@@ -30,6 +30,14 @@
   - type: Icon
     state: sheetblack
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetblack
 
 - type: entity
@@ -42,6 +50,14 @@
   - type: Icon
     state: sheetblue
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetblue
 
 - type: entity
@@ -54,6 +70,14 @@
   - type: Icon
     state: sheetbrown
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetbrown
 
 - type: entity
@@ -66,18 +90,38 @@
   - type: Icon
     state: sheetcaptain
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetcaptain
 
 - type: entity
   id: BedsheetCE
   parent: BedsheetBase
+<<<<<<< HEAD
   name: CE's bedsheet
+=======
+  name: ce's bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheetce
   - type: Icon
     state: sheetce
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetce
 
 - type: entity
@@ -90,6 +134,14 @@
   - type: Icon
     state: sheetcentcom
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetcentcom
 
 - type: entity
@@ -102,18 +154,38 @@
   - type: Icon
     state: sheetclown
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetclown
 
 - type: entity
   id: BedsheetCMO
   parent: BedsheetBase
+<<<<<<< HEAD
   name: CMO's bedsheet
+=======
+  name: cmo's bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheetcmo
   - type: Icon
     state: sheetcmo
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetcmo
 
 - type: entity
@@ -126,6 +198,14 @@
   - type: Icon
     state: sheetcosmos
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetcosmos
 
 - type: entity
@@ -138,6 +218,14 @@
   - type: Icon
     state: sheetcult
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetcult
 
 - type: entity
@@ -150,6 +238,14 @@
   - type: Icon
     state: sheetgreen
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetgreen
 
 - type: entity
@@ -162,30 +258,62 @@
   - type: Icon
     state: sheetgrey
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetgrey
 
 - type: entity
   id: BedsheetHOP
   parent: BedsheetBase
+<<<<<<< HEAD
   name: HoP's bedsheet
+=======
+  name: hop's bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheethop
   - type: Icon
     state: sheethop
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheethop
 
 - type: entity
   id: BedsheetHOS
   parent: BedsheetBase
+<<<<<<< HEAD
   name: HoS's bedsheet
+=======
+  name: hos's bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheethos
   - type: Icon
     state: sheethos
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheethos
 
 - type: entity
@@ -198,6 +326,14 @@
   - type: Icon
     state: sheetian
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetian
 
 - type: entity
@@ -210,6 +346,14 @@
   - type: Icon
     state: sheetmedical
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetmedical
 
 - type: entity
@@ -222,18 +366,38 @@
   - type: Icon
     state: sheetmime
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetmime
 
 - type: entity
   id: BedsheetNT
   parent: BedsheetBase
+<<<<<<< HEAD
   name: NT bedsheet
+=======
+  name: nt bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheetNT
   - type: Icon
     state: sheetNT
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetNT
 
 - type: entity
@@ -246,6 +410,14 @@
   - type: Icon
     state: sheetorange
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetorange
 
 - type: entity
@@ -258,18 +430,38 @@
   - type: Icon
     state: sheetpurple
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetpurple
 
 - type: entity
   id: BedsheetQM
   parent: BedsheetBase
+<<<<<<< HEAD
   name: Qm's bedsheet
+=======
+  name: qm's bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheetqm
   - type: Icon
     state: sheetqm
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetqm
 
 - type: entity
@@ -282,18 +474,38 @@
   - type: Icon
     state: sheetrainbow
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetrainbow
 
 - type: entity
   id: BedsheetRD
   parent: BedsheetBase
+<<<<<<< HEAD
   name: RD's bedsheet
+=======
+  name: rd's bedsheet
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: sheetrd
   - type: Icon
     state: sheetrd
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetrd
 
 - type: entity
@@ -306,6 +518,14 @@
   - type: Icon
     state: sheetred
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetred
 
 - type: entity
@@ -318,6 +538,14 @@
   - type: Icon
     state: sheetsyndie
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetsyndie
 
 - type: entity
@@ -330,6 +558,14 @@
   - type: Icon
     state: sheetUSA
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetUSA
 
 - type: entity
@@ -342,6 +578,14 @@
   - type: Icon
     state: sheetwhite
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetwhite
 
 - type: entity
@@ -354,6 +598,14 @@
   - type: Icon
     state: sheetwiz
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetwiz
 
 - type: entity
@@ -366,4 +618,12 @@
   - type: Icon
     state: sheetyellow
   - type: Clothing
+<<<<<<< HEAD
+=======
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - back
+    sprite: Clothing/back.rsi
+>>>>>>> 4b02d1b0... fix
     HeldPrefix: sheetyellow

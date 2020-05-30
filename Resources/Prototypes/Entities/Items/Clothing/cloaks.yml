@@ -10,7 +10,12 @@
   - type: Icon
     sprite: Clothing/cloak.rsi
   - type: Clothing
+<<<<<<< HEAD
     Size: 9999
+=======
+    Size: 10
+    QuickEquip: true
+>>>>>>> 4b02d1b0... fix
     Slots:
     - back
     sprite: Clothing/cloak.rsi
@@ -31,7 +36,11 @@
 - type: entity
   parent: CloakClothing
   id: HosCloak
+<<<<<<< HEAD
   name: HoS's cloak
+=======
+  name: head of security's Cloak
+>>>>>>> 4b02d1b0... fix
   description:
   components:
   - type: Sprite
@@ -45,7 +54,11 @@
 - type: entity
   parent: CloakClothing
   id: CeCloak
+<<<<<<< HEAD
   name: CE's cloak
+=======
+  name: chief engineer's cloak
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: cecloak
@@ -58,7 +71,11 @@
 - type: entity
   parent: CloakClothing
   id: CmoCloak
+<<<<<<< HEAD
   name: CMO's cloak
+=======
+  name: cmo's cloak
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: cmocloak
@@ -70,7 +87,11 @@
 - type: entity
   parent: CloakClothing
   id: RdCloak
+<<<<<<< HEAD
   name: RD's cloak
+=======
+  name: research director's cloak
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: rdcloak
@@ -83,7 +104,11 @@
 - type: entity
   parent: CloakClothing
   id: QmCloak
+<<<<<<< HEAD
   name: Qm's cloak
+=======
+  name: quartermaster's cloak
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: qmcloak
@@ -95,7 +120,11 @@
 - type: entity
   parent: CloakClothing
   id: HopCloak
+<<<<<<< HEAD
   name: HoP's cloak
+=======
+  name: head of personnel's cloak
+>>>>>>> 4b02d1b0... fix
   components:
   - type: Sprite
     state: hopcloak
