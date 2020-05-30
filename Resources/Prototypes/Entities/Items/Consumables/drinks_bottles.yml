@@ -1,29 +1,42 @@
 - type: entity
-  parent: DrinkBase
+  parent: BaseItem
+  id: DrinkBottleBaseFull
+  abstract: true
+  components:
+  - type: Drink
+    openSounds: bottleOpenSounds
+  - type: Solution
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkAbsintheBottleFull
   name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
-  - type: Drink  
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/absinthebottle.rsi
   - type: Icon
     sprite: Objects/Drinks/absinthebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkAlcoGreenFull
   name: Emeraldine Melon Liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
   components:
-  - type: Drink    
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/alco-green.rsi
   - type: Icon
     sprite: Objects/Drinks/alco-green.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkAleBottleFull
   name: Magm-Ale
   description: A true dorf's drink of choice.
@@ -33,26 +46,26 @@
     contents:
       reagents:
       - ReagentId: chem.Ale
-        Quantity: 80  
+        Quantity: 80
   - type: Sprite
     sprite: Objects/Drinks/alebottle.rsi
   - type: Icon
     sprite: Objects/Drinks/alebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkBottleOfNothingFull
   name: Bottle of nothing
   description: A bottle filled with nothing
   components:
-  - type: Drink  
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/bottleofnothing.rsi
   - type: Icon
     sprite: Objects/Drinks/bottleofnothing.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkCognacBottleFull
   name: Cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
@@ -62,38 +75,38 @@
     contents:
       reagents:
       - ReagentId: chem.Cognac
-        Quantity: 80  
+        Quantity: 80
   - type: Sprite
     sprite: Objects/Drinks/cognacbottle.rsi
   - type: Icon
     sprite: Objects/Drinks/cognacbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkGinBottleFull
   name: Griffeater gin bottle
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
-  - type: Drink   
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/ginbottle.rsi
   - type: Icon
     sprite: Objects/Drinks/ginbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkGoldschlagerBottleFull
   name: Goldschlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
-  - type: Drink  
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/goldschlagerbottle.rsi
   - type: Icon
     sprite: Objects/Drinks/goldschlagerbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkKahluaBottleFull
   name: Kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK
@@ -103,74 +116,74 @@
     contents:
       reagents:
       - ReagentId: chem.H2O
-        Quantity: 80  
+        Quantity: 80
   - type: Sprite
     sprite: Objects/Drinks/kahluabottle.rsi
   - type: Icon
     sprite: Objects/Drinks/kahluabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkPatronBottleFull
   name: Wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
   components:
-  - type: Drink  
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/patronbottle.rsi
   - type: Icon
     sprite: Objects/Drinks/patronbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkPoisonWinebottleFull
   name: Warlock's velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
   components:
-  - type: Drink   
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/pwinebottle.rsi
   - type: Icon
     sprite: Objects/Drinks/pwinebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkRumbottleFull
   name: Captain Pete's cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
-  - type: Drink  
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/rumbottle.rsi
   - type: Icon
     sprite: Objects/Drinks/rumbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkTequilabottleFull
   name: Caccavo guaranteed quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
-  - type: Drink   
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/tequillabottle.rsi
   - type: Icon
     sprite: Objects/Drinks/tequillabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkVermouthBottleFull
   name: Goldeneye vermouth bottle
   description: Sweet, sweet dryness~
   components:
-  - type: Drink    
+  - type: Drink
   - type: Sprite
     sprite: Objects/Drinks/vermouthbottle.rsi
   - type: Icon
     sprite: Objects/Drinks/vermouthbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkVodkaBottleFull
   name: Vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
@@ -187,7 +200,7 @@
     sprite: Objects/Drinks/vodkabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkWhiskeyBottleFull
   name: Uncle Git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
@@ -204,7 +217,7 @@
     sprite: Objects/Drinks/whiskeybottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkBottleBaseFull
   id: DrinkWineBottleFull
   name: Doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.

@@ -24,7 +24,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.25,-0.4,0.25,0.4"
+      bounds: "-0.16,-0.3,0.16,0.3"
       layer:
       - Opaque
       - Impassable
@@ -34,12 +34,14 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Kitchen/microwave.rsi
+    drawdepth: Items
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
+
   - type: PowerDevice
   - type: Icon
     sprite: Objects/Kitchen/microwave.rsi
