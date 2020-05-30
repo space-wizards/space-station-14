@@ -28,7 +28,7 @@ namespace Content.Server.Utility
         public static bool InRangeUnobstructed(ITargetedInteractEventArgs eventArgs, bool insideBlockerValid = true)
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                eventArgs.Target.Transform.WorldPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
+                eventArgs.Target.Transform.MapPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                 eventArgs.Target.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
@@ -50,7 +50,7 @@ namespace Content.Server.Utility
             if (eventArgs.Target != null)
             {
                 if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                    eventArgs.Target.Transform.WorldPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
+                    eventArgs.Target.Transform.MapPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
                 {
                     var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                     eventArgs.Target.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
@@ -59,9 +59,8 @@ namespace Content.Server.Utility
             }
             else
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
                 if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                    eventArgs.ClickLocation.ToMapPos(mapManager), ignoredEnt: eventArgs.User, insideBlockerValid: insideBlockerValid))
+                    eventArgs.ClickLocation.ToMap(IoCManager.Resolve<IMapManager>()), ignoredEnt: eventArgs.User, insideBlockerValid: insideBlockerValid))
                 {
                     var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                     eventArgs.User.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
@@ -77,13 +76,14 @@ namespace Content.Server.Utility
         /// Convenient static alternative to <see cref="SharedInteractionSystem.InRangeUnobstructed"/>, which also
         /// shows a popup message if not in range.
         /// </summary>
-        public static bool InRangeUnobstructed(IEntity user, Vector2 targetWorldCoords,
+        public static bool InRangeUnobstructed(IEntity user, MapCoordinates otherCoords,
             float range = SharedInteractionSystem.InteractionRange,
             int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null,
             bool insideBlockerValid = false)
         {
+            var mapManager = IoCManager.Resolve<IMapManager>();
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, targetWorldCoords, range, collisionMask,
+            if (!interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, otherCoords, range, collisionMask,
                 ignoredEnt, insideBlockerValid))
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();

@@ -123,7 +123,7 @@ namespace Content.Client
                 "Species",
                 "Drink",
                 "Food",
-                "DrinkFoodContainer",
+                "FoodContainer",
                 "Stomach",
                 "Hunger",
                 "Thirst",

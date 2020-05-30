@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Sound;
+using Content.Shared.Physics;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -89,7 +90,7 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void Initialize()
         {
             base.Initialize();
-            EntitySystem.TryGet(out _audioSystem);
+            if (EntitySystem.TryGet(out _audioSystem)) _audioSystem.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
         }
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -30,8 +30,6 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
@@ -50,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Construction
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            if (!InteractionChecks.InRangeUnobstructed(Owner, loc.ToMapPos(_mapManager),
+            if (!InteractionChecks.InRangeUnobstructed(Owner, loc.ToMap(_mapManager),
                 ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
             {
                 return;

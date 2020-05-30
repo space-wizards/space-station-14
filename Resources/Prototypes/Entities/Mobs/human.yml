@@ -109,6 +109,7 @@
       - VaultImpassable
       - SmallImpassable
       layer:
+      - Opaque
       - MobImpassable
   - type: Input
     context: "human"

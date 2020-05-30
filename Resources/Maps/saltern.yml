@@ -5690,7 +5690,7 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2652
+        - 2646
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
@@ -11820,17 +11820,17 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1659
-  type: Airlock
+  type: SpawnPointLatejoin
   components:
   - parent: 0
-    pos: -18.5,0.5
+    pos: -36.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1660
-  type: Airlock
+  type: SpawnPointLatejoin
   components:
   - parent: 0
-    pos: -20.5,0.5
+    pos: -36.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1661
@@ -17486,17 +17486,17 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2314
-  type: airlock_external
+  type: SpawnPointStationEngineer
   components:
   - parent: 0
-    pos: -39.5,8.5
+    pos: 33.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2315
-  type: airlock_external
+  type: SpawnPointSecurityOfficer
   components:
   - parent: 0
-    pos: -39.5,4.5
+    pos: -7.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2316
@@ -17645,55 +17645,51 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2334
-  type: airlock_medical_glass
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 17.5,-3.5
+    pos: 8.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - location: eva
+    type: WarpPoint
 - uid: 2335
-  type: airlock_medical_glass
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 10.5,-6.5
+    pos: 7.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - location: cap
+    type: WarpPoint
 - uid: 2336
-  type: airlock_medical_glass
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 11.5,-6.5
+    pos: 16.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - location: chem
+    type: WarpPoint
 - uid: 2337
-  type: airlock_medical_glass
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 7.5,-6.5
+    pos: 9.5,19.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - location: hop
+    type: WarpPoint
 - uid: 2338
-  type: airlock_medical_glass
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 20.5,-6.5
+    pos: 49.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - location: grav
+    type: WarpPoint
 - uid: 2339
-  type: airlock_medical_glass
-  components:
-  - parent: 0
-    pos: 20.5,-13.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2340
-  type: airlock_medical_glass
-  components:
-  - parent: 0
-    pos: 8.5,-12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2341
   type: LockerMedical
   components:
   - parent: 0
@@ -17707,7 +17703,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2342
+- uid: 2340
   type: LockerMedical
   components:
   - parent: 0
@@ -17721,7 +17717,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2343
+- uid: 2341
   type: VendingMachineMedical
   components:
   - parent: 0
@@ -17730,7 +17726,7 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/medical.rsi
     type: Sprite
-- uid: 2344
+- uid: 2342
   type: VendingMachineMedical
   components:
   - parent: 0
@@ -17739,28 +17735,28 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/medical.rsi
     type: Sprite
-- uid: 2345
+- uid: 2343
   type: Table
   components:
   - parent: 0
     pos: 21.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2346
+- uid: 2344
   type: Table
   components:
   - parent: 0
     pos: 22.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2347
+- uid: 2345
   type: Table
   components:
   - parent: 0
     pos: 23.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2348
+- uid: 2346
   type: CrateMedical
   components:
   - parent: 0
@@ -17774,63 +17770,63 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2349
+- uid: 2347
   type: Table
   components:
   - parent: 0
     pos: 6.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2350
+- uid: 2348
   type: Table
   components:
   - parent: 0
     pos: 6.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2351
+- uid: 2349
   type: Table
   components:
   - parent: 0
     pos: 6.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2352
+- uid: 2350
   type: Table
   components:
   - parent: 0
     pos: 6.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2353
+- uid: 2351
   type: Table
   components:
   - parent: 0
     pos: 10.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2354
+- uid: 2352
   type: Table
   components:
   - parent: 0
     pos: 9.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2355
+- uid: 2353
   type: Beaker
   components:
   - parent: 0
     pos: 18.57514,0.038482428
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2356
+- uid: 2354
   type: Beaker
   components:
   - parent: 0
     pos: 15.07514,-0.38339257
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2357
+- uid: 2355
   type: MedicalScanner
   components:
   - parent: 0
@@ -17842,7 +17838,7 @@ entities:
         entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 2358
+- uid: 2356
   type: MedicalScanner
   components:
   - parent: 0
@@ -17854,54 +17850,75 @@ entities:
         entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 2359
+- uid: 2357
   type: LowWall
   components:
   - parent: 0
     pos: 15.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2360
+- uid: 2358
   type: LowWall
   components:
   - parent: 0
     pos: 16.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2361
+- uid: 2359
   type: LowWall
   components:
   - parent: 0
     pos: 17.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2360
+  type: Window
+  components:
+  - parent: 0
+    pos: 15.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2361
+  type: Window
+  components:
+  - parent: 0
+    pos: 16.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2362
   type: Window
   components:
   - parent: 0
-    pos: 15.5,-12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2363
-  type: Window
-  components:
-  - parent: 0
-    pos: 16.5,-12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2364
-  type: Window
-  components:
-  - parent: 0
     pos: 17.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2365
+- uid: 2363
   type: Poweredlight
   components:
   - parent: 0
     pos: 20,-11.5
     rot: 3.141592653589793 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2364
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2364
+  type: LightTube
+  components:
+  - parent: 2363
+    type: Transform
+- uid: 2365
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: 7,-14.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -17922,7 +17939,8 @@ entities:
   type: Poweredlight
   components:
   - parent: 0
-    pos: 7,-14.5
+    pos: 23.5,-4
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -17943,8 +17961,8 @@ entities:
   type: Poweredlight
   components:
   - parent: 0
-    pos: 23.5,-4
-    rot: -1.5707963267948966 rad
+    pos: 23.5,-8
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -17962,28 +17980,6 @@ entities:
   - parent: 2369
     type: Transform
 - uid: 2371
-  type: Poweredlight
-  components:
-  - parent: 0
-    pos: 23.5,-8
-    rot: 1.5707963267948966 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2372
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
-- uid: 2372
-  type: LightTube
-  components:
-  - parent: 2371
-    type: Transform
-- uid: 2373
   type: Medkit
   components:
   - parent: 0
@@ -17995,7 +17991,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 2374
+- uid: 2372
   type: Medkit
   components:
   - parent: 0
@@ -18007,7 +18003,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 2375
+- uid: 2373
   type: Medkit
   components:
   - parent: 0
@@ -18019,7 +18015,7 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 2376
+- uid: 2374
   type: Medkit
   components:
   - parent: 0
@@ -18031,70 +18027,70 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 2377
+- uid: 2375
   type: LargeBeaker
   components:
   - parent: 0
     pos: 18.45014,1.5384824
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2378
+- uid: 2376
   type: LargeBeaker
   components:
   - parent: 0
     pos: 18.403265,0.8822324
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2379
+- uid: 2377
   type: LargeBeaker
   components:
   - parent: 0
     pos: 14.528265,-0.44589257
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2380
+- uid: 2378
   type: Beaker
   components:
   - parent: 0
     pos: 15.48139,-0.43026757
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2381
+- uid: 2379
   type: ComputerMedicalRecords
   components:
   - parent: 0
     pos: 24.5,-15.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2382
+- uid: 2380
   type: Table
   components:
   - parent: 0
     pos: 23.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2383
+- uid: 2381
   type: Table
   components:
   - parent: 0
     pos: 23.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2384
+- uid: 2382
   type: Table
   components:
   - parent: 0
     pos: 23.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2385
+- uid: 2383
   type: ChairOfficeLight
   components:
   - parent: 0
     pos: 24.5,-14.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 2386
+- uid: 2384
   type: Poweredlight
   components:
   - parent: 0
@@ -18106,183 +18102,208 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2387
+        - 2385
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2387
+- uid: 2385
   type: LightTube
   components:
-  - parent: 2386
+  - parent: 2384
     type: Transform
-- uid: 2388
-  type: airlock_science
+- uid: 2386
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 0.5,-19.5
+    pos: -24.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: dorms
+    type: WarpPoint
+- uid: 2387
+  type: WarpPoint
+  components:
+  - parent: 0
+    pos: -36.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - location: escape
+    type: WarpPoint
+- uid: 2388
+  type: SpawnPointAssistant
+  components:
+  - parent: 0
+    pos: -18.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2389
-  type: airlock_science
+  type: SpawnPointChef
   components:
   - parent: 0
-    pos: 0.5,-20.5
+    pos: -12.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2390
-  type: airlock_science_glass
+  type: SpawnPointLatejoin
   components:
   - parent: 0
-    pos: -3.5,-18.5
-    rot: 3.141592653589793 rad
+    pos: -36.5,0.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2391
-  type: airlock_science_glass
+  type: SpawnPointAssistant
   components:
   - parent: 0
-    pos: -3.5,-21.5
-    rot: 3.141592653589793 rad
+    pos: -29.5,-0.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2392
-  type: airlock_science
+  type: SpawnPointAssistant
   components:
   - parent: 0
-    pos: -12.5,-19.5
+    pos: -23.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2393
-  type: airlock_science
-  components:
-  - parent: 0
-    pos: -12.5,-20.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2394
-  type: airlock_science
-  components:
-  - parent: 0
-    pos: -8.5,-21.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2395
   type: Table
   components:
   - parent: 0
     pos: -4.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2396
+- uid: 2394
   type: Table
   components:
   - parent: 0
     pos: -4.5,-24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2397
+- uid: 2395
   type: LowWall
   components:
   - parent: 0
     pos: -10.5,-29.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2396
+  type: LowWall
+  components:
+  - parent: 0
+    pos: -10.5,-30.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2397
+  type: LowWall
+  components:
+  - parent: 0
+    pos: -9.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2398
   type: LowWall
   components:
   - parent: 0
-    pos: -10.5,-30.5
+    pos: -6.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2399
   type: LowWall
   components:
   - parent: 0
-    pos: -9.5,-30.5
+    pos: -7.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2400
   type: LowWall
   components:
   - parent: 0
-    pos: -6.5,-29.5
+    pos: -6.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2401
   type: LowWall
   components:
   - parent: 0
-    pos: -7.5,-30.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2402
-  type: LowWall
-  components:
-  - parent: 0
-    pos: -6.5,-30.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2403
-  type: LowWall
-  components:
-  - parent: 0
     pos: -8.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2404
+- uid: 2402
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -10.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2405
+- uid: 2403
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -10.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2406
+- uid: 2404
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -9.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2407
+- uid: 2405
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -8.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2408
+- uid: 2406
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -7.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2409
+- uid: 2407
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -6.5,-30.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2410
+- uid: 2408
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: -6.5,-29.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2411
+- uid: 2409
   type: Poweredlight
   components:
   - parent: 0
     pos: -1.5,-18
     rot: 1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2410
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2410
+  type: LightTube
+  components:
+  - parent: 2409
+    type: Transform
+- uid: 2411
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: -6,-14.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18303,7 +18324,8 @@ entities:
   type: Poweredlight
   components:
   - parent: 0
-    pos: -6,-14.5
+    pos: -1.5,-13
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18321,33 +18343,11 @@ entities:
   - parent: 2413
     type: Transform
 - uid: 2415
-  type: Poweredlight
+  type: LightTube
   components:
-  - parent: 0
-    pos: -1.5,-13
-    rot: -1.5707963267948966 rad
+  - parent: 2416
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2416
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2416
-  type: LightTube
-  components:
-  - parent: 2415
-    type: Transform
-- uid: 2417
-  type: LightTube
-  components:
-  - parent: 2418
-    type: Transform
-- uid: 2418
   type: Poweredlight
   components:
   - parent: 0
@@ -18359,17 +18359,39 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2417
+        - 2415
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2419
+- uid: 2417
   type: Poweredlight
   components:
   - parent: 0
     pos: -9.5,-17
     rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2418
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2418
+  type: LightTube
+  components:
+  - parent: 2417
+    type: Transform
+- uid: 2419
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: -1.5,-21
+    rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18390,8 +18412,8 @@ entities:
   type: Poweredlight
   components:
   - parent: 0
-    pos: -1.5,-21
-    rot: 1.5707963267948966 rad
+    pos: -2,-23.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18409,11 +18431,10 @@ entities:
   - parent: 2421
     type: Transform
 - uid: 2423
-  type: Poweredlight
+  type: PoweredSmallLight
   components:
   - parent: 0
-    pos: -2,-23.5
-    rot: 3.141592653589793 rad
+    pos: -7,-23.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18426,15 +18447,26 @@ entities:
   - load: 40
     type: PowerDevice
 - uid: 2424
-  type: LightTube
+  type: LightBulb
   components:
   - parent: 2423
     type: Transform
 - uid: 2425
-  type: PoweredSmallLight
+  type: ResearchAndDevelopmentServer
   components:
   - parent: 0
-    pos: -7,-23.5
+    pos: -8.5,-23.5
+    type: Transform
+- uid: 2426
+  type: LightTube
+  components:
+  - parent: 2427
+    type: Transform
+- uid: 2427
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: -18,-25.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18446,43 +18478,33 @@ entities:
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2426
-  type: LightBulb
-  components:
-  - parent: 2425
-    type: Transform
-- uid: 2427
-  type: ResearchAndDevelopmentServer
-  components:
-  - parent: 0
-    pos: -8.5,-23.5
-    type: Transform
 - uid: 2428
-  type: LightTube
-  components:
-  - parent: 2429
-    type: Transform
-- uid: 2429
   type: Poweredlight
   components:
   - parent: 0
-    pos: -18,-25.5
+    pos: -18,-21.5
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
   - containers:
       light_bulb:
         entities:
-        - 2428
+        - 2429
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
+- uid: 2429
+  type: LightTube
+  components:
+  - parent: 2428
+    type: Transform
 - uid: 2430
   type: Poweredlight
   components:
   - parent: 0
-    pos: -18,-21.5
+    pos: -13,-21.5
+    rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18503,7 +18525,7 @@ entities:
   type: Poweredlight
   components:
   - parent: 0
-    pos: -13,-21.5
+    pos: -13,-25.5
     rot: 3.141592653589793 rad
     type: Transform
   - color: '#FFFFFFFF'
@@ -18525,8 +18547,8 @@ entities:
   type: Poweredlight
   components:
   - parent: 0
-    pos: -13,-25.5
-    rot: 3.141592653589793 rad
+    pos: -15.5,-17
+    rot: -1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
     type: PointLight
@@ -18544,53 +18566,31 @@ entities:
   - parent: 2434
     type: Transform
 - uid: 2436
-  type: Poweredlight
-  components:
-  - parent: 0
-    pos: -15.5,-17
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2437
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
-- uid: 2437
-  type: LightTube
-  components:
-  - parent: 2436
-    type: Transform
-- uid: 2438
   type: Wire
   components:
   - parent: 0
     pos: -17.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2439
+- uid: 2437
   type: APC
   components:
   - parent: 0
     pos: -18.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2440
+- uid: 2438
   type: ComputerResearchAndDevelopment
   components:
   - parent: 0
     pos: -5.5,-15.5
     type: Transform
-- uid: 2441
+- uid: 2439
   type: LightBulb
   components:
-  - parent: 2442
+  - parent: 2440
     type: Transform
-- uid: 2442
+- uid: 2440
   type: PoweredSmallLight
   components:
   - parent: 0
@@ -18602,152 +18602,152 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2441
+        - 2439
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2443
+- uid: 2441
   type: Table
   components:
   - parent: 0
     pos: -0.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2444
+- uid: 2442
   type: Table
   components:
   - parent: 0
     pos: -1.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2445
+- uid: 2443
   type: Table
   components:
   - parent: 0
     pos: -2.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2446
+- uid: 2444
   type: Table
   components:
   - parent: 0
     pos: 0.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2447
+- uid: 2445
   type: Table
   components:
   - parent: 0
     pos: 0.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2448
+- uid: 2446
   type: BaseResearchAndDevelopmentPointSource
   components:
   - parent: 0
     pos: -5.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2449
+- uid: 2447
   type: ChairOfficeLight
   components:
   - parent: 0
     pos: -0.5,-14.5
     type: Transform
-- uid: 2450
+- uid: 2448
   type: ChairOfficeLight
   components:
   - parent: 0
     pos: -5.5,-23.5
     type: Transform
-- uid: 2451
+- uid: 2449
   type: VendingMachineCoffee
   components:
   - parent: 0
     pos: -7.5,-17.5
     type: Transform
-- uid: 2452
+- uid: 2450
   type: Table
   components:
   - parent: 0
     pos: -8.5,-17.5
     type: Transform
-- uid: 2453
+- uid: 2451
   type: ChairOfficeLight
   components:
   - parent: 0
     pos: -9.5,-17.5
     type: Transform
-- uid: 2454
+- uid: 2452
   type: ChairOfficeLight
   components:
   - parent: 0
     pos: -8.5,-18.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2455
+- uid: 2453
   type: Autolathe
   components:
   - parent: 0
     pos: -5.5,-12.5
     type: Transform
-- uid: 2456
+- uid: 2454
   type: Protolathe
   components:
   - parent: 0
     pos: -3.5,-12.5
     type: Transform
-- uid: 2457
+- uid: 2455
   type: Table
   components:
   - parent: 0
     pos: -2.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2458
+- uid: 2456
   type: Table
   components:
   - parent: 0
     pos: -1.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2459
+- uid: 2457
   type: Table
   components:
   - parent: 0
     pos: -0.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2460
-  type: airlock_external
+- uid: 2458
+  type: SpawnPointStationEngineer
   components:
   - parent: 0
-    pos: -41.5,8.5
+    pos: 41.5,4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2459
+  type: SpawnPointStationEngineer
+  components:
+  - parent: 0
+    pos: 33.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2460
+  type: SpawnPointSecurityOfficer
+  components:
+  - parent: 0
+    pos: -2.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2461
-  type: airlock_external
+  type: SpawnPointSecurityOfficer
   components:
   - parent: 0
-    pos: -41.5,4.5
+    pos: -13.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2462
-  type: airlock_external
-  components:
-  - parent: 0
-    pos: -39.5,-3.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2463
-  type: airlock_external
-  components:
-  - parent: 0
-    pos: -37.5,-3.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2464
   type: Poweredlight
   components:
   - parent: 0
@@ -18759,294 +18759,252 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2465
+        - 2463
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2465
+- uid: 2463
   type: LightTube
   components:
-  - parent: 2464
+  - parent: 2462
     type: Transform
-- uid: 2466
+- uid: 2464
   type: Table
   components:
   - parent: 0
     pos: -2.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2467
+- uid: 2465
   type: Table
   components:
   - parent: 0
     pos: -7.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2468
+- uid: 2466
   type: Table
   components:
   - parent: 0
     pos: -6.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2469
+- uid: 2467
   type: Table
   components:
   - parent: 0
     pos: -5.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2470
+- uid: 2468
   type: Table
   components:
   - parent: 0
     pos: -4.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2471
+- uid: 2469
   type: Table
   components:
   - parent: 0
     pos: -3.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2472
+- uid: 2470
   type: Table
   components:
   - parent: 0
     pos: -2.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2473
+- uid: 2471
   type: Table
   components:
   - parent: 0
     pos: 39.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2474
-  type: Airlock
+- uid: 2472
+  type: SpawnPointAssistant
   components:
   - parent: 0
-    pos: -21.5,-1.5
+    pos: -27.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2473
+  type: SpawnPointSecurityOfficer
+  components:
+  - parent: 0
+    pos: -12.5,15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2474
+  type: SpawnPointAssistant
+  components:
+  - parent: 0
+    pos: -27.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2475
-  type: Airlock
+  type: SpawnPointStationEngineer
   components:
   - parent: 0
-    pos: -26.5,-6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2476
-  type: Airlock
-  components:
-  - parent: 0
-    pos: -21.5,-4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2477
-  type: Airlock
-  components:
-  - parent: 0
-    pos: -22.5,9.5
+    pos: 33.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2478
-  type: airlock_external
-  components:
-  - parent: 0
-    pos: 20.5,14.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2479
-  type: airlock_external
-  components:
-  - parent: 0
-    pos: 22.5,14.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2480
-  type: airlock_external
-  components:
-  - parent: 0
-    pos: 22.5,16.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2481
-  type: airlock_external
-  components:
-  - parent: 0
-    pos: 20.5,16.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2482
-  type: airlock_engineering
-  components:
-  - parent: 0
-    pos: 41.5,10.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2483
-  type: airlock_engineering
-  components:
-  - parent: 0
-    pos: 40.5,10.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2484
   type: StoolBar
   components:
   - parent: 0
     pos: -7.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2485
+- uid: 2479
   type: StoolBar
   components:
   - parent: 0
     pos: -6.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2486
+- uid: 2480
   type: StoolBar
   components:
   - parent: 0
     pos: -5.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2487
+- uid: 2481
   type: StoolBar
   components:
   - parent: 0
     pos: -4.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2488
+- uid: 2482
   type: StoolBar
   components:
   - parent: 0
     pos: -3.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2489
+- uid: 2483
   type: StoolBar
   components:
   - parent: 0
     pos: -2.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2490
+- uid: 2484
   type: Fork
   components:
   - parent: 0
     pos: -7.6538,0.49939823
     type: Transform
-- uid: 2491
+- uid: 2485
   type: Arcade
   components:
   - parent: 0
     pos: -1.5,-4.5
     type: Transform
-- uid: 2492
+- uid: 2486
   type: TableWood
   components:
   - parent: 0
     pos: -7.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2493
+- uid: 2487
   type: TableWood
   components:
   - parent: 0
     pos: -6.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2494
+- uid: 2488
   type: TableWood
   components:
   - parent: 0
     pos: -0.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2495
+- uid: 2489
   type: TableWood
   components:
   - parent: 0
     pos: -3.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2496
+- uid: 2490
   type: ChairWood
   components:
   - parent: 0
     pos: -3.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2497
+- uid: 2491
   type: ChairWood
   components:
   - parent: 0
     pos: -3.5,-0.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2498
+- uid: 2492
   type: ChairWood
   components:
   - parent: 0
     pos: -6.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2499
+- uid: 2493
   type: ChairWood
   components:
   - parent: 0
     pos: -7.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2500
+- uid: 2494
   type: ChairWood
   components:
   - parent: 0
     pos: -7.5,-0.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2501
+- uid: 2495
   type: ChairWood
   components:
   - parent: 0
     pos: -6.5,-0.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2502
+- uid: 2496
   type: ChairWood
   components:
   - parent: 0
     pos: -0.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2503
+- uid: 2497
   type: ChairWood
   components:
   - parent: 0
     pos: -0.5,-0.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2504
+- uid: 2498
   type: BarSign
   components:
   - parent: 0
     pos: 1,2.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2505
+- uid: 2499
   type: Spoon
   components:
   - parent: 0
     pos: -6.419425,0.43689823
     type: Transform
-- uid: 2506
+- uid: 2500
   type: VendingMachineCigs
   components:
   - parent: 0
@@ -19054,7 +19012,7 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/cigs.rsi
     type: Sprite
-- uid: 2507
+- uid: 2501
   type: VendingMachineSnack
   components:
   - parent: 0
@@ -19062,68 +19020,78 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/snack.rsi
     type: Sprite
-- uid: 2508
+- uid: 2502
   type: Chair
   components:
   - parent: 0
     pos: 22.5,-14.5
     type: Transform
-- uid: 2509
+- uid: 2503
   type: Stool
   components:
   - parent: 0
     pos: -1.5,-3.5
     type: Transform
-- uid: 2510
+- uid: 2504
   type: Table
   components:
   - parent: 0
     pos: -15.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2511
+- uid: 2505
   type: ComputerComms
   components:
   - parent: 0
     pos: 3.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2512
-  type: AirlockCommand
+- uid: 2506
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 5.5,25.5
+    pos: -4.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2513
-  type: AirlockCommandGlass
+  - location: bar
+    type: WarpPoint
+- uid: 2507
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 1.5,25.5
+    pos: -6.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2514
-  type: AirlockCommandGlass
+  - location: sci
+    type: WarpPoint
+- uid: 2508
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 1.5,24.5
+    pos: 14.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2515
-  type: AirlockCommandGlass
+  - location: med
+    type: WarpPoint
+- uid: 2509
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 2.5,22.5
+    pos: 19.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2516
-  type: AirlockCommandGlass
+  - location: cargo
+    type: WarpPoint
+- uid: 2510
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 4.5,22.5
+    pos: 34.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2517
+  - location: eng
+    type: WarpPoint
+- uid: 2511
   type: VendingMachineCola
   components:
   - parent: 0
@@ -19132,14 +19100,14 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/cola.rsi
     type: Sprite
-- uid: 2518
+- uid: 2512
   type: VendingMachineCoffee
   components:
   - parent: 0
     pos: 0.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2519
+- uid: 2513
   type: VendingMachineCigs
   components:
   - parent: 0
@@ -19148,68 +19116,72 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/cigs.rsi
     type: Sprite
-- uid: 2520
+- uid: 2514
   type: TableWood
   components:
   - parent: 0
     pos: 8.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2521
+- uid: 2515
   type: TableWood
   components:
   - parent: 0
     pos: 8.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2522
+- uid: 2516
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: 3.5,31.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2523
+- uid: 2517
   type: ComputerComms
   components:
   - parent: 0
     pos: 9.5,23.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2524
+- uid: 2518
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: 9.5,25.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 2525
+- uid: 2519
   type: ChairWood
   components:
   - parent: 0
     pos: 7.5,25.5
     type: Transform
-- uid: 2526
-  type: Airlock
+- uid: 2520
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 0.5,17.5
+    pos: -6.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2527
-  type: AirlockCommand
+  - location: sec
+    type: WarpPoint
+- uid: 2521
+  type: WarpPoint
   components:
   - parent: 0
-    pos: 6.5,17.5
+    pos: 3.5,29.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2528
+  - location: bridge
+    type: WarpPoint
+- uid: 2522
   type: Table
   components:
   - parent: 0
     pos: 6.5,20.5
     type: Transform
-- uid: 2529
+- uid: 2523
   type: ComputerId
   components:
   - parent: 0
@@ -19224,7 +19196,7 @@ entities:
         entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 2530
+- uid: 2524
   type: ComputerId
   components:
   - parent: 0
@@ -19239,94 +19211,94 @@ entities:
         entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-- uid: 2531
+- uid: 2525
   type: ComputerAlert
   components:
   - parent: 0
     pos: 6.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2532
+- uid: 2526
   type: ComputerPowerMonitoring
   components:
   - parent: 0
     pos: 7.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2533
+- uid: 2527
   type: Paper
   components:
   - parent: 0
     pos: -1.344388,25.58412
     type: Transform
-- uid: 2534
+- uid: 2528
   type: Pen
   components:
   - parent: 0
     pos: -1.563138,24.568495
     type: Transform
-- uid: 2535
+- uid: 2529
   type: TableWood
   components:
   - parent: 0
     pos: -1.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2536
+- uid: 2530
   type: TableWood
   components:
   - parent: 0
     pos: -1.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2537
+- uid: 2531
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: -0.5,24.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 2538
+- uid: 2532
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: -0.5,25.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 2539
+- uid: 2533
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: -2.5,24.5
     type: Transform
-- uid: 2540
+- uid: 2534
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: -2.5,25.5
     type: Transform
-- uid: 2541
+- uid: 2535
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: 7.5,31.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2542
+- uid: 2536
   type: ComputerMedicalRecords
   components:
   - parent: 0
     pos: 0.5,32.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2543
+- uid: 2537
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: 0.5,31.5
     rot: 1.5707963267948966 rad
     type: Transform
-- uid: 2544
+- uid: 2538
   type: ComputerSupplyRequest
   components:
   - parent: 0
@@ -19346,767 +19318,767 @@ entities:
     - cargo.glass
     - cargo.cable
     type: GalacticMarket
-- uid: 2545
+- uid: 2539
   type: Table
   components:
   - parent: 0
     pos: 9.5,18.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2546
+- uid: 2540
   type: Table
   components:
   - parent: 0
     pos: 9.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2547
+- uid: 2541
   type: Table
   components:
   - parent: 0
     pos: 9.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2548
+- uid: 2542
   type: Chair
   components:
   - parent: 0
     pos: 8.5,17.5
     type: Transform
-- uid: 2549
+- uid: 2543
   type: ChairOfficeDark
   components:
   - parent: 0
     pos: 10.5,17.5
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 2550
+- uid: 2544
   type: Paper
   components:
   - parent: 0
     pos: 9.699392,17.630365
     rot: 3.141592653589793 rad
     type: Transform
-- uid: 2551
+- uid: 2545
   type: solid_wall
   components:
   - parent: 0
     pos: -34.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2552
+- uid: 2546
   type: solid_wall
   components:
   - parent: 0
     pos: -34.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2553
+- uid: 2547
   type: solid_wall
   components:
   - parent: 0
     pos: -34.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2554
+- uid: 2548
   type: solid_wall
   components:
   - parent: 0
     pos: -34.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2555
+- uid: 2549
   type: solid_wall
   components:
   - parent: 0
     pos: -33.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2556
+- uid: 2550
   type: solid_wall
   components:
   - parent: 0
     pos: -32.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2557
+- uid: 2551
   type: solid_wall
   components:
   - parent: 0
     pos: -31.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2558
+- uid: 2552
   type: solid_wall
   components:
   - parent: 0
     pos: -30.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2559
+- uid: 2553
   type: solid_wall
   components:
   - parent: 0
     pos: -29.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2560
+- uid: 2554
   type: solid_wall
   components:
   - parent: 0
     pos: -28.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2561
+- uid: 2555
   type: solid_wall
   components:
   - parent: 0
     pos: -27.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2562
+- uid: 2556
   type: solid_wall
   components:
   - parent: 0
     pos: -26.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2563
+- uid: 2557
   type: solid_wall
   components:
   - parent: 0
     pos: -25.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2564
+- uid: 2558
   type: solid_wall
   components:
   - parent: 0
     pos: -24.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2565
+- uid: 2559
   type: solid_wall
   components:
   - parent: 0
     pos: -24.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2566
+- uid: 2560
   type: solid_wall
   components:
   - parent: 0
     pos: -23.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2567
+- uid: 2561
   type: solid_wall
   components:
   - parent: 0
     pos: -16.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2568
+- uid: 2562
   type: solid_wall
   components:
   - parent: 0
     pos: -14.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2569
+- uid: 2563
   type: solid_wall
   components:
   - parent: 0
     pos: -20.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2570
+- uid: 2564
   type: solid_wall
   components:
   - parent: 0
     pos: -19.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2571
+- uid: 2565
   type: solid_wall
   components:
   - parent: 0
     pos: -19.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2572
+- uid: 2566
   type: solid_wall
   components:
   - parent: 0
     pos: -19.5,-16.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2573
+- uid: 2567
   type: solid_wall
   components:
   - parent: 0
     pos: -19.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2574
+- uid: 2568
   type: solid_wall
   components:
   - parent: 0
     pos: -20.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2575
+- uid: 2569
   type: solid_wall
   components:
   - parent: 0
     pos: -20.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2576
+- uid: 2570
   type: solid_wall
   components:
   - parent: 0
     pos: -19.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2577
+- uid: 2571
   type: solid_wall
   components:
   - parent: 0
     pos: -18.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2578
+- uid: 2572
   type: solid_wall
   components:
   - parent: 0
     pos: -17.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2579
+- uid: 2573
   type: solid_wall
   components:
   - parent: 0
     pos: -20.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2580
+- uid: 2574
   type: solid_wall
   components:
   - parent: 0
     pos: -15.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2581
+- uid: 2575
   type: solid_wall
   components:
   - parent: 0
     pos: -14.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2582
+- uid: 2576
   type: solid_wall
   components:
   - parent: 0
     pos: -13.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2583
+- uid: 2577
   type: solid_wall
   components:
   - parent: 0
     pos: -12.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2584
+- uid: 2578
   type: solid_wall
   components:
   - parent: 0
     pos: -15.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2585
+- uid: 2579
   type: solid_wall
   components:
   - parent: 0
     pos: -15.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2586
+- uid: 2580
   type: solid_wall
   components:
   - parent: 0
     pos: -15.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2587
+- uid: 2581
   type: solid_wall
   components:
   - parent: 0
     pos: -15.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2588
+- uid: 2582
   type: solid_wall
   components:
   - parent: 0
     pos: -15.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2589
+- uid: 2583
   type: solid_wall
   components:
   - parent: 0
     pos: -10.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2590
+- uid: 2584
   type: solid_wall
   components:
   - parent: 0
     pos: -11.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2591
+- uid: 2585
   type: solid_wall
   components:
   - parent: 0
     pos: -13.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2592
+- uid: 2586
   type: solid_wall
   components:
   - parent: 0
     pos: -14.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2593
+- uid: 2587
   type: solid_wall
   components:
   - parent: 0
     pos: -10.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2594
+- uid: 2588
   type: solid_wall
   components:
   - parent: 0
     pos: -10.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2595
+- uid: 2589
   type: solid_wall
   components:
   - parent: 0
     pos: -11.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2596
+- uid: 2590
   type: solid_wall
   components:
   - parent: 0
     pos: -12.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2597
+- uid: 2591
   type: solid_wall
   components:
   - parent: 0
     pos: -13.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2598
+- uid: 2592
   type: solid_wall
   components:
   - parent: 0
     pos: -14.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2599
+- uid: 2593
   type: Catwalk
   components:
   - parent: 0
     pos: -23.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2600
+- uid: 2594
   type: Catwalk
   components:
   - parent: 0
     pos: -17.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2601
+- uid: 2595
   type: Catwalk
   components:
   - parent: 0
     pos: -9.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2602
+- uid: 2596
   type: Catwalk
   components:
   - parent: 0
     pos: -15.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2603
+- uid: 2597
   type: Catwalk
   components:
   - parent: 0
     pos: -15.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2604
+- uid: 2598
   type: Catwalk
   components:
   - parent: 0
     pos: -16.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2605
+- uid: 2599
   type: Wire
   components:
   - parent: 0
     pos: -33.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2606
+- uid: 2600
   type: Wire
   components:
   - parent: 0
     pos: -33.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2607
+- uid: 2601
   type: Wire
   components:
   - parent: 0
     pos: -33.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2608
+- uid: 2602
   type: Wire
   components:
   - parent: 0
     pos: -33.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2609
+- uid: 2603
   type: Wire
   components:
   - parent: 0
     pos: -33.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2610
+- uid: 2604
   type: Wire
   components:
   - parent: 0
     pos: -32.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2611
+- uid: 2605
   type: Wire
   components:
   - parent: 0
     pos: -31.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2612
+- uid: 2606
   type: Wire
   components:
   - parent: 0
     pos: -30.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2613
+- uid: 2607
   type: Wire
   components:
   - parent: 0
     pos: -29.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2614
+- uid: 2608
   type: Wire
   components:
   - parent: 0
     pos: -28.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2615
+- uid: 2609
   type: Wire
   components:
   - parent: 0
     pos: -27.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2616
+- uid: 2610
   type: Wire
   components:
   - parent: 0
     pos: -26.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2617
+- uid: 2611
   type: Wire
   components:
   - parent: 0
     pos: -25.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2618
+- uid: 2612
   type: Wire
   components:
   - parent: 0
     pos: -24.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2619
+- uid: 2613
   type: Wire
   components:
   - parent: 0
     pos: -23.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2620
+- uid: 2614
   type: Wire
   components:
   - parent: 0
     pos: -23.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2621
+- uid: 2615
   type: Wire
   components:
   - parent: 0
     pos: -22.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2622
+- uid: 2616
   type: Wire
   components:
   - parent: 0
     pos: -21.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2623
+- uid: 2617
   type: Wire
   components:
   - parent: 0
     pos: -20.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2624
+- uid: 2618
   type: Wire
   components:
   - parent: 0
     pos: -19.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2625
+- uid: 2619
   type: Wire
   components:
   - parent: 0
     pos: -18.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2626
+- uid: 2620
   type: Wire
   components:
   - parent: 0
     pos: -18.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2627
+- uid: 2621
   type: Wire
   components:
   - parent: 0
     pos: -18.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2628
+- uid: 2622
   type: Wire
   components:
   - parent: 0
     pos: -9.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2629
+- uid: 2623
   type: Wire
   components:
   - parent: 0
     pos: -17.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2630
+- uid: 2624
   type: Wire
   components:
   - parent: 0
     pos: -16.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2631
+- uid: 2625
   type: Wire
   components:
   - parent: 0
     pos: -16.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2632
+- uid: 2626
   type: Wire
   components:
   - parent: 0
     pos: -16.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2633
+- uid: 2627
   type: Wire
   components:
   - parent: 0
     pos: -15.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2634
+- uid: 2628
   type: Wire
   components:
   - parent: 0
     pos: -15.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2635
+- uid: 2629
   type: Wire
   components:
   - parent: 0
     pos: -14.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2636
+- uid: 2630
   type: Wire
   components:
   - parent: 0
     pos: -13.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2637
+- uid: 2631
   type: Wire
   components:
   - parent: 0
     pos: -12.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2638
+- uid: 2632
   type: Wire
   components:
   - parent: 0
     pos: -11.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2639
+- uid: 2633
   type: Wire
   components:
   - parent: 0
     pos: -10.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2640
+- uid: 2634
   type: Wire
   components:
   - parent: 0
     pos: -23.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2641
+- uid: 2635
   type: Wire
   components:
   - parent: 0
     pos: -23.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2642
+- uid: 2636
   type: Wire
   components:
   - parent: 0
     pos: -23.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2643
+- uid: 2637
   type: Wire
   components:
   - parent: 0
     pos: -21.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2644
+- uid: 2638
   type: Wire
   components:
   - parent: 0
     pos: -20.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2645
-  type: AirlockGlass
+- uid: 2639
+  type: SpawnPointLatejoin
   components:
   - parent: 0
-    pos: -10.5,-1.5
+    pos: -36.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2646
+- uid: 2640
   type: Table
   components:
   - parent: 0
     pos: -10.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2647
+- uid: 2641
   type: Table
   components:
   - parent: 0
     pos: -10.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2648
+- uid: 2642
   type: Table
   components:
   - parent: 0
     pos: -10.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2649
+- uid: 2643
   type: Wire
   components:
   - parent: 0
     pos: -9.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2650
+- uid: 2644
   type: Wire
   components:
   - parent: 0
     pos: -10.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2651
+- uid: 2645
   type: Wire
   components:
   - parent: 0
     pos: -11.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2652
+- uid: 2646
   type: LightTube
   components:
   - parent: 788
     type: Transform
-- uid: 2653
-  type: Airlock
+- uid: 2647
+  type: SpawnPointSecurityOfficer
   components:
   - parent: 0
-    pos: -20.5,-7.5
+    pos: -11.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2654
+- uid: 2648
   type: VendingMachineTheater
   components:
   - parent: 0
@@ -20115,35 +20087,35 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/theater.rsi
     type: Sprite
-- uid: 2655
+- uid: 2649
   type: PianoInstrument
   components:
   - parent: 0
     pos: -9.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2656
+- uid: 2650
   type: Stool
   components:
   - parent: 0
     pos: -9.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2657
+- uid: 2651
   type: Table
   components:
   - parent: 0
     pos: -14.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2658
+- uid: 2652
   type: Table
   components:
   - parent: 0
     pos: -14.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2659
+- uid: 2653
   type: KitchenMicrowave
   components:
   - parent: 0
@@ -20155,23 +20127,89 @@ entities:
         entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-- uid: 2660
+- uid: 2654
   type: Wire
   components:
   - parent: 0
     pos: -11.5,-0.5
     type: Transform
-- uid: 2661
+- uid: 2655
   type: Wire
   components:
   - parent: 0
     pos: -11.5,1.5
     type: Transform
-- uid: 2662
+- uid: 2656
   type: Poweredlight
   components:
   - parent: 0
     pos: -13.5,-2
+    rot: 1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2657
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2657
+  type: LightTube
+  components:
+  - parent: 2656
+    type: Transform
+- uid: 2658
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: -13.5,2
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2659
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2659
+  type: LightTube
+  components:
+  - parent: 2658
+    type: Transform
+- uid: 2660
+  type: PoweredSmallLight
+  components:
+  - parent: 0
+    pos: -12.5,-5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2661
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2661
+  type: LightBulb
+  components:
+  - parent: 2660
+    type: Transform
+- uid: 2662
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: -18.5,-10
     rot: 1.5707963267948966 rad
     type: Transform
   - color: '#FFFFFFFF'
@@ -20190,401 +20228,335 @@ entities:
   - parent: 2662
     type: Transform
 - uid: 2664
-  type: Poweredlight
-  components:
-  - parent: 0
-    pos: -13.5,2
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2665
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
-- uid: 2665
-  type: LightTube
-  components:
-  - parent: 2664
-    type: Transform
-- uid: 2666
-  type: PoweredSmallLight
-  components:
-  - parent: 0
-    pos: -12.5,-5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2667
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
-- uid: 2667
-  type: LightBulb
-  components:
-  - parent: 2666
-    type: Transform
-- uid: 2668
-  type: Poweredlight
-  components:
-  - parent: 0
-    pos: -18.5,-10
-    rot: 1.5707963267948966 rad
-    type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2669
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
-- uid: 2669
-  type: LightTube
-  components:
-  - parent: 2668
-    type: Transform
-- uid: 2670
   type: GravityGenerator
   components:
   - parent: 0
     pos: 49.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2671
+- uid: 2665
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2672
+- uid: 2666
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2673
+- uid: 2667
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2674
+- uid: 2668
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2675
+- uid: 2669
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2676
+- uid: 2670
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2677
+- uid: 2671
   type: reinforced_wall
   components:
   - parent: 0
     pos: 46.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2678
+- uid: 2672
   type: reinforced_wall
   components:
   - parent: 0
     pos: 47.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2679
+- uid: 2673
   type: reinforced_wall
   components:
   - parent: 0
     pos: 48.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2680
+- uid: 2674
   type: reinforced_wall
   components:
   - parent: 0
     pos: 49.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2681
+- uid: 2675
   type: reinforced_wall
   components:
   - parent: 0
     pos: 50.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2682
+- uid: 2676
   type: reinforced_wall
   components:
   - parent: 0
     pos: 51.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2683
+- uid: 2677
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2684
+- uid: 2678
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2685
+- uid: 2679
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2686
+- uid: 2680
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2687
+- uid: 2681
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2688
+- uid: 2682
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2689
+- uid: 2683
   type: reinforced_wall
   components:
   - parent: 0
     pos: 52.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2690
+- uid: 2684
   type: reinforced_wall
   components:
   - parent: 0
     pos: 51.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2691
+- uid: 2685
   type: reinforced_wall
   components:
   - parent: 0
     pos: 47.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2692
+- uid: 2686
   type: solid_wall
   components:
   - parent: 0
     pos: 53.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2693
+- uid: 2687
   type: solid_wall
   components:
   - parent: 0
     pos: 52.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2694
+- uid: 2688
   type: solid_wall
   components:
   - parent: 0
     pos: 46.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2695
+- uid: 2689
   type: solid_wall
   components:
   - parent: 0
     pos: 47.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2696
+- uid: 2690
   type: solid_wall
   components:
   - parent: 0
     pos: 47.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2697
+- uid: 2691
   type: solid_wall
   components:
   - parent: 0
     pos: 51.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2698
+- uid: 2692
   type: solid_wall
   components:
   - parent: 0
     pos: 51.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2699
+- uid: 2693
   type: reinforced_wall
   components:
   - parent: 0
     pos: 48.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2700
+- uid: 2694
   type: reinforced_wall
   components:
   - parent: 0
     pos: 50.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2701
+- uid: 2695
   type: Wire
   components:
   - parent: 0
     pos: 42.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2702
+- uid: 2696
   type: Wire
   components:
   - parent: 0
     pos: 43.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2703
+- uid: 2697
   type: Wire
   components:
   - parent: 0
     pos: 44.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2704
+- uid: 2698
   type: Wire
   components:
   - parent: 0
     pos: 45.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2705
+- uid: 2699
   type: Wire
   components:
   - parent: 0
     pos: 46.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2706
+- uid: 2700
   type: Wire
   components:
   - parent: 0
     pos: 47.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2707
+- uid: 2701
   type: Wire
   components:
   - parent: 0
     pos: 48.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2708
+- uid: 2702
   type: Wire
   components:
   - parent: 0
     pos: 49.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2709
+- uid: 2703
   type: Wire
   components:
   - parent: 0
     pos: 49.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2710
+- uid: 2704
   type: Wire
   components:
   - parent: 0
     pos: 49.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2711
+- uid: 2705
   type: Wire
   components:
   - parent: 0
     pos: 49.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2712
+- uid: 2706
   type: Wire
   components:
   - parent: 0
     pos: 49.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2713
+- uid: 2707
   type: Wire
   components:
   - parent: 0
     pos: 49.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2714
+- uid: 2708
   type: Wire
   components:
   - parent: 0
     pos: 49.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2715
+- uid: 2709
   type: Wire
   components:
   - parent: 0
     pos: 49.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2716
+- uid: 2710
   type: APC
   components:
   - parent: 0
     pos: 50.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2717
+- uid: 2711
   type: Poweredlight
   components:
   - parent: 0
@@ -20595,17 +20567,17 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2718
+        - 2712
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2718
+- uid: 2712
   type: LightTube
   components:
-  - parent: 2717
+  - parent: 2711
     type: Transform
-- uid: 2719
+- uid: 2713
   type: Poweredlight
   components:
   - parent: 0
@@ -20617,122 +20589,122 @@ entities:
   - containers:
       light_bulb:
         entities:
-        - 2720
+        - 2714
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
   - load: 40
     type: PowerDevice
-- uid: 2720
+- uid: 2714
   type: LightTube
   components:
-  - parent: 2719
+  - parent: 2713
     type: Transform
-- uid: 2721
+- uid: 2715
   type: Catwalk
   components:
   - parent: 0
     pos: 47.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2722
+- uid: 2716
   type: Catwalk
   components:
   - parent: 0
     pos: 48.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2723
+- uid: 2717
   type: Catwalk
   components:
   - parent: 0
     pos: 49.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2724
+- uid: 2718
   type: Catwalk
   components:
   - parent: 0
     pos: 50.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2725
+- uid: 2719
   type: Catwalk
   components:
   - parent: 0
     pos: 51.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2726
+- uid: 2720
   type: Catwalk
   components:
   - parent: 0
     pos: 51.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2727
+- uid: 2721
   type: Catwalk
   components:
   - parent: 0
     pos: 51.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2728
+- uid: 2722
   type: Catwalk
   components:
   - parent: 0
     pos: 51.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2729
+- uid: 2723
   type: Catwalk
   components:
   - parent: 0
     pos: 51.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2730
+- uid: 2724
   type: Catwalk
   components:
   - parent: 0
     pos: 50.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2731
+- uid: 2725
   type: Catwalk
   components:
   - parent: 0
     pos: 49.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2732
+- uid: 2726
   type: Catwalk
   components:
   - parent: 0
     pos: 48.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2733
+- uid: 2727
   type: Catwalk
   components:
   - parent: 0
     pos: 47.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2734
+- uid: 2728
   type: Catwalk
   components:
   - parent: 0
     pos: 47.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2735
+- uid: 2729
   type: Catwalk
   components:
   - parent: 0
     pos: 47.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2736
+- uid: 2730
   type: WardrobePajamaFilled
   components:
   - parent: 0
@@ -20746,7 +20718,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2737
+- uid: 2731
   type: WardrobeGreyFilled
   components:
   - parent: 0
@@ -20760,7 +20732,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2738
+- uid: 2732
   type: LockerGeneric
   components:
   - parent: 0
@@ -20774,7 +20746,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2739
+- uid: 2733
   type: LockerL3JanitorFilled
   components:
   - parent: 0
@@ -20788,7 +20760,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2740
+- uid: 2734
   type: WardrobeScienceFilled
   components:
   - parent: 0
@@ -20802,7 +20774,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2741
+- uid: 2735
   type: LockerResearchDirectorFilled
   components:
   - parent: 0
@@ -20816,7 +20788,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2742
+- uid: 2736
   type: LockerEngineerFilled
   components:
   - parent: 0
@@ -20830,7 +20802,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2743
+- uid: 2737
   type: LockerEngineerFilled
   components:
   - parent: 0
@@ -20844,7 +20816,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2744
+- uid: 2738
   type: LockerChiefEngineerFilled
   components:
   - parent: 0
@@ -20858,7 +20830,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2745
+- uid: 2739
   type: LockerAtmosphericsFilled
   components:
   - parent: 0
@@ -20872,7 +20844,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2746
+- uid: 2740
   type: LockerAtmosphericsFilled
   components:
   - parent: 0
@@ -20886,7 +20858,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2747
+- uid: 2741
   type: WardrobeAtmosphericsFilled
   components:
   - parent: 0
@@ -20900,7 +20872,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2748
+- uid: 2742
   type: WardrobeEngineeringFilled
   components:
   - parent: 0
@@ -20914,7 +20886,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2749
+- uid: 2743
   type: LockerHeadOfPersonnelFilled
   components:
   - parent: 0
@@ -20928,7 +20900,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2750
+- uid: 2744
   type: WardrobeBlackFilled
   components:
   - parent: 0
@@ -20942,7 +20914,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2751
+- uid: 2745
   type: LockerChiefMedicalOfficerFilled
   components:
   - parent: 0
@@ -20956,7 +20928,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2752
+- uid: 2746
   type: LockerL3SecurityFilled
   components:
   - parent: 0
@@ -20970,7 +20942,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2753
+- uid: 2747
   type: WardrobeMedicalDoctorFilled
   components:
   - parent: 0
@@ -20984,7 +20956,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2754
+- uid: 2748
   type: LockerSecurityFilled
   components:
   - parent: 0
@@ -20998,7 +20970,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2755
+- uid: 2749
   type: LockerSecurityFilled
   components:
   - parent: 0
@@ -21012,7 +20984,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2756
+- uid: 2750
   type: LockerSecurityFilled
   components:
   - parent: 0
@@ -21026,7 +20998,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2757
+- uid: 2751
   type: LockerL3VirologyFilled
   components:
   - parent: 0
@@ -21040,7 +21012,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2758
+- uid: 2752
   type: LockerMedicineFilled
   components:
   - parent: 0
@@ -21054,7 +21026,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2759
+- uid: 2753
   type: WardrobeWhiteFilled
   components:
   - parent: 0
@@ -21068,7 +21040,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2760
+- uid: 2754
   type: LockerChefFilled
   components:
   - parent: 0
@@ -21082,7 +21054,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2761
+- uid: 2755
   type: LockerJanitorFilled
   components:
   - parent: 0
@@ -21096,7 +21068,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2762
+- uid: 2756
   type: LockerL3JanitorFilled
   components:
   - parent: 0
@@ -21110,7 +21082,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2763
+- uid: 2757
   type: WardrobePrisonFilled
   components:
   - parent: 0
@@ -21124,14 +21096,14 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2764
+- uid: 2758
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 0.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2765
+- uid: 2759
   type: WardrobeCargoFilled
   components:
   - parent: 0
@@ -21145,7 +21117,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2766
+- uid: 2760
   type: LockerCaptainFilled
   components:
   - parent: 0
@@ -21159,7 +21131,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2767
+- uid: 2761
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21173,7 +21145,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2768
+- uid: 2762
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21187,7 +21159,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2769
+- uid: 2763
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21201,7 +21173,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2770
+- uid: 2764
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21215,7 +21187,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2771
+- uid: 2765
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21229,7 +21201,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2772
+- uid: 2766
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21243,7 +21215,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2773
+- uid: 2767
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21257,7 +21229,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2774
+- uid: 2768
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21271,7 +21243,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2775
+- uid: 2769
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21285,7 +21257,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2776
+- uid: 2770
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21299,7 +21271,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2777
+- uid: 2771
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21313,7 +21285,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2778
+- uid: 2772
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21327,7 +21299,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2779
+- uid: 2773
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21341,7 +21313,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2780
+- uid: 2774
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21355,7 +21327,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2781
+- uid: 2775
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21369,7 +21341,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2782
+- uid: 2776
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21383,7 +21355,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2783
+- uid: 2777
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21397,7 +21369,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2784
+- uid: 2778
   type: LockerBombFilled
   components:
   - parent: 0
@@ -21411,7 +21383,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2785
+- uid: 2779
   type: LockerBombFilled
   components:
   - parent: 0
@@ -21425,7 +21397,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2786
+- uid: 2780
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21439,7 +21411,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2787
+- uid: 2781
   type: LockerFireFilled
   components:
   - parent: 0
@@ -21453,21 +21425,21 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2788
+- uid: 2782
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: -39.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2789
+- uid: 2783
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: -25.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2790
+- uid: 2784
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21481,14 +21453,14 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2791
+- uid: 2785
   type: PottedPlantRD
   components:
   - parent: 0
     pos: -2.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2792
+- uid: 2786
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21502,7 +21474,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2793
+- uid: 2787
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21516,7 +21488,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2794
+- uid: 2788
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21530,21 +21502,21 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2795
+- uid: 2789
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 7.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2796
+- uid: 2790
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 10.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2797
+- uid: 2791
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21558,7 +21530,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2798
+- uid: 2792
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21572,14 +21544,14 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2799
+- uid: 2793
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: -24.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2800
+- uid: 2794
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21593,14 +21565,14 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2801
+- uid: 2795
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 1.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2802
+- uid: 2796
   type: LockerBoozeFilled
   components:
   - parent: 0
@@ -21614,7 +21586,7 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2803
+- uid: 2797
   type: VendingMachineBooze
   components:
   - parent: 0
@@ -21623,7 +21595,7 @@ entities:
     type: Transform
   - sprite: Buildings/VendingMachines/boozeomat.rsi
     type: Sprite
-- uid: 2804
+- uid: 2798
   type: LockerEmergencyFilledRandom
   components:
   - parent: 0
@@ -21637,459 +21609,200 @@ entities:
     type: ContainerContainer
   - IsPlaceable: False
     type: PlaceableSurface
-- uid: 2805
+- uid: 2799
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 5.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2806
+- uid: 2800
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2807
+- uid: 2801
   type: PottedPlantRandomPlastic
   components:
   - parent: 0
     pos: 29.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2808
+- uid: 2802
   type: PottedPlantRandom
   components:
   - parent: 0
     pos: 21.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2809
+- uid: 2803
   type: PottedPlantRandomPlastic
   components:
   - parent: 0
     pos: -12.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2810
+- uid: 2804
   type: SpawnPointCargoTechnician
   components:
   - parent: 0
     pos: 14.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2811
+- uid: 2805
   type: SpawnPointCargoTechnician
   components:
   - parent: 0
     pos: 21.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2812
+- uid: 2806
   type: SpawnPointChiefMedicalOfficer
   components:
   - parent: 0
     pos: 24.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2813
+- uid: 2807
   type: SpawnPointMedicalDoctor
   components:
   - parent: 0
     pos: 6.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2814
+- uid: 2808
   type: SpawnPointMedicalDoctor
   components:
   - parent: 0
     pos: 14.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2815
+- uid: 2809
   type: SpawnPointMedicalDoctor
   components:
   - parent: 0
     pos: 22.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2816
+- uid: 2810
   type: SpawnPointMedicalDoctor
   components:
   - parent: 0
     pos: 16.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2817
+- uid: 2811
   type: SpawnPointMedicalDoctor
   components:
   - parent: 0
     pos: 11.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2818
+- uid: 2812
   type: SpawnPointMedicalDoctor
   components:
   - parent: 0
     pos: 15.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2819
+- uid: 2813
   type: SpawnPointResearchDirector
   components:
   - parent: 0
     pos: -5.5,-23.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2820
+- uid: 2814
   type: SpawnPointScientist
   components:
   - parent: 0
     pos: -9.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2821
+- uid: 2815
   type: SpawnPointScientist
   components:
   - parent: 0
     pos: -8.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2822
+- uid: 2816
   type: SpawnPointScientist
   components:
   - parent: 0
     pos: -0.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2823
+- uid: 2817
   type: SpawnPointScientist
   components:
   - parent: 0
     pos: -4.5,-15.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2824
+- uid: 2818
   type: SpawnPointScientist
   components:
   - parent: 0
     pos: -15.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2825
+- uid: 2819
   type: SpawnPointBartender
   components:
   - parent: 0
     pos: -5.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2826
+- uid: 2820
   type: SpawnPointClown
   components:
   - parent: 0
     pos: -18.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2827
+- uid: 2821
   type: SpawnPointJanitor
   components:
   - parent: 0
     pos: -20.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2828
+- uid: 2822
   type: SpawnPointHeadOfSecurity
   components:
   - parent: 0
     pos: -6.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2829
+- uid: 2823
   type: SpawnPointCaptain
   components:
   - parent: 0
     pos: 9.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2830
+- uid: 2824
   type: SpawnPointHeadOfPersonnel
   components:
   - parent: 0
     pos: 7.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2831
+- uid: 2825
   type: SpawnPointChiefEngineer
   components:
   - parent: 0
     pos: 40.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2832
+- uid: 2826
   type: SpawnPointStationEngineer
   components:
   - parent: 0
     pos: 30.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2833
-  type: SpawnPointStationEngineer
-  components:
-  - parent: 0
-    pos: 33.5,-2.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2834
-  type: SpawnPointStationEngineer
-  components:
-  - parent: 0
-    pos: 41.5,4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2835
-  type: SpawnPointStationEngineer
-  components:
-  - parent: 0
-    pos: 33.5,4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2836
-  type: SpawnPointStationEngineer
-  components:
-  - parent: 0
-    pos: 33.5,11.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2837
-  type: SpawnPointSecurityOfficer
-  components:
-  - parent: 0
-    pos: -7.5,12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2838
-  type: SpawnPointSecurityOfficer
-  components:
-  - parent: 0
-    pos: -2.5,12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2839
-  type: SpawnPointSecurityOfficer
-  components:
-  - parent: 0
-    pos: -13.5,15.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2840
-  type: SpawnPointSecurityOfficer
-  components:
-  - parent: 0
-    pos: -12.5,15.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2841
-  type: SpawnPointSecurityOfficer
-  components:
-  - parent: 0
-    pos: -11.5,8.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2842
-  type: SpawnPointAssistant
-  components:
-  - parent: 0
-    pos: -27.5,10.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2843
-  type: SpawnPointAssistant
-  components:
-  - parent: 0
-    pos: -27.5,8.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2844
-  type: spawn_point_latejoin
-  components:
-  - parent: 0
-    pos: -36.5,-5.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2845
-  type: spawn_point_latejoin
-  components:
-  - parent: 0
-    pos: -36.5,-3.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2846
-  type: spawn_point_latejoin
-  components:
-  - parent: 0
-    pos: -36.5,-1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2847
-  type: spawn_point_latejoin
-  components:
-  - parent: 0
-    pos: -36.5,0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2848
-  type: SpawnPointAssistant
-  components:
-  - parent: 0
-    pos: -29.5,-0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2849
-  type: SpawnPointAssistant
-  components:
-  - parent: 0
-    pos: -23.5,-2.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2850
-  type: SpawnPointAssistant
-  components:
-  - parent: 0
-    pos: -18.5,1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2851
-  type: SpawnPointChef
-  components:
-  - parent: 0
-    pos: -12.5,0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2852
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: -36.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: escape
-    type: WarpPoint
-- uid: 2853
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: -24.5,-3.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: dorms
-    type: WarpPoint
-- uid: 2854
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: -4.5,-0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: bar
-    type: WarpPoint
-- uid: 2855
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: -6.5,-19.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: sci
-    type: WarpPoint
-- uid: 2856
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 14.5,-9.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: med
-    type: WarpPoint
-- uid: 2857
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 34.5,4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: eng
-    type: WarpPoint
-- uid: 2858
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 19.5,11.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: cargo
-    type: WarpPoint
-- uid: 2859
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: -6.5,13.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: sec
-    type: WarpPoint
-- uid: 2860
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 3.5,29.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: bridge
-    type: WarpPoint
-- uid: 2861
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 9.5,19.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: hop
-    type: WarpPoint
-- uid: 2862
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 49.5,-2.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: grav
-    type: WarpPoint
-- uid: 2863
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 16.5,0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: chem
-    type: WarpPoint
-- uid: 2864
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 8.5,10.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: eva
-    type: WarpPoint
-- uid: 2865
-  type: WarpPoint
-  components:
-  - parent: 0
-    pos: 7.5,25.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-  - location: cap
-    type: WarpPoint
 ...
