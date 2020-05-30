@@ -616,7 +616,7 @@
     sprite: Objects/Drinks/ginvodkaglass.rsi
 
 - type: entity
- parent: DrinkBase
+  parent: DrinkBase
   id: DrinkGlassBrown
   name: Bilk
   description: This appears to be beer mixed with milk. Disgusting.
