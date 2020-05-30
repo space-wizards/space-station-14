@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     new PointerInputCmdHandler(HandleOpenCraftingMenu))
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUse))
-                .Register<ConstructorSystem>();
+                .Register<ConstructorSystem, InputSystem>();
         }
 
         public override void Shutdown()

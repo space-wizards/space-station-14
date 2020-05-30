@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
-                .Register<HandsSystem>();
+                .Register<HandsSystem, InputSystem>();
         }
 
         /// <inheritdoc />

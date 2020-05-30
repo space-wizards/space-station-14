@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.EntitySystems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenInventoryMenu,
                     InputCmdHandler.FromDelegate(s => HandleOpenInventoryMenu()))
-                .Register<ClientInventorySystem>();
+                .Register<ClientInventorySystem, InputSystem>();
         }
 
         public override void Shutdown()

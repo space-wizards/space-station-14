@@ -70,7 +70,7 @@ namespace Content.Client.GameObjects.EntitySystems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenContextMenu,
                     new PointerInputCmdHandler(OnOpenContextMenu))
-                .Register<VerbSystem>();
+                .Register<VerbSystem, InputSystem>();
         }
 
         public override void Shutdown()

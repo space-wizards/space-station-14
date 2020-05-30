@@ -5,6 +5,7 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.UserInterface;
@@ -44,7 +45,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine))
-                .Register<ExamineSystem>();
+                .Register<ExamineSystem, InputSystem>();
         }
 
         public override void Shutdown()

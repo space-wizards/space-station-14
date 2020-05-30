@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.EntitySystems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCharacterMenu,
                 InputCmdHandler.FromDelegate(s => HandleOpenCharacterMenu()))
-                .Register<CharacterInterfaceSystem>();
+                .Register<CharacterInterfaceSystem, InputSystem>();
         }
 
         public override void Shutdown()
