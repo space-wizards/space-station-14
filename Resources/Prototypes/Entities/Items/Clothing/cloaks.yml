@@ -2,7 +2,7 @@
   parent: Clothing
   id: CloakClothing
   abstract: true
-  name: Cloak
+  name: cloak
   description:
   components:
   - type: Sprite
@@ -11,7 +11,6 @@
     sprite: Clothing/cloak.rsi
   - type: Clothing
     Size: 9999
-    QuickEquip: false
     Slots:
     - back
     sprite: Clothing/cloak.rsi
@@ -19,7 +18,7 @@
 - type: entity
   parent: CloakClothing
   id: CapCloak
-  name: Captain's Cloak
+  name: captain's cloak
   description:
   components:
   - type: Sprite
@@ -32,7 +31,7 @@
 - type: entity
   parent: CloakClothing
   id: HosCloak
-  name: Head of Security's Cloak
+  name: HoS's cloak
   description:
   components:
   - type: Sprite
@@ -46,7 +45,7 @@
 - type: entity
   parent: CloakClothing
   id: CeCloak
-  name: Chief Engineer's Cloak
+  name: CE's cloak
   components:
   - type: Sprite
     state: cecloak
@@ -59,7 +58,7 @@
 - type: entity
   parent: CloakClothing
   id: CmoCloak
-  name: CMO's Cloak
+  name: CMO's cloak
   components:
   - type: Sprite
     state: cmocloak
@@ -71,7 +70,7 @@
 - type: entity
   parent: CloakClothing
   id: RdCloak
-  name: Research Director's Cloak
+  name: RD's cloak
   components:
   - type: Sprite
     state: rdcloak
@@ -84,7 +83,7 @@
 - type: entity
   parent: CloakClothing
   id: QmCloak
-  name: Quartermaster's Cloak
+  name: Qm's cloak
   components:
   - type: Sprite
     state: qmcloak
@@ -96,7 +95,7 @@
 - type: entity
   parent: CloakClothing
   id: HopCloak
-  name: Head of Personnel's Cloak
+  name: HoP's cloak
   components:
   - type: Sprite
     state: hopcloak

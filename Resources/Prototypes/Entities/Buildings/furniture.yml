@@ -81,7 +81,7 @@
     state: wooden_chair
 
 - type: entity
-  name: Bed
+  name: bed
   id: Bed
   components:
   - type: Sprite
