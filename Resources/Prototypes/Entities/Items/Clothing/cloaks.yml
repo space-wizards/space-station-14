@@ -32,7 +32,7 @@
 - type: entity
   parent: CloakClothing
   id: HosCloak
-  name: head of security's Cloak
+  name: security cloak
   description:
   components:
   - type: Sprite
@@ -46,7 +46,7 @@
 - type: entity
   parent: CloakClothing
   id: CeCloak
-  name: chief engineer's cloak
+  name: engineer cloak
   components:
   - type: Sprite
     state: cecloak
@@ -59,7 +59,7 @@
 - type: entity
   parent: CloakClothing
   id: CmoCloak
-  name: cmo's cloak
+  name: medical cloak
   components:
   - type: Sprite
     state: cmocloak
@@ -71,7 +71,7 @@
 - type: entity
   parent: CloakClothing
   id: RdCloak
-  name: research director's cloak
+  name: research cloak
   components:
   - type: Sprite
     state: rdcloak
@@ -84,7 +84,7 @@
 - type: entity
   parent: CloakClothing
   id: QmCloak
-  name: quartermaster's cloak
+  name: cargo cloak
   components:
   - type: Sprite
     state: qmcloak
@@ -96,7 +96,7 @@
 - type: entity
   parent: CloakClothing
   id: HopCloak
-  name: head of personnel's cloak
+  name: paperpusher cloak
   components:
   - type: Sprite
     state: hopcloak
