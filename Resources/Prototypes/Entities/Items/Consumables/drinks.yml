@@ -11,7 +11,6 @@
   - type: Pourable
     transferAmount: 5
   - type: Drink
-  - type: Sound
   - type: Sprite
     state: icon
   - type: Icon
@@ -19,6 +18,32 @@
 
 - type: entity
   parent: DrinkBase
+  id: DrinkGlassBase
+  abstract: true
+  components:
+  - type: Drink
+    isOpen: true
+
+# Transformable container - normal glass
+- type: entity
+  name: Drinking glass
+  parent: DrinkGlassBase
+  id: DrinkGlass
+  components:
+  - type: Sprite
+    sprite: Objects/Drinks/glass_clear.rsi
+  - type: Icon
+    sprite: Objects/Drinks/glass_clear.rsi
+  - type: Solution
+    fillingState: glass
+    maxVol: 50
+    caps: 16
+  - type: Pourable
+    transferAmount: 5
+  - type: TransformableContainer
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkAleglass
   name: Ale
   description: A dark alchoholic beverage made by malted barley and yeast.
@@ -35,7 +60,7 @@
     sprite: Objects/Drinks/aleglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkAntifreeze
   name: Anti-freeze
   description: Ultimate refreshment.
@@ -53,7 +78,7 @@
     sprite: Objects/Drinks/antifreeze.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkAtomicbombglass
   name: Atomic bomb glass
   description: Nuclear proliferation never tasted so good.
@@ -71,7 +96,7 @@
     sprite: Objects/Drinks/atomicbombglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkB52Glass
   name: B-52 glass
   description: Coffee, Irish Cream, and cognac. You will get bombed.
@@ -89,7 +114,7 @@
     sprite: Objects/Drinks/b52glass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBananahonkglass
   name: Bananahonk glass
   description: A drink from Clown Heaven.
@@ -100,22 +125,8 @@
   - type: Icon
     sprite: Objects/Drinks/bananahonkglass.rsi
 
-#- type: entity
-#  parent: DrinkBase
-#  id: DrinkBarflask
-#  name: Barflask
-#  description: ''
-#  components:
-#  - type: Drink#
-#    contents:
-#    - water: 1
-#  - type: Sprite
-#    sprite: Objects/Drinks/barflask.rsi
-#  - type: Icon
-#    sprite: Objects/Drinks/barflask.rsi
-
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBeepskySmashGlass
   name: Beepsky smash glass
   description: Deny drinking this and prepare for THE LAW.
@@ -127,7 +138,7 @@
     sprite: Objects/Drinks/beepskysmashglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBeer
   name: Beer  # Beer it is. Coffee. Beer? COFF-EE? BE-ER? C-O... B-E
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
@@ -144,7 +155,7 @@
     sprite: Objects/Drinks/beer.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBeerglass
   name: Beer glass
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
@@ -161,7 +172,7 @@
     sprite: Objects/Drinks/beerglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBerryjJice
   name: Berry juice
   description: A delicious blend of several different kinds of berries.
@@ -172,22 +183,8 @@
   - type: Icon
     sprite: Objects/Drinks/berryjuice.rsi
 
-#- type: entity
-#  parent: DrinkBase
-#  id: DrinkBigteacup
-#  name: Bigteacup
-#  description: ''
-#  components:
-#  - type: Drink#
-#    contents:
-#    - water: 1
-#  - type: Sprite
-#    sprite: Objects/Drinks/bigteacup.rsi
-#  - type: Icon
-#    sprite: Objects/Drinks/bigteacup.rsi
-
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBlackRussianGlass
   name: Black russian glass
   description: For the lactose-intolerant. Still as classy as a White Russian.
@@ -199,7 +196,7 @@
     sprite: Objects/Drinks/blackrussianglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBloodyMaryGlass
   name: Bloody mary glass
   description: A strange yet pleasurable mixture made of vodka, tomato and lime juice. Tastes like liquid murder
@@ -211,7 +208,7 @@
     sprite: Objects/Drinks/bloodymaryglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBooger
   name: Booger
   description: Ewww...
@@ -223,7 +220,7 @@
     sprite: Objects/Drinks/booger.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBraveBullGlass
   name: Brave bull glass
   description: It's just as effective as Dutch-Courage!
@@ -234,22 +231,8 @@
   - type: Icon
     sprite: Objects/Drinks/bravebullglass.rsi
 
-#- type: entity
-#  parent: DrinkBase
-#  id: DrinkBritMug
-#  name: Flat mug
-#  description: A mug with an unknown flag emblazoned on it. You feel like tea might be the only beverage that belongs in it.
-#  components:
-#  - type: Drink#
-#    contents:
-#    - water: 1
-#  - type: Sprite
-#    sprite: Objects/Drinks/britmug.rsi
-#  - type: Icon
-#    sprite: Objects/Drinks/britmug.rsi
-
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkBrownStar
   name: Brown star
   description: It's not what it sounds like...
@@ -261,19 +244,7 @@
     sprite: Objects/Drinks/brownstar.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkCafeLatte
-  name: Cafe latte
-  description: A nice, strong and tasty beverage while you are reading.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Drinks/cafe_latte.rsi
-  - type: Icon
-    sprite: Objects/Drinks/cafe_latte.rsi
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkCarafe
   name: Pitcher
   description: A handled glass pitcher.
@@ -291,7 +262,7 @@
       steps: 11
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkCarrotJuice
   name: Carrot juice
   description: Has a uniquely sweet flavour of concentrated carrots.
@@ -303,19 +274,7 @@
     sprite: Objects/Drinks/carrotjuice.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkChangelingSting
-  name: Changeling sting
-  description: You take a tiny sip and feel a burning sensation...
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Drinks/changelingsting.rsi
-  - type: Icon
-    sprite: Objects/Drinks/changelingsting.rsi
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkChocolateGlass
   name: Hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
@@ -327,7 +286,20 @@
     sprite: Objects/Drinks/chocolateglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
+  id: DrinkCafeLatte
+  name: Cafe latte
+  description: A nice, strong and tasty beverage while you are reading.
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Drinks/cafe_latte.rsi
+  - type: Icon
+    sprite: Objects/Drinks/cafe_latte.rsi
+
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkCoffee
   name: Coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
@@ -344,7 +316,7 @@
     sprite: Objects/Drinks/coffee.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkCognacGlass
   name: Cognac glass
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication.
@@ -361,7 +333,7 @@
     sprite: Objects/Drinks/cognacglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkColaBottle
   name: Space cola bottle
   description: Cola. in space
@@ -378,7 +350,7 @@
     sprite: Objects/Drinks/colabottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkCream
   name: Cream
   description: Dairy product composed of the higher-fat layer skimmed from the top of milk before homogenization.
@@ -395,7 +367,7 @@
     sprite: Objects/Drinks/cream.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkCubaLibreGlass
   name: Cuba libre glass
   description: Rum, mixed with cola. Viva la revolucion.
@@ -412,7 +384,7 @@
     sprite: Objects/Drinks/cubalibreglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkCuracaoGlass
   name: Blue curacao
   description: Exotically blue, fruity drink, distilled from oranges.
@@ -424,7 +396,7 @@
     sprite: Objects/Drinks/curacaoglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkDemonsBlood
   name: Demons blood
   description: AHHHH!!!!  # AAHHHHHH
@@ -436,7 +408,7 @@
     sprite: Objects/Drinks/demonsblood.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkDetFlask
   name: Inspector's flask
   description: A metal flask with a leather band and golden badge belonging to the inspector.
@@ -448,7 +420,7 @@
     sprite: Objects/Drinks/detflask.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkDevilsKiss
   name: Devil's kiss
   description: Creepy time!
@@ -460,7 +432,7 @@
     sprite: Objects/Drinks/devilskiss.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkDoctorsDelightGlass
   name: The Doctor's delight
   description: A gulp a day keeps the MediBot away. That's probably for the best.
@@ -472,7 +444,7 @@
     sprite: Objects/Drinks/doctorsdelightglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkDriestMartiniGlass
   name: Driest martini glass
   description: Only for the experienced. You think you see sand floating in the glass.
@@ -484,19 +456,7 @@
     sprite: Objects/Drinks/driestmartiniglass.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkDrGibb
-  name: Dr. Gibb
-  description: A delicious blend of 42 different flavours
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Drinks/dr_gibb.rsi
-  - type: Icon
-    sprite: Objects/Drinks/dr_gibb.rsi
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkDrGibbGlass
   name: Dr. Gibb Glass
   description: A delicious blend of 42 different flavours
@@ -508,7 +468,7 @@
     sprite: Objects/Drinks/dr_gibb_glass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkEmeraldGlass
   name: Melon liquor
   description: A relatively sweet and fruity 46 proof liquor.
@@ -520,19 +480,7 @@
     sprite: Objects/Drinks/emeraldglass.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkEnergyDrink
-  name: Energy drink
-  description: ''
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Drinks/energy_drink.rsi
-  - type: Icon
-    sprite: Objects/Drinks/energy_drink.rsi
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkErikaSurprise
   name: Erika surprise
   description: The surprise is, it's green!
@@ -544,7 +492,7 @@
     sprite: Objects/Drinks/erikasurprise.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkFlask
   name: Captain's flask
   description: A metal flask belonging to the captain
@@ -556,7 +504,7 @@
     sprite: Objects/Drinks/flask.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkFlaskOld
   name: Flask
   description: ''
@@ -568,7 +516,7 @@
     sprite: Objects/Drinks/flask_old.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGargleBlasterGlass
   name: Pan-galactic gargle blaster
   description: Whoah, this stuff looks volatile!
@@ -580,7 +528,7 @@
     sprite: Objects/Drinks/gargleblasterglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGinFizzGlass
   name: Gin fizz glass
   description: Refreshingly lemony, deliciously dry.
@@ -592,7 +540,7 @@
     sprite: Objects/Drinks/ginfizzglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGinTonicglass
   name: Gin and tonic
   description: An all time classic, mild cocktail.
@@ -604,7 +552,7 @@
     sprite: Objects/Drinks/gintonicglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGinVodkaGlass
   name: Goldschlager
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
@@ -616,7 +564,7 @@
     sprite: Objects/Drinks/ginvodkaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassBrown
   name: Bilk
   description: This appears to be beer mixed with milk. Disgusting.
@@ -628,7 +576,7 @@
     sprite: Objects/Drinks/glass_brown.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassBrown2
   name: Hooch
   description: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
@@ -640,7 +588,7 @@
     sprite: Objects/Drinks/glass_brown2.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassClear
   name: Moonshine
   description: You've really hit rock bottom now... your liver packed its bags and left last night.
@@ -652,7 +600,7 @@
     sprite: Objects/Drinks/glass_clear.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassGreen
   name: Lime juice
   description: The sweet-sour juice of limes.
@@ -664,7 +612,7 @@
     sprite: Objects/Drinks/glass_green.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassOrange
   name: Orange juice
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
@@ -676,7 +624,7 @@
     sprite: Objects/Drinks/glass_orange.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassRed
   name: Tomato juice
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
@@ -688,7 +636,7 @@
     sprite: Objects/Drinks/glass_red.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassWhite
   name: Milk
   description: An opaque white liquid produced by the mammary glands of mammals.
@@ -704,9 +652,8 @@
   - type: Icon
     sprite: Objects/Drinks/glass_white.rsi
 
-# Made this up
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGlassYellow
   name: Lemon juice
   description: ''
@@ -718,7 +665,7 @@
     sprite: Objects/Drinks/glass_yellow.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGoldschlagerGlass
   name: Goldschlager glass
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
@@ -730,7 +677,7 @@
     sprite: Objects/Drinks/goldschlagerglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGrapeJuice
   name: Grape juice
   description: The juice is often sold in stores or fermented and made into wine, brandy, or vinegar.
@@ -742,36 +689,20 @@
     sprite: Objects/Drinks/grapejuice.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkGrapeSoda
-  name: Grape soda
-  description: Sweetened drink with a grape flavor and a deep purple color.
-  components:
-  - type: Drink
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.Cola
-        Quantity: 20
-  - type: Sprite
-    sprite: Objects/Drinks/grapesoda.rsi
-  - type: Icon
-    sprite: Objects/Drinks/grapesoda.rsi
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGrenadinebottle
   name: Briar rose grenadine syrup bottle
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
   components:
   - type: Drink
+    isOpen: true
   - type: Sprite
     sprite: Objects/Drinks/grenadinebottle.rsi
   - type: Icon
     sprite: Objects/Drinks/grenadinebottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGrenadineGlass
   name: Grenadine syrup glass
   description: Made in the modern day with proper pomegranate substitute. Who uses real fruit, anyways?
@@ -783,7 +714,7 @@
     sprite: Objects/Drinks/grenadineglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGrogGlass
   name: Grog glass
   description: Watered-down rum, pirate approved!
@@ -795,7 +726,7 @@
     sprite: Objects/Drinks/grogglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkGrapeSodaGlass
   name: Grape soda glass
   description: Sweetened drink with a grape flavor and a deep purple color.
@@ -807,7 +738,7 @@
     sprite: Objects/Drinks/gsodaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkHell
   name: Hell ramen
   description: The noodles are boiled, the flavors are artificial, just like being back in school.
@@ -819,7 +750,7 @@
     sprite: Objects/Drinks/hell.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkHippiesdelightglass
   name: Hippies' delight glass
   description: You just don't get it maaaan.
@@ -831,36 +762,7 @@
     sprite: Objects/Drinks/hippiesdelightglass.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkHotCoco
-  name: Hot chocolate
-  description: A heated drink consisting melted chocolate and heated milk.
-  components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Drinks/hot_coco.rsi
-  - type: Icon
-    sprite: Objects/Drinks/hot_coco.rsi
-
-- type: entity
-  parent: DrinkBase
-  id: DrinkHotCoffee
-  name: Coffee
-  description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
-  components:
-  - type: Solution
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: chem.Coffee
-        Quantity: 20
-  - type: Sprite
-    sprite: Objects/Drinks/hot_coffee.rsi
-  - type: Icon
-    sprite: Objects/Drinks/hot_coffee.rsi
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIcedCoffeeGlass
   name: Iced coffee glass
   description: Coffee and ice, refreshing and cool.
@@ -872,7 +774,7 @@
     sprite: Objects/Drinks/icedcoffeeglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIcedteaglass
   name: Long island iced tea
   description: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
@@ -884,7 +786,7 @@
     sprite: Objects/Drinks/icedteaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIcedBeerglass
   name: Iced beer glass
   description: A beer which is so cold the air around it freezes.
@@ -896,7 +798,7 @@
     sprite: Objects/Drinks/iced_beerglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIceGlass
   name: Ice glass
   description: Water frozen into a solid state.
@@ -913,7 +815,7 @@
     sprite: Objects/Drinks/iceglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIrishcarbomb
   name: Irish car bomb
   description: Mmm, tastes like chocolate cake...
@@ -930,7 +832,7 @@
     sprite: Objects/Drinks/irishcarbomb.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIrishCoffeeGlass
   name: Irish coffee glass
   description: Coffee, and alcohol. More fun than a Mimosa to drink in the morning.
@@ -947,7 +849,7 @@
     sprite: Objects/Drinks/irishcoffeeglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkIrishCreamGlass
   name: Irish cream glass
   description: Whiskey-imbued cream, what else would you expect from the Irish.
@@ -964,7 +866,7 @@
     sprite: Objects/Drinks/irishcreamglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkJar
   name: Jar
   description: The hipster's cup
@@ -976,7 +878,7 @@
     sprite: Objects/Drinks/jar.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkJarMetroid
   name: Jar metroid
   description: ''
@@ -988,7 +890,7 @@
     sprite: Objects/Drinks/jar_metroid.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkJarWhat
   name: Jar of something
   description: You can't really tell what this is.
@@ -1000,7 +902,7 @@
     sprite: Objects/Drinks/jar_what.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkKahluaGlass
   name: Kahlua glass
   description: A widely known, Mexican coffee-flavoured liqueur.
@@ -1017,7 +919,7 @@
     sprite: Objects/Drinks/kahluaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkKiraSpecial
   name: Kira special
   description: Long live the guy who everyone had mistaken for a girl. Baka!
@@ -1029,7 +931,7 @@
     sprite: Objects/Drinks/kiraspecial.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLemonade
   name: Lemonade
   description: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
@@ -1041,7 +943,7 @@
     sprite: Objects/Drinks/lemonade.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLemonadeGlass
   name: Lemonade glass
   description: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
@@ -1053,7 +955,7 @@
     sprite: Objects/Drinks/lemonadeglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLemonGlass
   name: Lemon glass
   description: ''
@@ -1065,7 +967,7 @@
     sprite: Objects/Drinks/lemonglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLemonJuice
   name: Lemon juice
   description: Used to make lemonade, soft drinks, and cocktails.
@@ -1077,7 +979,7 @@
     sprite: Objects/Drinks/lemonjuice.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLemonLime
   name: Lemon lime
   description: A tangy substance made of lime and lemon.
@@ -1089,7 +991,7 @@
     sprite: Objects/Drinks/lemonlime.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLimeJuice
   name: Lime juice
   description: The sweet-sour juice of limes.
@@ -1101,7 +1003,7 @@
     sprite: Objects/Drinks/limejuice.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLithiumFlask
   name: Lithium flask
   description: A flask with a Lithium Atom symbol on it.
@@ -1113,7 +1015,7 @@
     sprite: Objects/Drinks/lithiumflask.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkLongIslandIcedTeaGlass
   name: Long island iced tea glass
   description: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
@@ -1125,7 +1027,7 @@
     sprite: Objects/Drinks/longislandicedteaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkManhattanGlass
   name: Manhattan glass
   description: The Detective's undercover drink of choice. He never could stomach gin...
@@ -1137,7 +1039,7 @@
     sprite: Objects/Drinks/manhattanglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkManlyDorfGlass
   name: The manly dorf glass
   description: Beer and Ale, brought together in a delicious mix. Intended for true men only.
@@ -1154,7 +1056,7 @@
     sprite: Objects/Drinks/manlydorfglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkMargaritaGlass
   name: Margarita glass
   description: On the rocks with salt on the rim. Arriba~!
@@ -1166,7 +1068,7 @@
     sprite: Objects/Drinks/margaritaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkMartiniGlass
   name: Vodka martini glass
   description: Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
@@ -1178,7 +1080,7 @@
     sprite: Objects/Drinks/martiniglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkMeadGlass
   name: Mead glass
   description: A Viking's drink, though a cheap one.
@@ -1190,7 +1092,7 @@
     sprite: Objects/Drinks/meadglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkMilkJug
   name: Milk jug
   description: An opaque white liquid produced by the mammary glands of mammals.
@@ -1207,7 +1109,7 @@
     sprite: Objects/Drinks/milk.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkMilkshake
   name: Milkshake
   description: Sweet, cold beverage that is usually made from milk
@@ -1219,7 +1121,7 @@
     sprite: Objects/Drinks/milkshake.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkMojito
   name: Mojito
   description: ''
@@ -1231,7 +1133,7 @@
     sprite: Objects/Drinks/mojito.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkNeurotoxinGlass
   name: Neurotoxin glass
   description: A strong neurotoxin that puts the subject into a death-like state.
@@ -1243,7 +1145,7 @@
     sprite: Objects/Drinks/neurotoxinglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkNothing
   name: Nothing
   description: Absolutely nothing.
@@ -1255,7 +1157,7 @@
     sprite: Objects/Drinks/nothing.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkNtcahors
   name: NeoTheology cahors whine
   description: Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
@@ -1267,7 +1169,7 @@
     sprite: Objects/Drinks/ntcahors.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkNukaColaGlass
   name: Nuka Cola glass
   description: Cola, cola never changes.
@@ -1279,7 +1181,7 @@
     sprite: Objects/Drinks/nuka_colaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkOrangeJuice
   name: Orange juice
   description: Liquid extract of the orange tree fruit, produced by squeezing or reaming oranges.
@@ -1291,7 +1193,7 @@
     sprite: Objects/Drinks/orangejuice.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkPatronGlass
   name: Patron glass
   description: Tequila with silver in it, a favorite of alcoholic women in the club scene.
@@ -1303,7 +1205,7 @@
     sprite: Objects/Drinks/patronglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkPoisonBerryJuice
   name: Poison berry juice
   description: A tasty juice blended from various kinds of very deadly and toxic berries.
@@ -1315,7 +1217,7 @@
     sprite: Objects/Drinks/poisonberryjuice.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkProjectManhattanGlass
   name: Manhattan project glass
   description: A scientist's drink of choice, for pondering ways to blow up the station.
@@ -1327,7 +1229,7 @@
     sprite: Objects/Drinks/proj_manhattanglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkPoisonWineGlass
   name: Poison wine glass
   description: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
@@ -1339,7 +1241,7 @@
     sprite: Objects/Drinks/pwineglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRag
   name: Rag
   description: ''
@@ -1351,7 +1253,7 @@
     sprite: Objects/Drinks/rag.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRagLit
   name: Rag lit
   description: ''
@@ -1363,7 +1265,7 @@
     sprite: Objects/Drinks/rag_lit.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRagSmall
   name: Rag small
   description: ''
@@ -1375,7 +1277,7 @@
     sprite: Objects/Drinks/rag_small.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRagSmallLit
   name: Rag small lit
   description: ''
@@ -1387,7 +1289,7 @@
     sprite: Objects/Drinks/rag_small_lit.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRamen
   name: Cup ramen
   description: Just add 10ml water, self heats! A taste that reminds you of your school years.
@@ -1399,7 +1301,7 @@
     sprite: Objects/Drinks/ramen.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: Red mead glass
   description: The true Viking's drink! Even though it has a strange red color.
@@ -1411,7 +1313,7 @@
     sprite: Objects/Drinks/red_meadglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRewriter
   name: Rewriter
   description: The secret of the sanctuary of the Libarian...
@@ -1423,7 +1325,7 @@
     sprite: Objects/Drinks/rewriter.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkRumGlass
   name: Deadrum glass
   description: Distilled alcoholic drink made from saltwater.
@@ -1435,7 +1337,7 @@
     sprite: Objects/Drinks/rumglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSbitenGlass
   name: Sbiten glass
   description: A spicy Vodka! Might be a little hot for the little guys!
@@ -1447,7 +1349,7 @@
     sprite: Objects/Drinks/sbitenglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkScrewdriverGlass
   name: Screwdriver glass
   description: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
@@ -1459,7 +1361,7 @@
     sprite: Objects/Drinks/screwdriverglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSuiDreamGlass
   name: Sui dream glass
   description: 'Comprised of: White soda, blue curacao, melon liquor.'
@@ -1471,7 +1373,7 @@
     sprite: Objects/Drinks/sdreamglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShakeBlue
   name: Blue milkshake
   description: ''
@@ -1484,7 +1386,7 @@
 
 # TODO: MOVE
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShakeEmpty
   name: ShakeEmpty
   description: ''
@@ -1496,7 +1398,7 @@
     sprite: Objects/Drinks/shake-empty.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShakeMeat
   name: Meat shake
   description: ''
@@ -1508,7 +1410,7 @@
     sprite: Objects/Drinks/shake-meat.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShakeRobo
   name: Robo shake
   description: ''
@@ -1520,7 +1422,7 @@
     sprite: Objects/Drinks/shake-robo.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShakeWhite
   name: White shake
   description: ''
@@ -1533,7 +1435,7 @@
 
 # TODO: Move to containers
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShaker
   name: Shaker
   description: ''
@@ -1545,7 +1447,7 @@
     sprite: Objects/Drinks/shaker.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShinyFlask
   name: Shiny flask
   description: A shiny metal flask. It appears to have a Greek symbol inscribed on it.
@@ -1557,7 +1459,7 @@
     sprite: Objects/Drinks/shinyflask.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkShotGlass
   name: Shot glass
   description: ''
@@ -1569,7 +1471,7 @@
     sprite: Objects/Drinks/shotglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSilencerGlass
   name: Silencer glass
   description: A drink from Mime Heaven.
@@ -1581,7 +1483,7 @@
     sprite: Objects/Drinks/silencerglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSingulo
   name: Singulo
   description: A blue-space beverage!
@@ -1593,7 +1495,7 @@
     sprite: Objects/Drinks/singulo.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSnowwhite
   name: Snow White
   description: A cold refreshment
@@ -1605,7 +1507,7 @@
     sprite: Objects/Drinks/snowwhite.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSodaWater
   name: Soda water
   description: Water containing dissolved carbon dioxide gas.
@@ -1617,7 +1519,7 @@
     sprite: Objects/Drinks/sodawater.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSoyMilk
   name: Soy milk
   description: An opaque white liquid made from soybeans.
@@ -1629,7 +1531,7 @@
     sprite: Objects/Drinks/soymilk.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSoyLatte
   name: Soy latte
   description: A coffee drink made with espresso and steamed soy milk.
@@ -1641,7 +1543,7 @@
     sprite: Objects/Drinks/soy_latte.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSpaceUpBottle
   name: Space-up bottle
   description: Tastes like a hull breach in your mouth.
@@ -1653,7 +1555,7 @@
     sprite: Objects/Drinks/space-up_bottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSpace-upGlass
   name: Space-up Glass
   description: Tastes like a hull breach in your mouth.
@@ -1665,7 +1567,7 @@
     sprite: Objects/Drinks/space-up_glass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSpaceMountainWindBottle
   name: Space Mountain Wind Bottle
   description: Blows right through you like a space wind.
@@ -1677,7 +1579,7 @@
     sprite: Objects/Drinks/space_mountain_wind_bottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSpaceMountainWindGlass
   name: Space Mountain Wind Glass
   description: Blows right through you like a space wind.
@@ -1689,7 +1591,7 @@
     sprite: Objects/Drinks/space_mountain_wind_glass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkSyndicatebomb
   name: Syndicate bomb
   description: Tastes like terrorism!
@@ -1706,30 +1608,7 @@
     sprite: Objects/Drinks/syndicatebomb.rsi
 
 - type: entity
-  parent: DrinkBase
-  id: DrinkTeacup
-  name: Teacup
-  description: A plain white porcelain teacup.
-  components:
-  - type: Solution
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: chem.Tea
-        Quantity: 20
-  - type: Sprite
-    sprite: Objects/Drinks/teacup.rsi
-    state: icon-1
-  - type: Icon
-    sprite: Objects/Drinks/teacup.rsi
-    state: icon-1
-  - type: Appearance
-    visuals:
-    - type: DrinkFoodVisualizer2D
-      steps: 2
-
-- type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkTeaGlass
   name: Tea glass
   description: Tasty black tea. Contains caffeine.
@@ -1746,7 +1625,7 @@
     sprite: Objects/Drinks/teaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkTeapot
   name: Teapot  # Short and stout
   description: An elegant teapot. It simply oozes class.
@@ -1763,7 +1642,7 @@
     sprite: Objects/Drinks/teapot.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkTequilaglass
   name: Tequila glass
   description: A strong and mildly flavoured, mexican produced spirit.
@@ -1775,7 +1654,7 @@
     sprite: Objects/Drinks/tequillaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkTequilaSunriseGlass
   name: Tequila sunrise glass
   description: Tequila and orange juice. Much like a Screwdriver, only Mexican~
@@ -1787,7 +1666,7 @@
     sprite: Objects/Drinks/tequillasunriseglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkThirteenLokoGlass
   name: Thirteen Loko Glass
   description: A potent mixture of caffeine and alcohol.
@@ -1799,7 +1678,7 @@
     sprite: Objects/Drinks/thirteen_loko_glass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkThreeMileIslandGlass
   name: Three mile island glass
   description: Made for a woman, strong enough for a man.
@@ -1811,7 +1690,7 @@
     sprite: Objects/Drinks/threemileislandglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkTomatoJuice
   name: Tomato juice
   description: Juice made from tomatoes, usually used as a beverage, either plain or in cocktails
@@ -1823,7 +1702,7 @@
     sprite: Objects/Drinks/tomatojuice.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkTonicWater
   name: Tonic water
   description: A carbonated soft drink in which quinine is dissolved.
@@ -1835,7 +1714,7 @@
     sprite: Objects/Drinks/tonic.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkToxinsSpecialGlass
   name: Toxins special glass
   description: This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
@@ -1847,7 +1726,7 @@
     sprite: Objects/Drinks/toxinsspecialglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkVacuumFlask
   name: Vacuum flask
   description: Keeping your drinks at the perfect temperature since 1892.
@@ -1859,7 +1738,7 @@
     sprite: Objects/Drinks/vacuumflask.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkVermouthglass
   name: Vermouth glass
   description: Aromatized, fortified white wine flavored with various botanicals.
@@ -1871,7 +1750,7 @@
     sprite: Objects/Drinks/vermouthglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkVodkaTonicGlass
   name: Vodka tonic glass
   description: For when a gin and tonic isn't russian enough.
@@ -1883,7 +1762,7 @@
     sprite: Objects/Drinks/vodkatonicglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWaterJug
   name: Water jug
   description: Stay hydrated
@@ -1895,7 +1774,7 @@
     sprite: Objects/Drinks/water.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWaterBottle
   name: Water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
@@ -1907,7 +1786,7 @@
     sprite: Objects/Drinks/waterbottle.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWatermelonJuice
   name: Watermelon juice
   description: Delicious juice made from watermelon.
@@ -1919,7 +1798,7 @@
     sprite: Objects/Drinks/watermelon.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWaterCup
   name: Water Cup
   description: A paper water cup.
@@ -1937,7 +1816,7 @@
       steps: 2
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWhiskeyColaGlass
   name: Whiskey cola glass
   description: Whiskey, mixed with cola. Surprisingly refreshing.
@@ -1954,7 +1833,7 @@
     sprite: Objects/Drinks/whiskeycolaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWhiskeyGlass
   name: Special blend whiskey glass
   description: Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything.
@@ -1971,7 +1850,7 @@
     sprite: Objects/Drinks/whiskeyglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWhiskeySodaGlass
   name: Whiskey soda glass
   description: For the more refined griffon.
@@ -1983,7 +1862,7 @@
     sprite: Objects/Drinks/whiskeysodaglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWhiskeySodaGlass2
   name: Whiskey soda glass
   description: For the more refined griffon.
@@ -1995,7 +1874,7 @@
     sprite: Objects/Drinks/whiskeysodaglass2.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWhiteRussianGlass
   name: White Russian glass
   description: That's just, like, your opinion, man...
@@ -2007,7 +1886,7 @@
     sprite: Objects/Drinks/whiterussianglass.rsi
 
 - type: entity
-  parent: DrinkBase
+  parent: DrinkGlassBase
   id: DrinkWineGlass
   name: Wine glass
   description: An premium alchoholic beverage made from distilled grape juice.
