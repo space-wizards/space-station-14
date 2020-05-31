@@ -1586,6 +1586,19 @@
 
 - type: entity
   parent: OuterclothingBase
+  id: OuterclothingSkub
+  name: Skub Suit
+  description: 'Skub is crudely written on the outside of this cylindrical suit.'
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/skubbody.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/skubbody.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/skubbody.rsi
+
+- type: entity
+  parent: OuterclothingBase
   id: OuterclothingSovietskaf
   name: Soviet skaf
   description: ''
