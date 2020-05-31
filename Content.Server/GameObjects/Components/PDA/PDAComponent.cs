@@ -6,17 +6,16 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.PDA
@@ -62,7 +61,8 @@ namespace Content.Server.GameObjects.Components.PDA
             _interface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
             var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.GridPosition);
             var idCardComponent = idCard.GetComponent<IdCardComponent>();
-            InsertIdCard(idCardComponent);
+            _idSlot.Insert(idCardComponent.Owner);
+            ContainedID = idCardComponent;
             UpdatePDAAppearance();
         }
 
@@ -89,12 +89,13 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-
                     if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
                     {
-                        //TODO: Send a message that tells the buyer they are too poor or something.
+                        SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                        break;
                     }
 
+                    SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
                     break;
                 }
             }
@@ -177,12 +178,14 @@ namespace Content.Server.GameObjects.Components.PDA
 
             OwnerMob = mob;
             UpdatePDAUserInterface();
+
         }
 
         private void InsertIdCard(IdCardComponent card)
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Guns/MagIn/batrifle_magin.ogg", Owner);
         }
 
         /// <summary>
@@ -206,6 +209,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _lightOn = !_lightOn;
             _pdaLight.Enabled = _lightOn;
+            EntitySystem.Get<AudioSystem>().Play("/Audio/items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -223,6 +227,8 @@ namespace Content.Server.GameObjects.Components.PDA
             var cardItemComponent = cardEntity.GetComponent<ItemComponent>();
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
+
+            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", Owner);
             UpdatePDAUserInterface();
         }
 

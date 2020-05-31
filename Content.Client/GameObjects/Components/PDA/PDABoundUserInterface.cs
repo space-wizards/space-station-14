@@ -1,8 +1,10 @@
 using System;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -19,13 +21,14 @@ namespace Content.Client.GameObjects.Components.PDA
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
         private PDAMenu _menu;
-        private ClientUserInterfaceComponent Owner;
+        private PDAMenuPopup failPopup;
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            Owner = owner;
+
         }
 
         protected override void Open()
@@ -56,6 +59,21 @@ namespace Content.Client.GameObjects.Components.PDA
 
             _menu.OnListingButtonPressed += (args, listing) =>
             {
+                if(_menu.CurrentLoggedInAccount.DataBalance < listing.Price)
+                {
+                    failPopup = new PDAMenuPopup(Loc.GetString("Insufficient funds!"));
+                    _userInterfaceManager.ModalRoot.AddChild(failPopup);
+
+                    failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150,
+                    _menu.Position.Y + 60,
+                    156,
+                    24));
+                    _menu.OnClose += () =>
+                    {
+                        failPopup.Dispose();
+                    };
+                }
+
                 SendMessage(new PDAUplinkBuyListingMessage(listing));
             };
 
@@ -66,7 +84,6 @@ namespace Content.Client.GameObjects.Components.PDA
 
             };
         }
-
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -108,16 +125,36 @@ namespace Content.Client.GameObjects.Components.PDA
                             _menu.AddListingGui(item);
                         }
                     }
+                    _menu.BalanceInfo.Text = Loc.GetString("TC Balance: {0}", _menu.CurrentLoggedInAccount?.DataBalance);
+                    _menu.MasterTabContainer.SetTabVisible(1, msg.Account != null);
                     break;
+
                 }
+
+
 
             }
         }
+
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             _menu?.Dispose();
+        }
+
+        public sealed class PDAMenuPopup : Popup
+        {
+            public PDAMenuPopup(string text)
+            {
+                var label = new RichTextLabel();
+                label.SetMessage(text);
+                AddChild(new PanelContainer
+                {
+                StyleClasses = {ExamineSystem.StyleClassEntityTooltip},
+                Children = {label}
+                });
+            }
         }
 
         private class PDAMenu : SS14Window
@@ -144,6 +181,7 @@ namespace Content.Client.GameObjects.Components.PDA
             public VBoxContainer UplinkListingsContainer;
 
             public VBoxContainer CategoryListContainer;
+            public Label BalanceInfo;
             public event Action<BaseButton.ButtonEventArgs, UplinkListingData> OnListingButtonPressed;
             public event Action<BaseButton.ButtonEventArgs, UplinkCategory> OnCategoryButtonPressed;
 
@@ -241,10 +279,11 @@ namespace Content.Client.GameObjects.Components.PDA
                 CategoryListContainer = new VBoxContainer
                 {
                 };
-                var uplinkStoreHeader = new Label
+
+                BalanceInfo = new Label
                 {
-                    Align = Label.AlignMode.Center,
-                    Text = Loc.GetString("Uplink Listings"),
+                    Align = Label.AlignMode.Left,
+
                 };
 
                 //Red background container.
@@ -300,7 +339,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
                     Children =
                     {
-                        uplinkStoreHeader,
+                        BalanceInfo,
                         masterPanelContainer
                     }
                 };
@@ -409,7 +448,6 @@ namespace Content.Client.GameObjects.Components.PDA
                     => OnListingButtonPressed?.Invoke(args,pdaUplinkListingButton.ButtonListing);
                 UplinkListingsContainer.AddChild(pdaUplinkListingButton);
             }
-
 
             public void ClearListings()
             {

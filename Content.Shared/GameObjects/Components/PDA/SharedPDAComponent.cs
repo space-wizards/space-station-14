@@ -81,6 +81,16 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
+    public sealed class PDAUplinkBuySuccessMessage : ComponentMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDAUplinkInsufficientFundsMessage : ComponentMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
     public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
     {
         public PDARequestUpdateInterfaceMessage()
