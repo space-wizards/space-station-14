@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.GameObjects.Components.Sound
 {
     [RegisterComponent]
-    public class SoundComponent : SharedSoundComponent
+    public class LoopingSoundComponent : SharedLoopingSoundComponent
     {
         private readonly Dictionary<ScheduledSound, IPlayingAudioStream> _audioStreams = new Dictionary<ScheduledSound, IPlayingAudioStream>();
         private AudioSystem _audioSystem;

@@ -12,13 +12,13 @@ namespace Content.Client.GameObjects.Components.Kitchen
 {
     public sealed class MicrowaveVisualizer : AppearanceVisualizer
     {
-        private SoundComponent _soundComponent;
+        private LoopingSoundComponent _loopingSoundComponent;
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            _soundComponent ??= component.Owner.GetComponent<SoundComponent>();
+            _loopingSoundComponent ??= component.Owner.GetComponent<LoopingSoundComponent>();
             if (!component.TryGetData(PowerDeviceVisuals.VisualState, out MicrowaveVisualState state))
             {
                 state = MicrowaveVisualState.Idle;
@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Kitchen
                 case MicrowaveVisualState.Idle:
                     sprite.LayerSetState(MicrowaveVisualizerLayers.Base, "mw");
                     sprite.LayerSetState(MicrowaveVisualizerLayers.BaseUnlit, "mw_unlit");
-                    _soundComponent.StopAllSounds();
+                    _loopingSoundComponent.StopAllSounds();
                     break;
 
                 case MicrowaveVisualState.Cooking:
@@ -39,8 +39,8 @@ namespace Content.Client.GameObjects.Components.Kitchen
                     var schedSound = new ScheduledSound();
                     schedSound.Filename = "/Audio/machines/microwave_loop.ogg";
                     schedSound.AudioParams = audioParams;
-                    _soundComponent.StopAllSounds();
-                    _soundComponent.AddScheduledSound(schedSound);
+                    _loopingSoundComponent.StopAllSounds();
+                    _loopingSoundComponent.AddScheduledSound(schedSound);
                     break;
 
                 default:

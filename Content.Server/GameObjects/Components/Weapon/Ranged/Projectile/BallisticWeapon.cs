@@ -5,6 +5,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
@@ -13,6 +16,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     /// </summary>
     public abstract class BallisticWeaponComponent : BaseProjectileWeaponComponent
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
+
         private Chamber[] _chambers;
 
         /// <summary>
@@ -132,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        private void PlayEmptySound() => Owner.GetComponent<SoundComponent>().Play(_soundGunEmpty);
+        private void PlayEmptySound() => EntitySystem.Get<AudioSystem>().Play(_soundGunEmpty, Owner);
 
         protected sealed class Chamber
         {

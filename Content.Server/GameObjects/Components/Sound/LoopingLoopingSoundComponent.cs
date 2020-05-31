@@ -6,7 +6,7 @@ using Robust.Shared.Interfaces.Network;
 namespace Content.Server.GameObjects.Components.Sound
 {
     [RegisterComponent]
-    public class SoundComponent : SharedSoundComponent
+    public class LoopingLoopingSoundComponent : SharedLoopingSoundComponent
     {
         /// <summary>
         /// Stops all sounds.

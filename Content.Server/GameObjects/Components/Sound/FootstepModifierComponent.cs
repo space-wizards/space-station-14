@@ -1,6 +1,9 @@
 ﻿using Content.Shared.Audio;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -15,10 +18,11 @@ namespace Content.Server.GameObjects.Components.Sound
     [RegisterComponent]
     public class FootstepModifierComponent : Component
     {
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _footstepRandom;
-        #pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
         /// <inheritdoc />
         ///
 
@@ -38,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Sound
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
                 var file = _footstepRandom.Pick(soundCollection.PickFiles);
-                Owner.GetComponent<SoundComponent>().Play(file, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().Play(file, Owner, AudioParams.Default.WithVolume(-2f));
             }
         }
     }

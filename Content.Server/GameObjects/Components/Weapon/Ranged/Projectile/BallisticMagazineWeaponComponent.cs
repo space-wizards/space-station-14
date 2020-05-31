@@ -8,9 +8,11 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -28,6 +30,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     [RegisterComponent]
     public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IInteractUsing, IMapInit
     {
+
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
         private const float BulletOffset = 0.2f;
 
         public override string Name => "BallisticMagazineWeapon";
@@ -105,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
             if (_magInSound != null && playSound)
             {
-                Owner.GetComponent<SoundComponent>().Play(_magInSound);
+                EntitySystem.Get<AudioSystem>().Play(_magInSound, Owner);
             }
             magazinetype.OnAmmoCountChanged += MagazineAmmoCountChanged;
             if (GetChambered(0) == null)
@@ -134,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
                 if (_magOutSound != null && playSound)
                 {
-                    Owner.GetComponent<SoundComponent>().Play(_magOutSound, AudioParams.Default.WithVolume(20));
+                    EntitySystem.Get<AudioSystem>().Play(_magOutSound, Owner, AudioParams.Default.WithVolume(20));
                 }
                 UpdateAppearance();
                 Dirty();
@@ -160,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(RandomBulletDirs).ToAngle();
             var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
-            Owner.GetComponent<SoundComponent>().Play(effect, AudioParams.Default.WithVolume(-3));
+            EntitySystem.Get<AudioSystem>().Play(effect, Owner, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
             {
@@ -191,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             EjectMagazine();
             if (_autoEjectSound != null)
             {
-                Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, AudioParams.Default.WithVolume(-5));
+                EntitySystem.Get<AudioSystem>().Play(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
             }
             Dirty();
         }
