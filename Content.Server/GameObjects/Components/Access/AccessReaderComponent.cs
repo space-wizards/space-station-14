@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
@@ -41,6 +41,12 @@ namespace Content.Server.GameObjects.Components.Access
                     return true;
                 }
             }
+
+            if (_necessaryTags.Count == 0) // If the list doesn't exist, or exists and only has [""], then deny access. Otherwise door would permitt access to all.
+            {
+                return false;
+            }
+
             foreach (var necessary in _necessaryTags)
             {
                 if (!accessTags.Contains(necessary))
