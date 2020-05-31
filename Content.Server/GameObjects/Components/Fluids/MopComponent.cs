@@ -23,7 +23,6 @@ namespace Content.Server.GameObjects.Components.Fluids
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override string Name => "Mop";

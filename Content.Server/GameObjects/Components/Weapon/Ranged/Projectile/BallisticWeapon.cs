@@ -16,10 +16,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     /// </summary>
     public abstract class BallisticWeaponComponent : BaseProjectileWeaponComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
-
         private Chamber[] _chambers;
 
         /// <summary>

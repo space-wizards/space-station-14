@@ -16,9 +16,6 @@ namespace Content.Server.GameObjects.Components.Power
     [ComponentReference(typeof(IActivate))]
     public sealed class ApcComponent : SharedApcComponent, IActivate
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
         PowerStorageComponent Storage;
         AppearanceComponent Appearance;
         private PowerProviderComponent _provider;

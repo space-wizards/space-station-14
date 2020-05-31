@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Sound
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _footstepRandom;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
         /// <inheritdoc />
         ///

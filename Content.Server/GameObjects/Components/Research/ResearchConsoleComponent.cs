@@ -25,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Research
     {
 
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649

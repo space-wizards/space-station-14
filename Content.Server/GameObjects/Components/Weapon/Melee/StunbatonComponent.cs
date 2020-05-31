@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
 #pragma warning disable 649
         [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649

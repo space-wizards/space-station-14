@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Items
     {
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
