@@ -28,12 +28,6 @@ namespace Content.Client.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent
     {
 
-        public static int MaxMidiEventsPerSecond => SharedInstrumentComponent.MaxMidiEventsPerSecond;
-
-        public static int MaxMidiEventsPerBatch = SharedInstrumentComponent.MaxMidiEventsPerBatch;
-
-        public const float TimeBetweenNetMessages = .5f;
-
         /// <summary>
         ///     Called when a midi song stops playing.
         /// </summary>
@@ -296,8 +290,6 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 
-        private readonly Dictionary<byte, TimeSpan> _notesActive = new Dictionary<byte,TimeSpan>();
-
         public override void Update(float delta)
         {
             if (!IsMidiOpen && !IsInputOpen) return;
@@ -313,40 +305,21 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_midiQueue.Count == 0) return;
 
-            var max = Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - _sentWithinASec);
+            var max = Math.Min(SharedInstrumentComponent.MaxMidiEventsPerBatch, SharedInstrumentComponent.MaxMidiEventsPerSecond - _sentWithinASec);
 
             if (max <= 0)
             {
-                _midiSawmill.Info($"Playing {_notesActive.Count} notes, hit {_sentWithinASec} event/sec limit.");
+                // hit event/sec limit
                 return;
             }
 
             var events = _midiQueue.Distinct().Take(max).ToArray();
-
-            foreach (var ev in events)
-            {
-                switch (ev.Type)
-                {
-                    case 0x80 /*NOTE_OFF*/:
-                    {
-                        _notesActive.Remove(ev.Key);
-                        break;
-                    }
-                    case 0x90 /*NOTE_ON*/:
-                    {
-                        _notesActive[ev.Key] = now;
-                        break;
-                    }
-                }
-            }
 
             SendNetworkMessage(new InstrumentMidiEventMessage(events));
 
             var eventCount = events.Length;
 
             _sentWithinASec += eventCount;
-
-            _midiSawmill.Info($"Playing {_notesActive.Count} notes, sent {eventCount} events.");
 
             _midiQueue.RemoveRange(0, eventCount);
         }

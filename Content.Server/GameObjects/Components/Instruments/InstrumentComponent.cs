@@ -33,12 +33,6 @@ namespace Content.Server.GameObjects.Components.Instruments
         [Dependency] private IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
-        public static int MaxMidiEventsPerSecond => SharedInstrumentComponent.MaxMidiEventsPerSecond;
-        public static int MaxMidiEventsPerBatch = SharedInstrumentComponent.MaxMidiEventsPerBatch;
-        public static int MaxMidiActiveNotes => SharedInstrumentComponent.MaxMidiActiveNotes;
-        public static int MaxMidiBatchDropped = SharedInstrumentComponent.MaxMidiBatchDropped;
-
-
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
         /// </summary>
@@ -135,8 +129,8 @@ namespace Content.Server.GameObjects.Components.Instruments
                     if (!Playing || session != _instrumentPlayer)
                         return;
 
-                    if (++_midiEventCount <= MaxMidiEventsPerSecond &&
-                        midiEventMsg.MidiEvent.Length <= MaxMidiEventsPerBatch)
+                    if (++_midiEventCount <= SharedInstrumentComponent.MaxMidiEventsPerSecond &&
+                        midiEventMsg.MidiEvent.Length <= SharedInstrumentComponent.MaxMidiEventsPerBatch)
                         SendNetworkMessage(midiEventMsg);
                     else
                         _batchesDropped++; // Batch dropped!
@@ -229,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
                 InstrumentPlayer = null;
 
-            if (_batchesDropped > MaxMidiBatchDropped && InstrumentPlayer != null)
+            if (_batchesDropped > SharedInstrumentComponent.MaxMidiBatchDropped && InstrumentPlayer != null)
             {
                 _batchesDropped = 0;
                 var mob = InstrumentPlayer.AttachedEntity;
