@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -48,6 +49,9 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         [ViewVariables]
         private int _batchesDropped = 0;
+
+        [ViewVariables]
+        private int _laggedBatches = 0;
 
         [ViewVariables]
         private uint _lastSequencerTick = 0;
@@ -135,7 +139,13 @@ namespace Content.Server.GameObjects.Components.Instruments
                     else
                         _batchesDropped++; // Batch dropped!
 
-                    _lastSequencerTick = midiEventMsg.MidiEvent[^1].Tick;
+
+                    var minTick = midiEventMsg.MidiEvent.Min(x => x.Tick);
+                    if (_lastSequencerTick >= minTick)
+                        _laggedBatches++;
+
+                    var maxTick = midiEventMsg.MidiEvent.Max(x => x.Tick);
+                    _lastSequencerTick = maxTick;
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     Playing = true;
@@ -223,9 +233,12 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
                 InstrumentPlayer = null;
 
-            if (_batchesDropped > MaxMidiBatchDropped && InstrumentPlayer != null)
+            if ((_batchesDropped+_laggedBatches) > MaxMidiBatchDropped
+
+                && InstrumentPlayer != null)
             {
                 _batchesDropped = 0;
+                _laggedBatches = 0;
                 var mob = InstrumentPlayer.AttachedEntity;
 
                 _userInterface.CloseAll();
