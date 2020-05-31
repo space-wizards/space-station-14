@@ -34,8 +34,8 @@ namespace Content.Server.GameObjects.Components.Instruments
 #pragma warning restore 649
 
         // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
-        public const int MaxMidiEventsPerSecond = 20;
-        public const int MaxMidiEventsPerBatch = 50;
+        public const int MaxMidiEventsPerSecond = 60;
+        public const int MaxMidiEventsPerBatch = 60;
         public const int MaxMidiBatchDropped = 20;
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                     else
                         _batchesDropped++; // Batch dropped!
 
-                    _lastSequencerTick = midiEventMsg.MidiEvent[^1].Timestamp;
+                    _lastSequencerTick = midiEventMsg.MidiEvent[^1].Tick;
                     break;
                 case InstrumentStartMidiMessage startMidi:
                     Playing = true;
