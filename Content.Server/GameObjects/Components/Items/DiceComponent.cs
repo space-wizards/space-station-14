@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Sound;
+﻿using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -84,8 +84,9 @@ namespace Content.Server.GameObjects.Components.Items
             Roll();
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
+            //No details check, since the sprite updates to show the side.
             var loc = IoCManager.Resolve<ILocalizationManager>();
             message.AddMarkup(loc.GetString("A dice with [color=lightgray]{0}[/color] sides.\n" +
                                             "It has landed on a [color=white]{1}[/color].", _sides, _currentSide));

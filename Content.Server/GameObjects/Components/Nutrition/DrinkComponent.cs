@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
@@ -106,9 +106,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseDrink(eventArgs.Target);
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!Opened)
+            if (!Opened || !inDetailsRange)
             {
                 return;
             }
