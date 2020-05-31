@@ -198,7 +198,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
                     foreach (var ev in midiEventMessage.MidiEvent)
                     {
-                        var delta = ((uint)(_renderer!.SequencerTimeScale * SequenceDelaySeconds))
+                        var delta = (uint)(_renderer!.SequencerTimeScale * SequenceDelaySeconds)
                             + (ev.Tick - _syncSequencerTick);
                         _renderer?.ScheduleMidiEvent(ev, delta, true);
                     }
