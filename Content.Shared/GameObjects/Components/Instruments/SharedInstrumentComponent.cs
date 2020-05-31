@@ -12,7 +12,6 @@ namespace Content.Shared.GameObjects.Components.Instruments
         // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
         public const int MaxMidiEventsPerSecond = 1000;
         public const int MaxMidiEventsPerBatch = 60;
-        public const int MaxMidiActiveNotes = 88;
         public const int MaxMidiBatchDropped = 20;
 
         public override string Name => "Instrument";
