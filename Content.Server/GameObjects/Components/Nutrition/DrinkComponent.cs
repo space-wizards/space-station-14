@@ -145,6 +145,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             var split = _contents.SplitSolution(transferAmount);
             if (stomachComponent.TryTransferSolution(split))
             {
+                if (_useSound == null) return false;
                 EntitySystem.Get<AudioSystem>().Play(_useSound, target, AudioParams.Default.WithVolume(-2f));
                 target.PopupMessage(target, Loc.GetString("Slurp"));
                 UpdateAppearance();
