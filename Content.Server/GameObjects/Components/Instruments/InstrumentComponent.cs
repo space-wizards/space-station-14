@@ -33,10 +33,11 @@ namespace Content.Server.GameObjects.Components.Instruments
         [Dependency] private IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
-        // These 2 values are quite high for now, and this could be easily abused. Change this if people are abusing it.
-        public const int MaxMidiEventsPerSecond = 60;
-        public const int MaxMidiEventsPerBatch = 60;
-        public const int MaxMidiBatchDropped = 20;
+        public static int MaxMidiEventsPerSecond => SharedInstrumentComponent.MaxMidiEventsPerSecond;
+        public static int MaxMidiEventsPerBatch = SharedInstrumentComponent.MaxMidiEventsPerBatch;
+        public static int MaxMidiActiveNotes => SharedInstrumentComponent.MaxMidiActiveNotes;
+        public static int MaxMidiBatchDropped = SharedInstrumentComponent.MaxMidiBatchDropped;
+
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -135,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                         return;
 
                     if (++_midiEventCount <= MaxMidiEventsPerSecond &&
-                        midiEventMsg.MidiEvent.Length < MaxMidiEventsPerBatch)
+                        midiEventMsg.MidiEvent.Length <= MaxMidiEventsPerBatch)
                         SendNetworkMessage(midiEventMsg);
                     else
                         _batchesDropped++; // Batch dropped!

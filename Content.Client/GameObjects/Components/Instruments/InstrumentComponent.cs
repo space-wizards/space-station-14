@@ -15,6 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
 using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
@@ -27,7 +28,11 @@ namespace Content.Client.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent
     {
 
-        public const float TimeBetweenNetMessages = 1.0f;
+        public static int MaxMidiEventsPerSecond => SharedInstrumentComponent.MaxMidiEventsPerSecond;
+
+        public static int MaxMidiEventsPerBatch = SharedInstrumentComponent.MaxMidiEventsPerBatch;
+
+        public const float TimeBetweenNetMessages = .5f;
 
         /// <summary>
         ///     Called when a midi song stops playing.
@@ -36,6 +41,8 @@ namespace Content.Client.GameObjects.Components.Instruments
 
 #pragma warning disable 649
         [Dependency] private IMidiManager _midiManager;
+
+        [Dependency] private IGameTiming _gameTiming;
 
         [Dependency] private ILogManager _logger;
 #pragma warning restore 649
@@ -195,7 +202,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
                     foreach (var ev in midiEventMessage.MidiEvent)
                     {
-                        var delta = ev.Tick - _syncSequencerTick;
+                        var delta = 400 + (ev.Tick - _syncSequencerTick);
                         _renderer?.ScheduleMidiEvent(ev, delta, true);
                     }
 
@@ -282,21 +289,66 @@ namespace Content.Client.GameObjects.Components.Instruments
             _midiQueue.Add(midiEvent);
         }
 
+
+        private TimeSpan _lastMeasuredInterval = TimeSpan.MinValue;
+
+        private int _sentWithinASec = 0;
+
+        private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
+
+        private readonly Dictionary<byte, TimeSpan> _notesActive = new Dictionary<byte,TimeSpan>();
+
         public override void Update(float delta)
         {
-            if (!IsMidiOpen && !IsInputOpen)
-                return;
+            if (!IsMidiOpen && !IsInputOpen) return;
 
-            SendAllMidiMessages();
-        }
+            var now = _gameTiming.RealTime;
+            var oneSecAGo = now.Add(OneSecAgo);
 
-        private void SendAllMidiMessages()
-        {
+            if (_lastMeasuredInterval <= oneSecAGo)
+            {
+                _lastMeasuredInterval = now;
+                _sentWithinASec = 0;
+            }
+
             if (_midiQueue.Count == 0) return;
 
-            SendNetworkMessage(new InstrumentMidiEventMessage(_midiQueue.ToArray()));
+            var max = Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - _sentWithinASec);
 
-            _midiQueue.Clear();
+            if (max <= 0)
+            {
+                _midiSawmill.Info($"Playing {_notesActive.Count} notes, hit {_sentWithinASec} event/sec limit.");
+                return;
+            }
+
+            var events = _midiQueue.Distinct().Take(max).ToArray();
+
+            foreach (var ev in events)
+            {
+                switch (ev.Type)
+                {
+                    case 0x80 /*NOTE_OFF*/:
+                    {
+                        _notesActive.Remove(ev.Key);
+                        break;
+                    }
+                    case 0x90 /*NOTE_ON*/:
+                    {
+                        _notesActive[ev.Key] = now;
+                        break;
+                    }
+                }
+            }
+
+            SendNetworkMessage(new InstrumentMidiEventMessage(events));
+
+            var eventCount = events.Length;
+
+            _sentWithinASec += eventCount;
+
+            _midiSawmill.Info($"Playing {_notesActive.Count} notes, sent {eventCount} events.");
+
+            _midiQueue.RemoveRange(0, eventCount);
         }
 
     }
