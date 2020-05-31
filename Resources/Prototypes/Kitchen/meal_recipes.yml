@@ -59,7 +59,7 @@
 - type: microwaveMealRecipe
   id: RecipeBread
   name: Bread Recipe
-  result: DrinkFoodContainerBread
+  result: FoodContainerBread
   time: 15
   reagents:
     chem.Flour: 15
@@ -104,7 +104,7 @@
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
   name: Cream Cheese Bread Recipe
-  result: DrinkFoodContainerCreamCheeseBread
+  result: FoodContainerCreamCheeseBread
   time: 20
   reagents:
     chem.Flour: 15
@@ -114,7 +114,7 @@
 - type: microwaveMealRecipe
   id: RecipeBananaBread
   name: Banana Bread Recipe
-  result: DrinkFoodContainerBananaBread
+  result: FoodContainerBananaBread
   time: 25
   reagents:
     chem.Flour: 15
@@ -129,7 +129,7 @@
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
   name: Margherita Pizza Recipe
-  result: DrinkFoodContainerMargheritaPizza
+  result: FoodContainerMargheritaPizza
   time: 30
   reagents:
     chem.Flour: 10
@@ -140,7 +140,7 @@
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
   name: Mushroom Pizza Recipe
-  result: DrinkFoodContainerMushroomPizza
+  result: FoodContainerMushroomPizza
   time: 25
   reagents:
     chem.Flour: 10
@@ -150,7 +150,7 @@
 - type: microwaveMealRecipe
   id: RecipeMeatPizza
   name: Meat Pizza Recipe
-  result: DrinkFoodContainerMeatPizza
+  result: FoodContainerMeatPizza
   time: 30
   reagents:
     chem.Flour: 10
@@ -162,7 +162,7 @@
 - type: microwaveMealRecipe
   id: RecipeVegetablePizza
   name: Vegetable Pizza Recipe
-  result: DrinkFoodContainerVegetablePizza
+  result: FoodContainerVegetablePizza
   time: 30
   reagents:
     chem.Flour: 10

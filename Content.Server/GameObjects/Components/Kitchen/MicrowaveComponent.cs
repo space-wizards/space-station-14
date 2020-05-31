@@ -241,7 +241,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return true;
             }
 
-            itemEntity.TryGetComponent(typeof(ItemComponent), out var food);
+            if (!itemEntity.TryGetComponent(typeof(ItemComponent), out var food))
+            {
+
+                _notifyManager.PopupMessage(Owner, eventArgs.User, "That won't work!");
+                return false;
+            }
+
             var ent = food.Owner; //Get the entity of the ItemComponent.
             _storage.Insert(ent);
             _uiDirty = true;

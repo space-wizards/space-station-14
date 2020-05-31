@@ -13,7 +13,6 @@
   - type: Pourable
     transferAmount: 5
   - type: Drink
-    despawn_empty: true
   - type: Sprite
     sprite: Objects/Food/flour.rsi
     state: icon
