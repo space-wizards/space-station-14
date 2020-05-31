@@ -1,4 +1,5 @@
-﻿- type: entity
+﻿# Airlocks
+- type: entity
   parent: Airlock
   id: AirlockExternal
   suffix: External
@@ -26,14 +27,14 @@
     sprite: Buildings/Doors/airlock_engineering.rsi
 
 - type: entity
-  parent: AirlockGlass
-  id: AirlockEngineeringGlass
-  suffix: Engineering
+  parent: Airlock
+  id: AirlockCargo
+  suffix: Cargo 
   components:
   - type: Sprite
-    sprite: Buildings/Doors/airlock_engineering_glass.rsi
+    sprite: Buildings/Doors/airlock_cargo.rsi
   - type: Icon
-    sprite: Buildings/Doors/airlock_engineering_glass.rsi
+    sprite: Buildings/Doors/airlock_cargo.rsi
 
 - type: entity
   parent: Airlock
@@ -44,6 +45,58 @@
     sprite: Buildings/Doors/airlock_medical.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_medical.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockScience
+  suffix: Science
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_science.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_science.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockCommand
+  suffix: Command
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_command.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_command.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockSecurity
+  suffix: Security
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_security.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_security.rsi
+
+# Glass Airlocks
+- type: entity
+  parent: AirlockGlass
+  id: AirlockEngineeringGlass
+  suffix: Engineering
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_engineering_glass.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_engineering_glass.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockCargoGlass
+  suffix: Cargo
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_cargo_glass.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_cargo_glass.rsi
+  
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
@@ -55,15 +108,6 @@
     sprite: Buildings/Doors/airlock_medical_glass.rsi
 
 - type: entity
-  parent: Airlock
-  id: AirlockScience
-  suffix: Science
-  components:
-  - type: Sprite
-    sprite: Buildings/Doors/airlock_science.rsi
-  - type: Icon
-    sprite: Buildings/Doors/airlock_science.rsi
-- type: entity
   parent: AirlockGlass
   id: AirlockScienceGlass
   suffix: Science
@@ -73,35 +117,6 @@
   - type: Icon
     sprite: Buildings/Doors/airlock_science_glass.rsi
 
-- type: entity
-  parent: Airlock
-  id: AirlockCargo
-  suffix: Cargo
-  components:
-  - type: Sprite
-    sprite: Buildings/Doors/airlock_cargo.rsi
-  - type: Icon
-    sprite: Buildings/Doors/airlock_cargo.rsi
-
-- type: entity
-  parent: AirlockGlass
-  id: AirlockCargoGlass
-  suffix: Cargo
-  components:
-  - type: Sprite
-    sprite: Buildings/Doors/airlock_cargo_glass.rsi
-  - type: Icon
-    sprite: Buildings/Doors/airlock_cargo_glass.rsi
-
-- type: entity
-  parent: Airlock
-  id: AirlockCommand
-  suffix: Command
-  components:
-  - type: Sprite
-    sprite: Buildings/Doors/airlock_command.rsi
-  - type: Icon
-    sprite: Buildings/Doors/airlock_command.rsi
 - type: entity
   parent: AirlockGlass
   id: AirlockCommandGlass
@@ -113,15 +128,6 @@
     sprite: Buildings/Doors/airlock_command_glass.rsi
 
 - type: entity
-  parent: Airlock
-  id: AirlockSecurity
-  suffix: Security
-  components:
-  - type: Sprite
-    sprite: Buildings/Doors/airlock_security.rsi
-  - type: Icon
-    sprite: Buildings/Doors/airlock_security.rsi
-- type: entity
   parent: AirlockGlass
   id: AirlockSecurityGlass
   suffix: Security
@@ -131,20 +137,10 @@
   - type: Icon
     sprite: Buildings/Doors/airlock_security_glass.rsi
 
+# Maintenance Hatchs
 - type: entity
-  parent: Airlock
-  id: AirlockMaint
-  name: Maintenance Hatch
-  components:
-  - type: Sprite
-    sprite: Buildings/Doors/airlock_maint.rsi
-  - type: Icon
-    sprite: Buildings/Doors/airlock_maint.rsi
-
-- type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintCargo
-  name: Maintenance Hatch
   suffix: Cargo
   components:
   - type: Sprite
@@ -153,9 +149,8 @@
     sprite: Buildings/Doors/airlock_maint_cargo.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintCommand
-  name: Maintenance Hatch
   suffix: Command
   components:
   - type: Sprite
@@ -164,9 +159,8 @@
     sprite: Buildings/Doors/airlock_maint_command.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintCommon
-  name: Maintenance Hatch
   suffix: Common
   components:
   - type: Sprite
@@ -175,9 +169,8 @@
     sprite: Buildings/Doors/airlock_maint_common.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintEngi
-  name: Maintenance Hatch
   suffix: Engineering
   components:
   - type: Sprite
@@ -186,9 +179,8 @@
     sprite: Buildings/Doors/airlock_maint_engi.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintInt
-  name: Maintenance Hatch
   suffix: Interior
   components:
   - type: Sprite
@@ -197,9 +189,8 @@
     sprite: Buildings/Doors/airlock_maint_int.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintMed
-  name: Maintenance Hatch
   suffix: Medical
   components:
   - type: Sprite
@@ -208,9 +199,8 @@
     sprite: Buildings/Doors/airlock_maint_med.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintRnD
-  name: Maintenance Hatch
   suffix: RnD
   components:
   - type: Sprite
@@ -219,9 +209,8 @@
     sprite: Buildings/Doors/airlock_maint_rnd.rsi
 
 - type: entity
-  parent: Airlock
+  parent: AirlockMaint
   id: AirlockMaintSec
-  name: Maintenance Hatch
   suffix: Security
   components:
   - type: Sprite

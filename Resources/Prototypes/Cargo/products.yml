@@ -1,7 +1,7 @@
-- type: cargoProduct
+﻿- type: cargoProduct
   name: "Dice"
   id: cargo.dice
-  description: Some dice
+  description: "Some dice"
   icon:
     sprite: Objects/Fun/dice.rsi
     state: d2020
@@ -13,7 +13,7 @@
 - type: cargoProduct
   name: "Medkit"
   id: cargo.Medkit
-  description: Everything you need to patch someone up.
+  description: "Everything you need to patch someone up."
   icon: Objects/Medical/medkit_r.png
   product: Medkit
   cost: 200
@@ -23,7 +23,7 @@
 - type: cargoProduct
   name: "Flashlight"
   id: cargo.flashlight
-  description: Shine a light in the dark.
+  description: "Shine a light in the dark."
   icon:
     sprite: Objects/Tools/flashlight.rsi
     state: lantern_off
@@ -35,7 +35,7 @@
 - type: cargoProduct
   name: "Light Bulb"
   id: cargo.lightbulb
-  description: Light up a room, anywhere, anytime. Electricity not included.
+  description: "Light up a room, anywhere, anytime. Electricity not included."
   icon:
     sprite: Objects/Lighting/light_tube.rsi
     state: normal
@@ -47,7 +47,7 @@
 - type: cargoProduct
   name: "Fire Extinguisher"
   id: cargo.fireextinguisher
-  description: Puts out fires. Or propels you in space.
+  description: "Puts out fires. Or propels you in space."
   icon: Objects/Misc/fire_extinguisher.png
   product: CrateFireExtinguisher
   cost: 300
@@ -57,7 +57,7 @@
 - type: cargoProduct
   name: "Pen"
   id: cargo.pen
-  description: Expels ink. Use it to write, or stab someone.
+  description: "Expels ink. Use it to write, or stab someone."
   icon:
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
@@ -69,7 +69,7 @@
 - type: cargoProduct
   name: "Bike Horn"
   id: cargo.bikehorn
-  description: HONK!
+  description: "HONK!"
   icon:
     sprite: Objects/Fun/bikehorn.rsi
     state: icon
@@ -81,7 +81,7 @@
 - type: cargoProduct
   name: "Cleaver"
   id: cargo.cleaver
-  description: That's not a knife, THAT'S a knife.
+  description: "That's not a knife, THAT'S a knife."
   icon:
     sprite: Objects/Melee/cleaver.rsi
     state: butch
@@ -93,7 +93,7 @@
 - type: cargoProduct
   name: "Fuel Tank"
   id: cargo.fueltank
-  description: Movable fuel tank for welders. No boom boom.
+  description: "Movable fuel tank for welders. No boom boom."
   icon: Buildings/weldtank.png
   product: CrateFuelTank
   cost: 200
@@ -103,7 +103,7 @@
 - type: cargoProduct
   name: "Medical Scanner"
   id: cargo.medscanner
-  description: Scans patients. First we stick this probe...
+  description: "Scans patients. First we stick this probe..."
   icon:
     sprite: Buildings/medical_scanner.rsi
     state: scanner_open
@@ -115,7 +115,7 @@
 - type: cargoProduct
   name: "Glass Crate"
   id: cargo.glass
-  description: 50 sheets of glass.
+  description: "50 sheets of glass."
   icon: Objects/Materials/sheet_glass.png
   product: CrateGlass
   cost: 50
@@ -125,10 +125,9 @@
 - type: cargoProduct
   name: "Cable Crate"
   id: cargo.cable
-  description: 50 coils of cable.
+  description: "50 coils of cable."
   icon: Objects/Tools/cable_coil.png
   product: CrateCable
   cost: 50
   category: Engineering
   group: market
-

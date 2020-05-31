@@ -10,7 +10,7 @@
   - type: Pourable
     transferAmount: 5
   - type: Drink
-  - type: Sound
+    isOpen: true
   - type: Sprite
     state: icon
   - type: Icon
@@ -237,3 +237,22 @@
     visuals:
     - type: DrinkFoodVisualizer2D
       steps: 4
+
+# Transformable container - normal glass
+- type: entity
+  name: Drinking glass
+  parent: DrinkBaseCup
+  id: DrinkGlass
+  components:
+  - type: Sprite
+    sprite: Objects/Drinks/glass_clear.rsi
+  - type: Icon
+    sprite: Objects/Drinks/glass_clear.rsi
+  - type: Solution
+    fillingState: glass
+    maxVol: 50
+    caps: 16
+  - type: Drink
+  - type: Pourable
+    transferAmount: 5
+  - type: TransformableContainer
