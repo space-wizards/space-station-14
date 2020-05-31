@@ -49,11 +49,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void CombineGroup(INodeGroup newGroup)
         {
+            if (newGroup.Nodes.Count < Nodes.Count)
+            {
+                newGroup.CombineGroup(this);
+                return;
+            }
             foreach (var node in Nodes)
             {
                 node.NodeGroup = newGroup;
             }
-            //This should now be GC-able
         }
 
         // <inheritdoc cref="INodeGroup"/>
@@ -70,7 +74,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                     node.SpreadGroup();
                 }
             }
-            //This should now be GC-able
         }
 
         protected abstract void OnAddNode(INode node);

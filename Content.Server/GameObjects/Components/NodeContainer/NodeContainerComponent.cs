@@ -62,7 +62,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer
                 node.OnContainerRemove();
             }
             _nodes = null;
-            //nodes should now be GC-able
             base.OnRemove();
         }
 
