@@ -13,6 +13,10 @@
         Quantity: 20
   - type: Pourable
     transferAmount: 5
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
 
 - type: entity
   parent: DrinkCanBaseFull

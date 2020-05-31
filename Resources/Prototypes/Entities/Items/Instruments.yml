@@ -210,3 +210,22 @@
   - type: Item
     Size: 24
     sprite: Objects/Instruments/banjo.rsi
+    
+- type: entity
+  name: gilded bike horn
+  description: An exquisitely decorated bike horn, capable of honking in a variety of notes.
+  parent: BaseHandheldInstrument
+  id: BikeHornInstrument
+  components:
+  - type: Instrument
+    program: 1
+    bank: 1
+  - type: Sprite
+    sprite: Objects/Instruments/bike_horn.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Instruments/bike_horn.rsi
+    state: icon
+  - type: Item
+    Size: 24
+    sprite: Objects/Instruments/bike_horn.rsi

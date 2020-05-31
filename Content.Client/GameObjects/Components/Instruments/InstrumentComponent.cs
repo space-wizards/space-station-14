@@ -37,6 +37,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         [CanBeNull]
         private IMidiRenderer _renderer;
         private byte _instrumentProgram = 1;
+        private byte _instrumentBank = 0;
         private uint _syncSequencerTick;
 
         /// <summary>
@@ -82,6 +83,23 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         /// <summary>
+        ///     Changes the instrument bank the midi renderer will use.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public byte InstrumentBank
+        {
+            get => _instrumentBank;
+            set
+            {
+                _instrumentBank = value;
+                if (_renderer != null)
+                {
+                    _renderer.MidiBank = _instrumentBank;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Whether there's a midi song being played or not.
         /// </summary>
         [ViewVariables]
@@ -115,6 +133,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_renderer != null)
             {
+                _renderer.MidiBank = _instrumentBank;
                 _renderer.MidiProgram = _instrumentProgram;
                 _renderer.TrackingEntity = Owner;
                 _renderer.OnMidiPlayerFinished += () => { OnMidiPlaybackEnded?.Invoke(); EndRenderer(); SendNetworkMessage(new InstrumentStopMidiMessage()); };
@@ -149,6 +168,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _instrumentProgram, "program", (byte)1);
+            serializer.DataField(ref _instrumentBank, "bank", (byte)0);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

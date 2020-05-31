@@ -45,7 +45,7 @@
   suffix: Science, Locked
   components:
   - type: AccessReader
-    necessary: ["Science"]
+    necessary: ["Research"]
 
 - type: entity
   parent: AirlockCommand
@@ -118,7 +118,7 @@
   suffix: Science, Locked
   components:
   - type: AccessReader
-    necessary: ["Science"]
+    necessary: ["Research"]
 
 - type: entity
   parent: AirlockCommandGlass

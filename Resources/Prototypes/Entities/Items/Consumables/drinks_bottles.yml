@@ -6,6 +6,8 @@
   - type: Drink
     openSounds: bottleOpenSounds
   - type: Solution
+  - type: Pourable
+    transferAmount: 5
   - type: Sprite
     state: icon
   - type: Icon
