@@ -28,6 +28,8 @@ namespace Content.Client.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent
     {
 
+        private const float SequenceDelaySeconds = .4f;
+
         /// <summary>
         ///     Called when a midi song stops playing.
         /// </summary>
@@ -196,7 +198,8 @@ namespace Content.Client.GameObjects.Components.Instruments
 
                     foreach (var ev in midiEventMessage.MidiEvent)
                     {
-                        var delta = 400 + (ev.Tick - _syncSequencerTick);
+                        var delta = ((uint)(_renderer!.SequencerTimeScale * SequenceDelaySeconds))
+                            + (ev.Tick - _syncSequencerTick);
                         _renderer?.ScheduleMidiEvent(ev, delta, true);
                     }
 
@@ -305,7 +308,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (_midiQueue.Count == 0) return;
 
-            var max = Math.Min(SharedInstrumentComponent.MaxMidiEventsPerBatch, SharedInstrumentComponent.MaxMidiEventsPerSecond - _sentWithinASec);
+            var max = Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - _sentWithinASec);
 
             if (max <= 0)
             {

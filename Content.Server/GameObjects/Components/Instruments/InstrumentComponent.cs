@@ -129,8 +129,8 @@ namespace Content.Server.GameObjects.Components.Instruments
                     if (!Playing || session != _instrumentPlayer)
                         return;
 
-                    if (++_midiEventCount <= SharedInstrumentComponent.MaxMidiEventsPerSecond &&
-                        midiEventMsg.MidiEvent.Length <= SharedInstrumentComponent.MaxMidiEventsPerBatch)
+                    if (++_midiEventCount <= MaxMidiEventsPerSecond &&
+                        midiEventMsg.MidiEvent.Length <= MaxMidiEventsPerBatch)
                         SendNetworkMessage(midiEventMsg);
                     else
                         _batchesDropped++; // Batch dropped!
@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
                 InstrumentPlayer = null;
 
-            if (_batchesDropped > SharedInstrumentComponent.MaxMidiBatchDropped && InstrumentPlayer != null)
+            if (_batchesDropped > MaxMidiBatchDropped && InstrumentPlayer != null)
             {
                 _batchesDropped = 0;
                 var mob = InstrumentPlayer.AttachedEntity;
