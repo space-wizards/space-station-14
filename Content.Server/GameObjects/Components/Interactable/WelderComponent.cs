@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return ToggleWelderStatus(eventArgs.User);
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (WelderLit)
             {
@@ -174,8 +174,11 @@ namespace Content.Server.GameObjects.Components.Interactable
                 message.AddText(Loc.GetString("Not lit\n"));
             }
 
-            message.AddMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
-                Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
+            if (inDetailsRange)
+            {
+                message.AddMarkup(Loc.GetString("Fuel: [color={0}]{1}/{2}[/color].",
+                    Fuel < FuelCapacity / 4f ? "darkorange" : "orange", Math.Round(Fuel), FuelCapacity));
+            }
         }
 
         public void OnUpdate(float frameTime)

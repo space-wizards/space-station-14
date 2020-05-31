@@ -238,21 +238,54 @@
     - type: DrinkFoodVisualizer2D
       steps: 4
 
-# Transformable container - normal glass
 - type: entity
-  name: Drinking glass
   parent: DrinkBaseCup
-  id: DrinkGlass
+  id: DrinkHotCoco
+  name: Hot chocolate
+  description: A heated drink consisting melted chocolate and heated milk.
   components:
-  - type: Sprite
-    sprite: Objects/Drinks/glass_clear.rsi
-  - type: Icon
-    sprite: Objects/Drinks/glass_clear.rsi
-  - type: Solution
-    fillingState: glass
-    maxVol: 50
-    caps: 16
   - type: Drink
-  - type: Pourable
-    transferAmount: 5
-  - type: TransformableContainer
+  - type: Sprite
+    sprite: Objects/Drinks/hot_coco.rsi
+  - type: Icon
+    sprite: Objects/Drinks/hot_coco.rsi
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkHotCoffee
+  name: Coffee
+  description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
+  components:
+  - type: Solution
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Coffee
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Drinks/hot_coffee.rsi
+  - type: Icon
+    sprite: Objects/Drinks/hot_coffee.rsi
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkTeacup
+  name: Teacup
+  description: A plain white porcelain teacup.
+  components:
+  - type: Solution
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Tea
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Drinks/teacup.rsi
+    state: icon-1
+  - type: Icon
+    sprite: Objects/Drinks/teacup.rsi
+    state: icon-1
+  - type: Appearance
+    visuals:
+    - type: DrinkFoodVisualizer2D
+      steps: 2

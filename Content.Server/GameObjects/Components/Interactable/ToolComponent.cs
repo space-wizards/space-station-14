@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
             Owner.TryGetComponent(out _spriteComponent);
         }
@@ -125,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
             var file = _robustRandom.Pick(soundCollection.PickFiles);
-            _entitySystemManager.GetEntitySystem<AudioSystem>()
+            EntitySystem.Get<AudioSystem>()
                 .Play(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 

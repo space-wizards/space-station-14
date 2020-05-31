@@ -47,6 +47,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemFreezer
 
 - type: tile
   name: floor_hydro
@@ -168,6 +169,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.5
+  item_drop: FloorTileItemTechmaint
 
 - type: tile
   name: floor_white

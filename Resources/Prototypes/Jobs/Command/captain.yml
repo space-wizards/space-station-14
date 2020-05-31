@@ -11,7 +11,7 @@
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
   - Captain
-  - IdCard
+  - HeadOfPersonnel
   - Command
   - Security
   - Engineering

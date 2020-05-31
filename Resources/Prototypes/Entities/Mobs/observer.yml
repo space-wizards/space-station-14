@@ -18,7 +18,7 @@
   - type: Ghost
   - type: Sprite
     netsync: false
-    drawdepth: Mobs
+    drawdepth: Ghosts
     sprite: Mob/ghost.rsi
     state: animated
     color: "#fff8"

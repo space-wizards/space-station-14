@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
@@ -85,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);
+            EntitySystem.Get<AudioSystem>().Play("/Audio/items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.

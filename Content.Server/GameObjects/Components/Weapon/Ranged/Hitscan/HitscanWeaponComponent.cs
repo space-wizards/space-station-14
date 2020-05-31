@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 Shaded = false
             };
             EntitySystem.Get<EffectSystem>().CreateParticle(message);
-            Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
+            EntitySystem.Get<AudioSystem>().Play(_fireSound, Owner, AudioParams.Default.WithVolume(-5));
         }
     }
 }

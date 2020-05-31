@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.Components.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,6 +11,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
@@ -75,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
         }
 
-        private void PlayFireSound() => Owner.GetComponent<SoundComponent>().Play(_soundGunshot);
+        private void PlayFireSound() => EntitySystem.Get<AudioSystem>().Play(_soundGunshot, Owner);
 
         /// <summary>
         ///     Gets the angle from an entity to a coordinate.

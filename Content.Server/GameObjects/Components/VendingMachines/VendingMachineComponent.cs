@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             }
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if(_description == null) { return; }
             message.AddText(_description);
