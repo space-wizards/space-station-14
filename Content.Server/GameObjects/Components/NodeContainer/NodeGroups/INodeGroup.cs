@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
-    //todo: add virtual methods for power network to override
-
     /// <summary>
     ///     Maintains a collection of <see cref="INode"/>s, and performs operations requiring a list of
     ///     all connected <see cref="INode"/>s.
@@ -39,11 +37,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void AddNode(INode node)
         {
             _nodes.Add(node);
+            OnAddNode(node);
         }
 
         public void RemoveNode(INode node)
         {
             _nodes.Remove(node);
+            OnRemoveNode(node);
             RemakeGroup(); //might want to move this into a strategy on INodes so remaking is optional on node removal
         }
 
@@ -72,5 +72,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
             //This should now be GC-able
         }
+
+        protected abstract void OnAddNode(INode node);
+        
+        protected abstract void OnRemoveNode(INode node);
     }
 }

@@ -74,7 +74,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             NodeGroup.RemoveNode(this);
             _nodeGroup = null;
-            Owner = null;
         }
 
         public bool TryAssignGroupIfNeeded()
