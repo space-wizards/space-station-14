@@ -5,7 +5,10 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -20,6 +23,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override string Name => "Mop";
@@ -107,8 +111,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            Owner.TryGetComponent(out SoundComponent soundComponent);
-            soundComponent?.Play(_pickupSound);
+            EntitySystem.Get<AudioSystem>().Play(_pickupSound, Owner);
 
         }
     }

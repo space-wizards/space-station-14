@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Sound
 {
-    public class SharedSoundComponent : Component
+    public class SharedLoopingSoundComponent : Component
     {
         public override string Name => "Sound";
         public override uint? NetID => ContentNetIDs.SOUND;

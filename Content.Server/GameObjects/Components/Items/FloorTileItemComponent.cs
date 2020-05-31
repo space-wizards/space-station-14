@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -53,8 +54,8 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", eventArgs.ClickLocation, AudioParams.Default);
-                if(_stack.Count < 1){
+                EntitySystem.Get<AudioSystem>().Play("/Audio/items/genhit.ogg", eventArgs.ClickLocation);
+                if(Stack.Count < 1){
                     Owner.Delete();
                 }
             }

@@ -25,6 +25,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
 using Content.Shared.BodySystem;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -96,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MicrowaveUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;

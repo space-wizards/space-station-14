@@ -19,6 +19,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -320,10 +322,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-            if (Owner.TryGetComponent(out SoundComponent sound))
-            {
-                sound.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
-            }
+
+            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+
         }
 
 

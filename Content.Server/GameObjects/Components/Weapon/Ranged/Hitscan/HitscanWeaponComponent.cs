@@ -27,6 +27,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
     [RegisterComponent]
     public class HitscanWeaponComponent : Component, IInteractUsing
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
         private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
 
@@ -134,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 Shaded = false
             };
             EntitySystem.Get<EffectSystem>().CreateParticle(message);
-            Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
+            EntitySystem.Get<AudioSystem>().Play(_fireSound, Owner, AudioParams.Default.WithVolume(-5));
         }
     }
 }

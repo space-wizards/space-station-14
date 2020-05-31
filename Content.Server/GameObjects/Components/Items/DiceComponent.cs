@@ -3,8 +3,11 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -22,6 +25,7 @@ namespace Content.Server.GameObjects.Components.Items
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override string Name => "Dice";
@@ -61,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
                 var file = _random.Pick(soundCollection.PickFiles);
-                Owner.GetComponent<SoundComponent>().Play(file, AudioParams.Default);
+                EntitySystem.Get<AudioSystem>().Play(file, Owner, AudioParams.Default);
             }
         }
 
