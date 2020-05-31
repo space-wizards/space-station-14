@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
 using Content.Server.GameObjects.EntitySystems;
@@ -8,6 +9,7 @@ using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -118,6 +120,26 @@ namespace Content.Client.State
             // 0 is the top element.
             foundEntities.Reverse();
             return foundEntities.Select(a => a.clicked).ToList();
+        }
+
+
+        /// <summary>
+        /// Gets all entities intersecting the given position.
+        ///
+        /// Static alternative to GetEntitiesUnderPosition to cut out
+        /// some of the boilerplate needed to get state manager and check the current state.
+        /// </summary>
+        /// <param name="stateManager">state manager to use to get the current game screen</param>
+        /// <param name="coordinates">coordinates to check</param>
+        /// <returns>the entities under the position, empty list if none found</returns>
+        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, GridCoordinates coordinates)
+        {
+            if (stateManager.CurrentState is GameScreenBase gameScreenBase)
+            {
+                return gameScreenBase.GetEntitiesUnderPosition(coordinates);
+            }
+
+            return ImmutableList<IEntity>.Empty;
         }
 
         internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth)>

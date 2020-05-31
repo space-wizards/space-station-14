@@ -105,12 +105,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return true;
             }
 
-            if (!(_stateManager.CurrentState is GameScreenBase gameScreen))
-            {
-                return false;
-            }
-
-            var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
+            var entities = GameScreenBase.GetEntitiesUnderPosition(_stateManager, args.Coordinates);
 
             if (entities.Count == 0)
             {

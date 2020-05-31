@@ -1,4 +1,6 @@
-﻿using Content.Shared.GameObjects;
+﻿using Content.Client.GameObjects.Components.Storage;
+using Content.Client.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -15,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects
 {
     [RegisterComponent]
-    public class ItemComponent : Component
+    public class ItemComponent : Component, IClientDraggable
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -75,6 +77,17 @@ namespace Content.Client.GameObjects
 
             var itemComponentState = (ItemComponentState)curState;
             EquippedPrefix = itemComponentState.EquippedPrefix;
+        }
+
+        public bool ClientCanDropOn(CanDropEventArgs eventArgs)
+        {
+            return eventArgs.Target.HasComponent<ClientStorageComponent>();
+        }
+
+        public bool ClientCanDrag(CanDragEventArgs eventArgs)
+        {
+            // always draggable
+            return true;
         }
     }
 }
