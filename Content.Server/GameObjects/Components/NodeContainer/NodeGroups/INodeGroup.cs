@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             _nodes.Remove(node);
             OnRemoveNode(node);
-            RemakeGroup(); //might want to move this into a strategy on INodes so remaking is optional on node removal
+            RemakeGroup();
         }
 
         public void CombineGroup(INodeGroup newGroup)
@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             foreach (var node in Nodes)
             {
-                node.NodeGroup = null;
+                node.ClearNodeGroup();
             }
             foreach (var node in Nodes)
             {

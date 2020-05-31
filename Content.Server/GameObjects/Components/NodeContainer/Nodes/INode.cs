@@ -20,15 +20,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         NodeGroupID NodeGroupID { get; }
 
-        /// <summary>
-        ///     The <see cref="INodeGroup"/> this <see cref="Node"/> is currently in.
-        /// </summary>
         public INodeGroup NodeGroup { get; set; }
 
-        /// <summary>
-        ///     The <see cref="IEntity"/> this node is on.
-        /// </summary>
         IEntity Owner { get; }
+
+        bool NeedsGroup { get; }
 
         void OnContainerInitialize();
 
@@ -37,6 +33,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         bool TryAssignGroupIfNeeded();
 
         void SpreadGroup();
+
+        void ClearNodeGroup();
     }
 
     public abstract class Node : INode
@@ -45,14 +43,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public NodeGroupID NodeGroupID { get; private set; }
 
-        // <inheritdoc cref="INode"/>
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
-        private INodeGroup _nodeGroup;
+        private INodeGroup _nodeGroup = NullGroup;
 
-        // <inheritdoc cref="INode"/>
         [ViewVariables]
         public IEntity Owner { get; private set; }
+
+        public bool NeedsGroup { get; private set; } = true;
+
+        private static readonly INodeGroup NullGroup = new NullNodeGroup();
 
 #pragma warning disable 649
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
@@ -73,12 +73,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void OnContainerRemove()
         {
             NodeGroup.RemoveNode(this);
-            _nodeGroup = null;
         }
 
         public bool TryAssignGroupIfNeeded()
         {
-            if (NodeGroup != null)
+            if (!NeedsGroup)
             {
                 return false;
             }
@@ -88,16 +87,22 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void SpreadGroup()
         {
-            Debug.Assert(NodeGroup != null);
-            foreach (var node in GetReachableCompatibleNodes().Where(node => node.NodeGroup == null))
+            Debug.Assert(!NeedsGroup);
+            foreach (var node in GetReachableCompatibleNodes().Where(node => node.NeedsGroup == true))
             {
                 node.NodeGroup = NodeGroup;
                 node.SpreadGroup();
             }
         }
 
+        public void ClearNodeGroup()
+        {
+            _nodeGroup = NullGroup;
+            NeedsGroup = true;
+        }
+
         /// <summary>
-        ///     Strategy for how to find other reachable <see cref="INode"/>s to group with.
+        ///     How this node will attempt to find other reachable <see cref="INode"/>s to group with.
         ///     Returns a set of <see cref="INode"/>s to consider grouping with. Should not return this current <see cref="INode"/>. 
         /// </summary>
         protected abstract IEnumerable<INode> GetReachableNodes();
@@ -109,28 +114,41 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private IEnumerable<INodeGroup> GetReachableCompatibleGroups()
         {
-            return GetReachableCompatibleNodes().Select(node => node.NodeGroup)
+            return GetReachableCompatibleNodes().Where(node => node.NeedsGroup == false)
+                .Select(node => node.NodeGroup)
                 .Where(group => group != NodeGroup);
         }
 
         private void CombineGroupWithReachable()
         {
-            Debug.Assert(NodeGroup != null);
+            Debug.Assert(!NeedsGroup);
             foreach (var group in GetReachableCompatibleGroups())
             {
-                group.CombineGroup(NodeGroup);
+                NodeGroup.CombineGroup(group);
             }
         }
 
         private void SetNodeGroup(INodeGroup newGroup)
         {
             _nodeGroup = newGroup;
-            NodeGroup?.AddNode(this);
+            NodeGroup.AddNode(this);
+            NeedsGroup = false;
         }
 
         private INodeGroup MakeNewGroup()
         {
             return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
+        }
+
+        private class NullNodeGroup : INodeGroup
+        {
+            public IReadOnlyList<INode> Nodes => _nodes;
+            private readonly List<INode> _nodes = new List<INode>();
+
+            public void AddNode(INode node) { }
+            public void CombineGroup(INodeGroup group) { }
+            public void RemakeGroup() { }
+            public void RemoveNode(INode node) { }
         }
     }
 }
