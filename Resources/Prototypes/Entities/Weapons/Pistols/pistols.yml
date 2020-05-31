@@ -5,7 +5,7 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: BallisticMagazineWeapon
     caliber: A9mm
     magazines:
@@ -131,7 +131,7 @@
   - type: Icon
     sprite: Objects/Guns/Pistols/deckard.rsi
     state: deckard-2
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: false

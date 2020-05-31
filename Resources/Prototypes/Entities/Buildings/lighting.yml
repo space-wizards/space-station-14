@@ -5,7 +5,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
-  - type: Sound
+  - type: LoopingSound
   - type: Sprite
     sprite: Buildings/light_tube.rsi
     state: on

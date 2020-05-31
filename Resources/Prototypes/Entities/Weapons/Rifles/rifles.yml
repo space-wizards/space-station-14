@@ -5,7 +5,7 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: BallisticMagazineWeapon
     caliber: A762mm
     magazines:
@@ -30,7 +30,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/ak.rsi
     state: ak-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: true
@@ -63,7 +63,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/black-ak.rsi
     state: black-ak-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: true
@@ -96,7 +96,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/carbine.rsi
     state: carbine-5
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 1.5
     automatic: true
@@ -129,7 +129,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/dallas.rsi
     state: dallas-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: true
@@ -163,7 +163,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/ih_heavyrifle.rsi
     state: ih_heavyrifle-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 1.5
     automatic: true

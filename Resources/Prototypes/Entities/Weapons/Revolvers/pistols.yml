@@ -4,7 +4,7 @@
 #  id: revolver_base
 #  description: A rooty tooty point and shooty.
 #  components:
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: BallisticMagazineWeapon
 #    caliber: A357
 #    magazines:
@@ -30,7 +30,7 @@
 #  - type: Icon
 #    sprite: Objects/Guns/revolvers/inspector.rsi
 #    state: inspector-0
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: RangedWeapon
 #    spreadstddev: 2
 #    automatic: false
@@ -65,7 +65,7 @@
 #  - type: Icon
 #    sprite: Objects/Guns/revolvers/mateba.rsi
 #    state: mateba-1
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: RangedWeapon
 #    spreadstddev: 2
 #    automatic: false
@@ -100,7 +100,7 @@
 #  - type: Icon
 #    sprite: Objects/Guns/revolvers/revolver.rsi
 #    state: revolver-1
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: RangedWeapon
 #    spreadstddev: 2
 #    automatic: false

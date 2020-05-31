@@ -46,4 +46,4 @@
     - type: StorageVisualizer2D
       state_open: crate_open
       state_closed: crate_door
-  - type: Sound
+  - type: LoopingSound

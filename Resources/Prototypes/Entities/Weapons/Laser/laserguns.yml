@@ -27,7 +27,7 @@
     visuals:
     - type: HitscanWeaponVisualizer2D
       prefix: laser_retro
-  - type: Sound
+  - type: LoopingSound
 
 - type: entity
   name: laser cannon

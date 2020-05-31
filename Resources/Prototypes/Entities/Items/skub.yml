@@ -16,7 +16,7 @@
     sprite: Objects/Misc/skub.rsi
   - type: ItemCooldown
 
-  - type: Sound
+  - type: LoopingSound
   - type: EmitSoundOnUse
     sound: /Audio/items/skub.ogg
 

@@ -150,7 +150,7 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25, -0.25, 0.25, 0.3"
-  - type: Sound
+  - type: LoopingSound
 
 - type: entity
   id: SMES

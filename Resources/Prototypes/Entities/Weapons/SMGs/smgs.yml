@@ -5,7 +5,7 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 8
@@ -65,7 +65,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/ih_smg.rsi
     state: ih_smg-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 16
@@ -97,7 +97,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/ih_smg_s.rsi
     state: ih_smg_s-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 16
@@ -130,7 +130,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/mac.rsi
     state: mac-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 16
@@ -162,7 +162,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/saber.rsi
     state: saber-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 12
@@ -194,7 +194,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/wt550.rsi
     state: wt550-5
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 3.5
     automatic: true

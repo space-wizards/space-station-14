@@ -11,7 +11,7 @@
   - type: Pourable
     transferAmount: 5
   - type: Drink
-  - type: Sound
+  - type: LoopingSound
   - type: Sprite
     state: icon
   - type: Icon

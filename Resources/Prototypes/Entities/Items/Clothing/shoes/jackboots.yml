@@ -10,7 +10,7 @@
     sprite: Clothing/Shoes/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/jackboots.rsi
-  - type: Sound
+  - type: LoopingSound
   - type: FootstepModifier
     footstepSoundCollection: footstep_heavy
 

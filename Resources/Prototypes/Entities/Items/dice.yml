@@ -5,7 +5,7 @@
   abstract: true
   components:
   - type: Dice
-  - type: Sound
+  - type: LoopingSound
 
 - type: entity
   name: "d100"

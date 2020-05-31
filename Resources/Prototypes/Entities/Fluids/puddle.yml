@@ -12,7 +12,7 @@
   - type: Puddle
     spill_sound: /Audio/effects/Fluids/splat.ogg
     recolor: true
-  - type: Sound
+  - type: LoopingSound
   - type: InteractionOutline
   - type: Clickable
   - type: Collidable
