@@ -13,6 +13,7 @@ namespace Content.Shared.GameObjects.Components.Instruments
         public const int MaxMidiEventsPerSecond = 1000;
         public const int MaxMidiEventsPerBatch = 60;
         public const int MaxMidiBatchDropped = 20;
+        public const int MaxMidiLaggedBatches = 36;
 
         public override string Name => "Instrument";
         public override uint? NetID => ContentNetIDs.INSTRUMENTS;

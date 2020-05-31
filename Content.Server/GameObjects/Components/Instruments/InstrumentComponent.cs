@@ -15,6 +15,7 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
@@ -32,7 +33,11 @@ namespace Content.Server.GameObjects.Components.Instruments
     {
 #pragma warning disable 649
         [Dependency] private IServerNotifyManager _notifyManager;
+
+        [Dependency] private ILogManager _logger;
 #pragma warning restore 649
+
+        private ISawmill _midiSawmill;
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -110,6 +115,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(InstrumentUiKey.Key);
             _userInterface.OnClosed += UserInterfaceOnClosed;
+            _midiSawmill = _logger.GetSawmill("midi");
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -137,12 +143,46 @@ namespace Content.Server.GameObjects.Components.Instruments
                         midiEventMsg.MidiEvent.Length <= MaxMidiEventsPerBatch)
                         SendNetworkMessage(midiEventMsg);
                     else
-                        _batchesDropped++; // Batch dropped!
+                    {
+                        _batchesDropped++;
+                        switch (_batchesDropped)
+                        {
+                            case 1:
+                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                    "You are fumbling some notes!");
+                                break;
+                            case (int)(MaxMidiBatchDropped * (1/3d)) + 1:
+                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                    "You've fumbled a lots of notes!");
+                                break;
+                            case (int)(MaxMidiBatchDropped * (2/3d)) + 1:
+                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                    "You've fumbled a ton of notes, you can't play like this!");
+                                break;
+                        }
+                    }
 
 
                     var minTick = midiEventMsg.MidiEvent.Min(x => x.Tick);
-                    if (_lastSequencerTick >= minTick)
+                    if (_lastSequencerTick != 0 && _lastSequencerTick >= minTick)
+                    {
                         _laggedBatches++;
+                        switch (_laggedBatches)
+                        {
+                            case 1:
+                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                    "You feel a cramp starting to build in your fingers!");
+                                break;
+                            case (int)(MaxMidiLaggedBatches * (1/3d)) + 1:
+                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                    "Your fingers are beginning to a cramp a little!");
+                                break;
+                            case (int)(MaxMidiLaggedBatches * (2/3d)) + 1:
+                                _notifyManager.PopupMessage(Owner, InstrumentPlayer.AttachedEntity,
+                                    "Your fingers are seriously cramping up!");
+                                break;
+                        }
+                    }
 
                     var maxTick = midiEventMsg.MidiEvent.Max(x => x.Tick);
                     _lastSequencerTick = maxTick;
@@ -233,8 +273,8 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
                 InstrumentPlayer = null;
 
-            if ((_batchesDropped+_laggedBatches) > MaxMidiBatchDropped
-
+            if ((_batchesDropped > MaxMidiBatchDropped
+                || _laggedBatches > MaxMidiLaggedBatches)
                 && InstrumentPlayer != null)
             {
                 _batchesDropped = 0;
