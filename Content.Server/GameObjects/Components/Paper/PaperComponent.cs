@@ -32,8 +32,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             _userInterface.SetState(new PaperBoundUserInterfaceState(_content, _mode));
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
+            if (!inDetailsRange)
+                return;
+
             message.AddMarkup(_content);
         }
 

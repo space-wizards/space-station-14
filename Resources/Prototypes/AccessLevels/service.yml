@@ -1,2 +1,11 @@
 - type: accessLevel
   id: Service
+<<<<<<< HEAD
+=======
+
+- type: accessLevel
+  id: Janitor
+
+- type: accessLevel
+  id: Theatre
+>>>>>>> master

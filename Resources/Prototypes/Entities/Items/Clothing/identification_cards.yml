@@ -51,7 +51,11 @@
   - type: IdCard
     jobTitle: Captain
   - type: Access
+<<<<<<< HEAD:Resources/Prototypes/Entities/Items/Clothing/identification_cards.yml
     tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]
+=======
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel"]
+>>>>>>> master:Resources/Prototypes/Entities/Items/Clothing/IDs.yml
 
 - type: entity
   parent: IDCardStandard
@@ -223,7 +227,11 @@
   - type: IdCard
     jobTitle: Head of Personnel
   - type: Access
+<<<<<<< HEAD:Resources/Prototypes/Entities/Items/Clothing/identification_cards.yml
     tags: ["Maintenance", "Cargo", "Security", "Service","Command"]
+=======
+    tags: ["Maintenance", "Cargo", "Security", "Service", "Command", "HeadOfPersonnel", "Janitor"]
+>>>>>>> master:Resources/Prototypes/Entities/Items/Clothing/IDs.yml
 
 - type: entity
   parent: IDCardStandard
@@ -318,4 +326,8 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
+<<<<<<< HEAD:Resources/Prototypes/Entities/Items/Clothing/identification_cards.yml
     tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External"]
+=======
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel"]
+>>>>>>> master:Resources/Prototypes/Entities/Items/Clothing/IDs.yml

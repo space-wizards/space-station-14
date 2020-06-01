@@ -48,6 +48,7 @@
 - type: entity
   name: Portal
   id: Portal
+  abstract: true
   description: "Portal to another location"
   components:
   - type: Collidable

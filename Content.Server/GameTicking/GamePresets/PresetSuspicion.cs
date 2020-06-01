@@ -19,7 +19,6 @@ namespace Content.Server.GameTicking.GamePresets
     public class PresetSuspicion : GamePreset
     {
 #pragma warning disable 649
-        [Dependency] private readonly ISandboxManager _sandboxManager;
         [Dependency] private readonly IChatManager _chatManager;
         [Dependency] private readonly IGameTicker _gameTicker;
         [Dependency] private readonly IRobustRandom _random;

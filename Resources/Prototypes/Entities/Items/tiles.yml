@@ -1,29 +1,47 @@
 - type: entity
-  name: Carpet Floor Tile
   parent: BaseItem
-  id: FloorTileItemCarpet
-  description: Those could work as a pretty decent throwing weapon.
+  id: FloorTileItemBase
+  description: These could work as a pretty decent throwing weapon.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
+    state: tile_steel
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
-  - type: Item
-    Size: 25
+    state: tile_steel
   - type: FloorTile
-    output: floor_carpet
+    output: floor_steel
   - type: Stack
-    stacktype: FloorTileCarpet
+    stacktype: FloorTileSteel
     count: 1
     max: 8
 
 - type: entity
+  name: Steel Floor Tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteel
+
+- type: entity
+  name: Carpet Floor Tile
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpet
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_carpet
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_carpet
+  - type: FloorTile
+    output: floor_carpet
+  - type: Stack
+    stacktype: FloorTileCarpet
+
+- type: entity
   name: Wood Floor Tile
-  parent: BaseItem
+  parent: FloorTileItemBase
   id: FloorTileItemWood
-  description: Those could work as a pretty decent throwing weapon.
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
@@ -31,8 +49,6 @@
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_wood
-  - type: Item
-    Size: 25
   - type: FloorTile
     output: floor_wood
   - type: Stack
@@ -42,9 +58,8 @@
 
 - type: entity
   name: White Floor Tile
-  parent: BaseItem
+  parent: FloorTileItemBase
   id: FloorTileItemWhite
-  description: Those could work as a pretty decent throwing weapon.
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
@@ -52,8 +67,6 @@
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
-  - type: Item
-    Size: 25
   - type: FloorTile
     output: floor_white
   - type: Stack
@@ -63,9 +76,8 @@
 
 - type: entity
   name: Dark Floor Tile
-  parent: BaseItem
+  parent: FloorTileItemBase
   id: FloorTileItemDark
-  description: Those could work as a pretty decent throwing weapon.
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
@@ -73,8 +85,6 @@
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark
-  - type: Item
-    Size: 25
   - type: FloorTile
     output: floor_dark
   - type: Stack
@@ -83,22 +93,29 @@
     max: 8
 
 - type: entity
-  name: Steel Floor Tile
-  parent: BaseItem
-  id: FloorTileItemSteel
-  description: Those could work as a pretty decent throwing weapon.
+  name: Floor Tile Techmaint
+  parent: FloorTileItemBase
+  id: FloorTileItemTechmaint
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
+    state: tile_dark_techfloor_grid
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
-  - type: Item
-    Size: 25
+    state: tile_dark_techfloor_grid
   - type: FloorTile
-    output: floor_steel
-  - type: Stack
-    stacktype: FloorTileSteel
-    count: 1
-    max: 8
+    output: floor_techmaint
+
+- type: entity
+  name: Floor Tile Freezer
+  parent: FloorTileItemBase
+  id: FloorTileItemFreezer
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_cafe #this is close enough for now.
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_cafe
+  - type: FloorTile
+    output: floor_freezer

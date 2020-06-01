@@ -1,0 +1,35 @@
+- type: job
+  id: HeadOfPersonnel
+  name: "Head Of Personnel"
+  head: true
+  positions: 1
+  startingGear: HoPGear
+  department:
+  - Command
+  - Civilian
+  icon: "HeadOfPersonnel"
+  access:
+  - Command
+<<<<<<< HEAD:Resources/Prototypes/Jobs/Command/HeadOfPersonnel.yml
+  - IdCard
+=======
+  - HeadOfPersonnel
+>>>>>>> master:Resources/Prototypes/Jobs/Command/head_of_personnel.yml
+  - Security # HoPcurity strikes again
+  - Service
+  - Cargo
+  - Maintenance
+<<<<<<< HEAD:Resources/Prototypes/Jobs/Command/HeadOfPersonnel.yml
+=======
+  - Janitor
+>>>>>>> master:Resources/Prototypes/Jobs/Command/head_of_personnel.yml
+  # I mean they'll give themselves the rest of the access levels *anyways*.
+
+- type: startingGear
+  id: HoPGear
+  equipment:
+    innerclothing: UniformHoP
+    backpack: BackpackClothing
+    shoes: ShoesBrown
+    head: HatHopcap
+    idcard: HoPPDA

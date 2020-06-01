@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
@@ -26,22 +28,22 @@ namespace Content.Server.GameObjects.Components.Access
         /// <param name="entity">The entity to be searched for access.</param>
         public bool IsAllowed(IEntity entity)
         {
-            var accessProvider = FindAccessProvider(entity);
-            return accessProvider != null && IsAllowed(accessProvider);
+            var tags = FindAccessTags(entity);
+            return tags != null && IsAllowed(tags);
         }
 
-        private bool IsAllowed(AccessComponent accessProvider)
+        private bool IsAllowed(List<string> accessTags)
         {
             foreach (var sufficient in _sufficientTags)
             {
-                if (accessProvider.Tags.Contains(sufficient))
+                if (accessTags.Contains(sufficient))
                 {
                     return true;
                 }
             }
             foreach (var necessary in _necessaryTags)
             {
-                if (!accessProvider.Tags.Contains(necessary))
+                if (!accessTags.Contains(necessary))
                 {
                     return false;
                 }
@@ -50,20 +52,20 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         [CanBeNull]
-        private static AccessComponent FindAccessProvider(IEntity entity)
+        private static List<string> FindAccessTags(IEntity entity)
         {
-            if (entity.TryGetComponent(out AccessComponent accessComponent))
+            if (entity.TryGetComponent(out IAccess accessComponent))
             {
-                return accessComponent;
+                return accessComponent.GetTags();
             }
 
             if (entity.TryGetComponent(out IHandsComponent handsComponent))
             {
                 var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                 if (activeHandEntity != null &&
-                    activeHandEntity.TryGetComponent(out AccessComponent handAccessComponent))
+                    activeHandEntity.TryGetComponent(out IAccess handAccessComponent))
                 {
-                    return handAccessComponent;
+                    return handAccessComponent.GetTags();
                 }
             }
             else
@@ -74,10 +76,10 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent item) &&
-                    item.Owner.TryGetComponent(out AccessComponent idAccessComponent)
+                    item.Owner.TryGetComponent(out IAccess idAccessComponent)
                     )
                 {
-                    return idAccessComponent;
+                    return idAccessComponent.GetTags();
                 }
             }
             return null;

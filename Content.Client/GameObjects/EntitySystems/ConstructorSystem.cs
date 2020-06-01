@@ -6,6 +6,7 @@ using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -24,11 +25,19 @@ namespace Content.Client.GameObjects.EntitySystems
             base.Initialize();
 
             var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenCraftingMenu,
-                new PointerInputCmdHandler(HandleOpenCraftingMenu));
 
-            inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
-                new PointerInputCmdHandler(HandleUse));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenCraftingMenu,
+                    new PointerInputCmdHandler(HandleOpenCraftingMenu))
+                .Bind(EngineKeyFunctions.Use,
+                    new PointerInputCmdHandler(HandleUse))
+                .Register<ConstructorSystem>();
+        }
+
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<ConstructorSystem>();
+            base.Shutdown();
         }
 
         private bool HandleOpenCraftingMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)

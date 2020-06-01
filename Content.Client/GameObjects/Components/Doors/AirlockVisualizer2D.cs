@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.Components.Wires;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Client.Animations;
@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Doors
             var closeSound = node.GetNode("close_sound").AsString();
             var denySound = node.GetNode("deny_sound").AsString();
 
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -49,7 +49,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);

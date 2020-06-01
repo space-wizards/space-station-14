@@ -1,2 +1,10 @@
 - type: accessLevel
+<<<<<<< HEAD
+<<<<<<< HEAD:Resources/Prototypes/AccessLevels/medical.yml
   id: Medical
+=======
+  id: External
+>>>>>>> master:Resources/Prototypes/AccessLevels/external.yml
+=======
+  id: Medical
+>>>>>>> master

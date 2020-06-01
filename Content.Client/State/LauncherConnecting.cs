@@ -48,7 +48,6 @@ namespace Content.Client.State
 
             var address = _gameController.LaunchState.Ss14Address ?? _gameController.LaunchState.ConnectAddress;
 
-            VBoxContainer disconnected;
             _control = new Control
             {
                 Stylesheet = _stylesheetManager.SheetSpace,
