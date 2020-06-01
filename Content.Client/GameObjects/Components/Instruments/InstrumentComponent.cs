@@ -234,9 +234,9 @@ namespace Content.Client.GameObjects.Components.Instruments
                         return;
                     }
 
-                    // scale the delay up with 3sqrt of client lag, min of 60ms up to 2s
-                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f) * 3;
-                    _sequenceDelaySeconds = Math.Max(0.06f, Math.Max(_sequenceDelaySeconds, Math.Min(2f, sqrtLag)));
+                    // scale the delay up with 2sqrt of client lag, min of 60ms up to 3s
+                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f) * 2;
+                    _sequenceDelaySeconds = Math.Max(0.06f, Math.Max(_sequenceDelaySeconds, Math.Min(3f, sqrtLag)));
 
                     /*
                     var delta = Math.Max((uint) (_renderer!.SequencerTimeScale * _sequenceDelaySeconds)
@@ -363,7 +363,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             _midiEventBuffer.Add(midiEvent);
         }
 
-        private TimeSpan _lastMeasuredInterval = TimeSpan.MinValue;
+        private TimeSpan _lastMeasured = TimeSpan.MinValue;
 
         private int _sentWithinASec = 0;
 
@@ -380,9 +380,9 @@ namespace Content.Client.GameObjects.Components.Instruments
             var now = _gameTiming.RealTime;
             var oneSecAGo = now.Add(OneSecAgo);
 
-            if (_lastMeasuredInterval <= oneSecAGo)
+            if (_lastMeasured <= oneSecAGo)
             {
-                _lastMeasuredInterval = now;
+                _lastMeasured = now;
                 _sentWithinASec = 0;
             }
 
