@@ -5,6 +5,7 @@ using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -32,6 +33,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         bool TryAssignGroupIfNeeded();
 
+        void StartSpreadingGroup();
+
         void SpreadGroup();
 
         void ClearNodeGroup();
@@ -45,14 +48,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
-        private INodeGroup _nodeGroup = NullGroup;
+        private INodeGroup _nodeGroup = BaseNodeGroup.Null;
 
         [ViewVariables]
         public IEntity Owner { get; private set; }
 
         public bool NeedsGroup { get; private set; } = true;
-
-        private static readonly INodeGroup NullGroup = new NullNodeGroup();
 
 #pragma warning disable 649
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
@@ -85,6 +86,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             return true;
         }
 
+        public void StartSpreadingGroup()
+        {
+            NodeGroup.BeforeRemakeSpread(); 
+            SpreadGroup();
+            NodeGroup.AfterRemakeSpread();
+        }
+
         public void SpreadGroup()
         {
             Debug.Assert(!NeedsGroup);
@@ -97,7 +105,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void ClearNodeGroup()
         {
-            _nodeGroup = NullGroup;
+            _nodeGroup = BaseNodeGroup.Null;
             NeedsGroup = true;
         }
 
@@ -138,19 +146,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup MakeNewGroup()
         {
             return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
-        }
-
-        private class NullNodeGroup : INodeGroup
-        {
-            public IReadOnlyList<INode> Nodes => _nodes;
-            private readonly List<INode> _nodes = new List<INode>();
-
-            public void AddNode(INode node) { }
-            public void CombineGroup(INodeGroup group) { }
-            public void RemakeGroup() { }
-            public void RemoveNode(INode node) { }
-            public void BeforeCombine() { }
-            public void AfterCombine() { }
         }
     }
 }

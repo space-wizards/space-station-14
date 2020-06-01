@@ -16,12 +16,10 @@ namespace Content.Server.GameObjects.Components.NewPower
 
         [ViewVariables]
         public IPowerNet PowerNet { get => _powerNet; set => SetPowerNet(value); }
-        private IPowerNet _powerNet = NullNet;
+        private IPowerNet _powerNet = PowerNetNodeGroup.NullNet;
 
         [ViewVariables]
         private bool _needsPowerNet = true;
-
-        private static readonly IPowerNet NullNet = new NullPowerNet();
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -55,7 +53,7 @@ namespace Content.Server.GameObjects.Components.NewPower
         public void ClearPowerNet()
         {
             RemoveSelfFromNet(_powerNet);
-            _powerNet = NullNet;
+            _powerNet = PowerNetNodeGroup.NullNet;
             _needsPowerNet = true;
         }
 
@@ -96,17 +94,6 @@ namespace Content.Server.GameObjects.Components.NewPower
             ClearPowerNet();
             _voltage = newVoltage;
             TryFindAndSetPowerNet();
-        }
-
-        private class NullPowerNet : IPowerNet
-        {
-            public void AddConsumer(PowerConsumerComponent consumer) { }
-            public void AddSupplier(PowerSupplierComponent supplier) { }
-            public void UpdateSupplierSupply(PowerSupplierComponent supplier, int oldSupplyRate, int newSupplyRate) { }
-            public void RemoveConsumer(PowerConsumerComponent consumer) { }
-            public void RemoveSupplier(PowerSupplierComponent supplier) { }
-            public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate) { }
-            public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority) { }
         }
     }
 

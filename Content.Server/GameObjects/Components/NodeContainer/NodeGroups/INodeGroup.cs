@@ -16,21 +16,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         void RemoveNode(INode node);
 
-        void CombineGroup(INodeGroup group);
-
-        /// <summary>
-        ///     Causes all <see cref="INode"/>s to remake their groups. Called when a <see cref="INode"/> is removed
-        ///     and may have split a group in two, so multiple new groups may need to be formed.
-        /// </summary>
-        void RemakeGroup();
+        void CombineGroup(INodeGroup newGroup);
 
         void BeforeCombine();
 
         void AfterCombine();
+
+        void BeforeRemakeSpread();
+
+        void AfterRemakeSpread();
     }
 
     [NodeGroup(NodeGroupID.Default)]
-    public class NodeGroup : INodeGroup
+    public class BaseNodeGroup : INodeGroup
     {
         [ViewVariables]
         public IReadOnlyList<INode> Nodes => _nodes;
@@ -38,6 +36,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         [ViewVariables]
         public int NodeCount => Nodes.Count;
+
+        public static readonly INodeGroup Null = new NullNodeGroup();
 
         public void AddNode(INode node)
         {
@@ -69,8 +69,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             newGroup.AfterCombine();
         }
 
-        // <inheritdoc cref="INodeGroup"/>
-        public void RemakeGroup()
+        /// <summary>
+        ///     Causes all <see cref="INode"/>s to remake their groups. Called when a <see cref="INode"/> is removed
+        ///     and may have split a group in two, so multiple new groups may need to be formed.
+        /// </summary>
+        private void RemakeGroup()
         {
             BeforeRemake();
             foreach (var node in Nodes)
@@ -81,7 +84,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (node.TryAssignGroupIfNeeded())
                 {
-                    node.SpreadGroup();
+                    node.StartSpreadingGroup();
                 }
             }
         }
@@ -97,5 +100,22 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public virtual void BeforeCombine() { }
 
         public virtual void AfterCombine() { }
+
+        public virtual void BeforeRemakeSpread() { }
+
+        public virtual void AfterRemakeSpread() { }
+
+        private class NullNodeGroup : INodeGroup
+        {
+            public IReadOnlyList<INode> Nodes => _nodes;
+            private readonly List<INode> _nodes = new List<INode>();
+            public void AddNode(INode node) { }
+            public void CombineGroup(INodeGroup newGroup) { }
+            public void RemoveNode(INode node) { }
+            public void BeforeCombine() { }
+            public void AfterCombine() { }
+            public void BeforeRemakeSpread() { }
+            public void AfterRemakeSpread() { }
+        }
     }
 }

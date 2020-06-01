@@ -8,9 +8,6 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
-    /// <summary>
-    ///     Interface for null object of <see cref="PowerNetNodeGroup"/>
-    /// </summary>
     public interface IPowerNet
     {
         void AddSupplier(PowerSupplierComponent supplier);
@@ -29,7 +26,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     }
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower, NodeGroupID.LVPower)]
-    public class PowerNetNodeGroup : NodeGroup, IPowerNet
+    public class PowerNetNodeGroup : BaseNodeGroup, IPowerNet
     {
         private readonly Dictionary<INode, List<BasePowerComponent>> _powerComponents = new Dictionary<INode, List<BasePowerComponent>>();
 
@@ -46,6 +43,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private readonly Dictionary<Priority, int> _drawByPriority = new Dictionary<Priority, int>();
 
         private bool _supressPowerRecalculation = false;
+
+        public static readonly IPowerNet NullNet = new NullPowerNet();
 
         public PowerNetNodeGroup()
         {
@@ -78,17 +77,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _powerComponents.Remove(node);
         }
 
-        protected override void BeforeRemake()
-        {
-            _supressPowerRecalculation = true;
-        }
-
-        protected override void AfterRemake()
-        {
-            _supressPowerRecalculation = false;
-            UpdateConsumerReceivedPower();
-        }
-
         public override void BeforeCombine()
         {
             _supressPowerRecalculation = true;
@@ -100,7 +88,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             UpdateConsumerReceivedPower();
         }
 
-        #region IPowerNet
+        protected override void BeforeRemake()
+        {
+            _supressPowerRecalculation = true;
+        }
+
+        public override void BeforeRemakeSpread()
+        {
+            _supressPowerRecalculation = true;
+        }
+
+        public override void AfterRemakeSpread()
+        {
+            _supressPowerRecalculation = false;
+            UpdateConsumerReceivedPower();
+        }
+
+        #region IPowerNet Methods
 
         public void AddSupplier(PowerSupplierComponent supplier)
         {
@@ -183,6 +187,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _drawByPriority[oldPriority] -= consumer.DrawRate;
             _consumersByPriority[newPriority].Add(consumer);
             _drawByPriority[newPriority] += consumer.DrawRate;
+        }
+
+        private class NullPowerNet : IPowerNet
+        {
+            public void AddConsumer(PowerConsumerComponent consumer) { }
+            public void AddSupplier(PowerSupplierComponent supplier) { }
+            public void UpdateSupplierSupply(PowerSupplierComponent supplier, int oldSupplyRate, int newSupplyRate) { }
+            public void RemoveConsumer(PowerConsumerComponent consumer) { }
+            public void RemoveSupplier(PowerSupplierComponent supplier) { }
+            public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate) { }
+            public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority) { }
         }
 
         #endregion
