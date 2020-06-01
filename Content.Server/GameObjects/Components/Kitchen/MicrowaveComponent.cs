@@ -277,10 +277,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     solidsDict.Add(item.Prototype.ID, 1);
                 }
             }
+            var failState = MicrowaveSuccessState.RecipeFail;
 
+            if(!_recipeManager.SolidAppears(solidsDict.Keys.ToArray()))
+            {
+                failState = MicrowaveSuccessState.UnwantedForeignObject;
+            }
             // Check recipes
             FoodRecipePrototype recipeToCook = null;
-            foreach (var r in _recipeManager.Recipes.Where(r => CanSatisfyRecipe(r, solidsDict)))
+            foreach (var r in _recipeManager.Recipes.Where(r => CanSatisfyRecipe(r, solidsDict) == MicrowaveSuccessState.RecipePass))
             {
                 recipeToCook = r;
             }
@@ -288,7 +293,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var goodMeal = (recipeToCook != null)
                            &&
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
-
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.Play(_startCookingSound, Owner, AudioParams.Default);
             Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
@@ -297,6 +301,14 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     return;
                 }
+
+                if(failState == MicrowaveSuccessState.UnwantedForeignObject)
+                {
+                    VaporizeReagents();
+                    EjectSolids();
+                    goto Finish;
+                }
+
                 if (goodMeal)
                 {
                     SubtractContents(recipeToCook);
@@ -312,9 +324,10 @@ namespace Content.Server.GameObjects.Components.Kitchen
                     var entityToSpawn = goodMeal ? recipeToCook.Result : _badRecipeName;
                     _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
                 }
-                _audioSystem.Play(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
-                SetAppearance(MicrowaveVisualState.Idle);
-                _busy = false;
+                Finish:
+                    _audioSystem.Play(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
+                    SetAppearance(MicrowaveVisualState.Idle);
+                    _busy = false;
 
                 _uiDirty = true;
             });
@@ -385,18 +398,18 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         }
 
-        private bool CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
+        private MicrowaveSuccessState CanSatisfyRecipe(FoodRecipePrototype recipe, Dictionary<string,int> solids)
         {
             foreach (var reagent in recipe.IngredientsReagents)
             {
                 if (!_solution.ContainsReagent(reagent.Key, out var amount))
                 {
-                    return false;
+                    return MicrowaveSuccessState.RecipeFail;
                 }
 
                 if (amount.Int() < reagent.Value)
                 {
-                    return false;
+                    return MicrowaveSuccessState.RecipeFail;
                 }
             }
 
@@ -404,16 +417,17 @@ namespace Content.Server.GameObjects.Components.Kitchen
             {
                 if (!solids.ContainsKey(solid.Key))
                 {
-                    return false;
+                    return MicrowaveSuccessState.RecipeFail;
                 }
 
                 if (solids[solid.Key] < solid.Value)
                 {
-                    return false;
+                    return MicrowaveSuccessState.RecipeFail;
                 }
             }
 
-            return true;
+
+            return MicrowaveSuccessState.RecipePass;
         }
 
         private void ClickSound()
