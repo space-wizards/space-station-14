@@ -29,7 +29,7 @@ namespace Content.Server.PDA
             foreach (var item in _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>())
             {
                 var newListing = new UplinkListingData(item.ListingName, item.ItemId, item.Price, item.Category,
-                    item.Description, item.DisplayColor);
+                    item.Description);
 
                 RegisterUplinkListing(newListing);
             }
