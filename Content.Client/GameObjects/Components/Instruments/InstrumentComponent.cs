@@ -37,13 +37,13 @@ namespace Content.Client.GameObjects.Components.Instruments
         public event Action OnMidiPlaybackEnded;
 
 #pragma warning disable 649
-        [Dependency] private IMidiManager _midiManager;
+        [Dependency] private readonly IMidiManager _midiManager;
 
-        [Dependency] private IGameTiming _gameTiming;
+        [Dependency] private readonly IGameTiming _gameTiming;
 
-        [Dependency] private ILogManager _logger;
+        [Dependency] private readonly ILogManager _logger;
 
-        [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IClientNetManager _netManager;
 #pragma warning restore 649
 
         private ISawmill _midiSawmill;
@@ -234,8 +234,8 @@ namespace Content.Client.GameObjects.Components.Instruments
                         return;
                     }
 
-                    // scale the delay up with sqrt of client lag, min of 60ms up to 2s
-                    var sqrtLag = MathF.Sqrt(_playerManager.LocalPlayer.Session.Ping / 1000f);
+                    // scale the delay up with 3sqrt of client lag, min of 60ms up to 2s
+                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f) * 3;
                     _sequenceDelaySeconds = Math.Max(0.06f, Math.Max(_sequenceDelaySeconds, Math.Min(2f, sqrtLag)));
 
                     /*
