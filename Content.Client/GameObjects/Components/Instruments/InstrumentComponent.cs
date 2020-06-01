@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using NFluidsynth;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
+using Robust.Client.Player;
 using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
@@ -28,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent
     {
 
-        private const float SequenceDelaySeconds = .4f;
+        private const float SequenceDelaySecondsDefault = .1f;
 
         /// <summary>
         ///     Called when a midi song stops playing.
@@ -41,6 +42,8 @@ namespace Content.Client.GameObjects.Components.Instruments
         [Dependency] private IGameTiming _gameTiming;
 
         [Dependency] private ILogManager _logger;
+
+        [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
         private ISawmill _midiSawmill;
@@ -49,14 +52,18 @@ namespace Content.Client.GameObjects.Components.Instruments
         private IMidiRenderer _renderer;
 
         private byte _instrumentProgram = 1;
+
         private byte _instrumentBank = 0;
-        private uint _syncSequencerTick;
+
+        private float _sequenceDelaySeconds = SequenceDelaySecondsDefault;
+
+        private uint _sequenceStartTick;
 
         /// <summary>
         ///     A queue of MidiEvents to be sent to the server.
         /// </summary>
         [ViewVariables]
-        private List<MidiEvent> _midiQueue = new List<MidiEvent>();
+        private readonly List<MidiEvent> _midiEventBuffer = new List<MidiEvent>();
 
         /// <summary>
         ///     Whether a midi song will loop or not.
@@ -133,11 +140,12 @@ namespace Content.Client.GameObjects.Components.Instruments
             _midiSawmill = _logger.GetSawmill("midi");
         }
 
-        protected void SetupRenderer()
+        protected void SetupRenderer(bool fromStateChange = false)
         {
-            if (IsRendererAlive)
-                return;
+            if (IsRendererAlive) return;
 
+            _sequenceDelaySeconds = SequenceDelaySecondsDefault;
+            _sequenceStartTick = 0;
             _midiManager.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
             _renderer = _midiManager.GetNewRenderer();
 
@@ -149,19 +157,29 @@ namespace Content.Client.GameObjects.Components.Instruments
                 _renderer.OnMidiPlayerFinished += () =>
                 {
                     OnMidiPlaybackEnded?.Invoke();
-                    EndRenderer();
-                    SendNetworkMessage(new InstrumentStopMidiMessage());
+                    EndRenderer(fromStateChange);
                 };
+            }
+
+            if (!fromStateChange)
+            {
+                SendNetworkMessage(new InstrumentStartMidiMessage());
             }
         }
 
-        protected void EndRenderer()
+        protected void EndRenderer(bool fromStateChange = false)
         {
             if (IsInputOpen)
-                CloseInput();
+            {
+                CloseInput(fromStateChange);
+                return;
+            }
 
             if (IsMidiOpen)
-                CloseMidi();
+            {
+                CloseMidi(fromStateChange);
+                return;
+            }
 
             _renderer?.StopAllNotes();
 
@@ -170,7 +188,12 @@ namespace Content.Client.GameObjects.Components.Instruments
             // We dispose of the synth two seconds from now to allow the last notes to stop from playing.
             Timer.Spawn(2000, () => { renderer?.Dispose(); });
             _renderer = null;
-            _midiQueue.Clear();
+            _midiEventBuffer.Clear();
+
+            if (!fromStateChange)
+            {
+                SendNetworkMessage(new InstrumentStopMidiMessage());
+            }
         }
 
         protected override void Shutdown()
@@ -183,7 +206,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
-            serializer.DataField(ref _instrumentBank, "bank", (byte)0);
+            serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
@@ -193,17 +216,60 @@ namespace Content.Client.GameObjects.Components.Instruments
             switch (message)
             {
                 case InstrumentMidiEventMessage midiEventMessage:
-                    // If we're the ones sending the MidiEvents, we ignore this message.
-                    if (!IsRendererAlive || IsInputOpen || IsMidiOpen) break;
+                    if (IsRendererAlive)
+                    {
+                        // If we're the ones sending the MidiEvents, we ignore this message.
+                        if (IsInputOpen || IsMidiOpen) break;
+                    }
+                    else
+                    {
+                        // if we haven't started or finished some sequence
+                        if (_sequenceStartTick == 0)
+                        {
+                            // we may have arrived late
+                            SetupRenderer(true);
+                        }
+
+                        // might be our own notes after we already finished playing
+                        return;
+                    }
+
+                    // scale the delay up with sqrt of client lag, min of 60ms up to 2s
+                    var sqrtLag = MathF.Sqrt(_playerManager.LocalPlayer.Session.Ping / 1000f);
+                    _sequenceDelaySeconds = Math.Max(0.06f, Math.Max(_sequenceDelaySeconds, Math.Min(2f, sqrtLag)));
+
+                    /*
+                    var delta = Math.Max((uint) (_renderer!.SequencerTimeScale * _sequenceDelaySeconds)
+                        + (ev.Tick - _syncSequencerTick), 0);
+                    */
+
+                    if (_sequenceStartTick <= 0)
+                    {
+                        _sequenceStartTick = midiEventMessage.MidiEvent
+                            .Min(x => x.Tick)-1;
+                    }
+
+                    var delta = (uint) (_renderer!.SequencerTimeScale * _sequenceDelaySeconds);
 
                     foreach (var ev in midiEventMessage.MidiEvent)
                     {
-                        var delta = (uint)(_renderer!.SequencerTimeScale * SequenceDelaySeconds)
-                            + (ev.Tick - _syncSequencerTick);
-                        _renderer?.ScheduleMidiEvent(ev, delta, true);
+                        /*
+                        _renderer?.ScheduleMidiEvent(ev, delta, false);
+                        */
+                        _renderer?.ScheduleMidiEvent(ev, ev.Tick + delta - _sequenceStartTick, true);
                     }
 
                     break;
+                case InstrumentStartMidiMessage startMidiMessage:
+                {
+                    SetupRenderer(true);
+                    break;
+                }
+                case InstrumentStopMidiMessage stopMidiMessage:
+                {
+                    EndRenderer(true);
+                    break;
+                }
             }
         }
 
@@ -214,18 +280,18 @@ namespace Content.Client.GameObjects.Components.Instruments
 
             if (state.Playing)
             {
-                SetupRenderer();
-                _syncSequencerTick = state.SequencerTick;
+                SetupRenderer(true);
             }
             else
-                EndRenderer();
+            {
+                EndRenderer(true);
+            }
         }
 
         /// <inheritdoc cref="MidiRenderer.OpenInput"/>
         public bool OpenInput()
         {
             SetupRenderer();
-            SendNetworkMessage(new InstrumentStartMidiMessage());
 
             if (_renderer != null && _renderer.OpenInput())
             {
@@ -237,15 +303,14 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         /// <inheritdoc cref="MidiRenderer.CloseInput"/>
-        public bool CloseInput()
+        public bool CloseInput(bool fromStateChange = false)
         {
             if (_renderer == null || !_renderer.CloseInput())
             {
                 return false;
             }
 
-            EndRenderer();
-            SendNetworkMessage(new InstrumentStopMidiMessage());
+            EndRenderer(fromStateChange);
             return true;
         }
 
@@ -253,7 +318,6 @@ namespace Content.Client.GameObjects.Components.Instruments
         public bool OpenMidi(string filename)
         {
             SetupRenderer();
-            SendNetworkMessage(new InstrumentStartMidiMessage());
 
             if (_renderer == null || !_renderer.OpenMidi(filename))
             {
@@ -265,15 +329,14 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         /// <inheritdoc cref="MidiRenderer.CloseMidi"/>
-        public bool CloseMidi()
+        public bool CloseMidi(bool fromStateChange = false)
         {
             if (_renderer == null || !_renderer.CloseMidi())
             {
                 return false;
             }
 
-            EndRenderer();
-            SendNetworkMessage(new InstrumentStopMidiMessage());
+            EndRenderer(fromStateChange);
             return true;
         }
 
@@ -283,15 +346,32 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <param name="midiEvent">The received midi event</param>
         private void RendererOnMidiEvent(MidiEvent midiEvent)
         {
-            _midiQueue.Add(midiEvent);
-        }
+            // avoid of out-of-band, unimportant or unsupported events
+            switch (midiEvent.Type)
+            {
+                case 0x80: // NOTE_OFF
+                case 0x90: // NOTE_ON
+                case 0xa0: // KEY_PRESSURE
+                case 0xb0: // CONTROL_CHANGE
+                case 0xd0: // CHANNEL_PRESSURE
+                case 0xe0: // PITCH_BEND
+                    break;
+                default:
+                    return;
+            }
 
+            _midiEventBuffer.Add(midiEvent);
+        }
 
         private TimeSpan _lastMeasuredInterval = TimeSpan.MinValue;
 
         private int _sentWithinASec = 0;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
+
+        private static readonly Comparer<MidiEvent> SortMidiEventTick
+            = Comparer<MidiEvent>.Create((x, y)
+                => x.Tick.CompareTo(y.Tick));
 
         public override void Update(float delta)
         {
@@ -306,25 +386,41 @@ namespace Content.Client.GameObjects.Components.Instruments
                 _sentWithinASec = 0;
             }
 
-            if (_midiQueue.Count == 0) return;
+            if (_midiEventBuffer.Count == 0) return;
 
             var max = Math.Min(MaxMidiEventsPerBatch, MaxMidiEventsPerSecond - _sentWithinASec);
 
             if (max <= 0)
             {
-                // hit event/sec limit
+                // hit event/sec limit, have to lag the batch or drop events
                 return;
             }
 
-            var events = _midiQueue.Distinct().Take(max).ToArray();
+            // fix cross-fade events generating retroactive events
+            // also handle any significant backlog of events after midi finished
 
-            SendNetworkMessage(new InstrumentMidiEventMessage(events));
+            _midiEventBuffer.Sort(SortMidiEventTick);
+            var bufferTicks = IsRendererAlive && _renderer!.Status != MidiRendererStatus.None
+                ? _renderer.SequencerTimeScale * .2f
+                : 0;
+            var bufferedTick = IsRendererAlive
+                ? _renderer!.SequencerTick - bufferTicks
+                : int.MaxValue;
+
+            var events = _midiEventBuffer
+                .TakeWhile(x => x.Tick < bufferedTick)
+                .Take(max)
+                .ToArray();
 
             var eventCount = events.Length;
 
+            if (eventCount == 0) return;
+
+            SendNetworkMessage(new InstrumentMidiEventMessage(events));
+
             _sentWithinASec += eventCount;
 
-            _midiQueue.RemoveRange(0, eventCount);
+            _midiEventBuffer.RemoveRange(0, eventCount);
         }
 
     }
