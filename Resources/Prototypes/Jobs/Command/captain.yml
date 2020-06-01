@@ -11,11 +11,7 @@
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
   - Captain
-<<<<<<< HEAD:Resources/Prototypes/Jobs/Command/Captain.yml
-  - IdCard
-=======
   - HeadOfPersonnel
->>>>>>> master:Resources/Prototypes/Jobs/Command/captain.yml
   - Command
   - Security
   - Engineering

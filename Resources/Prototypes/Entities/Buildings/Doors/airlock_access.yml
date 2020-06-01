@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # Airlocks
 - type: entity
   parent: Airlock
@@ -9,7 +7,6 @@
   - type: AccessReader
     necessary: ["Service"]
 
->>>>>>> master
 - type: entity
   parent: AirlockExternal
   id: AirlockExternalLocked
@@ -25,15 +22,6 @@
   components:
   - type: AccessReader
     necessary: ["Engineering"]
-<<<<<<< HEAD
-- type: entity
-  parent: AirlockEngineeringGlass
-  id: AirlockEngineeringGlassLocked
-  suffix: Glass, Locked
-  components:
-  - type: AccessReader
-    necessary: ["Engineering"]
-=======
 
 - type: entity
   parent: AirlockCargo
@@ -42,7 +30,6 @@
   components:
   - type: AccessReader
     necessary: ["Cargo"]
->>>>>>> master
 
 - type: entity
   parent: AirlockMedical
@@ -51,16 +38,6 @@
   components:
   - type: AccessReader
     necessary: ["Medical"]
-<<<<<<< HEAD
-- type: entity
-  parent: AirlockMedicalGlass
-  id: AirlockMedicalGlassLocked
-  suffix: Medical, Locked
-  components:
-  - type: AccessReader
-    necessary: ["Medical"]
-=======
->>>>>>> master
 
 - type: entity
   parent: AirlockScience
@@ -68,18 +45,7 @@
   suffix: Science, Locked
   components:
   - type: AccessReader
-<<<<<<< HEAD
-    necessary: ["Science"]
-- type: entity
-  parent: AirlockScienceGlass
-  id: AirlockScienceGlassLocked
-  suffix: Science, Locked
-  components:
-  - type: AccessReader
-    necessary: ["Science"]
-=======
     necessary: ["Research"]
->>>>>>> master
 
 - type: entity
   parent: AirlockCommand
@@ -88,8 +54,6 @@
   components:
   - type: AccessReader
     necessary: ["Command"]
-<<<<<<< HEAD
-=======
 
 - type: entity
   parent: AirlockSecurity
@@ -156,7 +120,6 @@
   - type: AccessReader
     necessary: ["Research"]
 
->>>>>>> master
 - type: entity
   parent: AirlockCommandGlass
   id: AirlockCommandGlassLocked
@@ -166,26 +129,12 @@
     necessary: ["Command"]
 
 - type: entity
-<<<<<<< HEAD
-  parent: AirlockSecurity
-  id: AirlockSecurityLocked
-=======
-  parent: AirlockSecurityGlass
-  id: AirlockSecurityGlassLocked
->>>>>>> master
-  suffix: Security, Locked
-  components:
-  - type: AccessReader
-    necessary: ["Security"]
-<<<<<<< HEAD
-- type: entity
   parent: AirlockSecurityGlass
   id: AirlockSecurityGlassLocked
   suffix: Security, Locked
   components:
   - type: AccessReader
     necessary: ["Security"]
-=======
 
 # Maintenance Hatchs
 - type: entity
@@ -259,4 +208,3 @@
   components:
   - type: AccessReader
     necessary: ["Security", "Maintenance"]
->>>>>>> master
