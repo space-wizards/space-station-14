@@ -1,7 +1,7 @@
 - type: entity
   parent: StorageTank
   id: WeldingFuelTank
-  name: Fueltank
+  name: fuel tank
   description: A storage tank containing welding fuel.
   components:
   - type: Sprite
