@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Client.GameObjects.EntitySystems;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -10,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.GameObjects.Components.IconSmoothing
@@ -30,6 +32,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
     {
         private string _smoothKey;
         private string _stateBase;
+        private string _statecolor;
         private IconSmoothingMode _mode;
 
         public override string Name => "IconSmooth";
@@ -41,12 +44,18 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
         /// <summary>
         ///     We will smooth with other objects with the same key.
         /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
         public string SmoothKey => _smoothKey;
 
         /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
         public string StateBase => _stateBase;
+
+        /// <summary>
+        ///     Applies color overlay if defined.
+        /// </summary>
+        public string StateColor => _statecolor;
 
         /// <summary>
         ///     Mode that controls how the icon should be selected.
@@ -71,6 +80,7 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             base.ExposeData(serializer);
 
             serializer.DataFieldCached(ref _stateBase, "base", "");
+            serializer.DataFieldCached(ref _statecolor, "color", null);
             serializer.DataFieldCached(ref _smoothKey, "key", null);
             serializer.DataFieldCached(ref _mode, "mode", IconSmoothingMode.Corners);
         }
@@ -85,22 +95,37 @@ namespace Content.Client.GameObjects.Components.IconSmoothing
             // the hook here would cause a dirty event to fire needlessly
             _lastPosition = (Owner.Transform.GridID, SnapGrid.Position);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new IconSmoothDirtyEvent(Owner,null, SnapGrid.Offset, Mode));
-            if (Mode == IconSmoothingMode.Corners)
+            if (StateBase != "")
             {
-                var state0 = $"{StateBase}0";
-                Sprite.LayerMapSet(CornerLayers.SE, Sprite.AddLayerState(state0));
-                Sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.None);
-                Sprite.LayerMapSet(CornerLayers.NE, Sprite.AddLayerState(state0));
-                Sprite.LayerSetDirOffset(CornerLayers.NE, DirectionOffset.CounterClockwise);
-                Sprite.LayerMapSet(CornerLayers.NW, Sprite.AddLayerState(state0));
-                Sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.Flip);
-                Sprite.LayerMapSet(CornerLayers.SW, Sprite.AddLayerState(state0));
-                Sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
+                if (Mode == IconSmoothingMode.Corners)
+                {
+                    var state0 = $"{StateBase}0";
+                    Sprite.LayerMapSet(CornerLayers.SE, Sprite.AddLayerState(state0));
+                    Sprite.LayerSetDirOffset(CornerLayers.SE, DirectionOffset.None);
+                    Sprite.LayerMapSet(CornerLayers.NE, Sprite.AddLayerState(state0));
+                    Sprite.LayerSetDirOffset(CornerLayers.NE, DirectionOffset.CounterClockwise);
+                    Sprite.LayerMapSet(CornerLayers.NW, Sprite.AddLayerState(state0));
+                    Sprite.LayerSetDirOffset(CornerLayers.NW, DirectionOffset.Flip);
+                    Sprite.LayerMapSet(CornerLayers.SW, Sprite.AddLayerState(state0));
+                    Sprite.LayerSetDirOffset(CornerLayers.SW, DirectionOffset.Clockwise);
+                }
+
+                if (StateColor != null)
+                {
+                    Sprite.LayerSetColor(CornerLayers.SE, Color.FromHex(StateColor));
+                    Sprite.LayerSetColor(CornerLayers.NE, Color.FromHex(StateColor));
+                    Sprite.LayerSetColor(CornerLayers.NW, Color.FromHex(StateColor));
+                    Sprite.LayerSetColor(CornerLayers.SW, Color.FromHex(StateColor));
+                }
             }
         }
 
         internal virtual void CalculateNewSprite()
         {
+            if (StateBase == "")
+            {
+                return;
+            }
             switch (Mode)
             {
                 case IconSmoothingMode.Corners:

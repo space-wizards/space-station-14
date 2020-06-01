@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: LowWall
   name: Low Wall
   description: Goes up to about your waist.
@@ -11,7 +11,6 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    color: "#889192"
     drawdepth: Walls
     sprite: Buildings/low_wall.rsi
 
@@ -33,6 +32,9 @@
   - type: LowWall
     key: walls
     base: metal_
+    color: "#8e989f"
+    overlayColor: "#8e989f"
+    edgeColor: "#8e989f"
 
 - type: entity
   id: LowWallOverlay
@@ -40,6 +42,14 @@
   abstract: true
   components:
   - type: Sprite
-    color: "#889192"
+    drawdepth: WallMountedItems
+    sprite: Buildings/low_wall.rsi
+    
+- type: entity
+  id: LowWallEdgeOverlay
+  name: Low Wall Edge Overlay
+  abstract: true
+  components:
+  - type: Sprite
     drawdepth: WallMountedItems
     sprite: Buildings/low_wall.rsi

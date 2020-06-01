@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: Window
   name: Window
   description: Don't smudge up the glass down there.
@@ -17,6 +17,7 @@
   - type: Icon
     sprite: Buildings/window.rsi
     state: full
+    color: "#74c1ee80"
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -33,6 +34,8 @@
     offset: Center
   - type: Window
     base: window
+    key: walls
+    color: "#74c1ee80"
 
 - type: entity
   id: ReinforcedWindow
@@ -44,6 +47,9 @@
     sprite: Buildings/rwindow.rsi
   - type: Window
     base: rwindow
+    key: walls
+    color: "#74c1ee80"
   - type: Icon
     sprite: Buildings/rwindow.rsi
     state: full
+    color: "#74c1ee80"

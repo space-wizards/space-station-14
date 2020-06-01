@@ -107,6 +107,34 @@
     output: floor_techmaint
 
 - type: entity
+  name: Floor Tile Techmaint
+  parent: FloorTileItemBase
+  id: FloorTileItemTechfloor
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dark_techfloor_grid
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dark_techfloor_grid
+  - type: FloorTile
+    output: floor_techfloor
+
+- type: entity
+  name: Floor Tile Techmaint
+  parent: FloorTileItemBase
+  id: FloorTileItemTechgrid
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dark_techfloor_grid
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dark_techfloor_grid
+  - type: FloorTile
+    output: floor_techfloor_grid
+
+- type: entity
   name: Floor Tile Freezer
   parent: FloorTileItemBase
   id: FloorTileItemFreezer

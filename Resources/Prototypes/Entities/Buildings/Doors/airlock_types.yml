@@ -8,6 +8,8 @@
     sprite: Buildings/Doors/airlock_external.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_external.rsi
+  - type: IconSmooth
+    key: walls
   - type: Appearance
     visuals:
     - type: AirlockVisualizer2D
@@ -25,16 +27,20 @@
     sprite: Buildings/Doors/airlock_engineering.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: Airlock
   id: AirlockCargo
-  suffix: Cargo 
+  suffix: Cargo
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_cargo.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_cargo.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: Airlock
@@ -45,6 +51,8 @@
     sprite: Buildings/Doors/airlock_medical.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_medical.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: Airlock
@@ -55,6 +63,8 @@
     sprite: Buildings/Doors/airlock_science.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_science.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: Airlock
@@ -65,6 +75,8 @@
     sprite: Buildings/Doors/airlock_command.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_command.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: Airlock
@@ -75,6 +87,8 @@
     sprite: Buildings/Doors/airlock_security.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_security.rsi
+  - type: IconSmooth
+    key: walls
 
 # Glass Airlocks
 - type: entity
@@ -86,6 +100,8 @@
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_engineering_glass.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockGlass
@@ -96,7 +112,9 @@
     sprite: Buildings/Doors/airlock_cargo_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_cargo_glass.rsi
-  
+  - type: IconSmooth
+    key: walls
+
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
@@ -106,6 +124,8 @@
     sprite: Buildings/Doors/airlock_medical_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_medical_glass.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockGlass
@@ -116,6 +136,8 @@
     sprite: Buildings/Doors/airlock_science_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_science_glass.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockGlass
@@ -126,6 +148,8 @@
     sprite: Buildings/Doors/airlock_command_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_command_glass.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockGlass
@@ -136,6 +160,8 @@
     sprite: Buildings/Doors/airlock_security_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_security_glass.rsi
+  - type: IconSmooth
+    key: walls
 
 # Maintenance Hatchs
 - type: entity
@@ -147,6 +173,8 @@
     sprite: Buildings/Doors/airlock_maint_cargo.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_cargo.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -157,6 +185,8 @@
     sprite: Buildings/Doors/airlock_maint_command.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_command.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -167,6 +197,8 @@
     sprite: Buildings/Doors/airlock_maint_common.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_common.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -177,6 +209,8 @@
     sprite: Buildings/Doors/airlock_maint_engi.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_engi.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -187,6 +221,8 @@
     sprite: Buildings/Doors/airlock_maint_int.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_int.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -197,6 +233,8 @@
     sprite: Buildings/Doors/airlock_maint_med.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_med.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -207,6 +245,8 @@
     sprite: Buildings/Doors/airlock_maint_rnd.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_rnd.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: AirlockMaint
@@ -217,3 +257,5 @@
     sprite: Buildings/Doors/airlock_maint_sec.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_maint_sec.rsi
+  - type: IconSmooth
+    key: walls

@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: base_wall
   name: BaseWall
   description: Keeps the air in and the greytide out.
@@ -43,7 +43,7 @@
 
 - type: entity
   id: brick_wall
-  name: Brick wall
+  name: brick wall
   parent: base_wall
   components:
   - type: Sprite
@@ -75,7 +75,7 @@
 
 - type: entity
   id: clown_wall
-  name: Clown wall
+  name: clown wall
   parent: base_wall
   components:
   - type: Sprite
@@ -92,7 +92,7 @@
 
 - type: entity
   id: cult_wall
-  name: Cult wall
+  name: cult wall
   parent: base_wall
   components:
   - type: Sprite
@@ -124,7 +124,7 @@
 
 - type: entity
   id: diamond_wall
-  name: Diamond wall
+  name: diamond wall
   parent: base_wall
   components:
   - type: Sprite
@@ -141,7 +141,7 @@
 
 - type: entity
   id: gold_wall
-  name: Gold wall
+  name: gold wall
   parent: base_wall
   components:
   - type: Sprite
@@ -157,7 +157,7 @@
 
 - type: entity
   id: ice_wall
-  name: Ice wall
+  name: ice wall
   parent: base_wall
   components:
   - type: Sprite
@@ -189,7 +189,7 @@
 
 - type: entity
   id: plasma_wall
-  name: Plasma wall
+  name: plasma wall
   parent: base_wall
   components:
   - type: Sprite
@@ -205,7 +205,7 @@
 
 - type: entity
   id: plastic_wall
-  name: Plastic wall
+  name: plastic wall
   parent: base_wall
   components:
   - type: Sprite
@@ -221,11 +221,10 @@
 
 - type: entity
   id: reinforced_wall
-  name: Reinforced wall
+  name: reinforced wall
   parent: base_wall
   components:
   - type: Sprite
-    color: "#889192"
     sprite: Buildings/Walls/solid.rsi
   - type: Icon
     sprite: Buildings/Walls/solid.rsi
@@ -233,15 +232,20 @@
   - type: Destructible
     thresholdvalue: 300
     spawnondestroy: Girder
-  - type: ReinforcedWall
+  - type: Wall
     key: walls
     base: solid
+    paintBase: solid_paint
+    stripeBase: solid_stripe
     reinforcedBase: reinf_over
+    color: "#889192"
+    paintColor: "#8e989f"
+    stripeColor: "#8e989f"
 
 # Riveting
 - type: entity
   id: riveted_wall
-  name: Riveted wall
+  name: riveted wall
   parent: base_wall
   components:
   - type: Sprite
@@ -257,7 +261,7 @@
 
 - type: entity
   id: sandstone_wall
-  name: Sandstone wall
+  name: sandstone wall
   parent: base_wall
   components:
   - type: Sprite
@@ -273,7 +277,7 @@
 
 - type: entity
   id: silver_wall
-  name: Silver wall
+  name: silver wall
   parent: base_wall
   components:
   - type: Sprite
@@ -289,11 +293,10 @@
 
 - type: entity
   id: solid_wall
-  name: Solid wall
+  name: solid wall
   parent: base_wall
   components:
   - type: Sprite
-    color: "#889192"
     sprite: Buildings/Walls/solid.rsi
   - type: Icon
     sprite: Buildings/Walls/solid.rsi
@@ -301,13 +304,19 @@
     thresholdvalue: 100
     spawnondestroy: Girder
     destroysound: /Audio/effects/metalbreak.ogg
-  - type: IconSmooth
+  - type: Wall
     key: walls
     base: solid
+    paintBase: solid_paint
+    stripeBase: solid_stripe
+    edgeBase: solid_other
+    color: "#889192"
+    paintColor: "#8e989f"
+    stripeColor: "#8e989f"
 
 - type: entity
   id: uranium_wall
-  name: Uranium wall
+  name: uranium wall
   parent: base_wall
   components:
   - type: Sprite
@@ -323,11 +332,114 @@
 
 - type: entity
   id: wood_wall
-  name: Wood wall
+  name: wood wall
   parent: base_wall
   components:
   - type: Sprite
     sprite: Buildings/Walls/wood.rsi
+    color: "#d5a66e"
+  - type: Icon
+    sprite: Buildings/Walls/wood.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: Girder
+  - type: IconSmooth
+    key: walls
+    base: wood
+    
+- type: entity
+  id: wood_wall_mahogany
+  name: mahogany wall
+  parent: base_wall
+  components:
+  - type: Sprite
+    sprite: Buildings/Walls/wood.rsi
+    color: "#792f27"
+  - type: Icon
+    sprite: Buildings/Walls/wood.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: Girder
+  - type: IconSmooth
+    key: walls
+    base: wood
+    
+- type: entity
+  id: wood_wall_maple
+  name: maple wall
+  parent: base_wall
+  components:
+  - type: Sprite
+    sprite: Buildings/Walls/wood.rsi
+    color: "#d2bc9d"
+  - type: Icon
+    sprite: Buildings/Walls/wood.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: Girder
+  - type: IconSmooth
+    key: walls
+    base: wood
+    
+- type: entity
+  id: wood_wall_ebony
+  name: ebony wall
+  parent: base_wall
+  components:
+  - type: Sprite
+    sprite: Buildings/Walls/wood.rsi
+    color: "#332521"
+  - type: Icon
+    sprite: Buildings/Walls/wood.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: Girder
+  - type: IconSmooth
+    key: walls
+    base: wood
+    
+- type: entity
+  id: wood_wall_walnut
+  name: walnut wall
+  parent: base_wall
+  components:
+  - type: Sprite
+    sprite: Buildings/Walls/wood.rsi
+    color: "#543c30"
+  - type: Icon
+    sprite: Buildings/Walls/wood.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: Girder
+  - type: IconSmooth
+    key: walls
+    base: wood
+    
+- type: entity
+  id: wood_wall_bamboo
+  name: bamboo wall
+  parent: base_wall
+  components:
+  - type: Sprite
+    sprite: Buildings/Walls/wood.rsi
+    color: "#e6d2ba"
+  - type: Icon
+    sprite: Buildings/Walls/wood.rsi
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: Girder
+  - type: IconSmooth
+    key: walls
+    base: wood
+     
+- type: entity
+  id: wood_wall_yew
+  name: yew wall
+  parent: base_wall
+  components:
+  - type: Sprite
+    sprite: Buildings/Walls/wood.rsi
+    color: "#e3994e"
   - type: Icon
     sprite: Buildings/Walls/wood.rsi
   - type: Destructible

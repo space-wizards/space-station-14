@@ -1,79 +1,122 @@
-﻿using Content.Client.GameObjects.EntitySystems;
+﻿using Content.Client.GameObjects.Components.IconSmoothing;
+using Content.Client.GameObjects.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using static Content.Client.GameObjects.Components.IconSmoothing.IconSmoothComponent;
 
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
-    public sealed class WindowComponent : Component
+    public sealed class WindowComponent : IconSmoothComponent
     {
         public override string Name => "Window";
 
-        private string _stateBase;
-        private ISpriteComponent _sprite;
-        private SnapGridComponent _snapGrid;
+        public CornerFill LastCornerNE { get; private set; }
+        public CornerFill LastCornerSE { get; private set; }
+        public CornerFill LastCornerSW { get; private set; }
+        public CornerFill LastCornerNW { get; private set; }
 
-        public override void Initialize()
+        internal override void CalculateNewSprite()
         {
-            base.Initialize();
-
-            _sprite = Owner.GetComponent<ISpriteComponent>();
-            _snapGrid = Owner.GetComponent<SnapGridComponent>();
-        }
-
-        /// <inheritdoc />
-        protected override void Startup()
-        {
-            base.Startup();
-
-            _snapGrid.OnPositionChanged += SnapGridOnPositionChanged;
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
-
-            var state0 = $"{_stateBase}0";
-            _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
-            _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
-            _sprite.LayerMapSet(CornerLayers.NE, _sprite.AddLayerState(state0));
-            _sprite.LayerSetDirOffset(CornerLayers.NE, SpriteComponent.DirectionOffset.CounterClockwise);
-            _sprite.LayerMapSet(CornerLayers.NW, _sprite.AddLayerState(state0));
-            _sprite.LayerSetDirOffset(CornerLayers.NW, SpriteComponent.DirectionOffset.Flip);
-            _sprite.LayerMapSet(CornerLayers.SW, _sprite.AddLayerState(state0));
-            _sprite.LayerSetDirOffset(CornerLayers.SW, SpriteComponent.DirectionOffset.Clockwise);
-        }
-
-        /// <inheritdoc />
-        protected override void Shutdown()
-        {
-            _snapGrid.OnPositionChanged -= SnapGridOnPositionChanged;
-
-            base.Shutdown();
-        }
-
-        private void SnapGridOnPositionChanged()
-        {
-            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new WindowSmoothDirtyEvent(Owner));
-        }
-
-        public void UpdateSprite()
-        {
+            base.CalculateNewSprite();
             var lowWall = FindLowWall();
+
             if (lowWall == null)
             {
-                return;
-            }
+                var n = MatchingEntity(SnapGrid.GetInDir(Direction.North));
+                var ne = MatchingEntity(SnapGrid.GetInDir(Direction.NorthEast));
+                var e = MatchingEntity(SnapGrid.GetInDir(Direction.East));
+                var se = MatchingEntity(SnapGrid.GetInDir(Direction.SouthEast));
+                var s = MatchingEntity(SnapGrid.GetInDir(Direction.South));
+                var sw = MatchingEntity(SnapGrid.GetInDir(Direction.SouthWest));
+                var w = MatchingEntity(SnapGrid.GetInDir(Direction.West));
+                var nw = MatchingEntity(SnapGrid.GetInDir(Direction.NorthWest));
 
-            _sprite.LayerSetState(CornerLayers.NE, $"{_stateBase}{(int) lowWall.LastCornerNE}");
-            _sprite.LayerSetState(CornerLayers.SE, $"{_stateBase}{(int) lowWall.LastCornerSE}");
-            _sprite.LayerSetState(CornerLayers.SW, $"{_stateBase}{(int) lowWall.LastCornerSW}");
-            _sprite.LayerSetState(CornerLayers.NW, $"{_stateBase}{(int) lowWall.LastCornerNW}");
+                // ReSharper disable InconsistentNaming
+                var cornerNE = CornerFill.None;
+                var cornerSE = CornerFill.None;
+                var cornerSW = CornerFill.None;
+                var cornerNW = CornerFill.None;
+                // ReSharper restore InconsistentNaming
+
+                if (n)
+                {
+                    cornerNE |= CornerFill.CounterClockwise;
+                    cornerNW |= CornerFill.Clockwise;
+                }
+
+                if (ne)
+                {
+                    cornerNE |= CornerFill.Diagonal;
+                }
+
+                if (e)
+                {
+                    cornerNE |= CornerFill.Clockwise;
+                    cornerSE |= CornerFill.CounterClockwise;
+                }
+
+                if (se)
+                {
+                    cornerSE |= CornerFill.Diagonal;
+                }
+
+                if (s)
+                {
+                    cornerSE |= CornerFill.Clockwise;
+                    cornerSW |= CornerFill.CounterClockwise;
+                }
+
+                if (sw)
+                {
+                    cornerSW |= CornerFill.Diagonal;
+                }
+
+                if (w)
+                {
+                    cornerSW |= CornerFill.Clockwise;
+                    cornerNW |= CornerFill.CounterClockwise;
+                }
+
+                if (nw)
+                {
+                    cornerNW |= CornerFill.Diagonal;
+                }
+
+                Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}{(int) cornerNE}");
+                Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}{(int) cornerSE}");
+                Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}{(int) cornerSW}");
+                Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}{(int) cornerNW}");
+
+                LastCornerNE = cornerNE;
+                LastCornerSE = cornerSE;
+                LastCornerSW = cornerSW;
+                LastCornerNW = cornerNW;
+            }
+            else
+            {
+                Sprite.LayerSetState(CornerLayers.NE, $"{StateBase}_onframe{(int) lowWall.LastCornerNE}");
+                Sprite.LayerSetState(CornerLayers.SE, $"{StateBase}_onframe{(int) lowWall.LastCornerSE}");
+                Sprite.LayerSetState(CornerLayers.SW, $"{StateBase}_onframe{(int) lowWall.LastCornerSW}");
+                Sprite.LayerSetState(CornerLayers.NW, $"{StateBase}_onframe{(int) lowWall.LastCornerNW}");
+
+                LastCornerNE = lowWall.LastCornerNE;
+                LastCornerSE = lowWall.LastCornerSE;
+                LastCornerSW = lowWall.LastCornerSW;
+                LastCornerNW = lowWall.LastCornerNW;
+            }
         }
 
         private LowWallComponent FindLowWall()
         {
-            foreach (var entity in _snapGrid.GetLocal())
+            foreach (var entity in SnapGrid.GetLocal())
             {
                 if (entity.TryGetComponent(out LowWallComponent lowWall))
                 {
@@ -82,13 +125,6 @@ namespace Content.Client.GameObjects.Components
             }
 
             return null;
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _stateBase, "base", null);
         }
     }
 }

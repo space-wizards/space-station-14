@@ -20,6 +20,8 @@
   - type: Icon
     sprite: Buildings/Doors/airlock_basic.rsi
     state: closed
+  - type: IconSmooth
+    key: walls
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -67,6 +69,8 @@
     sprite: Buildings/Doors/airlock_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_glass.rsi
+  - type: IconSmooth
+    key: walls
 
 - type: entity
   parent: Airlock

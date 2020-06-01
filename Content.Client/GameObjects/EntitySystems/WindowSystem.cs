@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
                 }
 
-                entity.GetComponent<WindowComponent>().UpdateSprite();
+                entity.GetComponent<WindowComponent>().CalculateNewSprite();
             }
         }
     }

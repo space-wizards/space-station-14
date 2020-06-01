@@ -21,6 +21,7 @@ namespace Content.Shared.Maps
         public ushort TileId { get; private set; }
         public string DisplayName { get; private set; }
         public string SpriteName { get; private set; }
+        public string SpriteColor { get; private set; }
         public bool IsSubFloor { get; private set; }
         public List<string> BaseTurfs { get; private set; }
         public bool CanCrowbar { get; private set; }
@@ -42,6 +43,11 @@ namespace Content.Shared.Maps
             if (mapping.TryGetNode("is_subfloor", out var node))
             {
                 IsSubFloor = node.AsBool();
+            }
+
+            if (mapping.TryGetNode("color", out node))
+            {
+                SpriteColor = node.AsString();
             }
 
             if (mapping.TryGetNode("base_turfs", out YamlSequenceNode baseTurfNode))

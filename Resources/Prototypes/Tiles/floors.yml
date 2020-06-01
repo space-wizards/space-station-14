@@ -1,6 +1,6 @@
 ﻿- type: tile
   name: floor_carpet
-  display_name: Carpet
+  display_name: carpet
   texture: "carpet"
   base_turfs:
   - space
@@ -13,7 +13,7 @@
 
 - type: tile
   name: floor_dark
-  display_name: Dark floor
+  display_name: dark floor
   texture: "dark"
   base_turfs:
   - space
@@ -26,7 +26,7 @@
 
 - type: tile
   name: floor_elevator_shaft
-  display_name: Elevator shaft
+  display_name: elevator shaft
   texture: "elevator_shaft"
   base_turfs:
   - space
@@ -38,7 +38,7 @@
 
 - type: tile
   name: floor_freezer
-  display_name: Freezer
+  display_name: freezer floor
   texture: "freezer"
   base_turfs:
   - space
@@ -51,7 +51,7 @@
 
 - type: tile
   name: floor_hydro
-  display_name: Hydro floor
+  display_name: hydro floor
   texture: "hydro"
   base_turfs:
   - space
@@ -63,7 +63,7 @@
 
 - type: tile
   name: floor_green_circuit
-  display_name: Green circuit floor
+  display_name: green circuit floor
   texture: "green_circuit"
   base_turfs:
   - space
@@ -75,7 +75,7 @@
 
 - type: tile
   name: floor_lino
-  display_name: Linoleum floor
+  display_name: linoleum floor
   texture: "lino"
   base_turfs:
   - space
@@ -87,7 +87,7 @@
 
 - type: tile
   name: floor_mono
-  display_name: Mono floor
+  display_name: mono floor
   texture: "mono"
   base_turfs:
   - space
@@ -99,7 +99,7 @@
 
 - type: tile
   name: floor_reinforced
-  display_name: Reinforced floor
+  display_name: reinforced floor
   texture: "reinforced"
   base_turfs:
   - space
@@ -111,7 +111,7 @@
 
 - type: tile
   name: floor_rock_vault
-  display_name: Rock vault floor
+  display_name: rock vault floor
   texture: "rock_vault"
   base_turfs:
   - space
@@ -123,7 +123,7 @@
 
 - type: tile
   name: floor_showroom
-  display_name: Showroom floor
+  display_name: showroom floor
   texture: "showroom"
   base_turfs:
   - space
@@ -135,8 +135,21 @@
 
 - type: tile
   name: floor_steel
-  display_name: Steel floor
-  texture: "steel"
+  display_name: steel floor
+  texture: "tiled_steel"
+  base_turfs:
+  - space
+  - plating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: FloorTileItemSteel
+
+- type: tile
+  name: floor_steel_mono
+  display_name: steel mono floor
+  texture: "monotile_steel"
   base_turfs:
   - space
   - plating
@@ -148,7 +161,7 @@
 
 - type: tile
   name: floor_steel_dirty
-  display_name: Dirty steel floor
+  display_name: dirty steel floor
   texture: "steel_dirty"
   base_turfs:
   - space
@@ -160,7 +173,7 @@
 
 - type: tile
   name: floor_techmaint
-  display_name: Techmaint Floor
+  display_name: techmaint floor
   texture: "tech_maint"
   base_turfs:
   - space
@@ -172,9 +185,48 @@
   item_drop: FloorTileItemTechmaint
 
 - type: tile
+  name: floor_techfloor
+  display_name: tech floor
+  texture: "techfloor_gray"
+  base_turfs:
+  - space
+  - underplating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.5
+  item_drop: FloorTileItemTechfloor
+
+- type: tile
+  name: floor_techfloor_grid
+  display_name: tech grid floor
+  texture: "techfloor_grid"
+  base_turfs:
+  - space
+  - underplating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.5
+  item_drop: FloorTileItemTechgrid
+
+- type: tile
   name: floor_white
-  display_name: White Floor
-  texture: "white"
+  display_name: white floor
+  texture: "tiled_white"
+  base_turfs:
+  - space
+  - underplating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.1
+  item_drop: FloorTileItemWhite
+
+- type: tile
+  name: floor_white_mono
+  display_name: white mono floor
+  texture: "monotile_white"
   base_turfs:
   - space
   - underplating
@@ -186,7 +238,7 @@
 
 - type: tile
   name: floor_asteroid_sand
-  display_name: Asteroid Floor
+  display_name: asteroid floor
   texture: asteroid_sand
   base_turfs:
   - space
@@ -197,7 +249,7 @@
 
 - type: tile
   name: floor_asteroid_tile
-  display_name: Asteroid Tile
+  display_name: asteroid Tile
   texture: asteroid_tile
   base_turfs:
   - space
@@ -208,7 +260,7 @@
 
 - type: tile
   name: floor_asteroid_coarse_sand0
-  display_name: Asteroid Coarse Sand 0
+  display_name: asteroid Coarse Sand 0
   texture: asteroid_coarse_sand0
   base_turfs:
   - space
@@ -219,7 +271,7 @@
 
 - type: tile
   name: floor_asteroid_coarse_sand1
-  display_name: Asteroid Coarse Sand 1
+  display_name: asteroid Coarse Sand 1
   texture: asteroid_coarse_sand1
   base_turfs:
   - space
@@ -230,7 +282,7 @@
 
 - type: tile
   name: floor_asteroid_coarse_sand2
-  display_name: Asteroid Coarse Sand 2
+  display_name: asteroid Coarse Sand 2
   texture: asteroid_coarse_sand2
   base_turfs:
   - space
@@ -241,7 +293,7 @@
 
 - type: tile
   name: floor_asteroid_coarse_sand_dug
-  display_name: Asteroid Dug Coarse Sand
+  display_name: asteroid Dug Coarse Sand
   texture: asteroid_coarse_sand_dug
   base_turfs:
   - space
