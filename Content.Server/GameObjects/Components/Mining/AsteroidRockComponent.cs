@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Mining
             if (!item.TryGetComponent(out PickaxeComponent pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))
             {
-                EntitySystem.Get<AudioSystem>().Play(pickaxeComponent.MiningSound, Owner, AudioParams.Default);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(pickaxeComponent.MiningSound, Owner, AudioParams.Default);
             }
             return true;
         }

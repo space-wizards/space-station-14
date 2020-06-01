@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Research
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
             var audioSystem = EntitySystem.Get<AudioSystem>();
-            audioSystem.Play(file,Owner,AudioParams.Default);
+            audioSystem.PlayFromEntity(file,Owner,AudioParams.Default);
         }
 
 

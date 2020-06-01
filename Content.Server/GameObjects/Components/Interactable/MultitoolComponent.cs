@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetTool();
             var current = _tools[_currentTool];
             if(!string.IsNullOrEmpty(current.ChangeSound))
-                _audioSystem.Play(current.ChangeSound, Owner);
+                _audioSystem.PlayFromEntity(current.ChangeSound, Owner);
         }
 
         private void SetTool()

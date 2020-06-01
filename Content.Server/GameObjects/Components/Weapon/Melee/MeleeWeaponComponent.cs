@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
-            audioSystem.Play(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
+            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
 
             if (Arc != null)
             {

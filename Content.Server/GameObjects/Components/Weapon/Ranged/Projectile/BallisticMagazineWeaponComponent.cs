@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
             if (_magInSound != null && playSound)
             {
-                EntitySystem.Get<AudioSystem>().Play(_magInSound, Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_magInSound, Owner);
             }
             magazinetype.OnAmmoCountChanged += MagazineAmmoCountChanged;
             if (GetChambered(0) == null)
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
                 if (_magOutSound != null && playSound)
                 {
-                    EntitySystem.Get<AudioSystem>().Play(_magOutSound, Owner, AudioParams.Default.WithVolume(20));
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity(_magOutSound, Owner, AudioParams.Default.WithVolume(20));
                 }
                 UpdateAppearance();
                 Dirty();
@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(RandomBulletDirs).ToAngle();
             var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
-            EntitySystem.Get<AudioSystem>().Play(effect, Owner, AudioParams.Default.WithVolume(-3));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(effect, Owner, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
             {
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             EjectMagazine();
             if (_autoEjectSound != null)
             {
-                EntitySystem.Get<AudioSystem>().Play(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
             }
             Dirty();
         }

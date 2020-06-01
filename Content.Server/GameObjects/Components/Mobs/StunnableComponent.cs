@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
 
             EntitySystem.Get<AudioSystem>()
-                .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .PlayFromEntity("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             _knockdownTimer -= _helpKnockdownRemove;
 
