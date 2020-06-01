@@ -10,5 +10,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         protected override void OnAddNode(INode node) { }
         protected override void OnRemoveNode(INode node) { }
+        protected override void BeforeRemake() { }
+        protected override void AfterRemake() { }
+        public override void BeforeCombine() { }
+        public override void AfterCombine() { }
     }
 }

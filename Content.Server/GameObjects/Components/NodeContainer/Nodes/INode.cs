@@ -149,6 +149,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             public void CombineGroup(INodeGroup group) { }
             public void RemakeGroup() { }
             public void RemoveNode(INode node) { }
+            public void BeforeCombine() { }
+            public void AfterCombine() { }
         }
     }
 }

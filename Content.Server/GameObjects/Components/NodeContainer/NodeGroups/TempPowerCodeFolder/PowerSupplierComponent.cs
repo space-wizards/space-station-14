@@ -31,9 +31,10 @@ namespace Content.Server.GameObjects.Components.NewPower
             powerNet.RemoveSupplier(this);
         }
 
-        private void SetSupplyRate(int newSupply)
+        private void SetSupplyRate(int newSupplyRate)
         {
-            throw new NotImplementedException();
+            PowerNet.UpdateSupplierSupply(this, SupplyRate, newSupplyRate);
+            _supplyRate = newSupplyRate;
         }
     }
 }

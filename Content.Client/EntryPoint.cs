@@ -146,6 +146,8 @@ namespace Content.Client
                 "Puddle",
                 "CanSpill",
                 "NodeContainer",
+                "PowerSupplier",
+                "PowerConsumer",
             };
 
             foreach (var ignoreName in registerIgnore)

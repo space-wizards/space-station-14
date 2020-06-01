@@ -23,6 +23,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         ///     and may have split a group in two, so multiple new groups may need to be formed.
         /// </summary>
         void RemakeGroup();
+
+        void BeforeCombine();
+
+        void AfterCombine();
     }
 
     public abstract class NodeGroup : INodeGroup
@@ -54,15 +58,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 newGroup.CombineGroup(this);
                 return;
             }
+            BeforeCombine();
+            newGroup.BeforeCombine();
             foreach (var node in Nodes)
             {
                 node.NodeGroup = newGroup;
             }
+            AfterCombine();
+            newGroup.AfterCombine();
         }
 
         // <inheritdoc cref="INodeGroup"/>
         public void RemakeGroup()
         {
+            BeforeRemake();
             foreach (var node in Nodes)
             {
                 node.ClearNodeGroup();
@@ -79,5 +88,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected abstract void OnAddNode(INode node);
         
         protected abstract void OnRemoveNode(INode node);
+
+        protected abstract void BeforeRemake();
+
+        protected abstract void AfterRemake();
+
+        public abstract void BeforeCombine();
+
+        public abstract void AfterCombine();
     }
 }

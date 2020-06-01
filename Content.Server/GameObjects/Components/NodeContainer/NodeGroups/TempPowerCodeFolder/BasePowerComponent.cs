@@ -34,23 +34,22 @@ namespace Content.Server.GameObjects.Components.NewPower
             base.OnAdd();
             if (_needsPowerNet)
             {
-                if (TryFindPowerNet(out var powerNet))
-                {
-                    PowerNet = powerNet;
-                }
+                TryFindAndSetPowerNet();
             }
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
         }
 
         public override void OnRemove()
         {
-            PowerNet = NullNet;
+            ClearPowerNet();
             base.OnRemove();
+        }
+
+        public void TryFindAndSetPowerNet()
+        {
+            if (TryFindPowerNet(out var powerNet))
+            {
+                PowerNet = powerNet;
+            }
         }
 
         public void ClearPowerNet()
@@ -80,30 +79,34 @@ namespace Content.Server.GameObjects.Components.NewPower
                     return true;
                 }
             }
-
             foundNet = null;
             return false;
         }
 
-        private void SetPowerNet(IPowerNet powerNet)
+        private void SetPowerNet(IPowerNet newPowerNet)
         {
             RemoveSelfFromNet(_powerNet);
-            AddSelfToNet(powerNet);
-            _powerNet = powerNet;
+            AddSelfToNet(newPowerNet);
+            _powerNet = newPowerNet;
             _needsPowerNet = false;
         }
 
-        private void SetVoltage(Voltage voltage)
+        private void SetVoltage(Voltage newVoltage)
         {
-            throw new NotImplementedException();
+            ClearPowerNet();
+            _voltage = newVoltage;
+            TryFindAndSetPowerNet();
         }
 
         private class NullPowerNet : IPowerNet
         {
             public void AddConsumer(PowerConsumerComponent consumer) { }
             public void AddSupplier(PowerSupplierComponent supplier) { }
+            public void UpdateSupplierSupply(PowerSupplierComponent supplier, int oldSupplyRate, int newSupplyRate) { }
             public void RemoveConsumer(PowerConsumerComponent consumer) { }
             public void RemoveSupplier(PowerSupplierComponent supplier) { }
+            public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate) { }
+            public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority) { }
         }
     }
 
