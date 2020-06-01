@@ -30,10 +30,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     [RegisterComponent]
     public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IInteractUsing, IMapInit
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
         private const float BulletOffset = 0.2f;
 
         public override string Name => "BallisticMagazineWeapon";

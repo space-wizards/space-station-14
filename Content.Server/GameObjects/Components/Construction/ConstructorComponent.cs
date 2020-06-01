@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

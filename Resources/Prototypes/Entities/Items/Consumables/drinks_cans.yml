@@ -106,3 +106,56 @@
     sprite: Objects/Drinks/thirteen_loko.rsi
   - type: Icon
     sprite: Objects/Drinks/thirteen_loko.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkChangelingSting
+  name: Changeling sting
+  description: You take a tiny sip and feel a burning sensation...
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Drinks/changelingsting.rsi
+  - type: Icon
+    sprite: Objects/Drinks/changelingsting.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkDrGibb
+  name: Dr. Gibb
+  description: A delicious blend of 42 different flavours
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Drinks/dr_gibb.rsi
+  - type: Icon
+    sprite: Objects/Drinks/dr_gibb.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkEnergyDrink
+  name: Energy drink
+  description: ''
+  components:
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Drinks/energy_drink.rsi
+  - type: Icon
+    sprite: Objects/Drinks/energy_drink.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkGrapeSoda
+  name: Grape soda
+  description: Sweetened drink with a grape flavor and a deep purple color.
+  components:
+  - type: Drink
+  - type: Solution
+    contents:
+      reagents:
+      - ReagentId: chem.Cola
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Drinks/grapesoda.rsi
+  - type: Icon
+    sprite: Objects/Drinks/grapesoda.rsi

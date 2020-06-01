@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Interactable
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
@@ -77,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 

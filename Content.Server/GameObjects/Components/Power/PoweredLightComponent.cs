@@ -23,10 +23,6 @@ namespace Content.Server.GameObjects.Components.Power
     [RegisterComponent]
     public class PoweredLightComponent : Component, IInteractHand, IInteractUsing
     {
-
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);

@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -40,26 +41,20 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
 
-            var input = EntitySystemManager.GetEntitySystem<InputSystem>();
-            input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));
-            input.BindMap.BindFunction(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop));
-            input.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem));
-            input.BindMap.BindFunction(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem));
-            input.BindMap.BindFunction(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack));
-            input.BindMap.BindFunction(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands))
+                .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop))
+                .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
+                .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
+                .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
+                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
+                .Register<HandsSystem>();
         }
 
         /// <inheritdoc />
         public override void Shutdown()
         {
-            if (EntitySystemManager.TryGetEntitySystem(out InputSystem input))
-            {
-                input.BindMap.UnbindFunction(ContentKeyFunctions.SwapHands);
-                input.BindMap.UnbindFunction(ContentKeyFunctions.Drop);
-                input.BindMap.UnbindFunction(ContentKeyFunctions.ActivateItemInHand);
-                input.BindMap.UnbindFunction(ContentKeyFunctions.ThrowItemInHand);
-            }
-
+            CommandBinds.Unregister<HandsSystem>();
             base.Shutdown();
         }
 

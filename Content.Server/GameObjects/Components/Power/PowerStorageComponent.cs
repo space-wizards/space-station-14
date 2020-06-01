@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <inheritdoc />
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 

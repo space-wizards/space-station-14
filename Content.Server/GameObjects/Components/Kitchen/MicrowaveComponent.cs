@@ -34,7 +34,6 @@ namespace Content.Server.GameObjects.Components.Kitchen
     public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly RecipeManager _recipeManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;

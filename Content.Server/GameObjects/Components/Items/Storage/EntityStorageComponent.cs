@@ -30,9 +30,6 @@ namespace Content.Server.GameObjects.Components
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
         public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.

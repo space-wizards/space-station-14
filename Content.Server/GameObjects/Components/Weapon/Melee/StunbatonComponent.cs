@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
 #pragma warning disable 649
         [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
@@ -227,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 

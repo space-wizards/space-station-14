@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
@@ -479,7 +479,7 @@ namespace Content.Server.GameObjects.Components
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 

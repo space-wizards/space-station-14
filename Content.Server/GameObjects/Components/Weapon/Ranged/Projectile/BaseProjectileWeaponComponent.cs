@@ -29,7 +29,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
 #pragma warning disable 649
         [Dependency] private IRobustRandom _spreadRandom;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
         public override void ExposeData(ObjectSerializer serializer)

@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override string Name => "Stunnable";
 
 #pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private IGameTiming _gameTiming;
 #pragma warning restore 649
 

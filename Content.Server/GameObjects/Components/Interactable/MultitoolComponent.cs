@@ -48,10 +48,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
-#pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
-
         public override string Name => "MultiTool";
         public override uint? NetID => ContentNetIDs.MULTITOOLS;
         private List<ToolEntry> _tools;

@@ -21,7 +21,6 @@ namespace Content.Server.GameObjects.Components.Items
     {
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
@@ -55,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Items
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
                 EntitySystem.Get<AudioSystem>().Play("/Audio/items/genhit.ogg", eventArgs.ClickLocation);
-                if(Stack.Count < 1){
+                if(_stack.Count < 1){
                     Owner.Delete();
                 }
             }
