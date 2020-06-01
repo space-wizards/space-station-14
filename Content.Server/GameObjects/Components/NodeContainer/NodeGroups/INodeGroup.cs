@@ -29,7 +29,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void AfterCombine();
     }
 
-    public abstract class NodeGroup : INodeGroup
+    [NodeGroup(NodeGroupID.Default)]
+    public class NodeGroup : INodeGroup
     {
         [ViewVariables]
         public IReadOnlyList<INode> Nodes => _nodes;
@@ -85,16 +86,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
-        protected abstract void OnAddNode(INode node);
+        protected virtual void OnAddNode(INode node) { }
         
-        protected abstract void OnRemoveNode(INode node);
+        protected virtual void OnRemoveNode(INode node) { }
 
-        protected abstract void BeforeRemake();
+        protected virtual void BeforeRemake() { }
 
-        protected abstract void AfterRemake();
+        protected virtual void AfterRemake() { }
 
-        public abstract void BeforeCombine();
+        public virtual void BeforeCombine() { }
 
-        public abstract void AfterCombine();
+        public virtual void AfterCombine() { }
     }
 }
