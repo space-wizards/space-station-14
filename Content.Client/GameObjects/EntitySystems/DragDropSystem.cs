@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Client.State;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -253,6 +254,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 dragSprite.CopyFrom(draggedSprite);
                 // TODO: apparently this ensures its drawn on top? Maybe refactor to method?
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
+                dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
+                // keep it on top of everything
+                dragSprite.DrawDepth = (int) DrawDepth.Overlays;
+
                 HighlightTargets();
             }
             else
