@@ -19,6 +19,7 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -30,14 +31,19 @@ namespace Content.Client.GameObjects.EntitySystems
     public class DragDropSystem : EntitySystem
     {
         // how long to wait on mousedown until initiating a drag
-        private const float WaitForDragTime = 0.25f;
+        private const float WaitForDragTime = 0.5f;
         // mouse must remain within this distance of
         // mousedown screen position in order for drag to be triggered.
         // any movement beyond this will cancel the drag
         private const float DragDeadzone = 0.05f;
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
-        private const float TargetRecheckInterval = 0.1f;
+        private const float TargetRecheckInterval = 0.25f;
+
+        // if a drag ends up being cancelled and it has been under this
+        // amount of time since the mousedown, we will "replay" the original
+        // mousedown event so it can be treated like a regular click
+        private const float MaxMouseDownTimeForReplayingClick = 0.1f;
 
         private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
         private const string ShaderDropTargetOutOfRange = "SelectionOutline";
@@ -63,10 +69,16 @@ namespace Content.Client.GameObjects.EntitySystems
         private Vector2 _mouseDownScreenPos;
         // how much time since last recheck of all possible targets
         private float _targetRecheckTime;
+        // reserved initial mousedown event so we can replay it if no drag ends up being performed
+        private PointerInputCmdHandler.PointerInputCmdArgs? _savedMouseDown;
+        // whether we are currently replaying the original mouse down, so we
+        // can ignore any events sent to this system
+        private bool _isReplaying;
 
         private ShaderInstance _dropTargetInRangeShader;
         private ShaderInstance _dropTargetOutOfRangeShader;
         private SharedInteractionSystem _interactionSystem;
+        private InputSystem _inputSystem;
 
         private List<SpriteComponent> highlightedSprites = new List<SpriteComponent>();
 
@@ -90,6 +102,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
             _interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
+            _inputSystem = EntitySystem.Get<InputSystem>();
             // needs to fire on mouseup and mousedown so we can detect a drag / drop,
             // TODO: Do we need to force it to run before constructor system
             CommandBinds.Builder
@@ -100,13 +113,20 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Shutdown()
         {
-            CancelDrag();
+            CancelDrag(false);
             CommandBinds.Unregister<DragDropSystem>();
             base.Shutdown();
         }
 
         private bool OnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
+            // not currently predicted
+            if (_inputSystem.Predicted) return false;
+
+            // currently replaying a saved click, don't handle this because
+            // we already decided this click doesn't represent an actual drag attempt
+            if (_isReplaying) return false;
+
             if (args.State == BoundKeyState.Down)
             {
                 return OnUseMouseDown(args);
@@ -124,22 +144,23 @@ namespace Content.Client.GameObjects.EntitySystems
             //TODO: Should we be using args.EntityUid to see what was clicked?
 
             var dragger = args.Session.AttachedEntity;
-            // cancel any current dragging if there is one
-            CancelDrag();
+            // cancel any current dragging if there is one (shouldn't be because they would've had to have lifted
+            // the mouse, canceling the drag, but just being cautious)
+            CancelDrag(false);
 
-            // possibly initiating a drag, check if there are any draggable entities
-            // under the mouse
-            if (_interactionSystem.InRangeUnobstructed(dragger.Transform.MapPosition,
-                    args.Coordinates.ToMap(_mapManager), ignoredEnt: dragger) == false)
+            // possibly initiating a drag
+            // check if the clicked entity is draggable
+            if (_entityManager.TryGetEntity(args.EntityUid, out var entity))
             {
+                //TODO: Refactor to use a shared InteractionChecks
+                // check if the entity is reachable
+                if (_interactionSystem.InRangeUnobstructed(dragger.Transform.MapPosition,
+                    entity.Transform.MapPosition, ignoredEnt: dragger) == false)
                 {
-                    return false;
+                    {
+                        return false;
+                    }
                 }
-            }
-
-            var entities = GameScreenBase.GetEntitiesUnderPosition(_stateManager, args.Coordinates);
-            foreach (var entity in entities)
-            {
                 foreach (var draggable in entity.GetAllComponents<IClientDraggable>())
                 {
                     var dragEventArgs = new CanDragEventArgs(args.Session.AttachedEntity, entity);
@@ -152,10 +173,11 @@ namespace Content.Client.GameObjects.EntitySystems
                         _mouseDownTime = 0;
                         _state = DragState.MOUSEDOWN;
                         _mouseDownScreenPos = _inputManager.MouseScreenPosition;
-                        // don't want anything else to process the click
-                        {
-                            return true;
-                        }
+                        // don't want anything else to process the click,
+                        // but we will save the event so we can "re-play" it if this drag does
+                        // not turn into an actual drag so the click can be handled normally
+                        _savedMouseDown = args;
+                        return true;
                     }
                 }
             }
@@ -165,17 +187,30 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool OnUseMouseUp(PointerInputCmdHandler.PointerInputCmdArgs args)
         {
+            if (_state == DragState.MOUSEDOWN)
+            {
+                // quick mouseup, definitely treat it as a normal click by
+                // replaying the original
+                CancelDrag(true);
+                return false;
+            }
             if (_state != DragState.DRAGGING) return false;
+
+            // remaining CancelDrag calls will not replay the click because
+            // by this time we've determined the input was actually a drag attempt
+
 
             //TODO: Some of this logic is duplicated in HighlightTargets
 
-            // tell the server we are dropping if we are over a valid drop target in range
-            //TODO: use the new way for this
+            // tell the server we are dropping if we are over a valid drop target in range.
+            // We don't use args.EntityUid here because drag interactions generally should
+            // work even if there's something "on top" of the drop target
+            //TODO: Refactor to use a shared InteractionChecks
             if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
-                args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger) == false)
+                    args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger) == false)
             {
                 {
-                    CancelDrag();
+                    CancelDrag(false);
                     return false;
                 }
             }
@@ -190,10 +225,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     // TODO: implement
                     Logger.Info("Dropped {0} on {1}", _draggedEntity.Name, entity.Name);
 
-                    CancelDrag();
+                    CancelDrag(false);
+                    return true;
                 }
             }
-
+            CancelDrag(false);
             return false;
         }
 
@@ -259,6 +295,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     {
                         // highlight depending on whether its in or out of range
                         // TODO: Concerned about the cost of doing this
+                        //TODO: Refactor to use a shared InteractionChecks
                         var inRange = _interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
                             pvsEntity.Transform.MapPosition, ignoredEnt: _dragger);
                         //TODO: Duplicated in InteractionOutline
@@ -281,7 +318,13 @@ namespace Content.Client.GameObjects.EntitySystems
             highlightedSprites.Clear();
         }
 
-        private void CancelDrag()
+        /// <summary>
+        /// Cancels the drag, firing our saved drag event if instructed to do so and
+        /// we are within the threshold for replaying the click
+        /// (essentially reverting the drag attempt and allowing the original click
+        /// to proceed as if no drag was performed)
+        /// </summary>
+        private void CancelDrag(bool fireSavedCmd)
         {
             RemoveHighlights();
             if (_dragShadow != null)
@@ -296,6 +339,18 @@ namespace Content.Client.GameObjects.EntitySystems
             _state = DragState.NOT_DRAGGING;
 
             _mouseDownTime = 0;
+
+            if (fireSavedCmd && _savedMouseDown.HasValue && _mouseDownTime < MaxMouseDownTimeForReplayingClick)
+            {
+                var savedValue = _savedMouseDown.Value;
+                _isReplaying = true;
+                _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use,
+                    savedValue.OriginalMessage);
+                _isReplaying = false;
+            }
+
+            _savedMouseDown = null;
+
         }
 
         public override void Update(float frameTime)
@@ -306,7 +361,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 var screenPos = _inputManager.MouseScreenPosition;
                 if (_draggedEntity == null || _draggedEntity.Deleted || (_mouseDownScreenPos - screenPos).Length > DragDeadzone)
                 {
-                    CancelDrag();
+                    // something happened to the clicked entity or we moved the mouse off the target so
+                    // we shouldn't replay the original click
+                    CancelDrag(false);
+                    return;
                 }
                 else
                 {
@@ -322,19 +380,25 @@ namespace Content.Client.GameObjects.EntitySystems
             }
             else if (_state == DragState.DRAGGING)
             {
-                // TODO: Check if still in range of dragged entity
                 if (_draggedEntity == null || _draggedEntity.Deleted)
                 {
-                    CancelDrag();
+                    CancelDrag(false);
                     return;
                 }
                 // still in range of the thing we are dragging?
+                //TODO: Refactor to use a shared InteractionChecks
                 if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
                         _draggedEntity.Transform.MapPosition, ignoredEnt: _dragger) == false)
                 {
-                    CancelDrag();
+                    CancelDrag(false);
                     return;
                 }
+
+                // keep dragged entity under mouse
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+                // TODO: would use MapPosition instead if it had a setter, but it has no setter.
+                // Is this intentional, or should we add a setter for Transform.MapPosition?
+                _dragShadow.Transform.WorldPosition = mousePos.Position;
 
                 _targetRecheckTime += frameTime;
                 if (_targetRecheckTime > TargetRecheckInterval)
