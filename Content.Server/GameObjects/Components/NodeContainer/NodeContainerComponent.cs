@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Content.Server.GameObjects.Components.NodeContainer
 {
     /// <summary>
-    ///     Creates and maintains a set of <see cref="INode"/>s.
+    ///     Creates and maintains a set of <see cref="Node"/>s.
     /// </summary>
     [RegisterComponent]
     public class NodeContainerComponent : Component
@@ -18,15 +18,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         public override string Name => "NodeContainer";
 
         [ViewVariables]
-        public IReadOnlyList<INode> Nodes => _nodes;
-        private List<INode> _nodes = new List<INode>();
+        public IReadOnlyList<Node> Nodes => _nodes;
+        private List<Node> _nodes = new List<Node>();
 
 #pragma warning disable 649
-        [Dependency] private readonly INodeFactory _nodeFactory;
+        [Dependency] private readonly NodeFactory _nodeFactory;
 #pragma warning restore 649
 
         /// <summary>
-        ///     A set of <see cref="NodeGroupID"/>s and <see cref="INode"/> implementation names
+        ///     A set of <see cref="NodeGroupID"/>s and <see cref="Node"/> implementation names
         ///     to be created and held in this container.
         /// </summary>
         [ViewVariables]
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             base.OnRemove();
         }
 
-        private INode MakeNewNode(string nodeName, NodeGroupID groupID, IEntity owner)
+        private Node MakeNewNode(string nodeName, NodeGroupID groupID, IEntity owner)
         {
             return _nodeFactory.MakeNode(nodeName, groupID, owner);
         }

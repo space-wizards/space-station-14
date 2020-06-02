@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [Node("AdjacentNode")]
     public class AdjacentNode : Node
     {
-        protected override IEnumerable<INode> GetReachableNodes()
+        protected override IEnumerable<Node> GetReachableNodes()
         {
             return Owner.GetComponent<SnapGridComponent>()
                 .GetCardinalNeighborCells()

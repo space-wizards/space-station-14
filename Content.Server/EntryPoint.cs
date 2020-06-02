@@ -84,8 +84,8 @@ namespace Content.Server
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
-            IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<INodeFactory>().Initialize();
+            IoCManager.Resolve<NodeGroupFactory>().Initialize();
+            IoCManager.Resolve<NodeFactory>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

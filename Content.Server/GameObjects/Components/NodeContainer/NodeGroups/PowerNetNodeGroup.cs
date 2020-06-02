@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower, NodeGroupID.LVPower)]
     public class PowerNetNodeGroup : BaseNodeGroup, IPowerNet
     {
-        private readonly Dictionary<INode, List<BasePowerComponent>> _powerComponents = new Dictionary<INode, List<BasePowerComponent>>();
+        private readonly Dictionary<Node, List<BasePowerComponent>> _powerComponents = new Dictionary<Node, List<BasePowerComponent>>();
 
         [ViewVariables]
         private readonly List<PowerSupplierComponent> _suppliers = new List<PowerSupplierComponent>();
@@ -55,7 +55,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
-        protected override void OnAddNode(INode node)
+        #region BaseNodeGroup Overrides
+
+        protected override void OnAddNode(Node node)
         {
             var newPowerComponents = node.Owner
                 .GetAllComponents<BasePowerComponent>()
@@ -68,7 +70,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
-        protected override void OnRemoveNode(INode node)
+        protected override void OnRemoveNode(Node node)
         {
             foreach (var powerComponent in _powerComponents[node])
             {
@@ -103,6 +105,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _supressPowerRecalculation = false;
             UpdateConsumerReceivedPower();
         }
+
+        #endregion
 
         #region IPowerNet Methods
 

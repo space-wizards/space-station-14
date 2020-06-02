@@ -32,8 +32,8 @@ namespace Content.Server
             IoCManager.Register<IModuleManager, ServerModuleManager>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
-            IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<INodeFactory, NodeFactory>();
+            IoCManager.Register<NodeGroupFactory, NodeGroupFactory>();
+            IoCManager.Register<NodeFactory, NodeFactory>();
         }
     }
 }

@@ -5,44 +5,19 @@ using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
     /// <summary>
-    ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="INode"/>s
-    ///     that they can "reach" and have the same <see cref="INode.NodeGroupID"/>.
+    ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
+    ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    public interface INode
+    public abstract class Node
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
-        ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
+        ///     implementation is used as a group, detailed in <see cref="NodeGroupFactory"/>.
         /// </summary>
-        NodeGroupID NodeGroupID { get; }
-
-        public INodeGroup NodeGroup { get; set; }
-
-        IEntity Owner { get; }
-
-        bool NeedsGroup { get; }
-
-        void OnContainerInitialize();
-
-        void OnContainerRemove();
-
-        bool TryAssignGroupIfNeeded();
-
-        void StartSpreadingGroup();
-
-        void SpreadGroup();
-
-        void ClearNodeGroup();
-    }
-
-    public abstract class Node : INode
-    {
-        // <inheritdoc cref="INode"/>
         [ViewVariables]
         public NodeGroupID NodeGroupID { get; private set; }
 
@@ -56,7 +31,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public bool NeedsGroup { get; private set; } = true;
 
 #pragma warning disable 649
-        [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
+        [Dependency] private readonly NodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
 
         public void Initialize(NodeGroupID nodeGroupID, IEntity owner)
@@ -110,12 +85,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     How this node will attempt to find other reachable <see cref="INode"/>s to group with.
-        ///     Returns a set of <see cref="INode"/>s to consider grouping with. Should not return this current <see cref="INode"/>. 
+        ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
+        ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>. 
         /// </summary>
-        protected abstract IEnumerable<INode> GetReachableNodes();
+        protected abstract IEnumerable<Node> GetReachableNodes();
 
-        private IEnumerable<INode> GetReachableCompatibleNodes()
+        private IEnumerable<Node> GetReachableCompatibleNodes()
         {
             return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID);
         }

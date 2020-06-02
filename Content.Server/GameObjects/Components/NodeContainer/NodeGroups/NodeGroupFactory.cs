@@ -6,14 +6,7 @@ using System.Reflection;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
-    public interface INodeGroupFactory
-    {
-        void Initialize();
-
-        INodeGroup MakeNodeGroup(NodeGroupID nodeGroupType);
-    }
-
-    public class NodeGroupFactory : INodeGroupFactory
+    public class NodeGroupFactory
     {
         private readonly Dictionary<NodeGroupID, Type> _groupTypes = new Dictionary<NodeGroupID, Type>();
 

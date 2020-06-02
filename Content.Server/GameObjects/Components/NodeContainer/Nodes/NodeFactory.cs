@@ -8,14 +8,7 @@ using System.Reflection;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
-    public interface INodeFactory
-    {
-        void Initialize();
-
-        INode MakeNode(string nodeName, NodeGroupID groupID, IEntity owner);
-    }
-
-    public class NodeFactory : INodeFactory
+    public class NodeFactory
     {
         private readonly Dictionary<string, Type> _groupTypes = new Dictionary<string, Type>();
 
@@ -37,7 +30,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        public INode MakeNode(string nodeName, NodeGroupID groupID, IEntity owner)
+        public Node MakeNode(string nodeName, NodeGroupID groupID, IEntity owner)
         {
             if (_groupTypes.TryGetValue(nodeName, out var type))
             {
@@ -45,7 +38,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 newNode.Initialize(groupID, owner);
                 return newNode;
             }
-            throw new ArgumentException($"{nodeName} did not have an associated {nameof(INode)}.");
+            throw new ArgumentException($"{nodeName} did not have an associated {nameof(Node)}.");
         }
     }
 }

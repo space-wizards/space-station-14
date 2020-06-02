@@ -5,16 +5,16 @@ using System.Collections.Generic;
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     /// <summary>
-    ///     Maintains a collection of <see cref="INode"/>s, and performs operations requiring a list of
-    ///     all connected <see cref="INode"/>s.
+    ///     Maintains a collection of <see cref="Node"/>s, and performs operations requiring a list of
+    ///     all connected <see cref="Node"/>s.
     /// </summary>
     public interface INodeGroup
     {
-        public IReadOnlyList<INode> Nodes { get; }
+        public IReadOnlyList<Node> Nodes { get; }
 
-        void AddNode(INode node);
+        void AddNode(Node node);
 
-        void RemoveNode(INode node);
+        void RemoveNode(Node node);
 
         void CombineGroup(INodeGroup newGroup);
 
@@ -31,21 +31,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public class BaseNodeGroup : INodeGroup
     {
         [ViewVariables]
-        public IReadOnlyList<INode> Nodes => _nodes;
-        private readonly List<INode> _nodes = new List<INode>();
+        public IReadOnlyList<Node> Nodes => _nodes;
+        private readonly List<Node> _nodes = new List<Node>();
 
         [ViewVariables]
         public int NodeCount => Nodes.Count;
 
         public static readonly INodeGroup Null = new NullNodeGroup();
 
-        public void AddNode(INode node)
+        public void AddNode(Node node)
         {
             _nodes.Add(node);
             OnAddNode(node);
         }
 
-        public void RemoveNode(INode node)
+        public void RemoveNode(Node node)
         {
             _nodes.Remove(node);
             OnRemoveNode(node);
@@ -70,7 +70,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         }
 
         /// <summary>
-        ///     Causes all <see cref="INode"/>s to remake their groups. Called when a <see cref="INode"/> is removed
+        ///     Causes all <see cref="Node"/>s to remake their groups. Called when a <see cref="Node"/> is removed
         ///     and may have split a group in two, so multiple new groups may need to be formed.
         /// </summary>
         private void RemakeGroup()
@@ -89,9 +89,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
-        protected virtual void OnAddNode(INode node) { }
+        protected virtual void OnAddNode(Node node) { }
         
-        protected virtual void OnRemoveNode(INode node) { }
+        protected virtual void OnRemoveNode(Node node) { }
 
         protected virtual void BeforeRemake() { }
 
@@ -107,11 +107,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private class NullNodeGroup : INodeGroup
         {
-            public IReadOnlyList<INode> Nodes => _nodes;
-            private readonly List<INode> _nodes = new List<INode>();
-            public void AddNode(INode node) { }
+            public IReadOnlyList<Node> Nodes => _nodes;
+            private readonly List<Node> _nodes = new List<Node>();
+            public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }
-            public void RemoveNode(INode node) { }
+            public void RemoveNode(Node node) { }
             public void BeforeCombine() { }
             public void AfterCombine() { }
             public void BeforeRemakeSpread() { }
