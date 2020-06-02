@@ -25,20 +25,17 @@ namespace Content.Shared.Kitchen
             Recipes.Sort(new RecipeComparer());
         }
         /// <summary>
-        /// Check if a given id appears in any of the recipes that exist.
+        /// Check if a prototype ids appears in any of the recipes that exist.
         /// </summary>
         /// <param name="solidIds"></param>
         /// <returns></returns>
-        public bool SolidAppears(string[] solidIds)
+        public bool SolidAppears(string solidId)
         {
-            for(var i = 0; i < Recipes.Count; i++)
+            foreach(var recipe in Recipes)
             {
-                for(var j = 0; j < solidIds.Length; j++)
+                if(recipe.IngredientsSolids.ContainsKey(solidId))
                 {
-                    if(Recipes[i].IngredientsSolids.ContainsKey(solidIds[j]))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
