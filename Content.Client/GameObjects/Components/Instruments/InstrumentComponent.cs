@@ -29,8 +29,6 @@ namespace Content.Client.GameObjects.Components.Instruments
     public class InstrumentComponent : SharedInstrumentComponent
     {
 
-        private const float SequenceDelaySecondsDefault = .1f;
-
         /// <summary>
         ///     Called when a midi song stops playing.
         /// </summary>
@@ -55,7 +53,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private byte _instrumentBank = 0;
 
-        private float _sequenceDelaySeconds = SequenceDelaySecondsDefault;
+        private uint _sequenceDelay = 0;
 
         private uint _sequenceStartTick;
 
@@ -144,7 +142,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             if (IsRendererAlive) return;
 
-            _sequenceDelaySeconds = SequenceDelaySecondsDefault;
+            _sequenceDelay = 0;
             _sequenceStartTick = 0;
             _midiManager.OcclusionCollisionMask = (int) CollisionGroup.Impassable;
             _renderer = _midiManager.GetNewRenderer();
@@ -234,29 +232,34 @@ namespace Content.Client.GameObjects.Components.Instruments
                         return;
                     }
 
-                    // scale the delay up with 2sqrt of client lag, min of 60ms up to 3s
-                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f) * 2;
-                    _sequenceDelaySeconds = Math.Max(0.06f, Math.Max(_sequenceDelaySeconds, Math.Min(3f, sqrtLag)));
-
-                    /*
-                    var delta = Math.Max((uint) (_renderer!.SequencerTimeScale * _sequenceDelaySeconds)
-                        + (ev.Tick - _syncSequencerTick), 0);
-                    */
-
                     if (_sequenceStartTick <= 0)
                     {
                         _sequenceStartTick = midiEventMessage.MidiEvent
-                            .Min(x => x.Tick)-1;
+                            .Min(x => x.Tick) - 1;
                     }
 
-                    var delta = (uint) (_renderer!.SequencerTimeScale * _sequenceDelaySeconds);
+                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f);
+                    var delay = (uint) (_renderer!.SequencerTimeScale * (.2 + sqrtLag));
+                    var delta = delay - _sequenceStartTick;
 
-                    foreach (var ev in midiEventMessage.MidiEvent)
+                    _sequenceDelay = Math.Max(_sequenceDelay, delta);
+
+                    var currentTick = _renderer.SequencerTick;
+
+                    // ReSharper disable once ForCanBeConvertedToForeach
+                    for (var i = 0; i < midiEventMessage.MidiEvent.Length; i++)
                     {
-                        /*
-                        _renderer?.ScheduleMidiEvent(ev, delta, false);
-                        */
-                        _renderer?.ScheduleMidiEvent(ev, ev.Tick + delta - _sequenceStartTick, true);
+                        var ev = midiEventMessage.MidiEvent[i];
+                        var scheduled = ev.Tick + _sequenceDelay;
+
+                        if (scheduled <= currentTick)
+                        {
+                            _sequenceDelay += currentTick - ev.Tick;
+                            scheduled = ev.Tick + _sequenceDelay;
+                        }
+
+
+                        _renderer?.ScheduleMidiEvent(ev, scheduled, true);
                     }
 
                     break;
