@@ -84,7 +84,6 @@
   - type: PowerGenerator
   - type: SolarPanel
     supply: 1500
-  - type: Rotatable
   - type: SnapGrid
     offset: Center
   - type: Damageable

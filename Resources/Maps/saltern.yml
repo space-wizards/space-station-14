@@ -92,7 +92,7 @@ grids:
   - ind: "1,-2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADsAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAPAAAADwAAAA8AAAAPAAAADgAAAA7AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADkAAAA5AAAAOQAAADwAAAA4AAAAOwAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA5AAAAOQAAADkAAAA8AAAAOAAAADsAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAOQAAADkAAAA5AAAAPAAAADgAAAA7AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADkAAAA5AAAAOQAAADwAAAA4AAAAOwAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAAAAAAAAAAAAAAAAAADwAAAA8AAAAPAAAADkAAAA8AAAAOAAAADsAAAA4AAAAOAAAADgAAAA4AAAAOAAAADwAAAAAAAAAAAAAAAAAAAA5AAAAOQAAADkAAAA5AAAAPAAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADgAAAA8AAAAAAAAAAAAAAAAAAAAOQAAADkAAAA5AAAAOQAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADsAAAA4AAAAPAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,1"
-    tiles: NgAAADYAAAA2AAAANgAAADYAAAA8AAAANgAAADYAAAA2AAAANgAAADYAAAA8AAAAOAAAADgAAAA4AAAAOAAAADwAAAA8AAAAPAAAADYAAAA8AAAAPAAAADYAAAA2AAAANgAAADYAAAA2AAAAPAAAADgAAAA4AAAAOAAAADgAAAA8AAAAMwAAADMAAAAzAAAAMwAAADwAAAA8AAAANgAAADwAAAA8AAAAPAAAADwAAAA4AAAAOAAAADgAAAA4AAAAPAAAADMAAAAzAAAAMwAAADMAAAA8AAAANgAAADYAAAA2AAAANgAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAAzAAAAMwAAADMAAAAzAAAANgAAADYAAAA2AAAANgAAADYAAAA8AAAAOAAAADgAAAA4AAAAOAAAADsAAAA8AAAAMwAAADMAAAAzAAAAMwAAADwAAAA2AAAANgAAADYAAAA2AAAAPAAAADsAAAA7AAAAOwAAADsAAAA7AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA7AAAAPAAAADwAAAAxAAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOwAAADwAAAAxAAAAMQAAADEAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADsAAAA7AAAAOwAAADsAAAA8AAAAMQAAADEAAAAxAAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAPAAAADwAAAA8AAAAPAAAADEAAAAxAAAAMQAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAAAAAAAAAAAADwAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAPAAAADwAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADYAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADwAAAA2AAAANgAAAA==
+    tiles: PAAAADYAAAA2AAAANgAAADYAAAA8AAAANgAAADYAAAA2AAAANgAAADYAAAA8AAAAOAAAADgAAAA4AAAAOAAAADwAAAA8AAAAPAAAADYAAAA8AAAAPAAAADYAAAA2AAAANgAAADYAAAA2AAAAPAAAADgAAAA4AAAAOAAAADgAAAA8AAAAMwAAADMAAAAzAAAAMwAAADwAAAA8AAAANgAAADwAAAA8AAAAPAAAADwAAAA4AAAAOAAAADgAAAA4AAAAPAAAADMAAAAzAAAAMwAAADMAAAA8AAAANgAAADYAAAA2AAAANgAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAAzAAAAMwAAADMAAAAzAAAANgAAADYAAAA2AAAANgAAADYAAAA8AAAAOAAAADgAAAA4AAAAOAAAADsAAAA8AAAAMwAAADMAAAAzAAAAMwAAADwAAAA2AAAANgAAADYAAAA2AAAAPAAAADsAAAA7AAAAOwAAADsAAAA7AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA7AAAAPAAAADwAAAAxAAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOwAAADwAAAAxAAAAMQAAADEAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADsAAAA7AAAAOwAAADsAAAA8AAAAMQAAADEAAAAxAAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAPAAAADwAAAA8AAAAPAAAADEAAAAxAAAAMQAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAAAAAAAAAAAADwAAAAxAAAAMQAAADEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAPAAAADwAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADYAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADwAAAA2AAAANgAAAA==
   - ind: "-2,1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADsAAAA4AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA7AAAAOAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAOwAAADgAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADsAAAA4AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA7AAAAOAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAOwAAADgAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADsAAAA4AAAAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA7AAAAOAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAOwAAADgAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAADsAAAA7AAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAA8AAAAPAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,2"
@@ -7478,10 +7478,15 @@ entities:
 - uid: 1041
   type: AirlockCommandLocked
   components:
+  - name: Head of Personnel's Office
+    type: MetaData
   - parent: 0
     pos: 6.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - necessary:
+    - HeadOfPersonnel
+    type: AccessReader
 - uid: 1042
   type: reinforced_wall
   components:
@@ -10451,6 +10456,8 @@ entities:
 - uid: 1466
   type: AirlockServiceLocked
   components:
+  - name: Freezer
+    type: MetaData
   - parent: 0
     pos: -12.5,-2.5
     rot: -1.5707963267948966 rad
@@ -15882,26 +15889,18 @@ entities:
   - parent: 2154
     type: Transform
 - uid: 2156
-  type: PoweredSmallLight
+  type: AirlockMaintCommonLocked
   components:
   - parent: 0
-    pos: -2,21.5
-    rot: 1.5707963267948966 rad
+    pos: -16.5,2.5
+    rot: -1.5707963267948966 rad
     type: Transform
-  - color: '#FFFFFFFF'
-    type: PointLight
-  - containers:
-      light_bulb:
-        entities:
-        - 2157
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2157
-  type: LightBulb
+  type: AirlockMaintCommonLocked
   components:
-  - parent: 2156
+  - parent: 0
+    pos: 1.5,-23.5
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2158
   type: PoweredSmallLight
@@ -17189,8 +17188,7 @@ entities:
     pos: -1.7489221,25.142187
     rot: 3.141592653589793 rad
     type: Transform
-  - maxVol: 0
-    fillingSteps: 0
+  - fillingSteps: 0
     type: Solution
 - uid: 2287
   type: Pen
@@ -21080,6 +21078,11 @@ entities:
     pos: 0.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2756
   type: WardrobeCargoFilled
   components:
@@ -21409,6 +21412,11 @@ entities:
     pos: -39.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2780
   type: PottedPlantRandom
   components:
@@ -21416,6 +21424,11 @@ entities:
     pos: -25.5,-8.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2781
   type: LockerEmergencyFilledRandom
   components:
@@ -21437,6 +21450,11 @@ entities:
     pos: -2.5,-22.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2783
   type: LockerEmergencyFilledRandom
   components:
@@ -21486,6 +21504,11 @@ entities:
     pos: 7.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2787
   type: PottedPlantRandom
   components:
@@ -21493,6 +21516,11 @@ entities:
     pos: 10.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2788
   type: LockerEmergencyFilledRandom
   components:
@@ -21528,6 +21556,11 @@ entities:
     pos: -24.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2791
   type: LockerEmergencyFilledRandom
   components:
@@ -21549,6 +21582,11 @@ entities:
     pos: 1.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2793
   type: LockerBoozeFilled
   components:
@@ -21593,6 +21631,11 @@ entities:
     pos: 5.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2797
   type: PottedPlantRandom
   components:
@@ -21600,6 +21643,11 @@ entities:
     pos: 12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2798
   type: PottedPlantRandomPlastic
   components:
@@ -21607,6 +21655,11 @@ entities:
     pos: 29.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2799
   type: PottedPlantRandom
   components:
@@ -21614,6 +21667,11 @@ entities:
     pos: 21.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2800
   type: PottedPlantRandomPlastic
   components:
@@ -21621,6 +21679,11 @@ entities:
     pos: -12.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - containers:
+      flashlight_cell_container:
+        entities: []
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
 - uid: 2801
   type: SpawnPointCargoTechnician
   components:
@@ -22128,6 +22191,8 @@ entities:
 - uid: 2872
   type: AirlockExternalLocked
   components:
+  - name: Escape Shuttle Dock
+    type: MetaData
   - parent: 0
     pos: -41.5,4.5
     rot: -1.5707963267948966 rad
@@ -22135,6 +22200,8 @@ entities:
 - uid: 2873
   type: AirlockExternalLocked
   components:
+  - name: Escape Shuttle Dock
+    type: MetaData
   - parent: 0
     pos: -39.5,4.5
     rot: -1.5707963267948966 rad
@@ -22142,6 +22209,8 @@ entities:
 - uid: 2874
   type: AirlockExternalLocked
   components:
+  - name: Escape Shuttle Dock
+    type: MetaData
   - parent: 0
     pos: -39.5,8.5
     rot: -1.5707963267948966 rad
@@ -22149,6 +22218,8 @@ entities:
 - uid: 2875
   type: AirlockExternalLocked
   components:
+  - name: Escape Shuttle Dock
+    type: MetaData
   - parent: 0
     pos: -41.5,8.5
     rot: -1.5707963267948966 rad
@@ -22156,6 +22227,8 @@ entities:
 - uid: 2876
   type: AirlockExternalLocked
   components:
+  - name: Arrivals Shuttle Dock
+    type: MetaData
   - parent: 0
     pos: -37.5,-3.5
     rot: -1.5707963267948966 rad
@@ -22163,34 +22236,44 @@ entities:
 - uid: 2877
   type: AirlockExternalLocked
   components:
+  - name: Arrivals Shuttle Dock
+    type: MetaData
   - parent: 0
     pos: -39.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2878
-  type: AirlockEngineeringLocked
+  type: AirlockSecurityGlassLocked
   components:
+  - name: Brig
+    type: MetaData
   - parent: 0
-    pos: 30.5,3.5
+    pos: -5.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2879
-  type: AirlockEngineeringLocked
+  type: AirlockSecurityGlassLocked
   components:
+  - name: Brig
+    type: MetaData
   - parent: 0
-    pos: 30.5,5.5
+    pos: -5.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2880
-  type: AirlockEngineeringLocked
+  type: AirlockSecurityGlassLocked
   components:
+  - name: Brig
+    type: MetaData
   - parent: 0
-    pos: 38.5,1.5
+    pos: -6.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2881
   type: AirlockEngineeringLocked
   components:
+  - name: Gravity Generator
+    type: MetaData
   - parent: 0
     pos: 49.5,-1.5
     rot: -1.5707963267948966 rad
@@ -22198,6 +22281,8 @@ entities:
 - uid: 2882
   type: AirlockEngineeringGlassLocked
   components:
+  - name: Engineering Equipment
+    type: MetaData
   - parent: 0
     pos: 33.5,1.5
     rot: -1.5707963267948966 rad
@@ -22205,6 +22290,8 @@ entities:
 - uid: 2883
   type: AirlockEngineeringGlassLocked
   components:
+  - name: Atmospherics
+    type: MetaData
   - parent: 0
     pos: 33.5,7.5
     rot: -1.5707963267948966 rad
@@ -22212,6 +22299,8 @@ entities:
 - uid: 2884
   type: AirlockEngineeringLocked
   components:
+  - name: Secure Storage
+    type: MetaData
   - parent: 0
     pos: 41.5,10.5
     rot: -1.5707963267948966 rad
@@ -22219,6 +22308,8 @@ entities:
 - uid: 2885
   type: AirlockEngineeringLocked
   components:
+  - name: Secure Storage
+    type: MetaData
   - parent: 0
     pos: 40.5,10.5
     rot: -1.5707963267948966 rad
@@ -22254,6 +22345,8 @@ entities:
 - uid: 2890
   type: AirlockCommandGlassLocked
   components:
+  - name: Heads of Staff Meeting Room
+    type: MetaData
   - parent: 0
     pos: 1.5,24.5
     rot: -1.5707963267948966 rad
@@ -22261,6 +22354,8 @@ entities:
 - uid: 2891
   type: AirlockCommandGlassLocked
   components:
+  - name: Heads of Staff Meeting Room
+    type: MetaData
   - parent: 0
     pos: 1.5,25.5
     rot: -1.5707963267948966 rad
@@ -22268,22 +22363,27 @@ entities:
 - uid: 2892
   type: AirlockCommandLocked
   components:
+  - name: Captain's Office
+    type: MetaData
   - parent: 0
     pos: 5.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - necessary:
+    - Captain
+    type: AccessReader
 - uid: 2893
-  type: AirlockCommandLocked
+  type: AirlockMaintCommonLocked
   components:
   - parent: 0
-    pos: 4.5,22.5
+    pos: 6.5,-19.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2894
-  type: AirlockCommandLocked
+  type: AirlockMaintCommonLocked
   components:
   - parent: 0
-    pos: 2.5,22.5
+    pos: 21.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2895
@@ -22296,6 +22396,8 @@ entities:
 - uid: 2896
   type: AirlockMedicalGlassLocked
   components:
+  - name: Medical Bay
+    type: MetaData
   - parent: 0
     pos: 10.5,-6.5
     rot: -1.5707963267948966 rad
@@ -22303,6 +22405,8 @@ entities:
 - uid: 2897
   type: AirlockMedicalGlassLocked
   components:
+  - name: Medical Bay
+    type: MetaData
   - parent: 0
     pos: 11.5,-6.5
     rot: -1.5707963267948966 rad
@@ -22310,6 +22414,8 @@ entities:
 - uid: 2898
   type: AirlockMedicalGlassLocked
   components:
+  - name: Medical Storage
+    type: MetaData
   - parent: 0
     pos: 20.5,-6.5
     rot: -1.5707963267948966 rad
@@ -22317,6 +22423,8 @@ entities:
 - uid: 2899
   type: AirlockMedicalGlassLocked
   components:
+  - name: Surgery
+    type: MetaData
   - parent: 0
     pos: 19.5,-18.5
     rot: -1.5707963267948966 rad
@@ -22324,29 +22432,35 @@ entities:
 - uid: 2900
   type: AirlockMedicalGlassLocked
   components:
+  - name: Cloning
+    type: MetaData
   - parent: 0
     pos: 8.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2901
-  type: AirlockMedicalLocked
+  type: AirlockSecurityGlassLocked
   components:
+  - name: Security Equipment
+    type: MetaData
   - parent: 0
-    pos: 7.5,-6.5
+    pos: -10.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2902
-  type: AirlockMedicalLocked
+  type: AirlockSecurityGlassLocked
   components:
+  - name: Reception Desk
+    type: MetaData
   - parent: 0
-    pos: 17.5,-3.5
+    pos: -9.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2903
-  type: AirlockMedicalLocked
+  type: AirlockMaintCommonLocked
   components:
   - parent: 0
-    pos: 20.5,-13.5
+    pos: 0.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2904
@@ -22373,6 +22487,8 @@ entities:
 - uid: 2907
   type: AirlockScienceLocked
   components:
+  - name: Science
+    type: MetaData
   - parent: 0
     pos: 0.5,-19.5
     rot: -1.5707963267948966 rad
@@ -22380,6 +22496,8 @@ entities:
 - uid: 2908
   type: AirlockScienceLocked
   components:
+  - name: Science
+    type: MetaData
   - parent: 0
     pos: 0.5,-20.5
     rot: -1.5707963267948966 rad
@@ -22387,24 +22505,32 @@ entities:
 - uid: 2909
   type: AirlockScienceGlassLocked
   components:
+  - name: Research and Development
+    type: MetaData
   - parent: 0
     pos: -3.5,-18.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2910
-  type: AirlockScienceLocked
+  type: AirlockMaintCommonLocked
   components:
   - parent: 0
-    pos: -3.5,-21.5
+    pos: -33.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2911
-  type: AirlockScienceLocked
+  type: AirlockCommandGlassLocked
   components:
+  - name: Chief Engineer's Office
+    type: MetaData
   - parent: 0
-    pos: -8.5,-21.5
+    pos: 38.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - necessary:
+    - Engineering
+    - Command
+    type: AccessReader
 - uid: 2912
   type: Catwalk
   components:
@@ -22419,6 +22545,9 @@ entities:
     pos: 11.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - necessary:
+    - HeadOfPersonnel
+    type: AccessReader
 - uid: 2914
   type: AirlockExternalLocked
   components:
@@ -22429,435 +22558,665 @@ entities:
 - uid: 2915
   type: AirlockServiceLocked
   components:
+  - name: Custodial Closet
+    type: MetaData
   - parent: 0
     pos: -22.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2916
-  type: AirlockMaintSecLocked
-  components:
-  - parent: 0
-    pos: -15.5,16.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2917
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -25.5,8.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2918
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -25.5,10.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2919
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -24.5,1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2920
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -23.5,1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2921
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -21.5,-1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2922
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -21.5,-4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2923
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -20.5,0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2924
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -18.5,0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2925
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -26.5,-0.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2926
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -26.5,-1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2927
-  type: AirlockServiceLocked
-  components:
-  - parent: 0
-    pos: -26.5,-6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2928
-  type: AirlockSecurityLocked
-  components:
-  - parent: 0
-    pos: -2.5,9.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2929
-  type: AirlockSecurityLocked
-  components:
-  - parent: 0
-    pos: 0.5,9.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2930
-  type: AirlockSecurityLocked
-  components:
-  - parent: 0
-    pos: -8.5,18.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2931
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -10.5,20.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2932
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -12.5,17.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2933
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -10.5,15.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2934
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -9.5,9.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2935
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -6.5,9.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2936
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -5.5,9.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2937
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -5.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2938
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -6.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2939
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -8.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2940
-  type: AirlockSecurityGlassLocked
-  components:
-  - parent: 0
-    pos: -9.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2941
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -10.5,-1.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2942
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -7.5,-4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2943
-  type: AirlockServiceGlassLocked
-  components:
-  - parent: 0
-    pos: -20.5,-7.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2944
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: -16.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2945
-  type: AirlockMaintLocked
-  components:
-  - parent: 0
-    pos: 27.5,7.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2946
-  type: AirlockEVALocked
-  components:
-  - parent: 0
-    pos: 9.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2947
-  type: AirlockMaintIntLocked
-  components:
-  - parent: 0
-    pos: -31.5,-6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2948
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: -8.5,-7.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2949
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: 21.5,2.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2950
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: 6.5,-19.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2951
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: 1.5,-23.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2952
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: -16.5,2.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2953
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -34.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2954
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: -32.5,2.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2955
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: -33.5,8.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2956
-  type: AirlockMaintCommonLocked
-  components:
-  - parent: 0
-    pos: 0.5,20.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2957
-  type: AirlockMaintIntLocked
-  components:
-  - parent: 0
-    pos: -13.5,-13.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2958
-  type: AirlockMaintIntLocked
-  components:
-  - parent: 0
-    pos: -12.5,-8.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2959
-  type: AirlockMaintIntLocked
-  components:
-  - parent: 0
-    pos: -16.5,-7.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2960
-  type: AirlockMaintIntLocked
-  components:
-  - parent: 0
-    pos: -14.5,-4.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2961
+- uid: 2917
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: -23.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2962
+- uid: 2918
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
     pos: 1.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2963
-  type: AirlockMaintIntLocked
-  components:
-  - parent: 0
-    pos: -20.5,11.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2964
-  type: AirlockEVALocked
-  components:
-  - parent: 0
-    pos: 8.5,12.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2965
-  type: AirlockEVALocked
-  components:
-  - parent: 0
-    pos: 7.5,6.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2966
+- uid: 2919
   type: AirlockVaultLocked
   components:
+  - name: Vault
+    type: MetaData
   - parent: 0
     pos: 0.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2967
+- uid: 2920
   type: AirlockMaintCommonLocked
   components:
   - parent: 0
-    pos: 5.5,14.5
+    pos: -8.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2968
-  type: AirlockMaintRnDLocked
+  - necessary:
+    - Service
+    type: AccessReader
+- uid: 2921
+  type: AirlockServiceGlassLocked
   components:
+  - name: Kitchen
+    type: MetaData
   - parent: 0
-    pos: -4.5,-11.5
+    pos: -10.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2969
+- uid: 2922
   type: AirlockMaintEngiLocked
   components:
   - parent: 0
     pos: 28.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2970
-  type: AirlockCargoLocked
+- uid: 2923
+  type: AirlockServiceGlassLocked
   components:
+  - name: Bar
+    type: MetaData
+  - parent: 0
+    pos: -7.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2924
+  type: AirlockSecurityGlassLocked
+  components:
+  - name: Brig
+    type: MetaData
+  - parent: 0
+    pos: -6.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2925
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: -16.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2926
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: 5.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2927
+  type: AirlockMaintRnDLocked
+  components:
+  - parent: 0
+    pos: -4.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2928
+  type: AirlockMaintIntLocked
+  components:
+  - parent: 0
+    pos: -12.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2929
+  type: AirlockMaintIntLocked
+  components:
+  - parent: 0
+    pos: -13.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2930
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: -32.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2931
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: -20.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Janitor
+    type: AccessReader
+- uid: 2932
+  type: AirlockEngineeringGlassLocked
+  components:
+  - name: Engineering
+    type: MetaData
+  - parent: 0
+    pos: 30.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2933
+  type: AirlockEngineeringGlassLocked
+  components:
+  - name: Engineering
+    type: MetaData
+  - parent: 0
+    pos: 30.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2934
+  type: AirlockMedicalGlassLocked
+  components:
+  - name: Chemistry
+    type: MetaData
+  - parent: 0
+    pos: 7.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2935
+  type: AirlockMedicalGlassLocked
+  components:
+  - name: Chemistry
+    type: MetaData
+  - parent: 0
+    pos: 17.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2936
+  type: AirlockCommandGlassLocked
+  components:
+  - name: Chief Medical Officer's Office
+    type: MetaData
+  - parent: 0
+    pos: 20.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Medical
+    - Command
+    type: AccessReader
+- uid: 2937
+  type: AirlockCommandGlassLocked
+  components:
+  - name: Server Room
+    type: MetaData
+  - parent: 0
+    pos: -8.5,-21.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Research
+    - Command
+    type: AccessReader
+- uid: 2938
+  type: AirlockCommandGlassLocked
+  components:
+  - name: Research Director's Office
+    type: MetaData
+  - parent: 0
+    pos: -3.5,-21.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Research
+    - Command
+    type: AccessReader
+- uid: 2939
+  type: AirlockScienceLocked
+  components:
+  - name: Testing Area
+    type: MetaData
+  - parent: 0
+    pos: -12.5,-19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2940
+  type: AirlockScienceLocked
+  components:
+  - name: Testing Area
+    type: MetaData
+  - parent: 0
+    pos: -12.5,-20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2941
+  type: AirlockGlass
+  components:
+  - name: Locker Room
+    type: MetaData
+  - parent: 0
+    pos: -26.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2942
+  type: AirlockServiceGlassLocked
+  components:
+  - name: Tool Storage
+    type: MetaData
+  - parent: 0
+    pos: -25.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Maintenance
+    type: AccessReader
+- uid: 2943
+  type: AirlockServiceGlassLocked
+  components:
+  - name: Tool Storage
+    type: MetaData
+  - parent: 0
+    pos: -25.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Maintenance
+    type: AccessReader
+- uid: 2944
+  type: AirlockGlass
+  components:
+  - name: Locker Room
+    type: MetaData
+  - parent: 0
+    pos: -26.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2945
+  type: AirlockServiceLocked
+  components:
+  - name: Theatre
+    type: MetaData
+  - parent: 0
+    pos: -20.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Theatre
+    type: AccessReader
+- uid: 2946
+  type: Airlock
+  components:
+  - name: Bunk Dorms
+    type: MetaData
+  - parent: 0
+    pos: -26.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2947
+  type: Airlock
+  components:
+  - name: Showers
+    type: MetaData
+  - parent: 0
+    pos: -21.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2948
+  type: Airlock
+  components:
+  - name: Toilet
+    type: MetaData
+  - parent: 0
+    pos: -18.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2949
+  type: Airlock
+  components:
+  - name: Restrooms
+    type: MetaData
+  - parent: 0
+    pos: -21.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2950
+  type: Airlock
+  components:
+  - name: Toilet
+    type: MetaData
+  - parent: 0
+    pos: -20.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2951
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: -14.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Service
+    type: AccessReader
+- uid: 2952
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: -16.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Service
+    type: AccessReader
+- uid: 2953
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: -31.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2954
+  type: AirlockMaintCommonLocked
+  components:
+  - parent: 0
+    pos: 27.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2955
+  type: Table
+  components:
+  - parent: 0
+    pos: -8.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2956
+  type: Table
+  components:
+  - parent: 0
+    pos: -9.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2957
+  type: Table
+  components:
+  - parent: 0
+    pos: -7.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2958
+  type: Table
+  components:
+  - parent: 0
+    pos: -7.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2959
+  type: ChairOfficeDark
+  components:
+  - parent: 0
+    pos: -9.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2960
+  type: ChairOfficeDark
+  components:
+  - parent: 0
+    pos: -8.5,8.5
+    type: Transform
+- uid: 2961
+  type: AirlockVaultLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - parent: 0
+    pos: -12.5,17.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2962
+  type: AirlockVaultLocked
+  components:
+  - name: Armory
+    type: MetaData
+  - parent: 0
+    pos: -10.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2963
+  type: AirlockCommandGlassLocked
+  components:
+  - name: Bridge
+    type: MetaData
+  - parent: 0
+    pos: 2.5,22.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2964
+  type: AirlockCommandGlassLocked
+  components:
+  - name: Bridge
+    type: MetaData
+  - parent: 0
+    pos: 4.5,22.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2965
+  type: AirlockCommandGlassLocked
+  components:
+  - name: EVA
+    type: MetaData
+  - parent: 0
+    pos: 7.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - External
+    type: AccessReader
+- uid: 2966
+  type: AirlockCommandGlassLocked
+  components:
+  - name: EVA
+    type: MetaData
+  - parent: 0
+    pos: 9.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - External
+    type: AccessReader
+- uid: 2967
+  type: AirlockMaintCommandLocked
+  components:
+  - parent: 0
+    pos: 8.5,12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - External
+    type: AccessReader
+- uid: 2968
+  type: AirlockCargoGlassLocked
+  components:
+  - name: Cargo Office
+    type: MetaData
   - parent: 0
     pos: 13.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2971
+- uid: 2969
   type: AirlockCargoGlassLocked
   components:
+  - name: Cargo Bay
+    type: MetaData
   - parent: 0
-    pos: 20.5,14.5
+    pos: 17.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2972
+- uid: 2970
   type: AirlockCargoGlassLocked
   components:
-  - parent: 0
-    pos: 20.5,16.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2973
-  type: AirlockCargoGlassLocked
-  components:
-  - parent: 0
-    pos: 22.5,16.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2974
-  type: AirlockCargoGlassLocked
-  components:
-  - parent: 0
-    pos: 22.5,14.5
-    rot: -1.5707963267948966 rad
-    type: Transform
-- uid: 2975
-  type: AirlockCargoLocked
-  components:
+  - name: Cargo Bay
+    type: MetaData
   - parent: 0
     pos: 17.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-- uid: 2976
-  type: AirlockCargoLocked
+- uid: 2971
+  type: AirlockExternalLocked
+  components:
+  - name: Supply Shuttle Dock
+    type: MetaData
+  - parent: 0
+    pos: 20.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Cargo
+    type: AccessReader
+- uid: 2972
+  type: AirlockExternalLocked
+  components:
+  - name: Supply Shuttle Dock
+    type: MetaData
+  - parent: 0
+    pos: 20.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Cargo
+    type: AccessReader
+- uid: 2973
+  type: AirlockExternalLocked
+  components:
+  - name: Supply Shuttle Dock
+    type: MetaData
+  - parent: 0
+    pos: 22.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Cargo
+    type: AccessReader
+- uid: 2974
+  type: AirlockExternalLocked
+  components:
+  - name: Supply Shuttle Dock
+    type: MetaData
+  - parent: 0
+    pos: 22.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Cargo
+    type: AccessReader
+- uid: 2975
+  type: AirlockExternalLocked
   components:
   - parent: 0
-    pos: 17.5,10.5
+    pos: 14.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2976
+  type: AirlockCommandGlassLocked
+  components:
+  - name: Head of Security's Office
+    type: MetaData
+  - parent: 0
+    pos: -8.5,18.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - necessary:
+    - Security
+    - Command
+    type: AccessReader
+- uid: 2977
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: 17,-20.5
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2978
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2978
+  type: LightTube
+  components:
+  - parent: 2977
+    type: Transform
+- uid: 2979
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: 15.5,-18
+    rot: 1.5707963267948966 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2980
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2980
+  type: LightTube
+  components:
+  - parent: 2979
+    type: Transform
+- uid: 2981
+  type: Poweredlight
+  components:
+  - parent: 0
+    pos: 20,-17.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - color: '#FFFFFFFF'
+    type: PointLight
+  - containers:
+      light_bulb:
+        entities:
+        - 2982
+        type: Content.Server.GameObjects.ContainerSlot
+    type: ContainerContainer
+  - load: 40
+    type: PowerDevice
+- uid: 2982
+  type: LightTube
+  components:
+  - parent: 2981
+    type: Transform
+- uid: 2983
+  type: reinforced_wall
+  components:
+  - parent: 0
+    pos: -15.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2984
+  type: Catwalk
+  components:
+  - parent: 0
+    pos: -1.5,21.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2985
+  type: AirlockSecurityGlassLocked
+  components:
+  - name: Cell 1
+    type: MetaData
+  - parent: 0
+    pos: -2.5,9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2986
+  type: AirlockSecurityGlassLocked
+  components:
+  - name: Cell 2
+    type: MetaData
+  - parent: 0
+    pos: 0.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
 ...
