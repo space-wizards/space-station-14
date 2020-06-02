@@ -45,13 +45,9 @@ namespace Content.Server.GameObjects.Components.Instruments
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 
         [Dependency] private readonly IGameTiming _gameTiming;
-
-        [Dependency] private readonly ILogManager _logger;
 #pragma warning restore 649
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
-
-        private ISawmill _midiSawmill;
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -133,7 +129,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(InstrumentUiKey.Key);
             _userInterface.OnClosed += UserInterfaceOnClosed;
-            _midiSawmill = _logger.GetSawmill("midi");
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -171,7 +166,6 @@ namespace Content.Server.GameObjects.Components.Instruments
                         }
 
                         _laggedBatches++;
-                        _midiSawmill.Info($"{InstrumentPlayer.Name} ({InstrumentPlayer.AttachedEntityUid}) has {_laggedBatches}/{MaxMidiLaggedBatches} lagged midi event batches.");
                         switch (_laggedBatches)
                         {
                             case (int) (MaxMidiLaggedBatches * (1 / 3d)) + 1:
@@ -203,7 +197,6 @@ namespace Content.Server.GameObjects.Components.Instruments
                         }
 
                         _batchesDropped++;
-                        _midiSawmill.Info($"{InstrumentPlayer.Name} ({InstrumentPlayer.AttachedEntityUid}) has {_batchesDropped}/{MaxMidiBatchDropped} dropped midi event batches.");
 
                         send = false;
                     }
@@ -228,18 +221,15 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         private void Clean()
         {
+            Playing = false;
             _lastSequencerTick = 0;
-            if (_laggedBatches > 0 || _batchesDropped > 0)
-            {
-                _midiSawmill.Info(
-                    $"{InstrumentPlayer.Name} ({InstrumentPlayer.AttachedEntityUid}) finished playing instrument; {_laggedBatches}/{MaxMidiLaggedBatches} lagged, {_batchesDropped}/{MaxMidiBatchDropped} dropped midi event batches.");
-            }
+            _batchesDropped = 0;
+            _laggedBatches = 0;
         }
 
         public void Dropped(DroppedEventArgs eventArgs)
         {
             Clean();
-            Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             InstrumentPlayer = null;
             _userInterface.CloseAll();
@@ -248,7 +238,6 @@ namespace Content.Server.GameObjects.Components.Instruments
         public void Thrown(ThrownEventArgs eventArgs)
         {
             Clean();
-            Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             InstrumentPlayer = null;
             _userInterface.CloseAll();
@@ -266,7 +255,6 @@ namespace Content.Server.GameObjects.Components.Instruments
         public void HandDeselected(HandDeselectedEventArgs eventArgs)
         {
             Clean();
-            Playing = false;
             SendNetworkMessage(new InstrumentStopMidiMessage());
             _userInterface.CloseAll();
         }
@@ -300,7 +288,6 @@ namespace Content.Server.GameObjects.Components.Instruments
             Clean();
             InstrumentPlayer = null;
             SendNetworkMessage(new InstrumentStopMidiMessage());
-            Playing = false;
         }
 
         private void OpenUserInterface(IPlayerSession session)
@@ -324,18 +311,14 @@ namespace Content.Server.GameObjects.Components.Instruments
                 var mob = InstrumentPlayer.AttachedEntity;
 
                 SendNetworkMessage(new InstrumentStopMidiMessage());
-                Clean();
-                InstrumentPlayer = null;
                 Playing = false;
 
                 _userInterface.CloseAll();
 
-                _batchesDropped = 0;
-                _laggedBatches = 0;
-
                 if (mob.TryGetComponent(out StunnableComponent stun))
                 {
                     stun.Stun(1);
+                    Clean();
                 }
                 else
                 {

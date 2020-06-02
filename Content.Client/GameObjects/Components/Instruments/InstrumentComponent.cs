@@ -39,12 +39,8 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         [Dependency] private readonly IGameTiming _gameTiming;
 
-        [Dependency] private readonly ILogManager _logger;
-
         [Dependency] private readonly IClientNetManager _netManager;
 #pragma warning restore 649
-
-        private ISawmill _midiSawmill;
 
         [CanBeNull]
         private IMidiRenderer _renderer;
@@ -135,7 +131,6 @@ namespace Content.Client.GameObjects.Components.Instruments
         {
             base.Initialize();
             IoCManager.InjectDependencies(this);
-            _midiSawmill = _logger.GetSawmill("midi");
         }
 
         protected void SetupRenderer(bool fromStateChange = false)
