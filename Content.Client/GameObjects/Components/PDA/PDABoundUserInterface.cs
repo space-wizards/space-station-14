@@ -21,11 +21,9 @@ namespace Content.Client.GameObjects.Components.PDA
         [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
         private PDAMenu _menu;
-        private ClientUserInterfaceComponent Owner;
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            Owner = owner;
         }
 
         protected override void Open()
