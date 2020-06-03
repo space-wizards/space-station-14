@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Markers
             get
             {
                 var list = new List<Type>();
-                
+
                 foreach (var rule in _gameRules)
                 {
                     list.Add(_reflectionManager.GetType(rule));
@@ -72,10 +72,6 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             if (_gameRules.Count == 0)
             {
-                // ReSharper disable twice CompareOfFloatsByEqualityOperator
-                if(Chance == 1.0f)
-                    return;
-
                 Spawn();
                 return;
             }
