@@ -334,7 +334,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 }
 
                 _audioSystem.Play(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
-                 SetAppearance(MicrowaveVisualState.Idle);
+                SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
 
                 _uiDirty = true;
