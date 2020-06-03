@@ -64,8 +64,8 @@ namespace Content.Server.GameObjects.Components.Markers
 
         private void RuleAdded(GameRuleAddedEventArgs obj)
         {
-            if(_gameRules.Count > 0)
-                TrySpawn();
+            if(_gameRules.Contains(obj.GameRule.GetType().Name))
+                Spawn();
         }
 
         private void TrySpawn()
@@ -82,8 +82,6 @@ namespace Content.Server.GameObjects.Components.Markers
                 Spawn();
                 return;
             }
-
-            return;
         }
 
         private void Spawn()
