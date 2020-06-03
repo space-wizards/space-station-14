@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Markers
 #pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<string> Prototypes { get; set; }
+        public List<string> Prototypes { get; set; } = new List<string>();
 
         [ViewVariables(VVAccess.ReadWrite)]
         private List<string> _gameRules = new List<string>();
@@ -44,12 +44,11 @@ namespace Content.Server.GameObjects.Components.Markers
             get
             {
                 var list = new List<Type>();
-
-                if(_gameRules != null)
-                    foreach (var rule in _gameRules)
-                    {
-                        list.Add(_reflectionManager.GetType(rule));
-                    }
+                
+                foreach (var rule in _gameRules)
+                {
+                    list.Add(_reflectionManager.GetType(rule));
+                }
 
                 return list;
             }
@@ -58,20 +57,20 @@ namespace Content.Server.GameObjects.Components.Markers
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => Prototypes, "prototypes", null);
+            serializer.DataField(this, x => Prototypes, "prototypes", new List<string>());
             serializer.DataField(this, x => Chance, "chance", 1.0f);
-            serializer.DataField(this, x => _gameRules, "gameRules", null);
+            serializer.DataField(this, x => _gameRules, "gameRules", new List<string>());
         }
 
         private void RuleAdded(GameRuleAddedEventArgs obj)
         {
-            if(_gameRules == null || _gameRules.Count > 0)
+            if(_gameRules.Count > 0)
                 TrySpawn();
         }
 
         private void TrySpawn()
         {
-            if (_gameRules == null || _gameRules.Count == 0)
+            if (_gameRules.Count == 0)
             {
                 // ReSharper disable twice CompareOfFloatsByEqualityOperator
                 if(Chance == 1.0f)
