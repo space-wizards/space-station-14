@@ -3,19 +3,19 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
-    ///     This interface gives components behavior when they're dropped by a mob.
+    ///     This interface gives components behavior when thrown.
     /// </summary>
-    public interface IDropped
+    public interface IThrown
     {
-        void Dropped(DroppedEventArgs eventArgs);
+        void Thrown(ThrownEventArgs eventArgs);
     }
 
-    public class DroppedEventArgs : EventArgs
+    public class ThrownEventArgs : EventArgs
     {
-        public DroppedEventArgs(IEntity user)
+        public ThrownEventArgs(IEntity user)
         {
             User = user;
         }
@@ -24,10 +24,10 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    ///     Raised when an entity is dropped
+    ///     Raised when throwing the entity in your hands.
     /// </summary>
     [PublicAPI]
-    public class DroppedMessage : EntitySystemMessage
+    public class ThrownMessage : EntitySystemMessage
     {
         /// <summary>
         ///     If this message has already been "handled" by a previous system.
@@ -35,19 +35,19 @@ namespace Content.Server.GameObjects.EntitySystems
         public bool Handled { get; set; }
 
         /// <summary>
-        ///     Entity that dropped the item.
+        ///     Entity that threw the item.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Item that was dropped.
+        ///     Item that was thrown.
         /// </summary>
-        public IEntity Dropped { get; }
+        public IEntity Thrown { get; }
 
-        public DroppedMessage(IEntity user, IEntity dropped)
+        public ThrownMessage(IEntity user, IEntity thrown)
         {
             User = user;
-            Dropped = dropped;
+            Thrown = thrown;
         }
     }
 }

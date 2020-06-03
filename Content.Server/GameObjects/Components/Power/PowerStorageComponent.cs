@@ -1,5 +1,6 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

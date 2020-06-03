@@ -20,8 +20,10 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using System;
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems.Click;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : EntitySystem

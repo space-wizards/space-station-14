@@ -1,5 +1,5 @@
 ﻿using Content.Server.Cargo;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Prototypes.Cargo;

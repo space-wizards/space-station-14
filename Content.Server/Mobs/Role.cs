@@ -1,7 +1,7 @@
 ﻿// Hey look,
 // Antag Datums.
 
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Mobs

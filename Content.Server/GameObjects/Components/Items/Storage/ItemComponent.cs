@@ -1,7 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Destructible;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Server.Utility;

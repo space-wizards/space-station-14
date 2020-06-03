@@ -4,32 +4,33 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
-    /// This interface gives components a behavior when clicking on another object and no interaction occurs,
-    /// at any range.
+    /// This interface gives components behavior when being clicked on by a user with an object in their hand
+    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
     /// </summary>
-    public interface IAfterInteract
+    public interface IInteractUsing
     {
         /// <summary>
-        /// Called when we interact with nothing, or when we interact with an entity out of range that has no behavior
+        /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
-        void AfterInteract(AfterInteractEventArgs eventArgs);
+        bool InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
-    public class AfterInteractEventArgs : EventArgs
+    public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
     {
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
+        public IEntity Using { get; set; }
         public IEntity Target { get; set; }
     }
 
     /// <summary>
-    ///     Raised when clicking on another object and no attack event was handled.
+    ///     Raised when being clicked on or "attacked" by a user with an object in their hand
     /// </summary>
     [PublicAPI]
-    public class AfterInteractMessage : EntitySystemMessage
+    public class InteractUsingMessage : EntitySystemMessage
     {
         /// <summary>
         ///     If this message has already been "handled" by a previous system.
@@ -44,25 +45,24 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         ///     Entity that the User attacked with.
         /// </summary>
-        public IEntity ItemInHand { get; set; }
+        public IEntity ItemInHand { get; }
 
         /// <summary>
-        ///     Entity that was attacked. This can be null if the attack did not click on an entity.
+        ///     Entity that was attacked.
         /// </summary>
         public IEntity Attacked { get; }
 
         /// <summary>
-        ///     Location that the user clicked outside of their interaction range.
+        ///     The original location that was clicked by the user.
         /// </summary>
         public GridCoordinates ClickLocation { get; }
 
-        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
         {
             User = user;
+            ItemInHand = itemInHand;
             Attacked = attacked;
             ClickLocation = clickLocation;
-            ItemInHand = itemInHand;
         }
     }
-
 }

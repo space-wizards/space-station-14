@@ -1,5 +1,5 @@
 ﻿using Content.Server.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems.Click;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {

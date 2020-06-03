@@ -4,19 +4,19 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
-    ///     This interface gives components behavior when their owner is put in an inventory slot.
+    ///     This interface gives components behavior when their owner is removed from an inventory slot.
     /// </summary>
-    public interface IEquipped
+    public interface IUnequipped
     {
-        void Equipped(EquippedEventArgs eventArgs);
+        void Unequipped(UnequippedEventArgs eventArgs);
     }
 
-    public class EquippedEventArgs : EventArgs
+    public class UnequippedEventArgs : EventArgs
     {
-        public EquippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
+        public UnequippedEventArgs(IEntity user, EquipmentSlotDefines.Slots slot)
         {
             User = user;
             Slot = slot;
@@ -27,10 +27,10 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
-    ///     Raised when equipping the entity in an inventory slot.
+    ///     Raised when removing the entity from an inventory slot.
     /// </summary>
     [PublicAPI]
-    public class EquippedMessage : EntitySystemMessage
+    public class UnequippedMessage : EntitySystemMessage
     {
         /// <summary>
         ///     If this message has already been "handled" by a previous system.
@@ -48,15 +48,17 @@ namespace Content.Server.GameObjects.EntitySystems
         public IEntity Equipped { get; }
 
         /// <summary>
-        ///     Slot where the item was placed.
+        ///     Slot where the item was removed from.
         /// </summary>
         public EquipmentSlotDefines.Slots Slot { get; }
 
-        public EquippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
+        public UnequippedMessage(IEntity user, IEntity equipped, EquipmentSlotDefines.Slots slot)
         {
             User = user;
             Equipped = equipped;
             Slot = slot;
         }
     }
+
+
 }
