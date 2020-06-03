@@ -63,11 +63,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 {
                     failPopup = new PDAMenuPopup(Loc.GetString("Insufficient funds!"));
                     _userInterfaceManager.ModalRoot.AddChild(failPopup);
-
-                    failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150,
-                    _menu.Position.Y + 60,
-                    156,
-                    24));
+                    failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150, _menu.Position.Y + 60, 156, 24));
                     _menu.OnClose += () =>
                     {
                         failPopup.Dispose();
