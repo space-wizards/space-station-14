@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -33,6 +34,7 @@ namespace Content.Client.State
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IGameTiming _timing;
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
 
         private IEntity _lastHoveredEntity;
@@ -51,8 +53,8 @@ namespace Content.Client.State
         {
             base.FrameUpdate(e);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(new ScreenCoordinates(_inputManager.MouseScreenPosition));
-            var entityToClick = GetEntityUnderPosition(mousePosWorld);
+            var mousePosWorld = _eyeManager.ScreenToWorld(_inputManager.MouseScreenPosition);
+            var entityToClick = _userInterfaceManager.CurrentlyHovered != null ? null : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
             if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)

@@ -60,6 +60,15 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        /// <summary>
+        /// The game time (<see cref='IGameTiming'/>) of the next coverage update.
+        /// This may have a random offset applied.
+        /// This is used to reduce solar panel updates and stagger them to prevent lagspikes.
+        /// This should only be updated by the PowerSolarSystem but is viewable for debugging.
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan TimeOfNextCoverageUpdate = TimeSpan.MinValue;
+
         private void UpdateSupply()
         {
             if (_powerGenerator != null)
