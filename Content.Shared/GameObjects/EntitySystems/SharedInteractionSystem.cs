@@ -73,10 +73,13 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="predicate">.</param>
-        /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
+        /// <param name="ignoreInsideBlocker">if true, if coordinates are inside the obstruction, ignores the obstruction and
+        /// considers the interaction unobstructed. Therefore, setting this to true makes this check more permissive, such
+        /// as allowing an interaction to occur inside something impassable (like a wall). The default, false,
+        /// makes the check more restrictive.</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, MapCoordinates otherCoords, float range = InteractionRange,
-            int collisionMask = (int)CollisionGroup.Impassable, Func<IEntity, bool> predicate = null, bool insideBlockerValid = false)
+            int collisionMask = (int)CollisionGroup.Impassable, Func<IEntity, bool> predicate = null, bool ignoreInsideBlocker = false)
         {
             if (!coords.InRange(otherCoords, range))
                 return false;
@@ -88,7 +91,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var ray = new CollisionRay(coords.Position, dir.Normalized, collisionMask);
             var rayResults = _physicsManager.IntersectRayWithPredicate(coords.MapId, ray, dir.Length, predicate, returnOnFirstHit: false).ToList();
-            return rayResults.Count == 0 || (insideBlockerValid && rayResults.Count > 0 && (rayResults[0].HitPos - otherCoords.Position).Length < 1f);
+            return rayResults.Count == 0 || (ignoreInsideBlocker && rayResults.Count > 0 && (rayResults[0].HitPos - otherCoords.Position).Length < 1f);
         }
 
         /// <summary>
@@ -102,11 +105,14 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="ignoredEnt">the entity to be ignored when checking for collisions.</param>
-        /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
+        /// <param name="ignoreInsideBlocker">if true, if coordinates are inside the obstruction, ignores the obstruction and
+        /// considers the interaction unobstructed. Therefore, setting this to true makes this check more permissive, such
+        /// as allowing an interaction to occur inside something impassable (like a wall).  The default, false,
+        /// makes the check more restrictive.</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, MapCoordinates otherCoords, float range = InteractionRange,
-            int collisionMask = (int)CollisionGroup.Impassable, IEntity ignoredEnt = null, bool insideBlockerValid = false) =>
+            int collisionMask = (int)CollisionGroup.Impassable, IEntity ignoredEnt = null, bool ignoreInsideBlocker = false) =>
             InRangeUnobstructed(coords, otherCoords, range, collisionMask,
-                ignoredEnt == null ? null : (Func<IEntity, bool>)(entity => ignoredEnt == entity), insideBlockerValid);
+                ignoredEnt == null ? null : (Func<IEntity, bool>)(entity => ignoredEnt == entity), ignoreInsideBlocker);
     }
 }

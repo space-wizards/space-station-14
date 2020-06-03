@@ -3,11 +3,11 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -16,9 +16,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -316,6 +314,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Initialize()
         {
+            SubscribeNetworkEvent<DragDropMessage>(HandleDragDropMessage);
+
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUseItemInHand))
@@ -330,6 +330,24 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             CommandBinds.Unregister<InteractionSystem>();
             base.Shutdown();
+        }
+
+        private void HandleDragDropMessage(DragDropMessage msg, EntitySessionEventArgs args)
+        {
+            var performer = args.SenderSession.AttachedEntity;
+            if (!EntityManager.TryGetEntity(msg.Dropped, out var dropped)) return;
+            if (!EntityManager.TryGetEntity(msg.Target, out var target)) return;
+
+            var interactionArgs = new DragDropEventArgs(performer, msg.DropLocation, dropped, target);
+
+            // must be in range of both the target and the object they are drag / dropping
+            if (!InteractionChecks.InRangeUnobstructed(interactionArgs)) return;
+
+            // TODO: trigger possible IDragDrop components
+
+            // TODO: IDragDropOn (on the object being dropped
+
+
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)

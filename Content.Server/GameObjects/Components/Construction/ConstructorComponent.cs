@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Construction
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             if (!InteractionChecks.InRangeUnobstructed(Owner, loc.ToMap(_mapManager),
-                ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+                ignoredEnt: Owner, ignoreInsideBlocker: prototype.CanBuildInImpassable))
             {
                 return;
             }

@@ -1,4 +1,5 @@
 using System;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
@@ -11,9 +12,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
     public interface IDragDrop
     {
         /// <summary>
-        /// Invoked when this component's entity is being dropped after being dragged by the mouse.
-        /// Note that Target may be null if the entity is dropped on nothing in particular
-        /// Make sure to validate if this object can be dropped on the target object!
+        /// Invoked server-side when this component's entity is being dragged and dropped on another.
+        ///
+        /// There is no other server-side drag and drop check other than a range check, so make sure to validate
+        /// if this object can be dropped on the target object!
         /// </summary>
         /// <returns>true iff an interaction occurred and no further interaction should
         /// be processed for this drop.</returns>
@@ -22,10 +24,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
     public class DragDropEventArgs : EventArgs
     {
-        public DragDropEventArgs(IEntity user, GridCoordinates clickLocation, IEntity dropped, IEntity target)
+        public DragDropEventArgs(IEntity user, GridCoordinates dropLocation, IEntity dropped, IEntity target)
         {
             User = user;
-            DropLocation = clickLocation;
+            DropLocation = dropLocation;
             Dropped = dropped;
             Target = target;
         }
