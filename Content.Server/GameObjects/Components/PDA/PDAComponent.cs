@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
@@ -6,18 +8,18 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+
+#nullable enable
 
 namespace Content.Server.GameObjects.Components.PDA
 {
@@ -26,24 +28,29 @@ namespace Content.Server.GameObjects.Components.PDA
     [ComponentReference(typeof(IAccess))]
     public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
     {
-#pragma warning disable 649
-        [Dependency] protected readonly IPDAUplinkManager _uplinkManager;
-        [Dependency] protected readonly IEntityManager _entityManager;
-#pragma warning restore 649
+        [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private Container _idSlot;
-        private PointLightComponent _pdaLight;
-        private bool _lightOn = false;
-        private BoundUserInterface _interface;
-        private string _startingIdCard;
-        public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
-        public IEntity OwnerMob { get; private set; }
+        [ViewVariables] private Container _idSlot = default!;
+        [ViewVariables] private PointLightComponent _pdaLight = default!;
+        [ViewVariables] private bool _lightOn;
+        [ViewVariables] private BoundUserInterface _interface = default!;
+        [ViewVariables] private string _startingIdCard = default!;
+        [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
+        [ViewVariables] public IEntity? OwnerMob { get; private set; }
 
-        public IdCardComponent ContainedID { get; private set; }
+        [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
 
-        private AppearanceComponent _appearance;
+        [ViewVariables] private AppearanceComponent _appearance = default!;
 
-        private UplinkAccount _syndicateUplinkAccount;
+        [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
+
+        [ViewVariables] private readonly PdaAccessSet _accessSet;
+
+        public PDAComponent()
+        {
+            _accessSet = new PdaAccessSet(this);
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -89,7 +96,6 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
-
                     if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
                     {
                         //TODO: Send a message that tells the buyer they are too poor or something.
@@ -112,13 +118,14 @@ namespace Content.Server.GameObjects.Components.PDA
             //Do we have an account? If so provide the info.
             if (_syndicateUplinkAccount != null)
             {
-                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder, _syndicateUplinkAccount.Balance);
+                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
+                    _syndicateUplinkAccount.Balance);
                 var listings = _uplinkManager.FetchListings.ToArray();
-                _interface.SetState(new PDAUpdateState(_lightOn,ownerInfo,accData,listings));
+                _interface.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
             }
             else
             {
-                _interface.SetState(new PDAUpdateState(_lightOn,ownerInfo));
+                _interface.SetState(new PDAUpdateState(_lightOn, ownerInfo));
             }
 
             UpdatePDAAppearance();
@@ -141,10 +148,10 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 return false;
             }
+
             InsertIdCard(idCardComponent);
             UpdatePDAUserInterface();
             return true;
-
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -153,6 +160,7 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 return;
             }
+
             _interface.Open(actor.playerSession);
             UpdatePDAAppearance();
         }
@@ -163,6 +171,7 @@ namespace Content.Server.GameObjects.Components.PDA
             {
                 return false;
             }
+
             _interface.Open(actor.playerSession);
             UpdatePDAAppearance();
             return true;
@@ -211,7 +220,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void HandleIDEjection(IEntity pdaUser)
         {
-            if (IdSlotEmpty)
+            if (ContainedID == null)
             {
                 return;
             }
@@ -241,14 +250,129 @@ namespace Content.Server.GameObjects.Components.PDA
             }
         }
 
-        List<string> IAccess.GetTags()
+        private ISet<string>? GetContainedAccess()
         {
-            return ContainedID?.Owner.GetComponent<AccessComponent>()?.GetTags();
+            return ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
         }
 
-        void IAccess.SetTags(List<string> newTags)
+        ISet<string> IAccess.Tags => _accessSet;
+        bool IAccess.IsReadOnly => true;
+
+        void IAccess.SetTags(IEnumerable<string> newTags)
         {
-            ContainedID?.Owner.GetComponent<AccessComponent>().SetTags(newTags);
+            throw new NotSupportedException("PDA access list is read-only.");
+        }
+
+        private sealed class PdaAccessSet : ISet<string>
+        {
+            private readonly PDAComponent _pdaComponent;
+            private static readonly HashSet<string> EmptySet = new HashSet<string>();
+
+            public PdaAccessSet(PDAComponent pdaComponent)
+            {
+                _pdaComponent = pdaComponent;
+            }
+
+            public IEnumerator<string> GetEnumerator()
+            {
+                var contained = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return contained.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            void ICollection<string>.Add(string item)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void ExceptWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void IntersectWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public bool IsProperSubsetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsProperSubsetOf(other);
+            }
+
+            public bool IsProperSupersetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsProperSupersetOf(other);
+            }
+
+            public bool IsSubsetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsSubsetOf(other);
+            }
+
+            public bool IsSupersetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsSupersetOf(other);
+            }
+
+            public bool Overlaps(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.Overlaps(other);
+            }
+
+            public bool SetEquals(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.SetEquals(other);
+            }
+
+            public void SymmetricExceptWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void UnionWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            bool ISet<string>.Add(string item)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void Clear()
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public bool Contains(string item)
+            {
+                return _pdaComponent.GetContainedAccess()?.Contains(item) ?? false;
+            }
+
+            public void CopyTo(string[] array, int arrayIndex)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                set.CopyTo(array, arrayIndex);
+            }
+
+            public bool Remove(string item)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public int Count => _pdaComponent.GetContainedAccess()?.Count ?? 0;
+            public bool IsReadOnly => true;
         }
     }
 }

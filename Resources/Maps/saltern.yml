@@ -7484,8 +7484,8 @@ entities:
     pos: 6.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - HeadOfPersonnel
+  - access:
+    - - HeadOfPersonnel
     type: AccessReader
 - uid: 1042
   type: reinforced_wall
@@ -22369,8 +22369,8 @@ entities:
     pos: 5.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Captain
+  - access:
+    - - Captain
     type: AccessReader
 - uid: 2893
   type: AirlockMaintCommonLocked
@@ -22527,9 +22527,9 @@ entities:
     pos: 38.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Engineering
-    - Command
+  - access:
+    - - Engineering
+      - Command
     type: AccessReader
 - uid: 2912
   type: Catwalk
@@ -22545,8 +22545,8 @@ entities:
     pos: 11.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - HeadOfPersonnel
+  - access:
+    - - HeadOfPersonnel
     type: AccessReader
 - uid: 2914
   type: AirlockExternalLocked
@@ -22601,8 +22601,8 @@ entities:
     pos: -8.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Service
+  - access:
+    - - Service
     type: AccessReader
 - uid: 2921
   type: AirlockServiceGlassLocked
@@ -22687,8 +22687,8 @@ entities:
     pos: -20.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Janitor
+  - access:
+    - - Janitor
     type: AccessReader
 - uid: 2932
   type: AirlockEngineeringGlassLocked
@@ -22735,9 +22735,9 @@ entities:
     pos: 20.5,-13.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Medical
-    - Command
+  - access:
+    - - Medical
+      - Command
     type: AccessReader
 - uid: 2937
   type: AirlockCommandGlassLocked
@@ -22748,9 +22748,9 @@ entities:
     pos: -8.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Research
-    - Command
+  - access:
+    - - Research
+      - Command
     type: AccessReader
 - uid: 2938
   type: AirlockCommandGlassLocked
@@ -22761,9 +22761,9 @@ entities:
     pos: -3.5,-21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Research
-    - Command
+  - access:
+    - - Research
+      - Command
     type: AccessReader
 - uid: 2939
   type: AirlockScienceLocked
@@ -22801,8 +22801,8 @@ entities:
     pos: -25.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Maintenance
+  - access:
+    - - Maintenance
     type: AccessReader
 - uid: 2943
   type: AirlockServiceGlassLocked
@@ -22813,8 +22813,8 @@ entities:
     pos: -25.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Maintenance
+  - access:
+    - - Maintenance
     type: AccessReader
 - uid: 2944
   type: AirlockGlass
@@ -22834,8 +22834,8 @@ entities:
     pos: -20.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Theatre
+  - access:
+    - - Theatre
     type: AccessReader
 - uid: 2946
   type: Airlock
@@ -22889,8 +22889,8 @@ entities:
     pos: -14.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Service
+  - access:
+    - - Service
     type: AccessReader
 - uid: 2952
   type: AirlockMaintCommonLocked
@@ -22899,8 +22899,8 @@ entities:
     pos: -16.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Service
+  - access:
+    - - Service
     type: AccessReader
 - uid: 2953
   type: AirlockMaintCommonLocked
@@ -23002,8 +23002,8 @@ entities:
     pos: 7.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - External
+  - access:
+    - - External
     type: AccessReader
 - uid: 2966
   type: AirlockCommandGlassLocked
@@ -23014,8 +23014,8 @@ entities:
     pos: 9.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - External
+  - access:
+    - - External
     type: AccessReader
 - uid: 2967
   type: AirlockMaintCommandLocked
@@ -23024,8 +23024,8 @@ entities:
     pos: 8.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - External
+  - access:
+    - - External
     type: AccessReader
 - uid: 2968
   type: AirlockCargoGlassLocked
@@ -23063,8 +23063,8 @@ entities:
     pos: 20.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Cargo
+  - access:
+    - - Cargo
     type: AccessReader
 - uid: 2972
   type: AirlockExternalLocked
@@ -23075,8 +23075,8 @@ entities:
     pos: 20.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Cargo
+  - access:
+    - - Cargo
     type: AccessReader
 - uid: 2973
   type: AirlockExternalLocked
@@ -23087,8 +23087,8 @@ entities:
     pos: 22.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Cargo
+  - access:
+    - - Cargo
     type: AccessReader
 - uid: 2974
   type: AirlockExternalLocked
@@ -23099,8 +23099,8 @@ entities:
     pos: 22.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Cargo
+  - access:
+    - - Cargo
     type: AccessReader
 - uid: 2975
   type: AirlockExternalLocked
@@ -23118,9 +23118,9 @@ entities:
     pos: -8.5,18.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - necessary:
-    - Security
-    - Command
+  - access:
+    - - Security
+      - Command
     type: AccessReader
 - uid: 2977
   type: Poweredlight

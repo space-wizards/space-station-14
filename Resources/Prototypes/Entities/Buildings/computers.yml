@@ -158,7 +158,7 @@
   name: ID Card Computer
   components:
   - type: AccessReader
-    necessary: ["HeadOfPersonnel"]
+    access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
   - type: UserInterface
     interfaces:
