@@ -221,11 +221,11 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
-            if (!Powered)
+            if (!Powered && inDetailsRange)
             {
                 message.AddMarkup(loc.GetString("The device is [color=orange]not powered[/color]."));
             }

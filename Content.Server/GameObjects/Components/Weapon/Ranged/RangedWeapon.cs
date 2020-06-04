@@ -2,7 +2,6 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -10,7 +9,6 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
@@ -22,8 +20,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
         public Func<bool> WeaponCanFireHandler;
         public Func<IEntity, bool> UserCanFireHandler;
         public Action<IEntity, GridCoordinates> FireHandler;
-
-        private const int MaxFireDelayAttempts = 2;
 
         private bool WeaponCanFire()
         {
@@ -59,12 +55,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                         return;
                     }
 
-                    _tryFire(user, msg.Target, 0);
+                    _tryFire(user, msg.Target);
                     break;
             }
         }
 
-        private void _tryFire(IEntity user, GridCoordinates coordinates, int attemptCount)
+        private void _tryFire(IEntity user, GridCoordinates coordinates)
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
             {
@@ -88,13 +84,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / FireRate)
             {
-                if (attemptCount >= MaxFireDelayAttempts)
-                {
-                    return;
-                }
-
-                Timer.Spawn(TimeSpan.FromSeconds(1 / FireRate) - span,
-                    () => _tryFire(user, coordinates, attemptCount + 1));
                 return;
             }
 

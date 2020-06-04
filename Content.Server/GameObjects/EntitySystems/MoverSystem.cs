@@ -6,6 +6,7 @@ using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Input;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -19,6 +20,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -77,11 +79,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
 
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveUp, moveUpCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveRight, moveRightCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveDown, moveDownCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.Run, runCmdHandler);
+            CommandBinds.Builder
+                .Bind(EngineKeyFunctions.MoveUp, moveUpCmdHandler)
+                .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
+                .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
+                .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
+                .Bind(EngineKeyFunctions.Run, runCmdHandler)
+                .Register<MoverSystem>();
 
             SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
             SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
@@ -110,15 +114,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Shutdown()
         {
-            if (EntitySystemManager.TryGetEntitySystem(out InputSystem input))
-            {
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveUp);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveLeft);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveRight);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveDown);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.Run);
-            }
-
+            CommandBinds.Unregister<MoverSystem>();
             base.Shutdown();
         }
 

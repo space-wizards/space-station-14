@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
@@ -315,25 +312,25 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
-
-        public const float InteractionRange = 2;
-        public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
         public override void Initialize()
         {
-            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
-                new PointerInputCmdHandler(HandleUseItemInHand));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.WideAttack,
-                new PointerInputCmdHandler(HandleWideAttack));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInWorld,
-                new PointerInputCmdHandler(HandleActivateItemInWorld));
+            CommandBinds.Builder
+                .Bind(EngineKeyFunctions.Use,
+                    new PointerInputCmdHandler(HandleUseItemInHand))
+                .Bind(ContentKeyFunctions.WideAttack,
+                    new PointerInputCmdHandler(HandleWideAttack))
+                .Bind(ContentKeyFunctions.ActivateItemInWorld,
+                    new PointerInputCmdHandler(HandleActivateItemInWorld))
+                .Register<InteractionSystem>();
         }
 
-
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<InteractionSystem>();
+            base.Shutdown();
+        }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
