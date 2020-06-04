@@ -54,7 +54,7 @@ namespace Content.Client.GameObjects.EntitySystems
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();
-            weaponArcAnimation.SetData(weaponArc, msg.Angle);
+            weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker);
 
 
             foreach (var uid in msg.Hits)
