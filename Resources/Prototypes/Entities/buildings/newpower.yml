@@ -59,8 +59,6 @@
   - type: NodeContainer
     nodeTypes: { LVPower : ["AdjacentNode"] }
   
-#Not Implemented
-
 - type: entity
   id: DebugGenerator 
   name: Debug Generator
@@ -79,6 +77,7 @@
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
+    supplyRate: 100
     
 - type: entity
   id: DebugConsumer
@@ -98,6 +97,7 @@
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
+    drawRate: 50
 
 - type: entity
   id: DebugBatteryStorage
@@ -114,8 +114,11 @@
     texture: Objects/Power/provider.png
   - type: Icon
     texture: Objects/Power/provider.png
+  - type: Battery
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+  - type: BatteryStorage
   
 - type: entity
   id: DebugBatteryDischarger
@@ -137,8 +140,11 @@
   - type: Icon
     sprite: Buildings/smes.rsi
     state: smes
+  - type: Battery
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerSupplier
+  - type: BatteryDischarger
     
 - type: entity
   id: DebugSmes
@@ -160,8 +166,13 @@
   - type: Icon
     sprite: Buildings/smes.rsi
     state: smes
+  - type: Battery
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+  - type: BatteryStorage
+  - type: PowerSupplier
+  - type: BatteryDischarger
     
 - type: entity
   id: DebugHVToMVSubstation
@@ -183,5 +194,11 @@
   - type: Icon
     sprite: Buildings/smes.rsi
     state: smes
+  - type: Battery
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+  - type: BatteryStorage
+  - type: PowerSupplier
+    voltage: Medium
+  - type: BatteryDischarger

@@ -2,7 +2,6 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Server.GameObjects.Components.NewPower
 {
@@ -18,7 +17,7 @@ namespace Content.Server.GameObjects.Components.NewPower
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _supplyRate, "supplyRate", 100);
+            serializer.DataField(ref _supplyRate, "supplyRate", 0);
         }
 
         protected override void AddSelfToNet(IPowerNet powerNet)

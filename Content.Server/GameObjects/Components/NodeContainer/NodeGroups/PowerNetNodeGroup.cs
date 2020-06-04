@@ -42,6 +42,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         private readonly Dictionary<Priority, int> _drawByPriority = new Dictionary<Priority, int>();
 
+        [ViewVariables]
         private bool _supressPowerRecalculation = false;
 
         public static readonly IPowerNet NullNet = new NullPowerNet();
@@ -125,6 +126,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             UpdateConsumerReceivedPower();
         }
 
+        public void UpdateSupplierSupply(PowerSupplierComponent supplier, int oldSupplyRate, int newSupplyRate)
+        {
+            Debug.Assert(_suppliers.Contains(supplier));
+            _totalSupply -= oldSupplyRate;
+            _totalSupply += newSupplyRate;
+            UpdateConsumerReceivedPower();
+        }
+
         public void AddConsumer(PowerConsumerComponent consumer)
         {
             _consumersByPriority[consumer.Priority].Add(consumer);
@@ -137,6 +146,24 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             Debug.Assert(_consumersByPriority[consumer.Priority].Contains(consumer));
             _consumersByPriority[consumer.Priority].Add(consumer);
             _drawByPriority[consumer.Priority] -= consumer.DrawRate;
+            UpdateConsumerReceivedPower();
+        }
+
+        public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate)
+        {
+            Debug.Assert(_consumersByPriority[consumer.Priority].Contains(consumer));
+            _drawByPriority[consumer.Priority] -= oldDrawRate;
+            _drawByPriority[consumer.Priority] += newDrawRate;
+            UpdateConsumerReceivedPower();
+        }
+
+        public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority)
+        {
+            Debug.Assert(_consumersByPriority[oldPriority].Contains(consumer));
+            _consumersByPriority[oldPriority].Remove(consumer);
+            _drawByPriority[oldPriority] -= consumer.DrawRate;
+            _consumersByPriority[newPriority].Add(consumer);
+            _drawByPriority[newPriority] += consumer.DrawRate;
             UpdateConsumerReceivedPower();
         }
 
@@ -168,29 +195,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                     }
                 }
             }
-        }
-
-        public void UpdateSupplierSupply(PowerSupplierComponent supplier, int oldSupplyRate, int newSupplyRate)
-        {
-            Debug.Assert(_suppliers.Contains(supplier));
-            _totalSupply -= oldSupplyRate;
-            _totalSupply += newSupplyRate;
-        }
-
-        public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate)
-        {
-            Debug.Assert(_consumersByPriority[consumer.Priority].Contains(consumer));
-            _drawByPriority[consumer.Priority] -= oldDrawRate;
-            _drawByPriority[consumer.Priority] += newDrawRate;
-        }
-
-        public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority)
-        {
-            Debug.Assert(_consumersByPriority[oldPriority].Contains(consumer));
-            _consumersByPriority[oldPriority].Remove(consumer);
-            _drawByPriority[oldPriority] -= consumer.DrawRate;
-            _consumersByPriority[newPriority].Add(consumer);
-            _drawByPriority[newPriority] += consumer.DrawRate;
         }
 
         private class NullPowerNet : IPowerNet

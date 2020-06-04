@@ -2,7 +2,6 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Diagnostics;
 
 namespace Content.Server.GameObjects.Components.NewPower
@@ -37,7 +36,7 @@ namespace Content.Server.GameObjects.Components.NewPower
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _drawRate, "drawRate", 50);
+            serializer.DataField(ref _drawRate, "drawRate", 0);
             serializer.DataField(ref _priority, "priorty", Priority.First);
         }
 
@@ -53,8 +52,9 @@ namespace Content.Server.GameObjects.Components.NewPower
 
         private void SetDrawRate(int newDrawRate)
         {
-            PowerNet.UpdateConsumerDraw(this, DrawRate, newDrawRate);
-            _drawRate = newDrawRate;
+            var oldDrawRate = DrawRate;
+            _drawRate = newDrawRate; //must be set before updating powernet, as it checks the DrawRate of every consumer
+            PowerNet.UpdateConsumerDraw(this, oldDrawRate, newDrawRate);
         }
 
         private void SetReceivedPower(int newReceivedPower)

@@ -29,9 +29,9 @@ namespace Content.Server.GameObjects.Components.NewPower
             serializer.DataField(ref _currentCharge, "startingCharge", 500);
         }
 
-        public override void OnAdd()
+        public override void Initialize()
         {
-            base.OnAdd();
+            base.Initialize();
             UpdateStorageState();
         }
 
