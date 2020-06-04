@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Instruments;
 using Content.Client.UserInterface.Stylesheets;
 using Robust.Client.Audio.Midi;
@@ -10,6 +11,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Timers;
 
 namespace Content.Client.Instruments
 {
@@ -174,7 +176,7 @@ namespace Content.Client.Instruments
             var filters = new FileDialogFilters(new FileDialogFilters.Group("mid", "midi"));
             var filename = await _fileDialogManager.OpenFile(filters);
 
-            if (filename == null) return;
+            if (string.IsNullOrEmpty(filename)) return;
 
             if (!_midiManager.IsMidiFile(filename))
             {
@@ -183,6 +185,7 @@ namespace Content.Client.Instruments
             }
 
             MidiStopButtonOnPressed(null);
+            await Timer.Delay(100);
             if (!_owner.Instrument.OpenMidi(filename)) return;
             MidiPlaybackSetButtonsDisabled(false);
             if (midiInputButton.Pressed)
