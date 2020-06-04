@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_24mm
-  name: "24mm Magazine"
+  name: "24mm magazine"
   parent: magazine_24mm_empty
   components:
   - type: BallisticMagazine

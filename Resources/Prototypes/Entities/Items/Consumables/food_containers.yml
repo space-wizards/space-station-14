@@ -13,7 +13,7 @@
 # Containers
 - type: entity
   parent: FoodContainerBase
-  name: Apple cake
+  name: apple cake
   id: FoodContainerAppleCake
   components:
   - type: FoodContainer
@@ -27,7 +27,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Banana bread
+  name: banana bread
   id: FoodContainerBananaBread
   components:
   - type: FoodContainer
@@ -40,7 +40,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Birthday cake
+  name: birthday cake
   id: FoodContainerBirthdayCake
   components:
   - type: FoodContainer
@@ -53,7 +53,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Brain cake
+  name: brain cake
   id: FoodContainerBrainCake
   components:
   - type: FoodContainer
@@ -66,7 +66,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Bread
+  name: bread
   id: FoodContainerBread
   components:
   - type: FoodContainer
@@ -79,7 +79,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Carrot cake
+  name: carrot cake
   id: FoodContainerCarrotCake
   components:
   - type: FoodContainer
@@ -92,7 +92,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Cheesecake
+  name: cheesecake
   id: FoodContainerCheeseCake
   components:
   - type: FoodContainer
@@ -105,7 +105,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Cheese wheel
+  name: cheese wheel
   id: FoodContainerCheeseWheel
   components:
   - type: FoodContainer
@@ -118,7 +118,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Chocolate cake
+  name: chocolate cake
   id: FoodContainerChocolateCake
   components:
   - type: FoodContainer
@@ -131,7 +131,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Cream cheese bread
+  name: cream cheese bread
   id: FoodContainerCreamCheeseBread
   components:
   - type: FoodContainer
@@ -144,7 +144,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Donut box
+  name: donut box
   id: FoodContainerDonutBox
   components:
   - type: FoodContainer
@@ -165,7 +165,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Egg box (shut)
+  name: egg box (shut)
   id: FoodContainerEggBoxShut
   components:
   - type: FoodContainer
@@ -179,7 +179,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Egg box
+  name: egg box
   id: FoodContainerEggBox
   components:
   - type: FoodContainer
@@ -201,7 +201,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Lemon cake
+  name: lemon cake
   id: FoodContainerLemonCake
   components:
   - type: FoodContainer
@@ -214,7 +214,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Lime cake
+  name: lime cake
   id: FoodContainerLimeCake
   components:
   - type: FoodContainer
@@ -227,7 +227,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Meat bread
+  name: meat bread
   id: FoodContainerMeatBread
   components:
   - type: FoodContainer
@@ -240,7 +240,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Meat pizza
+  name: meat pizza
   id: FoodContainerMeatPizza
   components:
   - type: FoodContainer
@@ -255,7 +255,7 @@
 # These two will probably get moved one day
 - type: entity
   parent: FoodContainerBase
-  name: Monkey cube box
+  name: monkey cube box
   id: FoodContainerMonkeyCubeBox
   components:
   - type: FoodContainer
@@ -268,7 +268,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Monkey cube wrap
+  name: monkey cube wrap
   id: FoodContainerMonkeyCubeWrap
   components:
   - type: FoodContainer
@@ -281,7 +281,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Mushroom pizza
+  name: mushroom pizza
   id: FoodContainerMushroomPizza
   components:
   - type: FoodContainer
@@ -295,7 +295,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Orange cake
+  name: orange cake
   id: FoodContainerOrangeCake
   components:
   - type: FoodContainer
@@ -309,7 +309,7 @@
 # TODO: Probably replace it with a stacking thing
 - type: entity
   parent: FoodContainerBase
-  name: Pizza box stack
+  name: pizza box stack
   id: FoodContainerPizzaBoxStack
   components:
   - type: FoodContainer
@@ -328,7 +328,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Pizza box
+  name: pizza box
   id: FoodContainerPizzaBox
   components:
   - type: FoodContainer
@@ -345,7 +345,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Margherita pizza
+  name: margherita pizza
   id: FoodContainerMargheritaPizza
   components:
   - type: FoodContainer
@@ -359,7 +359,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Plain cake
+  name: plain cake
   id: FoodContainerPlainCake
   components:
   - type: FoodContainer
@@ -373,7 +373,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Pumpkin pie
+  name: pumpkin pie
   id: FoodContainerPumpkinPie
   components:
   - type: FoodContainer
@@ -386,7 +386,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Tofu bread
+  name: tofu bread
   id: FoodContainerTofuBread
   components:
   - type: FoodContainer
@@ -399,7 +399,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Vegetable pizza
+  name: vegetable pizza
   id: FoodContainerVegetablePizza
   components:
   - type: FoodContainer
@@ -413,7 +413,7 @@
 
 - type: entity
   parent: FoodContainerBase
-  name: Xenomeat bread
+  name: xenomeat bread
   id: FoodContainerXenomeatBread
   components:
   - type: FoodContainer

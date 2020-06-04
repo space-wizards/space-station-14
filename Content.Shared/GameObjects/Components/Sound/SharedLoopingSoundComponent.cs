@@ -8,7 +8,7 @@ namespace Content.Shared.GameObjects.Components.Sound
 {
     public class SharedLoopingSoundComponent : Component
     {
-        public override string Name => "Sound";
+        public override string Name => "LoopingSound";
         public override uint? NetID => ContentNetIDs.SOUND;
 
         /// <summary>

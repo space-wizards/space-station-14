@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: Shoelord 9000
-  name: Shoelord 9000
+  name: shoelord 9000
   description: A vending machine containing footwear.
   spriteName: shoes
   startingInventory:

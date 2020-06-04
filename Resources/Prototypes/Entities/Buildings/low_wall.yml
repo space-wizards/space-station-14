@@ -1,6 +1,6 @@
 - type: entity
   id: LowWall
-  name: Low Wall
+  name: low wall
   description: Goes up to about your waist.
   placement:
     mode: SnapgridCenter
@@ -36,7 +36,7 @@
 
 - type: entity
   id: LowWallOverlay
-  name: Low Wall Overlay
+  name: low wall overlay
   abstract: true
   components:
   - type: Sprite

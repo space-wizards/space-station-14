@@ -1,5 +1,5 @@
 - type: entity
-  name: Wirecutter
+  name: wirecutter
   parent: BaseItem
   id: Wirecutter
   description: This kills the wire.
@@ -32,7 +32,7 @@
     sprite: Objects/Tools/wirecutters.rsi
 
 - type: entity
-  name: Screwdriver
+  name: screwdriver
   parent: BaseItem
   id: Screwdriver
   description: Industrial grade torque in a small screwdriving package
@@ -67,7 +67,7 @@
       yellow: "#ffa500"
 
 - type: entity
-  name: Welding Tool
+  name: welding tool
   parent: BaseItem
   id: Welder
   description: Melts anything as long as it's fueled, don't forget your eye protection!
@@ -101,7 +101,7 @@
     useSoundCollection: Welder
 
 - type: entity
-  name: Wrench
+  name: wrench
   parent: BaseItem
   id: Wrench
   description: A common tool for assembly and disassembly, righty tighty lefty loosey
@@ -122,7 +122,7 @@
     useSound: /Audio/items/ratchet.ogg
 
 - type: entity
-  name: Crowbar
+  name: crowbar
   parent: BaseItem
   id: Crowbar
   description: A multipurpose tool to pry open doors and fight interdimensional invaders
@@ -144,7 +144,7 @@
   - type: TilePrying
 
 - type: entity
-  name: Emergency Crowbar
+  name: emergency crowbar
   parent: BaseItem
   id: CrowbarRed
   description: A multipurpose tool to pry open doors and fight interdimensional invaders
@@ -166,7 +166,7 @@
   - type: TilePrying
 
 - type: entity
-  name: Multitool
+  name: multitool
   parent: BaseItem
   id: Multitool
   description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
@@ -184,7 +184,7 @@
       - Multitool
 
 - type: entity
-  name: Jaws of life
+  name: jaws of life
   parent: BaseItem
   id: JawsOfLife
   description: A set of jaws of life, compressed through the magic of science.
@@ -214,7 +214,7 @@
           changeSound: /Audio/items/change_jaws.ogg
 
 - type: entity
-  name: Power Drill
+  name: power drill
   parent: BaseItem
   id: PowerDrill
   description: A simple powered hand drill.

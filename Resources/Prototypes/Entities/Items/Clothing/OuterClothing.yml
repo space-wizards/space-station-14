@@ -14,7 +14,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingAcolyte
-  name: Acolyte
+  name: acolyte
   description: ''
   components:
   - type: Sprite
@@ -27,7 +27,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingAnomalysuit
-  name: Anomaly suit
+  name: anomaly suit
   description: ''
   components:
   - type: Sprite
@@ -40,7 +40,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingApron
-  name: Apron
+  name: apron
   description: ''
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingApronchef
-  name: Apron (chef)
+  name: apron (chef)
   description: ''
   components:
   - type: Sprite
@@ -66,7 +66,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingArmorreflec
-  name: Armor (reflective)
+  name: armor (reflective)
   description: ''
   components:
   - type: Sprite
@@ -79,7 +79,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingAssjacket
-  name: Ass jacket
+  name: ass jacket
   description: ''
   components:
   - type: Sprite
@@ -92,7 +92,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBedsheet
-  name: Bedsheet
+  name: bedsheet
   description: ''
   components:
   - type: Sprite
@@ -105,7 +105,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBio
-  name: Bio
+  name: bio
   description: ''
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBiocmo
-  name: Bio (CMO)
+  name: bio (CMO)
   description: ''
   components:
   - type: Sprite
@@ -131,7 +131,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBiogeneral
-  name: Bio (General)
+  name: bio (general)
   description: ''
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBiojanitor
-  name: Bio (Janitor)
+  name: bio (janitor)
   description: ''
   components:
   - type: Sprite
@@ -157,7 +157,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBioscientist
-  name: Bio (Scientist)
+  name: bio (scientist)
   description: ''
   components:
   - type: Sprite
@@ -170,7 +170,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBiosecurity
-  name: Bio (Security)
+  name: bio (security)
   description: ''
   components:
   - type: Sprite
@@ -183,7 +183,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBiovirology
-  name: Bio (Virology)
+  name: bio (virology)
   description: ''
   components:
   - type: Sprite
@@ -196,7 +196,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBlackhoodie
-  name: Black hoodie
+  name: black hoodie
   description: ''
   components:
   - type: Sprite
@@ -209,7 +209,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBlackhoodieopen
-  name: Black hoodie (open)
+  name: black hoodie (open)
   description: ''
   components:
   - type: Sprite
@@ -222,7 +222,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBluetag
-  name: Bluetag
+  name: bluetag
   description: ''
   components:
   - type: Sprite
@@ -235,7 +235,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBomber
-  name: Bomber
+  name: bomber
   description: ''
   components:
   - type: Sprite
@@ -248,7 +248,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBomberopen
-  name: Bomber (open)
+  name: bomber (open)
   description: ''
   components:
   - type: Sprite
@@ -261,7 +261,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBombsuit
-  name: Bombsuit
+  name: bombsuit
   description: ''
   components:
   - type: Sprite
@@ -274,7 +274,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBombsuitsec
-  name: Bombsuit (Security)
+  name: bombsuit (security)
   description: ''
   components:
   - type: Sprite
@@ -287,7 +287,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBombsuitwhite
-  name: Bombsuit
+  name: bombsuit
   description: ''
   components:
   - type: Sprite
@@ -300,7 +300,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBotanist
-  name: Botanist
+  name: botanist
   description: ''
   components:
   - type: Sprite
@@ -313,7 +313,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBulletproof
-  name: Bulletproof
+  name: bulletproof
   description: ''
   components:
   - type: Sprite
@@ -326,7 +326,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCaparmor
-  name: Captain's armor
+  name: captain's armor
   description: ''
   components:
   - type: Sprite
@@ -339,7 +339,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCardborg
-  name: Cardborg
+  name: cardborg
   description: ''
   components:
   - type: Sprite
@@ -352,7 +352,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCargojacket
-  name: Cargo jacket
+  name: cargo jacket
   description: ''
   components:
   - type: Sprite
@@ -365,7 +365,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCerig
-  name: Chief Engineer's rig
+  name: chief engineer's rig
   description: ''
   components:
   - type: Sprite
@@ -378,7 +378,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCerigsealed
-  name: Chief Engineer's rig (sealed)
+  name: chief engineer's rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -391,7 +391,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingChaplainhoodie
-  name: Chaplain hoodie
+  name: chaplain hoodie
   description: ''
   components:
   - type: Sprite
@@ -404,7 +404,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingChef
-  name: Chef
+  name: chef
   description: ''
   components:
   - type: Sprite
@@ -417,7 +417,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingChickensuit
-  name: Chicken suit
+  name: chicken suit
   description: ''
   components:
   - type: Sprite
@@ -430,7 +430,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingChurchcoat
-  name: Church coat
+  name: church coat
   description: ''
   components:
   - type: Sprite
@@ -443,7 +443,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingClassicponcho
-  name: Classic poncho
+  name: classic poncho
   description: ''
   components:
   - type: Sprite
@@ -456,7 +456,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCultrobes
-  name: Cult robes
+  name: cult robes
   description: ''
   components:
   - type: Sprite
@@ -469,7 +469,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCultrobesalt
-  name: Cult robes
+  name: cult robes
   description: ''
   components:
   - type: Sprite
@@ -482,7 +482,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCultarmour
-  name: Cult armor
+  name: cult armor
   description: ''
   components:
   - type: Sprite
@@ -495,7 +495,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingCustodian
-  name: Custodian
+  name: custodian
   description: ''
   components:
   - type: Sprite
@@ -508,7 +508,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingDeathsquad
-  name: Deathsquad
+  name: deathsquad
   description: ''
   components:
   - type: Sprite
@@ -521,7 +521,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingDetective
-  name: Detective
+  name: detective
   description: ''
   components:
   - type: Sprite
@@ -534,7 +534,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingDetvest
-  name: Detective's vest
+  name: detective's vest
   description: ''
   components:
   - type: Sprite
@@ -547,7 +547,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingEmergencysuit
-  name: Emergency suit
+  name: emergency suit
   description: ''
   components:
   - type: Sprite
@@ -560,7 +560,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingEngineeringrig
-  name: Engineering rig
+  name: engineering rig
   description: ''
   components:
   - type: Sprite
@@ -573,7 +573,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingEngineeringrigsealed
-  name: Engineering rig (sealed)
+  name: engineering rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -612,7 +612,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingFiresuit
-  name: Fire suit
+  name: fire suit
   description: ''
   components:
   - type: Sprite
@@ -625,7 +625,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingGentlecoat
-  name: Gentle coat
+  name: gentle coat
   description: ''
   components:
   - type: Sprite
@@ -638,7 +638,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingGolem
-  name: Golem
+  name: golem
   description: ''
   components:
   - type: Sprite
@@ -651,7 +651,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingGreyhoodie
-  name: Grey hoodie
+  name: grey hoodie
   description: ''
   components:
   - type: Sprite
@@ -664,7 +664,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingGreyhoodieopen
-  name: Grey hoodie (open)
+  name: grey hoodie (open)
   description: ''
   components:
   - type: Sprite
@@ -677,7 +677,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHackerrig
-  name: Hacker rig
+  name: hacker rig
   description: ''
   components:
   - type: Sprite
@@ -690,7 +690,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHackerrigsealed
-  name: Hacker rig (sealed)
+  name: hacker rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -703,7 +703,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHazard
-  name: Hazard
+  name: hazard
   description: ''
   components:
   - type: Sprite
@@ -716,7 +716,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHazardrig
-  name: Hazard rig
+  name: hazard rig
   description: ''
   components:
   - type: Sprite
@@ -729,7 +729,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHazardrigsealed
-  name: Hazard rig (sealed)
+  name: hazard rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -742,7 +742,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHeavy
-  name: Heavy
+  name: heavy
   description: ''
   components:
   - type: Sprite
@@ -820,7 +820,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingInspcoat
-  name: Inspector coat
+  name: inspector coat
   description: ''
   components:
   - type: Sprite
@@ -833,7 +833,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingJensencoat
-  name: Jensen coat
+  name: jensen coat
   description: ''
   components:
   - type: Sprite
@@ -846,7 +846,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingJudge
-  name: Judge
+  name: judge
   description: ''
   components:
   - type: Sprite
@@ -859,7 +859,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingKvest
-  name: Kvest
+  name: kvest
   description: ''
   components:
   - type: Sprite
@@ -872,7 +872,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoat
-  name: Lab coat
+  name: lab coat
   description: ''
   components:
   - type: Sprite
@@ -885,7 +885,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatchem
-  name: Lab coat (Chem)
+  name: lab coat (chem)
   description: ''
   components:
   - type: Sprite
@@ -898,7 +898,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatchemopen
-  name: Lab coat (Chem open)
+  name: lab coat (chem open)
   description: ''
   components:
   - type: Sprite
@@ -911,7 +911,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatcmo
-  name: Lab coat (CMO)
+  name: lab coat (CMO)
   description: ''
   components:
   - type: Sprite
@@ -924,7 +924,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatcmoopen
-  name: Lab coat (CMO open)
+  name: lab coat (CMO open)
   description: ''
   components:
   - type: Sprite
@@ -937,7 +937,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatgen
-  name: Lab coat (General)
+  name: lab coat (general)
   description: ''
   components:
   - type: Sprite
@@ -950,7 +950,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatgenopen
-  name: Labcoat (General open)
+  name: labcoat (general open)
   description: ''
   components:
   - type: Sprite
@@ -963,7 +963,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatmedspec
-  name: Lab coat (Medical)
+  name: lab coat (medical)
   description: ''
   components:
   - type: Sprite
@@ -976,7 +976,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatmedspecopen
-  name: Lab coat (Medical open)
+  name: lab coat (medical open)
   description: ''
   components:
   - type: Sprite
@@ -989,7 +989,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatopen
-  name: Lab coat (open)
+  name: lab coat (open)
   description: ''
   components:
   - type: Sprite
@@ -1002,7 +1002,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoattox
-  name: Lab coat (Tox)
+  name: lab coat (tox)
   description: ''
   components:
   - type: Sprite
@@ -1015,7 +1015,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoattoxopen
-  name: Lab coat (Tox open)
+  name: lab coat (tox open)
   description: ''
   components:
   - type: Sprite
@@ -1028,7 +1028,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatvir
-  name: Lab coat (Virology)
+  name: lab coat (virology)
   description: ''
   components:
   - type: Sprite
@@ -1041,7 +1041,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLabcoatviropen
-  name: Lab coat (Virology open)
+  name: lab coat (virology open)
   description: ''
   components:
   - type: Sprite
@@ -1054,7 +1054,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingLeatherjacket
-  name: Leather jacket
+  name: leather jacket
   description: ''
   components:
   - type: Sprite
@@ -1067,7 +1067,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMagusblue
-  name: Magus blue
+  name: magus blue
   description: ''
   components:
   - type: Sprite
@@ -1080,7 +1080,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMagusred
-  name: Magus red
+  name: magus red
   description: ''
   components:
   - type: Sprite
@@ -1093,7 +1093,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMarisa
-  name: Marisa
+  name: marisa
   description: ''
   components:
   - type: Sprite
@@ -1106,7 +1106,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMedicalrig
-  name: Medical rig
+  name: medical rig
   description: ''
   components:
   - type: Sprite
@@ -1119,7 +1119,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMedicalrigsealed
-  name: Medical rig (sealed)
+  name: medical rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -1132,7 +1132,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMercwebvest
-  name: Merc web vest
+  name: merc web vest
   description: ''
   components:
   - type: Sprite
@@ -1145,7 +1145,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMercrig
-  name: Merc rig
+  name: merc rig
   description: ''
   components:
   - type: Sprite
@@ -1158,7 +1158,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMercrigsealed
-  name: Merc rig (sealed)
+  name: merc rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -1171,7 +1171,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingMonkeysuit
-  name: Monkey suit
+  name: monkey suit
   description: ''
   components:
   - type: Sprite
@@ -1184,7 +1184,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingNinjarig
-  name: Ninja rig
+  name: ninja rig
   description: ''
   components:
   - type: Sprite
@@ -1197,7 +1197,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingNinjarigsealed
-  name: Ninja rig (sealed)
+  name: ninja rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -1210,7 +1210,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingNun
-  name: Nun
+  name: nun
   description: ''
   components:
   - type: Sprite
@@ -1223,7 +1223,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingNymph
-  name: Nymph
+  name: nymph
   description: ''
   components:
   - type: Sprite
@@ -1236,7 +1236,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingPirate
-  name: Pirate
+  name: pirate
   description: ''
   components:
   - type: Sprite
@@ -1249,7 +1249,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingPlaguedoctor
-  name: Plague doctor
+  name: plague doctor
   description: ''
   components:
   - type: Sprite
@@ -1262,7 +1262,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingPoncho
-  name: Poncho
+  name: poncho
   description: ''
   components:
   - type: Sprite
@@ -1275,7 +1275,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingPsyamp
-  name: Psyamp
+  name: psyamp
   description: ''
   components:
   - type: Sprite
@@ -1301,7 +1301,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRad
-  name: Rad
+  name: rad
   description: ''
   components:
   - type: Sprite
@@ -1314,7 +1314,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingReactive
-  name: Reactive
+  name: reactive
   description: ''
   components:
   - type: Sprite
@@ -1327,7 +1327,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingReactiveoff
-  name: Reactive (off)
+  name: reactive (off)
   description: ''
   components:
   - type: Sprite
@@ -1340,7 +1340,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRedtag
-  name: Red tag
+  name: red tag
   description: ''
   components:
   - type: Sprite
@@ -1353,7 +1353,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRedwizard
-  name: Red wizard
+  name: red wizard
   description: ''
   components:
   - type: Sprite
@@ -1366,7 +1366,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigatmos
-  name: Rig atmos
+  name: rig atmos
   description: ''
   components:
   - type: Sprite
@@ -1379,7 +1379,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigengineering
-  name: Rig engineering
+  name: rig engineering
   description: ''
   components:
   - type: Sprite
@@ -1392,7 +1392,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRighazardhardsuit
-  name: Rig hazard hardsuit
+  name: rig hazard hardsuit
   description: ''
   components:
   - type: Sprite
@@ -1405,7 +1405,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigmedical
-  name: Rig medical
+  name: rig medical
   description: ''
   components:
   - type: Sprite
@@ -1418,7 +1418,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigmining
-  name: Rig mining
+  name: rig mining
   description: ''
   components:
   - type: Sprite
@@ -1431,7 +1431,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigsectg
-  name: Rig sectg
+  name: rig sectg
   description: ''
   components:
   - type: Sprite
@@ -1444,7 +1444,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigsyndie
-  name: Rig syndie
+  name: rig syndie
   description: ''
   components:
   - type: Sprite
@@ -1457,7 +1457,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigwhite
-  name: Rig white
+  name: rig white
   description: ''
   components:
   - type: Sprite
@@ -1470,7 +1470,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRigwiz
-  name: Rig wiz
+  name: rig wiz
   description: ''
   components:
   - type: Sprite
@@ -1483,7 +1483,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRiot
-  name: Riot
+  name: riot
   description: ''
   components:
   - type: Sprite
@@ -1496,7 +1496,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingRobotechjacket
-  name: Robotech jacket
+  name: robotech jacket
   description: ''
   components:
   - type: Sprite
@@ -1509,7 +1509,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSanta
-  name: Santa
+  name: santa
   description: ''
   components:
   - type: Sprite
@@ -1522,7 +1522,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingScaf
-  name: Scaf
+  name: scaf
   description: ''
   components:
   - type: Sprite
@@ -1535,7 +1535,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSciencerig
-  name: Science rig
+  name: science rig
   description: ''
   components:
   - type: Sprite
@@ -1548,7 +1548,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSciencerigsealed
-  name: Science rig (sealed)
+  name: science rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -1561,7 +1561,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSecurityrig
-  name: Security rig
+  name: security rig
   description: ''
   components:
   - type: Sprite
@@ -1574,7 +1574,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSecurityrigsealed
-  name: Security rig (sealed)
+  name: security rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -1600,7 +1600,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSovietskaf
-  name: Soviet skaf
+  name: soviet skaf
   description: ''
   components:
   - type: Sprite
@@ -1613,7 +1613,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSpace
-  name: Space
+  name: space
   description: ''
   components:
   - type: Sprite
@@ -1626,7 +1626,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingStealthrig
-  name: Stealth rig
+  name: stealth rig
   description: ''
   components:
   - type: Sprite
@@ -1639,7 +1639,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingStealthrigsealed
-  name: Stealth rig (sealed)
+  name: stealth rig (sealed)
   description: ''
   components:
   - type: Sprite
@@ -1652,7 +1652,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingStraightjacket
-  name: Straight jacket
+  name: straight jacket
   description: ''
   components:
   - type: Sprite
@@ -1665,7 +1665,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSurgeon
-  name: Surgeon
+  name: surgeon
   description: ''
   components:
   - type: Sprite
@@ -1678,7 +1678,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSwat
-  name: Swat
+  name: swat
   description: ''
   components:
   - type: Sprite
@@ -1691,7 +1691,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSwatarmor
-  name: Swat armor
+  name: swat armor
   description: ''
   components:
   - type: Sprite
@@ -1704,7 +1704,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingSyndicate
-  name: Syndicate
+  name: syndicate
   description: ''
   components:
   - type: Sprite
@@ -1730,7 +1730,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingTdgreen
-  name: Td green
+  name: td green
   description: ''
   components:
   - type: Sprite
@@ -1743,7 +1743,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingTdred
-  name: Td red
+  name: td red
   description: ''
   components:
   - type: Sprite
@@ -1756,7 +1756,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingVest
-  name: Vest
+  name: vest
   description: ''
   components:
   - type: Sprite
@@ -1769,7 +1769,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingVioletwizard
-  name: Violet wizard
+  name: violet wizard
   description: ''
   components:
   - type: Sprite
@@ -1782,7 +1782,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingVoid
-  name: Void
+  name: void
   description: ''
   components:
   - type: Sprite
@@ -1795,7 +1795,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingWebvest
-  name: Web vest
+  name: web vest
   description: ''
   components:
   - type: Sprite
@@ -1808,7 +1808,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingWizard
-  name: Wizard
+  name: wizard
   description: ''
   components:
   - type: Sprite
@@ -1821,7 +1821,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingXenos
-  name: Xenos
+  name: xenos
   description: ''
   components:
   - type: Sprite
@@ -1834,7 +1834,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingHoSTrenchcoat
-  name: Head of Security Trenchcoat
+  name: head of security trenchcoat
   description: ''
   components:
   - type: Sprite

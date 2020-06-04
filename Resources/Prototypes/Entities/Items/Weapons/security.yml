@@ -1,5 +1,5 @@
 - type: entity
-  name: Stun baton
+  name: stun baton
   parent: BaseItem
   id: Stunbaton
   components:

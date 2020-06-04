@@ -1,5 +1,5 @@
 - type: entity
-  name: "Item"
+  name: "item"
   id: BaseItem
   abstract: true
   components:

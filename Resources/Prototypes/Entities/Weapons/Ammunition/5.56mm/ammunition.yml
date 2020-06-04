@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_556mm
-  name: "5.56mm Magazine"
+  name: "5.56mm magazine"
   parent: magazine_556mm_empty
   components:
   - type: BallisticMagazine
@@ -37,7 +37,7 @@
 
 - type: entity
   id: magazine_556mms
-  name: "5.56mm Magazine S"
+  name: "5.56mm magazine S"
   parent: magazine_556mm_empty
   components:
   - type: BallisticMagazine
@@ -59,7 +59,7 @@
 
 - type: entity
   id: magazine_556mm_win
-  name: "5.56mm Magazine win"
+  name: "5.56mm magazine win"
   parent: magazine_556mm_empty
   components:
   - type: BallisticMagazine
@@ -81,7 +81,7 @@
 
 - type: entity
   id: magazine_556mm__winhv
-  name: "5.56mm Magazine (High Velocity)"
+  name: "5.56mm magazine (high velocity)"
   parent: magazine_556mm_empty
   components:
   - type: BallisticMagazine
@@ -103,7 +103,7 @@
 
 - type: entity
   id: magazine_556mm_winr
-  name: "5.56mm Magazine (Rubber)"
+  name: "5.56mm magazine (rubber)"
   parent: magazine_556mm_empty
   components:
   - type: BallisticMagazine
@@ -142,7 +142,7 @@
 
 - type: entity
   id: ammo_casing_556mm_flash
-  name: "5.56mm casing (Flash)"
+  name: "5.56mm casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -158,7 +158,7 @@
 
 - type: entity
   id: ammo_casing_556mm_highvelocity
-  name: "5.56mm casing (High-Velocity)"
+  name: "5.56mm casing (high-velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -190,7 +190,7 @@
 
 - type: entity
   id: ammo_casing_556mm_practice
-  name: "5.56mm casing (Practice)"
+  name: "5.56mm casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -206,7 +206,7 @@
 
 - type: entity
   id: ammo_casing_556mm_rubber
-  name: "5.56mm casing (Rubber)"
+  name: "5.56mm casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

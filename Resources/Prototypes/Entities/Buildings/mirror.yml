@@ -1,6 +1,6 @@
 - type: entity
   id: Mirror
-  name: Mirror
+  name: mirror
   components:
   - type: Sprite
     sprite: Buildings/mirror.rsi

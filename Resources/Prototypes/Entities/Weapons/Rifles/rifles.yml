@@ -1,11 +1,11 @@
 - type: entity
-  name: BaseRifle
+  name: baserifle
   parent: BaseItem
   id: RifleBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: BallisticMagazineWeapon
     caliber: A762mm
     magazines:
@@ -18,7 +18,7 @@
     sound_gunshot: /Audio/Guns/Gunshots/batrifle.ogg
 
 - type: entity
-  name: AK
+  name: ak
   parent: RifleBase
   id: RifleAk
   description: A rooty tooty point and shooty.
@@ -30,7 +30,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/ak.rsi
     state: ak-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: true
@@ -51,7 +51,7 @@
     sprite: Objects/Guns/Rifles/ak.rsi
 
 - type: entity
-  name: Black AK
+  name: black ak
   parent: RifleBase
   id: RifleBlackAk
   description: A rooty tooty point and shooty.
@@ -63,7 +63,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/black-ak.rsi
     state: black-ak-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: true
@@ -84,7 +84,7 @@
     sprite: Objects/Guns/Rifles/black-ak.rsi
 
 - type: entity
-  name: Carbine
+  name: carbine
   parent: RifleBase
   id: RifleCarbine
   description: A rooty tooty point and shooty.
@@ -96,7 +96,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/carbine.rsi
     state: carbine-5
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 1.5
     automatic: true
@@ -117,7 +117,7 @@
     sprite: Objects/Guns/Rifles/carbine.rsi
 
 - type: entity
-  name: Dallas
+  name: dallas
   parent: RifleBase
   id: RifleDallas
   description: A rooty tooty point and shooty.
@@ -129,7 +129,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/dallas.rsi
     state: dallas-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: true
@@ -163,7 +163,7 @@
   - type: Icon
     sprite: Objects/Guns/Rifles/ih_heavyrifle.rsi
     state: ih_heavyrifle-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 1.5
     automatic: true
@@ -185,7 +185,7 @@
     sprite: Objects/Guns/Rifles/ih_heavyrifle.rsi
 
 - type: entity
-  name: Sol-EOT
+  name: sol-eot
   parent: RifleBase
   id: RifleSolEot
   description: A rooty tooty point and shooty.
@@ -220,7 +220,7 @@
     sprite: Objects/Guns/Rifles/sol-eot.rsi
 
 - type: entity
-  name: Sol-Para
+  name: sol-para
   parent: RifleBase
   id: RifleSolPara
   description: A rooty tooty point and shooty.
@@ -255,7 +255,7 @@
     sprite: Objects/Guns/Rifles/sol-para.rsi
 
 - type: entity
-  name: STS
+  name: sts
   parent: RifleBase
   id: RifleSts
   description: A rooty tooty point and shooty.

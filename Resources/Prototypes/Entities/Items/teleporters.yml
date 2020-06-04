@@ -1,5 +1,5 @@
 - type: entity
-  name: "BaseHandTele"
+  name: "basehandtele"
   parent: BaseItem
   id: BaseHandTele
   abstract: true
@@ -16,13 +16,13 @@
   - type: Item
     Size: 12
     sprite: Objects/Misc/hand_tele.rsi
-  - type: Sound
+  - type: LoopingSound
   - type: Appearance
     visuals:
     - type: HandTeleporterVisualizer2D
 
 - type: entity
-  name: "Hand Teleporter - Random"
+  name: "hand teleporter - random"
   parent: BaseHandTele
   id: RandHandTele
   description: "Travel to a random spot in range"
@@ -34,7 +34,7 @@
     charge_time: 1
 
 - type: entity
-  name: "Hand Teleporter - Direct"
+  name: "hand teleporter - direct"
   parent: BaseHandTele
   id: DirHandTele
   description: "Travel to a specific spot in a short range"
@@ -46,7 +46,7 @@
     charge_time: 0.2
 
 - type: entity
-  name: Portal
+  name: portal
   id: Portal
   abstract: true
   description: "Portal to another location"

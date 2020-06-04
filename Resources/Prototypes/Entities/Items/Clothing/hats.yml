@@ -14,7 +14,7 @@
 
 - type: entity
   id: HatAliceMccrea
-  name: Alice Mccrea
+  name: alice mccrea
   description: ''
   components:
   - sprite: Clothing/Head/alice_mccrea_1.rsi
@@ -27,7 +27,7 @@
 
 - type: entity
   id: HatAliceMccreaup
-  name: Alice Mccrea (up)
+  name: alice mccrea (up)
   description: ''
   components:
   - sprite: Clothing/Head/alice_mccrea_1up.rsi
@@ -40,7 +40,7 @@
 
 - type: entity
   id: HatAmp
-  name: Amp
+  name: amp
   description: ''
   components:
   - sprite: Clothing/Head/amp.rsi
@@ -53,7 +53,7 @@
 
 - type: entity
   id: HatAssetProtectionRig
-  name: Asset Protection Rig
+  name: asset protection rig
   description: ''
   components:
   - sprite: Clothing/Head/asset_protection_rig.rsi
@@ -66,7 +66,7 @@
 
 - type: entity
   id: HatAssetProtectionRigSealed
-  name: Asset Protection Rig (Sealed)
+  name: asset protection rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/asset_protection_rig_sealed.rsi
@@ -79,7 +79,7 @@
 
 - type: entity
   id: HatAtmosHelm
-  name: Atmos Helm
+  name: atmos helm
   description: ''
   components:
   - sprite: Clothing/Head/atmos_helm.rsi
@@ -92,7 +92,7 @@
 
 - type: entity
   id: HatBandana
-  name: Bandana
+  name: bandana
   description: ''
   components:
   - sprite: Clothing/Head/bandana.rsi
@@ -105,7 +105,7 @@
 
 - type: entity
   id: HatBandblack
-  name: Bandana black
+  name: bandana black
   description: ''
   components:
   - sprite: Clothing/Head/bandblack.rsi
@@ -118,7 +118,7 @@
 
 - type: entity
   id: HatBandblue
-  name: Bandana blue
+  name: bandana blue
   description: ''
   components:
   - sprite: Clothing/Head/bandblue.rsi
@@ -131,7 +131,7 @@
 
 - type: entity
   id: HatBandbotany
-  name: Bandana botany
+  name: bandana botany
   description: ''
   components:
   - sprite: Clothing/Head/bandbotany.rsi
@@ -144,7 +144,7 @@
 
 - type: entity
   id: HatBandcamo
-  name: Bandana camo
+  name: bandana camo
   description: ''
   components:
   - sprite: Clothing/Head/bandcamo.rsi
@@ -157,7 +157,7 @@
 
 - type: entity
   id: HatBandgold
-  name: Bandana gold
+  name: bandana gold
   description: ''
   components:
   - sprite: Clothing/Head/bandgold.rsi
@@ -170,7 +170,7 @@
 
 - type: entity
   id: HatBandgreen
-  name: Bandana green
+  name: bandana green
   description: ''
   components:
   - sprite: Clothing/Head/bandgreen.rsi
@@ -183,7 +183,7 @@
 
 - type: entity
   id: HatBandorange
-  name: Bandana orange
+  name: bandana orange
   description: ''
   components:
   - sprite: Clothing/Head/bandorange.rsi
@@ -196,7 +196,7 @@
 
 - type: entity
   id: HatBandpurple
-  name: Bandana purple
+  name: bandana purple
   description: ''
   components:
   - sprite: Clothing/Head/bandpurple.rsi
@@ -209,7 +209,7 @@
 
 - type: entity
   id: HatBandred
-  name: Bandana red
+  name: bandana red
   description: ''
   components:
   - sprite: Clothing/Head/bandred.rsi
@@ -222,7 +222,7 @@
 
 - type: entity
   id: HatBandskull
-  name: Bandana skull
+  name: bandana skull
   description: ''
   components:
   - sprite: Clothing/Head/bandskull.rsi
@@ -235,7 +235,7 @@
 
 - type: entity
   id: HatBearpelt
-  name: Bear pelt
+  name: bear pelt
   description: ''
   components:
   - sprite: Clothing/Head/bearpelt.rsi
@@ -248,7 +248,7 @@
 
 - type: entity
   id: HatBeaverHat
-  name: Beaver hat
+  name: beaver hat
   description: ''
   components:
   - sprite: Clothing/Head/beaver_hat.rsi
@@ -261,7 +261,7 @@
 
 - type: entity
   id: HatBeret
-  name: Beret
+  name: beret
   description: ''
   components:
   - sprite: Clothing/Head/beret.rsi
@@ -274,7 +274,7 @@
 
 - type: entity
   id: HatBeretBadge
-  name: Beret Badge
+  name: beret badge
   description: ''
   components:
   - sprite: Clothing/Head/beret_badge.rsi
@@ -287,7 +287,7 @@
 
 - type: entity
   id: HatBeretEngineering
-  name: Beret Engineering
+  name: beret engineering
   description: ''
   components:
   - sprite: Clothing/Head/beret_engineering.rsi
@@ -300,7 +300,7 @@
 
 - type: entity
   id: HatBeretHoS
-  name: Beret HoS
+  name: beret HoS
   description: ''
   components:
   - sprite: Clothing/Head/beret_hos.rsi
@@ -315,7 +315,7 @@
 
 - type: entity
   id: HatBeretNavyHos
-  name: Beret Navy HoS
+  name: beret navy HoS
   description: ''
   components:
   - sprite: Clothing/Head/beret_navy_hos.rsi
@@ -328,7 +328,7 @@
 
 - type: entity
   id: HatBeretNavyOfficer
-  name: Beret Navy Officer
+  name: beret navy officer
   description: ''
   components:
   - sprite: Clothing/Head/beret_navy_officer.rsi
@@ -341,7 +341,7 @@
 
 - type: entity
   id: HatBeretNavyWarden
-  name: Beret Navy Warden
+  name: beret navy warden
   description: ''
   components:
   - sprite: Clothing/Head/beret_navy_warden.rsi
@@ -354,7 +354,7 @@
 
 - type: entity
   id: HatBeretPurple
-  name: Beret Purple
+  name: beret purple
   description: ''
   components:
   - sprite: Clothing/Head/beret_purple.rsi
@@ -367,7 +367,7 @@
 
 - type: entity
   id: HatBioCmo
-  name: Bio - CMO
+  name: bio - cmo
   description: ''
   components:
   - sprite: Clothing/Head/bio_cmo.rsi
@@ -380,7 +380,7 @@
 
 - type: entity
   id: HatBioGeneral
-  name: Bio - General
+  name: bio - general
   description: ''
   components:
   - sprite: Clothing/Head/bio_general.rsi
@@ -393,7 +393,7 @@
 
 - type: entity
   id: HatBioJanitor
-  name: Bio - Janitor
+  name: bio - janitor
   description: ''
   components:
   - sprite: Clothing/Head/bio_janitor.rsi
@@ -406,7 +406,7 @@
 
 - type: entity
   id: HatBioScientist
-  name: Bio - Scientist
+  name: bio - scientist
   description: ''
   components:
   - sprite: Clothing/Head/bio_scientist.rsi
@@ -419,7 +419,7 @@
 
 - type: entity
   id: HatBioSecurity
-  name: Bio - Security
+  name: bio - security
   description: ''
   components:
   - sprite: Clothing/Head/bio_security.rsi
@@ -432,7 +432,7 @@
 
 - type: entity
   id: HatBioVirology
-  name: Bio - Virology
+  name: bio - virology
   description: ''
   components:
   - sprite: Clothing/Head/bio_virology.rsi
@@ -445,7 +445,7 @@
 
 - type: entity
   id: HatBluesoft
-  name: Bluesoft
+  name: bluesoft
   description: ''
   components:
   - sprite: Clothing/Head/bluesoft.rsi
@@ -458,7 +458,7 @@
 
 - type: entity
   id: HatBluesoftFlipped
-  name: Bluesoft Flipped
+  name: bluesoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/bluesoft_flipped.rsi
@@ -471,7 +471,7 @@
 
 - type: entity
   id: HatBoaterHat
-  name: Boater Hat
+  name: boater hat
   description: ''
   components:
   - sprite: Clothing/Head/boater_hat.rsi
@@ -484,7 +484,7 @@
 
 - type: entity
   id: HatBombsuit
-  name: Bombsuit
+  name: bombsuit
   description: ''
   components:
   - sprite: Clothing/Head/bombsuit.rsi
@@ -497,7 +497,7 @@
 
 - type: entity
   id: HatBombsuitold
-  name: Bombsuit old
+  name: bombsuit old
   description: ''
   components:
   - sprite: Clothing/Head/bombsuitold.rsi
@@ -510,7 +510,7 @@
 
 - type: entity
   id: HatBombsuitsec
-  name: Bombsuit sec
+  name: bombsuit sec
   description: ''
   components:
   - sprite: Clothing/Head/bombsuitsec.rsi
@@ -523,7 +523,7 @@
 
 - type: entity
   id: HatBombsuitsecold
-  name: Bombsuit sec old
+  name: bombsuit sec old
   description: ''
   components:
   - sprite: Clothing/Head/bombsuitsecold.rsi
@@ -536,7 +536,7 @@
 
 - type: entity
   id: HatBombsuitWhite
-  name: Bombsuit White
+  name: bombsuit white
   description: ''
   components:
   - sprite: Clothing/Head/bombsuit_white.rsi
@@ -549,7 +549,7 @@
 
 - type: entity
   id: HatBowler
-  name: Bowler
+  name: bowler
   description: ''
   components:
   - sprite: Clothing/Head/bowler.rsi
@@ -562,7 +562,7 @@
 
 - type: entity
   id: HatBowlerHat
-  name: Bowler Hat
+  name: bowler hat
   description: ''
   components:
   - sprite: Clothing/Head/bowler_hat.rsi
@@ -575,7 +575,7 @@
 
 - type: entity
   id: HatBrucehachert
-  name: Bruce hachert
+  name: bruce hachert
   description: ''
   components:
   - sprite: Clothing/Head/brucehachert.rsi
@@ -588,7 +588,7 @@
 
 - type: entity
   id: HatBunny
-  name: Bunny
+  name: bunny
   description: ''
   components:
   - sprite: Clothing/Head/bunny.rsi
@@ -601,7 +601,7 @@
 
 - type: entity
   id: HatCake
-  name: Cake
+  name: cake
   description: ''
   components:
   - sprite: Clothing/Head/cake0.rsi
@@ -614,7 +614,7 @@
 
 - type: entity
   id: HatCakeLit
-  name: Cake (lit)
+  name: cake (lit)
   description: ''
   components:
   - sprite: Clothing/Head/cake1.rsi
@@ -627,7 +627,7 @@
 
 - type: entity
   id: HatCapcap
-  name: Cap cap
+  name: cap cap
   description: ''
   components:
   - sprite: Clothing/Head/capcap.rsi
@@ -640,7 +640,7 @@
 
 - type: entity
   id: HatCapspace
-  name: Cap space
+  name: cap space
   description: ''
   components:
   - sprite: Clothing/Head/capspace.rsi
@@ -653,7 +653,7 @@
 
 - type: entity
   id: HatCaptain
-  name: Captain
+  name: captain
   description: ''
   components:
   - sprite: Clothing/Head/captain.rsi
@@ -666,7 +666,7 @@
 
 - type: entity
   id: HatCardborgH
-  name: Cardborg H
+  name: cardborg h
   description: ''
   components:
   - sprite: Clothing/Head/cardborg_h.rsi
@@ -679,7 +679,7 @@
 
 - type: entity
   id: HatCargosoft
-  name: Cargosoft
+  name: cargosoft
   description: ''
   components:
   - sprite: Clothing/Head/cargosoft.rsi
@@ -692,7 +692,7 @@
 
 - type: entity
   id: HatCargosoftFlipped
-  name: Cargosoft Flipped
+  name: cargosoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/cargosoft_flipped.rsi
@@ -705,7 +705,7 @@
 
 - type: entity
   id: HatCat
-  name: Cat
+  name: cat
   description: ''
   components:
   - sprite: Clothing/Head/cat.rsi
@@ -718,7 +718,7 @@
 
 - type: entity
   id: HatCat2
-  name: Cat2
+  name: cat2
   description: ''
   components:
   - sprite: Clothing/Head/cat2.rsi
@@ -731,7 +731,7 @@
 
 - type: entity
   id: HatCat3
-  name: Cat3
+  name: cat3
   description: ''
   components:
   - sprite: Clothing/Head/cat3.rsi
@@ -744,7 +744,7 @@
 
 - type: entity
   id: HatCentcom
-  name: Centcom
+  name: centcom
   description: ''
   components:
   - sprite: Clothing/Head/centcom.rsi
@@ -757,7 +757,7 @@
 
 - type: entity
   id: HatCespaceHelmet
-  name: CE space Helmet
+  name: ce space helmet
   description: ''
   components:
   - sprite: Clothing/Head/cespace_helmet.rsi
@@ -770,7 +770,7 @@
 
 - type: entity
   id: HatCeRig
-  name: CE Rig
+  name: ce rig
   description: ''
   components:
   - sprite: Clothing/Head/ce_rig.rsi
@@ -783,7 +783,7 @@
 
 - type: entity
   id: HatCeRigSealed
-  name: CE Rig (Sealed)
+  name: ce rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/ce_rig_sealed.rsi
@@ -796,7 +796,7 @@
 
 - type: entity
   id: HatChaplainHood
-  name: Chaplain Hood
+  name: chaplain hood
   description: ''
   components:
   - sprite: Clothing/Head/chaplain_hood.rsi
@@ -809,7 +809,7 @@
 
 - type: entity
   id: HatChefhat
-  name: Chef hat
+  name: chef hat
   description: ''
   components:
   - sprite: Clothing/Head/chefhat.rsi
@@ -822,7 +822,7 @@
 
 - type: entity
   id: HatChickenhead
-  name: Chicken head
+  name: chicken head
   description: ''
   components:
   - sprite: Clothing/Head/chickenhead.rsi
@@ -835,7 +835,7 @@
 
 - type: entity
   id: HatConstructiondrone
-  name: Construction drone
+  name: construction drone
   description: ''
   components:
   - sprite: Clothing/Head/constructiondrone.rsi
@@ -848,7 +848,7 @@
 
 - type: entity
   id: HatCorpsoft
-  name: Corpsoft
+  name: corpsoft
   description: ''
   components:
   - sprite: Clothing/Head/corpsoft.rsi
@@ -861,7 +861,7 @@
 
 - type: entity
   id: HatCorpsoftFlipped
-  name: Corpsoft Flipped
+  name: corpsoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/corpsoft_flipped.rsi
@@ -874,7 +874,7 @@
 
 - type: entity
   id: HatCosmo
-  name: Cosmo
+  name: cosmo
   description: ''
   components:
   - sprite: Clothing/Head/cosmo.rsi
@@ -887,7 +887,7 @@
 
 - type: entity
   id: HatCowboy
-  name: Cowboy
+  name: cowboy
   description: ''
   components:
   - sprite: Clothing/Head/cowboy.rsi
@@ -900,7 +900,7 @@
 
 - type: entity
   id: HatCulthood
-  name: Cult hood
+  name: cult hood
   description: ''
   components:
   - sprite: Clothing/Head/culthood.rsi
@@ -913,7 +913,7 @@
 
 - type: entity
   id: HatCultHelmet
-  name: Cult Helmet
+  name: cult helmet
   description: ''
   components:
   - sprite: Clothing/Head/cult_helmet.rsi
@@ -926,7 +926,7 @@
 
 - type: entity
   id: HatCultHoodalt
-  name: Cult Hood alt
+  name: cult hood alt
   description: ''
   components:
   - sprite: Clothing/Head/cult_hoodalt.rsi
@@ -939,7 +939,7 @@
 
 - type: entity
   id: HatDeathsquad
-  name: Deathsquad
+  name: deathsquad
   description: ''
   components:
   - sprite: Clothing/Head/deathsquad.rsi
@@ -952,7 +952,7 @@
 
 - type: entity
   id: HatDetective
-  name: Detective
+  name: detective
   description: ''
   components:
   - sprite: Clothing/Head/detective.rsi
@@ -965,7 +965,7 @@
 
 - type: entity
   id: HatDetective2
-  name: Detective2
+  name: detective2
   description: ''
   components:
   - sprite: Clothing/Head/detective2.rsi
@@ -978,7 +978,7 @@
 
 - type: entity
   id: HatEdvinTelephosphor
-  name: Edvin Telephosphor
+  name: edvin telephosphor
   description: ''
   components:
   - sprite: Clothing/Head/edvin_telephosphor_1.rsi
@@ -991,7 +991,7 @@
 
 - type: entity
   id: HatEmergencyhelm
-  name: Emergency helm
+  name: emergency helm
   description: ''
   components:
   - sprite: Clothing/Head/emergencyhelm.rsi
@@ -1004,7 +1004,7 @@
 
 - type: entity
   id: HatEngineeringRig
-  name: Engineering Rig
+  name: engineering rig
   description: ''
   components:
   - sprite: Clothing/Head/engineering_rig.rsi
@@ -1017,7 +1017,7 @@
 
 - type: entity
   id: HatEngineeringRigSealed
-  name: Engineering Rig (Sealed)
+  name: engineering rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/engineering_rig_sealed.rsi
@@ -1030,7 +1030,7 @@
 
 - type: entity
   id: HatEngspaceHelmet
-  name: Engspace Helmet
+  name: engspace helmet
   description: ''
   components:
   - sprite: Clothing/Head/engspace_helmet.rsi
@@ -1043,7 +1043,7 @@
 
 - type: entity
   id: HatEngHelm
-  name: Eng Helm
+  name: eng helm
   description: ''
   components:
   - sprite: Clothing/Head/eng_helm.rsi
@@ -1056,7 +1056,7 @@
 
 - type: entity
   id: HatEnosAdlai
-  name: Enos Adlai
+  name: enos adlai
   description: ''
   components:
   - sprite: Clothing/Head/enos_adlai_1.rsi
@@ -1069,7 +1069,7 @@
 
 - type: entity
   id: HatEvaRig
-  name: Eva Rig
+  name: EVA rig
   description: ''
   components:
   - sprite: Clothing/Head/eva_rig.rsi
@@ -1082,7 +1082,7 @@
 
 - type: entity
   id: HatEvaRigSealed
-  name: Eva Rig Sealed
+  name: EVA rig sealed
   description: ''
   components:
   - sprite: Clothing/Head/eva_rig_sealed.rsi
@@ -1095,7 +1095,7 @@
 
 - type: entity
   id: HatFeatherTrilby
-  name: Feather Trilby
+  name: feather trilby
   description: ''
   components:
   - sprite: Clothing/Head/feather_trilby.rsi
@@ -1108,7 +1108,7 @@
 
 - type: entity
   id: HatFedora
-  name: Fedora
+  name: fedora
   description: ''
   components:
   - sprite: Clothing/Head/fedora.rsi
@@ -1121,7 +1121,7 @@
 
 - type: entity
   id: HatFez
-  name: Fez
+  name: fez
   description: ''
   components:
   - sprite: Clothing/Head/fez.rsi
@@ -1134,7 +1134,7 @@
 
 - type: entity
   id: HatFlatCap
-  name: Flat Cap
+  name: flat cap
   description: ''
   components:
   - sprite: Clothing/Head/flat_cap.rsi
@@ -1147,7 +1147,7 @@
 
 - type: entity
   id: HatGentcap
-  name: Gent cap
+  name: gent cap
   description: ''
   components:
   - sprite: Clothing/Head/gentcap.rsi
@@ -1160,7 +1160,7 @@
 
 - type: entity
   id: HatGladiator
-  name: Gladiator
+  name: gladiator
   description: ''
   components:
   - sprite: Clothing/Head/gladiator.rsi
@@ -1173,7 +1173,7 @@
 
 - type: entity
   id: HatGreenbandana
-  name: Greenbandana
+  name: greenbandana
   description: ''
   components:
   - sprite: Clothing/Head/greenbandana.rsi
@@ -1186,7 +1186,7 @@
 
 - type: entity
   id: HatGreensoft
-  name: Greensoft
+  name: greensoft
   description: ''
   components:
   - sprite: Clothing/Head/greensoft.rsi
@@ -1199,7 +1199,7 @@
 
 - type: entity
   id: HatGreensoftFlipped
-  name: Greensoft Flipped
+  name: greensoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/greensoft_flipped.rsi
@@ -1212,7 +1212,7 @@
 
 - type: entity
   id: HatGreysoft
-  name: Greysoft
+  name: greysoft
   description: ''
   components:
   - sprite: Clothing/Head/greysoft.rsi
@@ -1225,7 +1225,7 @@
 
 - type: entity
   id: HatGreysoftFlipped
-  name: Greysoft Flipped
+  name: greysoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/greysoft_flipped.rsi
@@ -1238,7 +1238,7 @@
 
 - type: entity
   id: HatHackerRig
-  name: Hacker Rig
+  name: hacker rig
   description: ''
   components:
   - sprite: Clothing/Head/hacker_rig.rsi
@@ -1251,7 +1251,7 @@
 
 - type: entity
   id: HatHackerRigSealed
-  name: Hacker Rig Sealed
+  name: hacker rig sealed
   description: ''
   components:
   - sprite: Clothing/Head/hacker_rig_sealed.rsi
@@ -1264,7 +1264,7 @@
 
 - type: entity
   id: HatHairflower
-  name: Hairflower
+  name: hairflower
   description: ''
   components:
   - sprite: Clothing/Head/hairflower.rsi
@@ -1277,7 +1277,7 @@
 
 - type: entity
   id: HatHardhatDblue
-  name: Hardhat Dblue
+  name: hardhat dblue
   description: ''
   components:
   - sprite: Clothing/Head/hardhat0_dblue.rsi
@@ -1290,7 +1290,7 @@
 
 - type: entity
   id: HatHardhat Orange
-  name: Hardhat Orange
+  name: hardhat orange
   description: ''
   components:
   - sprite: Clothing/Head/hardhat0_orange.rsi
@@ -1303,7 +1303,7 @@
 
 - type: entity
   id: HatHardhatPumpkin
-  name: Hardhat Pumpkin
+  name: hardhat pumpkin
   description: ''
   components:
   - sprite: Clothing/Head/hardhat0_pumpkin.rsi
@@ -1316,7 +1316,7 @@
 
 - type: entity
   id: HatHardhatRed
-  name: Hardhat Red
+  name: hardhat red
   description: ''
   components:
   - sprite: Clothing/Head/hardhat0_red.rsi
@@ -1329,7 +1329,7 @@
 
 - type: entity
   id: HatHardhatWhite
-  name: Hardhat White
+  name: hardhat white
   description: ''
   components:
   - sprite: Clothing/Head/hardhat0_white.rsi
@@ -1342,7 +1342,7 @@
 
 - type: entity
   id: HatHardhatYellow
-  name: Hardhat Yellow
+  name: hardhat yellow
   description: ''
   components:
   - sprite: Clothing/Head/hardhat0_yellow.rsi
@@ -1355,7 +1355,7 @@
 
 - type: entity
   id: HatHardhatPumpkinAlt
-  name: Hardhat Pumpkin (alt)
+  name: hardhat pumpkin (alt)
   description: ''
   components:
   - sprite: Clothing/Head/hardhat1_pumpkin.rsi
@@ -1368,7 +1368,7 @@
 
 - type: entity
   id: HatHasturhood
-  name: Hasturhood
+  name: hasturhood
   description: ''
   components:
   - sprite: Clothing/Head/hasturhood.rsi
@@ -1381,7 +1381,7 @@
 
 - type: entity
   id: HatHazardRig
-  name: Hazard Rig
+  name: hazard rig
   description: ''
   components:
   - sprite: Clothing/Head/hazard_rig.rsi
@@ -1394,7 +1394,7 @@
 
 - type: entity
   id: HatHazardRigSealed
-  name: Hazard Rig (Sealed)
+  name: hazard rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/hazard_rig_sealed.rsi
@@ -1407,7 +1407,7 @@
 
 - type: entity
   id: HatHeadslime
-  name: Headslime
+  name: headslime
   description: ''
   components:
   - sprite: Clothing/Head/headslime.rsi
@@ -1420,7 +1420,7 @@
 
 - type: entity
   id: HatHelmet
-  name: Helmet
+  name: helmet
   description: ''
   components:
   - sprite: Clothing/Head/helmet.rsi
@@ -1433,7 +1433,7 @@
 
 - type: entity
   id: HatHelmetold
-  name: Helmet old
+  name: helmet old
   description: ''
   components:
   - sprite: Clothing/Head/helmetold.rsi
@@ -1446,7 +1446,7 @@
 
 - type: entity
   id: HatHgpiratecap
-  name: HG pirate cap
+  name: hg pirate cap
   description: ''
   components:
   - sprite: Clothing/Head/hgpiratecap.rsi
@@ -1459,7 +1459,7 @@
 
 - type: entity
   id: HatHmHelmet
-  name: HM Helmet
+  name: HM helmet
   description: ''
   components:
   - sprite: Clothing/Head/hm_helmet.rsi
@@ -1472,7 +1472,7 @@
 
 - type: entity
   id: HatHopcap
-  name: HoP cap
+  name: hop cap
   description: ''
   components:
   - sprite: Clothing/Head/hopcap.rsi
@@ -1511,7 +1511,7 @@
 
 - type: entity
   id: HatIhsvoidhelmOn
-  name: IHS voidhelm (On)
+  name: IHS voidhelm (on)
   description: ''
   components:
   - sprite: Clothing/Head/ihsvoidhelm_on.rsi
@@ -1524,7 +1524,7 @@
 
 - type: entity
   id: HatIhsRig
-  name: IHS Rig
+  name: IHS rig
   description: ''
   components:
   - sprite: Clothing/Head/ihs_rig.rsi
@@ -1537,7 +1537,7 @@
 
 - type: entity
   id: HatIhsRigSealed
-  name: IHS Rig (Sealed)
+  name: IHS rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/ihs_rig_sealed.rsi
@@ -1550,7 +1550,7 @@
 
 - type: entity
   id: HatKitten
-  name: Kitten
+  name: kitten
   description: ''
   components:
   - sprite: Clothing/Head/kitten.rsi
@@ -1563,7 +1563,7 @@
 
 - type: entity
   id: HatKitty
-  name: Kitty
+  name: kitty
   description: ''
   components:
   - sprite: Clothing/Head/kitty.rsi
@@ -1576,7 +1576,7 @@
 
 - type: entity
   id: HatKittyinner
-  name: Kitty inner
+  name: kitty inner
   description: ''
   components:
   - sprite: Clothing/Head/kittyinner.rsi
@@ -1589,7 +1589,7 @@
 
 - type: entity
   id: HatKrinnHat
-  name: Krinn Hat
+  name: krinn hat
   description: ''
   components:
   - sprite: Clothing/Head/krinn_hat.rsi
@@ -1602,7 +1602,7 @@
 
 - type: entity
   id: HatLightRiot
-  name: Light Riot
+  name: light riot
   description: ''
   components:
   - sprite: Clothing/Head/light_riot.rsi
@@ -1615,7 +1615,7 @@
 
 - type: entity
   id: HatLightRiotOn
-  name: Light Riot (On)
+  name: light riot (on)
   description: ''
   components:
   - sprite: Clothing/Head/light_riot_on.rsi
@@ -1628,7 +1628,7 @@
 
 - type: entity
   id: HatMagus
-  name: Magus
+  name: magus
   description: ''
   components:
   - sprite: Clothing/Head/magus.rsi
@@ -1641,7 +1641,7 @@
 
 - type: entity
   id: HatMailman
-  name: Mailman
+  name: mailman
   description: ''
   components:
   - sprite: Clothing/Head/mailman.rsi
@@ -1654,7 +1654,7 @@
 
 - type: entity
   id: HatMarisa
-  name: Marisa
+  name: marisa
   description: ''
   components:
   - sprite: Clothing/Head/marisa.rsi
@@ -1667,7 +1667,7 @@
 
 - type: entity
   id: HatMedicalHelm
-  name: Medical Helm
+  name: medical helm
   description: ''
   components:
   - sprite: Clothing/Head/medical_helm.rsi
@@ -1680,7 +1680,7 @@
 
 - type: entity
   id: HatMedicalRig
-  name: Medical Rig
+  name: medical rig
   description: ''
   components:
   - sprite: Clothing/Head/medical_rig.rsi
@@ -1693,7 +1693,7 @@
 
 - type: entity
   id: HatMedicalRigSealed
-  name: Medical Rig (Sealed)
+  name: medical rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/medical_rig_sealed.rsi
@@ -1706,7 +1706,7 @@
 
 - type: entity
   id: HatMercRig
-  name: Merc Rig
+  name: merc rig
   description: ''
   components:
   - sprite: Clothing/Head/merc_rig.rsi
@@ -1719,7 +1719,7 @@
 
 - type: entity
   id: HatMercRigSealed
-  name: Merc Rig (Sealed)
+  name: merc rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/merc_rig_sealed.rsi
@@ -1732,7 +1732,7 @@
 
 - type: entity
   id: HatMetroid
-  name: Metroid
+  name: metroid
   description: ''
   components:
   - sprite: Clothing/Head/metroid.rsi
@@ -1745,7 +1745,7 @@
 
 - type: entity
   id: HatMimesoft
-  name: Mimesoft
+  name: mimesoft
   description: ''
   components:
   - sprite: Clothing/Head/mimesoft.rsi
@@ -1758,7 +1758,7 @@
 
 - type: entity
   id: HatMimesoftFlipped
-  name: Mimesoft Flipped
+  name: mimesoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/mimesoft_flipped.rsi
@@ -1771,7 +1771,7 @@
 
 - type: entity
   id: HatMiningHelm
-  name: Mining Helm
+  name: mining helm
   description: ''
   components:
   - sprite: Clothing/Head/mining_helm.rsi
@@ -1784,7 +1784,7 @@
 
 - type: entity
   id: HatMonkey
-  name: Monkey
+  name: monkey
   description: ''
   components:
   - sprite: Clothing/Head/monkey.rsi
@@ -1797,7 +1797,7 @@
 
 - type: entity
   id: HatMouseBrown
-  name: Mouse Brown
+  name: mouse brown
   description: ''
   components:
   - sprite: Clothing/Head/mouse_brown.rsi
@@ -1810,7 +1810,7 @@
 
 - type: entity
   id: HatMouseGray
-  name: Mouse Gray
+  name: mouse gray
   description: ''
   components:
   - sprite: Clothing/Head/mouse_gray.rsi
@@ -1823,7 +1823,7 @@
 
 - type: entity
   id: HatMouseWhite
-  name: Mouse White
+  name: mouse white
   description: ''
   components:
   - sprite: Clothing/Head/mouse_white.rsi
@@ -1836,7 +1836,7 @@
 
 - type: entity
   id: HatNeilpattersonHat
-  name: Neil Patterson Hat
+  name: neil patterson hat
   description: ''
   components:
   - sprite: Clothing/Head/neilpatterson0_hat.rsi
@@ -1849,7 +1849,7 @@
 
 - type: entity
   id: HatNeilpatterson1Hat
-  name: Neil Patterson1 Hat
+  name: neil patterson1 hat
   description: ''
   components:
   - sprite: Clothing/Head/neilpatterson1_hat.rsi
@@ -1862,7 +1862,7 @@
 
 - type: entity
   id: HatNinjaRig
-  name: Ninja Rig
+  name: ninja rig
   description: ''
   components:
   - sprite: Clothing/Head/ninja_rig.rsi
@@ -1875,7 +1875,7 @@
 
 - type: entity
   id: HatNinjaRigSealed
-  name: Ninja Rig (Sealed)
+  name: ninja rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/ninja_rig_sealed.rsi
@@ -1888,7 +1888,7 @@
 
 - type: entity
   id: HatNorahBriggs
-  name: Norah Briggs
+  name: norah briggs
   description: ''
   components:
   - sprite: Clothing/Head/norah_briggs_1.rsi
@@ -1901,7 +1901,7 @@
 
 - type: entity
   id: HatNorahBriggsup
-  name: Norah Briggs (up)
+  name: norah briggs (up)
   description: ''
   components:
   - sprite: Clothing/Head/norah_briggs_1up.rsi
@@ -1914,7 +1914,7 @@
 
 - type: entity
   id: HatNunHood
-  name: Nun Hood
+  name: nun hood
   description: ''
   components:
   - sprite: Clothing/Head/nun_hood.rsi
@@ -1927,7 +1927,7 @@
 
 - type: entity
   id: HatNursehat
-  name: Nurse hat
+  name: nurse hat
   description: ''
   components:
   - sprite: Clothing/Head/nursehat.rsi
@@ -1940,7 +1940,7 @@
 
 - type: entity
   id: HatNymph
-  name: Nymph
+  name: nymph
   description: ''
   components:
   - sprite: Clothing/Head/nymph.rsi
@@ -1953,7 +1953,7 @@
 
 - type: entity
   id: HatOfficercap
-  name: Officer cap
+  name: officer cap
   description: ''
   components:
   - sprite: Clothing/Head/officercap.rsi
@@ -1966,7 +1966,7 @@
 
 - type: entity
   id: HatOrangesoft
-  name: Orangesoft
+  name: orangesoft
   description: ''
   components:
   - sprite: Clothing/Head/orangesoft.rsi
@@ -1979,7 +1979,7 @@
 
 - type: entity
   id: HatOrangesoftFlipped
-  name: Orangesoft Flipped
+  name: orangesoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/orangesoft_flipped.rsi
@@ -1992,7 +1992,7 @@
 
 - type: entity
   id: HatOrangeBandana
-  name: Orange Bandana
+  name: orange bandana
   description: ''
   components:
   - sprite: Clothing/Head/orange_bandana.rsi
@@ -2005,7 +2005,7 @@
 
 - type: entity
   id: HatPai-cat
-  name: Pai-cat
+  name: pai-cat
   description: ''
   components:
   - sprite: Clothing/Head/pai-cat.rsi
@@ -2018,7 +2018,7 @@
 
 - type: entity
   id: HatPai-monkey
-  name: Pai-monkey
+  name: pai-monkey
   description: ''
   components:
   - sprite: Clothing/Head/pai-monkey.rsi
@@ -2031,7 +2031,7 @@
 
 - type: entity
   id: HatPai-mouse
-  name: Pai-mouse
+  name: pai-mouse
   description: ''
   components:
   - sprite: Clothing/Head/pai-mouse.rsi
@@ -2044,7 +2044,7 @@
 
 - type: entity
   id: HatPai-repairbot
-  name: Pai-repairbot
+  name: pai-repairbot
   description: ''
   components:
   - sprite: Clothing/Head/pai-repairbot.rsi
@@ -2057,7 +2057,7 @@
 
 - type: entity
   id: HatPaintedwelding
-  name: Painted welding mask
+  name: painted welding mask
   description: ''
   components:
   - sprite: Clothing/Head/paintedwelding.rsi
@@ -2070,7 +2070,7 @@
 
 - type: entity
   id: HatPaintedweldingup
-  name: Painted welding mask (up)
+  name: painted welding mask (up)
   description: ''
   components:
   - sprite: Clothing/Head/paintedweldingup.rsi
@@ -2083,7 +2083,7 @@
 
 - type: entity
   id: HatPaper
-  name: Paper
+  name: paper
   description: ''
   components:
   - sprite: Clothing/Head/paper.rsi
@@ -2096,7 +2096,7 @@
 
 - type: entity
   id: HatPetehat
-  name: Pete hat
+  name: pete hat
   description: ''
   components:
   - sprite: Clothing/Head/petehat.rsi
@@ -2109,7 +2109,7 @@
 
 - type: entity
   id: HatPhilosopherWig
-  name: Philosopher Wig
+  name: philosopher wig
   description: ''
   components:
   - sprite: Clothing/Head/philosopher_wig.rsi
@@ -2122,7 +2122,7 @@
 
 - type: entity
   id: HatPirate
-  name: Pirate
+  name: pirate
   description: ''
   components:
   - sprite: Clothing/Head/pirate.rsi
@@ -2135,7 +2135,7 @@
 
 - type: entity
   id: HatPlaguedoctor
-  name: Plague doctor
+  name: plague doctor
   description: ''
   components:
   - sprite: Clothing/Head/plaguedoctor.rsi
@@ -2148,7 +2148,7 @@
 
 - type: entity
   id: HatPolicehelm
-  name: Police helm
+  name: police helm
   description: ''
   components:
   - sprite: Clothing/Head/policehelm.rsi
@@ -2161,7 +2161,7 @@
 
 - type: entity
   id: HatPurplesoft
-  name: Purple soft
+  name: purple soft
   description: ''
   components:
   - sprite: Clothing/Head/purplesoft.rsi
@@ -2174,7 +2174,7 @@
 
 - type: entity
   id: HatPurplesoftFlipped
-  name: Purplesoft Flipped
+  name: purplesoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/purplesoft_flipped.rsi
@@ -2187,7 +2187,7 @@
 
 - type: entity
   id: HatPwig
-  name: Pwig
+  name: pwig
   description: ''
   components:
   - sprite: Clothing/Head/pwig.rsi
@@ -2200,7 +2200,7 @@
 
 - type: entity
   id: HatRad
-  name: Rad
+  name: rad
   description: ''
   components:
   - sprite: Clothing/Head/rad.rsi
@@ -2213,7 +2213,7 @@
 
 - type: entity
   id: HatRainbowsoft
-  name: Rainbowsoft
+  name: rainbowsoft
   description: ''
   components:
   - sprite: Clothing/Head/rainbowsoft.rsi
@@ -2226,7 +2226,7 @@
 
 - type: entity
   id: HatRainbowsoftFlipped
-  name: Rainbowsoft Flipped
+  name: rainbowsoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/rainbowsoft_flipped.rsi
@@ -2239,7 +2239,7 @@
 
 - type: entity
   id: HatRedcoat
-  name: Redcoat
+  name: redcoat
   description: ''
   components:
   - sprite: Clothing/Head/redcoat.rsi
@@ -2252,7 +2252,7 @@
 
 - type: entity
   id: HatRedsoft
-  name: Redsoft
+  name: redsoft
   description: ''
   components:
   - sprite: Clothing/Head/redsoft.rsi
@@ -2265,7 +2265,7 @@
 
 - type: entity
   id: HatRedsoftFlipped
-  name: Redsoft Flipped
+  name: redsoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/redsoft_flipped.rsi
@@ -2278,7 +2278,7 @@
 
 - type: entity
   id: HatRedwizard
-  name: Red wizard
+  name: red wizard
   description: ''
   components:
   - sprite: Clothing/Head/redwizard.rsi
@@ -2291,7 +2291,7 @@
 
 - type: entity
   id: HatRepairbot
-  name: Repairbot
+  name: repairbot
   description: ''
   components:
   - sprite: Clothing/Head/repairbot.rsi
@@ -2304,7 +2304,7 @@
 
 - type: entity
   id: HatRichard
-  name: Richard
+  name: richard
   description: ''
   components:
   - sprite: Clothing/Head/richard.rsi
@@ -2317,7 +2317,7 @@
 
 - type: entity
   id: HatRig-old
-  name: Rig-old
+  name: rig-old
   description: ''
   components:
   - sprite: Clothing/Head/rig-old.rsi
@@ -2330,7 +2330,7 @@
 
 - type: entity
   id: HatRig-atmos
-  name: Rig-atmos
+  name: rig-atmos
   description: ''
   components:
   - sprite: Clothing/Head/rig-atmos.rsi
@@ -2343,7 +2343,7 @@
 
 - type: entity
   id: HatRig-engineering
-  name: Rig-engineering
+  name: rig-engineering
   description: ''
   components:
   - sprite: Clothing/Head/rig-engineering.rsi
@@ -2356,7 +2356,7 @@
 
 - type: entity
   id: HatRig-hazardhardsuit
-  name: Rig-hazardhardsuit
+  name: rig-hazardhardsuit
   description: ''
   components:
   - sprite: Clothing/Head/rig-hazardhardsuit.rsi
@@ -2369,7 +2369,7 @@
 
 - type: entity
   id: HatRig-medical
-  name: Rig-medical
+  name: rig-medical
   description: ''
   components:
   - sprite: Clothing/Head/rig-medical.rsi
@@ -2382,7 +2382,7 @@
 
 - type: entity
   id: HatRig-mining
-  name: Rig-mining
+  name: rig-mining
   description: ''
   components:
   - sprite: Clothing/Head/rig-mining.rsi
@@ -2395,7 +2395,7 @@
 
 - type: entity
   id: HatRig-sectg
-  name: Rig-sectg
+  name: rig-sectg
   description: ''
   components:
   - sprite: Clothing/Head/rig-sectg.rsi
@@ -2408,7 +2408,7 @@
 
 - type: entity
   id: HatRig-syndie
-  name: Rig-syndie
+  name: rig-syndie
   description: ''
   components:
   - sprite: Clothing/Head/rig-syndie.rsi
@@ -2421,7 +2421,7 @@
 
 - type: entity
   id: HatRig-white
-  name: Rig-white
+  name: rig-white
   description: ''
   components:
   - sprite: Clothing/Head/rig-white.rsi
@@ -2434,7 +2434,7 @@
 
 - type: entity
   id: HatRig-wiz
-  name: Rig-wiz
+  name: rig-wiz
   description: ''
   components:
   - sprite: Clothing/Head/rig-wiz.rsi
@@ -2447,7 +2447,7 @@
 
 - type: entity
   id: HatRiot
-  name: Riot
+  name: riot
   description: ''
   components:
   - sprite: Clothing/Head/riot.rsi
@@ -2460,7 +2460,7 @@
 
 - type: entity
   id: HatS-ninja
-  name: S-ninja
+  name: s-ninja
   description: ''
   components:
   - sprite: Clothing/Head/s-ninja.rsi
@@ -2473,7 +2473,7 @@
 
 - type: entity
   id: HatSantahat
-  name: Santa hat
+  name: santa hat
   description: ''
   components:
   - sprite: Clothing/Head/santahat.rsi
@@ -2486,7 +2486,7 @@
 
 - type: entity
   id: HatScaf
-  name: Scaf
+  name: scaf
   description: ''
   components:
   - sprite: Clothing/Head/scaf.rsi
@@ -2499,7 +2499,7 @@
 
 - type: entity
   id: HatScienceRig
-  name: Science Rig
+  name: science rig
   description: ''
   components:
   - sprite: Clothing/Head/science_rig.rsi
@@ -2512,7 +2512,7 @@
 
 - type: entity
   id: HatScienceRigSealed
-  name: Science Rig (Sealed)
+  name: science rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/science_rig_sealed.rsi
@@ -2525,7 +2525,7 @@
 
 - type: entity
   id: HatSecsoft
-  name: Secsoft
+  name: secsoft
   description: ''
   components:
   - sprite: Clothing/Head/secsoft.rsi
@@ -2538,7 +2538,7 @@
 
 - type: entity
   id: HatSecsoftFlipped
-  name: Secsoft Flipped
+  name: secsoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/secsoft_flipped.rsi
@@ -2551,7 +2551,7 @@
 
 - type: entity
   id: HatSecurity
-  name: Security
+  name: security
   description: ''
   components:
   - sprite: Clothing/Head/security.rsi
@@ -2564,7 +2564,7 @@
 
 - type: entity
   id: HatSecurityRig
-  name: Security Rig
+  name: security rig
   description: ''
   components:
   - sprite: Clothing/Head/security_rig.rsi
@@ -2577,7 +2577,7 @@
 
 - type: entity
   id: HatSecurityRigSealed
-  name: Security Rig (Sealed)
+  name: security rig (sealed)
   description: ''
   components:
   - sprite: Clothing/Head/security_rig_sealed.rsi
@@ -2590,7 +2590,7 @@
 
 - type: entity
   id: HatSecHelm
-  name: Sec Helm
+  name: sec helm
   description: ''
   components:
   - sprite: Clothing/Head/sec_helm.rsi
@@ -2616,7 +2616,7 @@
 
 - type: entity
   id: HatSombrero
-  name: Sombrero
+  name: sombrero
   description: ''
   components:
   - sprite: Clothing/Head/sombrero.rsi
@@ -2629,7 +2629,7 @@
 
 - type: entity
   id: HatSpace
-  name: Space
+  name: space
   description: ''
   components:
   - sprite: Clothing/Head/space.rsi
@@ -2642,7 +2642,7 @@
 
 - type: entity
   id: HatSurgcapBlue
-  name: Surgcap Blue
+  name: surgcap blue
   description: ''
   components:
   - sprite: Clothing/Head/surgcap_blue.rsi
@@ -2655,7 +2655,7 @@
 
 - type: entity
   id: HatSurgcapGreen
-  name: Surgcap Green
+  name: surgcap green
   description: ''
   components:
   - sprite: Clothing/Head/surgcap_green.rsi
@@ -2668,7 +2668,7 @@
 
 - type: entity
   id: HatSurgcapPurple
-  name: Surgcap Purple
+  name: surgcap purple
   description: ''
   components:
   - sprite: Clothing/Head/surgcap_purple.rsi
@@ -2681,7 +2681,7 @@
 
 - type: entity
   id: HatSwat-alt
-  name: Swat-alt
+  name: swat-alt
   description: ''
   components:
   - sprite: Clothing/Head/swat-alt.rsi
@@ -2694,7 +2694,7 @@
 
 - type: entity
   id: HatSwat
-  name: Swat
+  name: swat
   description: ''
   components:
   - sprite: Clothing/Head/swat.rsi
@@ -2707,7 +2707,7 @@
 
 - type: entity
   id: HatSwathelm
-  name: Swat helm
+  name: swat helm
   description: ''
   components:
   - sprite: Clothing/Head/swathelm.rsi
@@ -2720,7 +2720,7 @@
 
 - type: entity
   id: HatSwatold
-  name: Swat old
+  name: swat old
   description: ''
   components:
   - sprite: Clothing/Head/swatold.rsi
@@ -2733,7 +2733,7 @@
 
 - type: entity
   id: HatSwatup
-  name: Swat helm (up)
+  name: swat helm (up)
   description: ''
   components:
   - sprite: Clothing/Head/swatup.rsi
@@ -2746,7 +2746,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-blue
-  name: Syndicate-helm-black-blue
+  name: syndicate-helm-black-blue
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-blue.rsi
@@ -2759,7 +2759,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-engie
-  name: Syndicate-helm-black-engie
+  name: syndicate-helm-black-engie
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-engie.rsi
@@ -2772,7 +2772,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-engie1
-  name: Syndicate-helm-black-engie1
+  name: syndicate-helm-black-engie1
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-engie1.rsi
@@ -2785,7 +2785,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-green
-  name: Syndicate-helm-black-green
+  name: syndicate-helm-black-green
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-green.rsi
@@ -2798,7 +2798,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-med
-  name: Syndicate-helm-black-med
+  name: syndicate-helm-black-med
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-med.rsi
@@ -2811,7 +2811,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-orange
-  name: Syndicate-helm-black-orange
+  name: syndicate-helm-black-orange
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-orange.rsi
@@ -2824,7 +2824,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black-red
-  name: Syndicate-helm-black-red
+  name: syndicate-helm-black-red
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black-red.rsi
@@ -2837,7 +2837,7 @@
 
 - type: entity
   id: HatSyndicate-helm-black
-  name: Syndicate-helm-black
+  name: syndicate-helm-black
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-black.rsi
@@ -2850,7 +2850,7 @@
 
 - type: entity
   id: HatSyndicate-helm-blue
-  name: Syndicate-helm-blue
+  name: syndicate-helm-blue
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-blue.rsi
@@ -2863,7 +2863,7 @@
 
 - type: entity
   id: HatSyndicate-helm-green-dark
-  name: Syndicate-helm-green-dark
+  name: syndicate-helm-green-dark
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-green-dark.rsi
@@ -2876,7 +2876,7 @@
 
 - type: entity
   id: HatSyndicate-helm-green
-  name: Syndicate-helm-green
+  name: syndicate-helm-green
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-green.rsi
@@ -2889,7 +2889,7 @@
 
 - type: entity
   id: HatSyndicate-helm-orange
-  name: Syndicate-helm-orange
+  name: syndicate-helm-orange
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-orange.rsi
@@ -2902,7 +2902,7 @@
 
 - type: entity
   id: HatSyndicate-helm-orangeLight
-  name: Syndicate-helm-orange Light
+  name: syndicate-helm-orange light
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-orange_light.rsi
@@ -2915,7 +2915,7 @@
 
 - type: entity
   id: HatSyndicate-helm-orangeLight1
-  name: Syndicate-helm-orange Light1
+  name: syndicate-helm-orange light1
   description: ''
   components:
   - sprite: Clothing/Head/syndicate-helm-orange_light1.rsi
@@ -2928,7 +2928,7 @@
 
 - type: entity
   id: HatSyndicate
-  name: Syndicate
+  name: syndicate
   description: ''
   components:
   - sprite: Clothing/Head/syndicate.rsi
@@ -2941,7 +2941,7 @@
 
 - type: entity
   id: HatSyndieHelm
-  name: Syndie Helm
+  name: syndie helm
   description: ''
   components:
   - sprite: Clothing/Head/syndie_helm.rsi
@@ -2954,7 +2954,7 @@
 
 - type: entity
   id: HatThunderdome
-  name: Thunderdome
+  name: thunderdome
   description: ''
   components:
   - sprite: Clothing/Head/thunderdome.rsi
@@ -2967,7 +2967,7 @@
 
 - type: entity
   id: HatTophat
-  name: Tophat
+  name: tophat
   description: ''
   components:
   - sprite: Clothing/Head/tophat.rsi
@@ -2980,7 +2980,7 @@
 
 - type: entity
   id: HatUshankadown
-  name: Ushanka (down)
+  name: ushanka (down)
   description: ''
   components:
   - sprite: Clothing/Head/ushankadown.rsi
@@ -2993,7 +2993,7 @@
 
 - type: entity
   id: HatUshankaup
-  name: Ushanka (up)
+  name: ushanka (up)
   description: ''
   components:
   - sprite: Clothing/Head/ushankaup.rsi
@@ -3006,7 +3006,7 @@
 
 - type: entity
   id: HatV62
-  name: V62
+  name: v62
   description: ''
   components:
   - sprite: Clothing/Head/v62.rsi
@@ -3019,7 +3019,7 @@
 
 - type: entity
   id: HatViking
-  name: Viking
+  name: viking
   description: ''
   components:
   - sprite: Clothing/Head/viking.rsi
@@ -3032,7 +3032,7 @@
 
 - type: entity
   id: HatVioletwizard
-  name: Violetwizard
+  name: violetwizard
   description: ''
   components:
   - sprite: Clothing/Head/violetwizard.rsi
@@ -3045,7 +3045,7 @@
 
 - type: entity
   id: HatVoid
-  name: Void
+  name: void
   description: ''
   components:
   - sprite: Clothing/Head/void.rsi
@@ -3058,7 +3058,7 @@
 
 - type: entity
   id: HatWelding
-  name: Welding mask
+  name: welding mask
   description: ''
   components:
   - sprite: Clothing/Head/welding.rsi
@@ -3071,7 +3071,7 @@
 
 - type: entity
   id: HatWeldingup
-  name: Welding mask (up)
+  name: welding mask (up)
   description: ''
   components:
   - sprite: Clothing/Head/weldingup.rsi
@@ -3084,7 +3084,7 @@
 
 - type: entity
   id: HatWitch
-  name: Witch
+  name: witch
   description: ''
   components:
   - sprite: Clothing/Head/witch.rsi
@@ -3097,7 +3097,7 @@
 
 - type: entity
   id: HatWizard-fake
-  name: Wizard-fake
+  name: wizard-fake
   description: ''
   components:
   - sprite: Clothing/Head/wizard-fake.rsi
@@ -3110,7 +3110,7 @@
 
 - type: entity
   id: HatWizard
-  name: Wizard
+  name: wizard
   description: ''
   components:
   - sprite: Clothing/Head/wizard.rsi
@@ -3123,7 +3123,7 @@
 
 - type: entity
   id: HatXenom
-  name: Xenom
+  name: xenom
   description: ''
   components:
   - sprite: Clothing/Head/xenom.rsi
@@ -3136,7 +3136,7 @@
 
 - type: entity
   id: HatXenos
-  name: Xenos
+  name: xenos
   description: ''
   components:
   - sprite: Clothing/Head/xenos.rsi
@@ -3149,7 +3149,7 @@
 
 - type: entity
   id: HatXmashat
-  name: Xmashat
+  name: xmashat
   description: ''
   components:
   - sprite: Clothing/Head/xmashat.rsi
@@ -3162,7 +3162,7 @@
 
 - type: entity
   id: HatYellowsoft
-  name: Yellowsoft
+  name: yellowsoft
   description: ''
   components:
   - sprite: Clothing/Head/yellowsoft.rsi
@@ -3175,7 +3175,7 @@
 
 - type: entity
   id: HatYellowsoftFlipped
-  name: Yellowsoft Flipped
+  name: yellowsoft flipped
   description: ''
   components:
   - sprite: Clothing/Head/yellowsoft_flipped.rsi
@@ -3188,7 +3188,7 @@
 
 - type: entity
   id: HatYukiMatsuda
-  name: Yuki Matsuda
+  name: yuki matsuda
   description: ''
   components:
   - sprite: Clothing/Head/yuki_matsuda_1.rsi
@@ -3201,7 +3201,7 @@
 
 - type: entity
   id: HatYukiMatsudaup
-  name: Yuki Matsuda (up)
+  name: yuki matsuda (up)
   description: ''
   components:
   - sprite: Clothing/Head/yuki_matsuda_1up.rsi
@@ -3214,7 +3214,7 @@
 
 - type: entity
   id: HatZhanScarf
-  name: Zhan Scarf
+  name: zhan scarf
   description: ''
   components:
   - sprite: Clothing/Head/zhan_scarf.rsi

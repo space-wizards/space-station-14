@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: Engi-Vend
-  name: Engi-Vend
+  name: engi-vend
   description: Spare tool vending. What? Did you expect some witty description?
   animationDuration: 2.1
   spriteName: engivend
