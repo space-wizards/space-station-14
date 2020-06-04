@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
-    /// This interface allows the component's entity to be dragged and dropped by mouse and gives it
+    /// This interface allows the component's entity to be dragged and dropped by mouse onto another entity and gives it
     /// behavior when that occurs.
     /// </summary>
     public interface IDragDrop
@@ -35,12 +35,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public IEntity User { get; }
         public GridCoordinates DropLocation { get; }
         public IEntity Dropped { get; }
-
-        /// <summary>
-        /// Can be null if there is no target entity
-        /// </summary>
         public IEntity Target { get; }
-        //TODO: Is this needed? Can it really be null?
-        public bool HasTarget => Target != null;
     }
 }

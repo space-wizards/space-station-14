@@ -64,11 +64,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // must be in range of both the target and the object they are drag / dropping
             if (!InteractionChecks.InRangeUnobstructed(interactionArgs)) return;
 
-            // TODO: trigger possible IDragDrop components
+            // trigger dragdrops on the dropped entity
+            foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
+            {
+                if (dragDrop.DragDrop(interactionArgs)) return;
+            }
 
-            // TODO: IDragDropOn (on the object being dropped
-
-
+            // trigger dragdropons on the targeted entity
+            foreach (var dragDropOn in target.GetAllComponents<IDragDropOn>())
+            {
+                if (dragDropOn.DragDropOn(interactionArgs)) return;
+            }
         }
 
         private bool HandleActivateItemInWorld(ICommonSession session, GridCoordinates coords, EntityUid uid)
