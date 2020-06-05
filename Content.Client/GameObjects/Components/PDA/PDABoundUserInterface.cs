@@ -1,8 +1,10 @@
 using System;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.PDA;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -19,13 +21,14 @@ namespace Content.Client.GameObjects.Components.PDA
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
         private PDAMenu _menu;
-        private ClientUserInterfaceComponent Owner;
+        private PDAMenuPopup failPopup;
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
-            Owner = owner;
+
         }
 
         protected override void Open()
@@ -56,6 +59,17 @@ namespace Content.Client.GameObjects.Components.PDA
 
             _menu.OnListingButtonPressed += (args, listing) =>
             {
+                if (_menu.CurrentLoggedInAccount.DataBalance < listing.Price)
+                {
+                    failPopup = new PDAMenuPopup(Loc.GetString("Insufficient funds!"));
+                    _userInterfaceManager.ModalRoot.AddChild(failPopup);
+                    failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150, _menu.Position.Y + 60, 156, 24));
+                    _menu.OnClose += () =>
+                    {
+                        failPopup.Dispose();
+                    };
+                }
+
                 SendMessage(new PDAUplinkBuyListingMessage(listing));
             };
 
@@ -67,13 +81,12 @@ namespace Content.Client.GameObjects.Components.PDA
             };
         }
 
-
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
             DebugTools.Assert((state is PDAUBoundUserInterfaceState));
 
-            var cstate = (PDAUBoundUserInterfaceState) state;
+            var cstate = (PDAUBoundUserInterfaceState)state;
             switch (state)
             {
                 case PDAUpdateState msg:
@@ -108,16 +121,94 @@ namespace Content.Client.GameObjects.Components.PDA
                             _menu.AddListingGui(item);
                         }
                     }
+
+                    var balance = _menu.CurrentLoggedInAccount.DataBalance;
+                    var weightedColor = GetWeightedColorString(balance);
+                    _menu.BalanceInfo.SetMarkup(Loc.GetString("TC Balance: [color={0}]{1}[/color]", weightedColor, balance));
+                    _menu.MasterTabContainer.SetTabVisible(1, msg.Account != null);
                     break;
                 }
-
             }
         }
+
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             _menu?.Dispose();
+        }
+
+        /// <summary>
+        /// This is shitcode. It is, however, "PJB-approved shitcode".
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static Color GetWeightedColor(int x)
+        {
+            var weightedColor = Color.Gray;
+            if (x <= 0)
+            {
+                return weightedColor;
+            }
+            if (x <= 5)
+            {
+                weightedColor = Color.Green;
+            }
+            else if (x > 5 && x < 10)
+            {
+                weightedColor = Color.Yellow;
+            }
+            else if (x > 10 && x <= 20)
+            {
+                weightedColor = Color.Orange;
+            }
+            else if (x > 20 && x <= 50)
+            {
+                weightedColor = Color.Purple;
+            }
+
+            return weightedColor;
+        }
+
+        public static string GetWeightedColorString(int x)
+        {
+            var weightedColor = "gray";
+            if (x <= 0)
+            {
+                return weightedColor;
+            }
+
+            if (x <= 5)
+            {
+                weightedColor = "green";
+            }
+            else if (x > 5 && x < 10)
+            {
+                weightedColor = "yellow";
+            }
+            else if (x > 10 && x <= 20)
+            {
+                weightedColor = "yellow";
+            }
+            else if (x > 20 && x <= 50)
+            {
+                weightedColor = "purple";
+            }
+            return weightedColor;
+        }
+
+        public sealed class PDAMenuPopup : Popup
+        {
+            public PDAMenuPopup(string text)
+            {
+                var label = new RichTextLabel();
+                label.SetMessage(text);
+                AddChild(new PanelContainer
+                {
+                    StyleClasses = { ExamineSystem.StyleClassEntityTooltip },
+                    Children = { label }
+                });
+            }
         }
 
         private class PDAMenu : SS14Window
@@ -144,6 +235,7 @@ namespace Content.Client.GameObjects.Components.PDA
             public VBoxContainer UplinkListingsContainer;
 
             public VBoxContainer CategoryListContainer;
+            public RichTextLabel BalanceInfo;
             public event Action<BaseButton.ButtonEventArgs, UplinkListingData> OnListingButtonPressed;
             public event Action<BaseButton.ButtonEventArgs, UplinkCategory> OnCategoryButtonPressed;
 
@@ -241,16 +333,16 @@ namespace Content.Client.GameObjects.Components.PDA
                 CategoryListContainer = new VBoxContainer
                 {
                 };
-                var uplinkStoreHeader = new Label
+
+                BalanceInfo = new RichTextLabel
                 {
-                    Align = Label.AlignMode.Center,
-                    Text = Loc.GetString("Uplink Listings"),
+                    SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 };
 
                 //Red background container.
                 var masterPanelContainer = new PanelContainer
                 {
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.DarkRed.WithAlpha(0.6f)},
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Black },
                     SizeFlagsVertical = SizeFlags.FillExpand
                 };
 
@@ -272,7 +364,7 @@ namespace Content.Client.GameObjects.Components.PDA
                 //Add the category list to the left side. The store items to center.
                 var categoryListContainerBackground = new PanelContainer
                 {
-                    PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.4f)},
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Gray.WithAlpha(0.02f) },
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     Children =
                     {
@@ -300,7 +392,7 @@ namespace Content.Client.GameObjects.Components.PDA
 
                     Children =
                     {
-                        uplinkStoreHeader,
+                        BalanceInfo,
                         masterPanelContainer
                     }
                 };
@@ -334,7 +426,7 @@ namespace Content.Client.GameObjects.Components.PDA
             private void PopulateUplinkCategoryButtons()
             {
 
-                foreach (UplinkCategory cat in Enum.GetValues(typeof (UplinkCategory)))
+                foreach (UplinkCategory cat in Enum.GetValues(typeof(UplinkCategory)))
                 {
 
                     var catButton = new PDAUplinkCategoryButton
@@ -343,7 +435,9 @@ namespace Content.Client.GameObjects.Components.PDA
                         ButtonCategory = cat
 
                     };
-
+                    //It'd be neat if it could play a cool tech ping sound when you switch categories,
+                    //but right now there doesn't seem to be an easy way to do client-side audio without still having to round trip to the server and
+                    //send to a specific client INetChannel.
                     catButton.OnPressed += args => OnCategoryButtonPressed?.Invoke(args, catButton.ButtonCategory);
 
                     CategoryListContainer.AddChild(catButton);
@@ -357,34 +451,41 @@ namespace Content.Client.GameObjects.Components.PDA
                 {
                     return;
                 }
-
+                var weightedColor = GetWeightedColor(listing.Price);
                 var itemLabel = new Label
                 {
                     Text = listing.ListingName == string.Empty ? prototype.Name : listing.ListingName,
                     ToolTip = listing.Description == string.Empty ? prototype.Description : listing.Description,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    Modulate = _loggedInUplinkAccount.DataBalance >= listing.Price
+                    ? Color.White
+                    : Color.Gray.WithAlpha(0.30f)
                 };
 
                 var priceLabel = new Label
                 {
                     Text = $"{listing.Price} TC",
-                    Align = Label.AlignMode.Right,
+                    SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                    Modulate = _loggedInUplinkAccount.DataBalance >= listing.Price
+                    ? weightedColor
+                    : Color.Gray.WithAlpha(0.30f)
                 };
 
+                //Padding for the price lable.
+                var pricePadding = new HBoxContainer
+                {
+                    CustomMinimumSize = (32, 1),
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                };
 
-                //Can the account afford this item? If so use the item's color, else gray it out.
-                var itemColor = _loggedInUplinkAccount.DataBalance >= listing.Price
-                    ? listing.DisplayColor
-                    : Color.Gray.WithAlpha(0.25f);
-
-                //Contains the name of the item and its price. Used for spacing price and name.
+                //Contains the name of the item and its price. Used for spacing item name and price.
                 var listingButtonHbox = new HBoxContainer
                 {
-                    Modulate = itemColor,
                     Children =
                     {
                         itemLabel,
-                        priceLabel
+                        priceLabel,
+                        pricePadding
                     }
                 };
 
@@ -406,16 +507,14 @@ namespace Content.Client.GameObjects.Components.PDA
                     }
                 };
                 pdaUplinkListingButton.OnPressed += args
-                    => OnListingButtonPressed?.Invoke(args,pdaUplinkListingButton.ButtonListing);
+                    => OnListingButtonPressed?.Invoke(args, pdaUplinkListingButton.ButtonListing);
                 UplinkListingsContainer.AddChild(pdaUplinkListingButton);
             }
-
 
             public void ClearListings()
             {
                 UplinkListingsContainer.Children.Clear();
             }
-
 
             private sealed class PDAUplinkItemButton : ContainerButton
             {
