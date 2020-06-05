@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_44
-  name: ".44 Magazine"
+  name: ".44 magazine"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -36,7 +36,7 @@
 
 - type: entity
   id: magazine_44f
-  name: ".44 Magazine (Flash)"
+  name: ".44 magazine (flash)"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -57,7 +57,7 @@
 
 - type: entity
   id: magazine_44hv
-  name: ".44 Magazine (High Velocity)"
+  name: ".44 magazine (high velocity)"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_44l
-  name: ".44 Magazine (L)"
+  name: ".44 magazine (L)"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -99,7 +99,7 @@
 
 - type: entity
   id: magazine_44p
-  name: ".44 Magazine (Practice)"
+  name: ".44 magazine (practice)"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -120,7 +120,7 @@
 
 - type: entity
   id: magazine_44r
-  name: ".44 Magazine (Rubber)"
+  name: ".44 magazine (rubber)"
   parent: magazine_44_empty
   components:
   - type: BallisticMagazine
@@ -158,7 +158,7 @@
 
 - type: entity
   id: ammo_casing_44_flash
-  name: ".44 casing (Flash)"
+  name: ".44 casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -174,7 +174,7 @@
 
 - type: entity
   id: ammo_casing_44_hv
-  name: ".44 casing (High Velocity)"
+  name: ".44 casing (high velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -206,7 +206,7 @@
 
 - type: entity
   id: ammo_casing_44_p
-  name: ".44 casing (Practice)"
+  name: ".44 casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -222,7 +222,7 @@
 
 - type: entity
   id: ammo_casing_44_r
-  name: ".44 casing (Rubber)"
+  name: ".44 casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

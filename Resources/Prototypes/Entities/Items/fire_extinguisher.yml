@@ -1,5 +1,5 @@
 - type: entity
-  name: Fire Extinguisher
+  name: fire extinguisher
   parent: BaseItem
   id: FireExtinguisher
   description: Extinguishes fires.

@@ -1,0 +1,388 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Server.Interfaces.PDA;
+using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.PDA;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+
+#nullable enable
+
+namespace Content.Server.GameObjects.Components.PDA
+{
+    [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(IAccess))]
+    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess
+    {
+        [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
+        [ViewVariables] private Container _idSlot = default!;
+        [ViewVariables] private PointLightComponent _pdaLight = default!;
+        [ViewVariables] private bool _lightOn;
+        [ViewVariables] private BoundUserInterface _interface = default!;
+        [ViewVariables] private string _startingIdCard = default!;
+        [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
+        [ViewVariables] public IEntity? OwnerMob { get; private set; }
+
+        [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
+
+        [ViewVariables] private AppearanceComponent _appearance = default!;
+
+        [ViewVariables] private UplinkAccount? _syndicateUplinkAccount;
+
+        [ViewVariables] private readonly PdaAccessSet _accessSet;
+
+        public PDAComponent()
+        {
+            _accessSet = new PdaAccessSet(this);
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _startingIdCard, "idCard", "AssistantIDCard");
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _idSlot = ContainerManagerComponent.Ensure<Container>("pda_entity_container", Owner, out var existed);
+            _pdaLight = Owner.GetComponent<PointLightComponent>();
+            _appearance = Owner.GetComponent<AppearanceComponent>();
+            _interface = Owner.GetComponent<ServerUserInterfaceComponent>()
+                .GetBoundUserInterface(PDAUiKey.Key);
+            _interface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.GridPosition);
+            var idCardComponent = idCard.GetComponent<IdCardComponent>();
+            _idSlot.Insert(idCardComponent.Owner);
+            ContainedID = idCardComponent;
+            UpdatePDAAppearance();
+        }
+
+        private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        {
+            switch (message.Message)
+            {
+                case PDARequestUpdateInterfaceMessage msg:
+                {
+                    UpdatePDAUserInterface();
+                    break;
+                }
+                case PDAToggleFlashlightMessage msg:
+                {
+                    ToggleLight();
+                    break;
+                }
+
+                case PDAEjectIDMessage msg:
+                {
+                    HandleIDEjection(message.Session.AttachedEntity);
+                    break;
+                }
+
+                case PDAUplinkBuyListingMessage buyMsg:
+                {
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ListingToBuy))
+                    {
+                        SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                        break;
+                    }
+
+                    SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
+                    break;
+                }
+            }
+        }
+
+        private void UpdatePDAUserInterface()
+        {
+            var ownerInfo = new PDAIdInfoText
+            {
+                ActualOwnerName = OwnerMob?.Name,
+                IdOwner = ContainedID?.FullName,
+                JobTitle = ContainedID?.JobTitle
+            };
+
+            //Do we have an account? If so provide the info.
+            if (_syndicateUplinkAccount != null)
+            {
+                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
+                    _syndicateUplinkAccount.Balance);
+                var listings = _uplinkManager.FetchListings.ToArray();
+                _interface.SetState(new PDAUpdateState(_lightOn, ownerInfo, accData, listings));
+            }
+            else
+            {
+                _interface.SetState(new PDAUpdateState(_lightOn, ownerInfo));
+            }
+
+            UpdatePDAAppearance();
+        }
+
+        private void UpdatePDAAppearance()
+        {
+            _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
+        }
+
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            var item = eventArgs.Using;
+            if (!IdSlotEmpty)
+            {
+                return false;
+            }
+
+            if (!item.TryGetComponent<IdCardComponent>(out var idCardComponent) || _idSlot.Contains(item))
+            {
+                return false;
+            }
+
+            InsertIdCard(idCardComponent);
+            UpdatePDAUserInterface();
+            return true;
+        }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                return;
+            }
+
+            _interface.Open(actor.playerSession);
+            UpdatePDAAppearance();
+        }
+
+        public bool UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                return false;
+            }
+
+            _interface.Open(actor.playerSession);
+            UpdatePDAAppearance();
+            return true;
+        }
+
+        public void SetPDAOwner(IEntity mob)
+        {
+            if (mob == OwnerMob)
+            {
+                return;
+            }
+
+            OwnerMob = mob;
+            UpdatePDAUserInterface();
+
+        }
+
+        private void InsertIdCard(IdCardComponent card)
+        {
+            _idSlot.Insert(card.Owner);
+            ContainedID = card;
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Guns/MagIn/batrifle_magin.ogg", Owner);
+        }
+
+        /// <summary>
+        /// Initialize the PDA's syndicate uplink account.
+        /// </summary>
+        /// <param name="acc"></param>
+        public void InitUplinkAccount(UplinkAccount acc)
+        {
+            _syndicateUplinkAccount = acc;
+            _uplinkManager.AddNewAccount(_syndicateUplinkAccount);
+
+            _syndicateUplinkAccount.BalanceChanged += account =>
+            {
+                UpdatePDAUserInterface();
+            };
+
+            UpdatePDAUserInterface();
+        }
+
+        private void ToggleLight()
+        {
+            _lightOn = !_lightOn;
+            _pdaLight.Enabled = _lightOn;
+            EntitySystem.Get<AudioSystem>().Play("/Audio/items/flashlight_toggle.ogg", Owner);
+            UpdatePDAUserInterface();
+        }
+
+        private void HandleIDEjection(IEntity pdaUser)
+        {
+            if (ContainedID == null)
+            {
+                return;
+            }
+
+            var cardEntity = ContainedID.Owner;
+            _idSlot.Remove(cardEntity);
+
+            var hands = pdaUser.GetComponent<HandsComponent>();
+            var cardItemComponent = cardEntity.GetComponent<ItemComponent>();
+            hands.PutInHandOrDrop(cardItemComponent);
+            ContainedID = null;
+
+            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", Owner);
+            UpdatePDAUserInterface();
+        }
+
+        [Verb]
+        public sealed class EjectIDVerb : Verb<PDAComponent>
+        {
+            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            {
+                data.Text = Loc.GetString("Eject ID");
+                data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
+            }
+
+            protected override void Activate(IEntity user, PDAComponent component)
+            {
+                component.HandleIDEjection(user);
+            }
+        }
+
+        private ISet<string>? GetContainedAccess()
+        {
+            return ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
+        }
+
+        ISet<string> IAccess.Tags => _accessSet;
+        bool IAccess.IsReadOnly => true;
+
+        void IAccess.SetTags(IEnumerable<string> newTags)
+        {
+            throw new NotSupportedException("PDA access list is read-only.");
+        }
+
+        private sealed class PdaAccessSet : ISet<string>
+        {
+            private readonly PDAComponent _pdaComponent;
+            private static readonly HashSet<string> EmptySet = new HashSet<string>();
+
+            public PdaAccessSet(PDAComponent pdaComponent)
+            {
+                _pdaComponent = pdaComponent;
+            }
+
+            public IEnumerator<string> GetEnumerator()
+            {
+                var contained = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return contained.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            void ICollection<string>.Add(string item)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void ExceptWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void IntersectWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public bool IsProperSubsetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsProperSubsetOf(other);
+            }
+
+            public bool IsProperSupersetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsProperSupersetOf(other);
+            }
+
+            public bool IsSubsetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsSubsetOf(other);
+            }
+
+            public bool IsSupersetOf(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.IsSupersetOf(other);
+            }
+
+            public bool Overlaps(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.Overlaps(other);
+            }
+
+            public bool SetEquals(IEnumerable<string> other)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                return set.SetEquals(other);
+            }
+
+            public void SymmetricExceptWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void UnionWith(IEnumerable<string> other)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            bool ISet<string>.Add(string item)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public void Clear()
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public bool Contains(string item)
+            {
+                return _pdaComponent.GetContainedAccess()?.Contains(item) ?? false;
+            }
+
+            public void CopyTo(string[] array, int arrayIndex)
+            {
+                var set = _pdaComponent.GetContainedAccess() ?? EmptySet;
+                set.CopyTo(array, arrayIndex);
+            }
+
+            public bool Remove(string item)
+            {
+                throw new NotSupportedException("PDA access list is read-only.");
+            }
+
+            public int Count => _pdaComponent.GetContainedAccess()?.Count ?? 0;
+            public bool IsReadOnly => true;
+        }
+    }
+}

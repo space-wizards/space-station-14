@@ -1,6 +1,6 @@
 - type: entity
   id: CrateGeneric
-  name: Crate
+  name: crate
   description: A large container for items.
   components:
   - type: Sprite
@@ -46,4 +46,4 @@
     - type: StorageVisualizer2D
       state_open: crate_open
       state_closed: crate_door
-  - type: Sound
+  - type: LoopingSound

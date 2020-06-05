@@ -12,12 +12,14 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
+using System;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -26,7 +28,6 @@ namespace Content.Server.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
@@ -40,26 +41,20 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleContainerModified);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerModified);
 
-            var input = EntitySystemManager.GetEntitySystem<InputSystem>();
-            input.BindMap.BindFunction(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands));
-            input.BindMap.BindFunction(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop));
-            input.BindMap.BindFunction(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem));
-            input.BindMap.BindFunction(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem));
-            input.BindMap.BindFunction(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack));
-            input.BindMap.BindFunction(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.SwapHands, InputCmdHandler.FromDelegate(HandleSwapHands))
+                .Bind(ContentKeyFunctions.Drop, new PointerInputCmdHandler(HandleDrop))
+                .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
+                .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
+                .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
+                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
+                .Register<HandsSystem>();
         }
 
         /// <inheritdoc />
         public override void Shutdown()
         {
-            if (EntitySystemManager.TryGetEntitySystem(out InputSystem input))
-            {
-                input.BindMap.UnbindFunction(ContentKeyFunctions.SwapHands);
-                input.BindMap.UnbindFunction(ContentKeyFunctions.Drop);
-                input.BindMap.UnbindFunction(ContentKeyFunctions.ActivateItemInHand);
-                input.BindMap.UnbindFunction(ContentKeyFunctions.ThrowItemInHand);
-            }
-
+            CommandBinds.Unregister<HandsSystem>();
             base.Shutdown();
         }
 
@@ -121,22 +116,13 @@ namespace Content.Server.GameObjects.EntitySystems
             if (handsComp.GetActiveHand == null)
                 return false;
 
+            var entCoords = ent.Transform.GridPosition.Position;
+            var entToDesiredDropCoords = coords.Position - entCoords;
+            var targetLength = Math.Min(entToDesiredDropCoords.Length, InteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
+            var newCoords = new GridCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords, coords.GridID);
+            var rayLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedRayLength(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
 
-            if(EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(coords.ToMap(_mapManager), ent.Transform.WorldPosition, ignoredEnt: ent))
-                if (coords.InRange(_mapManager, ent.Transform.GridPosition, InteractionSystem.InteractionRange))
-                {
-                    handsComp.Drop(handsComp.ActiveIndex, coords);
-                }
-                else
-                {
-                    var entCoords = ent.Transform.GridPosition.Position;
-                    var entToDesiredDropCoords = coords.Position - entCoords;
-                    var clampedDropCoords = ((entToDesiredDropCoords.Normalized * InteractionSystem.InteractionRange) + entCoords);
-
-                    handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(clampedDropCoords, coords.GridID));
-                }
-            else
-                handsComp.Drop(handsComp.ActiveIndex, ent.Transform.GridPosition);
+            handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
 
             return true;
         }

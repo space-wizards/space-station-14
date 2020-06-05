@@ -1,5 +1,5 @@
 - type: entity
-  name: Emergency Medical Kit
+  name: emergency medical kit
   description: An emergency medical kit for those serious boo-boos.
   parent: BaseItem
   id: Medkit
@@ -20,7 +20,7 @@
   - type: MedkitFill # 3 Ointment, 3 Roll of Gauze. TODO 1 Health Analyzer once it exists
 
 - type: entity
-  name: Medical Stack
+  name: medical stack
   id: MedicalStack
   parent: BaseItem
   abstract: true
@@ -30,7 +30,7 @@
   - type: Healing
 
 - type: entity
-  name: Ointment
+  name: ointment
   description: Used to treat those nasty burns.
   parent: MedicalStack
   id: Ointment
@@ -48,7 +48,7 @@
     stacktype: enum.StackType.Ointment
 
 - type: entity
-  name: Roll of Gauze
+  name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: MedicalStack
   id: Brutepack

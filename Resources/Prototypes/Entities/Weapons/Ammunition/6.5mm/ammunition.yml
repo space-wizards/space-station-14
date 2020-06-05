@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_65mm
-  name: "6.5mm Magazine"
+  name: "6.5mm magazine"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -36,7 +36,7 @@
 
 - type: entity
   id: magazine_65mmf
-  name: "6.5mm Magazine (Flash)"
+  name: "6.5mm magazine (flash)"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -57,7 +57,7 @@
 
 - type: entity
   id: magazine_65mmhv
-  name: "6.5mm Magazine (High Velocity)"
+  name: "6.5mm magazine (high velocity)"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_65mml
-  name: "6.5mm Magazine (L)"
+  name: "6.5mm magazine (L)"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -99,7 +99,7 @@
 
 - type: entity
   id: magazine_65mmp
-  name: "6.5mm Magazine (Practice)"
+  name: "6.5mm magazine (practice)"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -120,7 +120,7 @@
 
 - type: entity
   id: magazine_65mmr
-  name: "6.5mm Magazine (Rubber)"
+  name: "6.5mm magazine (rubber)"
   parent: magazine_65mm_empty
   components:
   - type: BallisticMagazine
@@ -158,7 +158,7 @@
 
 - type: entity
   id: ammo_casing_65mm_flash
-  name: "6.5mm casing (Flash)"
+  name: "6.5mm casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -174,7 +174,7 @@
 
 - type: entity
   id: ammo_casing_65mm_hv
-  name: "6.5mm casing (High Velocity)"
+  name: "6.5mm casing (high velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -206,7 +206,7 @@
 
 - type: entity
   id: ammo_casing_65mm_p
-  name: "6.5mm casing (Practice)"
+  name: "6.5mm casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -222,7 +222,7 @@
 
 - type: entity
   id: ammo_casing_65mm_r
-  name: "6.5mm casing (Rubber)"
+  name: "6.5mm casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

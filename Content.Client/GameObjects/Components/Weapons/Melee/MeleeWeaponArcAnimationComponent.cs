@@ -2,6 +2,7 @@ using Content.Shared.GameObjects.Components.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Weapons.Melee
@@ -24,11 +25,12 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             _sprite = Owner.GetComponent<SpriteComponent>();
         }
 
-        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle)
+        public void SetData(MeleeWeaponAnimationPrototype prototype, Angle baseAngle, IEntity attacker)
         {
             _meleeWeaponAnimation = prototype;
             _sprite.AddLayer(new RSI.StateId(prototype.State));
             _baseAngle = baseAngle;
+            Owner.Transform.AttachParent(attacker);
         }
 
         internal void Update(float frameTime)
@@ -48,11 +50,12 @@ namespace Content.Client.GameObjects.Components.Weapons.Melee
             {
                 case WeaponArcType.Slash:
                     var angle = Angle.FromDegrees(_meleeWeaponAnimation.Width)/2;
-                    Owner.Transform.LocalRotation =
+                    Owner.Transform.WorldRotation =
                         _baseAngle + Angle.Lerp(-angle, angle, (float) (_timer / _meleeWeaponAnimation.Length.TotalSeconds));
                     break;
 
                 case WeaponArcType.Poke:
+                    Owner.Transform.WorldRotation = _baseAngle;
                     _sprite.Offset += (_meleeWeaponAnimation.Speed * frameTime, 0);
                     break;
             }

@@ -1,0 +1,17 @@
+- type: uplinkListing
+  id: UplinkPistolClarissa
+  category: Weapons
+  itemId: PistolClarissa
+  price: 15
+
+- type: uplinkListing
+  id: UplinkPistol9mmMagazine
+  category: Ammo
+  itemId: magazine_9mm
+  price: 5
+
+- type: uplinkListing
+  id: UplinkPen
+  category: Utility
+  itemId: Pen
+  price: 2

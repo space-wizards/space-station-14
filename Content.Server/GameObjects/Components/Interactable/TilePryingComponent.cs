@@ -16,11 +16,9 @@ namespace Content.Server.GameObjects.Components.Interactable
     public class TilePryingComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
 
         public override string Name => "TilePrying";
@@ -47,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMapPos(_mapManager), ignoredEnt:user))
+            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().InRangeUnobstructed(user.Transform.MapPosition, coordinates.ToMap(_mapManager), ignoredEnt:user))
                 return;
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];

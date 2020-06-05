@@ -123,7 +123,7 @@ namespace Content.Client
                 "Species",
                 "Drink",
                 "Food",
-                "DrinkFoodContainer",
+                "FoodContainer",
                 "Stomach",
                 "Hunger",
                 "Thirst",
@@ -162,6 +162,9 @@ namespace Content.Client
                 "Tool",
                 "TilePrying",
                 "RandomToolColor",
+                "ConditionalSpawner",
+                "PottedPlantHide",
+                "SecureEntityStorage",
             };
 
             foreach (var ignoreName in registerIgnore)

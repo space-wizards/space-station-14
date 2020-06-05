@@ -1,6 +1,6 @@
 - type: entity
   id: Girder
-  name: Girder
+  name: girder
   components:
   - type: Clickable
   - type: InteractionOutline

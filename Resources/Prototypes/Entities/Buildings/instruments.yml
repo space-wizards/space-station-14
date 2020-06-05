@@ -1,5 +1,5 @@
  - type: entity
-   name: BaseInstrument
+   name: baseinstrument
    id: BaseInstrument
    abstract: true
    components:
@@ -27,7 +27,7 @@
        type: InstrumentBoundUserInterface
 
  - type: entity
-   name: Piano
+   name: piano
    parent: BaseInstrument
    id: PianoInstrument
    description: Play Needles Piano Now.
@@ -42,7 +42,7 @@
      state: piano
 
  - type: entity
-   name: Minimoog
+   name: minimoog
    parent: BaseInstrument
    id: MinimoogInstrument
    components:
@@ -56,7 +56,7 @@
      state: minimoog
 
  - type: entity
-   name: Xylophone
+   name: xylophone
    parent: BaseInstrument
    id: XylophoneInstrument
    components:

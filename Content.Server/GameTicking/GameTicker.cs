@@ -7,6 +7,8 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.PDA;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -16,6 +18,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces;
@@ -26,6 +29,7 @@ using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -94,6 +98,7 @@ namespace Content.Server.GameTicking
         }
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
@@ -323,7 +328,23 @@ namespace Content.Server.GameTicking
             _gameRules.Add(instance);
             instance.Added();
 
+            OnRuleAdded?.Invoke(new GameRuleAddedEventArgs(instance));
+
             return instance;
+        }
+
+        public bool HasGameRule(Type t)
+        {
+            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+                return false;
+
+            foreach (var rule in _gameRules)
+            {
+                if (rule.GetType().Equals(t))
+                    return true;
+            }
+
+            return false;
         }
 
         public void RemoveGameRule(GameRule rule)
@@ -469,6 +490,8 @@ namespace Content.Server.GameTicking
 
             _spawnedPositions.Clear();
             _manifest.Clear();
+
+            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
         }
 
         private void _preRoundSetup()
@@ -623,20 +646,38 @@ namespace Content.Server.GameTicking
         {
             var inventory = mob.GetComponent<InventoryComponent>();
 
-            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent cardItem))
+            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent pdaItem))
             {
                 return;
             }
 
-            var card = cardItem.Owner;
+            var pda = pdaItem.Owner;
 
-            var cardComponent = card.GetComponent<IdCardComponent>();
-            cardComponent.FullName = characterName;
-            cardComponent.JobTitle = jobPrototype.Name;
+            var pdaComponent = pda.GetComponent<PDAComponent>();
+            if (pdaComponent.IdSlotEmpty)
+            {
+                return;
+            }
 
-            var access = card.GetComponent<AccessComponent>();
-            access.Tags.Clear();
-            access.Tags.AddRange(jobPrototype.Access);
+            var card = pdaComponent.ContainedID;
+            card.FullName = characterName;
+            card.JobTitle = jobPrototype.Name;
+
+            var access = card.Owner.GetComponent<AccessComponent>();
+            var accessTags = access.Tags;
+            accessTags.UnionWith(jobPrototype.Access);
+            access.SetTags(accessTags);
+            pdaComponent.SetPDAOwner(mob);
+            var mindComponent = mob.GetComponent<MindComponent>();
+            if (mindComponent.HasMind)//Redundancy checks.
+            {
+                if (mindComponent.Mind.AllRoles.Any(role => role.Antag)) //Give antags a new uplinkaccount.
+                {
+                    var uplinkAccount = new UplinkAccount(mob.Uid, 20); //TODO: make me into a variable based on server pop or something.
+                    pdaComponent.InitUplinkAccount(uplinkAccount);
+                }
+            }
+
         }
 
         private void AddManifestEntry(string characterName, string jobId)
@@ -761,5 +802,15 @@ The current game mode is: [color=white]{0}[/color].
 
         public GameRunLevel OldRunLevel { get; }
         public GameRunLevel NewRunLevel { get; }
+    }
+
+    public class GameRuleAddedEventArgs : EventArgs
+    {
+        public GameRule GameRule { get; }
+
+        public GameRuleAddedEventArgs(GameRule rule)
+        {
+            GameRule = rule;
+        }
     }
 }

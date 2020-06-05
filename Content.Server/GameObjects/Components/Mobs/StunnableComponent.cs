@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.Interfaces.Timing;
@@ -27,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override string Name => "Stunnable";
 
 #pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
         [Dependency] private IGameTiming _gameTiming;
 #pragma warning restore 649
 
@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             _canHelp = false;
             Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
 
-            _entitySystemManager.GetEntitySystem<AudioSystem>()
+            EntitySystem.Get<AudioSystem>()
                 .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             _knockdownTimer -= _helpKnockdownRemove;
