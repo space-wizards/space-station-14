@@ -111,6 +111,10 @@ namespace Content.Client.GameObjects.Components.PDA
                     if (msg.Account != null)
                     {
                         _menu.CurrentLoggedInAccount = msg.Account;
+                        var balance = msg.Account.DataBalance;
+                        var weightedColor = GetWeightedColorString(balance);
+                        _menu.BalanceInfo.SetMarkup(Loc.GetString("TC Balance: [color={0}]{1}[/color]", weightedColor, balance));
+
                     }
 
                     if (msg.Listings != null)
@@ -121,10 +125,6 @@ namespace Content.Client.GameObjects.Components.PDA
                             _menu.AddListingGui(item);
                         }
                     }
-
-                    var balance = _menu.CurrentLoggedInAccount.DataBalance;
-                    var weightedColor = GetWeightedColorString(balance);
-                    _menu.BalanceInfo.SetMarkup(Loc.GetString("TC Balance: [color={0}]{1}[/color]", weightedColor, balance));
                     _menu.MasterTabContainer.SetTabVisible(1, msg.Account != null);
                     break;
                 }
