@@ -234,14 +234,6 @@ namespace Content.Client.Construction
                 return;
             }
 
-            if (prototype.Type != ConstructionType.Structure)
-            {
-                // In-hand attackby doesn't exist so this is the best alternative.
-                var loc = Owner.Owner.GetComponent<ITransformComponent>().GridPosition;
-                Owner.SpawnGhost(prototype, loc, Direction.North);
-                return;
-            }
-
             var hijack = new ConstructionPlacementHijack(prototype, Owner);
             var info = new PlacementInformation
             {
