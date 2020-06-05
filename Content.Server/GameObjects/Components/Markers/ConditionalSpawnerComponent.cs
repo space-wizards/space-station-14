@@ -39,18 +39,14 @@ namespace Content.Server.GameObjects.Components.Markers
         [ViewVariables(VVAccess.ReadWrite)]
         public float Chance { get; set; } = 1.0f;
 
-        public List<Type> GameRules
+        public IEnumerable<Type> GameRules
         {
             get
             {
-                var list = new List<Type>();
-
                 foreach (var rule in _gameRules)
                 {
-                    list.Add(_reflectionManager.GetType(rule));
+                    yield return _reflectionManager.GetType(rule);
                 }
-
-                return list;
             }
         }
 
