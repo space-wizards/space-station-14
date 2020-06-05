@@ -30,7 +30,7 @@
   - type: Projectile
     deleteOnCollide: false
     soundHit: /Audio/effects/gen_hit.ogg
-  - type: StunProjectile
+  - type: StunnableProjectile
     paralyzeAmount: 8
 
 - type: entity

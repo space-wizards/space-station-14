@@ -152,7 +152,7 @@ namespace Content.Client
                 "PumpBarrel",
                 "RevolverBarrel",
                 "ExplosiveProjectile",
-                "StunProjectile",
+                "StunnableProjectile",
                 "RandomPottedPlant",
                 "CommunicationsConsole",
                 "BarSign",

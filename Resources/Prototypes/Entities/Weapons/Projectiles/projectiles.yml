@@ -75,7 +75,7 @@
     soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Brute: 3
-  - type: StunProjectile
+  - type: StunnableProjectile
     paralyzeAmount: 2
 
 - type: entity
@@ -91,7 +91,7 @@
     soundHitSpecies: "/Audio/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
-  - type: StunProjectile
+  - type: StunnableProjectile
   - type: Sprite
     directional: false
     sprite: Objects/Guns/Projectiles/spark.rsi

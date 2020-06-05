@@ -12,15 +12,20 @@ namespace Content.Server.GameObjects.Components.Projectiles
     /// Adds stun when it collides with an entity
     /// </summary>
     [RegisterComponent]
-    public sealed class StunProjectileComponent : Component, ICollideBehavior
+    public sealed class StunnableProjectileComponent : Component, ICollideBehavior
     {
-        public override string Name => "StunProjectile";
+        public override string Name => "StunnableProjectile";
 
+        // See stunnable for what these do
+        private int _stunAmount;
+        private int _knockdownAmount;
         private int _paralyzeAmount;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(ref _stunAmount, "stunAmount", 0);
+            serializer.DataField(ref _knockdownAmount, "knockdownAmount", 0);
             serializer.DataField(ref _paralyzeAmount, "paralyzeAmount", 5);
         }
 
@@ -38,6 +43,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
             {
+                stunnableComponent.Stun(_stunAmount);
+                stunnableComponent.Knockdown(_knockdownAmount);
                 stunnableComponent.Paralyze(_paralyzeAmount);
             }
         }
