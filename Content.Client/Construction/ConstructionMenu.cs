@@ -261,15 +261,8 @@ namespace Content.Client.Construction
 
         private void OnEraseToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            if (args.Pressed)
-            {
-                Placement.Clear();
-                Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(null, Owner));
-            }
-            else
-            {
-                Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(null, Owner));
-            }
+            if (args.Pressed) Placement.Clear();
+            Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(null, Owner));
             EraseButton.Pressed = args.Pressed;
         }
 
