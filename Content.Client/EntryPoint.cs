@@ -162,6 +162,9 @@ namespace Content.Client
                 "Tool",
                 "TilePrying",
                 "RandomToolColor",
+                "ConditionalSpawner",
+                "PottedPlantHide",
+                "SecureEntityStorage",
             };
 
             foreach (var ignoreName in registerIgnore)
