@@ -92,7 +92,7 @@
 - type: entity
   parent: OuterclothingBase
   id: OuterclothingBedsheet
-  name: bedsheet
+  name: ghost costume
   description: ''
   components:
   - type: Sprite
