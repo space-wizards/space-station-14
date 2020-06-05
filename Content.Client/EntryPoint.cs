@@ -79,7 +79,6 @@ namespace Content.Client
                 "ItemTeleporter",
                 "Portal",
                 "EntityStorage",
-                "PlaceableSurface",
                 "Wirecutter",
                 "Screwdriver",
                 "Multitool",

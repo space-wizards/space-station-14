@@ -17,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects
 {
     [RegisterComponent]
-    public class ItemComponent : Component, IClientDraggable
+    public class ItemComponent : Component
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -77,17 +77,6 @@ namespace Content.Client.GameObjects
 
             var itemComponentState = (ItemComponentState)curState;
             EquippedPrefix = itemComponentState.EquippedPrefix;
-        }
-
-        public bool ClientCanDropOn(CanDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.HasComponent<ClientStorageComponent>();
-        }
-
-        public bool ClientCanDrag(CanDragEventArgs eventArgs)
-        {
-            // always draggable
-            return true;
         }
     }
 }
