@@ -126,7 +126,7 @@
   name: Taser
   parent: BaseItem
   id: TaserGun
-  description: Literally just a dummy for a screenshot at this point, sorry!
+  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
   - type: Sprite
     netsync: false
