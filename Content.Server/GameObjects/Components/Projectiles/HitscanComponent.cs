@@ -48,9 +48,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _collisionMask, "collision_mask", CollisionGroup.Impassable | CollisionGroup.MobImpassable);
+            serializer.DataField(ref _collisionMask, "collisionMask", CollisionGroup.Opaque);
             serializer.DataField(ref _damage, "damage", 10.0f);
-            serializer.DataField(ref _damageType, "damage_type", DamageType.Heat);
+            serializer.DataField(ref _damageType, "damageType", DamageType.Heat);
             serializer.DataField(ref _spriteName, "spriteName", "Objects/Guns/Projectiles/laser.png");
             serializer.DataField(ref _muzzleFlash, "muzzleFlash", null);
             serializer.DataField(ref _impactFlash, "impactFlash", null);

@@ -18,7 +18,7 @@
 
 - type: entity
   id: CartridgeLRifle
-  name: Cartridge (.30 rifle flash)
+  name: Cartridge (.30 rifle)
   parent: CartridgeLRifleBase
   components:
   - type: Ammo
