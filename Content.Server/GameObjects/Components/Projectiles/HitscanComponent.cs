@@ -5,6 +5,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -22,9 +23,8 @@ namespace Content.Server.GameObjects.Components.Projectiles
     public class HitscanComponent : Component
     {
         public override string Name => "Hitscan";
-
-        public CollisionGroup CollisionMask => _collisionMask;
-        private CollisionGroup _collisionMask;
+        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
+        private int _collisionMask;
         
         public float Damage
         {
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _collisionMask, "collisionMask", CollisionGroup.Opaque);
+            serializer.DataField(ref _collisionMask, "layers", (int) CollisionGroup.Opaque, WithFormat.Flags<CollisionLayer>());
             serializer.DataField(ref _damage, "damage", 10.0f);
             serializer.DataField(ref _damageType, "damageType", DamageType.Heat);
             serializer.DataField(ref _spriteName, "spriteName", "Objects/Guns/Projectiles/laser.png");

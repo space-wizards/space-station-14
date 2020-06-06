@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Weapons;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
@@ -51,29 +52,19 @@ namespace Content.Server.GameObjects.Components.Weapon
                 }
 
                 // Direction will be zero if they're hit with the source only I think
-                if (direction != Vector2.Zero)
+                if (direction == Vector2.Zero)
                 {
-                    var ray = new CollisionRay(source.Transform.WorldPosition, direction.Normalized, (int) CollisionGroup.Opaque);
-                    var rayResult = physicsManager.IntersectRay(source.Transform.MapID, ray, direction.Length, source);
-                    // Doesn't matter whether the Flashable target blocks light or not
-                    var hit = false;
-                    foreach (var result in rayResult)
-                    {
-                        if (result.HitEntity == entity)
-                        {
-                            hit = true;
-                        }
-                        break;
-                    }
-
-                    // Next entity thanks mate
-                    if (!hit)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
-                // Doesn't matter whether the Flashable target blocks light or not
+                var ray = new CollisionRay(source.Transform.WorldPosition, direction.Normalized, (int) CollisionGroup.Opaque);
+                var rayCastResults = physicsManager.IntersectRay(source.Transform.MapID, ray, direction.Length, source, false).ToList();
+                if (rayCastResults.Count == 0 ||
+                    rayCastResults[0].HitEntity != entity)
+                {
+                    continue;
+                }
+
                 var flashable = entity.GetComponent<ServerFlashableComponent>();
                 flashable.Flash(duration);
             }

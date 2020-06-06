@@ -36,6 +36,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// </summary>
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing
     {
+        // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
+        // it's just when I re-organised it changed me as the contributor
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
@@ -53,16 +55,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         
         public abstract IEntity PeekAmmo();
         public abstract IEntity TakeProjectile();
-
-        // Casing ejection
-        private const float BulletEjectOffset = 0.2f;
-        private readonly Direction[] _randomBulletDirs =
-        {
-            Direction.North,
-            Direction.East,
-            Direction.South,
-            Direction.West
-        };
 
         // Recoil / spray control
         private Angle _minAngle;
@@ -392,32 +384,28 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var ray = new CollisionRay(Owner.Transform.GridPosition.Position, angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
-            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter).ToArray();
-            bool effect = false;
-            foreach (var result in rayCastResults)
+            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+
+            if (rayCastResults.Count >= 1)
             {
-                if (!effect)
-                {
-                    effect = true;
-                    var distance = result.HitEntity != null ? result.Distance : hitscan.MaxLength;
-                    hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                }
+                var result = rayCastResults[0];
+                var distance = result.HitEntity != null ? result.Distance : hitscan.MaxLength;
+                hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
 
                 if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out DamageableComponent damageable))
                 {
-                    continue;
+                    return;
                 }
                 
                 damageable.TakeDamage(
-                        hitscan.DamageType, 
-                        (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), 
-                        Owner, 
-                        shooter);
-                    //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
-                    //even numbers if halfway between two numbers, rather than rounding to nearest
+                    hitscan.DamageType, 
+                    (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), 
+                    Owner, 
+                    shooter);
+                //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
+                //even numbers if halfway between two numbers, rather than rounding to nearest
             }
-
-            if (!effect)
+            else
             {
                 hitscan.FireEffects(shooter, hitscan.MaxLength, angle);
             }

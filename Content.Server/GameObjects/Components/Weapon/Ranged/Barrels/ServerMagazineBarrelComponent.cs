@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -31,8 +28,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
         private ContainerSlot _magazineContainer;
 
-        [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
-        private MagazineType _magazineTypes;
+        [ViewVariables] public MagazineType MagazineTypes => (MagazineType) _magazineTypes;
+        private int _magazineTypes;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         private BallisticCaliber _caliber;
 
@@ -91,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            var magazineTypes = serializer.ReadDataFieldCached("magazineTypes", new List<MagazineType>());
+            serializer.DataField(ref _magazineTypes, "magazineTypes", 0, WithFormat.Flags<MagazineType>());
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
             serializer.DataField(ref _magNeedsOpenBolt, "magNeedsOpenBolt", false);
@@ -101,12 +98,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
             serializer.DataField(ref _soundMagEject, "soundMagEject", null);
             serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Guns/EmptyAlarm/smg_empty_alarm.ogg");
-
-            // TODO: When Flags support added change this
-            foreach (var magType in magazineTypes)
-            {
-                _magazineTypes |= magType;
-            }
         }
 
         public override ComponentState GetComponentState()
@@ -320,7 +311,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // Insert magazine
             if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))
             {
-                if ((_magazineTypes & magazineComponent.MagazineType) == 0)
+                if ((MagazineTypes & magazineComponent.MagazineType) == 0)
                 {
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("Wrong magazine type"));
                     return false;
@@ -442,6 +433,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     }
 
     [Flags]
+    [FlagsFor(typeof(MagazineType))]
     public enum MagazineType
     {
 
