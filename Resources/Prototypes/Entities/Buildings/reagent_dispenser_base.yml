@@ -25,5 +25,5 @@
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key
       type: ReagentDispenserBoundUserInterface
-  - type: Sound
+  - type: LoopingSound
 

@@ -1,6 +1,6 @@
 - type: entity
   id: Catwalk
-  name: Catwalk
+  name: catwalk
   components:
   - type: Clickable
   - type: InteractionOutline

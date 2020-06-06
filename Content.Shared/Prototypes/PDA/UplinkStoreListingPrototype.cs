@@ -16,7 +16,6 @@ namespace Content.Shared.Prototypes.PDA
         private UplinkCategory _category;
         private string _desc;
         private string _name;
-        private Color _displayColor;
 
         public string ID => _id;
 
@@ -25,7 +24,6 @@ namespace Content.Shared.Prototypes.PDA
         public UplinkCategory Category => _category;
         public string Description => _desc;
         public string ListingName => _name;
-        public Color DisplayColor => _displayColor;
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -35,7 +33,6 @@ namespace Content.Shared.Prototypes.PDA
             serializer.DataField(ref _category, "category", UplinkCategory.Utility);
             serializer.DataField(ref _desc, "description", string.Empty);
             serializer.DataField(ref _name, "listingName", string.Empty);
-            serializer.DataField(ref _displayColor, "displayColor", Color.White);
 
         }
     }

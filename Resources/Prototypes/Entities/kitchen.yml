@@ -1,6 +1,6 @@
 - type: entity
   id: KitchenMicrowave
-  name: Microwave
+  name: microwave
   description: It's magic.
   placement:
     mode: SnapgridCenter
@@ -16,7 +16,7 @@
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer
-  - type: Sound
+  - type: LoopingSound
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key

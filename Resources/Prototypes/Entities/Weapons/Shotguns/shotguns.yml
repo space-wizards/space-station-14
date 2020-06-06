@@ -1,11 +1,11 @@
 - type: entity
-  name: Shotgun
+  name: shotgun
   parent: BaseItem
   id: BaseShotgun
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: false
     firerate: 20
@@ -23,7 +23,7 @@
     sound_gunshot: /Audio/Guns/Gunshots/smg.ogg
 
 - type: entity
-  name: Magazine Fed Shotgun
+  name: magazine fed shotgun
   parent: BaseShotgun
   id: MagazineFedShotgun
   components:

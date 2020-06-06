@@ -1,5 +1,5 @@
 - type: entity
-  name: Material Stack
+  name: material stack
   id: MaterialStack
   abstract: true
   parent: BaseItem
@@ -9,7 +9,7 @@
   - type: ItemStatus
 
 - type: entity
-  name: Steel Sheet
+  name: steel sheet
   id: MetalStack
   parent: MaterialStack
   components:
@@ -26,14 +26,14 @@
 
 - type: entity
   id: SteelSheet1
-  name: Steel Sheet 1
+  name: steel sheet 1
   parent: MetalStack
   components:
   - type: Stack
     count: 1
 
 - type: entity
-  name: Glass Sheet
+  name: glass sheet
   id: GlassStack
   parent: MaterialStack
   components:
@@ -50,14 +50,14 @@
 
 - type: entity
   id: GlassSheet1
-  name: Glass Sheet 1
+  name: glass sheet 1
   parent: GlassStack
   components:
   - type: Stack
     count: 1
 
 - type: entity
-  name: Cable Coil
+  name: cable coil
   id: CableStack
   parent: BaseItem
   components:
@@ -72,14 +72,14 @@
 
 - type: entity
   id: CableStack1
-  name: Cable Stack 1
+  name: cable stack 1
   parent: CableStack
   components:
   - type: Stack
     count: 1
 
 - type: entity
-  name: Gold Bar
+  name: gold bar
   id: GoldStack
   parent: MaterialStack
   components:
@@ -96,7 +96,7 @@
 
 - type: entity
   id: GoldStack1
-  name: Gold Bar 1
+  name: gold bar 1
   parent: GoldStack
   components:
   - type: Stack

@@ -1,5 +1,5 @@
 - type: entity
-  name: BaseHandheldInstrument
+  name: basehandheldinstrument
   parent: BaseItem
   id: BaseHandheldInstrument
   abstract: true
@@ -12,7 +12,7 @@
       type: InstrumentBoundUserInterface
 
 - type: entity
-  name: Synthesizer
+  name: synthesizer
   parent: BaseHandheldInstrument
   id: SynthesizerInstrument
   components:
@@ -30,7 +30,7 @@
 
 
 - type: entity
-  name: Acoustic Guitar
+  name: acoustic guitar
   parent: BaseHandheldInstrument
   id: AcousticGuitarInstrument
   components:
@@ -47,7 +47,7 @@
     sprite: Objects/Instruments/guitar.rsi
 
 - type: entity
-  name: Violin
+  name: violin
   parent: BaseHandheldInstrument
   id: ViolinInstrument
   components:
@@ -64,7 +64,7 @@
     sprite: Objects/Instruments/violin.rsi
 
 - type: entity
-  name: Trumpet
+  name: trumpet
   parent: BaseHandheldInstrument
   id: TrumpetInstrument
   components:
@@ -76,7 +76,7 @@
     texture: Objects/Instruments/otherinstruments.rsi/trumpet.png
 
 - type: entity
-  name: Electric Guitar
+  name: electric guitar
   parent: BaseHandheldInstrument
   id: ElectricGuitarInstrument
   components:
@@ -93,7 +93,7 @@
     sprite: Objects/Instruments/eguitar.rsi
 
 - type: entity
-  name: Accordion
+  name: accordion
   parent: BaseHandheldInstrument
   id: AccordionInstrument
   components:
@@ -110,7 +110,7 @@
     sprite: Objects/Instruments/accordion.rsi
 
 - type: entity
-  name: Harmonica
+  name: harmonica
   parent: BaseHandheldInstrument
   id: HarmonicaInstrument
   components:
@@ -127,7 +127,7 @@
     sprite: Objects/Instruments/harmonica.rsi
 
 - type: entity
-  name: Recorder
+  name: recorder
   parent: BaseHandheldInstrument
   id: RecorderInstrument
   components:
@@ -144,7 +144,7 @@
     sprite: Objects/Instruments/recorder.rsi
 
 - type: entity
-  name: Trombone
+  name: trombone
   parent: BaseHandheldInstrument
   id: TromboneInstrument
   components:
@@ -161,7 +161,7 @@
     sprite: Objects/Instruments/trombone.rsi
 
 - type: entity
-  name: Saxophone
+  name: saxophone
   parent: BaseHandheldInstrument
   id: SaxophoneInstrument
   components:
@@ -178,7 +178,7 @@
     sprite: Objects/Instruments/saxophone.rsi
 
 - type: entity
-  name: Glockenspiel
+  name: glockenspiel
   parent: BaseHandheldInstrument
   id: GlockenspielInstrument
   components:
@@ -195,7 +195,7 @@
     sprite: Objects/Instruments/glockenspiel.rsi
 
 - type: entity
-  name: Banjo
+  name: banjo
   parent: BaseHandheldInstrument
   id: BanjoInstrument
   components:

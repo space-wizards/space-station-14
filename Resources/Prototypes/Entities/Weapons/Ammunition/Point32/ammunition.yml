@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_32
-  name: ".32 Magazine"
+  name: ".32 magazine"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -36,7 +36,7 @@
 
 - type: entity
   id: magazine_32f
-  name: ".32 Magazine (Flash)"
+  name: ".32 magazine (flash)"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -57,7 +57,7 @@
 
 - type: entity
   id: magazine_32hv
-  name: ".32 Magazine (High Velocity)"
+  name: ".32 magazine (high velocity)"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_32l
-  name: ".32 Magazine (L)"
+  name: ".32 magazine (L)"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -99,7 +99,7 @@
 
 - type: entity
   id: magazine_32p
-  name: ".32 Magazine (Practice)"
+  name: ".32 magazine (practice)"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -120,7 +120,7 @@
 
 - type: entity
   id: magazine_32r
-  name: ".32 Magazine (Rubber)"
+  name: ".32 magazine (rubber)"
   parent: magazine_32_empty
   components:
   - type: BallisticMagazine
@@ -158,7 +158,7 @@
 
 - type: entity
   id: ammo_casing_32_flash
-  name: ".32 casing (Flash)"
+  name: ".32 casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -174,7 +174,7 @@
 
 - type: entity
   id: ammo_casing_32_hv
-  name: ".32 casing (High Velocity)"
+  name: ".32 casing (high velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -206,7 +206,7 @@
 
 - type: entity
   id: ammo_casing_32_p
-  name: ".32 casing (Practice)"
+  name: ".32 casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -222,7 +222,7 @@
 
 - type: entity
   id: ammo_casing_32_r
-  name: ".32 casing (Rubber)"
+  name: ".32 casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

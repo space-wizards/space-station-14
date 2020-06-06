@@ -1,6 +1,6 @@
 - type: job
   id: Janitor
-  name: "Janitor"
+  name: "janitor"
   positions: 1
   startingGear: JanitorGear
   department:

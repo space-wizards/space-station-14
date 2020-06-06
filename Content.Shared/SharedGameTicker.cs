@@ -12,7 +12,7 @@ namespace Content.Shared
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
         public const string OverflowJob = "Assistant";
-        public const string OverflowJobName = "Assistant";
+        public const string OverflowJobName = "assistant";
 
         protected class MsgTickerJoinLobby : NetMessage
         {
