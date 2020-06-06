@@ -350,7 +350,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 var savedValue = _savedMouseDown.Value;
                 _isReplaying = true;
                 _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use,
-                    savedValue.OriginalMessage);
+                    savedValue.OriginalMessage, true);
                 _isReplaying = false;
             }
 
