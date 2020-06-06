@@ -46,9 +46,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 4
+      zeroVisible: true
 
 - type: entity
   name: Inspector

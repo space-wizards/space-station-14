@@ -76,6 +76,7 @@
     soundInsert: /Audio/Guns/MagIn/batrifle_magin.ogg
   - type: Appearance
     visuals:
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true

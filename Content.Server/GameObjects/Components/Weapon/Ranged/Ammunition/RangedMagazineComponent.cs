@@ -87,6 +87,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 _appearanceComponent = appearanceComponent;
             }
+            
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
         private void UpdateAppearance()
@@ -160,18 +162,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             var itemComponent = ammo.GetComponent<ItemComponent>();
             if (!handsComponent.CanPutInHand(itemComponent))
             {
-                var ammoComponent = ammo.GetComponent<AmmoComponent>();
                 ammo.Transform.GridPosition = eventArgs.User.Transform.GridPosition;
-                if (ammoComponent.SoundCollectionEject != null)
-                {
-                    var robustRandom = IoCManager.Resolve<IRobustRandom>();
-                    var soundCollection = IoCManager
-                        .Resolve<IPrototypeManager>()
-                        .Index<SoundCollectionPrototype>(ammoComponent.SoundCollectionEject);
-                    var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
-                }
+                ServerRangedBarrelComponent.EjectCasing(ammo);
             }
             else
             {

@@ -67,9 +67,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: Double-Barreled Shotgun
@@ -138,9 +139,10 @@
     maxAngle: 120
   - type: Appearance
     visuals:
-    - type: BarrelAmmoVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      magSteps: 4
+      steps: 5
+      zeroVisible: false
 
 - type: entity
   name: FS SG "Gladstone"

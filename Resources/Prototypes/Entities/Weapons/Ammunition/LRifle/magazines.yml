@@ -15,14 +15,15 @@
     netsync: false
     layers:
     - state: base
-      map: ["enum.RangedMagazineVisualLayers.Base"]
+      map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedMagazineVisualLayers.Mag"]
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 1
+      steps: 2
+      zeroVisible: false
 
 # Magazines
 - type: entity
@@ -40,9 +41,10 @@
     sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 7
+      steps: 8
+      zeroVisible: false
 
 - type: entity
   id: MagazineLRifle
@@ -133,6 +135,7 @@
     sprite: Objects/Guns/Ammunition/Magazine/LRifle/pk_box.rsi
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 7
+      zeroVisible: false

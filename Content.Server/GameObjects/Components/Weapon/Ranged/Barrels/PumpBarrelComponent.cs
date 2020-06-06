@@ -106,6 +106,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _appearanceComponent = appearanceComponent;
             }
             
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
             UpdateAppearance();
         }
 
@@ -161,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundCycle != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundCycle, AudioParams.Default.WithVolume(-3));
+                    soundSystem.Play(_soundCycle, AudioParams.Default.WithVolume(-2));
                 }
             }
             
@@ -208,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundInsert != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundInsert);
+                    soundSystem.Play(_soundInsert, AudioParams.Default.WithVolume(-2));
                 }
                 return true;
             }

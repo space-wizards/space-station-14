@@ -9,6 +9,7 @@
     ammoVelocity: 30
   - type: Sprite
     netsync: false
+    directional: false
     sprite: Objects/Guns/Ammunition/Casings/large_casing.rsi
     layers:
     - state: base

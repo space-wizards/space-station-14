@@ -15,14 +15,15 @@
     netsync: false
     layers:
     - state: base
-      map: ["enum.RangedMagazineVisualLayers.Base"]
+      map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedMagazineVisualLayers.Mag"]
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 1
+      steps: 2
+      zeroVisible: false
 
 # Magazines
 - type: entity
@@ -53,9 +54,10 @@
     sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag.rsi
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 5
+      steps: 6
+      zeroVisible: false
 
 # No flash
 
@@ -74,9 +76,10 @@
     sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_hv.rsi
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 5
+      steps: 6
+      zeroVisible: false
 
 - type: entity
   id: MagazineClRiflePistolPractice
@@ -93,9 +96,10 @@
     sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_practice.rsi
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 5
+      steps: 6
+      zeroVisible: false
 
 - type: entity
   id: MagazineClRiflePistolRubber
@@ -112,9 +116,10 @@
     sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_rubber.rsi
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 5
+      steps: 6
+      zeroVisible: false
 
 - type: entity
   id: MagazineClRifle

@@ -8,6 +8,7 @@
     caliber: Pistol
   - type: Sprite
     netsync: false
+    directional: false
     sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects

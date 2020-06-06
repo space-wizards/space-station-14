@@ -63,9 +63,10 @@
     soundMagEject: /Audio/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: Black AK
@@ -101,9 +102,10 @@
     soundMagEject: /Audio/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: FS CAR "Z8 Bulldog"
@@ -142,9 +144,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: Dallas
@@ -180,9 +183,10 @@
     soundMagEject: /Audio/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: STS-35
@@ -221,9 +225,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: Excelsior "Vintorez"
@@ -258,9 +263,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: FS AR "Wintermute"
@@ -300,6 +306,7 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true

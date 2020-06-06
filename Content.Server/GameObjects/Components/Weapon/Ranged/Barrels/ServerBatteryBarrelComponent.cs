@@ -9,6 +9,7 @@ using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -115,9 +116,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         
         public void UpdateAppearance()
         {
-            _appearanceComponent?.SetData(BatteryBarrelVisuals.BatteryLoaded, _powerCellContainer.ContainedEntity != null);
-            _appearanceComponent?.SetData(BatteryBarrelVisuals.AmmoCount, ShotsLeft);
-            _appearanceComponent?.SetData(BatteryBarrelVisuals.AmmoMax, Capacity);
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, _powerCellContainer.ContainedEntity != null);
+            _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
+            _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
 
         public override IEntity PeekAmmo()
@@ -208,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_soundPowerCellInsert != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundPowerCellInsert);
+                soundSystem.Play(_soundPowerCellInsert, AudioParams.Default.WithVolume(-2));
             }
 
             _powerCellContainer.Insert(entity);
@@ -229,7 +230,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_soundPowerCellEject != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundPowerCellEject);
+                soundSystem.Play(_soundPowerCellEject, AudioParams.Default.WithVolume(-2));
             }
             
             UpdateAppearance();

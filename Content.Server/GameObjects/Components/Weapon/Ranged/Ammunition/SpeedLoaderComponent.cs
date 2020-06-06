@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
     /// Used to load certain ranged weapons quickly
     /// </summary>
     [RegisterComponent]
-    public class SpeedLoaderComponent : Component, IAfterInteract, IInteractUsing, IMapInit
+    public class SpeedLoaderComponent : Component, IAfterInteract, IInteractUsing, IMapInit, IUse
     {
         public override string Name => "SpeedLoader";
 
@@ -67,6 +67,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
+                appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
                 appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
             }
@@ -96,6 +97,33 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             UpdateAppearance();
             return true;
 
+        }
+
+        private bool UseEntity(IEntity user)
+        {
+            if (!user.TryGetComponent(out HandsComponent handsComponent))
+            {
+                return false;
+            }
+
+            var ammo = TakeAmmo();
+            if (ammo == null)
+            {
+                return false;
+            }
+
+            var itemComponent = ammo.GetComponent<ItemComponent>();
+            if (!handsComponent.CanPutInHand(itemComponent))
+            {
+                ServerRangedBarrelComponent.EjectCasing(ammo);
+            }
+            else
+            {
+                handsComponent.PutInHand(itemComponent);
+            }
+
+            UpdateAppearance();
+            return true;
         }
 
         private IEntity TakeAmmo()
@@ -177,6 +205,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertAmmo(eventArgs.User, eventArgs.Using);
+        }
+
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        {
+            return UseEntity(eventArgs.User);
         }
     }
 }

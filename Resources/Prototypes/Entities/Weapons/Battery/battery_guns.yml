@@ -9,9 +9,9 @@
     sprite: Objects/Guns/Battery/laser_retro.rsi
     layers:
       - state: base
-        map: ["enum.BatteryBarrelVisualLayers.Base"]
-      - state: battery-4
-        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
     sprite: Objects/Guns/Battery/laser_retro.rsi
@@ -34,11 +34,10 @@
   - type: Sound
   - type: Appearance
     visuals:
-    - type: BatteryBarrelVisualizer2D
-      baseState: base
-      batteryState: battery
-      batterySteps: 5
-      emptyState: true
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 5
+      zeroVisible: true
 
 - type: entity
   name: Laser Cannon
@@ -51,9 +50,9 @@
     sprite: Objects/Guns/Battery/laser_cannon.rsi
     layers:
       - state: base
-        map: ["enum.BatteryBarrelVisualLayers.Base"]
-      - state: battery-4
-        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
     sprite: Objects/Guns/Battery/laser_cannon.rsi
@@ -76,11 +75,10 @@
   - type: Sound
   - type: Appearance
     visuals:
-    - type: BatteryBarrelVisualizer2D
-      baseState: base
-      batteryState: battery
-      batterySteps: 5
-      emptyState: false
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 5
+      zeroVisible: false
 
 - type: entity
   name: X-Ray Cannon
@@ -93,9 +91,9 @@
     sprite: Objects/Guns/Battery/xray.rsi
     layers:
       - state: base
-        map: ["enum.BatteryBarrelVisualLayers.Base"]
-      - state: battery-0
-        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
     sprite: Objects/Guns/Battery/xray.rsi
@@ -119,11 +117,10 @@
   - type: Sound
   - type: Appearance
     visuals:
-    - type: BatteryBarrelVisualizer2D
-      baseState: base
-      batteryState: battery
-      batterySteps: 5
-      emptyState: true
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 5
+      zeroVisible: true
 
 - type: entity
   name: Taser
@@ -136,9 +133,9 @@
     sprite: Objects/Guns/Battery/taser.rsi
     layers:
       - state: base
-        map: ["enum.BatteryBarrelVisualLayers.Base"]
-      - state: battery-0
-        map: ["enum.BatteryBarrelVisualLayers.Battery"]
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
     sprite: Objects/Guns/Battery/taser.rsi
@@ -162,8 +159,7 @@
   - type: Sound
   - type: Appearance
     visuals:
-    - type: BatteryBarrelVisualizer2D
-      baseState: base
-      batteryState: battery
-      batterySteps: 5
-      emptyState: true
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 5
+      zeroVisible: true

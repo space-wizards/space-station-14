@@ -63,6 +63,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                     _ammoContainer.Insert(entity);
                 }
             }
+            
         }
         
         void IMapInit.MapInit()
@@ -75,6 +76,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
+                appearanceComponent.SetData(MagazineBarrelVisuals.MagLoaded, true);
                 appearanceComponent.SetData(AmmoVisuals.AmmoCount, AmmoLeft);
                 appearanceComponent.SetData(AmmoVisuals.AmmoMax, _capacity);
             }
@@ -171,11 +173,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
         private void EjectContents(int count)
         {
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
-            var directions = new[] {Direction.North, Direction.East, Direction.South, Direction.West};
-            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-            var droppedCount = 0;
-            SoundCollectionPrototype soundCollection = null;
+            var ejectCount = Math.Min(count, Capacity);
+            var ejectAmmo = new List<IEntity>(ejectCount);
             
             for (var i = 0; i < Math.Min(count, Capacity); i++)
             {
@@ -185,29 +184,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                     break;
                 }
 
-                if (soundCollection == null)
-                {
-                    soundCollection = IoCManager
-                        .Resolve<IPrototypeManager>()
-                        .Index<SoundCollectionPrototype>(ammo.GetComponent<AmmoComponent>().SoundCollectionEject);
-                }
-                droppedCount++;
-                var offsetPosX = robustRandom.NextFloat() * 0.4f - 0.2f;
-                var offsetPosY = robustRandom.NextFloat() * 0.4f - 0.2f;
-                ammo.Transform.GridPosition = ammo.Transform.GridPosition.Offset(new Vector2(offsetPosX, offsetPosY));
-                ammo.Transform.LocalRotation = robustRandom.Pick(directions).ToAngle();
+                ejectAmmo.Add(ammo);
             }
 
-            if (soundCollection != null)
-            {
-                // Just so sound doesn't get spammed if we drop a big box
-                for (var i = 0; i < Math.Min(soundCollection.PickFiles.Count, droppedCount); i++)
-                {
-                    var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-                    soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
-                }
-            }
-
+            ServerRangedBarrelComponent.EjectCasings(ejectAmmo);
             UpdateAppearance();
         }
 

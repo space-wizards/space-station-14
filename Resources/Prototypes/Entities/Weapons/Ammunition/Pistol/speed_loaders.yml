@@ -13,14 +13,15 @@
     netsync: false
     layers:
     - state: base
-      map: ["enum.RangedMagazineVisualLayers.Base"]
+      map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: mag-6
-      map: ["enum.RangedMagazineVisualLayers.Mag"]
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: RangedMagazineVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
-      steps: 6
+      steps: 7
+      zeroVisible: false
 
 - type: entity
   id: SLPistol

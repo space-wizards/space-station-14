@@ -240,28 +240,84 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return;
         }
 
-        protected void EjectCasing(IEntity entity)
+        /// <summary>
+        /// Drops a single cartridge / shell
+        /// Made as a static function just because multiple places need it
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="playSound"></param>
+        /// <param name="robustRandom"></param>
+        /// <param name="prototypeManager"></param>
+        /// <param name="entitySystemManager"></param>
+        /// <param name="ejectDirections"></param>
+        public static void EjectCasing(
+            IEntity entity, 
+            bool playSound = true,
+            IRobustRandom robustRandom = null, 
+            IPrototypeManager prototypeManager = null,
+            IEntitySystemManager entitySystemManager = null,
+            Direction[] ejectDirections = null)
         {
-            var ammo = entity.GetComponent<AmmoComponent>();
-            var offsetPos = (CalcBulletOffset(), CalcBulletOffset());
-            entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
-            entity.Transform.LocalRotation = _robustRandom.Pick(_randomBulletDirs).ToAngle();
+            if (robustRandom == null)
+            {
+                robustRandom = IoCManager.Resolve<IRobustRandom>();
+            }
 
-            if (ammo.SoundCollectionEject == null)
+            if (ejectDirections == null)
+            {
+                ejectDirections = new[] {Direction.East, Direction.North, Direction.South, Direction.West};
+            }
+            
+            const float ejectOffset = 0.2f;
+            var ammo = entity.GetComponent<AmmoComponent>();
+            var offsetPos = (robustRandom.NextFloat() * ejectOffset, robustRandom.NextFloat() * ejectOffset);
+            entity.Transform.GridPosition = entity.Transform.GridPosition.Offset(offsetPos);
+            entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
+
+            if (ammo.SoundCollectionEject == null || !playSound)
             {
                 return;
             }
-            
-            var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
-            var randomFile = _robustRandom.Pick(soundCollection.PickFiles);
-            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+
+            if (prototypeManager == null)
+            {
+                prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            }
+
+            if (entitySystemManager == null)
+            {
+                entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            }
+                
+            var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
+            var randomFile = robustRandom.Pick(soundCollection.PickFiles);
+            var soundSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
             soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
-            
         }
 
-        private float CalcBulletOffset()
+        /// <summary>
+        /// Drops multiple cartridges / shells on the floor
+        /// Wraps EjectCasing to make it less toxic for bulk ejections
+        /// </summary>
+        /// <param name="entities"></param>
+        public static void EjectCasings(IEnumerable<IEntity> entities)
         {
-            return _robustRandom.NextFloat() * (BulletEjectOffset * 2) - BulletEjectOffset;
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
+            var ejectDirections = new[] {Direction.East, Direction.North, Direction.South, Direction.West};
+            var soundPlayCount = 0;
+            var playSound = true;
+
+            foreach (var entity in entities)
+            {
+                EjectCasing(entity, playSound, robustRandom, prototypeManager, entitySystemManager, ejectDirections);
+                soundPlayCount++;
+                if (soundPlayCount > 3)
+                {
+                    playSound = false;
+                }
+            }
         }
 
         #region Firing

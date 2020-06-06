@@ -9,11 +9,11 @@
     "states": [
         {
             "name": "base",
-            "directions": 4
+            "directions": 1
         },
         {
             "name": "spent",
-            "directions": 4
+            "directions": 1
         }
     ]
 }

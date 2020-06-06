@@ -8,6 +8,7 @@ using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -58,6 +59,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
+            
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
         private void UpdateAppearance()
@@ -95,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     if (_soundInsert != null)
                     {
                         var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                        soundSystem.Play(_soundInsert);
+                        soundSystem.Play(_soundInsert, AudioParams.Default.WithVolume(-2));
                     }
 
                     // Dirty();
@@ -126,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_soundSpin != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundSpin);
+                soundSystem.Play(_soundSpin, AudioParams.Default.WithVolume(-2));
             }
         }
 
@@ -180,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundEject != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundEject);
+                    soundSystem.Play(_soundEject, AudioParams.Default.WithVolume(-1));
                 }
             }
 

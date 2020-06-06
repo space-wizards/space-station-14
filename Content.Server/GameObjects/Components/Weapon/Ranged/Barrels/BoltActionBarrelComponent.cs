@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -65,14 +66,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     if (_soundBoltOpen != null)
                     {
-                        soundSystem.Play(_soundBoltOpen);
+                        soundSystem.Play(_soundBoltOpen, AudioParams.Default.WithVolume(-5));
                     }
                 }
                 else
                 {
                     if (_soundBoltClosed != null)
                     {
-                        soundSystem.Play(_soundBoltClosed);
+                        soundSystem.Play(_soundBoltClosed, AudioParams.Default.WithVolume(-5));
                     }
                 }
                 
@@ -212,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundCycle != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundCycle);
+                    soundSystem.Play(_soundCycle, AudioParams.Default.WithVolume(-2));
                 }
             }
             
@@ -245,7 +246,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundInsert != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundInsert);
+                    soundSystem.Play(_soundInsert, AudioParams.Default.WithVolume(-2));
                 }
                 // Dirty();
                 UpdateAppearance();
@@ -259,7 +260,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundInsert != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundInsert);
+                    soundSystem.Play(_soundInsert, AudioParams.Default.WithVolume(-2));
                 }
                 // Dirty();
                 UpdateAppearance();

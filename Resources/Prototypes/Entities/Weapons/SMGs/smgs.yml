@@ -67,9 +67,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: C-20r Sub Machine Gun
@@ -107,9 +108,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: Excelsior SMG "Drozd"
@@ -146,9 +148,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: Straylight
@@ -181,9 +184,10 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
 
 - type: entity
   name: WT550
@@ -219,9 +223,10 @@
     - SmgTopMounted
   - type: Appearance
     visuals:
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 6
+      zeroVisible: true
 
 - type: entity
   name: Zoric
@@ -254,6 +259,7 @@
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
-    - type: BarrelMagVisualizer2D
+    - type: MagVisualizer2D
       magState: mag
       steps: 1
+      zeroVisible: true
