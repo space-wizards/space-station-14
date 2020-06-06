@@ -61,13 +61,13 @@ namespace Content.Server.Mobs
             return true;
         }
 
-        public static void DropAllItemsInHands(IEntity entity)
+        public static void DropAllItemsInHands(IEntity entity, bool doMobChecks = false)
         {
             if (!entity.TryGetComponent(out IHandsComponent hands)) return;
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
-                hands.Drop(heldItem.Owner);
+                hands.Drop(heldItem.Owner, doMobChecks);
             }
         }
     }

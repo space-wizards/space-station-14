@@ -78,7 +78,6 @@ namespace Content.Client.GameObjects.EntitySystems
 
             if (weapon.Automatic || canFireSemi)
             {
-                Logger.Debug(IoCManager.Resolve<IGameTiming>().CurTick.ToString());
                 weapon.SyncFirePos(worldPos);
             }
         }
