@@ -7,8 +7,7 @@
   - Civilian
   icon: "Clown"
   access:
-  - Service
-  - Maintenance
+  - Theatre
 
 - type: startingGear
   id: ClownGear

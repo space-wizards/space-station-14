@@ -7,7 +7,7 @@
   - Civilian
   icon: "Janitor"
   access:
-  - Service
+  - Janitor
   - Maintenance
 
 - type: startingGear

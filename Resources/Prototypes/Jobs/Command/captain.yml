@@ -21,6 +21,8 @@
   - Service
   - Maintenance
   - External
+  - Janitor
+  - Theatre
 
 - type: startingGear
   id: CaptainGear
