@@ -20,7 +20,7 @@
     visuals:
     - type: MagVisualizer2D
       magState: mag
-      steps: 8
+      steps: 7
       zeroVisible: false
 
 - type: entity
