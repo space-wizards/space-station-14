@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.NewPower
         {
             var oldDrawRate = DrawRate;
             _drawRate = newDrawRate; //must be set before updating powernet, as it checks the DrawRate of every consumer
-            PowerNet.UpdateConsumerDraw(this, oldDrawRate, newDrawRate);
+            Net.UpdateConsumerDraw(this, oldDrawRate, newDrawRate);
         }
 
         private void SetReceivedPower(int newReceivedPower)
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.NewPower
 
         private void SetPriority(Priority newPriority)
         {
-            PowerNet.UpdateConsumerPriority(this, Priority, newPriority);
+            Net.UpdateConsumerPriority(this, Priority, newPriority);
             _priority = newPriority;
         }
     }

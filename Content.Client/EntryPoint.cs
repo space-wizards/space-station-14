@@ -148,6 +148,8 @@ namespace Content.Client
                 "NodeContainer",
                 "PowerSupplier",
                 "PowerConsumer",
+                "BatteryStorage",
+                "BatteryDischarger",
             };
 
             foreach (var ignoreName in registerIgnore)

@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.NewPower
 
         private void SetSupplyRate(int newSupplyRate)
         {
-            PowerNet.UpdateSupplierSupply(this, SupplyRate, newSupplyRate);
+            Net.UpdateSupplierSupply(this, SupplyRate, newSupplyRate);
             _supplyRate = newSupplyRate;
         }
     }

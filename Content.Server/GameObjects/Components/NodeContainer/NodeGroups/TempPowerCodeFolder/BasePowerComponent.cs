@@ -3,23 +3,22 @@ using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NewPower
 {
-    public abstract class BasePowerComponent : Component
+    public abstract class BaseNetConnectorComponent<T> : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
         private Voltage _voltage;
 
         [ViewVariables]
-        public IPowerNet PowerNet { get => _powerNet; set => SetPowerNet(value); }
-        private IPowerNet _powerNet = PowerNetNodeGroup.NullNet;
+        public T Net { get => _net; set => SetNet(value); }
+        private T _net;
 
         [ViewVariables]
-        private bool _needsPowerNet = true;
+        private bool _needsNet = true;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -27,48 +26,51 @@ namespace Content.Server.GameObjects.Components.NewPower
             serializer.DataField(ref _voltage, "voltage", Voltage.High);
         }
 
-        public override void OnAdd()
+        public override void Initialize()
         {
-            base.OnAdd();
-            if (_needsPowerNet)
+            base.Initialize();
+            _net = GetNullNet();
+            if (_needsNet)
             {
-                TryFindAndSetPowerNet();
+                TryFindAndSetNet();
             }
         }
 
         public override void OnRemove()
         {
-            ClearPowerNet();
+            ClearNet();
             base.OnRemove();
         }
 
-        public void TryFindAndSetPowerNet()
+        public void TryFindAndSetNet()
         {
-            if (TryFindPowerNet(out var powerNet))
+            if (TryFindNet(out var net))
             {
-                PowerNet = powerNet;
+                Net = net;
             }
         }
 
-        public void ClearPowerNet()
+        public void ClearNet()
         {
-            RemoveSelfFromNet(_powerNet);
-            _powerNet = PowerNetNodeGroup.NullNet;
-            _needsPowerNet = true;
+            RemoveSelfFromNet(_net);
+            _net = GetNullNet();
+            _needsNet = true;
         }
 
-        protected abstract void AddSelfToNet(IPowerNet powerNet);
+        protected abstract T GetNullNet();
 
-        protected abstract void RemoveSelfFromNet(IPowerNet powerNet);
+        protected abstract void AddSelfToNet(T net);
 
-        private bool TryFindPowerNet(out IPowerNet foundNet)
+        protected abstract void RemoveSelfFromNet(T net);
+
+        private bool TryFindNet(out T foundNet)
         {
             if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 var compatibleNet = container.Nodes
                     .Where(node => node.NodeGroupID == (NodeGroupID) Voltage)
                     .Select(node => node.NodeGroup)
-                    .OfType<IPowerNet>()
+                    .OfType<T>()
                     .FirstOrDefault();
 
                 if (compatibleNet != null)
@@ -77,23 +79,23 @@ namespace Content.Server.GameObjects.Components.NewPower
                     return true;
                 }
             }
-            foundNet = null;
+            foundNet = default;
             return false;
         }
 
-        private void SetPowerNet(IPowerNet newPowerNet)
+        private void SetNet(T newNet)
         {
-            RemoveSelfFromNet(_powerNet);
-            AddSelfToNet(newPowerNet);
-            _powerNet = newPowerNet;
-            _needsPowerNet = false;
+            RemoveSelfFromNet(_net);
+            AddSelfToNet(newNet);
+            _net = newNet;
+            _needsNet = false;
         }
 
         private void SetVoltage(Voltage newVoltage)
         {
-            ClearPowerNet();
+            ClearNet();
             _voltage = newVoltage;
-            TryFindAndSetPowerNet();
+            TryFindAndSetNet();
         }
     }
 

@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         public int NodeCount => Nodes.Count;
 
-        public static readonly INodeGroup Null = new NullNodeGroup();
+        public static readonly INodeGroup NullGroup = new NullNodeGroup();
 
         public void AddNode(Node node)
         {

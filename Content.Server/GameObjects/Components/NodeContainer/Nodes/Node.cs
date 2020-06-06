@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
-        private INodeGroup _nodeGroup = BaseNodeGroup.Null;
+        private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
         [ViewVariables]
         public IEntity Owner { get; private set; }
@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void ClearNodeGroup()
         {
-            _nodeGroup = BaseNodeGroup.Null;
+            _nodeGroup = BaseNodeGroup.NullGroup;
             NeedsGroup = true;
         }
 

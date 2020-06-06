@@ -175,8 +175,8 @@
   - type: BatteryDischarger
     
 - type: entity
-  id: DebugHVToMVSubstation
-  name: Debug HV To MV Substation
+  id: DebugSubstation
+  name: Debug Substation
   placement:
     mode: SnapgridCenter
   components:
@@ -202,3 +202,28 @@
   - type: PowerSupplier
     voltage: Medium
   - type: BatteryDischarger
+
+- type: entity
+  id: DebugApc
+  name: Debug Apc
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    drawdepth: WallMountedItems
+    texture: Objects/Power/provider.png
+  - type: Icon
+    texture: Objects/Power/provider.png
+  - type: Battery
+  - type: NodeContainer
+    nodeTypes: { MVPower : ["AdjacentNode"], LVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+    voltage: Medium
+  - type: BatteryStorage
+  - type: NewApc
+    voltage: Low

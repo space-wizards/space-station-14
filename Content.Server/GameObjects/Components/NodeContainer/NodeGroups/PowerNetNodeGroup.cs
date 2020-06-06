@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority);
     }
 
-    [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower, NodeGroupID.LVPower)]
+    [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     public class PowerNetNodeGroup : BaseNodeGroup, IPowerNet
     {
         private readonly Dictionary<Node, List<BasePowerComponent>> _powerComponents = new Dictionary<Node, List<BasePowerComponent>>();
@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _powerComponents.Add(node, newPowerComponents);
             foreach (var powerComponent in newPowerComponents)
             {
-                powerComponent.PowerNet = this;
+                powerComponent.Net = this;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             foreach (var powerComponent in _powerComponents[node])
             {
-                powerComponent.ClearPowerNet();
+                powerComponent.ClearNet();
             }
             _powerComponents.Remove(node);
         }
@@ -197,6 +197,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
+        #endregion
+
         private class NullPowerNet : IPowerNet
         {
             public void AddConsumer(PowerConsumerComponent consumer) { }
@@ -207,7 +209,5 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate) { }
             public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority) { }
         }
-
-        #endregion
     }
 }
