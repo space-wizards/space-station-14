@@ -1,10 +1,8 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Construction;
-using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -13,7 +11,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -39,6 +36,9 @@ namespace Content.Server.GameObjects.Components.Construction
             {
                 case TryStartStructureConstructionMessage tryStart:
                     TryStartStructureConstruction(tryStart.Location, tryStart.PrototypeName, tryStart.Angle, tryStart.Ack);
+                    break;
+                case TryStartItemConstructionMessage tryStart:
+                    TryStartItemConstruction(tryStart.PrototypeName);
                     break;
             }
         }
@@ -101,6 +101,57 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var msg = new AckStructureConstructionMessage(ack);
             SendNetworkMessage(msg);
+        }
+
+        void TryStartItemConstruction(string prototypeName)
+        {
+            var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
+
+            if (prototype.Stages.Count < 2)
+            {
+                throw new InvalidOperationException($"Prototype '{prototypeName}' does not have enough stages.");
+            }
+
+            var stage0 = prototype.Stages[0];
+            if (!(stage0.Forward is ConstructionStepMaterial matStep))
+            {
+                throw new NotImplementedException();
+            }
+
+            // Try to find the stack with the material in the user's hand.
+            var hands = Owner.GetComponent<HandsComponent>();
+            var activeHand = hands.GetActiveHand?.Owner;
+            if (activeHand == null)
+            {
+                return;
+            }
+
+            if (!activeHand.TryGetComponent(out StackComponent stack) || !ConstructionComponent.MaterialStackValidFor(matStep, stack))
+            {
+                return;
+            }
+
+            if (!stack.Use(matStep.Amount))
+            {
+                return;
+            }
+
+            // OK WE'RE GOOD CONSTRUCTION STARTED.
+            EntitySystem.Get<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+            if (prototype.Stages.Count == 2)
+            {
+                // Exactly 2 stages, so don't make an intermediate frame.
+                var ent = _serverEntityManager.SpawnEntity(prototype.Result, Owner.Transform.GridPosition);
+                hands.PutInHandOrDrop(ent.GetComponent<ItemComponent>());
+            }
+            else
+            {
+                //TODO: Make these viable as an item and try putting them in the players hands
+                var frame = _serverEntityManager.SpawnEntity("structureconstructionframe", Owner.Transform.GridPosition);
+                var construction = frame.GetComponent<ConstructionComponent>();
+                construction.Init(prototype);
+            }
+
         }
     }
 }

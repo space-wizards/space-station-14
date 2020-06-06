@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Construction;
+using Content.Client.Interfaces.GameObjects;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
@@ -236,11 +237,10 @@ namespace Content.Client.Construction
                     return;
                 }
 
-                if (prototype.Type != ConstructionType.Structure)
+                if (prototype.Type == ConstructionType.Item)
                 {
-                    // In-hand attackby doesn't exist so this is the best alternative.
-                    var loc = Owner.Owner.GetComponent<ITransformComponent>().GridPosition;
-                    Owner.SpawnGhost(prototype, loc, Direction.North);
+                    Owner.TryStartItemConstruction(prototype.ID);
+                    BuildButton.Pressed = false;
                     return;
                 }
 

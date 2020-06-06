@@ -48,6 +48,26 @@ namespace Content.Shared.GameObjects.Components.Construction
             }
         }
 
+        /// <summary>
+        ///     Sent client -> server to to tell the server that we started building
+        ///     an item-construction.
+        /// </summary>
+        [Serializable, NetSerializable]
+        protected class TryStartItemConstructionMessage : ComponentMessage
+        {
+            /// <summary>
+            ///     The construction prototype to start building.
+            /// </summary>
+            public readonly string PrototypeName;
+
+            public TryStartItemConstructionMessage(string prototypeName)
+            {
+                Directed = true;
+                PrototypeName = prototypeName;
+            }
+        }
+
+
         [Serializable, NetSerializable]
         protected class AckStructureConstructionMessage : ComponentMessage
         {
