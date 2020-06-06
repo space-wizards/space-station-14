@@ -1,6 +1,6 @@
 - type: entity
   id: CartridgeSRifleBase
-  name: Cartridge (.20 rifle)
+  name: cartridge (.20 rifle)
   parent: BaseItem
   abstract: true
   components:
@@ -18,7 +18,7 @@
 
 - type: entity
   id: CartridgeSRifle
-  name: Cartridge (.20 rifle)
+  name: cartridge (.20 rifle)
   parent: CartridgeSRifleBase
   components:
   - type: Ammo
@@ -26,7 +26,7 @@
 
 - type: entity
   id: CartridgeSRifleFlash
-  name: Cartridge (.20 rifle flash)
+  name: cartridge (.20 rifle flash)
   parent: CartridgeSRifleBase
   components:
   - type: Ammo
@@ -34,7 +34,7 @@
 
 - type: entity
   id: CartridgeSRifleHV
-  name: Cartridge (.20 rifle high-velocity)
+  name: cartridge (.20 rifle high-velocity)
   parent: CartridgeSRifleBase
   components:
   - type: Ammo
@@ -43,7 +43,7 @@
 
 - type: entity
   id: CartridgeSRiflePractice
-  name: Cartridge (.20 rifle practice)
+  name: cartridge (.20 rifle practice)
   parent: CartridgeSRifleBase
   components:
   - type: Ammo
@@ -51,7 +51,7 @@
 
 - type: entity
   id: CartridgeSRifleRubber
-  name: Cartridge (.20 rifle rubber)
+  name: cartridge (.20 rifle rubber)
   parent: CartridgeSRifleBase
   components:
   - type: Ammo

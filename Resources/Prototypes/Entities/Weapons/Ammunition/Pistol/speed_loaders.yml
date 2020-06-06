@@ -1,6 +1,6 @@
 - type: entity
   id: SLPistolBase
-  name: "Speed loader (.35 auto)"
+  name: "speed loader (.35 auto)"
   parent: BaseItem
   abstract: true
   components:
@@ -25,7 +25,7 @@
 
 - type: entity
   id: SLPistol
-  name: "Speed loader (.35 auto)"
+  name: "speed loader (.35 auto)"
   parent: SLPistolBase
   components:
   - type: SpeedLoader
@@ -37,7 +37,7 @@
 
 - type: entity
   id: SLPistolFlash
-  name: "Speed loader (.35 auto flash)"
+  name: "speed loader (.35 auto flash)"
   parent: SLPistolBase
   components:
   - type: SpeedLoader
@@ -49,7 +49,7 @@
 
 - type: entity
   id: SLPistolHV
-  name: "Speed loader (.35 auto high-velocity)"
+  name: "speed loader (.35 auto high-velocity)"
   parent: SLPistolBase
   components:
   - type: SpeedLoader
@@ -61,7 +61,7 @@
 
 - type: entity
   id: SLPistolPractice
-  name: "Speed loader (.35 auto practice)"
+  name: "speed loader (.35 auto practice)"
   parent: SLPistolBase
   components:
   - type: SpeedLoader
@@ -73,7 +73,7 @@
 
 - type: entity
   id: SLPistolRubber
-  name: "Speed loader (.35 auto rubber)"
+  name: "speed loader (.35 auto rubber)"
   parent: SLPistolBase
   components:
   - type: SpeedLoader

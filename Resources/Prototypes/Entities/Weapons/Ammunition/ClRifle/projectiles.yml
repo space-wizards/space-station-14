@@ -1,6 +1,6 @@
 - type: entity
   id: BulletClRifle
-  name: Bullet (.25 caseless)
+  name: bullet (.25 caseless)
   parent: BulletBase
   abstract: true
   components:
@@ -10,7 +10,7 @@
 
 - type: entity
   id: BulletClRifleFlash
-  name: Bullet (.25 caseless flash)
+  name: bullet (.25 caseless flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -20,7 +20,7 @@
 
 - type: entity
   id: BulletClRifleHV
-  name: Bullet (.25 caseless high-velocity)
+  name: bullet (.25 caseless high-velocity)
   parent: BulletBaseHV
   abstract: true
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   id: BulletClRiflePractice
-  name: Bullet (.25 caseless practice)
+  name: bullet (.25 caseless practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -40,7 +40,7 @@
 
 - type: entity
   id: BulletClRifleRubber
-  name: Bullet (.25 caseless rubber)
+  name: bullet (.25 caseless rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

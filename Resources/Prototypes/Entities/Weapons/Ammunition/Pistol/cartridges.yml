@@ -1,6 +1,6 @@
 - type: entity
   id: CartridgePistolBase
-  name: Cartridge (.35 auto)
+  name: cartridge (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -18,7 +18,7 @@
 
 - type: entity
   id: CartridgePistol
-  name: Cartridge (.35 auto)
+  name: cartridge (.35 auto)
   parent: CartridgePistolBase
   components:
   - type: Ammo
@@ -26,7 +26,7 @@
 
 - type: entity
   id: CartridgePistolFlash
-  name: Cartridge (.35 auto flash)
+  name: cartridge (.35 auto flash)
   parent: CartridgePistolBase
   components:
   - type: Ammo
@@ -34,7 +34,7 @@
 
 - type: entity
   id: CartridgePistolHV
-  name: Cartridge (.35 auto high-velocity)
+  name: cartridge (.35 auto high-velocity)
   parent: CartridgePistolBase
   components:
   - type: Ammo
@@ -43,7 +43,7 @@
 
 - type: entity
   id: CartridgePistolPractice
-  name: Cartridge (.35 auto practice)
+  name: cartridge (.35 auto practice)
   parent: CartridgePistolBase
   components:
   - type: Ammo
@@ -51,7 +51,7 @@
 
 - type: entity
   id: CartridgePistolRubber
-  name: Cartridge (.35 auto rubber)
+  name: cartridge (.35 auto rubber)
   parent: CartridgePistolBase
   components:
   - type: Ammo

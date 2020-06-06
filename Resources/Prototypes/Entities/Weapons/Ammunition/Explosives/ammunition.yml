@@ -19,7 +19,7 @@
 
 - type: entity
   id: GrenadeBaton
-  name: Baton grenade
+  name: baton grenade
   parent: BaseItem
   components:
   - type: Ammo
@@ -41,7 +41,7 @@
 
 - type: entity
   id: GrenadeBlast
-  name: Blast grenade
+  name: blast grenade
   parent: BaseItem
   components:
   - type: Ammo
@@ -63,7 +63,7 @@
 
 - type: entity
   id: GrenadeFlash
-  name: Flash grenade
+  name: flash grenade
   parent: BaseItem
   components:
   - type: Ammo
@@ -85,7 +85,7 @@
 
 - type: entity
   id: GrenadeFrag
-  name: Frag grenade
+  name: frag grenade
   parent: BaseItem
   components:
   - type: Ammo

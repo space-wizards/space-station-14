@@ -1,6 +1,6 @@
 - type: entity
   id: BulletAntiMaterial
-  name: Bullet (.60 anti-material)
+  name: bullet (.60 anti-material)
   parent: BulletBaseHV
   abstract: true
   components:

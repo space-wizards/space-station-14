@@ -13,9 +13,9 @@ namespace Content.Server.GameObjects.Components.Explosion
     /// When triggered will flash in an area around the object and destroy itself
     /// </summary>
     [RegisterComponent]
-    public class FlashBangComponent : Component, ITimerTrigger, IDestroyAct
+    public class FlashExplosiveComponent : Component, ITimerTrigger, IDestroyAct
     {
-        public override string Name => "FlashBang";
+        public override string Name => "FlashExplosive";
 
         private float _range;
         private double _duration;

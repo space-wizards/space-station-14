@@ -1,5 +1,5 @@
 - type: entity
-  name: Red Laser
+  name: red laser
   id: RedLaser
   abstract: true
   components:
@@ -10,7 +10,7 @@
     damage: 10
 
 - type: entity
-  name: Red Heavy Laser
+  name: red heavy laser
   id: RedHeavyLaser
   abstract: true
   components:
@@ -21,7 +21,7 @@
     damage: 30
 
 - type: entity
-  name: X-ray Laser
+  name: x-ray laser
   id: XrayLaser
   abstract: true
   components:

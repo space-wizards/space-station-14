@@ -1,6 +1,6 @@
 - type: entity
   id: BulletMagnum
-  name: Bullet (.40 magnum)
+  name: bullet (.40 magnum)
   parent: BulletBase
   abstract: true
   components:
@@ -10,7 +10,7 @@
 
 - type: entity
   id: BulletMagnumFlash
-  name: Bullet (.40 magnum flash)
+  name: bullet (.40 magnum flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -20,7 +20,7 @@
 
 - type: entity
   id: BulletMagnumHV
-  name: Bullet (.40 magnum high-velocity)
+  name: bullet (.40 magnum high-velocity)
   parent: BulletBaseHV
   abstract: true
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   id: BulletMagnumPractice
-  name: Bullet (.40 magnum practice)
+  name: bullet (.40 magnum practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -40,7 +40,7 @@
 
 - type: entity
   id: BulletMagnumRubber
-  name: Bullet (.40 magnum rubber)
+  name: bullet (.40 magnum rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

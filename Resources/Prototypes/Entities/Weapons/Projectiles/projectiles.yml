@@ -79,7 +79,7 @@
     paralyzeAmount: 2
 
 - type: entity
-  name : Taser
+  name : taser
   id: BulletTaser
   abstract: true
   components:
@@ -116,7 +116,7 @@
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
-  name: Rocket
+  name: rocket
   parent: BulletBase
   abstract: true
   components:
@@ -135,7 +135,7 @@
 
 - type: entity
   id: BulletGrenadeBaton
-  name: Baton grenade
+  name: baton grenade
   parent: BulletBase
   abstract: true
   components:
@@ -151,7 +151,7 @@
 
 - type: entity
   id: BulletGrenadeBlast
-  name: Blast grenade
+  name: blast grenade
   parent: BulletBase
   abstract: true
   components:
@@ -170,7 +170,7 @@
 
 - type: entity
   id: BulletGrenadeFlash
-  name: Flash grenade
+  name: flash grenade
   parent: BulletBase
   abstract: true
   components:
@@ -187,7 +187,7 @@
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
   id: BulletGrenadeFrag
-  name: Frag grenade
+  name: frag grenade
   parent: BulletBase
   abstract: true
   components:

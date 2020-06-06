@@ -168,7 +168,7 @@ namespace Content.Client
                 "TilePrying",
                 "RandomToolColor",
                 "BatteryBarrel",
-                "FlashBang",
+                "FlashExplosive",
                 "FlashProjectile",
             };
 

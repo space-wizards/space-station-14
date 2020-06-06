@@ -1,6 +1,6 @@
 - type: entity
   id: BoxMagnumBase
-  name: "Ammunition box (.40 magnum)"
+  name: "ammunition box (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 # Boxes
 - type: entity
   id: BoxMagnum
-  name: "Ammunition box (.40 magnum)"
+  name: "ammunition box (.40 magnum)"
   parent: BoxMagnumBase
   components:
   - type: AmmoBox
@@ -39,7 +39,7 @@
 
 - type: entity
   id: BoxMagnumFlash
-  name: "Ammunition box (.40 magnum flash)"
+  name: "ammunition box (.40 magnum flash)"
   parent: BoxMagnumBase
   components:
   - type: AmmoBox
@@ -52,7 +52,7 @@
 
 - type: entity
   id: BoxMagnumHV
-  name: "Ammunition box (.40 magnum high-velocity)"
+  name: "ammunition box (.40 magnum high-velocity)"
   parent: BoxMagnumBase
   components:
   - type: AmmoBox
@@ -65,7 +65,7 @@
 
 - type: entity
   id: BoxMagnumPractice
-  name: "Ammunition box (.40 magnum practice)"
+  name: "ammunition box (.40 magnum practice)"
   parent: BoxMagnumBase
   components:
   - type: AmmoBox
@@ -78,7 +78,7 @@
 
 - type: entity
   id: BoxMagnumRubber
-  name: "Ammunition box (.40 magnum rubber)"
+  name: "ammunition box (.40 magnum rubber)"
   parent: BoxMagnumBase
   components:
   - type: AmmoBox

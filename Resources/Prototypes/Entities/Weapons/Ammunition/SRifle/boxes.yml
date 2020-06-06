@@ -1,6 +1,6 @@
 - type: entity
   id: BoxSRifleBase
-  name: "Ammunition box (.20 rifle)"
+  name: "ammunition box (.20 rifle)"
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 # Boxes
 - type: entity
   id: BoxSRifleBigBox
-  name: "Ammunition box (.20 rifle)"
+  name: "ammunition box (.20 rifle)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox
@@ -39,7 +39,7 @@
 
 - type: entity
   id: BoxSRifleBigBoxRubber
-  name: "Ammunition box (.20 rifle rubber)"
+  name: "ammunition box (.20 rifle rubber)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox
@@ -52,7 +52,7 @@
 
 - type: entity
   id: BoxSRifleBox
-  name: "Ammunition box (.20 rifle)"
+  name: "ammunition box (.20 rifle)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox
@@ -65,7 +65,7 @@
 
 - type: entity
   id: BoxSRifleBoxFlash
-  name: "Ammunition box (.20 rifle flash)"
+  name: "ammunition box (.20 rifle flash)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox
@@ -78,7 +78,7 @@
 
 - type: entity
   id: BoxSRifleBoxHV
-  name: "Ammunition box (.20 rifle high-velocity)"
+  name: "ammunition box (.20 rifle high-velocity)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox
@@ -91,7 +91,7 @@
 
 - type: entity
   id: BoxSRifleBoxPractice
-  name: "Ammunition box (.20 rifle practice)"
+  name: "ammunition box (.20 rifle practice)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox
@@ -104,7 +104,7 @@
 
 - type: entity
   id: BoxSRifleBoxRubber
-  name: "Ammunition box (.20 rifle rubber)"
+  name: "ammunition box (.20 rifle rubber)"
   parent: BoxSRifleBase
   components:
   - type: AmmoBox

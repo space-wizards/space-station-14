@@ -70,7 +70,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Pulemyot Kalashnikova
+  name: pulemyot kalashnikova
   id: LMGPK
   parent: LMGBase
   description: Kalashnikov's Machinegun, a well preserved and maintained antique weapon of war.

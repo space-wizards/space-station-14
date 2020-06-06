@@ -1,6 +1,6 @@
 - type: entity
   id: SLLRifle
-  name: "Speed loader (.30 rifle)"
+  name: "speed loader (.30 rifle)"
   parent: BaseItem
   components:
   - type: SpeedLoader

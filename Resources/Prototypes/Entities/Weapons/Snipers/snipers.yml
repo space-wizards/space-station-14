@@ -32,7 +32,7 @@
     soundInsert: /Audio/Guns/MagIn/bullet_insert.ogg
 
 - type: entity
-  name: Excelsior BR .30 "Kardashev-Mosin"
+  name: Kardashev-Mosin
   parent: SniperBase
   id: SniperBoltGun
   description: Weapon for hunting, or endless trench warfare. If you’re on a budget, it’s a darn good rifle for just about everything.
@@ -50,7 +50,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: Excelsior BR .30 "Kardashev-Mosin"
+  name: Kardashev-Mosin
   parent: SniperBase
   id: SniperBoltGunWood
   description: Weapon for hunting, or endless trench warfare. If you’re on a budget, it’s a darn good rifle for just about everything.
@@ -66,7 +66,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: SA AMR "Hristov"
+  name: Hristov
   parent: SniperBase
   id: SniperHeavy
   description: A portable anti-armour rifle, fitted with a scope, it was originally designed for use against armoured exosuits. It is capable of punching through windows and non-reinforced walls with ease. Fires armor piercing 14.5mm shells.

@@ -1,6 +1,6 @@
 - type: entity
   id: MagazinePistolBase
-  name: Magazine (.35 auto)
+  name: magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: MagazinePistolHCBase
-  name: High-capacity magazine (.35 auto)
+  name: high-capacity magazine (.35 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -103,7 +103,7 @@
 
 - type: entity
   id: MagazinePistol
-  name: Magazine (.35 auto)
+  name: magazine (.35 auto)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -115,7 +115,7 @@
 
 - type: entity
   id: MagazinePistolFlash
-  name: Magazine (.35 auto flash)
+  name: magazine (.35 auto flash)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -127,7 +127,7 @@
 
 - type: entity
   id: MagazinePistolHV
-  name: Magazine (.35 auto high-velocity)
+  name: magazine (.35 auto high-velocity)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -139,7 +139,7 @@
 
 - type: entity
   id: MagazinePistolPractice
-  name: Magazine (.35 auto practice)
+  name: magazine (.35 auto practice)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -151,7 +151,7 @@
 
 - type: entity
   id: MagazinePistolRubber
-  name: Magazine (.35 auto rubber)
+  name: magazine (.35 auto rubber)
   parent: MagazinePistolBase
   components:
   - type: RangedMagazine
@@ -163,7 +163,7 @@
 
 - type: entity
   id: MagazineHCPistol
-  name: High-capacity magazine (.35 auto)
+  name: high-capacity magazine (.35 auto)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -175,7 +175,7 @@
 
 - type: entity
   id: MagazineHCPistolHV
-  name: High-capacity magazine (.35 auto high-velocity)
+  name: high-capacity magazine (.35 auto high-velocity)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -187,7 +187,7 @@
 
 - type: entity
   id: MagazineHCPistolPractice
-  name: High-capacity magazine (.35 auto practice)
+  name: high-capacity magazine (.35 auto practice)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine
@@ -199,7 +199,7 @@
 
 - type: entity
   id: MagazineHCPistolRubber
-  name: High-capacity magazine (.35 auto rubber)
+  name: high-capacity magazine (.35 auto rubber)
   parent: MagazinePistolHCBase
   components:
   - type: RangedMagazine

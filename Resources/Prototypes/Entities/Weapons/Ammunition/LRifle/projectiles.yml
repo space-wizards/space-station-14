@@ -1,6 +1,6 @@
 - type: entity
   id: BulletLRifle
-  name: Bullet (.20 rifle)
+  name: bullet (.20 rifle)
   parent: BulletBase
   abstract: true
   components:
@@ -10,7 +10,7 @@
 
 - type: entity
   id: BulletLRifleFlash
-  name: Bullet (.20 rifle flash)
+  name: bullet (.20 rifle flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -20,7 +20,7 @@
 
 - type: entity
   id: BulletLRifleHV
-  name: Bullet (.20 rifle high-velocity)
+  name: bullet (.20 rifle high-velocity)
   parent: BulletBaseHV
   abstract: true
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   id: BulletLRiflePractice
-  name: Bullet (.20 rifle practice)
+  name: bullet (.20 rifle practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -40,7 +40,7 @@
 
 - type: entity
   id: BulletLRifleRubber
-  name: Bullet (.20 rifle rubber)
+  name: bullet (.20 rifle rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

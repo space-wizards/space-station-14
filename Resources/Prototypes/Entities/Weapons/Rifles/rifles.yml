@@ -30,7 +30,7 @@
     soundMagEject: /Audio/Guns/MagOut/batrifle_magout.ogg
 
 - type: entity
-  name: Excelsior AKMS
+  name: AKMS
   parent: RifleBase
   id: RifleAk
   description: Weapon of the oppressed, oppressors, and extremists of all flavours. This is a copy of an ancient semi-automatic rifle chambered for .30 Rifle. If it won't fire, percussive maintenance should get it working again. It is known for its easy maintenance, and low price. This gun is not in active military service anymore, but has become ubiquitous among criminals and insurgents. This is a high-quality copy, which has an automatic fire mode.
@@ -69,7 +69,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Black AK
+  name: black AK
   parent: RifleBase
   id: RifleBlackAk
   description: Weapon of the oppressed, oppressors, and extremists of all flavours. This is a copy of an ancient semi-automatic rifle chambered for .30 Rifle. If it won't fire, percussive maintenance should get it working again. It is known for its easy maintenance, and low price. This gun is not in active military service anymore, but has become ubiquitous among criminals and insurgents. This is a high-quality copy, which has an automatic fire mode.
@@ -108,7 +108,7 @@
       zeroVisible: true
 
 - type: entity
-  name: FS CAR "Z8 Bulldog"
+  name: Z8 Bulldog
   parent: RifleBase
   id: RifleCarbine
   description: The Z8 Bulldog is an older bullpup carbine model, made by Frozen Star.
@@ -231,7 +231,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Excelsior "Vintorez"
+  name: Vintorez
   parent: RifleBase
   id: RifleVintorez
   description: This gun is a copy of a design from a country that no longer exists. It is still highly prized for its armor piercing capabilities.
@@ -269,7 +269,7 @@
       zeroVisible: true
 
 - type: entity
-  name: FS AR "Wintermute"
+  name: Wintermute
   parent: RifleBase
   id: RifleWintermute
   description: A high end military grade assault rifle, designed as a modern ballistic infantry weapon. Primarily used by and produced for IH troops.

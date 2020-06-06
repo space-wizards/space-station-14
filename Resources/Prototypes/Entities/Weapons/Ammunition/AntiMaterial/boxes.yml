@@ -1,6 +1,6 @@
 - type: entity
   id: BoxAntiMaterial
-  name: "Ammunition box (.60 Anti Material)"
+  name: "ammunition box (.60 anti-material)"
   parent: BaseItem
   components:
   - type: AmmoBox

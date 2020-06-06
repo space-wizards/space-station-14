@@ -1,6 +1,6 @@
 - type: entity
   id: PelletShotgunSlug
-  name: Pellet (.50 slug)
+  name: pellet (.50 slug)
   abstract: true
   parent: BulletBase
   components:
@@ -13,7 +13,7 @@
 
 - type: entity
   id: PelletShotgunBeanbag
-  name: Beanbag (.50)
+  name: beanbag (.50)
   abstract: true
   parent: BulletBase
   components:
@@ -27,7 +27,7 @@
 
 - type: entity
   id: PelletShotgun
-  name: Pellet (.50)
+  name: pellet (.50)
   abstract: true
   parent: BulletBase
   components:
@@ -40,7 +40,7 @@
 
 - type: entity
   id: PelletShotgunFlash
-  name: Pellet (.50 flash)
+  name: pellet (.50 flash)
   abstract: true
   parent: BulletBaseFlash
   components:
@@ -53,7 +53,7 @@
 
 - type: entity
   id: PelletShotgunIncendiary
-  name: Pellet (.50 incendiary)
+  name: pellet (.50 incendiary)
   abstract: true
   parent: BulletBase
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   id: PelletShotgunPractice
-  name: Pellet (.50 practice)
+  name: pellet (.50 practice)
   abstract: true
   parent: BulletBasePractice
   components:

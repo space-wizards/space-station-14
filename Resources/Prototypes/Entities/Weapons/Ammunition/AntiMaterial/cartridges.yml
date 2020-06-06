@@ -1,6 +1,6 @@
 - type: entity
   id: CartridgeAntiMaterial
-  name: Cartridge (.60 anti-material)
+  name: cartridge (.60 anti-material)
   parent: BaseItem
   components:
   - type: Ammo

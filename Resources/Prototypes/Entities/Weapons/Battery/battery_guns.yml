@@ -1,5 +1,5 @@
 - type: entity
-  name: Retro Laser Gun
+  name: retro laser gun
   parent: BaseItem
   id: LaserGun
   description: A weapon using light amplified by the stimulated emission of radiation. Ancient inefficient model.
@@ -40,7 +40,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Laser Cannon
+  name: laser cannon
   parent: BaseItem
   id: LaserCannon
   description: With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!
@@ -81,7 +81,7 @@
       zeroVisible: false
 
 - type: entity
-  name: X-Ray Cannon
+  name: x-ray cannon
   parent: BaseItem
   id: XrayCannon
   description: Blah blah blah
@@ -123,7 +123,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Taser
+  name: taser
   parent: BaseItem
   id: TaserGun
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.

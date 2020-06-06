@@ -1,6 +1,6 @@
 - type: entity
   id: MagazineShotgunBase
-  name: Ammo drum (.50 shells)
+  name: ammo drum (.50 shells)
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: MagazineShotgun
-  name: Ammo drum (.50 pellet)
+  name: ammo drum (.50 pellet)
   parent: MagazineShotgunBase
   components:
   - type: RangedMagazine
@@ -38,7 +38,7 @@
 
 - type: entity
   id: MagazineShotgunBeanbag
-  name: Ammo drum (.50 beanbags)
+  name: ammo drum (.50 beanbags)
   parent: MagazineShotgunBase
   components:
   - type: RangedMagazine
@@ -50,7 +50,7 @@
 
 - type: entity
   id: MagazineShotgunSlug
-  name: Ammo drum (.50 slug)
+  name: ammo drum (.50 slug)
   parent: MagazineShotgunBase
   components:
   - type: RangedMagazine

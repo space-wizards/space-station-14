@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: MagazineMagnumBase
-  name: "Magazine (.40 magnum)"
+  name: "magazine (.40 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -54,7 +54,7 @@
 # Magazines
 - type: entity
   id: MagazineMagnum
-  name: "Magazine (.40 magnum)"
+  name: "magazine (.40 magnum)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -66,7 +66,7 @@
 
 - type: entity
   id: MagazineMagnumFlash
-  name: "Magazine (.40 magnum flash)"
+  name: "magazine (.40 magnum flash)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -78,7 +78,7 @@
 
 - type: entity
   id: MagazineMagnumHV
-  name: "Magazine (.40 magnum high-velocity)"
+  name: "magazine (.40 magnum high-velocity)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -90,7 +90,7 @@
 
 - type: entity
   id: MagazineMagnumPractice
-  name: "Magazine (.40 magnum practice)"
+  name: "magazine (.40 magnum practice)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine
@@ -102,7 +102,7 @@
 
 - type: entity
   id: MagazineMagnumRubber
-  name: "Magazine (.40 magnum rubber)"
+  name: "magazine (.40 magnum rubber)"
   parent: MagazineMagnumBase
   components:
   - type: RangedMagazine

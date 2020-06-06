@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: MagazineClRifleBase
-  name: "Magazine (.25 caseless)"
+  name: "magazine (.25 caseless)"
   parent: BaseItem
   abstract: true
   components:
@@ -28,7 +28,7 @@
 # Magazines
 - type: entity
   id: MagazineClRifle10x24
-  name: "Box magazine (.25 caseless)"
+  name: "box magazine (.25 caseless)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -41,7 +41,7 @@
 
 - type: entity
   id: MagazineClRiflePistol
-  name: "Pistol magazine (.25 caseless)"
+  name: "pistol magazine (.25 caseless)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -63,7 +63,7 @@
 
 - type: entity
   id: MagazineClRiflePistolHV
-  name: "Pistol magazine (.25 caseless high-velocity)"
+  name: "pistol magazine (.25 caseless high-velocity)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -83,7 +83,7 @@
 
 - type: entity
   id: MagazineClRiflePistolPractice
-  name: "Pistol magazine (.25 caseless practice)"
+  name: "pistol magazine (.25 caseless practice)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -103,7 +103,7 @@
 
 - type: entity
   id: MagazineClRiflePistolRubber
-  name: "Pistol magazine (.25 caseless rubber)"
+  name: "pistol magazine (.25 caseless rubber)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -123,7 +123,7 @@
 
 - type: entity
   id: MagazineClRifle
-  name: "Magazine (.25 caseless)"
+  name: "magazine (.25 caseless)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -135,7 +135,7 @@
 
 - type: entity
   id: MagazineClRifleHV
-  name: "Magazine (.25 caseless high-velocity)"
+  name: "magazine (.25 caseless high-velocity)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -147,7 +147,7 @@
 
 - type: entity
   id: MagazineClRiflePractice
-  name: "Magazine (.25 caseless practice)"
+  name: "magazine (.25 caseless practice)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -159,7 +159,7 @@
 
 - type: entity
   id: MagazineClRifleRubber
-  name: "Magazine (.25 caseless rubber)"
+  name: "magazine (.25 caseless rubber)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -171,7 +171,7 @@
 
 - type: entity
   id: MagazineClRifleShort
-  name: "Short magazine (.25 caseless)"
+  name: "short magazine (.25 caseless)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -184,7 +184,7 @@
 
 - type: entity
   id: MagazineClRifleShortFlash
-  name: "Short magazine (.25 caseless flash)"
+  name: "short magazine (.25 caseless flash)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -197,7 +197,7 @@
 
 - type: entity
   id: MagazineClRifleShortHV
-  name: "Short magazine (.25 caseless high-velocity)"
+  name: "short magazine (.25 caseless high-velocity)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -210,7 +210,7 @@
 
 - type: entity
   id: MagazineClRifleShortPractice
-  name: "Short magazine (.25 caseless practice)"
+  name: "short magazine (.25 caseless practice)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine
@@ -223,7 +223,7 @@
 
 - type: entity
   id: MagazineClRifleShortRubber
-  name: "Short magazine (.25 caseless rubber)"
+  name: "short magazine (.25 caseless rubber)"
   parent: MagazineClRifleBase
   components:
   - type: RangedMagazine

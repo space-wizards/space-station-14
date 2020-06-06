@@ -1,6 +1,6 @@
 - type: entity
   id: CartridgeClRifleBase
-  name: Cartridge (.25 rifle)
+  name: cartridge (.25 rifle)
   parent: BaseItem
   abstract: true
   components:
@@ -18,7 +18,7 @@
 
 - type: entity
   id: CartridgeClRifle
-  name: Cartridge (.25 caseless)
+  name: cartridge (.25 caseless)
   parent: CartridgeClRifleBase
   components:
   - type: Ammo
@@ -27,7 +27,7 @@
 
 - type: entity
   id: CartridgeClRifleFlash
-  name: Cartridge (.25 caseless flash)
+  name: cartridge (.25 caseless flash)
   parent: CartridgeClRifleBase
   components:
   - type: Ammo
@@ -36,7 +36,7 @@
 
 - type: entity
   id: CartridgeClRifleHV
-  name: Cartridge (.25 caseless high-velocity)
+  name: cartridge (.25 caseless high-velocity)
   parent: CartridgeClRifleBase
   components:
   - type: Ammo
@@ -46,7 +46,7 @@
 
 - type: entity
   id: CartridgeClRiflePractice
-  name: Cartridge (.25 caseless practice)
+  name: cartridge (.25 caseless practice)
   parent: CartridgeClRifleBase
   components:
   - type: Ammo
@@ -55,7 +55,7 @@
 
 - type: entity
   id: CartridgeClRifleRubber
-  name: Cartridge (.25 caseless rubber)
+  name: cartridge (.25 caseless rubber)
   parent: CartridgeClRifleBase
   components:
   - type: Ammo

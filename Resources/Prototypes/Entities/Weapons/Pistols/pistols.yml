@@ -47,7 +47,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Clarissa
+  name: clarissa
   parent: PistolBase
   id: PistolClarissa
   description: 
@@ -72,7 +72,7 @@
     angleDecay: 60
 
 - type: entity
-  name: Colt M1911
+  name: colt M1911
   parent: PistolBase
   id: PistolColt
   description: 
@@ -104,7 +104,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: Giskard
+  name: giskard
   parent: PistolBase
   id: PistolGiskard
   description: A popular "Frozen Star" brand pocket pistol chambered for the ubiquitous .35 auto round. Uses standard capacity magazines.
@@ -128,7 +128,7 @@
     angleDecay: 60
 
 - type: entity
-  name: Handmade pistol
+  name: handmade pistol
   parent: BaseItem
   id: PistolHMPistol
   description: Looks unreliable.
@@ -171,7 +171,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: Lamia
+  name: lamia
   parent: PistolBase
   id: PistolLamia
   description: A heavy pistol of Ironhammer enforcers.
@@ -212,7 +212,7 @@
       zeroVisible: true
 
 - type: entity
-  name: Mandella
+  name: mandella
   parent: PistolBase
   id: PistolMandella
   description: A rugged, robust operator handgun with inbuilt silencer. Chambered in caseless rifle ammunition, this time-tested handgun is your absolute choice if you need to take someone down silently, as it's deadly, produces no sound, and leaves no trace.
@@ -245,7 +245,7 @@
     soundGunshot: /Audio/Guns/Gunshots/silenced.ogg
 
 - type: entity
-  name: Mk 58
+  name: mk 58
   parent: PistolBase
   id: PistolMk58
   description: The NT Mk58 is a cheap, ubiquitous sidearm, that was produced by a NanoTrasen subsidiary.
@@ -277,7 +277,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: Mk 58 (wood)
+  name: mk 58 (wood)
   parent: PistolBase
   id: PistolMk58Wood
   description: The NT Mk58 is a cheap, ubiquitous sidearm, that was produced by a NanoTrasen subsidiary.
@@ -309,7 +309,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: Molly
+  name: molly
   parent: PistolBase
   id: PistolMolly
   description: An experimental fully automatic pistol, designed as a middle ground between SMGs and Pistols. Primarily employed in CQC scenarios or as a civilian self defence tool. Takes both highcap pistol and smg mags.
@@ -337,7 +337,7 @@
     angleDecay: 60
 
 - type: entity
-  name: Olivaw
+  name: olivaw
   parent: PistolBase
   id: PistolOlivaw
   description: A popular "Frozen Star" machine pistol. This one has a two-round burst-fire mode and is chambered for .35 auto. It can use normal and high capacity magazines.
@@ -370,7 +370,7 @@
     - type: BarrelBoltVisualizer2D
 
 - type: entity
-  name: Paco
+  name: paco
   parent: PistolBase
   id: PistolPaco
   description: A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Ironhammer Operatives.

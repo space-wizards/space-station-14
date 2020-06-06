@@ -1,7 +1,7 @@
 # Empty mags
 - type: entity
   id: MagazineSRifleBase
-  name: "Magazine (.20 rifle)"
+  name: "magazine (.20 rifle)"
   parent: BaseItem
   abstract: true
   components:
@@ -28,7 +28,7 @@
 # Magazines
 - type: entity
   id: MagazineSRifle
-  name: "Magazine (.20 rifle)"
+  name: "magazine (.20 rifle)"
   parent: MagazineSRifleBase
   components:
   - type: RangedMagazine
@@ -40,7 +40,7 @@
 
 - type: entity
   id: MagazineSRifleFlash
-  name: "Magazine (.20 rifle flash)"
+  name: "magazine (.20 rifle flash)"
   parent: MagazineSRifleBase
   components:
   - type: RangedMagazine
@@ -52,7 +52,7 @@
 
 - type: entity
   id: MagazineSRifleHV
-  name: "Magazine (.20 rifle high-velocity)"
+  name: "magazine (.20 rifle high-velocity)"
   parent: MagazineSRifleBase
   components:
   - type: RangedMagazine
@@ -64,7 +64,7 @@
 
 - type: entity
   id: MagazineSRiflePractice
-  name: "Magazine (.20 rifle practice)"
+  name: "magazine (.20 rifle practice)"
   parent: MagazineSRifleBase
   components:
   - type: RangedMagazine
@@ -76,7 +76,7 @@
 
 - type: entity
   id: MagazineSRifleRubber
-  name: "Magazine (.20 rifle rubber)"
+  name: "magazine (.20 rifle rubber)"
   parent: MagazineSRifleBase
   components:
   - type: RangedMagazine

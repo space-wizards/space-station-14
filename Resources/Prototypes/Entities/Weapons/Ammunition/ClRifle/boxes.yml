@@ -1,6 +1,6 @@
 - type: entity
   id: BoxClRifleBase
-  name: "Ammunition box (.25 caseless)"
+  name: "ammunition box (.25 caseless)"
   parent: BaseItem
   abstract: true
   components:
@@ -26,7 +26,7 @@
 # Boxes
 - type: entity
   id: BoxClRifle10x24
-  name: "Ammunition box (.25 caseless)"
+  name: "ammunition box (.25 caseless)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -39,7 +39,7 @@
 
 - type: entity
   id: BoxClRifleBigBox
-  name: "Ammunition box (.25 caseless)"
+  name: "ammunition box (.25 caseless)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -52,7 +52,7 @@
 
 - type: entity
   id: BoxClRifleBigBoxRubber
-  name: "Ammunition box (.25 caseless rubber)"
+  name: "ammunition box (.25 caseless rubber)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -65,7 +65,7 @@
 
 - type: entity
   id: BoxClRifleBox
-  name: "Ammunition box (.25 caseless)"
+  name: "ammunition box (.25 caseless)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -78,7 +78,7 @@
 
 - type: entity
   id: BoxClRifleBoxFlash
-  name: "Ammunition box (.25 caseless flash)"
+  name: "ammunition box (.25 caseless flash)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -91,7 +91,7 @@
 
 - type: entity
   id: BoxClRifleBoxHV
-  name: "Ammunition box (.25 caseless high-velocity)"
+  name: "ammunition box (.25 caseless high-velocity)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -104,7 +104,7 @@
 
 - type: entity
   id: BoxClRifleBoxPractice
-  name: "Ammunition box (.25 caseless practice)"
+  name: "ammunition box (.25 caseless practice)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
@@ -117,7 +117,7 @@
 
 - type: entity
   id: BoxClRifleBoxRubber
-  name: "Ammunition box (.25 caseless rubber)"
+  name: "ammunition box (.25 caseless rubber)"
   parent: BoxClRifleBase
   components:
   - type: AmmoBox
