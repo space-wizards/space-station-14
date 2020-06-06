@@ -14,6 +14,8 @@
     - idcard
     sprite: Clothing/id_cards.rsi
     HeldPrefix: default
+  - type: Access
+  - type: IdCard
 
 #IDs with layers
 
@@ -29,10 +31,8 @@
     - state: idassistant
   - type: Icon
     state: default
-  - type: IdCard
-    jobTitle: Assistant
-  - type: Access
-    tags: ["Maintenance", "Service"]
+  - type: PresetIdCard
+    job: Assistant
 
 - type: entity
   parent: IDCardStandard
@@ -48,10 +48,8 @@
     state: gold
   - type: Clothing
     HeldPrefix: gold
-  - type: IdCard
-    jobTitle: Captain
-  - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel"]
+  - type: PresetIdCard
+    job: Captain
 
 - type: entity
   parent: IDCardStandard
@@ -65,10 +63,8 @@
     - state: idsecurityofficer
   - type: Icon
     state: idsecurityofficer
-  - type: IdCard
-    jobTitle: Security Officer
-  - type: Access
-    tags: ["Security", "Maintenance", "Service"]
+  - type: PresetIdCard
+    job: SecurityOfficer
 
 - type: entity
   parent: IDCardStandard
@@ -82,10 +78,8 @@
     - state: idstationengineer
   - type: Icon
     state: idstationengineer
-  - type: IdCard
-    jobTitle: Engineer
-  - type: Access
-    tags: ["Engineering", "Maintenance", "External"]
+  - type: PresetIdCard
+    job: StationEngineer
 
 - type: entity
   parent: IDCardStandard
@@ -99,10 +93,8 @@
     - state: idmedicaldoctor
   - type: Icon
     state: idmedicaldoctor
-  - type: IdCard
-    jobTitle: Doctor
-  - type: Access
-    tags: ["Medical"]
+  - type: PresetIdCard
+    job: MedicalDoctor
 
 - type: entity
   parent: IDCardStandard
@@ -116,10 +108,8 @@
     - state: idcargotechnician
   - type: Icon
     state: idcargotechnician
-  - type: IdCard
-    jobTitle: Cargo Technician
-  - type: Access
-    tags: ["Cargo", "Maintenance"]
+  - type: PresetIdCard
+    job: CargoTechnician
 
 - type: entity
   parent: IDCardStandard
@@ -133,10 +123,8 @@
     - state: idscientist
   - type: Icon
     state: idscientist
-  - type: IdCard
-    jobTitle: Scientist
-  - type: Access
-    tags: ["Research"]
+  - type: PresetIdCard
+    job: Scientist
 
 - type: entity
   parent: IDCardStandard
@@ -150,10 +138,8 @@
     - state: idclown
   - type: Icon
     state: idclown
-  - type: IdCard
-    jobTitle: Clown
-  - type: Access
-    tags: ["Maintenance", "Service"]
+  - type: PresetIdCard
+    job: Clown
 
 - type: entity
   parent: IDCardStandard
@@ -167,10 +153,8 @@
     - state: idjanitor
   - type: Icon
     state: idjanitor
-  - type: IdCard
-    jobTitle: Janitor
-  - type: Access
-    tags: ["Maintenance", "Service"]
+  - type: PresetIdCard
+    job: Janitor
 
 - type: entity
   parent: IDCardStandard
@@ -184,10 +168,8 @@
     - state: idbartender
   - type: Icon
     state: idbartender
-  - type: IdCard
-    jobTitle: Bartender
-  - type: Access
-    tags: ["Service"]
+  - type: PresetIdCard
+    job: Bartender
 
 - type: entity
   parent: IDCardStandard
@@ -201,10 +183,8 @@
     - state: idcook
   - type: Icon
     state: idcook
-  - type: IdCard
-    jobTitle: Chef
-  - type: Access
-    tags: ["Maintenance", "Service"]
+  - type: PresetIdCard
+    job: Chef
 
 - type: entity
   parent: IDCardStandard
@@ -220,10 +200,8 @@
     state: idheadofpersonnel
   - type: Clothing
     HeldPrefix: silver
-  - type: IdCard
-    jobTitle: Head of Personnel
-  - type: Access
-    tags: ["Maintenance", "Cargo", "Security", "Service", "Command", "HeadOfPersonnel", "Janitor"]
+  - type: PresetIdCard
+    job: HeadOfPersonnel
 
 - type: entity
   parent: IDCardStandard
@@ -239,10 +217,8 @@
     state: idchiefengineer
   - type: Clothing
     HeldPrefix: silver
-  - type: IdCard
-    jobTitle: Chief Engineer
-  - type: Access
-    tags: ["Engineering", "Command", "Maintenance", "External"]
+  - type: PresetIdCard
+    job: ChiefEngineer
 
 - type: entity
   parent: IDCardStandard
@@ -258,10 +234,8 @@
     state: idchiefmedicalofficer
   - type: Clothing
     HeldPrefix: silver
-  - type: IdCard
-    jobTitle: Chief Medical Officer
-  - type: Access
-    tags: ["Medical", "Command", "Maintenance"]
+  - type: PresetIdCard
+    job: ChiefMedicalOfficer
 
 - type: entity
   parent: IDCardStandard
@@ -277,10 +251,8 @@
     state: idresearchdirector
   - type: Clothing
     HeldPrefix: silver
-  - type: IdCard
-    jobTitle: Research Director
-  - type: Access
-    tags: ["Research", "Command", "Maintenance"]
+  - type: PresetIdCard
+    job: ResearchDirector
 
 - type: entity
   parent: IDCardStandard
@@ -296,10 +268,8 @@
     state: idheadofsecurity
   - type: Clothing
     HeldPrefix: silver
-  - type: IdCard
-    jobTitle: Head of Security
-  - type: Access
-    tags: ["Security", "Maintenance", "Service", "Command"]
+  - type: PresetIdCard
+    job: HeadOfSecurity
 
 - type: entity
   parent: IDCardStandard
@@ -318,4 +288,4 @@
   - type: IdCard
     jobTitle: Central Commander
   - type: Access
-    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel"]
+    tags: ["Maintenance", "Cargo", "Engineering", "Medical", "Research", "Security", "Service", "Captain", "Command", "External", "HeadOfPersonnel", "Janitor", "Theatre"]
