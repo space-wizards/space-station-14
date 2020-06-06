@@ -1,6 +1,6 @@
 - type: job
   id: Captain
-  name: "Captain"
+  name: "captain"
   head: true
   positions: 1
   startingGear: CaptainGear

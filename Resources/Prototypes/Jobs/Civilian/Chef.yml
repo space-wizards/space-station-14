@@ -1,6 +1,6 @@
 - type: job
   id: Chef
-  name: "Chef"
+  name: "chef"
   positions: 1
   startingGear: ChefGear
   department:

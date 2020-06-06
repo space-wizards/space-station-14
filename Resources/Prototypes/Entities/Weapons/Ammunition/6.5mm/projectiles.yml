@@ -1,6 +1,6 @@
 - type: entity
   id: bullet_65mm
-  name: 6.5mm Bullet
+  name: 6.5mm bullet
   parent: BulletBase
   abstract: true
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: bullet_65mmf
-  name: 6.5mm Bullet (Flash)
+  name: 6.5mm bullet (flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   id: bullet_65mmhv
-  name: 6.5mm Bullet (High-Velocity)
+  name: 6.5mm bullet (high-velocity)
   parent: BulletBaseHighVelocity
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_65mml
-  name: 6.5mm Bullet (L)
+  name: 6.5mm bullet (L)
   parent: BulletBaseL
   abstract: true
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: bullet_65mmp
-  name: 6.5mm Bullet (Practice)
+  name: 6.5mm bullet (practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   id: bullet_65mmr
-  name: 6.5mm Bullet (Rubber)
+  name: 6.5mm bullet (rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

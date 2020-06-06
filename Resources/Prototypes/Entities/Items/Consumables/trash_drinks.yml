@@ -1,11 +1,11 @@
 # These can still be used as containers
 - type: entity
-  name: Base empty bottle
+  name: base empty bottle
   parent: BaseItem
   abstract: true
   id: DrinkBottleBaseEmpty
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: Sprite
     state: icon
   - type: Icon
@@ -20,7 +20,7 @@
 
 # Containers
 - type: entity
-  name: Jailbreaker Verte bottle
+  name: jailbreaker verte bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleAbsinthe
   components:
@@ -30,7 +30,7 @@
     sprite: Objects/TrashDrinks/absinthebottle_empty.rsi
 
 - type: entity
-  name: Alcohol bottle
+  name: alcohol bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleAlcoClear
   components:
@@ -40,7 +40,7 @@
     sprite: Objects/TrashDrinks/alco-clear.rsi
 
 - type: entity
-  name: Ale bottle
+  name: ale bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleAle
   components:
@@ -50,7 +50,7 @@
     sprite: Objects/TrashDrinks/alebottle_empty.rsi
 
 - type: entity
-  name: Beer bottle
+  name: beer bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleBeer
   components:
@@ -60,7 +60,7 @@
     sprite: Objects/TrashDrinks/beer_empty.rsi
 
 - type: entity
-  name: Broken bottle
+  name: broken bottle
   parent: DrinkBottleBaseEmpty  # Can't hold liquids
   id: DrinkBrokenBottle
   components:
@@ -70,7 +70,7 @@
     sprite: Objects/TrashDrinks/broken_bottle.rsi
 
 - type: entity
-  name: Cognac bottle
+  name: cognac bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleCognac
   components:
@@ -80,7 +80,7 @@
     sprite: Objects/TrashDrinks/cognacbottle_empty.rsi
 
 - type: entity
-  name: Griffeater gin bottle
+  name: griffeater gin bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleGin
   components:
@@ -90,7 +90,7 @@
     sprite: Objects/TrashDrinks/ginbottle_empty.rsi
 
 - type: entity
-  name: Goldschlager bottle
+  name: goldschlager bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleGoldschlager
   components:
@@ -100,7 +100,7 @@
     sprite: Objects/TrashDrinks/goldschlagerbottle_empty.rsi
 
 - type: entity
-  name: Kahlua bottle
+  name: kahlua bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleKahlua
   components:
@@ -110,7 +110,7 @@
     sprite: Objects/TrashDrinks/kahluabottle_empty.rsi
 
 - type: entity
-  name: NT Cahors bottle
+  name: nt cahors bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleNTCahors
   components:
@@ -120,7 +120,7 @@
     sprite: Objects/TrashDrinks/ntcahors_empty.rsi
 
 - type: entity
-  name: Patron bottle
+  name: patron bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottlePatron
   components:
@@ -130,7 +130,7 @@
     sprite: Objects/TrashDrinks/patronbottle_empty.rsi
 
 - type: entity
-  name: Poison wine bottle
+  name: poison wine bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottlePoisonWine
   components:
@@ -140,7 +140,7 @@
     sprite: Objects/TrashDrinks/pwinebottle_empty.rsi
 
 - type: entity
-  name: Rum bottle
+  name: rum bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleRum
   components:
@@ -150,7 +150,7 @@
     sprite: Objects/TrashDrinks/rumbottle_empty.rsi
 
 - type: entity
-  name: Tequila bottle
+  name: tequila bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleTequila
   components:
@@ -160,7 +160,7 @@
     sprite: Objects/TrashDrinks/tequillabottle_empty.rsi
 
 - type: entity
-  name: Vermouth bottle
+  name: vermouth bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleVermouth
   components:
@@ -170,7 +170,7 @@
     sprite: Objects/TrashDrinks/vermouthbottle_empty.rsi
 
 - type: entity
-  name: Vodka bottle
+  name: vodka bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleVodka
   components:
@@ -180,7 +180,7 @@
     sprite: Objects/TrashDrinks/vodkabottle_empty.rsi
 
 - type: entity
-  name: Whiskey bottle
+  name: whiskey bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleWhiskey
   components:
@@ -190,7 +190,7 @@
     sprite: Objects/TrashDrinks/whiskeybottle_empty.rsi
 
 - type: entity
-  name: Wine bottle
+  name: wine bottle
   parent: DrinkBottleBaseEmpty
   id: DrinkBottleWine
   components:

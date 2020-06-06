@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
@@ -31,7 +29,7 @@ namespace Content.Server.PDA
             foreach (var item in _prototypeManager.EnumeratePrototypes<UplinkStoreListingPrototype>())
             {
                 var newListing = new UplinkListingData(item.ListingName, item.ItemId, item.Price, item.Category,
-                    item.Description, item.DisplayColor);
+                    item.Description);
 
                 RegisterUplinkListing(newListing);
             }
@@ -94,11 +92,15 @@ namespace Content.Server.PDA
                 return false;
             }
 
+            if (!ChangeBalance(acc, -listing.Price))
+            {
+                return false;
+            }
             var player = _entityManager.GetEntity(acc.AccountHolder);
             var hands = player.GetComponent<HandsComponent>();
             hands.PutInHandOrDrop(_entityManager.SpawnEntity(listing.ItemId,
                 player.Transform.GridPosition).GetComponent<ItemComponent>());
-            return ChangeBalance(acc, -listing.Price);
+            return true;
 
         }
 

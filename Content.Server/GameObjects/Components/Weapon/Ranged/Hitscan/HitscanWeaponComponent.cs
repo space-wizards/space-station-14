@@ -100,7 +100,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             if (rayCastResults.Count >= 1)
             {
                 Hit(rayCastResults[0], energyModifier, user);
-                AfterEffects(user, rayCastResults[0], angle, energyModifier);
+                AfterEffects(user, rayCastResults[0].Distance, angle, energyModifier);
+            }
+            else
+            {
+                AfterEffects(user, MaxLength, angle, energyModifier);
             }
         }
 
@@ -114,17 +118,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             }
         }
 
-        protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle, float energyModifier)
+        protected virtual void AfterEffects(IEntity user, float distance, Angle angle, float energyModifier)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var dist = ray.Distance;
-            var offset = angle.ToVec() * dist / 2;
+            var offset = angle.ToVec() * distance / 2;
             var message = new EffectSystemMessage
             {
                 EffectSprite = _spritename,
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
-                Size = new Vector2(dist, 1f),
+                Size = new Vector2(distance, 1f),
                 Coordinates = user.Transform.GridPosition.Translated(offset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,

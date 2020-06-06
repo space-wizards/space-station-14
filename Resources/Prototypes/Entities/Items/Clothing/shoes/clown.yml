@@ -1,7 +1,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesClown
-  name: Clown shoes
+  name: clown shoes
   description: The prankster's standard-issue clowning shoes. Damn they're huge!
   components:
   - type: Sprite
@@ -10,6 +10,6 @@
     sprite: Clothing/Shoes/clown.rsi
   - type: Clothing
     sprite: Clothing/Shoes/clown.rsi
-  - type: Sound
+  - type: LoopingSound
   - type: FootstepModifier
     footstepSoundCollection: footstep_clown

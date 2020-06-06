@@ -1,5 +1,5 @@
 - type: entity
-  name: Paper
+  name: paper
   parent: BaseItem
   id: Paper
   description: 'A piece of white paper'
@@ -19,7 +19,7 @@
       type: PaperBoundUserInterface
 
 - type: entity
-  name: Pen
+  name: pen
   parent: BaseItem
   id: Pen
   description: 'A dark ink pen'

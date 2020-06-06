@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A556mm
     capacity: 80
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes
@@ -35,7 +35,7 @@
 
 - type: entity
   id: box_556mmp
-  name: "5.56mm box (Practice)"
+  name: "5.56mm box (practice)"
   parent: box_556mm_empty
   components:
   - type: AmmoBox
