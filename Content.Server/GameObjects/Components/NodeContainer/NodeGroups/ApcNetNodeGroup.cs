@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NewPower;
+﻿using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void RemoveRemotePowerProvider(RemotePowerProviderComponent provider);
     }
 
-    [NodeGroup(NodeGroupID.LVPower)]
+    [NodeGroup(NodeGroupID.Apc)]
     class ApcNetNodeGroup : BaseNodeGroup, IApcNet
     {
         [ViewVariables]

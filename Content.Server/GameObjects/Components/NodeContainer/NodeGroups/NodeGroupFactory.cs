@@ -46,6 +46,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         Default,
         HVPower,
         MVPower,
-        LVPower,
+        Apc,
     }
 }

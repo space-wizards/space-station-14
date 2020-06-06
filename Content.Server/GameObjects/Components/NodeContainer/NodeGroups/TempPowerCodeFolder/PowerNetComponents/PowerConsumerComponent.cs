@@ -4,10 +4,10 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Diagnostics;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
 {
     [RegisterComponent]
-    public class PowerConsumerComponent : BasePowerComponent
+    public class PowerConsumerComponent : BasePowerNetComponent
     {
         public override string Name => "PowerConsumer";
 

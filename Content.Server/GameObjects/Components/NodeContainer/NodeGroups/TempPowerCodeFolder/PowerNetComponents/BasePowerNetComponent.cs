@@ -1,8 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
 {
-    public abstract class BasePowerComponent : BaseNetConnectorComponent<IPowerNet>
+    public abstract class BasePowerNetComponent : BaseNetConnectorComponent<IPowerNet>
     {
         protected sealed override IPowerNet GetNullNet()
         {

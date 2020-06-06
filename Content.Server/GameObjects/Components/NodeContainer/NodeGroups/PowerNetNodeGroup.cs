@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NewPower;
+﻿using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.ViewVariables;
 using System;
@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     public class PowerNetNodeGroup : BaseNodeGroup, IPowerNet
     {
-        private readonly Dictionary<Node, List<BasePowerComponent>> _powerComponents = new Dictionary<Node, List<BasePowerComponent>>();
+        private readonly Dictionary<Node, List<BasePowerNetComponent>> _powerComponents = new Dictionary<Node, List<BasePowerNetComponent>>();
 
         [ViewVariables]
         private readonly List<PowerSupplierComponent> _suppliers = new List<PowerSupplierComponent>();
@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected override void OnAddNode(Node node)
         {
             var newPowerComponents = node.Owner
-                .GetAllComponents<BasePowerComponent>()
+                .GetAllComponents<BasePowerNetComponent>()
                 .Where(powerComp => (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
                 .ToList();
             _powerComponents.Add(node, newPowerComponents);

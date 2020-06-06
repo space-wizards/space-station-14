@@ -1,23 +1,32 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Server.Interfaces.GameObjects;
+﻿using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using System;
 using System.Linq;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 {
-    public class RemotePowerProviderComponent : BaseLVPowerComponent
+    /// <summary>
+    ///     
+    /// </summary>
+    public class RemotePowerReceiverComponent : Component
     {
-        public override string Name => "RemotePowerProvider";
+        public override string Name => "RemotePowerReceiver";
 
-        public int PowerTransferRange { get => _powerReceiverRange; set => SetPowerReceiverRange(value); }
-        private int _powerReceiverRange;
+        public Action<bool> OnPowerStateChange;
+
+        public bool Powered { get => _powered; set => SetPowered(value); }
+        private bool _powered;
+
+        public int PowerTransferRange { get => _powerTransferRange; set => SetPowerTransferRange(value); }
+        private int _powerTransferRange;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _powerReceiverRange, "powerTransferRange", 3);
+            serializer.DataField(ref _powerTransferRange, "powerTransferRange", 3);
         }
 
         public override void Initialize()
@@ -31,19 +40,15 @@ namespace Content.Server.GameObjects.Components.NewPower
                 .Where(provider => provider != null);
         }
 
-        protected override void AddSelfToNet(IApcNet apcNet)
+        private void SetPowered(bool newPowered)
         {
-            throw new System.NotImplementedException();
+            _powered = newPowered;
+            OnPowerStateChange?.Invoke(_powered);
         }
 
-        protected override void RemoveSelfFromNet(IApcNet apcNet)
+        private void SetPowerTransferRange(int newPowerTransferRange)
         {
-            throw new System.NotImplementedException();
-        }
-
-        private void SetPowerReceiverRange(int newPowerReceiverRange)
-        {
-            _powerReceiverRange = newPowerReceiverRange;
+            _powerTransferRange = newPowerTransferRange;
         }
     }
 }

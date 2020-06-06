@@ -1,8 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 {
-    public class ApcComponent : BaseLVPowerComponent
+    public class ApcComponent : BaseApcNetComponent
     {
         public override string Name => "NewApc";
 

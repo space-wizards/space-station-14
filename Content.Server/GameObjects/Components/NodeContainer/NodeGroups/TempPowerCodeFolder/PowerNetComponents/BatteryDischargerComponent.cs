@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
 {
     /// <summary>
     ///     Uses charge from a <see cref="BatteryComponent"/> to supply power via a <see cref="PowerSupplierComponent"/>.
