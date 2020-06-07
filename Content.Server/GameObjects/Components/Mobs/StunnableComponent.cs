@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (seconds <= 0f)
                 return;
 
-            StandingStateHelper.DropAllItemsInHands(Owner);
+            StandingStateHelper.DropAllItemsInHands(Owner, false);
 
             _stunnedTimer = seconds;
             _lastStun = _gameTiming.CurTime;
@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
 
             EntitySystem.Get<AudioSystem>()
-                .Play("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .PlayFromEntity("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             _knockdownTimer -= _helpKnockdownRemove;
 

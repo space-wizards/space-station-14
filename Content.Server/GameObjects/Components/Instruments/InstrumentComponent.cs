@@ -322,7 +322,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                 }
                 else
                 {
-                    StandingStateHelper.DropAllItemsInHands(mob);
+                    StandingStateHelper.DropAllItemsInHands(mob, false);
                 }
 
                 InstrumentPlayer = null;

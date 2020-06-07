@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Sound
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
                 var file = _footstepRandom.Pick(soundCollection.PickFiles);
-                EntitySystem.Get<AudioSystem>().Play(file, Owner, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default.WithVolume(-2f));
             }
         }
     }

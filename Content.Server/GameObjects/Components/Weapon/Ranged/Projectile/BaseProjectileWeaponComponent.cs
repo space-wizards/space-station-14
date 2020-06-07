@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
         }
 
-        private void PlayFireSound() => EntitySystem.Get<AudioSystem>().Play(_soundGunshot, Owner);
+        private void PlayFireSound() => EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundGunshot, Owner);
 
         /// <summary>
         ///     Gets the angle from an entity to a coordinate.

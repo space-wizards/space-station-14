@@ -128,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Power
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("glassbreak");
             var file = _random.Pick(soundCollection.PickFiles);
 
-            EntitySystem.Get<AudioSystem>().Play(file, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner);
 
             State = LightBulbState.Broken;
         }

@@ -288,7 +288,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     }
                     else
                     {
-                        //This is trash but it shows the general idea 
+                        //This is trash but it shows the general idea
                         var color = proto.SubstanceColor;
                         var colorIsh = "Red";
                         if (color.G > color.R)
@@ -492,7 +492,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Play reaction sound client-side
-            _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+            _audioSystem.PlayAtCoords("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
 
         /// <summary>
