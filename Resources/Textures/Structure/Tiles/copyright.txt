@@ -1,0 +1,3 @@
+Alright because tiles don't use RSIs (yet) I gotta write this out.
+
+floor_steel.png taken from CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2
