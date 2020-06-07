@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (seconds <= 0f)
                 return;
 
-            StandingStateHelper.DropAllItemsInHands(Owner);
+            StandingStateHelper.DropAllItemsInHands(Owner, false);
 
             _stunnedTimer = seconds;
             _lastStun = _gameTiming.CurTime;
