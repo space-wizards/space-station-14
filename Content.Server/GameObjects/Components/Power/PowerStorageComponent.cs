@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -13,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// <summary>
     ///     Stores electrical energy. Used by power cells and SMESes.
     /// </summary>
-    public abstract class PowerStorageComponent : Component, IExamine
+    public abstract class PowerStorageComponent : Component, IExamine, IInteractUsing
     {
         [ViewVariables]
         public ChargeState LastChargeState { get; private set; } = ChargeState.Still;
@@ -174,6 +175,13 @@ namespace Content.Server.GameObjects.Components.Power
             message.AddMarkup(loc.GetString(
                 "[color=yellow]Charge: {0}J / {1}J ({2}%)\nRate: {3}W IN, {4}W OUT[/color]",
                 Math.Round(Charge, 2), Capacity, chargePercent, ChargeRate, DistributionRate));
+        }
+
+        /// <inheritdoc />
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            if (Full) Owner.PopupMessage(eventArgs.User, "Capacitor at max charge");
+            return true;
         }
     }
 }

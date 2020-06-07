@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
-using Content.Shared.Interfaces;
 using Content.Shared.Physics;
+using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -20,33 +19,20 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+#nullable enable
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     [RegisterComponent]
     public class HitscanWeaponComponent : Component, IInteractUsing
     {
-        private const float MaxLength = 20;
-        public override string Name => "HitscanWeapon";
-
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. 
         string _spritename;
         private int _damage;
         private int _baseFireCost;
         private float _lowerChargeLimit;
         private string _fireSound;
-
-        //As this is a component that sits on the weapon rather than a static value
-        //we just declare the field and then use GetComponent later to actually get it.
-        //Do remember to add it in both the .yaml prototype and the factory in EntryPoint.cs
-        //Otherwise you will get errors
-        private HitscanWeaponCapacitorComponent capacitorComponent;
-
-        public int Damage => _damage;
-
-        public int BaseFireCost => _baseFireCost;
-
-        public HitscanWeaponCapacitorComponent CapacitorComponent => capacitorComponent;
+#pragma warning restore CS8618 // Non-nullable field is uninitialized.
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -59,58 +45,78 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             serializer.DataField(ref _fireSound, "fireSound", "/Audio/laser.ogg");
         }
 
+        //Remember to add it in both the .yaml prototype and the factory in EntryPoint.cs
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. 
+#pragma warning disable IDE1006 // Naming Styles
+        protected HitscanWeaponCapacitorComponent _capacitorComponent;
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore CS8618 // Non-nullable field is uninitialized.
         public override void Initialize()
         {
             base.Initialize();
-            var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
-            capacitorComponent = Owner.GetComponent<HitscanWeaponCapacitorComponent>();
-            rangedWeapon.FireHandler = Fire;
-
+            _capacitorComponent = Owner.GetComponent<HitscanWeaponCapacitorComponent>();
+            Owner.GetComponent<RangedWeaponComponent>().FireHandler = Fire;
         }
+
+        //Should this be hardcoded here? Shouldn't this be exposed to YAML with a theoretically maximium applied?
+        private const float MaxLength = 20;
+
+        public override string Name => "HitscanWeapon";
+        public int Damage => _damage;
+        public int BaseFireCost => _baseFireCost;
+        public HitscanWeaponCapacitorComponent CapacitorComponent => _capacitorComponent;
+
+        //Make these public?
+        private void PlayFireSound() => EntitySystem.Get<AudioSystem>().Play(_fireSound, Owner, AudioParams.Default.WithVolume(-5));
+
+        private bool CanFire()
+        {
+            if (_capacitorComponent.CanDeductCharge(_lowerChargeLimit)) return true;
+            return false;
+        }
+
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out PowerStorageComponent component))
-            {
-                return false;
-            }
-            if (capacitorComponent.Full)
-            {
-                Owner.PopupMessage(eventArgs.User, "Capacitor at max charge");
-                return false;
-            }
-            capacitorComponent.FillFrom(component);
+            if (!eventArgs.Using.TryGetComponent(out PowerStorageComponent component)) return false;
+            _capacitorComponent.FillFrom(component);
             return true;
         }
 
-        private void Fire(IEntity user, GridCoordinates clickLocation)
+        protected virtual void Fire(IEntity user, GridCoordinates clickLocation)
         {
-            if (capacitorComponent.Charge < _lowerChargeLimit)
-            {//If capacitor has less energy than the lower limit, do nothing
-                return;
-            }
-            float energyModifier = capacitorComponent.GetChargeFrom(_baseFireCost) / _baseFireCost;
+            if (!CanFire()) return;
+
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Opaque));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, returnOnFirstHit: false).ToList();
+            var rayCastResults = FireHitScan(userPosition, angle, user);
 
-            //The first result is guaranteed to be the closest one
-            if (rayCastResults.Count >= 1)
+            float beemStrength = _capacitorComponent.GetChargeFrom(_baseFireCost) / _baseFireCost;
+            float distance = MaxLength;
+            bool hitSomething = rayCastResults.Any();
+
+            if (hitSomething)
             {
-                Hit(rayCastResults[0], energyModifier, user);
-                AfterEffects(user, rayCastResults[0].Distance, angle, energyModifier);
+                RayCastResults result = rayCastResults.First(); //The first result is guaranteed to be the closest one
+                OnHit(result, beemStrength, user);
+                distance = result.Distance;
             }
-            else
-            {
-                AfterEffects(user, MaxLength, angle, energyModifier);
-            }
+
+            CreateEnergyBeam(user, distance, angle, beemStrength);
+            PlayFireSound();
         }
 
-        protected virtual void Hit(RayCastResults ray, float damageModifier, IEntity user = null)
+        protected virtual List<RayCastResults> FireHitScan(Vector2 userPosition, Angle angle, IEntity user)
         {
-            if (ray.HitEntity != null && ray.HitEntity.TryGetComponent(out DamageableComponent damage))
+            var ray = new CollisionRay(userPosition, angle.ToVec(), (int) (CollisionGroup.Opaque));
+            return IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, returnOnFirstHit: false).ToList();
+        }
+
+
+        protected void OnHit(RayCastResults ray, float damageModifier, IEntity? user = null)
+        {
+            if (ray.HitEntity.TryGetComponent(out DamageableComponent damage))
             {
                 damage.TakeDamage(DamageType.Heat, (int)Math.Round(_damage * damageModifier, MidpointRounding.AwayFromZero), Owner, user);
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
@@ -118,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             }
         }
 
-        protected virtual void AfterEffects(IEntity user, float distance, Angle angle, float energyModifier)
+        protected virtual void CreateEnergyBeam(IEntity user, float distance, Angle angle, float beemStrength)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
             var offset = angle.ToVec() * distance / 2;
@@ -132,12 +138,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
-                Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), energyModifier),
+                Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), beemStrength),
 
                 Shaded = false
             };
             EntitySystem.Get<EffectSystem>().CreateParticle(message);
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_fireSound, Owner, AudioParams.Default.WithVolume(-5));
         }
     }
 }
