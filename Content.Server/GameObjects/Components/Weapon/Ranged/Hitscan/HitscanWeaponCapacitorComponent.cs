@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -8,7 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     [RegisterComponent]
-    public class HitscanWeaponCapacitorComponent : PowerCellComponent
+    public class HitscanWeaponCapacitorComponent : PowerCellComponent, IInteractUsing
     {
         private AppearanceComponent _appearance;
 
@@ -36,6 +37,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             Charge = Capacity;
             Owner.TryGetComponent(out _appearance);
 
+        }
+
+        public new bool InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            base.InteractUsing(eventArgs);
+
+            if (!eventArgs.Using.TryGetComponent(out PowerStorageComponent component)) return false;
+            FillFrom(component);
+
+            return true;
         }
 
         public float GetChargeFrom(float toDeduct)
