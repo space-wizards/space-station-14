@@ -38,7 +38,7 @@ namespace Content.Server.Mobs
                     .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("bodyfall"), entity, AudioHelpers.WithVariation(0.25f));
 
             if(dropItems)
-                DropAllItemsInHands(entity);
+                DropAllItemsInHands(entity, false);
 
             return true;
         }
@@ -61,13 +61,13 @@ namespace Content.Server.Mobs
             return true;
         }
 
-        public static void DropAllItemsInHands(IEntity entity)
+        public static void DropAllItemsInHands(IEntity entity, bool doMobChecks = true)
         {
             if (!entity.TryGetComponent(out IHandsComponent hands)) return;
 
             foreach (var heldItem in hands.GetAllHeldItems())
             {
-                hands.Drop(heldItem.Owner);
+                hands.Drop(heldItem.Owner, doMobChecks);
             }
         }
     }
