@@ -18,6 +18,16 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockFreezer
+  suffix: Freezer
+  components:
+  - type: Sprite
+    sprite: Buildings/Doors/airlock_freezer.rsi
+  - type: Icon
+    sprite: Buildings/Doors/airlock_freezer.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockEngineering
   suffix: Engineering
   components:
@@ -29,7 +39,7 @@
 - type: entity
   parent: Airlock
   id: AirlockCargo
-  suffix: Cargo 
+  suffix: Cargo
   components:
   - type: Sprite
     sprite: Buildings/Doors/airlock_cargo.rsi
@@ -96,7 +106,7 @@
     sprite: Buildings/Doors/airlock_cargo_glass.rsi
   - type: Icon
     sprite: Buildings/Doors/airlock_cargo_glass.rsi
-  
+
 - type: entity
   parent: AirlockGlass
   id: AirlockMedicalGlass
