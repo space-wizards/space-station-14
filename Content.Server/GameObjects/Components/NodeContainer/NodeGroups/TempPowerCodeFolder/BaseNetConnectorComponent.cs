@@ -17,6 +17,8 @@ namespace Content.Server.GameObjects.Components.NewPower
         public T Net { get => _net; set => SetNet(value); }
         private T _net;
 
+        protected abstract T NullNet { get; }
+
         [ViewVariables]
         private bool _needsNet = true;
 
@@ -29,7 +31,7 @@ namespace Content.Server.GameObjects.Components.NewPower
         public override void Initialize()
         {
             base.Initialize();
-            _net = GetNullNet();
+            _net = NullNet;
             if (_needsNet)
             {
                 TryFindAndSetNet();
@@ -53,11 +55,9 @@ namespace Content.Server.GameObjects.Components.NewPower
         public void ClearNet()
         {
             RemoveSelfFromNet(_net);
-            _net = GetNullNet();
+            _net = NullNet;
             _needsNet = true;
         }
-
-        protected abstract T GetNullNet();
 
         protected abstract void AddSelfToNet(T net);
 

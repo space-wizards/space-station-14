@@ -4,9 +4,6 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 {
     public abstract class BaseApcNetComponent : BaseNetConnectorComponent<IApcNet>
     {
-        protected sealed override IApcNet GetNullNet()
-        {
-            return ApcNetNodeGroup.NullNet;
-        }
+        protected override IApcNet NullNet => ApcNetNodeGroup.NullNet;
     }
 }
