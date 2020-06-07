@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        private void PlayEmptySound() => EntitySystem.Get<AudioSystem>().Play(_soundGunEmpty, Owner);
+        private void PlayEmptySound() => EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundGunEmpty, Owner);
 
         protected sealed class Chamber
         {

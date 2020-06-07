@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 if (stomachComponent.TryTransferSolution(split))
                 {
                     _entitySystem.GetEntitySystem<AudioSystem>()
-                        .Play(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+                        .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
                     trueTarget.PopupMessage(user, Loc.GetString("Nom"));
                 }
                 else

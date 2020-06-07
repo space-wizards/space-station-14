@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return;
             }
 
-            EntitySystem.Get<AudioSystem>().Play(_pickupSound, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_pickupSound, Owner);
 
         }
     }

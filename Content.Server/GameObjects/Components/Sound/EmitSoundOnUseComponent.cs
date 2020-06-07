@@ -34,10 +34,10 @@ namespace Content.Server.GameObjects.Components.Sound
             {
                 if (_pitchVariation > 0.0)
                 {
-                    EntitySystem.Get<AudioSystem>().Play(_soundName, Owner, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioHelpers.WithVariation(_pitchVariation).WithVolume(-2f));
                     return true;
                 }
-                EntitySystem.Get<AudioSystem>().Play(_soundName, Owner, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundName, Owner, AudioParams.Default.WithVolume(-2f));
                 return true;
             }
             return false;

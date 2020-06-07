@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
                 var audioSystem = EntitySystem.Get<AudioSystem>();
-                audioSystem.Play("/Audio/effects/lightburn.ogg", Owner);
+                audioSystem.PlayFromEntity("/Audio/effects/lightburn.ogg", Owner);
             }
 
             void Eject()
@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Power
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

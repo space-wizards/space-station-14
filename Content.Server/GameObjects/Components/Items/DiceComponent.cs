@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
                 var file = _random.Pick(soundCollection.PickFiles);
-                EntitySystem.Get<AudioSystem>().Play(file, Owner, AudioParams.Default);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default);
             }
         }
 

@@ -127,13 +127,13 @@ namespace Content.Server.GameObjects.Components.Interactable
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
             var file = _robustRandom.Pick(soundCollection.PickFiles);
             EntitySystem.Get<AudioSystem>()
-                .Play(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                .PlayFromEntity(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 
         public void PlayUseSound(float volume=-5f)
         {
             if(string.IsNullOrEmpty(UseSoundCollection))
-                _audioSystem.Play(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                _audioSystem.PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
             else
                 PlaySoundCollection(UseSoundCollection, volume);
         }

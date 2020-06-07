@@ -35,7 +35,7 @@ namespace Content.Server.Mobs
 
             if (playSound)
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
-                    .Play(AudioHelpers.GetRandomFileFromSoundCollection("bodyfall"), entity, AudioHelpers.WithVariation(0.25f));
+                    .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("bodyfall"), entity, AudioHelpers.WithVariation(0.25f));
 
             if(dropItems)
                 DropAllItemsInHands(entity);
