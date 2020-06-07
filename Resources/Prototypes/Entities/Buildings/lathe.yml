@@ -1,6 +1,6 @@
 - type: entity
   id: BaseLathe
-  name: "Lathe"
+  name: "lathe"
   abstract: true
   components:
   - type: Clickable
@@ -19,7 +19,7 @@
 - type: entity
   parent: BaseLathe
   id: Autolathe
-  name: "Autolathe"
+  name: "autolathe"
   components:
   - type: Sprite
     sprite: Buildings/autolathe.rsi
@@ -35,7 +35,11 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 15
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Lathe
@@ -62,7 +66,7 @@
 - type: entity
   parent: BaseLathe
   id: Protolathe
-  name: "Protolathe"
+  name: "protolathe"
   components:
   - type: Sprite
     sprite: Buildings/research.rsi
@@ -80,7 +84,11 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 15
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: ResearchClient

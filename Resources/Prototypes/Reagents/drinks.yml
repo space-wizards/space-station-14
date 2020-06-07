@@ -1,117 +1,117 @@
 - type: reagent
   id: chem.Whiskey
-  name: Whiskey
+  name: whiskey
   desc: An alcoholic beverage made from fermented grain mash
   color: "#664300"
   spritePath: whiskeyglass.rsi
 
 - type: reagent
   id: chem.Ale
-  name: Ale
+  name: ale
   desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
   color: "#664300"
   spritePath: aleglass.rsi
 
 - type: reagent
   id: chem.Wine
-  name: Wine
+  name: wine
   desc: An alcoholic drink made from fermented grapes
   color: "#7E4043"
   spritePath: wineglass.rsi
 
 - type: reagent
   id: chem.Beer
-  name: Beer
+  name: beer
   desc: A cold pint of pale lager.
   color: "#664300"
   spritePath: beerglass.rsi
 
 - type: reagent
   id: chem.Vodka
-  name: Vodka
+  name: vodka
   desc: The glass contain wodka. Xynta.
   color: "#664300"
 
 - type: reagent
   id: chem.Kahlua
-  name: Kahlua
+  name: kahlua
   desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
   color: "#664300"
   spritePath: kahluaglass.rsi
 
 - type: reagent
   id: chem.Cognac
-  name: Cognac
+  name: cognac
   desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
   color: "#AB3C05"
   spritePath: cognacglass.rsi
 
 - type: reagent
   id: chem.ManlyDorf
-  name: Manly Dorf
+  name: manly dorf
   desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
   color: "#664300"
   spritePath: manlydorfglass.rsi
 
 - type: reagent
   id: chem.CubaLibre
-  name: Cuba Libre
+  name: cuba libre
   desc: A classic mix of rum and cola.
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
 
 - type: reagent
   id: chem.IrishCarBomb
-  name: Irish Car Bomb
+  name: irish car bomb
   desc: A troubling mixture of irish cream and ale.
   color: "#2E6671"
   spritePath: irishcarbomb.rsi
 
 - type: reagent
   id: chem.IrishCoffee
-  name: Irish Coffee
+  name: irish coffee
   desc: Coffee served with irish cream. Regular cream just isn't the same!
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
 
 - type: reagent
   id: chem.IrishCream
-  name: Irish Cream
+  name: irish cream
   desc: Whiskey-imbued cream. What else could you expect from the Irish.
   color: "#664300"
   spritePath: irishcreamglass.rsi
 
 - type: reagent
   id: chem.B52
-  name: B-52
+  name: b-52
   desc: Coffee, irish cream, and cognac. You will get bombed.
   color: "#664300"
   spritePath: b52glass.rsi
 
 - type: reagent
   id: chem.AtomicBomb
-  name: Atomic Bomb
+  name: atomic bomb
   desc: Nuclear proliferation never tasted so good.
   color: "#666300"
   spritePath: atomicbombglass.rsi
 
 - type: reagent
   id: chem.WhiskeyCola
-  name: Whiskey Cola
+  name: whiskey cola
   desc: An innocent-looking mixture of cola and whiskey. Delicious.
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
 
 - type: reagent
   id: chem.SyndicateBomb
-  name: Syndicate Bomb
+  name: syndicate bomb
   desc: Somebody set us up the bomb!
   color: "#2E6671"
   spritePath: syndicatebomb.rsi
 
 - type: reagent
   id: chem.Antifreeze
-  name: Antifreeze
+  name: antifreeze
   desc: The ultimate refreshment.
   color: "#664300"
   spritePath: antifreeze.rsi
@@ -119,7 +119,7 @@
 
 - type: reagent
   id: chem.Cola
-  name: Cola
+  name: cola
   desc: A sweet, carbonated soft drink. Caffeine free.
   color: "#100800"
   metabolism:
@@ -128,7 +128,7 @@
 
 - type: reagent
   id: chem.Coffee
-  name: Coffee
+  name: coffee
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
   color: "#664300"
   metabolism:
@@ -137,7 +137,7 @@
 
 - type: reagent
   id: chem.Tea
-  name: Tea
+  name: tea
   desc: A made by boiling leaves of the tea tree, Camellia sinensis.
   color: "#101000"
   metabolism:
@@ -146,7 +146,7 @@
 
 - type: reagent
   id: chem.Cream
-  name: Cream
+  name: cream
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   color: "#DFD7AF"
   metabolism:
@@ -155,7 +155,7 @@
 
 - type: reagent
   id: chem.Milk
-  name: Milk
+  name: milk
   desc: An opaque white liquid produced by the mammary glands of mammals.
   color: "#DFDFDF"
   metabolism:

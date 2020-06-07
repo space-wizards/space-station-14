@@ -1,5 +1,5 @@
 - type: entity
-  name: Beaker
+  name: beaker
   parent: BaseItem
   description: Used to contain a moderate amount of chemicals and solutions.
   id: Beaker
@@ -16,7 +16,7 @@
     transferAmount: 5.0
 
 - type: entity
-  name: Large Beaker
+  name: large beaker
   parent: BaseItem
   description: Used to contain a large amount of chemicals or solutions.
   id: LargeBeaker
@@ -33,7 +33,7 @@
     transferAmount: 5.0
 
 - type: entity
-  name: Dropper
+  name: dropper
   parent: BaseItem
   description: Used to transfer small amounts of chemical solution between containers.
   id: Dropper
@@ -51,7 +51,7 @@
     transferAmount: 5.0
 
 - type: entity
-  name: Syringe
+  name: syringe
   parent: BaseItem
   description: Used to draw blood samples from mobs, or to inject them with reagents
   id: Syringe

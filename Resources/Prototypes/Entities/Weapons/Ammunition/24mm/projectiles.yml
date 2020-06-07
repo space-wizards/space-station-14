@@ -1,6 +1,6 @@
 - type: entity
   id: bullet_24mm
-  name: 24mm Bullet
+  name: 24mm bullet
   parent: BulletBase
   abstract: true
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: bullet_24mmf
-  name: 24mm Bullet (Flash)
+  name: 24mm bullet (flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   id: bullet_24mmhv
-  name: 24mm Bullet (High-Velocity)
+  name: 24mm bullet (high-velocity)
   parent: BulletBaseHighVelocity
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_24mml
-  name: 24mm Bullet (L)
+  name: 24mm bullet (L)
   parent: BulletBaseL
   abstract: true
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: bullet_24mmp
-  name: 24mm Bullet (Practice)
+  name: 24mm bullet (practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   id: bullet_24mmr
-  name: 24mm Bullet (Rubber)
+  name: 24mm bullet (rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

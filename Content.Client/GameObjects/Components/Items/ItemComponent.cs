@@ -3,8 +3,10 @@ using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Renderable;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -26,7 +28,13 @@ namespace Content.Client.GameObjects
         public string EquippedPrefix
         {
             get => _equippedPrefix;
-            set => _equippedPrefix = value;
+            set
+            {
+                _equippedPrefix = value;
+                if (!ContainerHelpers.TryGetContainer(Owner, out IContainer container)) return;
+                if(container.Owner.TryGetComponent(out HandsComponent hands))
+                    hands.RefreshInHands();
+            }
         }
 
         public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(string hand)

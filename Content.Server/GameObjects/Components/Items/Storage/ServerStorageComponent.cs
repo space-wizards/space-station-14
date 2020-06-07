@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -31,7 +32,7 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate, IStorageComponent, IDestroyAct
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -44,6 +45,8 @@ namespace Content.Server.GameObjects
         private int StorageUsed = 0;
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
+
+        public IReadOnlyCollection<IEntity> StoredEntities => storage.ContainedEntities;
 
         public override void Initialize()
         {
@@ -138,15 +141,16 @@ namespace Content.Server.GameObjects
         /// <param name="user"></param>
         /// <param name="attackwith"></param>
         /// <returns></returns>
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            _ensureInitialCalculated();
-            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
+            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.Using.Uid);
 
             if(Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 return false;
             }
+
+
 
             return PlayerInsertEntity(eventArgs.User);
          }
@@ -363,8 +367,10 @@ namespace Content.Server.GameObjects
         /// <summary>
         /// Inserts an entity into the storage component from the players active hand.
         /// </summary>
-        private bool PlayerInsertEntity(IEntity player)
+        public bool PlayerInsertEntity(IEntity player)
         {
+            _ensureInitialCalculated();
+
             if (!player.TryGetComponent(out IHandsComponent hands) || hands.GetActiveHand == null)
                 return false;
 

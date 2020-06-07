@@ -2,11 +2,12 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
-using Content.Server.Players;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
@@ -91,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         // Async this so that we don't throw if the grid we're on is being deleted.
                         var mapMan = IoCManager.Resolve<IMapManager>();
 
-                        if (!mapMan.GridExists(spawnPosition.GridID))
+                        if (spawnPosition.GridID == GridId.Invalid || !mapMan.GridExists(spawnPosition.GridID))
                         {
                             spawnPosition = IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
                         }
@@ -113,16 +114,23 @@ namespace Content.Server.GameObjects.Components.Mobs
             serializer.DataField(ref _showExamineInfo, "show_examine_info", false);
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!ShowExamineInfo)
+            if (!ShowExamineInfo || !inDetailsRange)
                 return;
 
-            // TODO: Use gendered pronouns depending on the entity
+            var dead = false;
+
+            if(Owner.TryGetComponent<SpeciesComponent>(out var species))
+                if (species.CurrentDamageState is DeadState)
+                    dead = true;
+
             if(!HasMind)
-                message.AddMarkup($"[color=red]They are totally catatonic. The stresses of life in deep-space must have been too much for them. Any recovery is unlikely.[/color]");
-            else if(Mind.Session == null)
-                message.AddMarkup("[color=yellow]They have a blank, absent-minded stare and appears completely unresponsive to anything. They may snap out of it soon.[/color]");
+                message.AddMarkup(!dead
+                    ? $"[color=red]" + Loc.GetString("{0:They} are totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
+                    : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
+            else if (Mind.Session == null)
+                message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} have a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
         }
     }
 }

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
 using Robust.Server.GameObjects.Components.Container;
@@ -100,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
             var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();
-            targetIdAccess.Tags = newAccessList;
+            targetIdAccess.SetTags(newAccessList);
         }
 
         /// <summary>
@@ -179,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Access
                     true,
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
-                    targetAccessComponent.Tags,
+                    targetAccessComponent.Tags.ToArray(),
                     _privilegedIdContainer.ContainedEntity?.Name ?? "",
                     _targetIdContainer.ContainedEntity?.Name ?? "");
             }

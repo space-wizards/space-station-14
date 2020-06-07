@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -42,7 +43,14 @@ namespace Content.Client
 
         private void DoNotifyMessage(MsgDoNotify message)
         {
-            PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+            if (message.AtCursor)
+            {
+                PopupMessage(message.Message);
+            }
+            else
+            {
+                PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+            }
         }
 
         public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
@@ -55,12 +63,26 @@ namespace Content.Client
             PopupMessage(_eyeManager.WorldToScreen(coordinates), message);
         }
 
+        public override void PopupMessageCursor(IEntity viewer, string message)
+        {
+            if (viewer != _playerManager.LocalPlayer.ControlledEntity)
+            {
+                return;
+            }
+
+            PopupMessage(message);
+        }
+
         public void PopupMessage(ScreenCoordinates coordinates, string message)
         {
-            var label = new PopupLabel {Text = message};
+            var label = new PopupLabel
+            {
+                Text = message,
+                StyleClasses = { StyleNano.StyleClassPopupMessage },
+            };
+            _userInterfaceManager.PopupRoot.AddChild(label);
             var minimumSize = label.CombinedMinimumSize;
             LayoutContainer.SetPosition(label, label.InitialPos = coordinates.Position - minimumSize / 2);
-            _userInterfaceManager.PopupRoot.AddChild(label);
             _aliveLabels.Add(label);
         }
 

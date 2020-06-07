@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -12,7 +13,7 @@ using Robust.Shared.Map;
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
-    internal class WirePlacerComponent : Component, IAfterAttack
+    internal class WirePlacerComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerEntityManager _entityManager;
@@ -23,8 +24,10 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "WirePlacer";
 
         /// <inheritdoc />
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
+
             if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
                 return;
 

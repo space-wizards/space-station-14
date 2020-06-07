@@ -1,5 +1,5 @@
  - type: entity
-   name: BaseInstrument
+   name: baseinstrument
    id: BaseInstrument
    abstract: true
    components:
@@ -12,7 +12,7 @@
    - type: Collidable
      shapes:
      - !type:PhysShapeAabb
-       layer: 31
+       layer: [MobMask, Impassable]
 
    - type: SnapGrid
      offset: Center
@@ -27,7 +27,7 @@
        type: InstrumentBoundUserInterface
 
  - type: entity
-   name: Piano
+   name: piano
    parent: BaseInstrument
    id: PianoInstrument
    description: Play Needles Piano Now.
@@ -35,36 +35,36 @@
    - type: Instrument
      program: 1
    - type: Sprite
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
    - type: Icon
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
 
  - type: entity
-   name: Minimoog
+   name: minimoog
    parent: BaseInstrument
    id: MinimoogInstrument
    components:
    - type: Instrument
-     program: 7
+     program: 81
    - type: Sprite
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: minimoog
    - type: Icon
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: minimoog
 
  - type: entity
-   name: Xylophone
+   name: xylophone
    parent: BaseInstrument
    id: XylophoneInstrument
    components:
    - type: Instrument
      program: 13
    - type: Sprite
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: xylophone
    - type: Icon
-     sprite: Objects/Instruments/musician.rsi
+     sprite: Objects/Instruments/otherinstruments.rsi
      state: xylophone

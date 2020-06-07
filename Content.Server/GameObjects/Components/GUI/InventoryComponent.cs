@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
@@ -10,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
@@ -23,6 +26,7 @@ namespace Content.Server.GameObjects
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
 #pragma warning restore 649
 
         [ViewVariables]
@@ -90,8 +94,9 @@ namespace Content.Server.GameObjects
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
         /// <param name="item">The item to insert into the slot.</param>
+        /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
-        public bool Equip(Slots slot, ItemComponent item)
+        public bool Equip(Slots slot, ItemComponent item, out string reason)
         {
             if (item == null)
             {
@@ -99,7 +104,7 @@ namespace Content.Server.GameObjects
                     "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            if (!CanEquip(slot, item))
+            if (!CanEquip(slot, item, out reason))
             {
                 return false;
             }
@@ -117,18 +122,24 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
+        public bool Equip(Slots slot, ItemComponent item) => Equip(slot, item, out var _);
 
+        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
         /// </summary>
         /// <param name="slot">The slot to check for.</param>
         /// <param name="item">The item to check for.</param>
+        /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
         /// <returns>True if the item can be inserted into the specified slot.</returns>
-        public bool CanEquip(Slots slot, ItemComponent item)
+        public bool CanEquip(Slots slot, ItemComponent item, out string reason)
         {
             var pass = false;
+            reason = null;
+
+            if (!ActionBlockerSystem.CanEquip(Owner))
+                return false;
 
             if (item is ClothingComponent clothing)
             {
@@ -136,15 +147,27 @@ namespace Content.Server.GameObjects
                 {
                     pass = true;
                 }
+                else
+                {
+                    reason = Loc.GetString("This doesn't fit.");
+                }
             }
 
             if (Owner.TryGetComponent(out IInventoryController controller))
             {
-                pass = controller.CanEquip(slot, item.Owner, pass);
+                pass = controller.CanEquip(slot, item.Owner, pass, out var controllerReason);
+                reason = controllerReason ?? reason;
+            }
+
+            if (!pass && reason == null)
+            {
+                reason = Loc.GetString("You can't equip this!");
             }
 
             return pass && SlotContainers[slot].CanInsert(item.Owner);
         }
+
+        public bool CanEquip(Slots slot, ItemComponent item) => CanEquip(slot, item, out var _);
 
         public bool CanEquip(Slots slot, IEntity entity) => CanEquip(slot, entity.GetComponent<ItemComponent>());
 
@@ -187,6 +210,9 @@ namespace Content.Server.GameObjects
         /// </returns>
         public bool CanUnequip(Slots slot)
         {
+            if (!ActionBlockerSystem.CanUnequip(Owner))
+                return false;
+
             var InventorySlot = SlotContainers[slot];
             return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
         }
@@ -279,9 +305,12 @@ namespace Content.Server.GameObjects
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
                         hands.Drop(hands.ActiveIndex);
-                        if (!Equip(msg.Inventoryslot, clothing))
+                        if (!Equip(msg.Inventoryslot, clothing, out var reason))
                         {
                             hands.PutInHand(clothing);
+
+                            if (reason != null)
+                                _serverNotifyManager.PopupMessageCursor(Owner, reason);
                         }
                     }
                     break;

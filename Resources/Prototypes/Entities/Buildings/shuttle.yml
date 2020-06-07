@@ -1,5 +1,5 @@
 - type: entity
-  name: Pilot Chair
+  name: pilot chair
   description: The driver seat of a prestigious battle cruiser.
   id: PilotSeatChair
   components:
@@ -12,17 +12,17 @@
     state: chair
 
   - type: Collidable
-  
+
   - type: Clickable
   - type: InteractionOutline
-  
+
   - type: EntityStorage
     showContents: true
     noDoor: true
-  
+
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
-    
+
   - type: Physics
   - type: ShuttleController

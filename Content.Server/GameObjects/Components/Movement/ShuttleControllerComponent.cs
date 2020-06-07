@@ -34,6 +34,15 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentWalkSpeed { get; set; } = 8;
         public float CurrentSprintSpeed { get; set; }
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float CurrentPushSpeed => 0.0f;
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float GrabRange => 0.0f;
+
         public bool Sprinting { get; set; }
         public Vector2 VelocityDir { get; } = Vector2.Zero;
         public GridCoordinates LastPosition { get; set; }
@@ -56,8 +65,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 if (!gridEntity.HasComponent<ICollidableComponent>())
                 {
                     var collideComp = gridEntity.AddComponent<CollidableComponent>();
-                    collideComp.CollisionEnabled = true;
-                    collideComp.IsHardCollidable = true;
+                    collideComp.CanCollide = true;
+                    //collideComp.IsHardCollidable = true;
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
@@ -124,11 +133,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (!removed)
             {
-                mindComp.Mind.Visit(Owner);
+                mindComp.Mind?.Visit(Owner);
             }
             else
             {
-                mindComp.Mind.UnVisit();
+                mindComp.Mind?.UnVisit();
             }
         }
     }

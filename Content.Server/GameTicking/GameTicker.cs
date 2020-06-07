@@ -7,6 +7,8 @@ using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.Components.PDA;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -16,6 +18,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces;
@@ -26,6 +29,7 @@ using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -53,7 +57,7 @@ namespace Content.Server.GameTicking
 
         private const string PlayerPrototypeName = "HumanMob_Content";
         private const string ObserverPrototypeName = "MobObserver";
-        private const string MapFile = "Maps/stationstation.yml";
+        private const string MapFile = "Maps/saltern.yml";
         private static TimeSpan _roundStartTimeSpan;
 
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
@@ -94,6 +98,7 @@ namespace Content.Server.GameTicking
         }
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
@@ -104,7 +109,8 @@ namespace Content.Server.GameTicking
 
             _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
-            _configurationManager.RegisterCVar("game.defaultpreset", "Sandbox", CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
 
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
@@ -181,11 +187,6 @@ namespace Content.Server.GameTicking
 
             SendServerMessage("The round is starting now...");
 
-            RunLevel = GameRunLevel.InRound;
-
-            var preset = MakeGamePreset();
-            preset.Start();
-
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
@@ -195,6 +196,8 @@ namespace Content.Server.GameTicking
             {
                 readyPlayers = _playersInLobby.Keys.ToList();
             }
+
+            RunLevel = GameRunLevel.InRound;
 
             // Get the profiles for each player for easier lookup.
             var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);
@@ -220,6 +223,18 @@ namespace Content.Server.GameTicking
             foreach (var (player, job) in assignedJobs)
             {
                 SpawnPlayer(player, job, false);
+            }
+
+            // Time to start the preset.
+            var preset = MakeGamePreset();
+
+            if (!preset.Start(assignedJobs.Keys.ToList()))
+            {
+                SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
+                var newPreset = MakeGamePreset();
+                _chatManager.DispatchServerAnnouncement($"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                if(!newPreset.Start(readyPlayers))
+                    throw new ApplicationException("Fallback preset failed to start!");
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
@@ -255,15 +270,16 @@ namespace Content.Server.GameTicking
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
             foreach(var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
-                if(ply.AttachedEntity.TryGetComponent<MindComponent>(out var mindComponent)
-                    && mindComponent.HasMind)
+                var mind = ply.ContentData().Mind;
+                if(mind != null)
                 {
+                    var antag = mind.AllRoles.Any(role => role.Antag);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
-                        PlayerICName = mindComponent.Mind.CurrentEntity.Name,
-                        Role = mindComponent.Mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
-                        Antag = false
+                        PlayerICName = mind.CurrentEntity.Name,
+                        Role = antag ? mind.AllRoles.First(role => role.Antag).Name : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
+                        Antag = antag
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
@@ -312,7 +328,23 @@ namespace Content.Server.GameTicking
             _gameRules.Add(instance);
             instance.Added();
 
+            OnRuleAdded?.Invoke(new GameRuleAddedEventArgs(instance));
+
             return instance;
+        }
+
+        public bool HasGameRule(Type t)
+        {
+            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+                return false;
+
+            foreach (var rule in _gameRules)
+            {
+                if (rule.GetType().Equals(t))
+                    return true;
+            }
+
+            return false;
         }
 
         public void RemoveGameRule(GameRule rule)
@@ -339,6 +371,7 @@ namespace Content.Server.GameTicking
             {
                 "Sandbox" => typeof(PresetSandbox),
                 "DeathMatch" => typeof(PresetDeathMatch),
+                "Suspicion" => typeof(PresetSuspicion),
                 _ => throw new NotSupportedException()
             });
 
@@ -457,6 +490,8 @@ namespace Content.Server.GameTicking
 
             _spawnedPositions.Clear();
             _manifest.Clear();
+
+            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
         }
 
         private void _preRoundSetup()
@@ -611,20 +646,37 @@ namespace Content.Server.GameTicking
         {
             var inventory = mob.GetComponent<InventoryComponent>();
 
-            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent cardItem))
+            if (!inventory.TryGetSlotItem(Slots.IDCARD, out ItemComponent pdaItem))
             {
                 return;
             }
 
-            var card = cardItem.Owner;
+            var pda = pdaItem.Owner;
 
-            var cardComponent = card.GetComponent<IdCardComponent>();
-            cardComponent.FullName = characterName;
-            cardComponent.JobTitle = jobPrototype.Name;
+            var pdaComponent = pda.GetComponent<PDAComponent>();
+            if (pdaComponent.IdSlotEmpty)
+            {
+                return;
+            }
 
-            var access = card.GetComponent<AccessComponent>();
-            access.Tags.Clear();
-            access.Tags.AddRange(jobPrototype.Access);
+            var card = pdaComponent.ContainedID;
+            card.FullName = characterName;
+            card.JobTitle = jobPrototype.Name;
+
+            var access = card.Owner.GetComponent<AccessComponent>();
+            var accessTags = access.Tags;
+            accessTags.UnionWith(jobPrototype.Access);
+            pdaComponent.SetPDAOwner(mob);
+            var mindComponent = mob.GetComponent<MindComponent>();
+            if (mindComponent.HasMind)//Redundancy checks.
+            {
+                if (mindComponent.Mind.AllRoles.Any(role => role.Antag)) //Give antags a new uplinkaccount.
+                {
+                    var uplinkAccount = new UplinkAccount(mob.Uid, 20); //TODO: make me into a variable based on server pop or something.
+                    pdaComponent.InitUplinkAccount(uplinkAccount);
+                }
+            }
+
         }
 
         private void AddManifestEntry(string characterName, string jobId)
@@ -749,5 +801,15 @@ The current game mode is: [color=white]{0}[/color].
 
         public GameRunLevel OldRunLevel { get; }
         public GameRunLevel NewRunLevel { get; }
+    }
+
+    public class GameRuleAddedEventArgs : EventArgs
+    {
+        public GameRule GameRule { get; }
+
+        public GameRuleAddedEventArgs(GameRule rule)
+        {
+            GameRule = rule;
+        }
     }
 }

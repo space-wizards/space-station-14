@@ -1,4 +1,4 @@
-- type: sound_collection
+- type: soundCollection
   id: dice
   files:
   - /Audio/items/dice/dice1.ogg

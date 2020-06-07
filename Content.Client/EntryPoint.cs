@@ -12,9 +12,11 @@ using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Markers;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.GameObjects.Components.VendingMachines;
+using Content.Shared.Kitchen;
 using Robust.Client;
 using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Graphics.Overlays;
@@ -50,7 +52,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
-                "Wrenchable",
+                "Anchorable",
                 "AmmoBox",
                 "Breakable",
                 "Pickaxe",
@@ -66,6 +68,9 @@ namespace Content.Client
                 "Explosive",
                 "OnUseTimerTrigger",
                 "ToolboxElectricalFill",
+                "ToolboxEmergencyFill",
+                "WarpPoint",
+                "ToolboxGoldFill",
                 "ToolLockerFill",
                 "EmitSoundOnUse",
                 "FootstepModifier",
@@ -118,7 +123,7 @@ namespace Content.Client
                 "Species",
                 "Drink",
                 "Food",
-                "DrinkFoodContainer",
+                "FoodContainer",
                 "Stomach",
                 "Hunger",
                 "Thirst",
@@ -143,6 +148,23 @@ namespace Content.Client
                 "Bucket",
                 "Puddle",
                 "CanSpill",
+                "RandomPottedPlant",
+                "CommunicationsConsole",
+                "BarSign",
+                "DroppedBodyPart",
+                "DroppedMechanism",
+                "BodyManager",
+                "Stunnable",
+                "SolarPanel",
+                "BodyScanner",
+                "Stunbaton",
+                "EmergencyClosetFill",
+                "Tool",
+                "TilePrying",
+                "RandomToolColor",
+                "ConditionalSpawner",
+                "PottedPlantHide",
+                "SecureEntityStorage",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -160,6 +182,8 @@ namespace Content.Client
             factory.Register<SharedWiresComponent>();
             factory.Register<SharedCargoConsoleComponent>();
             factory.Register<SharedReagentDispenserComponent>();
+            factory.Register<SharedMicrowaveComponent>();
+            factory.Register<SharedGravityGeneratorComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
@@ -232,7 +256,6 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IItemSlotManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

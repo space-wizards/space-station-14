@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Physics;
@@ -12,7 +13,9 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
@@ -22,20 +25,19 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IAttackHand, IExAct, IEquipped, IUnequipped
+    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
 
-#pragma warning disable 649
+        #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _robustRandom;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IMapManager _mapManager;
         #pragma warning restore 649
 
@@ -49,8 +51,8 @@ namespace Content.Server.GameObjects
             }
             set
             {
-                Dirty();
                 _equippedPrefix = value;
+                Dirty();
             }
         }
 
@@ -95,13 +97,12 @@ namespace Content.Server.GameObjects
                 return false;
 
             var userPos = user.Transform.MapPosition;
-            var itemPos = Owner.Transform.WorldPosition;
+            var itemPos = Owner.Transform.MapPosition;
 
-            return _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InRangeUnobstructed(userPos, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
+            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
         }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        public bool InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!CanPickup(eventArgs.User)) return false;
 
@@ -113,23 +114,15 @@ namespace Content.Server.GameObjects
         [Verb]
         public sealed class PickUpVerb : Verb<ItemComponent>
         {
-            protected override string GetText(IEntity user, ItemComponent component)
-            {
-                if (user.TryGetComponent(out HandsComponent hands) && hands.IsHolding(component.Owner))
-                {
-                    return "Pick Up (Already Holding)";
-                }
-                return "Pick Up";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, ItemComponent component)
+            protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
                 if (ContainerHelpers.IsInContainer(component.Owner) || !component.CanPickup(user))
                 {
-                    return VerbVisibility.Invisible;
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
 
-                return VerbVisibility.Visible;
+                data.Text = "Pick Up";
             }
 
             protected override void Activate(IEntity user, ItemComponent component)

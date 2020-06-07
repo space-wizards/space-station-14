@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
@@ -128,6 +131,13 @@ namespace Content.Server.Mobs
             // This can definitely get more complex removal hooks later,
             // when we need it.
             _roles.Remove(role);
+        }
+
+        public bool HasRole<T>() where T : Role
+        {
+            var t = typeof(T);
+
+            return _roles.Any(role => role.GetType() == t);
         }
 
         /// <summary>

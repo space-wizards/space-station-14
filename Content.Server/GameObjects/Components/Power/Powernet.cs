@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -15,8 +17,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public Powernet()
         {
-            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            var powerSystem = EntitySystemManager.GetEntitySystem<PowerSystem>();
+            var powerSystem = EntitySystem.Get<PowerSystem>();
             powerSystem.Powernets.Add(this);
             Uid = powerSystem.NewUid();
         }
@@ -374,8 +375,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private void RemoveFromSystem()
         {
-            var EntitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            EntitySystemManager.GetEntitySystem<PowerSystem>().Powernets.Remove(this);
+            EntitySystem.Get<PowerSystem>().Powernets.Remove(this);
         }
 
         #region Registration
