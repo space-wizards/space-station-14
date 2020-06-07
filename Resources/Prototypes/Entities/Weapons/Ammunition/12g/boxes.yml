@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A12g
     capacity: 30
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes

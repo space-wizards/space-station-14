@@ -2,7 +2,7 @@
 - type: entity
   parent: BaseItem
   id: DrinkBaseCup
-  name: Base cup
+  name: base cup
   abstract: true
   components:
   - type: Solution
@@ -19,7 +19,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkGoldenCup
-  name: Golden cup
+  name: golden cup
   description: A golden cup
   components:
   - type: Solution
@@ -32,7 +32,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkPitcher
-  name: Insulated pitcher
+  name: insulated pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
   - type: Solution
@@ -51,7 +51,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMug
-  name: Mug
+  name: mug
   description: A plain white mug.
   components:
   - type: Solution
@@ -70,7 +70,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugBlack
-  name: Mug Black
+  name: mug black
   description: A sleek black mug.
   components:
   - type: Solution
@@ -89,7 +89,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugBlue
-  name: Mug Blue
+  name: mug blue
   description: A blue and black mug.
   components:
   - type: Solution
@@ -108,7 +108,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugGreen
-  name: Mug Green
+  name: mug green
   description: A pale green and pink mug.
   components:
   - type: Solution
@@ -127,7 +127,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugHeart
-  name: Mug Heart
+  name: mug heart
   description: A white mug, it prominently features a red heart.
   components:
   - type: Solution
@@ -146,7 +146,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugMetal
-  name: Mug Metal
+  name: mug metal
   description: A metal mug. You're not sure which metal.
   components:
   - type: Solution
@@ -165,7 +165,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugMoebius
-  name: Mug Moebius
+  name: mug moebius
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
   - type: Solution
@@ -203,7 +203,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugRainbow
-  name: Mug Rainbow
+  name: mug rainbow
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
   - type: Solution
@@ -222,7 +222,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkMugRed
-  name: Mug Red
+  name: mug red
   description: A red and black mug.
   components:
   - type: Solution

@@ -2,7 +2,7 @@
 
 - type: job
   id: ChiefMedicalOfficer
-  name: "Chief Medical Officer"
+  name: "chief medical officer"
   head: true
   positions: 1
   startingGear: CMOGear

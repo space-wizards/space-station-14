@@ -1,14 +1,14 @@
 - type: entity
-  name: BasePistol
+  name: basepistol
   parent: BaseItem
   id: PistolBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     auto_eject_magazine: false
@@ -37,7 +37,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg
@@ -51,7 +51,7 @@
     sprite: Objects/Guns/Pistols/clarissa.rsi
 
 - type: entity
-  name: Clarissa (Silenced)
+  name: clarissa (silenced)
   parent: PistolBase
   id: PistolClarissaS
   description: A rooty tooty point and shooty.
@@ -69,7 +69,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     sound_gunshot: /Audio/Guns/Gunshots/silenced.ogg
@@ -101,7 +101,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A50
-    magazines: 
+    magazines:
     - A50
     default_magazine: magazine_50
     sound_auto_eject: /Audio/Guns/MagOut/hpistol_magout.ogg
@@ -131,14 +131,14 @@
   - type: Icon
     sprite: Objects/Guns/Pistols/deckard.rsi
     state: deckard-2
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 2
     automatic: false
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A44
-    magazines: 
+    magazines:
     - A44
     default_magazine: magazine_44
     sound_gunshot: /Audio/Guns/Gunshots/revolver.ogg
@@ -154,7 +154,7 @@
     sprite: Objects/Guns/Pistols/deckard.rsi
 
 - type: entity
-  name: Giskard
+  name: giskard
   parent: PistolBase
   id: PistolGiskard
   description: A rooty tooty point and shooty.
@@ -172,7 +172,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A32
-    magazines: 
+    magazines:
     - A32
     default_magazine: magazine_32
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg
@@ -186,7 +186,7 @@
     sprite: Objects/Guns/Pistols/giskard.rsi
 
 - type: entity
-  name: Giskard (Silenced)
+  name: giskard (silenced)
   parent: PistolBase
   id: PistolGiskardS
   description: A rooty tooty point and shooty.
@@ -204,7 +204,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A32
-    magazines: 
+    magazines:
     - A32
     default_magazine: magazine_32
     sound_gunshot: /Audio/Guns/Gunshots/silenced.ogg
@@ -218,7 +218,7 @@
     sprite: Objects/Guns/Pistols/giskard_s.rsi
 
 - type: entity
-  name: Gyro pistol
+  name: gyro pistol
   parent: PistolBase
   id: PistolGyro
   description: A rooty tooty point and shooty.
@@ -236,7 +236,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A20mm
-    magazines: 
+    magazines:
     - A20mm
     default_magazine: magazine_20mm
     auto_eject_magazine: true
@@ -273,7 +273,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     - A9mmSMG
     default_magazine: magazine_9mm_smg
@@ -289,7 +289,7 @@
     sprite: Objects/Guns/Pistols/ih_mp.rsi
 
 - type: entity
-  name: IH machine pistol (Silenced)
+  name: IH machine pistol (silenced)
   parent: PistolBase
   id: PistolIhmpS
   description: Pewsh pewsh
@@ -307,7 +307,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     - A9mmSMG
     default_magazine: magazine_9mm_smg
@@ -341,7 +341,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     auto_eject_magazine: true
@@ -356,7 +356,7 @@
     sprite: Objects/Guns/Pistols/ih_sidearm.rsi
 
 - type: entity
-  name: IH sidearm (Silenced)
+  name: IH sidearm (silenced)
   parent: PistolBase
   id: PistolIhSidearmS
   description: A rooty tooty point and shooty.
@@ -374,7 +374,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     auto_eject_magazine: true
@@ -389,7 +389,7 @@
     sprite: Objects/Guns/Pistols/ih_sidearm_s.rsi
 
 - type: entity
-  name: Lamia
+  name: lamia
   parent: PistolBase
   id: PistolLamia
   description: A rooty tooty point and shooty.
@@ -407,7 +407,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A44
-    magazines: 
+    magazines:
     - A44
     default_magazine: magazine_44
     auto_eject_magazine: true
@@ -426,7 +426,7 @@
     sprite: Objects/Guns/Pistols/lamia.rsi
 
 - type: entity
-  name: Makarov
+  name: makarov
   parent: PistolBase
   id: PistolMakarov
   description: A rooty tooty point and shooty.
@@ -444,7 +444,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg
@@ -458,7 +458,7 @@
     sprite: Objects/Guns/Pistols/makarov.rsi
 
 - type: entity
-  name: Makarov (Silenced)
+  name: makarov (silenced)
   parent: PistolBase
   id: PistolMakarovS
   description: A rooty tooty point and shooty.
@@ -476,7 +476,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mm
     default_magazine: magazine_9mm
     sound_gunshot: /Audio/Guns/Gunshots/silenced.ogg
@@ -490,7 +490,7 @@
     sprite: Objects/Guns/Pistols/makarov_s.rsi
 
 - type: entity
-  name: Mk 58
+  name: mk 58
   parent: PistolBase
   id: PistolMk58
   description: A rooty tooty point and shooty.
@@ -508,7 +508,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A45mm
-    magazines: 
+    magazines:
     - A45mm
     default_magazine: magazine_45mm
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg
@@ -522,7 +522,7 @@
     sprite: Objects/Guns/Pistols/mk58.rsi
 
 - type: entity
-  name: Mk 58 (Wood)
+  name: mk 58 (wood)
   parent: PistolBase
   id: PistolMk58W
   description: A rooty tooty point and shooty.
@@ -540,7 +540,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A45mm
-    magazines: 
+    magazines:
     - A45mm
     default_magazine: magazine_45mm
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg
@@ -554,7 +554,7 @@
     sprite: Objects/Guns/Pistols/mk58_wood.rsi
 
 - type: entity
-  name: Olivaw civil
+  name: olivaw civil
   parent: PistolBase
   id: PistolOlivawCivil
   description: A rooty tooty point and shooty.
@@ -572,7 +572,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A32
-    magazines: 
+    magazines:
     - A32
     default_magazine: magazine_32
     sound_gunshot: /Audio/Guns/Gunshots/pistol.ogg

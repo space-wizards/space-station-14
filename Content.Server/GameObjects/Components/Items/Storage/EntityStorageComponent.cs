@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
     {
         public override string Name => "EntityStorage";
 
@@ -379,6 +379,11 @@ namespace Content.Server.GameObjects.Components
 
             IsWeldedShut ^= true;
             return true;
+        }
+
+        public void OnDestroy(DestructionEventArgs eventArgs)
+        {
+            EmptyContents();
         }
     }
 }

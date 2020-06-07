@@ -1,6 +1,6 @@
 - type: entity
   id: MedicalScanner
-  name: Medical Scanner
+  name: medical scanner
   description: A bulky medical scanner.
   components:
   - type: Sprite

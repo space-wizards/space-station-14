@@ -21,7 +21,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkColaCan
-  name: Space cola
+  name: space cola
   description: A refreshing beverage.
   components:
   - type: Solution
@@ -33,7 +33,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkIceTeaCan
-  name: Ice tea can
+  name: ice tea can
   description: ''
   components:
   - type: Sprite
@@ -44,7 +44,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCan
-  name: Lemon-lime can
+  name: lemon-lime can
   description: You wanted ORANGE. It gave you Lemon Lime.
   components:
   - type: Sprite
@@ -55,7 +55,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkPurpleCan
-  name: Purple Can
+  name: purple can
   description: ''
   components:
   - type: Sprite
@@ -66,7 +66,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceMountainWindCan
-  name: Space mountain wind can
+  name: space mountain wind can
   description: Blows right through you like a space wind.
   components:
   - type: Sprite
@@ -77,7 +77,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceUpCan
-  name: Space-up can
+  name: space-up can
   description: Tastes like a hull breach in your mouth.
   components:
   - type: Sprite
@@ -88,7 +88,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkStarkistCan
-  name: Starkist can
+  name: starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
   - type: Sprite
@@ -99,7 +99,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkThirteenLokoCan
-  name: Thirteen loko can
+  name: thirteen loko can
   description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: Sprite

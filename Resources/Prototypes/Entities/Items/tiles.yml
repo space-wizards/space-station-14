@@ -39,7 +39,7 @@
     stacktype: FloorTileCarpet
 
 - type: entity
-  name: Wood Floor Tile
+  name: wood floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWood
   components:
@@ -57,7 +57,7 @@
     max: 8
 
 - type: entity
-  name: White Floor Tile
+  name: white floor tile
   parent: FloorTileItemBase
   id: FloorTileItemWhite
   components:
@@ -75,7 +75,7 @@
     max: 8
 
 - type: entity
-  name: Dark Floor Tile
+  name: dark floor tile
   parent: FloorTileItemBase
   id: FloorTileItemDark
   components:
@@ -93,7 +93,7 @@
     max: 8
 
 - type: entity
-  name: Floor Tile Techmaint
+  name: floor tile techmaint
   parent: FloorTileItemBase
   id: FloorTileItemTechmaint
   components:
@@ -107,7 +107,7 @@
     output: floor_techmaint
 
 - type: entity
-  name: Floor Tile Freezer
+  name: floor tile freezer
   parent: FloorTileItemBase
   id: FloorTileItemFreezer
   components:

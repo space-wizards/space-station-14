@@ -15,7 +15,7 @@
 # Magazines
 - type: entity
   id: magazine_50
-  name: ".50 cal Magazine"
+  name: ".50 cal magazine"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -35,7 +35,7 @@
 
 - type: entity
   id: magazine_50f
-  name: ".50 cal Magazine (Flash)"
+  name: ".50 cal magazine (flash)"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -55,7 +55,7 @@
 
 - type: entity
   id: magazine_50hv
-  name: ".50 cal Magazine (High-Velocity)"
+  name: ".50 cal magazine (high-velocity)"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -75,7 +75,7 @@
 
 - type: entity
   id: magazine_50l
-  name: ".50 cal Magazine (L)"
+  name: ".50 cal magazine (L)"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -95,7 +95,7 @@
 
 - type: entity
   id: magazine_50p
-  name: ".50 cal Magazine (Practice)"
+  name: ".50 cal magazine (practice)"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -115,7 +115,7 @@
 
 - type: entity
   id: magazine_50r
-  name: ".50 cal Magazine (Rubber)"
+  name: ".50 cal magazine (rubber)"
   parent: magazine_50_empty
   components:
   - type: BallisticMagazine
@@ -152,7 +152,7 @@
 
 - type: entity
   id: ammo_casing_50_f
-  name: ".50 cal casing (Flash)"
+  name: ".50 cal casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -168,7 +168,7 @@
 
 - type: entity
   id: ammo_casing_50_hv
-  name: ".50 cal casing (High-Velocity)"
+  name: ".50 cal casing (high-velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -200,7 +200,7 @@
 
 - type: entity
   id: ammo_casing_50_p
-  name: ".50 cal casing (Practice)"
+  name: ".50 cal casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -216,7 +216,7 @@
 
 - type: entity
   id: ammo_casing_50_r
-  name: ".50 cal casing (Rubber)"
+  name: ".50 cal casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

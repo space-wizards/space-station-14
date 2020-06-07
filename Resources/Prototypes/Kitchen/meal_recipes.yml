@@ -2,7 +2,7 @@
 #Burgers
 - type: microwaveMealRecipe
   id: RecipeCheeseburger
-  name: Cheeseburger Recipe
+  name: cheeseburger recipe
   result: FoodCheeseburger
   time: 5
   reagents:
@@ -12,7 +12,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeClownBurger
-  name: Clownburger Recipe
+  name: clownburger recipe
   result: FoodClownBurger
   time: 5
   reagents:
@@ -22,7 +22,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeTofuBurger
-  name: Tofu Burger Recipe
+  name: tofu burger recipe
   result: FoodTofuBurger
   time: 5
   reagents:
@@ -32,7 +32,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeXenoburger
-  name: Xenoburger Recipe
+  name: xenoburger recipe
   result: FoodXenoburger
   time: 5
   reagents:
@@ -42,7 +42,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeSuperBiteBurger
-  name: Super Bite Burger Recipe
+  name: super bite burger recipe
   result: FoodSuperBiteBurger
   time: 20
   reagents:
@@ -58,7 +58,7 @@
 #Breads & Sandwiches
 - type: microwaveMealRecipe
   id: RecipeBread
-  name: Bread Recipe
+  name: bread recipe
   result: FoodContainerBread
   time: 15
   reagents:
@@ -66,7 +66,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeSandwich
-  name: Sandwich Recipe
+  name: sandwich recipe
   result: FoodSandwich
   time: 10
   solids:
@@ -76,7 +76,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeToastedSandwich
-  name: Toasted Sandwich Recipe
+  name: toasted sandwich recipe
   result: FoodToastedSandwich
   time: 5
   solids:
@@ -84,7 +84,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeGrilledCheese
-  name: Grilled Cheese Recipe
+  name: grilled cheese recipe
   result: FoodGrilledCheese
   time: 5
   solids:
@@ -93,7 +93,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBaguette
-  name: Baguette Recipe
+  name: baguette recipe
   result: FoodBaguette
   time: 10
   reagents:
@@ -103,7 +103,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
-  name: Cream Cheese Bread Recipe
+  name: cream cheese bread recipe
   result: FoodContainerCreamCheeseBread
   time: 20
   reagents:
@@ -113,7 +113,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBananaBread
-  name: Banana Bread Recipe
+  name: banana bread recipe
   result: FoodContainerBananaBread
   time: 25
   reagents:
@@ -128,7 +128,7 @@
 #Pizzas
 - type: microwaveMealRecipe
   id: RecipeMargheritaPizza
-  name: Margherita Pizza Recipe
+  name: margherita pizza recipe
   result: FoodContainerMargheritaPizza
   time: 30
   reagents:
@@ -139,7 +139,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMushroomPizza
-  name: Mushroom Pizza Recipe
+  name: mushroom pizza recipe
   result: FoodContainerMushroomPizza
   time: 25
   reagents:
@@ -149,7 +149,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMeatPizza
-  name: Meat Pizza Recipe
+  name: meat pizza recipe
   result: FoodContainerMeatPizza
   time: 30
   reagents:
@@ -161,7 +161,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeVegetablePizza
-  name: Vegetable Pizza Recipe
+  name: vegetable pizza recipe
   result: FoodContainerVegetablePizza
   time: 30
   reagents:
@@ -175,7 +175,7 @@
 #Italian
 - type: microwaveMealRecipe
   id: RecipeSpaghetti
-  name:  Spaghetti Recipe
+  name:  spaghetti recipe
   result: FoodSpaghetti
   time: 1
   reagents:
@@ -183,7 +183,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
-  name: Boiled Spaghetti Recipe
+  name: boiled spaghetti recipe
   result: FoodSpaghettiBoiled
   time: 5
   reagents:
@@ -193,7 +193,7 @@
 
 - type: microwaveMealRecipe
   id: RecipePastaTomato
-  name: Pasta Tomato Recipe
+  name: pasta tomato recipe
   result: FoodPastaTomato
   time: 10
   reagents:
@@ -204,7 +204,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMeatballSpaghetti
-  name: Spaghetti & Meatballs Recipe
+  name: spaghetti & meatballs recipe
   result: FoodMeatballSpaghetti
   time: 10
   reagents:
@@ -215,7 +215,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCrabSpaghetti
-  name: Crab Spaghetti Recipe
+  name: crab spaghetti recipe
   result: FoodCrabSpaghetti
   time: 10
   reagents:
@@ -225,7 +225,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeCopypasta
-  name: Copypasta Recipe
+  name: copypasta recipe
   result: FoodCopypasta
   time: 10
   solids:
@@ -233,7 +233,7 @@
 
 # - type: microwaveMealRecipe
 #   id: RecipeMoMMISpaghetti
-#   name: MoMMI Spaghetti Recipe
+#   name: mommi spaghetti recipe
 #   result: FoodMoMMISpaghetti
 #   time: 10
 #   reagents:
@@ -242,7 +242,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeRisotto
-  name: Risotto Recipe
+  name: risotto recipe
   result: FoodRisotto
   time: 10
   reagents:
@@ -253,7 +253,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeBruschetta
-  name: Bruschetta Recipe
+  name: bruschetta recipe
   result: FoodBruschetta
   time: 10
   reagents:
@@ -266,7 +266,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeQuiche
-  name: Quiche Recipe
+  name: quiche recipe
   result: FoodQuiche
   time: 10
   solids:
@@ -277,7 +277,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeLasagna
-  name: Lasagna Recipe
+  name: lasagna recipe
   result: FoodLasagna
   time: 15
   # reagents:
@@ -291,7 +291,7 @@
 #Soups & Stew
 - type: microwaveMealRecipe
   id: RecipeMeatballSoup
-  name: Meatball Soup Recipe
+  name: meatball soup recipe
   result: FoodMeatballSoup
   time: 10
   reagents:
@@ -303,7 +303,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeNettleSoup
-  name: Nettle Soup Recipe
+  name: nettle soup recipe
   result: FoodNettleSoup
   time: 10
   reagents:
@@ -316,7 +316,7 @@
 #Other
 - type: microwaveMealRecipe
   id: RecipeMeatSteak
-  name: Meat Steak Recipe
+  name: meat steak recipe
   result: FoodMeatSteak
   time: 10
   reagents:
@@ -327,7 +327,7 @@
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
-  name: Salty Sweet MiloCola Soup Recipe
+  name: salty sweet milocola soup recipe
   result: DisgustingSweptSoup
   time: 15
   reagents:

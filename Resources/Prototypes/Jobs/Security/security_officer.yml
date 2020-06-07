@@ -1,6 +1,6 @@
 - type: job
   id: SecurityOfficer
-  name: "Security Officer"
+  name: "security officer"
   positions: 3
   spawnPositions: 2
   startingGear: SecurityOfficerGear

@@ -1,6 +1,6 @@
 - type: entity
   id: EmergencyLight
-  name: "Emergency Light"
+  name: "emergency light"
   parent: WallLight
   components:
   - type: PointLight

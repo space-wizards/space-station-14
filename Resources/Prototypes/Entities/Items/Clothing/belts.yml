@@ -9,7 +9,7 @@
 - type: entity
   parent: BeltBase
   id: UtilityBeltClothing
-  name: Utility Belt
+  name: utility belt
   description: Belt for holding all your usual tools
   components:
   - type: Sprite
@@ -35,7 +35,7 @@
 - type: entity
   parent: BeltBase
   id: SuspendersClothing
-  name: Suspenders
+  name: suspenders
   description: For holding your pants up.
   components:
   - type: Sprite

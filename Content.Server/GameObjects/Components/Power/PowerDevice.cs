@@ -286,7 +286,7 @@ namespace Content.Server.GameObjects.Components.Power
         private void ConnectToBestProvider()
         {
             //Any values we can connect to or are we already connected to a node, cancel!
-            if (!AvailableProviders.Any() || Connected == DrawTypes.Node || Deleted)
+            if (!AvailableProviders.Any() || Connected == DrawTypes.Node || Deleted || Owner.Deleted)
                 return;
 
             //Get the starting value for our loop
@@ -300,6 +300,9 @@ namespace Content.Server.GameObjects.Components.Power
 
                 foreach (var availprovider in AvailableProviders)
                 {
+                    if (availprovider.Owner.Deleted)
+                        continue;
+
                     //Find distance to new provider
                     var distance = (availprovider.Owner.GetComponent<ITransformComponent>().WorldPosition - position).LengthSquared;
 

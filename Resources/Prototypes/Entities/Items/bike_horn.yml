@@ -1,5 +1,5 @@
 - type: entity
-  name: Bike Horn
+  name: bike horn
   parent: BaseItem
   id: BikeHorn
   description: A horn off of a bicycle.
