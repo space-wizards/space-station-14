@@ -1,11 +1,15 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 {
+    [RegisterComponent]
     public class ApcComponent : BaseApcNetComponent
     {
         public override string Name => "NewApc";
 
+        [ViewVariables]
         private BatteryComponent _battery;
 
         public override void Initialize()

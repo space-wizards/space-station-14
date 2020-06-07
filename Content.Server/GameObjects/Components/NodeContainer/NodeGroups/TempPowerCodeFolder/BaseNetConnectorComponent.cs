@@ -22,6 +22,12 @@ namespace Content.Server.GameObjects.Components.NewPower
         [ViewVariables]
         private bool _needsNet = true;
 
+        public override void OnAdd()
+        {
+            base.OnAdd();
+            _net = NullNet;
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -31,7 +37,6 @@ namespace Content.Server.GameObjects.Components.NewPower
         public override void Initialize()
         {
             base.Initialize();
-            _net = NullNet;
             if (_needsNet)
             {
                 TryFindAndSetNet();

@@ -46,8 +46,8 @@
   
 - type: entity
   parent: WireBase
-  id: LVWire
-  name: LV Wire
+  id: ApcExtensionCable
+  name: Apc Extension Cable
   components:
   - type: Sprite
     color: Green
@@ -57,7 +57,9 @@
     base: lvcable_
     key: lv_cables
   - type: NodeContainer
-    nodeTypes: { LVPower : ["AdjacentNode"] }
+    nodeTypes: { Apc : ["AdjacentNode"] }
+  - type: NewPowerProvider
+    voltage: Apc
   
 - type: entity
   id: DebugGenerator 
@@ -221,9 +223,26 @@
     texture: Objects/Power/provider.png
   - type: Battery
   - type: NodeContainer
-    nodeTypes: { MVPower : ["AdjacentNode"], LVPower : ["AdjacentNode"] }
+    nodeTypes: { MVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
   - type: NewApc
-    voltage: Low
+    voltage: Apc
+    
+- type: entity
+  id: DebugPowerReceiver
+  name: Debug Power Receiver
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Furniture/wirelessmachine.png
+  - type: Icon
+    texture: Objects/Furniture/wirelessmachine.png
+  - type: PowerReceiver

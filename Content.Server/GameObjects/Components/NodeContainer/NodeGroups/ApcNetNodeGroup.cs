@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -10,9 +11,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         void RemoveApc(ApcComponent apc);
 
-        void AddRemotePowerProvider(RemotePowerProviderComponent provider);
+        void AddRemotePowerProvider(PowerProviderComponent provider);
 
-        void RemoveRemotePowerProvider(RemotePowerProviderComponent provider);
+        void RemoveRemotePowerProvider(PowerProviderComponent provider);
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -20,6 +21,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         [ViewVariables]
         private readonly List<ApcComponent> _apcs = new List<ApcComponent>();
+
+        [ViewVariables]
+        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _receiverByProvider = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
 
         public static readonly IApcNet NullNet = new NullApcNet();
 
@@ -33,22 +37,27 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _apcs.Remove(apc);
         }
 
-        public void AddRemotePowerProvider(RemotePowerProviderComponent provider)
+        public void AddRemotePowerProvider(PowerProviderComponent provider)
         {
-            throw new System.NotImplementedException();
+            _receiverByProvider.Add(provider, provider.LinkedReceivers.ToList());
         }
 
-        public void RemoveRemotePowerProvider(RemotePowerProviderComponent provider)
+        public void RemoveRemotePowerProvider(PowerProviderComponent provider)
         {
-            throw new System.NotImplementedException();
+            _receiverByProvider.Remove(provider);
+        }
+
+        public void Update(float frameTime)
+        {
+
         }
 
         private class NullApcNet : IApcNet
         {
             public void AddApc(ApcComponent apc) { }
-            public void AddRemotePowerProvider(RemotePowerProviderComponent provider) { }
+            public void AddRemotePowerProvider(PowerProviderComponent provider) { }
             public void RemoveApc(ApcComponent apc) { }
-            public void RemoveRemotePowerProvider(RemotePowerProviderComponent provider) { }
+            public void RemoveRemotePowerProvider(PowerProviderComponent provider) { }
         }
     }
 }
