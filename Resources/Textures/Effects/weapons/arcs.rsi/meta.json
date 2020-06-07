@@ -13,6 +13,22 @@
         {
             "name": "slash",
             "directions": 1
+        },
+        {
+            "name": "eswordblueslash",
+            "directions": 1
+        },
+        {
+            "name": "eswordgreenslash",
+            "directions": 1
+        },
+        {
+            "name": "eswordpurpleslash",
+            "directions": 1
+        },
+        {
+            "name": "eswordredslash",
+            "directions": 1
         }
     ]
 }

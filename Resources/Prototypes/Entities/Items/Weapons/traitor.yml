@@ -1,0 +1,139 @@
+- type: entity
+  name: blue esword
+  parent: BaseItem
+  id: EswordBlue
+  components:
+
+    - type: Sprite
+      sprite: Objects/Melee/eswordblue.rsi
+      state: esword_off
+
+    - type: Icon
+      sprite: Objects/Melee/eswordblue.rsi
+      state: esword_off
+
+    - type: Esword
+      damage: 40
+      range: 0.75
+      arcwidth: 0
+      arc: eswordblueslash
+
+    - type: Item
+      Size: 10
+      sprite: Objects/Melee/eswordblue.rsi
+      HeldPrefix: off
+
+    - type: PointLight
+      enabled: false
+      radius: 1.1
+      color: lightblue
+      energy: 2.0
+      #offset: "-0.3, 0" currently non-functional the light
+      #of your esword is just gonna be in the center of your player for now...
+
+    - type: ItemCooldown
+
+- type: entity
+  name: green esword
+  parent: BaseItem
+  id: EswordGreen
+  components:
+
+    - type: Sprite
+      sprite: Objects/Melee/eswordgreen.rsi
+      state: esword_off
+
+    - type: Icon
+      sprite: Objects/Melee/eswordgreen.rsi
+      state: esword_off
+
+    - type: Esword
+      damage: 40
+      range: 0.75
+      arcwidth: 0
+      arc: eswordgreenslash
+
+    - type: Item
+      Size: 10
+      sprite: Objects/Melee/eswordgreen.rsi
+      HeldPrefix: off
+
+    - type: PointLight
+      enabled: false
+      radius: 1.1
+      color: lightgreen
+      energy: 2.0
+      #offset: "-0.3, 0" currently non-functional the light
+      #of your esword is just gonna be in the center of your player for now...
+
+    - type: ItemCooldown
+
+- type: entity
+  name: purple esword
+  parent: BaseItem
+  id: EswordPurple
+  components:
+
+    - type: Sprite
+      sprite: Objects/Melee/eswordpurple.rsi
+      state: esword_off
+
+    - type: Icon
+      sprite: Objects/Melee/eswordpurple.rsi
+      state: esword_off
+
+    - type: Esword
+      damage: 40
+      range: 0.75
+      arcwidth: 0
+      arc: eswordpurpleslash
+
+    - type: Item
+      Size: 10
+      sprite: Objects/Melee/eswordpurple.rsi
+      HeldPrefix: off
+
+    - type: PointLight
+      enabled: false
+      radius: 1.2
+      color: purple
+      energy: 1.5
+      #offset: "-0.3, 0" currently non-functional the light
+      #of your esword is just gonna be in the center of your player for now...
+
+    - type: ItemCooldown
+
+- type: entity
+  name: red esword
+  parent: BaseItem
+  id: EswordRed
+  components:
+
+    - type: Sprite
+      sprite: Objects/Melee/eswordred.rsi
+      state: esword_off
+
+    - type: Icon
+      sprite: Objects/Melee/eswordred.rsi
+      state: esword_off
+
+    - type: Esword
+      damage: 40
+      range: 0.75
+      arcwidth: 0
+      arc: eswordredslash
+
+    - type: Item
+      Size: 10
+      sprite: Objects/Melee/eswordred.rsi
+      HeldPrefix: off
+
+    - type: PointLight
+      enabled: false
+      radius: 1.2
+      color: red
+      energy: 1.5
+      #offset: "-0.3, 0" currently non-functional the light
+      #of your esword is just gonna be in the center of your player for now...
+
+    - type: ItemCooldown

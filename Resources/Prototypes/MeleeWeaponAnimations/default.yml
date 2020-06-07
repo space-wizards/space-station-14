@@ -5,3 +5,35 @@
   length: 0.1
   color: 255,255,255,1020
   colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: eswordblueslash
+  state: eswordblueslash
+  arcType: Slash
+  length: 0.1
+  color: 63,206,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: eswordgreenslash
+  state: eswordgreenslash
+  arcType: Slash
+  length: 0.1
+  color: 77,246,128,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: eswordredslash
+  state: eswordredslash
+  arcType: Slash
+  length: 0.1
+  color: 242,65,98,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: eswordpurpleslash
+  state: eswordpurpleslash
+  arcType: Slash
+  length: 0.1
+  color: 191,76,243,1020
+  colorDelta: 0,0,0,-5100
