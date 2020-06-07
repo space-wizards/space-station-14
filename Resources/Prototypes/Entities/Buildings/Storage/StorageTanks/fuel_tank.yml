@@ -18,3 +18,8 @@
       reagents:
       - ReagentId: chem.WeldingFuel
         Quantity: 1500
+  - type: DamageOnToolInteract
+    damage: 200
+    tools:
+    - Welding
+
