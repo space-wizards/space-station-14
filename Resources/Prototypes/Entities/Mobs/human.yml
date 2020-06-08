@@ -110,8 +110,6 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Input
-    context: "human"
   - type: Species
     Template: Human
     HeatResistance: 323
@@ -129,6 +127,7 @@
   - type: FootstepSound
   - type: HumanoidAppearance
   - type: Stunnable
+  - type: AnimationPlayer
 
 - type: entity
   save: false
@@ -150,7 +149,6 @@
   - type: CameraRecoil
   - type: Examiner
   - type: HumanInventoryController
-  - type: AnimationPlayer
 
 - type: entity
   save: false
