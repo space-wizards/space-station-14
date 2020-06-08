@@ -166,10 +166,11 @@ namespace Content.Shared.GameObjects.Components.PDA
         public UplinkCategory Category;
         public string Description;
         public string ListingName;
+        public override uint NetID => ContentNetIDs.PDA;
 
         public UplinkListingData(string listingName,string itemId,
             int price, UplinkCategory category,
-            string description) : base(ContentNetIDs.PDA)
+            string description)
         {
             ListingName = listingName;
             Price = price;

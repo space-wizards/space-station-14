@@ -57,9 +57,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             public bool IsInCombatMode { get; }
             public TargetingZone TargetingZone { get; }
+            public override uint NetID => ContentNetIDs.COMBATMODE;
 
             public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
-                : base(ContentNetIDs.COMBATMODE)
             {
                 IsInCombatMode = isInCombatMode;
                 TargetingZone = targetingZone;

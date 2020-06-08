@@ -59,8 +59,9 @@ namespace Content.Shared.GameObjects.Components.Instruments
     public class InstrumentState : ComponentState
     {
         public bool Playing { get; }
+        public override uint NetID => ContentNetIDs.INSTRUMENTS;
 
-        public InstrumentState(bool playing, uint sequencerTick = 0) : base(ContentNetIDs.INSTRUMENTS)
+        public InstrumentState(bool playing, uint sequencerTick = 0)
         {
             Playing = playing;
         }

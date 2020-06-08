@@ -17,8 +17,9 @@ namespace Content.Shared.GameObjects
     {
         public readonly Dictionary<string, EntityUid> Hands;
         public readonly string ActiveIndex;
+        public override uint NetID => ContentNetIDs.HANDS;
 
-        public HandsComponentState(Dictionary<string, EntityUid> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(Dictionary<string, EntityUid> hands, string activeIndex)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
