@@ -53,6 +53,8 @@ namespace Content.Server.GameObjects.Components.Cargo
                 {
                     _bankAccount.OnBalanceChange += OnBankAccountBalanceChange;
                 }
+
+                OnBankAccountBalanceChange();
             }
         }
 
@@ -75,9 +77,8 @@ namespace Content.Server.GameObjects.Components.Cargo
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            EntitySystem.TryGet(out _cargoConsoleSystem);
+            _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
-            OnBankAccountBalanceChange(); // So that the UI isn't empty before the first update
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                 {
                     if (msg.Amount <= 0)
                         break;
-                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _cargoConsoleSystem.StationAccount.Id);
+                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                     break;
                 }
                 case CargoConsoleRemoveOrderMessage msg:
@@ -119,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null)
                         break;
-                    if (!_cargoConsoleSystem.ChangeBalance(_cargoConsoleSystem.StationAccount.Id, (-product.PointCost) * order.Amount))
+                    if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
                     _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);
                     break;
