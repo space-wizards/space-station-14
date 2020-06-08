@@ -117,9 +117,7 @@ namespace Content.Shared.GameObjects.Components.Research
     public class LatheDatabaseState : ComponentState
     {
         public readonly List<string> Recipes;
-        public override uint NetID => ContentNetIDs.LATHE_DATABASE;
-
-        public LatheDatabaseState(List<string> recipes)
+        public LatheDatabaseState(List<string> recipes) : base(ContentNetIDs.LATHE_DATABASE)
         {
             Recipes = recipes;
         }

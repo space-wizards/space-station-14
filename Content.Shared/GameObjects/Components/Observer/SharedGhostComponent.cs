@@ -14,9 +14,8 @@ namespace Content.Shared.GameObjects.Components.Observer
     public class GhostComponentState : ComponentState
     {
         public bool CanReturnToBody { get; }
-        public override uint NetID => ContentNetIDs.GHOST;
 
-        public GhostComponentState(bool canReturnToBody)
+        public GhostComponentState(bool canReturnToBody) : base(ContentNetIDs.GHOST)
         {
             CanReturnToBody = canReturnToBody;
         }
