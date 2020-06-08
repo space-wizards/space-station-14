@@ -2,6 +2,7 @@
   name: "basedroppedbodypart"
   parent: BaseItem
   id: BaseDroppedBodyPart
+  abstract: true
   components:
   - type: DroppedBodyPart
   - type: Sprite
@@ -12,6 +13,7 @@
   name: "basedroppedmechanism"
   parent: BaseItem
   id: BaseDroppedMechanism
+  abstract: true
   components:
   - type: DroppedMechanism
   - type: Sprite
