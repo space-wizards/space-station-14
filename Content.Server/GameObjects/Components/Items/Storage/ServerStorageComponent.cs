@@ -292,9 +292,9 @@ namespace Content.Server.GameObjects
                             var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))
                             {
-                                if (hands.CanPutInHand(item) && hands.PutInHand(item))
-                                    Remove(entity);
-                                    return;
+                                    if (hands.CanPutInHand(item) && hands.PutInHand(item))
+                                        //Remove(entity);
+                                        return;
                             }
 
                             entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
