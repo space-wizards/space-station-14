@@ -483,7 +483,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             physics.SetController<PullController>();
 
-            if (!(pull.Owner.GetComponent<PhysicsComponent>().Controller as PullController).GettingPulled)
+            if (!((PullController)physics.Controller).GettingPulled)
             {
                 hands.StartPulling(pull);
             }
