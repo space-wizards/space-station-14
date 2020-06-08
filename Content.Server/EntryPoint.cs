@@ -1,4 +1,5 @@
-﻿using Content.Server.Cargo;
+﻿using Content.Server.AI.WorldState;
+using Content.Server.Cargo;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -85,6 +86,7 @@ namespace Content.Server
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
         }
 

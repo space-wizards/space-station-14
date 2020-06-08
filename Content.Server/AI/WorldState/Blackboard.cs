@@ -16,14 +16,8 @@ namespace Content.Server.AI.WorldState
         // is harder. This also allows data to be cached if it's being hit frequently.
         
         // This also stops you from re-writing the same boilerplate everywhere of stuff like "Do I have OuterClothing on?"
-        
-        // Eventually a Group blackboard will be added where AI can share knowledge with each other
-        
-        // Cache the known types
-        private static readonly Lazy<List<Type>> _aiStates = new Lazy<List<Type>>(GetStates);
 
         private readonly Dictionary<Type, IAiState> _states = new Dictionary<Type, IAiState>();
-        private readonly List<ICachedState> _cachedStates = new List<ICachedState>();
         private readonly List<IPlanningState> _planningStates = new List<IPlanningState>();
 
         public Blackboard(IEntity owner)
@@ -31,38 +25,22 @@ namespace Content.Server.AI.WorldState
             Setup(owner);
         }
 
-        private static List<Type> GetStates()
-        {
-            var aiStates = new List<Type>();
-            var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-
-            foreach (var state in reflectionManager.GetAllChildren(typeof(IAiState)))
-            {
-                aiStates.Add(state);
-            }
-
-            return aiStates;
-        }
-
         private void Setup(IEntity owner)
         {
-            DebugTools.AssertNotNull(_aiStates);
             var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
+            var blackboardManager = IoCManager.Resolve<BlackboardManager>();
 
-            foreach (var state in _aiStates.Value)
+            foreach (var state in blackboardManager.AiStates)
             {
                 var newState = (IAiState) typeFactory.CreateInstance(state);
                 newState.Setup(owner);
                 _states.Add(newState.GetType(), newState);
 
-                if (newState is ICachedState cachedState)
+                switch (newState)
                 {
-                    _cachedStates.Add(cachedState);
-                }
-
-                if (newState is IPlanningState planningState)
-                {
-                    _planningStates.Add(planningState);
+                    case IPlanningState planningState:
+                        _planningStates.Add(planningState);
+                        break;
                 }
             }
         }
