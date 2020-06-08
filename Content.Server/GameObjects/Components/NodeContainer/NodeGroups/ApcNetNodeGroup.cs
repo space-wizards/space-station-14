@@ -18,6 +18,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void RemovePowerProvider(PowerProviderComponent provider);
 
         void UpdatePowerProviderReceivers(PowerProviderComponent provider);
+
+        void Update(float frameTime);
     }
 
     [NodeGroup(NodeGroupID.Apc)]
@@ -114,6 +116,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void RemoveApc(ApcComponent apc) { }
             public void RemovePowerProvider(PowerProviderComponent provider) { }
             public void UpdatePowerProviderReceivers(PowerProviderComponent provider) { }
+            public void Update(float frameTime) { }
         }
     }
 }
