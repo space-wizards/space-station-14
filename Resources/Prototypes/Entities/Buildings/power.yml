@@ -1,4 +1,255 @@
 - type: entity
+  abstract: true
+  id: WireBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Icon
+    texture: Objects/Power/eightdirwire.png
+  - type: Sprite  
+  - type: IconSmooth
+    mode: CardinalFlags
+  
+- type: entity
+  parent: WireBase
+  id: HVWire
+  name: HV Wire
+  components:
+  - type: Sprite
+    sprite: Objects/Power/hv_cable.rsi
+    state: hvcable_0
+  - type: IconSmooth
+    base: hvcable_
+    key: hv_cables
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  
+- type: entity
+  parent: WireBase
+  id: MVWire
+  name: MV Wire
+  components:
+  - type: Sprite
+    color: Yellow
+    sprite: Objects/Power/mv_cable.rsi
+    state: mvcable_0
+  - type: IconSmooth
+    base: mvcable_
+    key: mv_cables
+  - type: NodeContainer
+    nodeTypes: { MVPower : ["AdjacentNode"] }
+  
+- type: entity
+  parent: WireBase
+  id: ApcExtensionCable
+  name: Apc Extension Cable
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Objects/Power/lv_cable.rsi
+    state: lvcable_0
+  - type: IconSmooth
+    base: lvcable_
+    key: lv_cables
+  - type: NodeContainer
+    nodeTypes: { Apc : ["AdjacentNode"] }
+  - type: NewPowerProvider
+    voltage: Apc
+  
+- type: entity
+  id: DebugGenerator 
+  name: Debug Generator
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Power/generator.png
+  - type: Icon
+    texture: Objects/Power/generator.png
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerSupplier
+    supplyRate: 100
+    
+- type: entity
+  id: DebugConsumer
+  name: Debug Consumer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Power/wiredmachine.png
+  - type: Icon
+    texture: Objects/Power/wiredmachine.png
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+    drawRate: 50
+
+- type: entity
+  id: DebugBatteryStorage
+  name: Debug Battery Storage
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Power/provider.png
+  - type: Icon
+    texture: Objects/Power/provider.png
+  - type: Battery
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+  - type: BatteryStorage
+  
+- type: entity
+  id: DebugBatteryDischarger
+  name: Debug Battery Discharger
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+  - type: Battery
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerSupplier
+  - type: BatteryDischarger
+    
+- type: entity
+  id: DebugSmes
+  name: Debug Smes
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+  - type: Battery
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+  - type: BatteryStorage
+  - type: PowerSupplier
+  - type: BatteryDischarger
+    
+- type: entity
+  id: DebugSubstation
+  name: Debug Substation
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
+  - type: Icon
+    sprite: Buildings/smes.rsi
+    state: smes
+  - type: Battery
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
+  - type: PowerConsumer
+  - type: BatteryStorage
+  - type: PowerSupplier
+    voltage: Medium
+  - type: BatteryDischarger
+
+- type: entity
+  id: DebugApc
+  name: Debug Apc
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    drawdepth: WallMountedItems
+    texture: Objects/Power/provider.png
+  - type: Icon
+    texture: Objects/Power/provider.png
+  - type: Battery
+  - type: NodeContainer
+    nodeTypes: { MVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+  - type: PowerConsumer
+    voltage: Medium
+  - type: BatteryStorage
+  - type: NewApc
+    voltage: Apc
+    
+- type: entity
+  id: DebugPowerReceiver
+  name: Debug Power Receiver
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    texture: Objects/Furniture/wirelessmachine.png
+  - type: Icon
+    texture: Objects/Furniture/wirelessmachine.png
+  - type: PowerReceiver
+  
+#Depriciated, to remove from maps
+
+- type: entity
   id: Wire
   name: wire
   description: Transfers power, avoid letting things come down it
@@ -7,12 +258,16 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Collidable
   - type: Sprite
+    netsync: false
+    drawdepth: BelowFloor
     color: Red
     sprite: Objects/Power/power_cable.rsi
     state: cable_0
   - type: Icon
     texture: Objects/Power/eightdirwire.png
+  - type: PowerTransfer
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
@@ -54,6 +309,7 @@
     texture: Objects/Power/generator.png
   - type: Icon
     texture: Objects/Power/generator.png
+  - type: PowerGenerator
   - type: SnapGrid
     offset: Center
 
@@ -103,6 +359,10 @@
     texture: Objects/Power/provider.png
   - type: Icon
     texture: Objects/Power/provider.png
+  - type: PowerProvider
+    range: 8
+    priority: Provider
+    load: 0
   - type: SnapGrid
     offset: Center
 
@@ -110,13 +370,23 @@
   parent: WPPnobattery
   id: WPP
   name: WPP
+  description: Supplies power at range, has a backup battery just in case
+  components:
+  - type: PowerStorage
+    capacity: 1000
+    charge: 1000
+    chargerate: 200
+    chargepowernet: false
 
 - type: entity
   parent: WPP
   id: APC
   name: APC
   components:
+  - type: Apc
   - type: Sprite
+    netsync: false
+    texture: ""
     sprite: "Buildings/apc.rsi"
     state: apc0
   - type: Appearance
@@ -147,16 +417,34 @@
       bounds: "-0.5, -0.5, 0.5, 0.5"
       layer: [MobMask, Opaque]
   - type: Sprite
+    netsync: false
     sprite: Buildings/smes.rsi
+    state: smes
+    layers:
+    - state: smes-display
+      shader: unshaded
   - type: Icon
     sprite: Buildings/smes.rsi
     state: smes
+  - type: PowerStorage
+    capacity: 3000
+    charge: 1000
+    chargerate: 200
+    distributionrate: 400
+    chargepowernet: true
+  - type: Smes
+  - type: Appearance
+    visuals:
+    - type: SmesVisualizer2D
   - type: SnapGrid
     offset: Center
 
 - type: entity
   id: SmesDry
   parent: SMES
+  components:
+  - type: PowerStorage
+    charge: 0
 
 - type: entity
   id: WiredMachine
@@ -176,6 +464,10 @@
     texture: Objects/Power/wiredmachine.png
   - type: Icon
     texture: Objects/Power/wiredmachine.png
+  - type: PowerDevice
+    drawtype: Node
+    load: 100
+    priority: High
   - type: SnapGrid
     offset: Center
 
@@ -197,5 +489,9 @@
     texture: Objects/Furniture/wirelessmachine.png
   - type: Icon
     texture: Objects/Furniture/wirelessmachine.png
+  - type: PowerDevice
+    drawtype: Both
+    load: 200
+    priority: Low
   - type: SnapGrid
     offset: Center
