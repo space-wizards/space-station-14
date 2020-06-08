@@ -22,7 +22,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             public override uint NetID => ContentNetIDs.SOLUTION;
 
-        public SolutionComponentState() { }
+            public SolutionComponentState() { }
         }
 
         /// <inheritdoc />
