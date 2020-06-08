@@ -34,10 +34,20 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
 
+        [ViewVariables]
+        public int PowerLoad { get => _powerLoad; set => SetPowerLoad(value); }
+        private int _powerLoad;
+
+        [ViewVariables]
+        public int PowerShutoffFraction { get => _powerShutoffFraction; set => SetPowerShutoffFraction(value); }
+        private int _powerShutoffFraction;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _powerReceptionRange, "powerReceptionRange", 3);
+            serializer.DataField(ref _powerLoad, "powerLoad", 50);
+            serializer.DataField(ref _powerShutoffFraction, "powerShutOffFraction", 50);
         }
 
         public override void Initialize()
@@ -96,8 +106,11 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 
         private void SetPowered(bool newPowered)
         {
-            _powered = newPowered;
-            OnPowerStateChange?.Invoke(_powered);
+            if (newPowered != _powered)
+            {
+                _powered = newPowered;
+                OnPowerStateChange?.Invoke(_powered);
+            }
         }
 
         private void SetPowerReceptionRange(int newPowerReceptionRange)
@@ -105,6 +118,16 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             ClearProvider();
             _powerReceptionRange = newPowerReceptionRange;
             TryFindAndSetProvider();
+        }
+
+        private void SetPowerLoad(int newPowerLoad)
+        {
+            _powerLoad = newPowerLoad;
+        }
+
+        private void SetPowerShutoffFraction(int newPowerShutOffPercent)
+        {
+            _powerShutoffFraction = newPowerShutOffPercent;
         }
     }
 }

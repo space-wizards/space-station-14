@@ -63,6 +63,16 @@ namespace Content.Server.GameObjects.Components.NewPower
             _currentCharge = FloatMath.Clamp(newChargeAmount, 0, MaxCharge);
             UpdateStorageState();
         }
+
+        /// <summary>
+        ///     Uses charge from the battery, returns the amount of charge used.
+        /// </summary>
+        public float TryUseCharge(float chargeToUse)
+        {
+            var oldCharge = CurrentCharge;
+            CurrentCharge -= chargeToUse;
+            return oldCharge - CurrentCharge;
+        }
     }
 
     public enum BatteryState

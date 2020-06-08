@@ -52,12 +52,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
+        #region BaseNodeGroup Overrides
+
         protected override void SetNetConnectorNet(BasePowerNetComponent netConnectorComponent)
         {
             netConnectorComponent.Net = this;
         }
-
-        #region BaseNodeGroup Overrides
 
         public override void BeforeCombine()
         {
