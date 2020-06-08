@@ -1,6 +1,8 @@
-﻿using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+﻿using Content.Server.GameObjects.Components.NewPower;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
@@ -11,19 +13,24 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         void RemoveApc(ApcComponent apc);
 
-        void AddRemotePowerProvider(PowerProviderComponent provider);
+        void AddPowerProvider(PowerProviderComponent provider);
 
-        void RemoveRemotePowerProvider(PowerProviderComponent provider);
+        void RemovePowerProvider(PowerProviderComponent provider);
+
+        void UpdatePowerProviderReceivers(PowerProviderComponent provider);
     }
 
     [NodeGroup(NodeGroupID.Apc)]
     public class ApcNetNodeGroup : BaseNetConnectorNodeGroup<BaseApcNetComponent, IApcNet>, IApcNet
     {
         [ViewVariables]
-        private readonly List<ApcComponent> _apcs = new List<ApcComponent>();
+        private readonly Dictionary<ApcComponent, BatteryComponent> _apcBatteries = new Dictionary<ApcComponent, BatteryComponent>();
 
         [ViewVariables]
-        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _receiverByProvider = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
+        private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _providerReceivers = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
+
+        [ViewVariables]
+        private int TotalReceivers => _providerReceivers.SelectMany(kvp => kvp.Value).Count();
 
         public static readonly IApcNet NullNet = new NullApcNet();
 
@@ -32,30 +39,32 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             netConnectorComponent.Net = this;
         }
 
-        #region BaseNodeGroup Overrides
-
-        #endregion
-
         #region IApcNet Methods
 
         public void AddApc(ApcComponent apc)
         {
-            _apcs.Add(apc);
+            _apcBatteries.Add(apc, apc.Battery);
         }
 
         public void RemoveApc(ApcComponent apc)
         {
-            _apcs.Remove(apc);
+            _apcBatteries.Remove(apc);
         }
 
-        public void AddRemotePowerProvider(PowerProviderComponent provider)
+        public void AddPowerProvider(PowerProviderComponent provider)
         {
-            _receiverByProvider.Add(provider, provider.LinkedReceivers.ToList());
+            _providerReceivers.Add(provider, provider.LinkedReceivers.ToList());
         }
 
-        public void RemoveRemotePowerProvider(PowerProviderComponent provider)
+        public void RemovePowerProvider(PowerProviderComponent provider)
         {
-            _receiverByProvider.Remove(provider);
+            _providerReceivers.Remove(provider);
+        }
+
+        public void UpdatePowerProviderReceivers(PowerProviderComponent provider)
+        {
+            Debug.Assert(_providerReceivers.ContainsKey(provider));
+            _providerReceivers[provider] = provider.LinkedReceivers.ToList();
         }
 
         #endregion
@@ -63,9 +72,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private class NullApcNet : IApcNet
         {
             public void AddApc(ApcComponent apc) { }
-            public void AddRemotePowerProvider(PowerProviderComponent provider) { }
+            public void AddPowerProvider(PowerProviderComponent provider) { }
             public void RemoveApc(ApcComponent apc) { }
-            public void RemoveRemotePowerProvider(PowerProviderComponent provider) { }
+            public void RemovePowerProvider(PowerProviderComponent provider) { }
+            public void UpdatePowerProviderReceivers(PowerProviderComponent provider) { }
         }
     }
 }

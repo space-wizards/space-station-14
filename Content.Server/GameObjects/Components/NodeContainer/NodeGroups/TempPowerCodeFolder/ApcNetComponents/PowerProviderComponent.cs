@@ -32,18 +32,20 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 
         [ViewVariables]
         public IReadOnlyList<PowerReceiverComponent> LinkedReceivers => _linkedReceivers;
-        private readonly List<PowerReceiverComponent> _linkedReceivers = new List<PowerReceiverComponent>();
+        private List<PowerReceiverComponent> _linkedReceivers = new List<PowerReceiverComponent>();
 
         public static readonly IPowerProvider NullProvider = new NullPowerProvider();
 
         public void AddReceiver(PowerReceiverComponent receiver)
         {
             _linkedReceivers.Add(receiver);
+            Net.UpdatePowerProviderReceivers(this);
         }
 
         public void RemoveReceiver(PowerReceiverComponent receiver)
         {
             _linkedReceivers.Remove(receiver);
+            Net.UpdatePowerProviderReceivers(this);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -55,33 +57,36 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public override void Initialize()
         {
             base.Initialize();
+            _linkedReceivers = FindAvailableReceivers();
+        }
+
+        private List<PowerReceiverComponent> FindAvailableReceivers()
+        {
             var mapManager = IoCManager.Resolve<IMapManager>();
-            var compatibleReceivers = IoCManager.Resolve<IServerEntityManager>()
+            return IoCManager.Resolve<IServerEntityManager>()
                 .GetEntitiesInRange(Owner.Transform.GridPosition, PowerTransferRange)
                 .Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
                 .Where(receiver => receiver != null)
                 .Where(receiver => receiver.NeedsProvider)
-                .Where(receiver => receiver.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition) < Math.Min(PowerTransferRange, receiver.PowerReceptionRange));
-            foreach (var receiver in compatibleReceivers)
-            {
-
-            }
+                .Where(receiver => receiver.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition) < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
+                .ToList();
         }
 
         protected override void AddSelfToNet(IApcNet apcNet)
         {
-            apcNet.AddRemotePowerProvider(this);
+            apcNet.AddPowerProvider(this);
         }
 
         protected override void RemoveSelfFromNet(IApcNet apcNet)
         {
-            apcNet.RemoveRemotePowerProvider(this);
+            apcNet.RemovePowerProvider(this);
         }
 
         private void SetPowerTransferRange(int newPowerTransferRange)
         {
             _powerTransferRange = newPowerTransferRange;
-            //todo: update stuff
+            _linkedReceivers = FindAvailableReceivers();
+            Net.UpdatePowerProviderReceivers(this);
         }
 
         private class NullPowerProvider : IPowerProvider

@@ -10,12 +10,12 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public override string Name => "NewApc";
 
         [ViewVariables]
-        private BatteryComponent _battery;
+        public BatteryComponent Battery { get; private set; }
 
         public override void Initialize()
         {
             base.Initialize();
-            _battery = Owner.GetComponent<BatteryComponent>();
+            Battery = Owner.GetComponent<BatteryComponent>();
         }
 
         protected override void AddSelfToNet(IApcNet apcNet)

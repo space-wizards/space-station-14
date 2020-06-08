@@ -7,17 +7,17 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NewPower
 {
-    public abstract class BaseNetConnectorComponent<T> : Component
+    public abstract class BaseNetConnectorComponent<TNetType> : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
         private Voltage _voltage;
 
         [ViewVariables]
-        public T Net { get => _net; set => SetNet(value); }
-        private T _net;
+        public TNetType Net { get => _net; set => SetNet(value); }
+        private TNetType _net;
 
-        protected abstract T NullNet { get; }
+        protected abstract TNetType NullNet { get; }
 
         [ViewVariables]
         private bool _needsNet = true;
@@ -64,18 +64,18 @@ namespace Content.Server.GameObjects.Components.NewPower
             _needsNet = true;
         }
 
-        protected abstract void AddSelfToNet(T net);
+        protected abstract void AddSelfToNet(TNetType net);
 
-        protected abstract void RemoveSelfFromNet(T net);
+        protected abstract void RemoveSelfFromNet(TNetType net);
 
-        private bool TryFindNet(out T foundNet)
+        private bool TryFindNet(out TNetType foundNet)
         {
             if (Owner.TryGetComponent<NodeContainerComponent>(out var container))
             {
                 var compatibleNet = container.Nodes
                     .Where(node => node.NodeGroupID == (NodeGroupID) Voltage)
                     .Select(node => node.NodeGroup)
-                    .OfType<T>()
+                    .OfType<TNetType>()
                     .FirstOrDefault();
 
                 if (compatibleNet != null)
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.NewPower
             return false;
         }
 
-        private void SetNet(T newNet)
+        private void SetNet(TNetType newNet)
         {
             RemoveSelfFromNet(_net);
             AddSelfToNet(newNet);
