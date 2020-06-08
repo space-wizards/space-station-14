@@ -51,9 +51,8 @@ namespace Content.Shared.GameObjects
         protected class InventoryComponentState : ComponentState
         {
             public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
-            public override uint NetID => ContentNetIDs.STORAGE;
 
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities)
+            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities) : base(ContentNetIDs.STORAGE)
             {
                 Entities = entities;
             }

@@ -107,9 +107,8 @@ namespace Content.Shared.GameObjects.Components
         {
             public int Count { get; }
             public int MaxCount { get; }
-            public override uint NetID => ContentNetIDs.STACK;
 
-            public StackComponentState(int count, int maxCount)
+            public StackComponentState(int count, int maxCount) : base(ContentNetIDs.STACK)
             {
                 Count = count;
                 MaxCount = maxCount;

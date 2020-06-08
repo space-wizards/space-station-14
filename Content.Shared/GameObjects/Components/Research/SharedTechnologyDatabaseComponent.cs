@@ -104,14 +104,12 @@ namespace Content.Shared.GameObjects.Components.Research
     public class TechnologyDatabaseState : ComponentState
     {
         public List<string> Technologies;
-        public override uint NetID => ContentNetIDs.TECHNOLOGY_DATABASE;
-
-        public TechnologyDatabaseState(List<string> technologies)
+        public TechnologyDatabaseState(List<string> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
         {
             Technologies = technologies;
         }
 
-        public TechnologyDatabaseState(List<TechnologyPrototype> technologies)
+        public TechnologyDatabaseState(List<TechnologyPrototype> technologies) : base(ContentNetIDs.TECHNOLOGY_DATABASE)
         {
             Technologies = new List<string>();
             foreach (var technology in technologies)

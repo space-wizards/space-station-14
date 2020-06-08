@@ -69,9 +69,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [NetSerializable]
         private sealed class HumanoidAppearanceComponentState : ComponentState
         {
-            public override uint NetID => ContentNetIDs.HUMANOID_APPEARANCE;
-
-            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex)
+            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex) : base(ContentNetIDs.HUMANOID_APPEARANCE)
             {
                 Appearance = appearance;
                 Sex = sex;

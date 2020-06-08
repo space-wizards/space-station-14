@@ -12,9 +12,7 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         protected sealed class HandheldLightComponentState : ComponentState
         {
-            public override uint NetID => ContentNetIDs.HANDHELD_LIGHT;
-
-            public HandheldLightComponentState(float? charge)
+            public HandheldLightComponentState(float? charge) : base(ContentNetIDs.HANDHELD_LIGHT)
             {
                 Charge = charge;
             }

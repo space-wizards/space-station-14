@@ -22,9 +22,8 @@ namespace Content.Shared.GameObjects.Components.Chemistry
             public ReagentUnit CurrentVolume { get; }
             public ReagentUnit TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
-            public override uint NetID => ContentNetIDs.REAGENT_INJECTOR;
 
-            public InjectorComponentState(ReagentUnit currentVolume, ReagentUnit totalVolume, InjectorToggleMode currentMode)
+            public InjectorComponentState(ReagentUnit currentVolume, ReagentUnit totalVolume, InjectorToggleMode currentMode) : base(ContentNetIDs.REAGENT_INJECTOR)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;
