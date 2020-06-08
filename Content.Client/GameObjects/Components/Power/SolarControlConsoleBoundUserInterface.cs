@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Power
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency]
-        private IGameTiming _gameTiming;
+        private IGameTiming _gameTiming = default;
 
         private SolarControlWindow _window;
         private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);

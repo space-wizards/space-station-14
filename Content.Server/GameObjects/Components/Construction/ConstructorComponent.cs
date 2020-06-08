@@ -137,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", Owner);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
