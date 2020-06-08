@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
@@ -107,8 +107,9 @@ namespace Content.Shared.GameObjects.Components
         {
             public int Count { get; }
             public int MaxCount { get; }
+            public override uint NetID => ContentNetIDs.STACK;
 
-            public StackComponentState(int count, int maxCount) : base(ContentNetIDs.STACK)
+            public StackComponentState(int count, int maxCount)
             {
                 Count = count;
                 MaxCount = maxCount;
@@ -121,6 +122,7 @@ namespace Content.Shared.GameObjects.Components
         Metal,
         Glass,
         Cable,
+        Gold,
         Ointment,
         Brutepack,
         FloorTileSteel,

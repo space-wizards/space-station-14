@@ -1,6 +1,6 @@
 - type: entity
   id: BoozeDispenser
-  name: Booze Dispenser
+  name: booze dispenser
   description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
   components:

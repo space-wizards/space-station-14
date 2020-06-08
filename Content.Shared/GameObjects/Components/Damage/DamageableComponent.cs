@@ -16,8 +16,9 @@ namespace Content.Shared.GameObjects
     public class DamageComponentState : ComponentState
     {
         public Dictionary<DamageType, int> CurrentDamage = new Dictionary<DamageType, int>();
+        public override uint NetID => ContentNetIDs.DAMAGEABLE;
 
-        public DamageComponentState(Dictionary<DamageType, int> damage) : base(ContentNetIDs.DAMAGEABLE)
+        public DamageComponentState(Dictionary<DamageType, int> damage)
         {
             CurrentDamage = damage;
         }

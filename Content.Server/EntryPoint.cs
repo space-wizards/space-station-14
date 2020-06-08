@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Interfaces.PDA;
 using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Content.Shared.Kitchen;
@@ -37,12 +38,14 @@ namespace Content.Server
                 "IconSmooth",
                 "SubFloorHide",
                 "LowWall",
+                "ReinforcedWall",
                 "Window",
                 "CharacterInfo",
                 "InteractionOutline",
                 "MeleeWeaponArcAnimation",
                 "AnimationsTest",
-                "ItemStatus"
+                "ItemStatus",
+                "Marker",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -84,6 +87,7 @@ namespace Content.Server
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<NodeGroupFactory>().Initialize();
             IoCManager.Resolve<NodeFactory>().Initialize();
         }
@@ -92,11 +96,11 @@ namespace Content.Server
         {
             base.Update(level, frameEventArgs);
 
-            _gameTicker.Update(frameEventArgs);
             switch (level)
             {
                 case ModUpdateLevel.PreEngine:
                 {
+                    _gameTicker.Update(frameEventArgs);
                     IoCManager.Resolve<IGalacticBankManager>().Update(frameEventArgs);
                     break;
                 }

@@ -1,6 +1,6 @@
 - type: entity
   id: Table
-  name: "Table"
+  name: "table"
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -16,7 +16,9 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 20
+      layer:
+      - SmallImpassable
+      - MobImpassable
 
   - type: SnapGrid
     offset: Center
@@ -28,8 +30,9 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50
-    spawnondestroy: TableParts
+    spawnondestroy: SteelSheet1
 
+# TODO: drop wood instead of steel when destroyed when that's added
 - type: entity
   id: TableWood
   parent: Table
@@ -41,4 +44,4 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50
-    spawnondestroy: TableParts
+    spawnondestroy: SteelSheet1

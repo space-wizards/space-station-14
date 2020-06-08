@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
@@ -9,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Timing;
@@ -17,11 +20,12 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     [RegisterComponent]
-    public class HitscanWeaponComponent : Component, IAttackBy
+    public class HitscanWeaponComponent : Component, IInteractUsing
     {
         private const float MaxLength = 20;
         public override string Name => "HitscanWeapon";
@@ -64,9 +68,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out PowerStorageComponent component))
+            if (!eventArgs.Using.TryGetComponent(out PowerStorageComponent component))
             {
                 return false;
             }
@@ -89,11 +93,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, ignoreNonHardCollidables: true);
+            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Opaque));
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, returnOnFirstHit: false).ToList();
 
-            Hit(rayCastResults, energyModifier, user);
-            AfterEffects(user, rayCastResults, angle, energyModifier);
+            //The first result is guaranteed to be the closest one
+            if (rayCastResults.Count >= 1)
+            {
+                Hit(rayCastResults[0], energyModifier, user);
+                AfterEffects(user, rayCastResults[0].Distance, angle, energyModifier);
+            }
+            else
+            {
+                AfterEffects(user, MaxLength, angle, energyModifier);
+            }
         }
 
         protected virtual void Hit(RayCastResults ray, float damageModifier, IEntity user = null)
@@ -106,17 +118,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             }
         }
 
-        protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle, float energyModifier)
+        protected virtual void AfterEffects(IEntity user, float distance, Angle angle, float energyModifier)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var dist = ray.DidHitObject ? ray.Distance : MaxLength;
-            var offset = angle.ToVec() * dist / 2;
+            var offset = angle.ToVec() * distance / 2;
             var message = new EffectSystemMessage
             {
                 EffectSprite = _spritename,
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
-                Size = new Vector2(dist, 1f),
+                Size = new Vector2(distance, 1f),
                 Coordinates = user.Transform.GridPosition.Translated(offset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
@@ -125,9 +136,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
                 Shaded = false
             };
-            var mgr = IoCManager.Resolve<IEntitySystemManager>();
-            mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            Owner.GetComponent<SoundComponent>().Play(_fireSound, AudioParams.Default.WithVolume(-5));
+            EntitySystem.Get<EffectSystem>().CreateParticle(message);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_fireSound, Owner, AudioParams.Default.WithVolume(-5));
         }
     }
 }

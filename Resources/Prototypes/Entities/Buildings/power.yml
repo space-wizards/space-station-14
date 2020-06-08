@@ -1,6 +1,9 @@
 - type: entity
   id: Wire
-  name: Wire
+  name: wire
+  description: Transfers power, avoid letting things come down it
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -16,13 +19,37 @@
     base: cable_
     key: power_cables
     mode: CardinalFlags
+  - type: SubFloorHide
+  - type: Destructible
+    thresholdvalue: 100
+    spawnondestroy: CableStack1
+
+  snap:
+  - Wire
+
+- type: entity
+  parent: Wire
+  id: BlueWire
+  name: bluewire
+  description: Transfers power, and puts on a good show of it
+  components:
+  - type: Sprite
+    color: Blue
 
 - type: entity
   id: Generator
-  name: Generator
+  name: generator
+  description: A portal to hell which summons power from the nether
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.3, 0.5"
+      layer: [MobMask, Opaque]
   - type: Sprite
     texture: Objects/Power/generator.png
   - type: Icon
@@ -31,11 +58,46 @@
     offset: Center
 
 - type: entity
-  id: WPPnobattery
-  name: WPPnobattery
+  id: SolarPanel
+  name: solar panel
+  description: Generates power from sunlight. Usually used to power replacements for sunlight. Fragile.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: [MobMask, Opaque]
+  - type: Sprite
+    sprite: Buildings/solar_panel.rsi
+    state: normal
+  - type: Icon
+    sprite: Buildings/solar_panel.rsi
+    state: normal
+  - type: PowerGenerator
+  - type: SolarPanel
+    supply: 1500
+  - type: SnapGrid
+    offset: Center
+  - type: Damageable
+  - type: Breakable
+    thresholdvalue: 100
+
+- type: entity
+  id: WPPnobattery
+  name: wppnobattery
+  description: Supplies power directly to nearby objects
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer: [Clickable]
   - type: Sprite
     drawdepth: WallMountedItems
     texture: Objects/Power/provider.png
@@ -56,13 +118,34 @@
   components:
   - type: Sprite
     sprite: "Buildings/apc.rsi"
+    state: apc0
+  - type: Appearance
+    visuals:
+    - type: ApcVisualizer2D
+  - type: UserInterface
+    interfaces:
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25, -0.25, 0.25, 0.3"
+  - type: LoopingSound
 
 - type: entity
   id: SMES
-  name: Smes
+  name: smes
+  description: Stores power in its super-magnetic cells
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: Sprite
     sprite: Buildings/smes.rsi
   - type: Icon
@@ -77,10 +160,18 @@
 
 - type: entity
   id: WiredMachine
-  name: WiredMachine
+  name: wiredmachine
+  description: A monstrosity that does nothing but suck up power from the nearby wires
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.25, 0.5, 0.25"
+      layer: [MobMask, Opaque]
   - type: Sprite
     texture: Objects/Power/wiredmachine.png
   - type: Icon
@@ -90,10 +181,18 @@
 
 - type: entity
   id: WirelessMachine
-  name: WirelessMachine
+  name: wirelessmachine
+  description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.25, 0.5, 0.25"
+      layer: [MobMask, Opaque]
   - type: Sprite
     texture: Objects/Furniture/wirelessmachine.png
   - type: Icon

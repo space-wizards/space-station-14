@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -17,7 +19,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ServerDoorComponent : Component, IActivate
+    public class ServerDoorComponent : Component, IActivate, ICollideBehavior
     {
         public override string Name => "Door";
 
@@ -85,26 +87,16 @@ namespace Content.Server.GameObjects
             ActivateImpl(eventArgs);
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
-            base.HandleMessage(message, component);
-
-            switch (message)
+            if (State != DoorState.Closed)
             {
-                case BumpedEntMsg msg:
-                    if (State != DoorState.Closed)
-                    {
-                        return;
-                    }
-
-                    // Only open when bumped by mobs.
-                    if (!msg.Entity.HasComponent(typeof(SpeciesComponent)))
-                    {
-                        return;
-                    }
-
-                    TryOpen(msg.Entity);
-                    break;
+                return;
+            }
+            if (entity.HasComponent(typeof(SpeciesComponent)))
+            {
+                    TryOpen(entity);
             }
         }
 
@@ -155,7 +147,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                collidableComponent.IsHardCollidable = false;
+                collidableComponent.CanCollide = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
@@ -191,14 +183,14 @@ namespace Content.Server.GameObjects
 
         public bool Close()
         {
-            if (collidableComponent.TryCollision(Vector2.Zero))
+            if (collidableComponent.IsColliding(Vector2.Zero))
             {
                 // Do nothing, somebody's in the door.
                 return false;
             }
 
             State = DoorState.Closing;
-            collidableComponent.IsHardCollidable = true;
+            collidableComponent.CanCollide = true;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
 

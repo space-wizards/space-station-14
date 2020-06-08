@@ -8,6 +8,7 @@ namespace Content.Shared.Interfaces
     {
         void PopupMessage(IEntity source, IEntity viewer, string message);
         void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
+        void PopupMessageCursor(IEntity viewer, string message);
     }
 
     public static class NotifyManagerExt

@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: Getmore Chocolate Corp
-  name: Getmore Chocolate Corp
+  name: getmore chocolate corp
   description: A vending machine containing snacks.
   spriteName: snack

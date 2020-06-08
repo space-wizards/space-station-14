@@ -88,7 +88,9 @@ namespace Content.Shared.GameObjects.Components.Cargo
     public class GalacticMarketState : ComponentState
     {
         public List<string> Products;
-        public GalacticMarketState(List<string> technologies) : base(ContentNetIDs.GALACTIC_MARKET)
+        public override uint NetID => ContentNetIDs.GALACTIC_MARKET;
+
+        public GalacticMarketState(List<string> technologies)
         {
             Products = technologies;
         }

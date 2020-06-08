@@ -44,6 +44,7 @@ namespace Content.Client.UserInterface.Stylesheets
             var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
             var notoSansItalic10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 10);
             var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansItalic12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 12);
             var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
@@ -449,6 +450,19 @@ namespace Content.Client.UserInterface.Stylesheets
                 new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"tooltipBox"}, null, null), new[]
                 {
                     new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "sayBox"}, null, null), new[]
+                {
+                    new StyleProperty(PanelContainer.StylePropertyPanel, tooltipBox)
+                }),
+
+                new StyleRule(new SelectorChild(
+                    new SelectorElement(typeof(PanelContainer), new[] {"speechBox", "emoteBox"}, null, null),
+                    new SelectorElement(typeof(RichTextLabel), null, null, null)),
+                    new[]
+                {
+                    new StyleProperty("font", notoSansItalic12),
                 }),
 
                 // Entity tooltip

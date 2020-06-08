@@ -2,13 +2,16 @@
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -21,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IAttackBy, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
@@ -52,30 +55,28 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
 
             if (Cell != null) return false;
 
             var handsComponent = eventArgs.User.GetComponent<IHandsComponent>();
 
-            if (!handsComponent.Drop(eventArgs.AttackWith, _cellContainer))
+            if (!handsComponent.Drop(eventArgs.Using, _cellContainer))
             {
                 return false;
             }
 
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                soundComponent.Play("/Audio/items/weapons/pistol_magin.ogg");
-            }
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
+
 
             Dirty();
 
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
@@ -131,10 +132,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                soundComponent.Play("/Audio/items/flashlight_toggle.ogg");
-            }
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
+
         }
 
         private void TurnOn(IEntity user)
@@ -145,13 +144,10 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             var cell = Cell;
-            SoundComponent soundComponent;
             if (cell == null)
             {
-                if (Owner.TryGetComponent(out soundComponent))
-                {
-                    soundComponent.Play("/Audio/machines/button.ogg");
-                }
+
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
@@ -162,11 +158,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Simple enough.
             if (cell.AvailableCharge(1) < Wattage)
             {
-                if (Owner.TryGetComponent(out soundComponent))
-                {
-                    soundComponent.Play("/Audio/machines/button.ogg");
-                }
-
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -174,10 +166,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             SetState(true);
 
-            if (Owner.TryGetComponent(out soundComponent))
-            {
-                soundComponent.Play("/Audio/items/flashlight_toggle.ogg");
-            }
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
+
         }
 
         private void SetState(bool on)
@@ -224,10 +214,8 @@ namespace Content.Server.GameObjects.Components.Interactable
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            if (Owner.TryGetComponent(out SoundComponent soundComponent))
-            {
-                soundComponent.Play("/Audio/items/weapons/pistol_magout.ogg");
-            }
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magout.ogg", Owner);
+
         }
 
         public override ComponentState GetComponentState()
@@ -250,14 +238,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         [Verb]
         public sealed class EjectCellVerb : Verb<HandheldLightComponent>
         {
-            protected override string GetText(IEntity user, HandheldLightComponent component)
+            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
-                return component.Cell == null ? "Eject cell (cell missing)" : "Eject cell";
-            }
-
-            protected override VerbVisibility GetVisibility(IEntity user, HandheldLightComponent component)
-            {
-                return component.Cell == null ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                if (component.Cell == null)
+                {
+                    data.Text = "Eject cell (cell missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+                else
+                {
+                    data.Text = "Eject cell";
+                }
             }
 
             protected override void Activate(IEntity user, HandheldLightComponent component)

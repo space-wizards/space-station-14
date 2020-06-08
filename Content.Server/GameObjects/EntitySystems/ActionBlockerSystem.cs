@@ -22,6 +22,9 @@ namespace Content.Server.GameObjects.EntitySystems
         bool CanEmote() => true;
 
         bool CanAttack() => true;
+        bool CanEquip() => true;
+        bool CanUnequip() => true;
+        bool CanChangeDirection() => true;
     }
 
     public class ActionBlockerSystem : EntitySystem
@@ -118,6 +121,42 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return canattack;
+        }
+
+        public static bool CanEquip(IEntity entity)
+        {
+            bool canequip = true;
+
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                canequip &= actionblockercomponents.CanEquip();
+            }
+
+            return canequip;
+        }
+
+        public static bool CanUnequip(IEntity entity)
+        {
+            bool canunequip = true;
+
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                canunequip &= actionblockercomponents.CanUnequip();
+            }
+
+            return canunequip;
+        }
+
+        public static bool CanChangeDirection(IEntity entity)
+        {
+            bool canchangedirection = true;
+
+            foreach (var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
+            {
+                canchangedirection &= actionblockercomponents.CanChangeDirection();
+            }
+
+            return canchangedirection;
         }
     }
 }

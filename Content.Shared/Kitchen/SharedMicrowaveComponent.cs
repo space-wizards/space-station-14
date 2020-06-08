@@ -41,7 +41,7 @@ namespace Content.Shared.Kitchen
                 EntityID = entityID;
             }
         }
-        
+
         [Serializable, NetSerializable]
         public class MicrowaveVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
         {
@@ -55,26 +55,35 @@ namespace Content.Shared.Kitchen
         [Serializable, NetSerializable]
         public class MicrowaveSelectCookTimeMessage : BoundUserInterfaceMessage
         {
-            public uint newCookTime;
-            public MicrowaveSelectCookTimeMessage(uint inputTime)
+            public int ButtonIndex;
+            public uint NewCookTime;
+            public MicrowaveSelectCookTimeMessage(int buttonIndex, uint inputTime)
             {
-                newCookTime = inputTime;
+                ButtonIndex = buttonIndex;
+                NewCookTime = inputTime;
             }
         }
     }
 
-
-
     [NetSerializable, Serializable]
     public class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly IReadOnlyList<Solution.ReagentQuantity> ReagentsReagents;
-        public readonly List<EntityUid> ContainedSolids;
-        public MicrowaveUpdateUserInterfaceState(IReadOnlyList<Solution.ReagentQuantity> reagents, List<EntityUid> solids)
+        public Solution.ReagentQuantity[] ReagentQuantities;
+        public EntityUid[] ContainedSolids;
+        public bool IsMicrowaveBusy;
+        public int ActiveButtonIndex;
+        public uint CurrentCookTime;
+
+        public MicrowaveUpdateUserInterfaceState(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids,
+            bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime)
         {
-            ReagentsReagents = reagents;
-            ContainedSolids = solids;
+            ReagentQuantities = reagents;
+            ContainedSolids = containedSolids;
+            IsMicrowaveBusy = isMicrowaveBusy;
+            ActiveButtonIndex = activeButtonIndex;
+            CurrentCookTime = currentCookTime;
         }
+
     }
 
     [Serializable, NetSerializable]

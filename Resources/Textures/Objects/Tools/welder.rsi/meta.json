@@ -27,6 +27,86 @@
                     0.1
                 ]
             ]
+        },
+        {
+          "name": "on-inhand-left",
+          "directions": 4,
+          "delays": [
+            [
+              0.2,
+              0.1
+            ],
+            [
+              0.2,
+              0.1
+            ],
+            [
+              0.2,
+              0.1
+            ],
+            [
+              0.2,
+              0.1
+            ]
+          ]
+        },
+        {
+          "name": "on-inhand-right",
+          "directions": 4,
+          "delays": [
+            [
+              0.2,
+              0.1
+            ],
+            [
+              0.2,
+              0.1
+            ],
+            [
+              0.2,
+              0.1
+            ],
+            [
+              0.2,
+              0.1
+            ]
+          ]
+        },
+        {
+          "name": "off-inhand-left",
+          "directions": 4,
+          "delays": [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ]
+        },
+        {
+          "name": "off-inhand-right",
+          "directions": 4,
+          "delays": [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ]
         }
     ]
 }

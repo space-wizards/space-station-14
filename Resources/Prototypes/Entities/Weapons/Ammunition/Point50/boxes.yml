@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A50
     capacity: 20
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes
@@ -35,7 +35,7 @@
 
 - type: entity
   id: box_50f
-  name: ".50 cal box (Flash)"
+  name: ".50 cal box (flash)"
   parent: box_50_empty
   components:
   - type: AmmoBox
@@ -58,7 +58,7 @@
 
 - type: entity
   id: box_50p
-  name: ".50 cal box (Practice)"
+  name: ".50 cal box (practice)"
   parent: box_50_empty
   components:
   - type: AmmoBox
@@ -79,7 +79,7 @@
 
 - type: entity
   id: box_50r
-  name: ".50 cal box (Rubber)"
+  name: ".50 cal box (rubber)"
   parent: box_50_empty
   components:
   - type: AmmoBox

@@ -1,5 +1,5 @@
 - type: entity
-  name: Retro Laser Gun
+  name: retro laser gun
   parent: BaseItem
   id: LaserGun
   description: A weapon using light amplified by the stimulated emission of radiation. Ancient inefficient model.
@@ -27,10 +27,10 @@
     visuals:
     - type: HitscanWeaponVisualizer2D
       prefix: laser_retro
-  - type: Sound
+  - type: LoopingSound
 
 - type: entity
-  name: Laser Cannon
+  name: laser cannon
   parent: LaserGun
   id: LaserCannon
   description: With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!

@@ -1,7 +1,9 @@
 ﻿using System.Linq;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Interactable;
+using Content.Server.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -17,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Power
     /// Component to transfer power to nearby components, can create powernets and connect to nodes
     /// </summary>
     [RegisterComponent]
-    public class PowerTransferComponent : Component, IAttackBy
+    public class PowerTransferComponent : Component, IInteractUsing
     {
         public override string Name => "PowerTransfer";
 
@@ -138,19 +140,18 @@ namespace Content.Server.GameObjects.Components.Power
             return Parent != null && Parent.Dirty == false && !Regenerating;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.AttackWith.TryGetComponent(out WirecutterComponent wirecutter))
-            {
-                Owner.Delete();
-                var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);
+            if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Cutting)) return false;
 
-                if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
-                    stackComp.Count = 1;
+            Owner.Delete();
+            var droppedEnt = Owner.EntityManager.SpawnEntity("CableStack", eventArgs.ClickLocation);
 
-                return true;
-            }
-            return false;
+            if (droppedEnt.TryGetComponent<StackComponent>(out var stackComp))
+                stackComp.Count = 1;
+
+            return true;
         }
     }
 }

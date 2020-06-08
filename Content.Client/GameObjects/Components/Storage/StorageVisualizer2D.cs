@@ -1,6 +1,7 @@
 using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -8,6 +9,7 @@ namespace Content.Client.GameObjects.Components.Storage
 {
     public sealed class StorageVisualizer2D : AppearanceVisualizer
     {
+        private string _stateBase;
         private string _stateOpen;
         private string _stateClosed;
 
@@ -15,7 +17,12 @@ namespace Content.Client.GameObjects.Components.Storage
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("state_open", out var child))
+            if (node.TryGetNode("state", out var child))
+            {
+                _stateBase = child.AsString();
+            }
+
+            if (node.TryGetNode("state_open", out child))
             {
                 _stateOpen = child.AsString();
             }
@@ -23,6 +30,19 @@ namespace Content.Client.GameObjects.Components.Storage
             if (node.TryGetNode("state_closed", out child))
             {
                 _stateClosed = child.AsString();
+            }
+        }
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            if (!entity.TryGetComponent(out ISpriteComponent sprite))
+            {
+                return;
+            }
+
+            if (_stateBase != null)
+            {
+                sprite.LayerSetState(0, _stateBase);
             }
         }
 
@@ -36,12 +56,35 @@ namespace Content.Client.GameObjects.Components.Storage
             }
 
             component.TryGetData(StorageVisuals.Open, out bool open);
-            sprite.LayerSetState(StorageVisualLayers.Door, open ? _stateOpen : _stateClosed);
+            sprite.LayerSetState(StorageVisualLayers.Door, open
+                ? _stateOpen ?? $"{_stateBase}_open"
+                : _stateClosed ?? $"{_stateBase}_door");
+
+            if (component.TryGetData(StorageVisuals.CanLock, out bool canLock) && canLock)
+            {
+                if (!component.TryGetData(StorageVisuals.Locked, out bool locked))
+                {
+                    locked = true;
+                }
+
+                sprite.LayerSetVisible(StorageVisualLayers.Lock, !open);
+                if (!open)
+                {
+                    sprite.LayerSetState(StorageVisualLayers.Lock, locked ? "locked" : "unlocked");
+                }
+            }
+
+            if (component.TryGetData(StorageVisuals.Welded, out bool weldedVal))
+            {
+                sprite.LayerSetVisible(StorageVisualLayers.Welded, weldedVal);
+            }
         }
     }
 
     public enum StorageVisualLayers
     {
-        Door
+        Door,
+        Welded,
+        Lock
     }
 }

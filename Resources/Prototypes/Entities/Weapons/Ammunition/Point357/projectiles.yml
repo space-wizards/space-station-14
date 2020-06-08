@@ -1,6 +1,6 @@
 - type: entity
   id: bullet_357
-  name: .357 Bullet
+  name: .357 bullet
   parent: BulletBase
   abstract: true
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: bullet_357f
-  name: .357 Bullet (Flash)
+  name: .357 bullet (flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   id: bullet_357hv
-  name: .357 Bullet (High-Velocity)
+  name: .357 bullet (high-velocity)
   parent: BulletBaseHighVelocity
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_357l
-  name: .357 Bullet (L)
+  name: .357 bullet (L)
   parent: BulletBaseL
   abstract: true
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: bullet_357p
-  name: .357 Bullet (Practice)
+  name: .357 bullet (practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   id: bullet_357r
-  name: .357 Bullet (Rubber)
+  name: .357 bullet (rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

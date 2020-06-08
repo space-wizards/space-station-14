@@ -1,12 +1,13 @@
 ﻿using System;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization.Macros;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
-    public abstract class SharedHumanoidAppearanceComponent : Component
+    public abstract class SharedHumanoidAppearanceComponent : Component, IGenderable
     {
         private HumanoidCharacterAppearance _appearance;
         private Sex _sex;
@@ -36,6 +37,13 @@ namespace Content.Shared.GameObjects.Components.Mobs
             }
         }
 
+        public Gender Gender => Sex switch
+        {
+            Sex.Female => Gender.Female,
+            Sex.Male => Gender.Male,
+            _ => Gender.Epicene,
+        };
+
         public override ComponentState GetComponentState()
         {
             return new HumanoidAppearanceComponentState(Appearance, Sex);
@@ -61,7 +69,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [NetSerializable]
         private sealed class HumanoidAppearanceComponentState : ComponentState
         {
-            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex) : base(ContentNetIDs.HUMANOID_APPEARANCE)
+            public override uint NetID => ContentNetIDs.HUMANOID_APPEARANCE;
+
+            public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance, Sex sex)
             {
                 Appearance = appearance;
                 Sex = sex;

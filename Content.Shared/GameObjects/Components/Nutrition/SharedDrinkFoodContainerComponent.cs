@@ -4,12 +4,12 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Nutrition
 {
-    public abstract class SharedDrinkFoodContainerComponent : Component
+    public abstract class SharedFoodContainerComponent : Component
     {
     }
 
     [NetSerializable, Serializable]
-    public enum DrinkFoodContainerVisualMode
+    public enum FoodContainerVisualMode
     {
         /// <summary>
         /// Discrete: 50 eggs in a carton -> down to 25, will show 12/12 until it gets below max
@@ -20,7 +20,7 @@ namespace Content.Shared.GameObjects.Components.Nutrition
     }
 
     [NetSerializable, Serializable]
-    public enum DrinkFoodContainerVisuals
+    public enum FoodContainerVisuals
     {
         Capacity,
         Current,

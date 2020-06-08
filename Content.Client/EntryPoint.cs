@@ -52,7 +52,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
-                "Wrenchable",
+                "Anchorable",
                 "AmmoBox",
                 "Breakable",
                 "Pickaxe",
@@ -68,6 +68,9 @@ namespace Content.Client
                 "Explosive",
                 "OnUseTimerTrigger",
                 "ToolboxElectricalFill",
+                "ToolboxEmergencyFill",
+                "WarpPoint",
+                "ToolboxGoldFill",
                 "ToolLockerFill",
                 "EmitSoundOnUse",
                 "FootstepModifier",
@@ -120,7 +123,7 @@ namespace Content.Client
                 "Species",
                 "Drink",
                 "Food",
-                "DrinkFoodContainer",
+                "FoodContainer",
                 "Stomach",
                 "Hunger",
                 "Thirst",
@@ -145,6 +148,23 @@ namespace Content.Client
                 "Bucket",
                 "Puddle",
                 "CanSpill",
+                "RandomPottedPlant",
+                "CommunicationsConsole",
+                "BarSign",
+                "DroppedBodyPart",
+                "DroppedMechanism",
+                "BodyManager",
+                "Stunnable",
+                "SolarPanel",
+                "BodyScanner",
+                "Stunbaton",
+                "EmergencyClosetFill",
+                "Tool",
+                "TilePrying",
+                "RandomToolColor",
+                "ConditionalSpawner",
+                "PottedPlantHide",
+                "SecureEntityStorage",
                 "NodeContainer",
                 "PowerSupplier",
                 "PowerConsumer",
@@ -245,7 +265,6 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IItemSlotManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {
