@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     }
 
     [NodeGroup(NodeGroupID.Apc)]
-    class ApcNetNodeGroup : BaseNodeGroup, IApcNet
+    public class ApcNetNodeGroup : BaseNetConnectorNodeGroup<BaseApcNetComponent, IApcNet>, IApcNet
     {
         [ViewVariables]
         private readonly List<ApcComponent> _apcs = new List<ApcComponent>();
@@ -26,6 +26,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private readonly Dictionary<PowerProviderComponent, List<PowerReceiverComponent>> _receiverByProvider = new Dictionary<PowerProviderComponent, List<PowerReceiverComponent>>();
 
         public static readonly IApcNet NullNet = new NullApcNet();
+
+        protected override void SetNetConnectorNet(BaseApcNetComponent netConnectorComponent)
+        {
+            netConnectorComponent.Net = this;
+        }
+
+        #region BaseNodeGroup Overrides
+
+        #endregion
+
+        #region IApcNet Methods
 
         public void AddApc(ApcComponent apc)
         {
@@ -47,10 +58,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _receiverByProvider.Remove(provider);
         }
 
-        public void Update(float frameTime)
-        {
-
-        }
+        #endregion
 
         private class NullApcNet : IApcNet
         {

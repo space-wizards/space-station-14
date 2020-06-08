@@ -1,10 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -26,10 +24,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     }
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
-    public class PowerNetNodeGroup : BaseNodeGroup, IPowerNet
+    public class PowerNetNodeGroup : BaseNetConnectorNodeGroup<BasePowerNetComponent, IPowerNet>, IPowerNet
     {
-        private readonly Dictionary<Node, List<BasePowerNetComponent>> _powerComponents = new Dictionary<Node, List<BasePowerNetComponent>>();
-
         [ViewVariables]
         private readonly List<PowerSupplierComponent> _suppliers = new List<PowerSupplierComponent>();
 
@@ -56,29 +52,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
+        protected override void SetNetConnectorNet(BasePowerNetComponent netConnectorComponent)
+        {
+            netConnectorComponent.Net = this;
+        }
+
         #region BaseNodeGroup Overrides
-
-        protected override void OnAddNode(Node node)
-        {
-            var newPowerComponents = node.Owner
-                .GetAllComponents<BasePowerNetComponent>()
-                .Where(powerComp => (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
-                .ToList();
-            _powerComponents.Add(node, newPowerComponents);
-            foreach (var powerComponent in newPowerComponents)
-            {
-                powerComponent.Net = this;
-            }
-        }
-
-        protected override void OnRemoveNode(Node node)
-        {
-            foreach (var powerComponent in _powerComponents[node])
-            {
-                powerComponent.ClearNet();
-            }
-            _powerComponents.Remove(node);
-        }
 
         public override void BeforeCombine()
         {
