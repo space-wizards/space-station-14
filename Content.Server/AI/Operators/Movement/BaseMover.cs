@@ -136,13 +136,13 @@ namespace Content.Server.AI.Operators.Movement
                         {
                             // TODO Fix this because they are yeeting themselves when they charge
                             // TODO: If something updates this this will fuck it
-                            collidableComponent.CollisionEnabled = false;
+                            collidableComponent.CanCollide = false;
 
                             Timer.Spawn(100, () =>
                             {
-                                if (!collidableComponent.CollisionEnabled)
+                                if (!collidableComponent.CanCollide)
                                 {
-                                    collidableComponent.CollisionEnabled = true;
+                                    collidableComponent.CanCollide = true;
                                 }
                             });
                         }

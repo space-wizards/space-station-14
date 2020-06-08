@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
             {
                 if (container.Owner.TryGetComponent(out EntityStorageComponent storageComponent))
                 {
-                    if (storageComponent.Locked && !storageComponent.Open)
+                    if (storageComponent.IsWeldedShut && !storageComponent.Open)
                     {
                         return 0.0f;
                     }

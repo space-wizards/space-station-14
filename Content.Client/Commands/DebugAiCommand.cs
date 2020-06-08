@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.EntitySystems.Debug;
+using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Player;

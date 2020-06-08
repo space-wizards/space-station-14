@@ -41,9 +41,9 @@ namespace Content.Server.AI.Utils
                 angle.ToVec(),
                 (int)(CollisionGroup.Opaque | CollisionGroup.Impassable | CollisionGroup.MobImpassable));
 
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(owner.Transform.MapID, ray, range, owner);
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
 
-            return rayCastResults.HitEntity == target;
+            return rayCastResults.Count > 0 && rayCastResults[0].HitEntity == target;
         }
 
         // Should this be in robust or something? Fark it

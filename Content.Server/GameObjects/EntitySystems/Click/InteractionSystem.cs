@@ -319,7 +319,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUseItemInHand))
+                    new PointerInputCmdHandler(HandleClientUseItemInHand))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,

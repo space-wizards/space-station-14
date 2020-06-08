@@ -24,7 +24,7 @@ namespace Content.Server.AI.Operators.Inventory
         public override Outcome Execute(float frameTime)
         {
             if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
-                InteractionSystem.InteractionRange)
+                SharedInteractionSystem.InteractionRange)
             {
                 return Outcome.Failed;
             }
@@ -35,14 +35,15 @@ namespace Content.Server.AI.Operators.Inventory
             }
 
             if (!container.Owner.TryGetComponent(out EntityStorageComponent storageComponent) || 
-                storageComponent.Locked)
+                storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;
             }
             
             if (!storageComponent.Open)
             {
-                storageComponent.ToggleOpen();
+                var activateArgs = new ActivateEventArgs {User = _owner, Target = _target};
+                storageComponent.Activate(activateArgs);
             }
             
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);

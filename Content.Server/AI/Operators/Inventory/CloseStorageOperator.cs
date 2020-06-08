@@ -50,20 +50,21 @@ namespace Content.Server.AI.Operators.Inventory
         public override Outcome Execute(float frameTime)
         {
             if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
-                InteractionSystem.InteractionRange)
+                SharedInteractionSystem.InteractionRange)
             {
                 return Outcome.Failed;
             }
 
             if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) || 
-                storageComponent.Locked)
+                storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;
             }
             
             if (storageComponent.Open)
             {
-                storageComponent.ToggleOpen();
+                var activateArgs = new ActivateEventArgs {User = _owner, Target = _target};
+                storageComponent.Activate(activateArgs);
             }
 
             return Outcome.Success;

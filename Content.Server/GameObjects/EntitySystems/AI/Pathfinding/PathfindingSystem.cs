@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         public override void Initialize()
         {
             IoCManager.InjectDependencies(this);
-            SubscribeLocalEvent<CollisionEnabledEvent>(QueueCollisionEnabledEvent);
+            SubscribeLocalEvent<CollisionChangeEvent>(QueueCollisionEnabledEvent);
             SubscribeLocalEvent<MoveEvent>(QueueCollidableMove);
 
             // Handle all the base grid changes
@@ -337,12 +337,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
 
-        private void QueueCollisionEnabledEvent(CollisionEnabledEvent collisionEvent)
+        private void QueueCollisionEnabledEvent(CollisionChangeEvent collisionEvent)
         {
             // TODO: Handle containers
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entity = entityManager.GetEntity(collisionEvent.Owner);
-            switch (collisionEvent.Value)
+            switch (collisionEvent.CanCollide)
             {
                 case true:
                     _queuedGraphUpdates.Enqueue(new CollisionChange(entity, true));

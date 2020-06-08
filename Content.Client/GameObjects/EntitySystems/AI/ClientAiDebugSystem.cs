@@ -10,7 +10,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.EntitySystems.Debug
+namespace Content.Client.GameObjects.EntitySystems.AI
 {
 #if DEBUG
     public class ClientAiDebugSystem : EntitySystem
