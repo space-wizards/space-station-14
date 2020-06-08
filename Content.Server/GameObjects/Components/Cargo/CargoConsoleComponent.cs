@@ -45,20 +45,20 @@ namespace Content.Server.GameObjects.Components.Cargo
                     return;
                 if (_bankAccount != null)
                 {
-                    _bankAccount.OnBalanceChange -= OnBankAccountBalanceChange;
+                    _bankAccount.OnBalanceChange -= OnBankAccountChange;
                 }
 
                 _bankAccount = value;
                 if (value != null)
                 {
-                    _bankAccount.OnBalanceChange += OnBankAccountBalanceChange;
+                    _bankAccount.OnBalanceChange += OnBankAccountChange;
                 }
 
-                OnBankAccountBalanceChange();
+                OnBankAccountChange();
             }
         }
 
-        private void OnBankAccountBalanceChange()
+        private void OnBankAccountChange()
         {
             SetState(_bankAccount.Id, _bankAccount.Name, _bankAccount.Balance);
         }
