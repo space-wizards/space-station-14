@@ -94,7 +94,6 @@ namespace Content.Server.Cargo
                 return;
             if (!_orders.TryGetValue(orderNumber, out var order))
                 return;
-
             else if (CurrentOrderSize + order.Amount > MaxOrderSize) { 
                 AddOrder(order.Requester, order.Reason+" (Overflow)", order.ProductId, order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
                 order.Amount = MaxOrderSize - CurrentOrderSize;
