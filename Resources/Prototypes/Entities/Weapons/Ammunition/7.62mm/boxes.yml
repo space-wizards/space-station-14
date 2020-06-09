@@ -8,7 +8,7 @@
   - type: AmmoBox
     caliber: A762mm
     capacity: 80
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Ammo boxes

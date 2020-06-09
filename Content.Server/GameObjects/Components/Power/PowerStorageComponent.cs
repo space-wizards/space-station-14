@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public bool CanDeductCharge(float toDeduct)
         {
-            if (Charge > toDeduct)
+            if (Charge >= toDeduct)
                 return true;
             return false;
         }
@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         /// <inheritdoc />
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 

@@ -1,11 +1,11 @@
 - type: entity
   id: WallLight
-  name: "Unpowered Light"
+  name: "unpowered light"
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
-  - type: Sound
+  - type: LoopingSound
   - type: Sprite
     sprite: Buildings/light_tube.rsi
     state: on
@@ -22,7 +22,7 @@
     - Wallmount
 
 - type: entity
-  name: Light
+  name: light
   id: Poweredlight
   parent: WallLight
   components:
@@ -43,7 +43,7 @@
     bulb: Tube
 
 - type: entity
-  name: Small Light
+  name: small light
   id: PoweredSmallLight
   parent: WallLight
   components:

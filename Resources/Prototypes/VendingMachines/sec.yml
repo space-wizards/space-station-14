@@ -1,6 +1,6 @@
 - type: vendingMachineInventory
   id: SecTech
-  name: SecTech
+  name: sectech
   description: "A vending machine containing Security equipment. A label reads \"SECURITY PERSONNEL ONLY\"."
   animationDuration: 1.4
   spriteName: sec

@@ -1,41 +1,18 @@
-﻿using Content.Shared.BodySystem;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-
-
-
-namespace Content.Server.BodySystem
-{
+﻿namespace Content.Server.BodySystem {
 
 
     /// <summary>
     ///     Data class representing a singular limb such as an arm or a leg. Typically held within a BodyManagerComponent,
     ///     which coordinates functions between BodyParts.
     /// </summary>
-    public class BodyPart
-    {
+    public class BodyPart {
 
-        /// <summary>
-        ///     List of active <see cref="Mechanism">Mechanisms</see> in this BodyPart.
-        /// </summary>
-        [ViewVariables]
-        private List<Mechanism> _mechanisms = new List<Mechanism>();
-
-        /// <summary>
-        ///     The <see cref="ISurgeryData">ISurgeryData</see> object currently representing this limb.
-        /// </summary>
         [ViewVariables]
         private ISurgeryData _surgeryData;
 
-        /// <summary>
-        ///     How much space the mechanisms are currently taking up.
-        /// </summary>
+        [ViewVariables]
+        private List<Mechanism> _mechanisms = new List<Mechanism>();
+
         [ViewVariables]
         private int _sizeUsed = 0;
 
@@ -123,10 +100,9 @@ namespace Content.Server.BodySystem
         [ViewVariables]
         public List<Mechanism> Mechanisms => _mechanisms;
 
-        public BodyPart(){}
+        public BodyPart() { }
 
-        public BodyPart(BodyPartPrototype data)
-        {
+        public BodyPart(BodyPartPrototype data) {
             LoadFromPrototype(data);
         }
 
@@ -136,8 +112,7 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Attempts to add a Mechanism. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Use InstallDroppedMechanism if you want to easily install an IEntity with a DroppedMechanismComponent.
         /// </summary>
-        public bool InstallMechanism(Mechanism mechanism)
-        {
+        public bool InstallMechanism(Mechanism mechanism) {
             if (_sizeUsed + mechanism.Size > Size)
                 return false; //No space
             _mechanisms.Add(mechanism);
@@ -146,10 +121,9 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Attempts to install a DroppedMechanismComponent into the given limb, potentially deleting the dropped IEntity. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Calls InstallMechanism if successful.
+        ///     Attempts to install a DroppedMechanismComponent into the given limb, potentially deleting the dropped IEntity. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart).
         /// </summary>
-        public bool InstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
-        {
+        public bool InstallDroppedMechanism(DroppedMechanismComponent droppedMechanism) {
             if (_sizeUsed + droppedMechanism.ContainedMechanism.Size > Size)
                 return false; //No space
             InstallMechanism(droppedMechanism.ContainedMechanism);
@@ -160,8 +134,7 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Tries to remove the given Mechanism reference from the given BodyPart reference. Returns null if there was an error in spawning the entity or removing the mechanism, otherwise returns a reference to the DroppedMechanismComponent on the newly spawned entity.
         /// </summary>	
-        public DroppedMechanismComponent DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
-        {
+        public DroppedMechanismComponent DropMechanism(IEntity dropLocation, Mechanism mechanismTarget) {
             if (!_mechanisms.Contains(mechanismTarget))
                 return null;
             _mechanisms.Remove(mechanismTarget);
@@ -176,8 +149,7 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Tries to destroy the given Mechanism in the given BodyPart. Returns false if there was an error, true otherwise. Does NOT spawn a dropped entity.
         /// </summary>	
-        public bool DestroyMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget)
-        {
+        public bool DestroyMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget) {
             if (!_mechanisms.Contains(mechanismTarget))
                 return false;
             _mechanisms.Remove(mechanismTarget);
@@ -186,29 +158,23 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart.
+        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g. 
         /// </summary>
-        public bool SurgeryCheck(SurgeryToolType toolType)
-        {
+        public bool SurgeryCheck(SurgeryToolType toolType) {
             return _surgeryData.CheckSurgery(toolType);
         }
 
         /// <summary>
         ///     Attempts to perform surgery on this BodyPart with the given tool. Returns false if there was an error, true if successful.
         /// </summary>
-        public bool AttemptSurgery(SurgeryToolType toolType, IBodyPartContainer container, IEntity performer)
-        {
-            return _surgeryData.PerformSurgery(toolType, container, performer);
+        public bool AttemptSurgery(SurgeryToolType toolType, BodyManagerComponent target, IEntity performer) {
+            return _surgeryData.PerformSurgery(toolType, target, performer);
         }
-
-
-
 
         /// <summary>
         ///    Loads the given BodyPartPrototype - current data on this BodyPart will be overwritten!
         /// </summary>	
-        public virtual void LoadFromPrototype(BodyPartPrototype data)
-        {
+        public virtual void LoadFromPrototype(BodyPartPrototype data) {
             Name = data.Name;
             Plural = data.Plural;
             PartType = data.PartType;
@@ -224,10 +190,8 @@ namespace Content.Server.BodySystem
             //TODO: figure out a way to convert a string name in the YAML to the proper class (reflection won't work for reasons)
             _surgeryData = new BiologicalSurgeryData(this);
             IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (string mechanismPrototypeID in data.Mechanisms)
-            {
-                if (!prototypeManager.TryIndex(mechanismPrototypeID, out MechanismPrototype mechanismData))
-                {
+            foreach (string mechanismPrototypeID in data.Mechanisms) {
+                if (!prototypeManager.TryIndex(mechanismPrototypeID, out MechanismPrototype mechanismData)) {
                     throw new InvalidOperationException("No MechanismPrototype was found with the name " + mechanismPrototypeID + " while loading a BodyPartPrototype!");
                 }
                 _mechanisms.Add(new Mechanism(mechanismData));

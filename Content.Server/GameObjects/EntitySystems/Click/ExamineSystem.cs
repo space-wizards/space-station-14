@@ -1,7 +1,9 @@
-﻿using Content.Shared.GameObjects.EntitySystemMessages;
+﻿using Content.Server.Utility;
+using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -12,9 +14,10 @@ namespace Content.Server.GameObjects.EntitySystems
     public interface IExamine
     {
         /// <summary>
-        /// Returns an status examine value for components appended to the end of the description of the entity
+        /// Returns a status examine value for components appended to the end of the description of the entity
         /// </summary>
-        void Examine(FormattedMessage message);
+        /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
+        void Examine(FormattedMessage message, bool inDetailsRange);
     }
 
     public class ExamineSystem : ExamineSystemShared
@@ -24,6 +27,8 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning restore 649
 
         private static readonly FormattedMessage _entityNotFoundMessage;
+
+        private const float ExamineDetailsRange = 3f;
 
         static ExamineSystem()
         {
@@ -40,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
             IoCManager.InjectDependencies(this);
         }
 
-        private static FormattedMessage GetExamineText(IEntity entity)
+        private static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)
         {
             var message = new FormattedMessage();
 
@@ -55,11 +60,15 @@ namespace Content.Server.GameObjects.EntitySystems
 
             message.PushColor(Color.DarkGray);
 
+            var inDetailsRange = Get<SharedInteractionSystem>()
+                .InRangeUnobstructed(examiner.Transform.MapPosition, entity.Transform.MapPosition,
+                    ExamineDetailsRange, predicate: entity0 => entity0 == examiner || entity0 == entity, insideBlockerValid: true);
+
             //Add component statuses from components that report one
-            foreach (var examineComponents in entity.GetAllComponents<IExamine>())
+            foreach (var examineComponent in entity.GetAllComponents<IExamine>())
             {
                 var subMessage = new FormattedMessage();
-                examineComponents.Examine(subMessage);
+                examineComponent.Examine(subMessage, inDetailsRange);
                 if (subMessage.Tags.Count == 0)
                     continue;
 
@@ -91,7 +100,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            var text = GetExamineText(entity);
+            var text = GetExamineText(entity, player.AttachedEntity);
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text), channel);
         }
     }

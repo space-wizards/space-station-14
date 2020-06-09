@@ -1,6 +1,6 @@
 ﻿- type: vendingMachineInventory
   id: YouTool
-  name: YouTool
+  name: youtool
   description: "A vending machine containing standard tools. A label reads: \"Tools for tools.\""
   animationDuration: 1.1
   spriteName: youtool

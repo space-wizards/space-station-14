@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
@@ -7,7 +8,9 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -22,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Research
     {
 
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
@@ -33,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Research
         private const string _soundCollectionName = "keyboard";
 
         private bool Powered => _powerDevice.Powered;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -109,6 +111,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return;
             }
+
             OpenUserInterface(actor.playerSession);
             PlayKeyboardSound();
             return;
@@ -118,8 +121,8 @@ namespace Content.Server.GameObjects.Components.Research
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
-            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
-            audioSystem.Play(file);
+            var audioSystem = EntitySystem.Get<AudioSystem>();
+            audioSystem.PlayFromEntity(file,Owner,AudioParams.Default);
         }
 
 

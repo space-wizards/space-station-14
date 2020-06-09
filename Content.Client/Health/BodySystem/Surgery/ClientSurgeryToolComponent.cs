@@ -44,7 +44,7 @@ namespace Content.Client.BodySystem
         public override void OnAdd()
         {
             base.OnAdd();
-            Window = new SurgeryToolWindow() { SurgeryToolEntity = this }; 
+            Window = new SurgeryToolWindow() { SurgeryToolEntity = this };
         }
 
         public override void OnRemove()

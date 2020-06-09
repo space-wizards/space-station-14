@@ -1,18 +1,18 @@
 - type: entity
-  name: BaseLMG
+  name: baselmg
   parent: BaseItem
   id: LmgBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 30
     automatic: true
     firerate: 10
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_pk
     auto_eject_magazine: false
@@ -41,7 +41,7 @@
     firerate: 10
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_a762
   - type: Appearance
@@ -72,7 +72,7 @@
     firerate: 8
   - type: BallisticMagazineWeapon
     caliber: A762mm
-    magazines: 
+    magazines:
     - A762mm
     default_magazine: magazine_pk
   - type: Appearance

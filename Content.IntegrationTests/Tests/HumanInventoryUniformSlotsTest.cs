@@ -40,7 +40,7 @@ namespace Content.IntegrationTests.Tests
                 uniform = entityMan.SpawnEntity("JanitorUniform", MapCoordinates.Nullspace);
                 idCard = entityMan.SpawnEntity("AssistantIDCard", MapCoordinates.Nullspace);
                 pocketItem = entityMan.SpawnEntity("FlashlightLantern", MapCoordinates.Nullspace);
-                var tooBigItem = entityMan.SpawnEntity("RedToolboxItem", MapCoordinates.Nullspace);
+                var tooBigItem = entityMan.SpawnEntity("ToolboxEmergency", MapCoordinates.Nullspace);
 
                 inventory = human.GetComponent<InventoryComponent>();
 

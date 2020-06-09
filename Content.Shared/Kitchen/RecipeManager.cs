@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {
-    
+
     public class RecipeManager
     {
 #pragma warning disable 649
@@ -24,6 +24,24 @@ namespace Content.Shared.Kitchen
 
             Recipes.Sort(new RecipeComparer());
         }
+        /// <summary>
+        /// Check if a prototype ids appears in any of the recipes that exist.
+        /// </summary>
+        /// <param name="solidIds"></param>
+        /// <returns></returns>
+        public bool SolidAppears(string solidId)
+        {
+            foreach(var recipe in Recipes)
+            {
+                if(recipe.IngredientsSolids.ContainsKey(solidId))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private class RecipeComparer : Comparer<FoodRecipePrototype>
         {
             public override int Compare(FoodRecipePrototype x, FoodRecipePrototype y)
@@ -32,7 +50,7 @@ namespace Content.Shared.Kitchen
                 {
                     return 0;
                 }
-                
+
                 return -x.IngredientsReagents.Count.CompareTo(y.IngredientsReagents.Count);
             }
         }

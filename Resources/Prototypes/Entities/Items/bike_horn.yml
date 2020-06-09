@@ -1,5 +1,5 @@
 - type: entity
-  name: Bike Horn
+  name: bike horn
   parent: BaseItem
   id: BikeHorn
   description: A horn off of a bicycle.
@@ -17,7 +17,6 @@
     sprite: Objects/Fun/bikehorn.rsi
   - type: ItemCooldown
 
-  - type: Sound
   - type: EmitSoundOnUse
     sound: /Audio/items/bikehorn.ogg
     variation: 0.2

@@ -12,6 +12,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
 
 - Index: 50
   Name: Moderator
@@ -28,6 +29,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
   - kick
   - listplayers
   - loc
@@ -47,6 +49,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
   - spawn
   - delete
   - tp
@@ -70,6 +73,7 @@
   - showtime
   - group
   - addai
+  - warp
   CanViewVar: true
   CanAdminPlace: true
 
@@ -88,6 +92,7 @@
   - observe
   - toggleready
   - ghost
+  - suicide
   - spawn
   - delete
   - tp
@@ -132,6 +137,7 @@
   - saveconfig
   - gc
   - gc_mode
+  - warp
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

@@ -1,6 +1,6 @@
 - type: entity
   id: CratePlastic
-  name: Plastic Crate
+  name: plastic crate
   parent: CrateGeneric
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
 
 - type: entity
   id: CrateFreezer
-  name: Freezer
+  name: freezer
   parent: CrateGeneric
   components:
   - type: Sprite
@@ -36,7 +36,7 @@
 
 - type: entity
   id: CrateHydroponics
-  name: Hydroponics Crate
+  name: hydroponics crate
   parent: CrateGeneric
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
 
 - type: entity
   id: CrateMedical
-  name: Medical Crate
+  name: medical crate
   parent: CrateGeneric
   components:
   - type: Sprite
@@ -72,7 +72,7 @@
 
 - type: entity
   id: CrateRadiation
-  name: Radiation Gear Crate
+  name: radiation gear crate
   description: Is not actually lead lined. Do not store your plutonium in this.
   parent: CrateGeneric
   components:
@@ -91,7 +91,7 @@
 
 - type: entity
   id: CrateInternals
-  name: Internals Crate
+  name: internals crate
   parent: CrateGeneric
   components:
   - type: Sprite
@@ -109,7 +109,7 @@
 
 - type: entity
   id: CrateFlashlights
-  name: Flashlight Crate (x5)
+  name: flashlight crate (x5)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -122,7 +122,7 @@
 
 - type: entity
   id: CrateLightBulb
-  name: Light Bulb Crate (x10)
+  name: light bulb crate (x10)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -140,7 +140,7 @@
 
 - type: entity
   id: CrateFireExtinguisher
-  name: Fire Extinguisher Crate (x3)
+  name: fire extinguisher crate (x3)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -151,7 +151,7 @@
 
 - type: entity
   id: CratePen
-  name: Pen Crate (x10)
+  name: pen crate (x10)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -169,7 +169,7 @@
 
 - type: entity
   id: CrateBikeHorn
-  name: Bike Horn Crate (x5)
+  name: bike horn crate (x5)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -182,7 +182,7 @@
 
 - type: entity
   id: CrateCleaver
-  name: Cleaver Crate (x5)
+  name: cleaver crate (x5)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -195,7 +195,7 @@
 
 - type: entity
   id: CrateFuelTank
-  name: Fuel Tank
+  name: fuel tank
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -204,7 +204,7 @@
 
 - type: entity
   id: CrateMedicalScanner
-  name: Medical Scanner
+  name: medical scanner
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -213,7 +213,7 @@
 
 - type: entity
   id: CrateGlass
-  name: Glass Sheet Crate (x50)
+  name: glass sheet crate (x50)
   parent: CrateGeneric
   components:
   - type: StorageFill
@@ -222,7 +222,7 @@
 
 - type: entity
   id: CrateCable
-  name: Cable Coil Crate (x50)
+  name: cable coil crate (x50)
   parent: CrateGeneric
   components:
   - type: StorageFill

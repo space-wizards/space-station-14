@@ -42,6 +42,19 @@ namespace Content.Server
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
 
+        public override void PopupMessageCursor(IEntity viewer, string message)
+        {
+            if (!viewer.TryGetComponent(out IActorComponent actor))
+            {
+                return;
+            }
+
+            var netMessage = _netManager.CreateNetMessage<MsgDoNotify>();
+            netMessage.Message = message;
+            netMessage.AtCursor = true;
+            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
+        }
+
         public class PopupMsgCommand : IClientCommand
         {
             public string Command => "srvpopupmsg";

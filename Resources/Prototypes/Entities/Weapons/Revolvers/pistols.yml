@@ -1,13 +1,13 @@
 #- type: entity
-#  name: Baserevolver
+#  name: baserevolver
 #  parent: BaseItem
 #  id: revolver_base
 #  description: A rooty tooty point and shooty.
 #  components:
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: BallisticMagazineWeapon
 #    caliber: A357
-#    magazines: 
+#    magazines:
 #    - A357
 #    default_magazine: magazine_9mm
 #    auto_eject_magazine: false
@@ -18,7 +18,7 @@
 #    sound_gunshot: /Audio/Guns/Gunshots/revolver.ogg
 #
 #- type: entity
-#  name: Inspector
+#  name: inspector
 #  parent: revolver_base
 #  id: revolver_inspector
 #  description: A rooty tooty point and shooty.
@@ -30,14 +30,14 @@
 #  - type: Icon
 #    sprite: Objects/Guns/revolvers/inspector.rsi
 #    state: inspector-0
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: RangedWeapon
 #    spreadstddev: 2
 #    automatic: false
 #    firerate: 8
 #  - type: BallisticMagazineWeapon
 #    caliber: A44
-#    magazines: 
+#    magazines:
 #    - A44
 #    default_magazine: magazine_44
 #    sound_gunshot: /Audio/Guns/Gunshots/revolver.ogg
@@ -53,7 +53,7 @@
 #    sprite: Objects/Guns/revolvers/inspector.rsi
 #
 #- type: entity
-#  name: Mateba
+#  name: mateba
 #  parent: revolver_base
 #  id: revolver_mateba
 #  description: A rooty tooty point and shooty.
@@ -65,14 +65,14 @@
 #  - type: Icon
 #    sprite: Objects/Guns/revolvers/mateba.rsi
 #    state: mateba-1
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: RangedWeapon
 #    spreadstddev: 2
 #    automatic: false
 #    firerate: 8
 #  - type: BallisticMagazineWeapon
 #    caliber: A357
-#    magazines: 
+#    magazines:
 #    - A357
 #    default_magazine:
 #    sound_gunshot: /Audio/Guns/Gunshots/revolver.ogg
@@ -88,7 +88,7 @@
 #    sprite: Objects/Guns/revolvers/mateba.rsi
 #
 #- type: entity
-#  name: Revolver
+#  name: revolver
 #  parent: revolver_base
 #  id: revolver_revolver
 #  description: A rooty tooty point and shooty.
@@ -100,14 +100,14 @@
 #  - type: Icon
 #    sprite: Objects/Guns/revolvers/revolver.rsi
 #    state: revolver-1
-#  - type: Sound
+#  - type: LoopingSound
 #  - type: RangedWeapon
 #    spreadstddev: 2
 #    automatic: false
 #    firerate: 8
 #  - type: BallisticMagazineWeapon
 #    caliber: A357
-#    magazines: 
+#    magazines:
 #    - A357
 #    default_magazine:
 #    sound_gunshot: /Audio/Guns/Gunshots/revolver.ogg

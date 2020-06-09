@@ -1,11 +1,11 @@
 - type: entity
-  name: BaseSMG
+  name: basesmg
   parent: BaseItem
   id: SmgBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 8
@@ -22,7 +22,7 @@
     sound_gunshot: /Audio/Guns/Gunshots/smg.ogg
 
 - type: entity
-  name: C-20r Sub Machine Gun
+  name: c-20r sub machine gun
   parent: SmgBase
   id: SmgC20r
   description: A rooty tooty point and shooty.
@@ -65,7 +65,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/ih_smg.rsi
     state: ih_smg-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 16
@@ -85,7 +85,7 @@
     sprite: Objects/Guns/SMGs/ih_smg.rsi
 
 - type: entity
-  name: IH SMG (Silenced)
+  name: IH SMG (silenced)
   parent: SmgBase
   id: SmgIhSmgS
   description: Pewsh pewsh
@@ -97,7 +97,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/ih_smg_s.rsi
     state: ih_smg_s-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 16
@@ -118,7 +118,7 @@
     sprite: Objects/Guns/SMGs/ih_smg_s.rsi
 
 - type: entity
-  name: Mac
+  name: mac
   parent: SmgBase
   id: SmgMac
   description: Pla-ket-ket-ket-ket
@@ -130,12 +130,12 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/mac.rsi
     state: mac-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 16
   - type: BallisticMagazineWeapon
-    spreadstddev: 6 
+    spreadstddev: 6
     caliber: A9mm
     magazines:
     - A9mmSMG
@@ -150,7 +150,7 @@
     sprite: Objects/Guns/SMGs/mac.rsi
 
 - type: entity
-  name: Saber
+  name: saber
   parent: SmgBase
   id: SmgSaber
   description: A rooty tooty point and shooty.
@@ -162,7 +162,7 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/saber.rsi
     state: saber-0
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     automatic: true
     firerate: 12
@@ -182,7 +182,7 @@
     sprite: Objects/Guns/SMGs/saber.rsi
 
 - type: entity
-  name: WT550
+  name: wt550
   parent: SmgBase
   id: SmgWt550
   description: A rooty tooty point and shooty.
@@ -194,14 +194,14 @@
   - type: Icon
     sprite: Objects/Guns/SMGs/wt550.rsi
     state: wt550-5
-  - type: Sound
+  - type: LoopingSound
   - type: RangedWeapon
     spreadstddev: 3.5
     automatic: true
     firerate: 10
   - type: BallisticMagazineWeapon
     caliber: A9mm
-    magazines: 
+    magazines:
     - A9mmTopMounted
     default_magazine: magazine_9mmtm
   - type: Appearance

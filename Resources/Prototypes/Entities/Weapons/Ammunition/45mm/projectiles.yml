@@ -1,6 +1,6 @@
 - type: entity
   id: bullet_45mm
-  name: .45mm Bullet
+  name: .45mm bullet
   parent: BulletBase
   abstract: true
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: bullet_45mmf
-  name: .45mm Bullet (Flash)
+  name: .45mm bullet (flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   id: bullet_45mmhv
-  name: .45mm Bullet (High-Velocity)
+  name: .45mm bullet (high-velocity)
   parent: BulletBaseHighVelocity
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_45mml
-  name: .45mm Bullet (L)
+  name: .45mm bullet (L)
   parent: BulletBaseL
   abstract: true
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: bullet_45mmp
-  name: .45mm Bullet (Practice)
+  name: .45mm bullet (practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   id: bullet_45mmr
-  name: .45mm Bullet (Rubber)
+  name: .45mm bullet (rubber)
   parent: BulletBaseRubber
   abstract: true
   components:
