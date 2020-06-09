@@ -72,7 +72,6 @@ namespace Content.Server.Cargo
                 if (!component.ConnectedToDatabase || component.Database.Id != id)
                     continue;
                 component.Dirty();
-                
             }
         }
 
