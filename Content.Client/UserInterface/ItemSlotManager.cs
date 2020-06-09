@@ -100,12 +100,12 @@ namespace Content.Client.UserInterface
                 var end = cooldown.CooldownEnd.Value;
 
                 var length = (end - start).TotalSeconds;
-                var progress = (_gameTiming.CurTime - start).TotalSeconds;
-                var ratio = 1 - (float)(progress / length).Clamp(0, 1);
+                var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
+                var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownDisplay.Fraction = ratio;
+                cooldownDisplay.Progress = (float)ratio.Clamp(-1, 1);
 
-                if (ratio > 0)
+                if (ratio > -1f)
                 {
                     cooldownDisplay.Visible = true;
                 }
