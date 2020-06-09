@@ -17,7 +17,7 @@ namespace Content.Server.BodySystem {
     ///     Component representing the many BodyParts attached to each other.
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component, IInteractHand {
+    public class BodyManagerComponent : Component, IBodyPartContainer, IInteractHand {
 
         public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649

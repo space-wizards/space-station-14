@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
 
     [RegisterComponent]
-    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterAttack
+    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -42,11 +42,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private IEntity _performerCache;
         private BodyManagerComponent _bodyManagerComponentCache;
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();
@@ -66,10 +66,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
                 else
                 {
-                    _sharedNotifyManager.PopupMessage(eventArgs.Attacked, eventArgs.User, "You see no useful way to use the " + Owner.Name + ".");
+                    _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, "You see no useful way to use the " + Owner.Name + ".");
                 }
             }
-            if (eventArgs.Attacked.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart))
+            if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart))
             {
                 if (droppedBodyPart.ContainedBodyPart == null)
                 {
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
                 else
                 {
-                    _sharedNotifyManager.PopupMessage(eventArgs.Attacked, eventArgs.User,"You see no useful way to use the " + Owner.Name + ".");
+                    _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,"You see no useful way to use the " + Owner.Name + ".");
                 }
             }
         }

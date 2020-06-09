@@ -17,7 +17,7 @@ namespace Content.Server.BodySystem
     ///    Component containing the data for a dropped BodyPart entity.
     /// </summary>	
     [RegisterComponent]
-    public class DroppedBodyPartComponent : Component, IAfterAttack, IBodyPartContainer
+    public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {
 
         public sealed override string Name => "DroppedBodyPart";
@@ -36,11 +36,11 @@ namespace Content.Server.BodySystem
             }
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
             {
                 //Popup UI to possibly install limb on someone.
             }

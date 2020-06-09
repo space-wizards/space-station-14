@@ -17,7 +17,7 @@ namespace Content.Server.BodySystem {
     ///    Component containing the data for a dropped Mechanism entity.
     /// </summary>
     [RegisterComponent]
-    public class DroppedMechanismComponent : Component
+    public class DroppedMechanismComponent : Component, IAfterInteract
     {
         public sealed override string Name => "DroppedMechanism";
 
@@ -37,15 +37,15 @@ namespace Content.Server.BodySystem {
             }
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
             {
                 //Popup UI to possibly install mechanism on some limb.
             }
-            else if (eventArgs.Attacked.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart))
+            else if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart))
             {
                 if (droppedBodyPart.ContainedBodyPart == null)
                 {
