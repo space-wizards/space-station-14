@@ -15,6 +15,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -30,6 +31,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEyeManager _eyeManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 0649
 
         public bool SetItemSlot(ItemSlotButton button, IEntity entity)
@@ -71,9 +73,12 @@ namespace Content.Client.UserInterface
                 var func = args.Function;
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, BoundKeyState.Down, mousePosWorld,
-                    args.PointerLocation, item.Uid);
+                var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
+                if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
+                    grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+
+                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, BoundKeyState.Down,
+                    grid.MapToGrid(mousePosWorld), args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer.Session;
