@@ -94,9 +94,9 @@ namespace Content.Shared.GameObjects.Components.Cargo
         public readonly int BankId;
         public readonly string BankName;
         public readonly int BankBalance;
-        public readonly Tuple<int,int> ShuttleCapacity;
+        public readonly (int CurrentCapacity, int MaxCapacity) ShuttleCapacity;
 
-        public CargoConsoleInterfaceState(bool requestOnly, int bankId, string bankName, int bankBalance, Tuple<int,int> shuttleCapacity)
+        public CargoConsoleInterfaceState(bool requestOnly, int bankId, string bankName, int bankBalance, (int CurrentCapacity, int MaxCapacity) shuttleCapacity)
         {
             RequestOnly = requestOnly;
             BankId = bankId;

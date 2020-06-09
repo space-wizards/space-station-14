@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Cargo
         [ViewVariables]
         public int BankBalance { get; private set; }
         [ViewVariables]
-        public Tuple<int,int> ShuttleCapacity { get; private set; }
+        public (int CurrentCapacity, int MaxCapacity) ShuttleCapacity { get; private set; }
 
         private CargoProductPrototype _product;
 

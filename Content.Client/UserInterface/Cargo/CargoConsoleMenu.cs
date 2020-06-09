@@ -322,7 +322,7 @@ namespace Content.Client.UserInterface.Cargo
 
         public void UpdateCargoCapacity()
         {
-            _shuttleCapacityLabel.Text = Owner.ShuttleCapacity.Item1 + "/" + Owner.ShuttleCapacity.Item2;
+            _shuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
         }
 
         public void UpdateBankData()

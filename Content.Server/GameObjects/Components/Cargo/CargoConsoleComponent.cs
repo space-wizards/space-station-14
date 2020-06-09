@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Cargo
         /// </summary>
         public void SetState(int id, string name, int balance)
         {
-            Tuple<int,int> capacity = _cargoOrderDataManager.GetCapacity();
+            (int CurrentCapacity, int MaxCapacity) capacity = _cargoOrderDataManager.GetCapacity(id);
             _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
