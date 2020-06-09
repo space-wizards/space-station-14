@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 }
                 else
                 {
-                    receiver.Powered = TryUsePower(receiver.PowerLoad * frameTime);
+                    receiver.Powered = TryUsePower(receiver.Load * frameTime);
                 }
             }
         }

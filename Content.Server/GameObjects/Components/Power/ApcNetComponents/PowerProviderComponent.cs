@@ -26,6 +26,9 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
     {
         public override string Name => "NewPowerProvider";
 
+        /// <summary>
+        ///     The max distance this can transmit power to <see cref="PowerReceiverComponent"/>s from.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerTransferRange { get => _powerTransferRange; set => SetPowerTransferRange(value); }
         private int _powerTransferRange;

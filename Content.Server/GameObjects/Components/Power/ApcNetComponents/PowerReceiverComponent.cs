@@ -23,6 +23,9 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public bool Powered { get => _powered; set => SetPowered(value); }
         private bool _powered;
 
+        /// <summary>
+        ///     The max distance from a <see cref="PowerProviderComponent"/> that this can receive power from.
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public int PowerReceptionRange { get => _powerReceptionRange; set => SetPowerReceptionRange(value); }
         private int _powerReceptionRange;
@@ -34,10 +37,16 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
 
+        /// <summary>
+        ///     Amount of charge this needs from an APC per second to function.
+        /// </summary>
         [ViewVariables]
-        public int PowerLoad { get => _powerLoad; set => SetPowerLoad(value); }
-        private int _powerLoad;
+        public float Load { get => _load; set => SetLoad(value); }
+        private float _load;
 
+        /// <summary>
+        ///     The fraction of APC charge below which this shuts off and stops using power.
+        /// </summary>
         [ViewVariables]
         public float PowerShutoffFraction { get => _powerShutoffFraction; set => SetPowerShutoffFraction(value); }
         private float _powerShutoffFraction;
@@ -46,7 +55,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _powerReceptionRange, "powerReceptionRange", 3);
-            serializer.DataField(ref _powerLoad, "powerLoad", 50);
+            serializer.DataField(ref _load, "powerLoad", 5);
             serializer.DataField(ref _powerShutoffFraction, "powerShutoffFraction", 0.3f);
         }
 
@@ -119,9 +128,9 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             TryFindAndSetProvider();
         }
 
-        private void SetPowerLoad(int newPowerLoad)
+        private void SetLoad(float newLoad)
         {
-            _powerLoad = newPowerLoad;
+            _load = newLoad;
         }
 
         private void SetPowerShutoffFraction(float newPowerShutOffPercent)
