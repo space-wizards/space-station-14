@@ -8,7 +8,6 @@ namespace Content.Server.Cargo
     {
         private Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
         private int _orderNumber = 0;
-        
 
         public CargoOrderDatabase(int id)
         {
@@ -68,7 +67,6 @@ namespace Content.Server.Cargo
         /// <param name="approved">Whether the order will be bought when the orders are processed.</param>
         public void AddOrder(string requester, string reason, string productId, int amount, int payingAccountId)
         {
-            
             var order = new CargoOrderData(_orderNumber, requester, reason, productId, amount, payingAccountId);
             if (Contains(order))
                 return;
@@ -102,7 +100,6 @@ namespace Content.Server.Cargo
                 order.Amount = MaxOrderSize - CurrentOrderSize;
             }
             order.Approved = true;
-
             CurrentOrderSize += order.Amount;
         }
 
