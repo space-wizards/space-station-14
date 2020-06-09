@@ -120,7 +120,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineCola
-  name: Robust softdrinks
+  name: Robust Softdrinks
   components:
   - type: VendingMachine
     pack: Robust Softdrinks
@@ -190,7 +190,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineMining
-  name: Dwarven mining equipment
+  name: Dwarven Mining Equipment
   components:
   - type: VendingMachine
     pack: Dwarven Mining Equipment
@@ -240,7 +240,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineSeeds
-  name: MegaSeed servitor
+  name: MegaSeed Servitor
   components:
   - type: VendingMachine
     pack: MegaSeed Servitor
@@ -330,7 +330,7 @@
 - type: entity
   parent: VendingMachine
   id: VendingMachineVox
-  name: Trader supply
+  name: Trader Supply
   components:
   - type: VendingMachine
     pack: Trader Supply
