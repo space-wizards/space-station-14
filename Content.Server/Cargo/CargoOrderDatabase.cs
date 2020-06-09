@@ -8,13 +8,18 @@ namespace Content.Server.Cargo
     {
         private Dictionary<int, CargoOrderData> _orders = new Dictionary<int, CargoOrderData>();
         private int _orderNumber = 0;
+        
 
         public CargoOrderDatabase(int id)
         {
             Id = id;
+            CurrentOrderSize = 0;
+            MaxOrderSize = 20;
         }
 
         public int Id { get; private set; }
+        public int CurrentOrderSize { get; private set; }
+        public int MaxOrderSize { get; private set; }
 
         /// <summary>
         ///     Removes all orders from the database.
@@ -63,6 +68,7 @@ namespace Content.Server.Cargo
         /// <param name="approved">Whether the order will be bought when the orders are processed.</param>
         public void AddOrder(string requester, string reason, string productId, int amount, int payingAccountId)
         {
+            
             var order = new CargoOrderData(_orderNumber, requester, reason, productId, amount, payingAccountId);
             if (Contains(order))
                 return;
@@ -86,9 +92,18 @@ namespace Content.Server.Cargo
         /// <param name="order">The order to be approved.</param>
         public void ApproveOrder(int orderNumber)
         {
+            if (CurrentOrderSize == MaxOrderSize)
+                return;
             if (!_orders.TryGetValue(orderNumber, out var order))
                 return;
+
+            else if (CurrentOrderSize + order.Amount > MaxOrderSize) { 
+                AddOrder(order.Requester, order.Reason+" (Overflow)", order.ProductId, order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
+                order.Amount = MaxOrderSize - CurrentOrderSize;
+            }
             order.Approved = true;
+
+            CurrentOrderSize += order.Amount;
         }
 
         /// <summary>
@@ -99,6 +114,14 @@ namespace Content.Server.Cargo
         public bool Contains(CargoOrderData order)
         {
             return _orders.ContainsValue(order);
+        }
+
+        /// <summary>
+        ///     Clears the current order capacity. This allows more orders to be processed and is invoked after an order is dispatched.
+        /// </summary>
+        public void ClearOrderCapacity()
+        {
+            CurrentOrderSize = 0;
         }
     }
 }

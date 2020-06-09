@@ -22,6 +22,11 @@ namespace Content.Server.GameObjects.Components.Cargo
             _cargoOrderDataManager.AddComponent(this);
         }
 
+        public int[] GetCapacity()
+        {
+            return new int[2] {Database.CurrentOrderSize,Database.MaxOrderSize};
+        }
+
         public override ComponentState GetComponentState()
         {
             if (!ConnectedToDatabase)

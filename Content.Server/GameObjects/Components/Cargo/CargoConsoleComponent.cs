@@ -104,6 +104,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                 case CargoConsoleShuttleMessage _:
                 {
                     var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(Orders.Database);
+                    Orders.Database.ClearOrderCapacity();
                     // TODO replace with shuttle code
 
                     // TEMPORARY loop for spawning stuff on top of console
@@ -138,7 +139,8 @@ namespace Content.Server.GameObjects.Components.Cargo
         /// </summary>
         public void SetState(int id, string name, int balance)
         {
-            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance));
+            int[] capacity = _cargoOrderDataManager.GetCapacity();
+            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
 }

@@ -2,6 +2,7 @@
 using Content.Shared.Prototypes.Cargo;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.Cargo
 {
@@ -71,6 +72,7 @@ namespace Content.Server.Cargo
                 if (!component.ConnectedToDatabase || component.Database.Id != id)
                     continue;
                 component.Dirty();
+                
             }
         }
 
@@ -94,6 +96,11 @@ namespace Content.Server.Cargo
             if (!TryGetAccount(accountId, out var account))
                 return null;
             return account.GetOrders();
+        }
+
+        public int[] GetCapacity()
+        {
+            return _components.FirstOrDefault().GetCapacity();
         }
     }
 }

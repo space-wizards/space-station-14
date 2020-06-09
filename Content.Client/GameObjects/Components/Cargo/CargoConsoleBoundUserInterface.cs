@@ -27,6 +27,8 @@ namespace Content.Client.GameObjects.Components.Cargo
         public string BankName { get; private set; }
         [ViewVariables]
         public int BankBalance { get; private set; }
+        [ViewVariables]
+        public int[] ShuttleCapacity { get; private set; }
 
         private CargoProductPrototype _product;
 
@@ -95,6 +97,8 @@ namespace Content.Client.GameObjects.Components.Cargo
             BankId = cstate.BankId;
             BankName = cstate.BankName;
             BankBalance = cstate.BankBalance;
+            ShuttleCapacity = cstate.ShuttleCapacity;
+            _menu.UpdateCargoCapacity();
             _menu.UpdateBankData();
         }
 

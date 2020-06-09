@@ -32,6 +32,7 @@ namespace Content.Client.UserInterface.Cargo
         private Label _accountNameLabel { get; set; }
         private Label _pointsLabel { get; set; }
         private Label _shuttleStatusLabel { get; set; }
+        private Label _shuttleCapacityLabel { get; set; }
         private VBoxContainer _requests { get; set; }
         private VBoxContainer _orders { get; set; }
         private OptionButton _categories { get; set; }
@@ -94,6 +95,21 @@ namespace Content.Client.UserInterface.Cargo
             shuttleStatus.AddChild(shuttleStatusLabel);
             shuttleStatus.AddChild(_shuttleStatusLabel);
             rows.AddChild(shuttleStatus);
+
+            var shuttleCapacity = new HBoxContainer();
+            var shuttleCapacityLabel = new Label
+            {
+                Text = _loc.GetString("Order Capacity: "),
+                StyleClasses = { StyleNano.StyleClassLabelKeyText }
+            };
+            _shuttleCapacityLabel = new Label
+            {
+                Text = "0/20"
+            };
+            shuttleCapacity.AddChild(shuttleCapacityLabel);
+            shuttleCapacity.AddChild(_shuttleCapacityLabel);
+            rows.AddChild(shuttleCapacity);
+
 
             var buttons = new HBoxContainer();
             CallShuttleButton = new Button()
@@ -273,7 +289,7 @@ namespace Content.Client.UserInterface.Cargo
         {
             _orders.RemoveAllChildren();
             _requests.RemoveAllChildren();
-
+            
             foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();
@@ -304,6 +320,11 @@ namespace Content.Client.UserInterface.Cargo
             PopulateProducts();
             PopulateCategories();
             PopulateOrders();
+        }
+
+        public void UpdateCargoCapacity()
+        {
+            _shuttleCapacityLabel.Text = Owner.ShuttleCapacity[0] + "/" + Owner.ShuttleCapacity[1];
         }
 
         public void UpdateBankData()
