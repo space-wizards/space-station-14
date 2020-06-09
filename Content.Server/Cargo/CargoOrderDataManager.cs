@@ -97,7 +97,7 @@ namespace Content.Server.Cargo
             return account.GetOrders();
         }
 
-        public (int CurrentCapacity, int ShuttleCapacity) GetCapacity(int id)
+        public (int CurrentCapacity, int MaxCapacity) GetCapacity(int id)
         {
             TryGetAccount(id, out var account);
             return (account.CurrentOrderSize, account.MaxOrderSize);
