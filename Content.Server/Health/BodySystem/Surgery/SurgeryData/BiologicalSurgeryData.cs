@@ -25,8 +25,17 @@ namespace Content.Server.BodySystem {
 
         public BiologicalSurgeryData(BodyPart parent) : base(parent) { }
 
+        protected override bool CanInstallMechanism(Mechanism toBeInstalled)
+        {
+            return _skinOpened && _vesselsClamped && _skinRetracted;
+        }
+
         public override SurgeryAction GetSurgeryStep(SurgeryToolType toolType)
         {
+            if (toolType == SurgeryToolType.BoneSawing)
+            {
+                return RemoveBodyPartSurgery;
+            }
             if (_skinOpened)
             {
                 if (_vesselsClamped)
@@ -64,28 +73,28 @@ namespace Content.Server.BodySystem {
             return null;
         }
 
-        protected void OpenSkinSurgery(BodyManagerComponent target, IEntity performer)
+        protected void OpenSkinSurgery(IBodyPartContainer container, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Cut open the skin..."));
             //Delay?
             _skinOpened = true;
         }
-        protected void ClampVesselsSurgery(BodyManagerComponent target, IEntity performer)
+        protected void ClampVesselsSurgery(IBodyPartContainer container, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Clamp the vessels..."));
             //Delay?
             _vesselsClamped = true;
         }
-        protected void RetractSkinSurgery(BodyManagerComponent target, IEntity performer)
+        protected void RetractSkinSurgery(IBodyPartContainer container, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Retract the skin..."));
             //Delay?
             _skinRetracted = true;
         }
-        protected void CautizerizeIncisionSurgery(BodyManagerComponent target, IEntity performer)
+        protected void CautizerizeIncisionSurgery(IBodyPartContainer container, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Cauterize the incision..."));
@@ -94,7 +103,7 @@ namespace Content.Server.BodySystem {
             _vesselsClamped = false;
             _skinRetracted = false;
         }
-        protected void DisconnectOrganSurgery(BodyManagerComponent target, IEntity performer)
+        protected void DisconnectOrganSurgery(IBodyPartContainer container, IEntity performer)
         {
             Mechanism mechanismTarget = null;
             //TODO: figureout popup, right now it just takes the first organ available if there is one
@@ -109,7 +118,7 @@ namespace Content.Server.BodySystem {
             }
 
         }
-        protected void RemoveOrganSurgery(BodyManagerComponent target, IEntity performer)
+        protected void RemoveOrganSurgery(IBodyPartContainer container, IEntity performer)
         {
             if (_targetOrgan != null)
             {
@@ -119,5 +128,18 @@ namespace Content.Server.BodySystem {
                 _parent.DropMechanism(performer, _targetOrgan);
             }
         }
+
+        protected void RemoveBodyPartSurgery(IBodyPartContainer container, IEntity performer)
+        {
+            if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.
+                return;
+            BodyManagerComponent bmTarget = (BodyManagerComponent) container;
+            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
+            performer.PopupMessage(performer, localizationManager.GetString("Saw off the limb!"));
+            //Delay?
+            bmTarget.DisconnectBodyPart(_parent, true);
+        }
+
+
     }
 }

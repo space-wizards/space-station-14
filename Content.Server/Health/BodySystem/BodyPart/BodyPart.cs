@@ -21,12 +21,21 @@ namespace Content.Server.BodySystem
     public class BodyPart
     {
 
-        [ViewVariables]
-        private ISurgeryData _surgeryData;
-
+        /// <summary>
+        ///     List of active <see cref="Mechanism">Mechanisms</see> in this BodyPart.
+        /// </summary>
         [ViewVariables]
         private List<Mechanism> _mechanisms = new List<Mechanism>();
 
+        /// <summary>
+        ///     The <see cref="ISurgeryData">ISurgeryData</see> object currently representing this limb.
+        /// </summary>
+        [ViewVariables]
+        private ISurgeryData _surgeryData;
+
+        /// <summary>
+        ///     How much space the mechanisms are currently taking up.
+        /// </summary>
         [ViewVariables]
         private int _sizeUsed = 0;
 
@@ -137,7 +146,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Attempts to install a DroppedMechanismComponent into the given limb, potentially deleting the dropped IEntity. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart).
+        ///     Attempts to install a DroppedMechanismComponent into the given limb, potentially deleting the dropped IEntity. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Calls InstallMechanism if successful.
         /// </summary>
         public bool InstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
         {
@@ -177,7 +186,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g. 
+        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart.
         /// </summary>
         public bool SurgeryCheck(SurgeryToolType toolType)
         {
@@ -187,10 +196,13 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Attempts to perform surgery on this BodyPart with the given tool. Returns false if there was an error, true if successful.
         /// </summary>
-        public bool AttemptSurgery(SurgeryToolType toolType, BodyManagerComponent target, IEntity performer)
+        public bool AttemptSurgery(SurgeryToolType toolType, IBodyPartContainer container, IEntity performer)
         {
-            return _surgeryData.PerformSurgery(toolType, target, performer);
+            return _surgeryData.PerformSurgery(toolType, container, performer);
         }
+
+
+
 
         /// <summary>
         ///    Loads the given BodyPartPrototype - current data on this BodyPart will be overwritten!

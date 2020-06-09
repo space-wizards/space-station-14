@@ -17,7 +17,7 @@ namespace Content.Server.BodySystem {
     ///     Component representing the many BodyParts attached to each other. 
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component, IAttackHand {
+    public class BodyManagerComponent : Component, IBodyPartContainer {
 
         public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649
@@ -117,12 +117,6 @@ namespace Content.Server.BodySystem {
         /////////  Server-specific stuff
         /////////
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
-        {
-            //TODO: remove organs? 
-            return false;
-        }
-
         public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
 
@@ -158,8 +152,8 @@ namespace Content.Server.BodySystem {
                 { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                     throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
                 }
-                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists. 
-                _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+                //_partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
+                _partDictionary.Add(slotName, new BodyPart(newPartData)); ////Create a new BodyPart with the given BodyPartPrototype then add it to our dictionary.
             }
         }
 
@@ -189,8 +183,9 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
+        ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. Returns whether the operation was successful.
         /// </summary>
+        /// /// <param name="dropEntity">Whether a DroppedBodyPart entity should be created. (e.g. true if you want the limb to be dropped)</param>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
             if (!_partDictionary.ContainsValue(part))
@@ -220,7 +215,7 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Internal string version of DisconnectBodyPart for performance purposes.
         /// </summary>
-        private void DisconnectBodyPartByName(string name, bool dropEntity)
+        private void DisconnectBodyPartByName(string name, bool dropEntity) //Yes, passing in a string instead of a BodyPart will actually make it more efficient since it's a Dictionary<string, BodyPart>.
         {
             if (!TryGetBodyPart(name, out BodyPart part))
                 return;

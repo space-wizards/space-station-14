@@ -18,6 +18,8 @@ using System.Globalization;
 
 namespace Content.Client.BodySystem
 {
+
+    //TODO : Make window close if target or surgery tool gets too far away from user.
     [RegisterComponent]
     public class ClientSurgeryToolComponent : SharedSurgeryToolComponent
     {
@@ -42,7 +44,7 @@ namespace Content.Client.BodySystem
         public override void OnAdd()
         {
             base.OnAdd();
-            Window = new SurgeryToolWindow() { SurgeryToolEntity = this };
+            Window = new SurgeryToolWindow() { SurgeryToolEntity = this }; 
         }
 
         public override void OnRemove()

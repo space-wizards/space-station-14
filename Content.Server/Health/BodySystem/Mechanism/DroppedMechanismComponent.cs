@@ -8,6 +8,8 @@ using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using System.Globalization;
 using Robust.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Log;
 
 namespace Content.Server.BodySystem {
 
@@ -15,7 +17,7 @@ namespace Content.Server.BodySystem {
     ///    Component containing the data for a dropped Mechanism entity.
     /// </summary>	
     [RegisterComponent]
-    public class DroppedMechanismComponent : Component
+    public class DroppedMechanismComponent : Component, IAfterAttack
     {
 
         #pragma warning disable CS0649
@@ -38,6 +40,25 @@ namespace Content.Server.BodySystem {
             {
                 component.LayerSetRSI(0, data.RSIPath);
                 component.LayerSetState(0, data.RSIState);
+            }
+        }
+
+        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        {
+            if (eventArgs.Attacked == null)
+                return;
+            if (eventArgs.Attacked.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
+            {
+                //Popup UI to possibly install mechanism on some limb.
+            }
+            else if (eventArgs.Attacked.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart))
+            {
+                if (droppedBodyPart.ContainedBodyPart == null)
+                {
+                    Logger.Debug("Installing a mechanism was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
+                    throw new InvalidOperationException("A DroppedBodyPartComponent exists without a BodyPart in it!");
+                }
+                droppedBodyPart.ContainedBodyPart.InstallDroppedMechanism(this);
             }
         }
     }

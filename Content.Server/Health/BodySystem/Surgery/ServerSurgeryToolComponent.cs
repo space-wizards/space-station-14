@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.BodySystem;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
@@ -33,18 +34,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPhysicsManager _physicsManager;
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
 #pragma warning restore 649
 
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
         private Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
-        private BodyManagerComponent _targetCache;
         private IEntity _performerCache;
+        private BodyManagerComponent _bodyManagerComponentCache;
 
         void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
         {
             if (eventArgs.Attacked == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
+            if (eventArgs.Attacked.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();
@@ -60,23 +62,47 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     OpenSurgeryUI(eventArgs.User);
                     UpdateSurgeryUI(eventArgs.User, toSend);
                     _performerCache = eventArgs.User;
-                    _targetCache = bodyManager;
+                    _bodyManagerComponentCache = bodyManager;
+                }
+                else
+                {
+                    _sharedNotifyManager.PopupMessage(eventArgs.Attacked, eventArgs.User, "You see no useful way to use the " + Owner.Name + ".");
+                }
+            }
+            if (eventArgs.Attacked.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart))
+            {
+                if (droppedBodyPart.ContainedBodyPart == null)
+                {
+                    Logger.Debug("Surgery was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
+                    throw new InvalidOperationException("A DroppedBodyPartComponent exists without a BodyPart in it!");
+                }
+                if (droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryToolClass)) //If surgery can be performed...
+                {
+                    if (!droppedBodyPart.ContainedBodyPart.AttemptSurgery(_surgeryToolClass, droppedBodyPart, eventArgs.User)) //...do the surgery.
+                    {
+                        Logger.Debug("Error when trying to perform surgery on bodypart " + eventArgs.User.Name + "!");
+                        throw new InvalidOperationException();
+                    }
+                }
+                else
+                {
+                    _sharedNotifyManager.PopupMessage(eventArgs.Attacked, eventArgs.User,"You see no useful way to use the " + Owner.Name + ".");
                 }
             }
         }
 
         /// <summary>
-        /// Called after the user selects a surgery target.
+        /// Called after the user selects a surgery target. 
         /// </summary>
-        void PerformSurgery(SelectSurgeryUIMessage msg)
+        void PerformSurgeryOnBodyManagerSlot(string targetSlot)
         {
             //TODO: sanity checks to see whether user is in range, body is still same, etc etc
-            if (!_surgeryOptionsCache.TryGetValue(msg.TargetSlot, out BodyPart target))
+            if (!_surgeryOptionsCache.TryGetValue(targetSlot, out BodyPart target))
             {
-                Logger.Debug("Error when trying to perform surgery on bodypart in slot " + msg.TargetSlot + ": it was not found!");
+                Logger.Debug("Error when trying to perform surgery on bodypart in slot " + targetSlot + ": it was not found!");
                 throw new InvalidOperationException();
             }
-            if (!target.AttemptSurgery(_surgeryToolClass, _targetCache, _performerCache))
+            if (!target.AttemptSurgery(_surgeryToolClass, _bodyManagerComponentCache, _performerCache))
             {
                 Logger.Debug("Error when trying to perform surgery on bodypart " + target.Name + "!");
                 throw new InvalidOperationException();
@@ -123,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     UnsubscribeSession(session as IPlayerSession);
                     break;
                 case SelectSurgeryUIMessage msg:
-                    PerformSurgery(msg);
+                    PerformSurgeryOnBodyManagerSlot(msg.TargetSlot);
                     break;
             }
         }

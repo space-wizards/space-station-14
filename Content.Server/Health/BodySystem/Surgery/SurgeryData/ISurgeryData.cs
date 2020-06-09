@@ -21,16 +21,23 @@ namespace Content.Server.BodySystem {
         ///     The BodyPart this surgeryData is attached to. The ISurgeryData class should not exist without a BodyPart that it represents, and will not work correctly without it.
         /// </summary>	
         protected BodyPart _parent;
+
         /// <summary>
         ///     The BodyPartType of the parent PartType.
         /// </summary>	
         protected BodyPartType _parentType => _parent.PartType;
-        public delegate void SurgeryAction(BodyManagerComponent target, IEntity performer);
+
+        public delegate void SurgeryAction(IBodyPartContainer container, IEntity performer);
 
         public ISurgeryData(BodyPart parent)
         {
             _parent = parent;
         }
+
+        /// <summary>
+        ///     Abstract ISurgeryData function. Returns whether a mechanism can be installed into the BodyPart this ISurgeryData represents. 
+        /// </summary>
+        protected abstract bool CanInstallMechanism(Mechanism toBeInstalled);
 
         /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given SurgeryToolType. Returns null if no surgery step can be performed.
@@ -50,12 +57,12 @@ namespace Content.Server.BodySystem {
         /// </summary>
         /// /// <param name="toolType">The SurgeryToolType used for this surgery.</param>
         /// /// <param name="performer">The entity performing the surgery.</param>
-        public bool PerformSurgery(SurgeryToolType toolType, BodyManagerComponent target, IEntity performer)
+        public bool PerformSurgery(SurgeryToolType toolType, IBodyPartContainer container, IEntity performer)
         {
             SurgeryAction step = GetSurgeryStep(toolType);
             if (step == null)
                 return false;
-            step(target, performer);
+            step(container, performer);
             return true;
         }
 
