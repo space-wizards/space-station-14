@@ -10,7 +10,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class InstrumentSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming;
+        [Dependency] private readonly IGameTiming _gameTiming = default;
 
         public override void Initialize()
         {
