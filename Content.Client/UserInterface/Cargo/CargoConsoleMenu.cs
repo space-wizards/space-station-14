@@ -287,8 +287,7 @@ namespace Content.Client.UserInterface.Cargo
         public void PopulateOrders()
         {
             _orders.RemoveAllChildren();
-            _requests.RemoveAllChildren();
-            
+            _requests.RemoveAllChildren();            
             foreach (var order in Owner.Orders.Orders)
             {
                 var row = new CargoOrderRow();
