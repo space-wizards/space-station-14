@@ -2,6 +2,7 @@
 using Content.Shared.GameObjects.Components.Cargo;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using System;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -22,9 +23,9 @@ namespace Content.Server.GameObjects.Components.Cargo
             _cargoOrderDataManager.AddComponent(this);
         }
 
-        public int[] GetCapacity()
+        public Tuple<int,int> GetCapacity()
         {
-            return new int[2] {Database.CurrentOrderSize,Database.MaxOrderSize};
+            return new Tuple<int,int> (Database.CurrentOrderSize,Database.MaxOrderSize);
         }
 
         public override ComponentState GetComponentState()

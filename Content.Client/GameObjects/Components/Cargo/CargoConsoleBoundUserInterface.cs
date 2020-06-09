@@ -5,6 +5,7 @@ using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
+using System;
 
 namespace Content.Client.GameObjects.Components.Cargo
 {
@@ -28,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Cargo
         [ViewVariables]
         public int BankBalance { get; private set; }
         [ViewVariables]
-        public int[] ShuttleCapacity { get; private set; }
+        public Tuple<int,int> ShuttleCapacity { get; private set; }
 
         private CargoProductPrototype _product;
 

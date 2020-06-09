@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 
@@ -13,6 +14,6 @@ namespace Content.Server.Cargo
         void AddComponent(CargoOrderDatabaseComponent component);
         List<CargoOrderData> GetOrdersFromAccount(int accountId);
         List<CargoOrderData> RemoveAndGetApprovedFrom(CargoOrderDatabase database);
-        int[] GetCapacity();
+        Tuple<int,int> GetCapacity();
     }
 }

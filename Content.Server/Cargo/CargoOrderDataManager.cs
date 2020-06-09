@@ -97,7 +97,7 @@ namespace Content.Server.Cargo
             return account.GetOrders();
         }
 
-        public int[] GetCapacity()
+        public Tuple<int,int> GetCapacity()
         {
             return _components.FirstOrDefault().GetCapacity();
         }
