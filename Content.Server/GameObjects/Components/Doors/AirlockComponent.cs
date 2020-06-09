@@ -235,6 +235,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         _wires.OpenInterface(actor.playerSession);
                     }
                 }
+                return true;
             }
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
