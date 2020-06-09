@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power;
@@ -224,6 +224,18 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
+
+            if (tool.UseTool(eventArgs.User, Owner, ToolQuality.Cutting)
+                || tool.UseTool(eventArgs.User, Owner, ToolQuality.Multitool))
+            {
+                if (_wires.IsPanelOpen)
+                {
+                    if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+                    {
+                        _wires.OpenInterface(actor.playerSession);
+                    }
+                }
+            }
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
 
