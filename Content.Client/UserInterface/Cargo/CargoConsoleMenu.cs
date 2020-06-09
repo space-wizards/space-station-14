@@ -110,7 +110,6 @@ namespace Content.Client.UserInterface.Cargo
             shuttleCapacity.AddChild(_shuttleCapacityLabel);
             rows.AddChild(shuttleCapacity);
 
-
             var buttons = new HBoxContainer();
             CallShuttleButton = new Button()
             {
