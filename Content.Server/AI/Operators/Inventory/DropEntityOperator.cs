@@ -1,5 +1,6 @@
 using Content.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
 
 namespace Content.Server.AI.Operators.Inventory
 {
@@ -25,21 +26,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            foreach (var hand in handsComponent.ActivePriorityEnumerable())
-            {
-                if (handsComponent.GetHand(hand).Owner == _entity)
-                {
-                    if (handsComponent.CanDrop(hand))
-                    {
-                        handsComponent.Drop(_entity);
-                        return Outcome.Success;
-                    }
-
-                    return Outcome.Failed;
-                }
-            }
-
-            return Outcome.Failed;
+            return handsComponent.Drop(_entity) ? Outcome.Success : Outcome.Failed;
         }
     }
 }

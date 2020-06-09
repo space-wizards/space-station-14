@@ -2,6 +2,7 @@ using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -23,8 +24,7 @@ namespace Content.Server.AI.Operators.Inventory
         
         public override Outcome Execute(float frameTime)
         {
-            if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
-                SharedInteractionSystem.InteractionRange)
+            if (InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
             {
                 return Outcome.Failed;
             }

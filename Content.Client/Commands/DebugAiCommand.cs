@@ -2,6 +2,7 @@ using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Player;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -27,7 +28,7 @@ namespace Content.Client.Commands
             }
 
             var anyAction = false;
-            var debugSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClientAiDebugSystem>();
+            var debugSystem = EntitySystem.Get<ClientAiDebugSystem>();
 
             foreach (var arg in args)
             {

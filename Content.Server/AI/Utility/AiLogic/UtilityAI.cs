@@ -56,9 +56,9 @@ namespace Content.Server.AI.Utility.AiLogic
         private bool _isDead = false;
 
         // These 2 methods will be used eventually if / when we get a director AI
-        public void AddBehaviorSet(BehaviorSet behaviorSet)
+        public void AddBehaviorSet<T>(T behaviorSet, bool sort = true) where T : BehaviorSet
         {
-            if (BehaviorSets.TryAdd(behaviorSet.GetType(), behaviorSet))
+            if (BehaviorSets.TryAdd(typeof(T), behaviorSet) && sort)
             {
                 SortActions();
             }
@@ -105,11 +105,6 @@ namespace Content.Server.AI.Utility.AiLogic
             }
 
             _availableActions.Reverse();
-        }
-
-        public virtual void Bark(BarkType barkType)
-        {
-            return;
         }
 
         public override void Setup()

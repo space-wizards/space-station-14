@@ -11,9 +11,10 @@ namespace Content.Server.AI.Utility.AiLogic
         public override void Setup()
         {
             base.Setup();
-            BehaviorSets.Add(typeof(ClothingBehaviorSet), new ClothingBehaviorSet(SelfEntity));
-            BehaviorSets.Add(typeof(HungerBehaviorSet), new HungerBehaviorSet(SelfEntity));
-            BehaviorSets.Add(typeof(IdleBehaviorSet), new IdleBehaviorSet(SelfEntity));
+            AddBehaviorSet(new ClothingBehaviorSet(SelfEntity), false);
+            AddBehaviorSet(new HungerBehaviorSet(SelfEntity), false);
+            AddBehaviorSet(new ThirstBehaviorSet(SelfEntity), false);
+            AddBehaviorSet(new IdleBehaviorSet(SelfEntity), false);
             SortActions();
         }
     }
