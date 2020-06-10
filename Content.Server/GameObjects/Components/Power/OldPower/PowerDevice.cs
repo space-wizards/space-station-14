@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
@@ -418,15 +419,5 @@ namespace Content.Server.GameObjects.Components.Power
         Node = 1,
         Provider = 2,
         Both = 3,
-    }
-
-    public class PowerStateEventArgs : EventArgs
-    {
-        public readonly bool Powered;
-
-        public PowerStateEventArgs(bool powered)
-        {
-            Powered = powered;
-        }
     }
 }
