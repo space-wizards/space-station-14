@@ -20,9 +20,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged
         /// </remarks>
         public (int count, int max)? MagazineCount { get; }
 
-        public override uint NetID => ContentNetIDs.BALLISTIC_MAGAZINE_WEAPON;
-
-        public BallisticMagazineWeaponComponentState(bool chambered, (int count, int max)? magazineCount)
+        public BallisticMagazineWeaponComponentState(bool chambered, (int count, int max)? magazineCount) : base(ContentNetIDs.BALLISTIC_MAGAZINE_WEAPON)
         {
             Chambered = chambered;
             MagazineCount = magazineCount;

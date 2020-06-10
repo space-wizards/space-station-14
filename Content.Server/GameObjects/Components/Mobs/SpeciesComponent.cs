@@ -126,6 +126,21 @@ namespace Content.Server.GameObjects
             return CurrentDamageState.CanAttack();
         }
 
+        bool IActionBlocker.CanEquip()
+        {
+            return CurrentDamageState.CanEquip();
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return CurrentDamageState.CanUnequip();
+        }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return CurrentDamageState.CanChangeDirection();
+        }
+
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
         {
             var thresholdlist = DamageTemplate.DamageThresholds;

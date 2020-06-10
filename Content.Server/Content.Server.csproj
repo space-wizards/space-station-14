@@ -5,7 +5,6 @@
     <TargetFramework>$(TargetFramework)</TargetFramework>
     <LangVersion>8</LangVersion>
     <IsPackable>false</IsPackable>
-    <Platforms>x64</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Server\</OutputPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>

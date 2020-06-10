@@ -69,6 +69,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
             {
                 var products = serializer.ReadDataField("products", new List<string>());
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                _products.Clear();
                 foreach (var id in products)
                 {
                     if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))
@@ -88,9 +89,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
     public class GalacticMarketState : ComponentState
     {
         public List<string> Products;
-        public override uint NetID => ContentNetIDs.GALACTIC_MARKET;
-
-        public GalacticMarketState(List<string> technologies)
+        public GalacticMarketState(List<string> technologies) : base(ContentNetIDs.GALACTIC_MARKET)
         {
             Products = technologies;
         }

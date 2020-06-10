@@ -165,6 +165,8 @@ namespace Content.Client
                 "ConditionalSpawner",
                 "PottedPlantHide",
                 "SecureEntityStorage",
+                "PresetIdCard",
+                "SolarControlConsole",
                 "NodeContainer",
                 "PowerSupplier",
                 "PowerConsumer",

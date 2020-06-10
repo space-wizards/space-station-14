@@ -7,9 +7,8 @@ namespace Content.Shared.GameObjects.Components.Items
     public class ClothingComponentState : ItemComponentState
     {
         public string ClothingEquippedPrefix { get; set; }
-        public override uint NetID => ContentNetIDs.CLOTHING;
 
-        public ClothingComponentState(string clothingEquippedPrefix, string equippedPrefix) : base(equippedPrefix)
+        public ClothingComponentState(string clothingEquippedPrefix, string equippedPrefix) : base(equippedPrefix, ContentNetIDs.CLOTHING)
         {
             ClothingEquippedPrefix = clothingEquippedPrefix;
         }

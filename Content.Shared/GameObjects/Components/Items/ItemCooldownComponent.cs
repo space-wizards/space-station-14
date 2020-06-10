@@ -74,9 +74,8 @@ namespace Content.Shared.GameObjects.Components.Items
         {
             public TimeSpan? CooldownStart { get; set; }
             public TimeSpan? CooldownEnd { get; set; }
-            public override uint NetID => ContentNetIDs.ITEMCOOLDOWN;
 
-        public ItemCooldownComponentState()
+            public ItemCooldownComponentState() : base(ContentNetIDs.ITEMCOOLDOWN)
             {
             }
         }

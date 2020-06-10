@@ -1,6 +1,6 @@
 ﻿- type: vendingMachineInventory
   id: AmmoVend
-  name: ammovend
+  name: Ammovend
   description: A generic ammunition vending machine.
   spriteName: ammo
   startingInventory:
