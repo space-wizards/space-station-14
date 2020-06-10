@@ -96,6 +96,9 @@ namespace Content.Server.GameObjects.Components.Cargo
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null)
                         break;
+                    var capacity = _cargoOrderDataManager.GetCapacity(Orders.Database.Id);
+                    if (capacity.CurrentCapacity == capacity.MaxCapacity)
+                        break;
                     if (!_galacticBankManager.ChangeBalance(BankId, (-product.PointCost) * order.Amount))
                         break;
                     _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);

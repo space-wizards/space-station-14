@@ -5,7 +5,6 @@ using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Client.GameObjects.Components.Cargo
 {
@@ -131,7 +130,10 @@ namespace Content.Client.GameObjects.Components.Cargo
         {
             if (!(args.Button.Parent.Parent is CargoOrderRow row))
                 return;
+            if (ShuttleCapacity.CurrentCapacity == ShuttleCapacity.MaxCapacity)
+                return;
             SendMessage(new SharedCargoConsoleComponent.CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+            _menu?.UpdateCargoCapacity();
         }
     }
 }
