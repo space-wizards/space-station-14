@@ -65,13 +65,19 @@ namespace Content.Server.GameObjects.Components.NewPower
         }
 
         /// <summary>
-        ///     Uses charge from the battery, returns the amount of charge used.
+        ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
         /// </summary>
-        public float TryUseCharge(float chargeToUse)
+        public bool TryUseCharge(float chargeToUse)
         {
-            var oldCharge = CurrentCharge;
-            CurrentCharge -= chargeToUse;
-            return oldCharge - CurrentCharge;
+            if (chargeToUse > CurrentCharge)
+            {
+                return false;
+            }
+            else
+            {
+                CurrentCharge -= chargeToUse;
+                return true;
+            }
         }
     }
 

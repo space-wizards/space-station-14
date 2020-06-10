@@ -88,18 +88,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 }
                 else
                 {
-                    receiver.Powered = TryUsePower(receiver.Load * frameTime);
+                    receiver.Powered = TryUsePower(receiver.Load * frameTime); //this is returning false early? --floating point math error, need to fix
                 }
             }
         }
 
         private bool TryUsePower(float neededCharge)
         {
-            var remainingNeededCharge = neededCharge;
             foreach (var battery in _apcBatteries.Values)
             {
-                remainingNeededCharge -= battery.TryUseCharge(remainingNeededCharge);
-                if (remainingNeededCharge <= 0)
+                if (battery.TryUseCharge(neededCharge)) //simplification - all power needed must come from one battery
                 {
                     return true;
                 }
