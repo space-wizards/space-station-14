@@ -27,13 +27,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
             serializer.DataField(ref Damage, "damage", 0);
 
-            serializer.DataReadFunction("tools", new List<string>(0), parsedtools =>
-            {
-                foreach (string tool in parsedtools)
-                {
-                    _tools.Add((ToolQuality) Enum.Parse(typeof(ToolQuality), tool));
-                }
-            });
+            serializer.DataField(ref _tools, "tools", new List<ToolQuality>());
         }
 
         public override void Initialize()
