@@ -84,11 +84,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (availablePowerFraction < receiver.PowerShutoffFraction)
                 {
-                    receiver.Powered = false;
+                    receiver.HasApcPower = false;
                 }
                 else
                 {
-                    receiver.Powered = TryUsePower(receiver.Load * frameTime);
+                    receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
                 }
             }
         }

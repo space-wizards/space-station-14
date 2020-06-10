@@ -20,8 +20,11 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
 
         [ViewVariables]
-        public bool Powered { get => _powered; set => SetPowered(value); }
-        private bool _powered;
+        public bool Powered => HasApcPower || !NeedsPower;
+
+        [ViewVariables]
+        public bool HasApcPower { get => _hasApcPower; set => SetHasApcPower(value); }
+        private bool _hasApcPower;
 
         /// <summary>
         ///     The max distance from a <see cref="PowerProviderComponent"/> that this can receive power from.
@@ -51,12 +54,20 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public float PowerShutoffFraction { get => _powerShutoffFraction; set => SetPowerShutoffFraction(value); }
         private float _powerShutoffFraction;
 
+        /// <summary>
+        ///     When true, causes this to appear powered even if not receiving power from an Apc.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool NeedsPower { get => _needsPower; set => SetNeedsPower(value); }
+        private bool _needsPower;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _powerReceptionRange, "powerReceptionRange", 3);
             serializer.DataField(ref _load, "powerLoad", 5);
             serializer.DataField(ref _powerShutoffFraction, "powerShutoffFraction", 0.3f);
+            serializer.DataField(ref _needsPower, "needsPower", true);
         }
 
         public override void Initialize()
@@ -112,11 +123,12 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             NeedsProvider = false;
         }
 
-        private void SetPowered(bool newPowered)
+        private void SetHasApcPower(bool newHasApcPower)
         {
-            if (newPowered != _powered)
+            var oldPowered = Powered;
+            _hasApcPower = newHasApcPower;
+            if (oldPowered != Powered)
             {
-                _powered = newPowered;
                 OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
             }
         }
@@ -136,6 +148,16 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         private void SetPowerShutoffFraction(float newPowerShutOffPercent)
         {
             _powerShutoffFraction = newPowerShutOffPercent;
+        }
+
+        private void SetNeedsPower(bool newNeedsPower)
+        {
+            var oldPowered = Powered;
+            _needsPower = newNeedsPower;
+            if (oldPowered != Powered)
+            {
+                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+            }
         }
     }
 

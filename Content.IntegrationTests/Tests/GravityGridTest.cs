@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
                 var powerComponent = generator.GetComponent<PowerReceiverComponent>();
                 Assert.AreEqual(generatorComponent.Status, GravityGeneratorStatus.Unpowered);
-                powerComponent.ExternalPowered = true;
+                powerComponent.NeedsPower = false;
             });
             server.RunTicks(1);
 
