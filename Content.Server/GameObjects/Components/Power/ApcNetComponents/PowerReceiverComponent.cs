@@ -137,15 +137,15 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         {
             _powerShutoffFraction = newPowerShutOffPercent;
         }
+    }
 
-        public class PowerStateEventArgs : EventArgs
+    public class PowerStateEventArgs : EventArgs
+    {
+        public readonly bool Powered;
+
+        public PowerStateEventArgs(bool powered)
         {
-            public readonly bool Powered;
-
-            public PowerStateEventArgs(bool powered)
-            {
-                Powered = powered;
-            }
+            Powered = powered;
         }
     }
 }

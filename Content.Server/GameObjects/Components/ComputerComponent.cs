@@ -1,3 +1,4 @@
+﻿using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -12,18 +13,18 @@ namespace Content.Server.GameObjects.Components
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out PowerDeviceComponent powerDevice))
+            if (Owner.TryGetComponent(out PowerReceiverComponent powerReceiver))
             {
-                powerDevice.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+                powerReceiver.OnPowerStateChanged += PowerReceiverOnOnPowerStateChanged;
 
                 if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
-                    appearance.SetData(ComputerVisuals.Powered, powerDevice.Powered);
+                    appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
                 }
             }
         }
 
-        private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        private void PowerReceiverOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {

@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -15,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         protected IEntity _heldItem;
         protected ContainerSlot _container;
-        protected PowerDeviceComponent _powerDevice;
+        protected PowerReceiverComponent _powerReceiver;
         public CellChargerStatus Status => _status;
         protected CellChargerStatus _status;
 
@@ -43,8 +44,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         public override void Initialize()
         {
             base.Initialize();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            if (_powerDevice == null)
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            if (_powerReceiver == null)
             {
                 var exc = new InvalidOperationException("Chargers requires a PowerDevice to function");
                 Logger.FatalS("charger", exc.Message);
@@ -54,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
             _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
-            _powerDevice.OnPowerStateChanged += PowerUpdate;
+            _powerReceiver.OnPowerStateChanged += PowerUpdate;
         }
 
         /// <summary>
@@ -115,18 +116,18 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             {
                 // Update load just in case
                 case CellChargerStatus.Off:
-                    _powerDevice.Load = 0;
+                    _powerReceiver.Load = 0;
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Off);
                     break;
                 case CellChargerStatus.Empty:
-                    _powerDevice.Load = 0;
+                    _powerReceiver.Load = 0;
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Empty); ;
                     break;
                 case CellChargerStatus.Charging:
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charging);
                     break;
                 case CellChargerStatus.Charged:
-                    _powerDevice.Load = 0;
+                    _powerReceiver.Load = 0;
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charged);
                     break;
                 default:

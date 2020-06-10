@@ -129,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         protected override CellChargerStatus GetStatus()
         {
-            if (!_powerDevice.Powered)
+            if (!_powerReceiver.Powered)
             {
                 return CellChargerStatus.Off;
             }
@@ -154,9 +154,9 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             // chargeLoss which is how much is drawn from the powernet
             _container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent weaponCapacitorComponent);
             var chargeLoss = weaponCapacitorComponent.RequestCharge(frameTime) * _transferRatio;
-            _powerDevice.Load = chargeLoss;
+            _powerReceiver.Load = chargeLoss;
 
-            if (!_powerDevice.Powered)
+            if (!_powerReceiver.Powered)
             {
                 // No power: Event should update to Off status
                 return;

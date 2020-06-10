@@ -29,12 +29,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         public override void Initialize()
         {
             base.Initialize();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerDeviceComponent>();
             _container =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
             _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
-            _powerDevice.OnPowerStateChanged += PowerUpdate;
+            _powerReceiver.OnPowerStateChanged += PowerUpdate;
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         protected override CellChargerStatus GetStatus()
         {
-            if (!_powerDevice.Powered)
+            if (!_powerReceiver.Powered)
             {
                 return CellChargerStatus.Off;
             }
@@ -159,9 +159,9 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             // chargeLoss which is how much is drawn from the powernet
             _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
             var chargeLoss = cellComponent.RequestCharge(frameTime) * _transferRatio;
-            _powerDevice.Load = chargeLoss;
+            _powerReceiver.Load = chargeLoss;
 
-            if (!_powerDevice.Powered)
+            if (!_powerReceiver.Powered)
             {
                 // No power: Event should update to Off status
                 return;
