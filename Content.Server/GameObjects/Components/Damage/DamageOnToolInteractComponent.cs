@@ -51,7 +51,10 @@ namespace Content.Server.GameObjects.Components.Damage
                 {
                     if (eventArgs.Using.TryGetComponent<WelderComponent>(out WelderComponent welder))
                     {
-                        if (welder.WelderLit) return CallDamage(eventArgs);
+                        if (welder.WelderLit)
+                            return CallDamage(eventArgs);
+                        else
+                            return false;
                     }
 
                     //Should I add some error checking here for TryGet?
