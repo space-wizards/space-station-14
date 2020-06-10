@@ -2,12 +2,7 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
-using System;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Damage
@@ -38,39 +33,39 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            bool result = false; //assumes interaction can only be with one tool at one time.
+            
 
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
+            {
                 if (tool.HasQuality(ToolQuality.Welding))
                 {
                     if (eventArgs.Using.TryGetComponent<WelderComponent>(out WelderComponent welder))
                     {
                         if (welder.WelderLit)
-                            return CallDamage(eventArgs);
+                            return CallDamage(eventArgs, tool);
                         else
                             return false;
                     }
 
                     //Should I add some error checking here for TryGet?
                 }
-            foreach (var toolQuality in _tools)
-            {
-                if (tool.HasQuality(toolQuality))
+
+                foreach (var toolQuality in _tools)
                 {
-                    result = CallDamage(eventArgs);
+                    if (tool.HasQuality(toolQuality))
+                        return CallDamage(eventArgs, tool); //Break when return called automatically.
                 }
-
-                if (result is true) return true; //Should Break when return called automatically.
-            }             
-
-            return result;
+            }
+            return false;
         }
 
-        protected bool CallDamage(InteractUsingEventArgs eventArgs)
+        protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
         {
             if (eventArgs.Target.TryGetComponent<DamageableComponent>(out var damageable))
             {
-                damageable.TakeDamage(Shared.GameObjects.DamageType.Heat, Damage, eventArgs.Using, eventArgs.User);
+                if(tool.HasQuality(ToolQuality.Welding)) damageable.TakeDamage(Shared.GameObjects.DamageType.Heat, Damage, eventArgs.Using, eventArgs.User);
+                else
+                damageable.TakeDamage(Shared.GameObjects.DamageType.Brute, Damage, eventArgs.Using, eventArgs.User);
                 return true;
             }
                 return false;
