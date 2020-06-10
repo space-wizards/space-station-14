@@ -2,7 +2,6 @@
 using Content.Shared.Prototypes.Cargo;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.Cargo
 {
