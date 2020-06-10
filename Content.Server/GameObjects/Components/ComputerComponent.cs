@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;

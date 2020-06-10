@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerDevice;
         private WiresComponent _wires;
 
         private CancellationTokenSource _powerWiresPulsedTimerCancel;
@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Doors
         public override void Initialize()
         {
             base.Initialize();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerDevice = Owner.GetComponent<PowerReceiverComponent>();
             _wires = Owner.GetComponent<WiresComponent>();
 
             _powerDevice.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;

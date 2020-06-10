@@ -1,3 +1,4 @@
+﻿using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
@@ -20,9 +21,9 @@ namespace Content.Server.GameObjects.Components.Power
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
         private PowerSolarSystem _powerSolarSystem;
-        private bool Powered => _powerDevice.Powered;
+        private bool Powered => _powerReceiver.Powered;
 
         public override void Initialize()
         {
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(SolarControlConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();
         }
 

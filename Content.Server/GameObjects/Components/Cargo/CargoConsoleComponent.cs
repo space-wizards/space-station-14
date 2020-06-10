@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Utility;
 using Robust.Shared.Map;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -42,8 +43,8 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
 
         public override void Initialize()
         {
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             Orders = Owner.GetComponent<CargoOrderDatabaseComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _galacticBankManager.AddComponent(this);
             BankId = 0;
         }

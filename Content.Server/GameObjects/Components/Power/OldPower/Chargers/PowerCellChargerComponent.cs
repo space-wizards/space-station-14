@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         public override void Initialize()
         {
             base.Initialize();
-            _powerReceiver = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _container =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
             _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
