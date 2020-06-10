@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Prototypes.Cargo;
+using Robust.Shared.Localization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -96,7 +97,8 @@ namespace Content.Server.Cargo
                 return;
             else if (CurrentOrderSize + order.Amount > MaxOrderSize)
             { 
-                AddOrder(order.Requester, order.Reason+" (Overflow)", order.ProductId, order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
+                AddOrder(order.Requester, Loc.GetString("{0} (Overflow)", order.Reason.Replace(" (Overflow)","")), order.ProductId,
+                    order.Amount - MaxOrderSize - CurrentOrderSize, order.PayingAccountId);
                 order.Amount = MaxOrderSize - CurrentOrderSize;
             }
             order.Approved = true;
