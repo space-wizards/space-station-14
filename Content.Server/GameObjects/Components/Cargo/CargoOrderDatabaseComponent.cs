@@ -1,4 +1,7 @@
 ﻿using Content.Server.Cargo;
+using Content.Shared.GameObjects.Components.Cargo;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
