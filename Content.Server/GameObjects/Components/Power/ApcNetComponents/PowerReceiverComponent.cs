@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
 
         [ViewVariables]
-        public bool Powered => HasApcPower || !NeedsPower;
+        public bool Powered => (HasApcPower || !NeedsPower) && !PowerDisabled;
 
         [ViewVariables]
         public bool HasApcPower { get => _hasApcPower; set => SetHasApcPower(value); }
@@ -61,6 +61,12 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public bool NeedsPower { get => _needsPower; set => SetNeedsPower(value); }
         private bool _needsPower;
 
+        /// <summary>
+        ///     When true, causes this to never appear powered.
+        /// </summary>
+        public bool PowerDisabled { get => _powerDisabled; set => SetPowerDisabled(value); }
+        private bool _powerDisabled;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -68,6 +74,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             serializer.DataField(ref _load, "powerLoad", 5);
             serializer.DataField(ref _powerShutoffFraction, "powerShutoffFraction", 0.3f);
             serializer.DataField(ref _needsPower, "needsPower", true);
+            serializer.DataField(ref _powerDisabled, "powerDisabled", false);
         }
 
         public override void Initialize()
@@ -154,6 +161,16 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         {
             var oldPowered = Powered;
             _needsPower = newNeedsPower;
+            if (oldPowered != Powered)
+            {
+                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+            }
+        }
+
+        private void SetPowerDisabled(bool newPowerDisabled)
+        {
+            var oldPowered = Powered;
+            _powerDisabled = newPowerDisabled;
             if (oldPowered != Powered)
             {
                 OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
