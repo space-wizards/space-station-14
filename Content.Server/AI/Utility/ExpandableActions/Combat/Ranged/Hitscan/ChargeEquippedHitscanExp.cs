@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
 {
     public sealed class ChargeEquippedHitscanExp : ExpandableUtilityAction
     {
-        public override float Bonus => 20.0f;
+        public override float Bonus => UtilityAction.CombatPrepBonus;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

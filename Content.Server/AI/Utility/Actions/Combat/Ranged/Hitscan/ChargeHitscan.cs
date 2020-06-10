@@ -19,7 +19,6 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
     {
         // Maybe a bad idea to not allow override
         public override bool CanOverride => false;
-        public override float Bonus => 1.0f;
         private readonly IEntity _charger;
 
         public PutHitscanInCharger(IEntity owner, IEntity charger, float weight) : base(owner)

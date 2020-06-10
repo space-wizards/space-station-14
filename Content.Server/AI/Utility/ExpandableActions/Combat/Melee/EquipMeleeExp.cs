@@ -9,7 +9,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 {
     public sealed class EquipMeleeExp : ExpandableUtilityAction
     {
-        public override float Bonus => 20.0f;
+        public override float Bonus => UtilityAction.CombatPrepBonus;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

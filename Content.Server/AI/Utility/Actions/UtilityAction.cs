@@ -24,15 +24,17 @@ namespace Content.Server.AI.Utility.Actions
         /// Threshold doesn't necessarily mean we'll do an action at a higher threshold;
         /// if it's really un-optimal (i.e. low score) then we'll also check lower tiers
         /// </summary>
-        /// Guidelines:
-        // Idle should just be flavor-stuff if we reeaaalllyyy have nothing to do
-        // Idle = 1
-        // Normal = 5
-        // Needs = 10
-        // Combat prep (e.g. grabbing weapons) = 20
-        // Combat = 30
-        // Danger (e.g. dodging a grenade) = 50
-        public virtual float Bonus { get; protected set; } = 1.0f;
+        public virtual float Bonus { get; protected set; } = IdleBonus;
+        // For GW2 they had the bonuses close together but IMO it feels better when they're more like discrete tiers.
+
+        // These are just baselines to make mass-updates easier; actions can do whatever
+        // e.g. if you want shooting a gun to be considered before picking up a gun you could + 1.0f it or w/e
+        public const float IdleBonus = 1.0f;
+        public const float NormalBonus = 5.0f;
+        public const float NeedsBonus = 10.0f;
+        public const float CombatPrepBonus = 20.0f;
+        public const float CombatBonus = 30.0f;
+        public const float DangerBonus = 50.0f;
 
         protected IEntity Owner { get; }
 

@@ -16,15 +16,11 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
     /// </summary>
     public sealed class EquipAnyHeadExp : ExpandableUtilityAction
     {
-        public override float Bonus => 5.0f;
+        public override float Bonus => UtilityAction.NormalBonus;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent controller))
-            {
-                throw new InvalidOperationException();
-            }
 
             foreach (var entity in context.GetState<InventoryState>().GetValue())
             {

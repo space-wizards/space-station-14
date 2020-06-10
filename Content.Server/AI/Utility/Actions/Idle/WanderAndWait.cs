@@ -22,7 +22,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
     public sealed class WanderAndWait : UtilityAction
     {
         public override bool CanOverride => false;
-        public override float Bonus => 1.0f;
+        public override float Bonus => IdleBonus;
 
         public WanderAndWait(IEntity owner) : base(owner)
         {

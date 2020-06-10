@@ -9,7 +9,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Nutrition
 {
     public sealed class UseDrinkInHandsExp : ExpandableUtilityAction
     {
-        public override float Bonus => 10.0f;
+        public override float Bonus => UtilityAction.NeedsBonus;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {

@@ -13,7 +13,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 {
     public sealed class MeleeAttackNearbyPlayerExp : ExpandableUtilityAction
     {
-        public override float Bonus => 30.0f;
+        public override float Bonus => UtilityAction.CombatBonus;
 
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
