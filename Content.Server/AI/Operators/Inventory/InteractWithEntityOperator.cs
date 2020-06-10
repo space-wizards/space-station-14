@@ -28,7 +28,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (InteractionChecks.InRangeUnobstructed(_owner, _useTarget.Transform.MapPosition))
+            if (!InteractionChecks.InRangeUnobstructed(_owner, _useTarget.Transform.MapPosition))
             {
                 return Outcome.Failed;
             }

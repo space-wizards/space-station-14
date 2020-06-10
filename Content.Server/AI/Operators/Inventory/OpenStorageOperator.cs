@@ -24,7 +24,7 @@ namespace Content.Server.AI.Operators.Inventory
         
         public override Outcome Execute(float frameTime)
         {
-            if (InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
+            if (!InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
             {
                 return Outcome.Failed;
             }

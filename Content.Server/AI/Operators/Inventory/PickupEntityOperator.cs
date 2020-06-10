@@ -1,5 +1,6 @@
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -25,8 +26,7 @@ namespace Content.Server.AI.Operators.Inventory
                 _target.Deleted ||
                 !_target.HasComponent<ItemComponent>() ||
                 ContainerHelpers.IsInContainer(_target) ||
-                (_owner.Transform.GridPosition.Position - _target.Transform.GridPosition.Position).Length >
-                InteractionSystem.InteractionRange)
+                !InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
             {
                 return Outcome.Failed;
             }

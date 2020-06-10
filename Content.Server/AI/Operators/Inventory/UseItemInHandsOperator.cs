@@ -25,14 +25,21 @@ namespace Content.Server.AI.Operators.Inventory
             }
 
             // TODO: Also have this check storage a la backpack etc.
-            _owner.TryGetComponent(out HandsComponent hands);
-            _target.TryGetComponent(out ItemComponent itemComponent);
-
-            foreach (var slot in hands.ActivePriorityEnumerable())
+            if (!_owner.TryGetComponent(out HandsComponent handsComponent))
             {
-                if (hands.GetHand(slot) != itemComponent) continue;
-                hands.ActiveIndex = slot;
-                hands.ActivateItem();
+                return Outcome.Failed;
+            }
+
+            if (_target.TryGetComponent(out ItemComponent itemComponent))
+            {
+                return Outcome.Failed;
+            }
+
+            foreach (var slot in handsComponent.ActivePriorityEnumerable())
+            {
+                if (handsComponent.GetHand(slot) != itemComponent) continue;
+                handsComponent.ActiveIndex = slot;
+                handsComponent.ActivateItem();
                 return Outcome.Success;
             }
 
