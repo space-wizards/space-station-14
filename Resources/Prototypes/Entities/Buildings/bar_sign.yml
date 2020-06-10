@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: BarSign
   name: bar sign
   components:
@@ -12,7 +12,7 @@
   - type: Icon
     sprite: Buildings/barsign.rsi
     state: empty
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: BarSign
 
 

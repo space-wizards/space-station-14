@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: BaseLathe
   name: "lathe"
   abstract: true
@@ -14,7 +14,7 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: PowerDevice
+  - type: PowerReceiver
 
 - type: entity
   parent: BaseLathe

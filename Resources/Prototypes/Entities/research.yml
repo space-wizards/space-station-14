@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: ResearchAndDevelopmentServer
   name: "R&D server"
   components:
@@ -15,9 +15,8 @@
     offset: Center
   - type: ResearchServer
   - type: TechnologyDatabase
-  - type: PowerDevice
-    drawtype: Both
-    load: 200
+  - type: PowerReceiver
+    powerLoad: 200
     priority: Low
 
 - type: entity
@@ -58,4 +57,4 @@
   - type: Appearance
     visuals:
     - type: PowerDeviceVisualizer2D
-  - type: PowerDevice
+  - type: PowerReceiver

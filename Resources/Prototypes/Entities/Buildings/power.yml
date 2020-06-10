@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   id: WireBase
   placement:
@@ -466,9 +466,8 @@
     texture: Objects/Power/wiredmachine.png
   - type: Icon
     texture: Objects/Power/wiredmachine.png
-  - type: PowerDevice
-    drawtype: Node
-    load: 100
+  - type: PowerReceiver
+    powerLoad: 100
     priority: High
   - type: SnapGrid
     offset: Center
@@ -491,9 +490,8 @@
     texture: Objects/Furniture/wirelessmachine.png
   - type: Icon
     texture: Objects/Furniture/wirelessmachine.png
-  - type: PowerDevice
-    drawtype: Both
-    load: 200
+  - type: PowerReceiver
+    powerLoad: 200
     priority: Low
   - type: SnapGrid
     offset: Center

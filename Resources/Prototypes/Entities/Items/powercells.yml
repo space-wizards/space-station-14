@@ -108,8 +108,7 @@
   - type: PowerCellCharger
     transfer_ratio: 0.10
     transfer_efficiency: 0.85
-  - type: PowerDevice
-    priority: Low
+  - type: PowerReceiver
   - type: Icon
     sprite: Objects/Power/PowerCells/cell_recharger.rsi
     state: empty
@@ -140,8 +139,7 @@
   - type: WeaponCapacitorCharger
     transfer_ratio: 0.10
     transfer_efficiency: 0.85
-  - type: PowerDevice
-    priority: Low
+  - type: PowerReceiver
   - type: Icon
     sprite: Objects/Power/PowerCells/recharger.rsi
     state: empty
@@ -172,8 +170,7 @@
   - type: WeaponCapacitorCharger
     transfer_ratio: 0.15
     transfer_efficiency: 0.95
-  - type: PowerDevice
-    priority: Low
+  - type: PowerReceiver
   - type: Icon
     sprite: Objects/Power/PowerCells/wall_recharger.rsi
     state: empty

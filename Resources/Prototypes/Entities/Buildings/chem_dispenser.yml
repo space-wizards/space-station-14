@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: chem_dispenser
   name: chemical dispenser
   parent: ReagentDispenserBase
@@ -10,7 +10,7 @@
     texture: Buildings/chemicals.rsi/industrial_dispenser.png
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
-  - type: PowerDevice
+  - type: PowerReceiver
 
 - type: reagentDispenserInventory
   id: ChemDispenserStandardInventory

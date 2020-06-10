@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: VendingMachine
   name: vending machine
   components:
@@ -40,8 +40,7 @@
       type: VendingMachineBoundUserInterface
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
-  - type: PowerDevice
-    priority: Low
+  - type: PowerReceiver
   - type: Wires
     BoardName: "Vending Machine"
     LayoutId: Vending
