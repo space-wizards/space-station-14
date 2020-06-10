@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 }
                 else
                 {
-                    receiver.Powered = TryUsePower(receiver.Load * frameTime); //this is returning false early? --floating point math error, need to fix
+                    receiver.Powered = TryUsePower(receiver.Load * frameTime);
                 }
             }
         }

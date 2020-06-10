@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
@@ -148,12 +149,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public void UpdateLight()
         {
-            var device = Owner.GetComponent<PowerDeviceComponent>();
+            var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             var sprite = Owner.GetComponent<SpriteComponent>();
             var light = Owner.GetComponent<PointLightComponent>();
             if (LightBulb == null) // No light bulb.
             {
-                device.Load = 0;
+                powerReceiver.Load = 0;
                 sprite.LayerSetState(0, "empty");
                 light.Enabled = false;
                 return;
@@ -162,8 +163,8 @@ namespace Content.Server.GameObjects.Components.Power
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    device.Load = LightBulb.PowerUse;
-                    if (device.Powered)
+                    powerReceiver.Load = LightBulb.PowerUse;
+                    if (powerReceiver.Powered)
                     {
                         sprite.LayerSetState(0, "on");
                         light.Enabled = true;
@@ -182,12 +183,12 @@ namespace Content.Server.GameObjects.Components.Power
                     }
                     break;
                 case LightBulbState.Broken:
-                    device.Load = 0;
+                    powerReceiver.Load = 0;
                     sprite.LayerSetState(0, "broken");
                     light.Enabled = false;
                     break;
                 case LightBulbState.Burned:
-                    device.Load = 0;
+                    powerReceiver.Load = 0;
                     sprite.LayerSetState(0, "burned");
                     light.Enabled = false;
                     break;
@@ -198,8 +199,8 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.Initialize();
 
-            var device = Owner.GetComponent<PowerDeviceComponent>();
-            device.OnPowerStateChanged += UpdateLight;
+            var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            powerReceiver.OnPowerStateChanged += UpdateLight;
 
             _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
 

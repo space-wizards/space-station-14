@@ -227,6 +227,8 @@
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
+  - type: NewPowerProvider
+    voltage: Apc
   - type: NewApc
     voltage: Apc
     

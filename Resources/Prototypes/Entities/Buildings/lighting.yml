@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: WallLight
   name: "unpowered light"
   components:
@@ -37,10 +37,9 @@
     state: off
   - type: PointLight
     enabled: false
-  - type: PowerDevice
-    priority: Low
   - type: PoweredLight
     bulb: Tube
+  - type: PowerReceiver
 
 - type: entity
   name: small light
@@ -59,8 +58,6 @@
     energy: 1.0
     enabled: false
     offset: "-0.5, 0"
-  - type: PowerDevice
-    priority: Low
   - type: PoweredLight
     bulb: Bulb
-
+  - type: PowerReceiver

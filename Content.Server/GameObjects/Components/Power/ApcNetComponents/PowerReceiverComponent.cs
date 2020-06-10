@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
     {
         public override string Name => "PowerReceiver";
 
-        public Action<bool> OnPowerStateChange;
+        public event EventHandler<PowerStateEventArgs> OnPowerStateChanged;
 
         [ViewVariables]
         public bool Powered { get => _powered; set => SetPowered(value); }
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         /// <summary>
         ///     The fraction of APC charge below which this shuts off and stops using power.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float PowerShutoffFraction { get => _powerShutoffFraction; set => SetPowerShutoffFraction(value); }
         private float _powerShutoffFraction;
 
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             if (newPowered != _powered)
             {
                 _powered = newPowered;
-                OnPowerStateChange?.Invoke(_powered);
+                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
             }
         }
 
@@ -136,6 +136,16 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         private void SetPowerShutoffFraction(float newPowerShutOffPercent)
         {
             _powerShutoffFraction = newPowerShutOffPercent;
+        }
+
+        public class PowerStateEventArgs : EventArgs
+        {
+            public readonly bool Powered;
+
+            public PowerStateEventArgs(bool powered)
+            {
+                Powered = powered;
+            }
         }
     }
 }
