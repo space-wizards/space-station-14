@@ -1,0 +1,10 @@
+light_mode unshaded;
+
+uniform float progress = 0.0;
+
+
+void fragment() {
+	vec4 col = texture(TEXTURE, UV);
+
+    COLOR = col;
+}
