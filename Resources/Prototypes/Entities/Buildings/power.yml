@@ -79,7 +79,7 @@
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
-    supplyRate: 100
+    supplyRate: 100000
     
 - type: entity
   id: DebugConsumer
@@ -169,12 +169,16 @@
     sprite: Buildings/smes.rsi
     state: smes
   - type: Battery
+    maxCharge: 100000
+    startingCharge: 100000
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
+    activeDrawRate: 100000
   - type: PowerSupplier
   - type: BatteryDischarger
+    activeSupplyRate: 100000
     
 - type: entity
   id: DebugSubstation
@@ -197,13 +201,17 @@
     sprite: Buildings/smes.rsi
     state: smes
   - type: Battery
+    maxCharge: 100000
+    startingCharge: 100000
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
+    activeDrawRate: 100000
   - type: PowerSupplier
     voltage: Medium
   - type: BatteryDischarger
+    activeSupplyRate: 100000
 
 - type: entity
   id: DebugApc
@@ -222,11 +230,14 @@
   - type: Icon
     texture: Objects/Power/provider.png
   - type: Battery
+    maxCharge: 100000
+    startingCharge: 100000
   - type: NodeContainer
     nodeTypes: { MVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
+    activeDrawRate: 100000
   - type: NewPowerProvider
     voltage: Apc
   - type: NewApc
@@ -248,72 +259,8 @@
   - type: Icon
     texture: Objects/Furniture/wirelessmachine.png
   - type: PowerReceiver
-  
-#Depriciated, to remove from maps
 
-- type: entity
-  id: Wire
-  name: wire
-  description: Transfers power, avoid letting things come down it
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-  - type: Sprite
-    netsync: false
-    drawdepth: BelowFloor
-    color: Red
-    sprite: Objects/Power/power_cable.rsi
-    state: cable_0
-  - type: Icon
-    texture: Objects/Power/eightdirwire.png
-  - type: PowerTransfer
-  - type: SnapGrid
-    offset: Center
-  - type: IconSmooth
-    base: cable_
-    key: power_cables
-    mode: CardinalFlags
-  - type: SubFloorHide
-  - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: CableStack1
-
-  snap:
-  - Wire
-
-- type: entity
-  parent: Wire
-  id: BlueWire
-  name: bluewire
-  description: Transfers power, and puts on a good show of it
-  components:
-  - type: Sprite
-    color: Blue
-
-- type: entity
-  id: Generator
-  name: generator
-  description: A portal to hell which summons power from the nether
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.3, 0.5"
-      layer: [MobMask, Opaque]
-  - type: Sprite
-    texture: Objects/Power/generator.png
-  - type: Icon
-    texture: Objects/Power/generator.png
-  - type: PowerGenerator
-  - type: SnapGrid
-    offset: Center
+#To update
 
 - type: entity
   id: SolarPanel
@@ -342,156 +289,29 @@
   - type: Damageable
   - type: Breakable
     thresholdvalue: 100
+  
+#Depriciated, to be removed from maps
 
 - type: entity
-  id: WPPnobattery
-  name: wppnobattery
-  description: Supplies power directly to nearby objects
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      layer: [Clickable]
-  - type: Sprite
-    drawdepth: WallMountedItems
-    texture: Objects/Power/provider.png
-  - type: Icon
-    texture: Objects/Power/provider.png
-  - type: PowerProvider
-    range: 8
-    priority: Provider
-    load: 0
-  - type: SnapGrid
-    offset: Center
+  id: Wire
+  parent: ApcExtensionCable
 
 - type: entity
-  parent: WPPnobattery
-  id: WPP
-  name: WPP
-  description: Supplies power at range, has a backup battery just in case
-  components:
-  - type: PowerStorage
-    capacity: 1000
-    charge: 1000
-    chargerate: 200
-    chargepowernet: false
+  id: Generator
+  parent: DebugGenerator
 
 - type: entity
-  parent: WPP
   id: APC
-  name: APC
-  components:
-  - type: Apc
-  - type: Sprite
-    netsync: false
-    texture: ""
-    sprite: "Buildings/apc.rsi"
-    state: apc0
-  - type: Appearance
-    visuals:
-    - type: ApcVisualizer2D
-  - type: UserInterface
-    interfaces:
-    - key: enum.ApcUiKey.Key
-      type: ApcBoundUserInterface
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25, -0.25, 0.25, 0.3"
-  - type: LoopingSound
+  parent: DebugApc
 
 - type: entity
   id: SMES
-  name: smes
-  description: Stores power in its super-magnetic cells
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.5, 0.5, 0.5"
-      layer: [MobMask, Opaque]
-  - type: Sprite
-    netsync: false
-    sprite: Buildings/smes.rsi
-    state: smes
-    layers:
-    - state: smes-display
-      shader: unshaded
-  - type: Icon
-    sprite: Buildings/smes.rsi
-    state: smes
-  - type: PowerStorage
-    capacity: 3000
-    charge: 1000
-    chargerate: 200
-    distributionrate: 400
-    chargepowernet: true
-  - type: Smes
-  - type: Appearance
-    visuals:
-    - type: SmesVisualizer2D
-  - type: SnapGrid
-    offset: Center
-
-- type: entity
-  id: SmesDry
-  parent: SMES
-  components:
-  - type: PowerStorage
-    charge: 0
+  parent: DebugSmes
 
 - type: entity
   id: WiredMachine
-  name: wiredmachine
-  description: A monstrosity that does nothing but suck up power from the nearby wires
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.25, 0.5, 0.25"
-      layer: [MobMask, Opaque]
-  - type: Sprite
-    texture: Objects/Power/wiredmachine.png
-  - type: Icon
-    texture: Objects/Power/wiredmachine.png
-  - type: PowerReceiver
-    powerLoad: 100
-    priority: High
-  - type: SnapGrid
-    offset: Center
+  parent: DebugConsumer
 
 - type: entity
   id: WirelessMachine
-  name: wirelessmachine
-  description: A terrifying monstrosity that sucks up power from the wireless transmitters, Tesla would be proud
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
-    shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.5, -0.25, 0.5, 0.25"
-      layer: [MobMask, Opaque]
-  - type: Sprite
-    texture: Objects/Furniture/wirelessmachine.png
-  - type: Icon
-    texture: Objects/Furniture/wirelessmachine.png
-  - type: PowerReceiver
-    powerLoad: 200
-    priority: Low
-  - type: SnapGrid
-    offset: Center
+  parent: DebugPowerReceiver

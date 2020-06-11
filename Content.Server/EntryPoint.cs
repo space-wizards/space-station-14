@@ -76,7 +76,8 @@ namespace Content.Server
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
-
+            IoCManager.Resolve<NodeGroupFactory>().Initialize();
+            IoCManager.Resolve<NodeFactory>().Initialize();
         }
 
         public override void PostInit()
@@ -88,8 +89,6 @@ namespace Content.Server
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
-            IoCManager.Resolve<NodeGroupFactory>().Initialize();
-            IoCManager.Resolve<NodeFactory>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
