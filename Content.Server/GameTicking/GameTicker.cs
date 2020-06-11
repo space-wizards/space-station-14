@@ -21,6 +21,7 @@ using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
+using Prometheus;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
@@ -53,6 +54,14 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker : SharedGameTicker, IGameTicker
     {
+        private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
+            "ss14_round_number",
+            "Round number.");
+
+        private static readonly Gauge RoundLengthMetric = Metrics.CreateGauge(
+            "ss14_round_length",
+            "Round length in seconds.");
+
         private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
 
         private const string PlayerPrototypeName = "HumanMob_Content";
@@ -98,6 +107,7 @@ namespace Content.Server.GameTicking
         }
 
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         private TimeSpan LobbyDuration =>
             TimeSpan.FromSeconds(_configurationManager.GetCVar<int>("game.lobbyduration"));
@@ -140,6 +150,11 @@ namespace Content.Server.GameTicking
 
         public void Update(FrameEventArgs frameEventArgs)
         {
+            if (RunLevel == GameRunLevel.InRound)
+            {
+                RoundLengthMetric.Inc(frameEventArgs.DeltaSeconds);
+            }
+
             if (RunLevel != GameRunLevel.PreRoundLobby || _roundStartTimeUtc > DateTime.UtcNow ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                 return;
@@ -159,6 +174,8 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Restarting round!");
 
             SendServerMessage("Restarting round...");
+
+            RoundNumberMetric.Inc();
 
             RunLevel = GameRunLevel.PreRoundLobby;
             _resettingCleanup();
@@ -197,6 +214,8 @@ namespace Content.Server.GameTicking
             }
 
             RunLevel = GameRunLevel.InRound;
+
+            RoundLengthMetric.Set(0);
 
             // Get the profiles for each player for easier lookup.
             var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);
@@ -327,7 +346,23 @@ namespace Content.Server.GameTicking
             _gameRules.Add(instance);
             instance.Added();
 
+            OnRuleAdded?.Invoke(new GameRuleAddedEventArgs(instance));
+
             return instance;
+        }
+
+        public bool HasGameRule(Type t)
+        {
+            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+                return false;
+
+            foreach (var rule in _gameRules)
+            {
+                if (rule.GetType().Equals(t))
+                    return true;
+            }
+
+            return false;
         }
 
         public void RemoveGameRule(GameRule rule)
@@ -647,9 +682,8 @@ namespace Content.Server.GameTicking
             card.JobTitle = jobPrototype.Name;
 
             var access = card.Owner.GetComponent<AccessComponent>();
-            var accessTags = access.GetTags();
-            accessTags.AddRange(jobPrototype.Access);
-            access.SetTags(accessTags);
+            var accessTags = access.Tags;
+            accessTags.UnionWith(jobPrototype.Access);
             pdaComponent.SetPDAOwner(mob);
             var mindComponent = mob.GetComponent<MindComponent>();
             if (mindComponent.HasMind)//Redundancy checks.
@@ -785,5 +819,15 @@ The current game mode is: [color=white]{0}[/color].
 
         public GameRunLevel OldRunLevel { get; }
         public GameRunLevel NewRunLevel { get; }
+    }
+
+    public class GameRuleAddedEventArgs : EventArgs
+    {
+        public GameRule GameRule { get; }
+
+        public GameRuleAddedEventArgs(GameRule rule)
+        {
+            GameRule = rule;
+        }
     }
 }

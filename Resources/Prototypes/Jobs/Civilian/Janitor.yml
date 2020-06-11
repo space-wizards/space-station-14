@@ -1,13 +1,13 @@
 - type: job
   id: Janitor
-  name: "Janitor"
+  name: "janitor"
   positions: 1
   startingGear: JanitorGear
   department:
   - Civilian
   icon: "Janitor"
   access:
-  - Service
+  - Janitor
   - Maintenance
 
 - type: startingGear

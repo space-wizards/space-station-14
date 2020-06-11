@@ -1,5 +1,5 @@
 - type: construction
-  name: Wall
+  name: wall
   id: wall
   category: Structures
   description: Keeps the air in and the greytide out.
@@ -22,7 +22,7 @@
       tool: Anchoring
 
 - type: construction
-  name: Table
+  name: table
   id: Table
   category: Structures
   icon:
@@ -35,7 +35,7 @@
     amount: 2
 
 - type: construction
-  name: Window
+  name: window
   id: Window
   category: Structures
   description: Clear.
@@ -50,7 +50,7 @@
     amount: 2
 
 - type: construction
-  name: Low Wall
+  name: low wall
   id: LowWall
   category: Structures
   description: A low wall used for mounting windows.
@@ -73,7 +73,7 @@
       tool: Anchoring
 
 - type: construction
-  name: Rein Window
+  name: rein window
   id: ReinforcedWindow
   category: Structures
   description: Clear but tough.

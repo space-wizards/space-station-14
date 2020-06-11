@@ -5,5 +5,5 @@
   id: Captain
 
 - type: accessLevel
-  id: IdCard
-  name: ID modification
+  id: HeadOfPersonnel
+  name: Head of Personnel

@@ -30,12 +30,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     [RegisterComponent]
     public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-#pragma warning restore 649
-
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
         private Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
         private BodyManagerComponent _targetCache;

@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -36,9 +37,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     public class ToolComponent : SharedToolComponent
     {
 #pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
-        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _robustRandom;
 #pragma warning restore 649
@@ -91,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
             Owner.TryGetComponent(out _spriteComponent);
         }
@@ -127,14 +126,14 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(name);
             var file = _robustRandom.Pick(soundCollection.PickFiles);
-            _entitySystemManager.GetEntitySystem<AudioSystem>()
-                .Play(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity(file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
 
         public void PlayUseSound(float volume=-5f)
         {
             if(string.IsNullOrEmpty(UseSoundCollection))
-                _audioSystem.Play(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                _audioSystem.PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
             else
                 PlaySoundCollection(UseSoundCollection, volume);
         }

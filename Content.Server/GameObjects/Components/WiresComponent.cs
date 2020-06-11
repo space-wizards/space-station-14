@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
@@ -428,7 +428,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
 
-                            _audioSystem.Play("/Audio/effects/multitool_pulse.ogg", Owner);
+                            _audioSystem.PlayFromEntity("/Audio/effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -474,12 +474,12 @@ namespace Content.Server.GameObjects.Components
 
             IsPanelOpen = !IsPanelOpen;
             EntitySystem.Get<AudioSystem>()
-                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
+                .PlayFromEntity(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
                     Owner);
             return true;
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 

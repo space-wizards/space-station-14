@@ -1,5 +1,5 @@
 - type: entity
-  name: "Clothing"
+  name: "clothing"
   id: Clothing
   parent: BaseItem
   abstract: true

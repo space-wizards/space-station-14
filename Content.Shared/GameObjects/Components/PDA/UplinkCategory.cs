@@ -2,7 +2,8 @@ namespace Content.Shared.GameObjects.Components.PDA
 {
     public enum UplinkCategory
     {
-        Weapon,
+        Weapons,
+        Ammo,
         Utility,
     }
 }

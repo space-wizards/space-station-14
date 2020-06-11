@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: StorageTank
   id: WaterTank
-  name: Water Tank
+  name: water tank
   suffix: Empty
   description: "A water tank. It is used to store high amounts of water."
   components:

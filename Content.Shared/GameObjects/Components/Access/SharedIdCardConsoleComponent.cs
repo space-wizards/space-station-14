@@ -52,14 +52,14 @@ namespace Content.Shared.GameObjects.Components.Access
             public readonly string TargetIdName;
             public readonly string TargetIdFullName;
             public readonly string TargetIdJobTitle;
-            public readonly List<string> TargetIdAccessList;
+            public readonly string[] TargetIdAccessList;
 
             public IdCardConsoleBoundUserInterfaceState(bool isPrivilegedIdPresent,
                 bool isPrivilegedIdAuthorized,
                 bool isTargetIdPresent,
                 string targetIdFullName,
                 string targetIdJobTitle,
-                List<string> targetIdAccessList, string privilegedIdName, string targetIdName)
+                string[] targetIdAccessList, string privilegedIdName, string targetIdName)
             {
                 IsPrivilegedIdPresent = isPrivilegedIdPresent;
                 IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;

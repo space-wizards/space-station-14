@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -24,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Research
     {
 
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
@@ -121,8 +121,8 @@ namespace Content.Server.GameObjects.Components.Research
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
-            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
-            audioSystem.Play(file,Owner,AudioParams.Default);
+            var audioSystem = EntitySystem.Get<AudioSystem>();
+            audioSystem.PlayFromEntity(file,Owner,AudioParams.Default);
         }
 
 

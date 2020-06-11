@@ -11,7 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged
 {
