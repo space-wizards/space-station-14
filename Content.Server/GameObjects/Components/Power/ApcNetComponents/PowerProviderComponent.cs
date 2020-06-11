@@ -57,9 +57,9 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             serializer.DataField(ref _powerTransferRange, "powerTransferRange", 3);
         }
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             _linkedReceivers = FindAvailableReceivers();
         }
 

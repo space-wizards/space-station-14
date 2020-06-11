@@ -77,9 +77,9 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             serializer.DataField(ref _powerDisabled, "powerDisabled", false);
         }
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             if (NeedsProvider)
             {
                 TryFindAndSetProvider();

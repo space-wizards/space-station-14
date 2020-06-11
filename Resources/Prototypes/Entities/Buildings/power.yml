@@ -79,7 +79,7 @@
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
-    supplyRate: 100000
+    supplyRate: 1000
     
 - type: entity
   id: DebugConsumer
@@ -169,16 +169,16 @@
     sprite: Buildings/smes.rsi
     state: smes
   - type: Battery
-    maxCharge: 100000
-    startingCharge: 100000
+    maxCharge: 1000
+    startingCharge: 1000
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
-    activeDrawRate: 100000
+    activeDrawRate: 1000
   - type: PowerSupplier
   - type: BatteryDischarger
-    activeSupplyRate: 100000
+    activeSupplyRate: 1000
     
 - type: entity
   id: DebugSubstation
@@ -201,17 +201,17 @@
     sprite: Buildings/smes.rsi
     state: smes
   - type: Battery
-    maxCharge: 100000
-    startingCharge: 100000
+    maxCharge: 1000
+    startingCharge: 1000
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
-    activeDrawRate: 100000
+    activeDrawRate: 1000
   - type: PowerSupplier
     voltage: Medium
   - type: BatteryDischarger
-    activeSupplyRate: 100000
+    activeSupplyRate: 1000
 
 - type: entity
   id: DebugApc
@@ -230,14 +230,14 @@
   - type: Icon
     texture: Objects/Power/provider.png
   - type: Battery
-    maxCharge: 100000
-    startingCharge: 100000
+    maxCharge: 10000
+    startingCharge: 10000
   - type: NodeContainer
     nodeTypes: { MVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
-    activeDrawRate: 100000
+    activeDrawRate: 1000
   - type: NewPowerProvider
     voltage: Apc
   - type: NewApc
@@ -296,16 +296,28 @@
   id: Wire
   name: Depriciated Wire
   parent: ApcExtensionCable
+  components:
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
 
 - type: entity
   id: Generator
   name: Depriciated Generator
   parent: DebugGenerator
-
+  components:
+  - type: PowerSupplier
+    voltage: High
+    supplyRate: 10000
+  
 - type: entity
   id: APC
   name: Depriciated Apc
   parent: DebugApc
+  components:
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+  - type: PowerConsumer
+    voltage: High
 
 - type: entity
   id: SMES
