@@ -294,24 +294,30 @@
 
 - type: entity
   id: Wire
+  name: Depriciated Wire
   parent: ApcExtensionCable
 
 - type: entity
   id: Generator
+  name: Depriciated Generator
   parent: DebugGenerator
 
 - type: entity
   id: APC
+  name: Depriciated Apc
   parent: DebugApc
 
 - type: entity
   id: SMES
+  name: Depriciated Smes
   parent: DebugSmes
 
 - type: entity
   id: WiredMachine
+  name: Depriciated WiredMachine
   parent: DebugConsumer
 
 - type: entity
   id: WirelessMachine
+  name: Depriciated WirelessMachine
   parent: DebugPowerReceiver

@@ -86,6 +86,12 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             }
         }
 
+        public override void OnRemove()
+        {
+            _provider.RemoveReceiver(this);
+            base.OnRemove();
+        }
+
         private void TryFindAndSetProvider()
         {
             if (TryFindAvailableProvider(out var provider))
