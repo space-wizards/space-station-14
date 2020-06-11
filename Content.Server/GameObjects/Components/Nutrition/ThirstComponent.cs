@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -45,6 +46,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {ThirstThreshold.Dead, 0.0f},
         };
 
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _thirstThresholdImages =
+        {
+            "/Textures/Mob/UI/Thirst/OverHydrated.png",
+            "/Textures/Mob/UI/Thirst/Okay.png",
+            "/Textures/Mob/UI/Thirst/Thirsty.png",
+            "/Textures/Mob/UI/Thirst/Parched.png",
+            "/Textures/Mob/UI/Thirst/Dead.png",
+        };
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
