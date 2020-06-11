@@ -14,6 +14,7 @@ namespace Content.Shared.GameObjects.Components.Weapons.Ranged
     }
 
     [Flags]
+    [FlagsFor(typeof(FireRateSelector))]
     public enum FireRateSelector
     {
         Safety = 0,

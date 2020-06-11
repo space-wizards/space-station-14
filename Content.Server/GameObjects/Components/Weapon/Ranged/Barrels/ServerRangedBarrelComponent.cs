@@ -45,8 +45,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;
-        public override FireRateSelector AllRateSelectors => _allRateSelectors;
-        private FireRateSelector _allRateSelectors;
+        public override FireRateSelector AllRateSelectors => _fireRateSelector;
+        private int _allRateSelectors;
         public override float FireRate => _fireRate;
         private float _fireRate;
         
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _fireRateSelector, "currentSelector", FireRateSelector.Safety);
-            serializer.DataField(ref _allRateSelectors, "allSelectors", FireRateSelector.Safety);
+            serializer.DataField(ref _allRateSelectors, "allSelectors", 0, WithFormat.Flags<FireRateSelector>());
             serializer.DataField(ref _fireRate, "fireRate", 2.0f);
 
             // This hard-to-read area's dealing with recoil
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Guns/Empty/empty.ogg");
 
             // Validate yaml
-            if ((_fireRateSelector & _allRateSelectors) == 0)
+            if ((_fireRateSelector & AllRateSelectors) == 0)
             {
                 Logger.Error($"Set an invalid FireRateSelector for {Name}");
                 throw new InvalidOperationException();
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {
-            if ((rateSelector & _allRateSelectors) != 0)
+            if ((rateSelector & AllRateSelectors) != 0)
             {
                 _fireRateSelector = rateSelector;
                 return;

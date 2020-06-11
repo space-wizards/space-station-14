@@ -15,7 +15,8 @@
     state: icon
   - type: MagazineBarrel
     currentSelector: Automatic
-    allSelectors: Automatic
+    allSelectors:
+    - Automatic
     fireRate: 5
     minAngle: 0
     maxAngle: 45
