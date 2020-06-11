@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             if (_sound != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_sound);
+                soundSystem.PlayAtCoords(_sound, Owner.Transform.GridPosition);
             }
 
             if (_deleteOnFlash && !Owner.Deleted)

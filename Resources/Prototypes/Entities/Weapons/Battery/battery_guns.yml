@@ -26,12 +26,12 @@
     angleIncrease: 15
     angleDecay: 45
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
     ammoPrototype: RedLaser
     soundGunshot: /Audio/Guns/Gunshots/laser.ogg
-  - type: Sound
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -63,7 +63,8 @@
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 2
     minAngle: 0
     maxAngle: 45
@@ -72,7 +73,6 @@
     powerCellPrototype: PowerCellSmallSuper
     ammoPrototype: RedHeavyLaser
     soundGunshot: /Audio/Guns/Gunshots/laser_cannon.ogg
-  - type: Sound
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -104,7 +104,8 @@
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 2
     minAngle: 0
     maxAngle: 45
@@ -114,7 +115,6 @@
     base_fire_cost: 600
     ammoPrototype: XrayLaser
     soundGunshot: /Audio/Guns/Gunshots/laser3.ogg
-  - type: Sound
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -147,7 +147,8 @@
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 2
     minAngle: 5
     maxAngle: 45
@@ -156,7 +157,6 @@
     powerCellPrototype: PowerCellSmallStandard
     ammoPrototype: BulletTaser
     soundGunshot: /Audio/Guns/Gunshots/taser.ogg
-  - type: Sound
   - type: Appearance
     visuals:
     - type: MagVisualizer2D

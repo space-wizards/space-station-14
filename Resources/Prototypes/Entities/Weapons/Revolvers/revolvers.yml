@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     state: icon
@@ -36,7 +35,8 @@
   - type: RangedWeapon
   - type: BoltActionBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     caliber: Magnum
     capacity: 5
     autoCycle: true
@@ -67,7 +67,8 @@
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     caliber: Magnum
     capacity: 7
     soundEmpty: /Audio/Guns/Empty/empty.ogg
@@ -91,7 +92,8 @@
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     caliber: Magnum
     capacity: 7
     soundEmpty: /Audio/Guns/Empty/empty.ogg

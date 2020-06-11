@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                soundSystem.Play(_soundHitWall, user.Transform.GridPosition.Translated(offset));
+                soundSystem.PlayAtCoords(_soundHitWall, user.Transform.GridPosition.Translated(offset));
             }
             
             Timer.Spawn((int) _deathTime.TotalMilliseconds, () =>

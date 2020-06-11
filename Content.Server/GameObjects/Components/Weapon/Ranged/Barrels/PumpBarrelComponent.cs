@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundCycle != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundCycle, AudioParams.Default.WithVolume(-2));
+                    soundSystem.PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
             }
             
@@ -209,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 if (_soundInsert != null)
                 {
                     var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundInsert, AudioParams.Default.WithVolume(-2));
+                    soundSystem.PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
                 return true;
             }

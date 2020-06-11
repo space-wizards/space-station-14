@@ -83,12 +83,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
             serializer.DataField(ref _soundPowerCellInsert, "soundPowerCellInsert", null);
             serializer.DataField(ref _soundPowerCellEject, "soundPowerCellEject", null);
-
-            if (_ammoPrototype == null)
-            {
-                Logger.Error($"Must specify a prototype for a {Name}");
-                throw new InvalidOperationException($"Must specify a prototype for a {Name}");
-            }
         }
 
         public override void Initialize()
@@ -209,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_soundPowerCellInsert != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundPowerCellInsert, AudioParams.Default.WithVolume(-2));
+                soundSystem.PlayAtCoords(_soundPowerCellInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
 
             _powerCellContainer.Insert(entity);
@@ -230,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (_soundPowerCellEject != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundPowerCellEject, AudioParams.Default.WithVolume(-2));
+                soundSystem.PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
             
             UpdateAppearance();

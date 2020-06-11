@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
   - type: Icon

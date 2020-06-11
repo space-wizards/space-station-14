@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Weapon
 
             if (sound != null)
             {
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().Play(sound, source.Transform.GridPosition);
+                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>().PlayAtCoords(sound, source.Transform.GridPosition);
             }
         }
     }

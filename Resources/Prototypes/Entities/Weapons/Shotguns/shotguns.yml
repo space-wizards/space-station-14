@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     state: icon
@@ -15,7 +14,8 @@
     Size: 24
   - type: PumpBarrel
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     caliber: Shotgun
     capacity: 7
     fireRate: 2.0
@@ -33,7 +33,6 @@
   id: ShotgunBojevic
   description: It's a magazine-fed shotgun designed for close quarters combat, nicknamed 'Striker' by boarding parties. A robust and reliable design allows you to swap magazines on the go and dump as many shells at your foes as you want... if you can manage the recoil, of course.
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     sprite: Objects/Guns/Shotguns/bojevic.rsi
@@ -52,7 +51,8 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic
-    allSelectors: Automatic
+    allSelectors:
+    - Automatic
     fireRate: 3
     caliber: Shotgun
     magazineTypes: 
@@ -78,7 +78,6 @@
   id: ShotgunDB
   description: An immortal classic.
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     sprite: Objects/Guns/Shotguns/db_shotgun.rsi
@@ -97,7 +96,8 @@
   - type: BoltActionBarrel
     caliber: Shotgun
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     capacity: 2
     fireRate: 8.0
     minAngle: 10
@@ -201,7 +201,6 @@
   id: ShotgunSawn
   description: Omar's coming!
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     sprite: Objects/Guns/Shotguns/sawn.rsi
@@ -220,7 +219,8 @@
   - type: BoltActionBarrel
     caliber: Shotgun
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     capacity: 2
     fireRate: 8.0
     minAngle: 10
@@ -230,8 +230,8 @@
     soundGunshot: /Audio/Guns/Gunshots/shotgun.ogg
     soundEmpty: /Audio/Guns/Empty/empty.ogg
     soundInsert: /Audio/Guns/MagIn/shotgun_insert.ogg
-    sound_bolt_open: /Audio/Guns/Cock/shotgun_open.ogg
-    sound_bolt_closed: /Audio/Guns/Cock/shotgun_close.ogg
+    soundBoltOpen: /Audio/Guns/Cock/shotgun_open.ogg
+    soundBoltClosed: /Audio/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D

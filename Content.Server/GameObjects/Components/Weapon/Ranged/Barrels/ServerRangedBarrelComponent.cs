@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -115,13 +116,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // Sounds
             serializer.DataField(ref _soundGunshot, "soundGunshot", null);
             serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Guns/Empty/empty.ogg");
-
-            // Validate yaml
-            if ((_fireRateSelector & AllRateSelectors) == 0)
-            {
-                Logger.Error($"Set an invalid FireRateSelector for {Name}");
-                throw new InvalidOperationException();
-            }
         }
 
         public override void OnAdd()
@@ -181,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundEmpty != null)
                 {
-                    soundSystem.Play(_soundEmpty);
+                    soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.GridPosition);
                 }
                 return;
             }
@@ -190,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var projectile = TakeProjectile();
             if (projectile == null)
             {
-                soundSystem.Play(_soundEmpty);
+                soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.GridPosition);
                 return;
             }
 
@@ -198,6 +192,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var worldPosition = IoCManager.Resolve<IMapManager>().GetGrid(target.GridID).LocalToWorld(target).Position;
             var direction = (worldPosition - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
+            // This should really be client-side but for now we'll just leave it here
+            if (shooter.TryGetComponent(out CameraRecoilComponent recoilComponent))
+            {
+                recoilComponent.Kick(-angle.ToVec() * 0.15f);
+            }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent hitscan))
@@ -226,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 throw new InvalidOperationException();
             }
             
-            soundSystem.Play(_soundGunshot);
+            soundSystem.PlayAtCoords(_soundGunshot, Owner.Transform.GridPosition);
             _lastFire = _gameTiming.CurTime;
 
             return;
@@ -284,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
             var randomFile = robustRandom.Pick(soundCollection.PickFiles);
             var soundSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
-            soundSystem.Play(randomFile, AudioParams.Default.WithVolume(-1));
+            soundSystem.PlayAtCoords(randomFile, entity.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>

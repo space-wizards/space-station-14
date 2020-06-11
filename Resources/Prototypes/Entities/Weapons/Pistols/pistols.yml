@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     layers:
@@ -25,7 +24,8 @@
     magazineTypes: 
     - Pistol
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 8
     minAngle: 10
     maxAngle: 60
@@ -133,7 +133,6 @@
   id: PistolHMPistol
   description: Looks unreliable.
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
     sprite: Objects/Guns/Pistols/hm_pistol.rsi
@@ -152,7 +151,8 @@
   - type: BoltActionBarrel
     caliber: Pistol
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     capacity: 1
     fireRate: 8
     minAngle: 10
@@ -325,7 +325,8 @@
   - type: MagazineBarrel
     caliber: Pistol
     currentSelector: Automatic
-    allSelectors: Automatic
+    allSelectors:
+    - Automatic
     magazineTypes: 
     - HCPistol
     - Smg

@@ -5,7 +5,6 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: Sound
   - type: Sprite
     netsync: false
   - type: Icon
@@ -36,7 +35,8 @@
   - type: BoltActionBarrel
     caliber: Grenade
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 1
     capacity: 3
     soundEmpty: /Audio/Guns/Empty/empty.ogg
@@ -68,7 +68,8 @@
   - type: RevolverBarrel
     caliber: Rocket
     currentSelector: Single
-    allSelectors: Single
+    allSelectors:
+    - Single
     fireRate: 0.5
     capacity: 1
     soundEmpty: /Audio/Guns/Empty/empty.ogg

@@ -81,11 +81,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
             if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundHitSpecies, entity.Transform.GridPosition);
+                soundSystem.PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
             } else if (_soundHit != null)
             {
                 var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.Play(_soundHit, entity.Transform.GridPosition);
+                soundSystem.PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
             
             if (entity.TryGetComponent(out DamageableComponent damage))
