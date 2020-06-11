@@ -18,12 +18,20 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class StatusEffectComponentState : ComponentState
     {
-        public Dictionary<StatusEffect, string> StatusEffects;
+        public Dictionary<StatusEffect, StatusEffectStatus> StatusEffects;
 
-        public StatusEffectComponentState(Dictionary<StatusEffect, string> statusEffects) : base(ContentNetIDs.STATUSEFFECTS)
+        public StatusEffectComponentState(Dictionary<StatusEffect, StatusEffectStatus> statusEffects) : base(ContentNetIDs.STATUSEFFECTS)
         {
             StatusEffects = statusEffects;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public struct StatusEffectStatus
+    {
+        public string Icon;
+        public TimeSpan? CooldownStart;
+        public TimeSpan? CooldownEnd;
     }
 
     // Each status effect is assumed to be unique
