@@ -11,7 +11,7 @@ namespace Content.Shared.Physics
         private float _throwTime;
         private SharedPhysicsComponent _component;
 
-        private const float DefaultThrowTime = 0.25f;
+        public const float DefaultThrowTime = 0.25f;
 
         public float ThrowTime
         {
@@ -33,7 +33,7 @@ namespace Content.Shared.Physics
 
         public void StopThrow()
         {
-            if (_component == null) return;
+            if (_component == null || _component.Owner.Deleted) return;
             if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition))
             {
                 Timer.Spawn((int) (ThrowTime * 1000), StopThrow);

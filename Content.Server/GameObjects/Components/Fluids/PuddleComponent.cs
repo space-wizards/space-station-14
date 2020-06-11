@@ -18,7 +18,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -139,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystem.Get<AudioSystem>().Play(_spillSound);
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(_spillSound, Owner.Transform.GridPosition);
             return true;
         }
 

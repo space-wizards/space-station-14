@@ -9,13 +9,13 @@
     caliber: A10mm
     magazine: A10mm
     capacity: 8
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 # Magazines
 - type: entity
   id: magazine_10mm
-  name: "10mm Magazine"
+  name: "10mm magazine"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -36,7 +36,7 @@
 
 - type: entity
   id: magazine_10mmf
-  name: "10mm Magazine (Flash)"
+  name: "10mm magazine (flash)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -57,7 +57,7 @@
 
 - type: entity
   id: magazine_10mmhv
-  name: "10mm Magazine (High Velocity)"
+  name: "10mm magazine (high velocity)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -78,7 +78,7 @@
 
 - type: entity
   id: magazine_10mml
-  name: "10mm Magazine (L)"
+  name: "10mm magazine (L)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -99,7 +99,7 @@
 
 - type: entity
   id: magazine_10mmp
-  name: "10mm Magazine (Practice)"
+  name: "10mm magazine (practice)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -120,7 +120,7 @@
 
 - type: entity
   id: magazine_10mmr
-  name: "10mm Magazine (Rubber)"
+  name: "10mm magazine (rubber)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -141,7 +141,7 @@
 
 - type: entity
   id: magazine_10mm_smg
-  name: "10mm SMG Magazine"
+  name: "10mm SMG magazine"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -163,7 +163,7 @@
 
 - type: entity
   id: magazine_10mm_smgf
-  name: "10mm SMG magazine (Flash)"
+  name: "10mm SMG magazine (flash)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -185,7 +185,7 @@
 
 - type: entity
   id: magazine_10mm_smghv
-  name: "10mm SMG magazine (High Velocity)"
+  name: "10mm SMG magazine (high velocity)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -229,7 +229,7 @@
 
 - type: entity
   id: magazine_10mm_smgp
-  name: "10mm SMG magazine (Practice)"
+  name: "10mm SMG magazine (practice)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -251,7 +251,7 @@
 
 - type: entity
   id: magazine_10mm_smgr
-  name: "10mm SMG magazine (Rubber)"
+  name: "10mm SMG magazine (rubber)"
   parent: magazine_10mm_empty
   components:
   - type: BallisticMagazine
@@ -290,7 +290,7 @@
 
 - type: entity
   id: ammo_casing_10mm_flash
-  name: "10mm casing (Flash)"
+  name: "10mm casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -306,7 +306,7 @@
 
 - type: entity
   id: ammo_casing_10mm_hv
-  name: "10mm casing (High Velocity)"
+  name: "10mm casing (high velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -338,7 +338,7 @@
 
 - type: entity
   id: ammo_casing_10mm_p
-  name: "10mm casing (Practice)"
+  name: "10mm casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -354,7 +354,7 @@
 
 - type: entity
   id: ammo_casing_10mm_r
-  name: "10mm casing (Rubber)"
+  name: "10mm casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

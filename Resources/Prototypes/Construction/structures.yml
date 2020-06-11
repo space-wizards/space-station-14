@@ -1,5 +1,5 @@
 - type: construction
-  name: Wall
+  name: wall
   id: wall
   category: Structures
   description: Keeps the air in and the greytide out.
@@ -14,15 +14,15 @@
     amount: 2
     icon: Buildings/wall_girder.png
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
   - material: Metal
     amount: 2
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
 - type: construction
-  name: Table
+  name: table
   id: Table
   category: Structures
   icon:
@@ -35,7 +35,7 @@
     amount: 2
 
 - type: construction
-  name: Window
+  name: window
   id: Window
   category: Structures
   description: Clear.
@@ -50,7 +50,7 @@
     amount: 2
 
 - type: construction
-  name: Low Wall
+  name: low wall
   id: LowWall
   category: Structures
   description: A low wall used for mounting windows.
@@ -65,15 +65,15 @@
     amount: 2
     icon: Buildings/wall_girder.png
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
   - material: Metal
     amount: 2
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
 - type: construction
-  name: Rein Window
+  name: rein window
   id: ReinforcedWindow
   category: Structures
   description: Clear but tough.
@@ -87,11 +87,11 @@
   - material: Glass
     amount: 2
     reverse:
-      tool: Wrench
+      tool: Anchoring
 
 # Should be replaced with Metal Rods when someone puts them in.
   - material: Metal
     amount: 2
     reverse:
       # Should be replaced with Wirecutter when someone makes it work.
-      tool: Wrench
+      tool: Anchoring

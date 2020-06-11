@@ -5,7 +5,10 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -16,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// Can a mop click on this entity and dump its fluids
     /// </summary>
     [RegisterComponent]
-    public class BucketComponent : Component, IAttackBy
+    public class BucketComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -65,15 +68,14 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            Owner.TryGetComponent(out SoundComponent soundComponent);
-            soundComponent?.Play(_sound);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out MopComponent mopComponent))
+            if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
             {
                 return false;
             }
@@ -111,8 +113,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            Owner.TryGetComponent(out SoundComponent soundComponent);
-            soundComponent?.Play(_sound);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
 

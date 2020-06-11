@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Power
@@ -9,6 +9,7 @@ namespace Content.Shared.GameObjects.Components.Power
         Idle,
         Producing,
         InsertingMetal,
-        InsertingGlass
+        InsertingGlass,
+        InsertingGold
     }
 }

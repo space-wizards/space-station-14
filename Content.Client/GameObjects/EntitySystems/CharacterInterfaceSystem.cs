@@ -6,6 +6,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -21,9 +22,16 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenCharacterMenu,
-                InputCmdHandler.FromDelegate(s => HandleOpenCharacterMenu()));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenCharacterMenu,
+                InputCmdHandler.FromDelegate(s => HandleOpenCharacterMenu()))
+                .Register<CharacterInterfaceSystem>();
+        }
+
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<CharacterInterfaceSystem>();
+            base.Shutdown();
         }
 
         private void HandleOpenCharacterMenu()

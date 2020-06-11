@@ -1,4 +1,4 @@
-- type: sound_collection
+- type: soundCollection
   id: sparks
   files:
   - /Audio/effects/sparks1.ogg

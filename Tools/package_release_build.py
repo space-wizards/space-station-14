@@ -303,7 +303,7 @@ def publish_client_server(runtime: str, target_os: str, actually_only_server: bo
         "--no-self-contained",
         "-c", "Release",
         f"/p:TargetOS={target_os}",
-        "/p:FullRelease=True",
+        "/p:FullRelease=True"
     ]
 
     if not actually_only_server:

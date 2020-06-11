@@ -1,0 +1,29 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup submodule
+      run: git submodule update --init --recursive
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.300
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Content.Tests
+      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+    - name: Content.IntegrationTests
+      run: dotnet test --no-build Content.Tests/Content.Tests.csproj

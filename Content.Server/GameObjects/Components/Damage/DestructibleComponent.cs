@@ -4,6 +4,7 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -71,10 +72,11 @@ namespace Content.Server.GameObjects.Components.Destructible
             if (e.Passed && e.DamageThreshold == Threshold && destroyed == false)
             {
                 destroyed = true;
+                var pos = Owner.Transform.GridPosition;
                 _actSystem.HandleDestruction(Owner, true);
                 if(destroySound != string.Empty)
                 {
-                    _entitySystemManager.GetEntitySystem<AudioSystem>().Play(destroySound, Owner);
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(destroySound, pos);
                 }
 
 

@@ -1,5 +1,5 @@
 - type: construction
-  name: Wall Light
+  name: wall light
   id: WallLight
   keywords: [fixture, lamp]
   category: Machines

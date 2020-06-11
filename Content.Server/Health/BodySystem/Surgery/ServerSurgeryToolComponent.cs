@@ -28,26 +28,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
 
     [RegisterComponent]
-    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterAttack
+    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterInteract
     {
-#pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IPhysicsManager _physicsManager;
-#pragma warning restore 649
-
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
         private Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
         private BodyManagerComponent _targetCache;
         private IEntity _performerCache;
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            if (eventArgs.Attacked == null)
+            if (eventArgs.Target == null)
                 return;
-            if (eventArgs.Attacked.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
+            if (eventArgs.Target.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();

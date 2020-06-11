@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Interactable.Tools;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -19,14 +20,11 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Construction.ConstructionStepMaterial;
-using static Content.Shared.Construction.ConstructionStepTool;
-using Robust.Shared.Utility;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Construction
 {
     [RegisterComponent]
-    public class ConstructionComponent : Component, IAttackBy
+    public class ConstructionComponent : Component, IInteractUsing
     {
         public override string Name => "Construction";
 
@@ -37,12 +35,6 @@ namespace Content.Server.GameObjects.Components.Construction
 
         SpriteComponent Sprite;
         ITransformComponent Transform;
-#pragma warning disable 649
-        [Dependency] private IRobustRandom _random;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
 
         public override void Initialize()
         {
@@ -52,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Construction
             Transform = Owner.GetComponent<ITransformComponent>();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // default interaction check for AttackBy allows inside blockers, so we will check if its blocked if
             // we're not allowed to build on impassable stuff
@@ -64,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
             var stage = Prototype.Stages[Stage];
 
-            if (TryProcessStep(stage.Forward, eventArgs.AttackWith))
+            if (TryProcessStep(stage.Forward, eventArgs.Using, eventArgs.User))
             {
                 Stage++;
                 if (Stage == Prototype.Stages.Count - 1)
@@ -84,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Construction
                 }
             }
 
-            else if (TryProcessStep(stage.Backward, eventArgs.AttackWith))
+            else if (TryProcessStep(stage.Backward, eventArgs.Using, eventArgs.User))
             {
                 Stage--;
                 if (Stage == 0)
@@ -120,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         }
 
-        bool TryProcessStep(ConstructionStep step, IEntity slapped)
+        bool TryProcessStep(ConstructionStep step, IEntity slapped, IEntity user)
         {
             if (step == null)
             {
@@ -138,57 +130,21 @@ namespace Content.Server.GameObjects.Components.Construction
                         return false;
                     }
                     if (matStep.Material == MaterialType.Cable)
-                        sound.Play("/Audio/items/zip.ogg", Transform.GridPosition);
+                        sound.PlayAtCoords("/Audio/items/zip.ogg", Transform.GridPosition);
                     else
-                        sound.Play("/Audio/items/deconstruct.ogg", Transform.GridPosition);
+                        sound.PlayAtCoords("/Audio/items/deconstruct.ogg", Transform.GridPosition);
                     return true;
                 case ConstructionStepTool toolStep:
-                    switch (toolStep.Tool)
-                    {
-                        case ToolType.Crowbar:
-                            if (slapped.HasComponent<CrowbarComponent>())
-                            {
-                                sound.Play("/Audio/items/crowbar.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Welder:
-                            if (slapped.TryGetComponent(out WelderComponent welder) && welder.TryUse(toolStep.Amount))
-                            {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/welder.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/welder2.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Wrench:
-                            if (slapped.HasComponent<WrenchComponent>())
-                            {
-                                sound.Play("/Audio/items/ratchet.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Screwdriver:
-                            if (slapped.HasComponent<ScrewdriverComponent>())
-                            {
-                                if (_random.NextDouble() > 0.5)
-                                    sound.Play("/Audio/items/screwdriver.ogg", Transform.GridPosition);
-                                else
-                                    sound.Play("/Audio/items/screwdriver2.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        case ToolType.Wirecutters:
-                            if (slapped.HasComponent<WirecutterComponent>())
-                            {
-                                sound.Play("/Audio/items/wirecutter.ogg", Transform.GridPosition);
-                                return true;
-                            }
-                            return false;
-                        default:
-                            throw new NotImplementedException();
-                    }
+                    if (!slapped.TryGetComponent<ToolComponent>(out var tool))
+                        return false;
+
+                    // Handle welder manually since tool steps specify fuel amount needed, for some reason.
+                    if (toolStep.ToolQuality.HasFlag(ToolQuality.Welding))
+                        return slapped.TryGetComponent<WelderComponent>(out var welder)
+                               && welder.UseTool(user, Owner, toolStep.ToolQuality, toolStep.Amount);
+
+                    return tool.UseTool(user, Owner, toolStep.ToolQuality);
+
                 default:
                     throw new NotImplementedException();
             }
@@ -198,6 +154,7 @@ namespace Content.Server.GameObjects.Components.Construction
         = new Dictionary<StackType, MaterialType>
         {
             { StackType.Cable, MaterialType.Cable },
+            { StackType.Gold, MaterialType.Gold },
             { StackType.Glass, MaterialType.Glass },
             { StackType.Metal, MaterialType.Metal }
         };

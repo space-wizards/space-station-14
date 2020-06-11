@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
     [RegisterComponent]
-    public class BallisticMagazineComponent : Component, IMapInit, IAttackBy
+    public class BallisticMagazineComponent : Component, IMapInit, IInteractUsing
     {
         public override string Name => "BallisticMagazine";
 
@@ -189,12 +189,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var ammoMagTransfer = CanTransferFrom(eventArgs.AttackWith);
+            var ammoMagTransfer = CanTransferFrom(eventArgs.Using);
             if (ammoMagTransfer.Result) {
                 IEntity bullet;
-                if (eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent magazineComponent))
+                if (eventArgs.Using.TryGetComponent(out BallisticMagazineComponent magazineComponent))
                 {
                     int fillCount = Math.Min(magazineComponent.CountLoaded, Capacity - CountLoaded);
                     for (int i = 0; i < fillCount; i++)
@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                     eventArgs.User.PopupMessage(eventArgs.User, $"Transferred {fillCount} rounds");
                     return true;
                 }
-                if (eventArgs.AttackWith.TryGetComponent(out AmmoBoxComponent boxComponent))
+                if (eventArgs.Using.TryGetComponent(out AmmoBoxComponent boxComponent))
                 {
                     int fillCount = Math.Min(boxComponent.CountLeft, Capacity - CountLoaded);
                     for (int i = 0; i < fillCount; i++)

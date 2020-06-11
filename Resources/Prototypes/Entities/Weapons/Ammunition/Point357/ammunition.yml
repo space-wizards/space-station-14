@@ -32,7 +32,7 @@
 #
 #- type: entity
 #  id: ammo_casing_357_flash
-#  name: ".357 casing (Flash)"
+#  name: ".357 casing (flash)"
 #  parent: BaseItem
 #  components:
 #  - type: BallisticBullet
@@ -48,7 +48,7 @@
 #
 #- type: entity
 #  id: ammo_casing_357_hv
-#  name: ".357 casing (High Velocity)"
+#  name: ".357 casing (high velocity)"
 #  parent: BaseItem
 #  components:
 #  - type: BallisticBullet
@@ -80,7 +80,7 @@
 #
 #- type: entity
 #  id: ammo_casing_357_p
-#  name: ".357 casing (Practice)"
+#  name: ".357 casing (practice)"
 #  parent: BaseItem
 #  components:
 #  - type: BallisticBullet
@@ -96,7 +96,7 @@
 #
 #- type: entity
 #  id: ammo_casing_357_r
-#  name: ".357 casing (Rubber)"
+#  name: ".357 casing (rubber)"
 #  parent: BaseItem
 #  components:
 #  - type: BallisticBullet

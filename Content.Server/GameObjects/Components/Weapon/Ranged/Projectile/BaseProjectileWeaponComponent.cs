@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.Components.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,6 +11,9 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Physics;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 {
@@ -61,7 +63,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 projectile.Transform.GridPosition = source.Transform.GridPosition; //move projectile to entity it is being fired from
                 projectile.GetComponent<ProjectileComponent>().IgnoreEntity(source);//make sure it doesn't hit the source entity
                 var finalvelocity = projectile.GetComponent<ProjectileComponent>().Velocity + velocity;//add velocity
-                projectile.GetComponent<PhysicsComponent>().LinearVelocity = finalangle.ToVec() * finalvelocity;//Rotate the bullets sprite to the correct direction
+                var physicsComponent = projectile.GetComponent<PhysicsComponent>();
+                physicsComponent.Status = BodyStatus.InAir;
+                physicsComponent.LinearVelocity = finalangle.ToVec() * finalvelocity;//Rotate the bullets sprite to the correct direction
                 projectile.Transform.LocalRotation = finalangle.Theta;
             }
             PlayFireSound();
@@ -72,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             }
         }
 
-        private void PlayFireSound() => Owner.GetComponent<SoundComponent>().Play(_soundGunshot);
+        private void PlayFireSound() => EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundGunshot, Owner);
 
         /// <summary>
         ///     Gets the angle from an entity to a coordinate.

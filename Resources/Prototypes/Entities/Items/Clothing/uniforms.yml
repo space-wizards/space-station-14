@@ -10,7 +10,7 @@
 - type: entity
   parent: UniformBase
   id: JanitorUniform
-  name: Janitor Jumpsuit
+  name: janitor jumpsuit
   description: The jumpsuit for the poor sop with a mop
   components:
   - type: Sprite
@@ -27,7 +27,7 @@
 - type: entity
   parent: UniformBase
   id: UniformEngineering
-  name: Engineering Jumpsuit
+  name: engineering jumpsuit
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_engineering.rsi
@@ -44,7 +44,7 @@
 - type: entity
   parent: UniformBase
   id: UniformAssistant
-  name: Assistant Jumpsuit
+  name: assistant jumpsuit
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_assistant.rsi
@@ -60,7 +60,7 @@
 - type: entity
   parent: UniformBase
   id: UniformClown
-  name: Clown Suit
+  name: clown suit
   description: HONK!
   components:
   - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: UniformBase
   id: UniformSec
-  name: Security Jumpsuit
+  name: security jumpsuit
   description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
@@ -95,7 +95,7 @@
 - type: entity
   parent: UniformBase
   id: UniformCargoTech
-  name: Cargo Technician Jumpsuit
+  name: cargo technician jumpsuit
   description: Shooooorts! They're comfy and easy to wear!
   components:
   - type: Sprite
@@ -112,7 +112,7 @@
 - type: entity
   parent: UniformBase
   id: UniformChef
-  name: Chef's Uniform
+  name: chef's uniform
   description: Can't cook without this.
   components:
   - type: Sprite
@@ -129,7 +129,7 @@
 - type: entity
   parent: UniformBase
   id: UniformCaptain
-  name: Captain's Jumpsuit
+  name: captain's jumpsuit
   description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
   components:
   - type: Sprite
@@ -146,7 +146,7 @@
 - type: entity
   parent: UniformBase
   id: UniformHoP
-  name: Head of Personnel Jumpsuit
+  name: head of personnel jumpsuit
   description: It's a jumpsuit worn by someone who works in the position of Head of Personnel.
   components:
   - type: Sprite
@@ -163,7 +163,7 @@
 - type: entity
   parent: UniformBase
   id: UniformChiefEngineer
-  name: Chief Engineer Jumpsuit
+  name: chief engineer jumpsuit
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
   components:
   - type: Sprite
@@ -180,7 +180,7 @@
 - type: entity
   parent: UniformBase
   id: UniformCMO
-  name: Chief Medical Officer Jumpsuit
+  name: chief medical officer jumpsuit
   description: It's a jumpsuit worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
@@ -197,7 +197,7 @@
 - type: entity
   parent: UniformBase
   id: UniformMedicalDoctor
-  name: Medical Doctor Jumpsuit
+  name: medical doctor jumpsuit
   description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
   components:
   - type: Sprite
@@ -214,7 +214,7 @@
 - type: entity
   parent: UniformBase
   id: UniformScientist
-  name: Scientist Jumpsuit
+  name: scientist jumpsuit
   description: It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist.
   components:
   - type: Sprite
@@ -231,7 +231,7 @@
 - type: entity
   parent: UniformBase
   id: UniformResearchDirector
-  name: Research Director Vest Suit
+  name: research director vest suit
   description: It's a suit worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
@@ -248,7 +248,7 @@
 - type: entity
   parent: UniformBase
   id: UniformMime
-  name: Mime's Clothes
+  name: mime's clothes
   description: ...
   components:
   - type: Sprite
@@ -265,7 +265,7 @@
 - type: entity
   parent: UniformBase
   id: UniformHoS
-  name: Head of Security Jumpsuit
+  name: head of security jumpsuit
   description: A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security.
   components:
   - type: Sprite

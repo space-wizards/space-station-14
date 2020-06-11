@@ -3,5 +3,5 @@
   name: Dwarven Mining Equipment
   description: Get your mining equipment here, and above all keep digging!
   spriteName: mining
-  startinginventory:
+  startingInventory:
     Pickaxe: 4

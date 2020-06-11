@@ -1,4 +1,4 @@
-using System;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -6,7 +6,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
-    public class MoverController: VirtualController
+    public class MoverController : VirtualController
     {
         private Vector2 _velocity;
         private SharedPhysicsComponent _component = null;
@@ -29,7 +29,8 @@ namespace Content.Shared.Physics
 
         public void Move(Vector2 velocityDirection, float speed)
         {
-            if (IoCManager.Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition)) return;
+            if (!_component.Owner.HasComponent<MovementIgnoreGravityComponent>() && IoCManager
+                .Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition)) return;
             Push(velocityDirection, speed);
         }
 

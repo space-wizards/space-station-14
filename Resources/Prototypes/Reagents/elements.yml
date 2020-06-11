@@ -1,107 +1,107 @@
 - type: reagent
   id: chem.H
-  name: Hydrogen
+  name: hydrogen
   desc: A light, flammable gas.
   color: "#808080"
 
 - type: reagent
   id: chem.O
-  name: Oxygen
+  name: oxygen
   desc: An oxidizing, colorless gas.
   color: "#808080"
 
 - type: reagent
   id: chem.S
-  name: Sulfur
+  name: sulfur
   desc: A yellow, crystalline solid.
   color: "#FFFACD"
 
 - type: reagent
   id: chem.C
-  name: Carbon
+  name: carbon
   desc: A black, crystalline solid.
   color: "#22282b"
 
 - type: reagent
   id: chem.Al
-  name: Aluminum
+  name: aluminum
   desc: A silvery-white, soft, non-magnetic, and ductile metal.
   color: "#848789"
 
 - type: reagent
   id: chem.Cu
-  name: Copper
+  name: copper
   desc: A soft, malleable, and ductile metal with very high thermal and electrical conductivity.
   color: "#b05b3c"
 
 - type: reagent
   id: chem.N
-  name: Nitrogen
+  name: nitrogen
   desc: A colorless, odorless unreactive gas. Highly stable.
   color: "#808080"
 
 - type: reagent
   id: chem.Fe
-  name: Iron
+  name: iron
   desc: A silvery-grey metal which forms iron oxides (rust) with contact with air. Commonly alloyed with other elements to create alloys such as steel.
   color: "#434b4d"
 
 - type: reagent
   id: chem.F
-  name: Fluorine
+  name: fluorine
   desc: A highly toxic pale yellow gas. Extremely reactive.
   color: "#808080"
 
 - type: reagent
   id: chem.Si
-  name: Silicon
+  name: silicon
   desc: A hard and brittle crystalline solid with a blue-grey color.
   color: "#364266"
 
 - type: reagent
   id: chem.Cl
-  name: Chlorine
+  name: chlorine
   desc: A yellow-green gas which is toxic to humans.
   color: "#a2ff00"
 
 - type: reagent
   id: chem.Li
-  name: Lithium
+  name: lithium
   desc: A soft, silvery-white alkali metal. It is highly reactive, and ignites if it makes contact with water.
   color: "#c6c8cc"
 
 - type: reagent
   id: chem.Hg
-  name: Mercury
+  name: mercury
   desc: A silver metal which is liquid at room temperature. It is highly toxic to humans.
   color: "#929296"
 
 - type: reagent
   id: chem.P
-  name: Phosphorus
+  name: phosphorus
   desc: A reactive metal used in pyrotechnics and weapons.
   color: "#803330"
 
 - type: reagent
   id: chem.K
-  name: Potassium
+  name: potassium
   desc: A soft, silvery-white metal. Even more reactive than lithium.
   color: "#c6c8cc"
 
 - type: reagent
   id: chem.Ra
-  name: Radium
+  name: radium
   desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
   color: "#00ff04"
 
 - type: reagent
   id: chem.Na
-  name: Sodium
+  name: sodium
   desc: A silvery-white alkali metal. Highly reactive in it's pure form.
   color: "#c6c8cc"
 
 - type: reagent
   id: chem.U
-  name: Uranium
+  name: uranium
   desc: A silvery-white metallic chemical element in the actinide series, weakly radioactive.
   color: "#00ff06"

@@ -8,6 +8,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -20,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Power
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IAttackHand, IAttackBy
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing
     {
         public override string Name => "PoweredLight";
 
@@ -28,9 +29,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         private TimeSpan _lastThunk;
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-#pragma warning restore 649
 
         private LightBulbType BulbType = LightBulbType.Tube;
 
@@ -49,12 +47,12 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return InsertBulb(eventArgs.AttackWith);
+            return InsertBulb(eventArgs.Using);
         }
 
-        public bool AttackHand(AttackHandEventArgs eventArgs)
+        public bool InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
             {
@@ -80,8 +78,8 @@ namespace Content.Server.GameObjects.Components.Power
             void Burn()
             {
                 damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
-                var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
-                audioSystem.Play("/Audio/effects/lightburn.ogg", Owner);
+                var audioSystem = EntitySystem.Get<AudioSystem>();
+                audioSystem.PlayFromEntity("/Audio/effects/lightburn.ogg", Owner);
             }
 
             void Eject()
@@ -174,7 +172,7 @@ namespace Content.Server.GameObjects.Components.Power
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            Owner.GetComponent<SoundComponent>().Play("/Audio/machines/light_tube_on.ogg", AudioParams.Default.WithVolume(-10f));
+                            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

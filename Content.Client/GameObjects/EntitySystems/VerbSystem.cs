@@ -24,6 +24,7 @@ using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -46,7 +47,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
         [Dependency] private readonly IGameTiming _gameTiming;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
 #pragma warning restore 649
 
         private EntityList _currentEntityList;
@@ -66,9 +66,16 @@ namespace Content.Client.GameObjects.EntitySystems
 
             IoCManager.InjectDependencies(this);
 
-            var input = EntitySystemManager.GetEntitySystem<InputSystem>();
-            input.BindMap.BindFunction(ContentKeyFunctions.OpenContextMenu,
-                new PointerInputCmdHandler(OnOpenContextMenu));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenContextMenu,
+                    new PointerInputCmdHandler(OnOpenContextMenu))
+                .Register<VerbSystem>();
+        }
+
+        public override void Shutdown()
+        {
+            CommandBinds.Unregister<VerbSystem>();
+            base.Shutdown();
         }
 
         public void OpenContextMenu(IEntity entity, ScreenCoordinates screenCoordinates)
@@ -430,6 +437,12 @@ namespace Content.Client.GameObjects.EntitySystems
                     inputSys.HandleInputCommand(session, func, message);
 
                     _master.CloseAllMenus();
+                    return;
+                }
+
+                if (args.Function == ContentKeyFunctions.ExamineEntity)
+                {
+                    Get<ExamineSystem>().DoExamine(_entity);
                     return;
                 }
 

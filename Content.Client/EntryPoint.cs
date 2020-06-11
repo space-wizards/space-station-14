@@ -52,7 +52,7 @@ namespace Content.Client
 
             var registerIgnore = new[]
             {
-                "Wrenchable",
+                "Anchorable",
                 "AmmoBox",
                 "Breakable",
                 "Pickaxe",
@@ -68,6 +68,9 @@ namespace Content.Client
                 "Explosive",
                 "OnUseTimerTrigger",
                 "ToolboxElectricalFill",
+                "ToolboxEmergencyFill",
+                "WarpPoint",
+                "ToolboxGoldFill",
                 "ToolLockerFill",
                 "EmitSoundOnUse",
                 "FootstepModifier",
@@ -120,7 +123,7 @@ namespace Content.Client
                 "Species",
                 "Drink",
                 "Food",
-                "DrinkFoodContainer",
+                "FoodContainer",
                 "Stomach",
                 "Hunger",
                 "Thirst",
@@ -155,7 +158,15 @@ namespace Content.Client
                 "SolarPanel",
                 "BodyScanner",
                 "Stunbaton",
-                "EmergencyClosetFill"
+                "EmergencyClosetFill",
+                "Tool",
+                "TilePrying",
+                "RandomToolColor",
+                "ConditionalSpawner",
+                "PottedPlantHide",
+                "SecureEntityStorage",
+                "PresetIdCard",
+                "SolarControlConsole",
             };
 
             foreach (var ignoreName in registerIgnore)

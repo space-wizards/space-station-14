@@ -25,13 +25,13 @@ namespace Content.Server.Utility
         /// Validates that attacker is in range of the attacked entity. Additionally shows a popup if
         /// validation fails.
         /// </summary>
-        public static bool InRangeUnobstructed(ITargetedAttackEventArgs eventArgs, bool insideBlockerValid = true)
+        public static bool InRangeUnobstructed(ITargetedInteractEventArgs eventArgs, bool insideBlockerValid = true)
         {
             if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                eventArgs.Attacked.Transform.WorldPosition, ignoredEnt: eventArgs.Attacked, insideBlockerValid: insideBlockerValid))
+                eventArgs.Target.Transform.MapPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                eventArgs.Attacked.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
+                eventArgs.Target.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -45,23 +45,22 @@ namespace Content.Server.Utility
         /// If there is no attacked entity, validates that they are in range of the clicked position.
         /// Additionally shows a popup if validation fails.
         /// </summary>
-        public static bool InRangeUnobstructed(AfterAttackEventArgs eventArgs, bool insideBlockerValid = true)
+        public static bool InRangeUnobstructed(AfterInteractEventArgs eventArgs, bool insideBlockerValid = true)
         {
-            if (eventArgs.Attacked != null)
+            if (eventArgs.Target != null)
             {
                 if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                    eventArgs.Attacked.Transform.WorldPosition, ignoredEnt: eventArgs.Attacked, insideBlockerValid: insideBlockerValid))
+                    eventArgs.Target.Transform.MapPosition, ignoredEnt: eventArgs.Target, insideBlockerValid: insideBlockerValid))
                 {
                     var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                    eventArgs.Attacked.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
+                    eventArgs.Target.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
                     return false;
                 }
             }
             else
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
                 if (!EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
-                    eventArgs.ClickLocation.ToMapPos(mapManager), ignoredEnt: eventArgs.User, insideBlockerValid: insideBlockerValid))
+                    eventArgs.ClickLocation.ToMap(IoCManager.Resolve<IMapManager>()), ignoredEnt: eventArgs.User, insideBlockerValid: insideBlockerValid))
                 {
                     var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                     eventArgs.User.PopupMessage(eventArgs.User, localizationManager.GetString("You can't reach there!"));
@@ -77,13 +76,14 @@ namespace Content.Server.Utility
         /// Convenient static alternative to <see cref="SharedInteractionSystem.InRangeUnobstructed"/>, which also
         /// shows a popup message if not in range.
         /// </summary>
-        public static bool InRangeUnobstructed(IEntity user, Vector2 targetWorldCoords,
+        public static bool InRangeUnobstructed(IEntity user, MapCoordinates otherCoords,
             float range = SharedInteractionSystem.InteractionRange,
             int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null,
             bool insideBlockerValid = false)
         {
+            var mapManager = IoCManager.Resolve<IMapManager>();
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
-            if (!interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, targetWorldCoords, range, collisionMask,
+            if (!interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, otherCoords, range, collisionMask,
                 ignoredEnt, insideBlockerValid))
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();

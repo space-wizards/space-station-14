@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class LatheComponent : SharedLatheComponent, IAttackBy, IActivate
+    public class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
     {
         public const int VolumePerSheet = 3750;
 
@@ -154,14 +154,14 @@ namespace Content.Server.GameObjects.Components.Research
 
             OpenUserInterface(actor.playerSession);
         }
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
-                ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
+                ||  !eventArgs.Using.TryGetComponent(out MaterialComponent material)) return false;
 
             var multiplier = 1;
 
-            if (eventArgs.AttackWith.TryGetComponent(out StackComponent stack)) multiplier = stack.Count;
+            if (eventArgs.Using.TryGetComponent(out StackComponent stack)) multiplier = stack.Count;
 
             var totalAmount = 0;
 
@@ -190,15 +190,18 @@ namespace Content.Server.GameObjects.Components.Research
                 case "Glass":
                     SetAppearance(LatheVisualState.InsertingGlass);
                     break;
+                case "Gold":
+                    SetAppearance(LatheVisualState.InsertingGold);
+                    break;
             }
 
-            Timer.Spawn(InsertionTime, async () =>
+            Timer.Spawn(InsertionTime, () =>
             {
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);
             });
 
-            eventArgs.AttackWith.Delete();
+            eventArgs.Using.Delete();
 
             return false;
         }

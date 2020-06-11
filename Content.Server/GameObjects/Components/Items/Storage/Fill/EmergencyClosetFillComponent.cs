@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
                 storage.Insert(Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
             }
 
-            if (random.Prob(40))
+            if (random.Prob(0.4f))
             {
                 Spawn("ToolboxEmergencyFilled");
             }

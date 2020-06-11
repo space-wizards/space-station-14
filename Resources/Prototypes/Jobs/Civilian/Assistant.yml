@@ -1,15 +1,13 @@
 - type: job
   id: Assistant
-  name: "Assistant"
+  name: "assistant"
   positions: -1 # Treated as infinite.
   startingGear: AssistantGear
   department:
   - Civilian
-
   icon: "Assistant"
-
   access:
-  - maintenance
+  - Maintenance
 
 - type: startingGear
   id: AssistantGear
@@ -17,5 +15,5 @@
     innerclothing: UniformColorGrey
     backpack: BackpackClothing
     shoes: ShoesBlack
-    idcard: AssistantIDCard
+    idcard: AssistantPDA
 
