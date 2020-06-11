@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!Owner.TryGetComponent(out ServerStatusEffectsComponent status))
                 return;
 
-            status.ChangeStatus(StatusEffect.Stun, _stunTexture, StunStart, StunEnd);
+            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture, (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             _statusRemoveCancellation.Cancel();
             _statusRemoveCancellation = new CancellationTokenSource();
         }
@@ -237,7 +237,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (progress >= length)
             {
-                Timer.Spawn(250, () => status.RemoveStatus(StatusEffect.Stun), _statusRemoveCancellation.Token);
+                Timer.Spawn(250, () => status.RemoveStatusEffect(StatusEffect.Stun), _statusRemoveCancellation.Token);
                 _lastStun = null;
             }
         }

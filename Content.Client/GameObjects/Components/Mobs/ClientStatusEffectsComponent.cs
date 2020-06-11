@@ -94,30 +94,32 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
             _ui.VBox.DisposeAllChildren();
 
-            foreach (var effect in _status.OrderBy(x => (int) x.Key))
+            foreach (var (key, statusEffect) in _status.OrderBy(x => (int) x.Key))
             {
-                var cooldown = new CooldownGraphic();
-
-                Control status = new Control()
+                var status = new Control()
                 {
                     Children =
                     {
                         new TextureRect
                         {
                             TextureScale = (2, 2),
-                            Texture = _resourceCache.GetTexture(effect.Value.Icon)
+                            Texture = _resourceCache.GetTexture(statusEffect.Icon)
                         },
-                        cooldown,
                     }
                 };
 
-                _cooldown[effect.Key] = cooldown;
+                if (statusEffect.Cooldown.HasValue)
+                {
+                    var cooldown = new CooldownGraphic();
+                    status.Children.Add(cooldown);
+                    _cooldown[key] = cooldown;
+                }
 
                 _ui.VBox.AddChild(status);
             }
         }
 
-        public void RemoveIcon(StatusEffect name)
+        public void RemoveStatusEffect(StatusEffect name)
         {
             _status.Remove(name);
             UpdateStatusEffects();
@@ -128,30 +130,22 @@ namespace Content.Client.GameObjects.Components.Mobs
             foreach (var (effect, cooldownGraphic) in _cooldown)
             {
                 var status = _status[effect];
-                if (!status.CooldownStart.HasValue || !status.CooldownEnd.HasValue)
+                if (!status.Cooldown.HasValue)
                 {
                     cooldownGraphic.Progress = 0;
                     cooldownGraphic.Visible = false;
                     continue;
                 }
 
-                var start = status.CooldownStart.Value;
-                var end = status.CooldownEnd.Value;
+                var start = status.Cooldown.Value.Item1;
+                var end = status.Cooldown.Value.Item2;
 
                 var length = (end - start).TotalSeconds;
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
                 cooldownGraphic.Progress = (float)ratio.Clamp(-1, 1);
-
-                if (ratio > -1f)
-                {
-                    cooldownGraphic.Visible = true;
-                }
-                else
-                {
-                    cooldownGraphic.Visible = false;
-                }
+                cooldownGraphic.Visible = ratio > -1f;
             }
         }
     }

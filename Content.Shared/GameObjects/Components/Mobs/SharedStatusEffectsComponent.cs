@@ -30,8 +30,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     public struct StatusEffectStatus
     {
         public string Icon;
-        public TimeSpan? CooldownStart;
-        public TimeSpan? CooldownEnd;
+        public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
     }
 
     // Each status effect is assumed to be unique

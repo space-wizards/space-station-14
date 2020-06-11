@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             return new StatusEffectComponentState(_statusEffects);
         }
 
-        public void ChangeStatusIcon(StatusEffect effect, string icon)
+        public void ChangeStatusEffectIcon(StatusEffect effect, string icon)
         {
             if (_statusEffects.TryGetValue(effect, out var value) && value.Icon == icon)
             {
@@ -24,33 +24,33 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             _statusEffects[effect] = new StatusEffectStatus()
-                {Icon = icon, CooldownStart = value.CooldownStart, CooldownEnd = value.CooldownEnd};
+                {Icon = icon, Cooldown = value.Cooldown};
             Dirty();
         }
 
-        public void ChangeStatusCooldown(StatusEffect effect, TimeSpan? start, TimeSpan? end)
+        public void ChangeStatusEffectCooldown(StatusEffect effect, ValueTuple<TimeSpan, TimeSpan> cooldown)
         {
             if (_statusEffects.TryGetValue(effect, out var value)
-                && value.CooldownStart == start && value.CooldownEnd == end)
+                && value.Cooldown == cooldown)
             {
                 return;
             }
 
             _statusEffects[effect] = new StatusEffectStatus()
             {
-                Icon = value.Icon, CooldownStart = start, CooldownEnd = end
+                Icon = value.Icon, Cooldown = cooldown
             };
             Dirty();
         }
 
-        public void ChangeStatus(StatusEffect effect, string icon, TimeSpan? start, TimeSpan? end)
+        public void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
         {
             _statusEffects[effect] = new StatusEffectStatus()
-                {Icon = icon, CooldownStart = start, CooldownEnd = end};
+                {Icon = icon, Cooldown = cooldown};
             Dirty();
         }
 
-        public void RemoveStatus(StatusEffect effect)
+        public void RemoveStatusEffect(StatusEffect effect)
         {
             if (!_statusEffects.Remove(effect))
             {
