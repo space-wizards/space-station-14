@@ -15,8 +15,8 @@ namespace Content.Server.BodySystem
 
 
     /// <summary>
-    ///     Data class representing a singular limb such as an arm or a leg. Typically held within a BodyManagerComponent,
-    ///     which coordinates functions between BodyParts.
+    ///     Data class representing a singular limb such as an arm or a leg. Typically held within either a <see cref="BodyManagerComponent">BodyManagerComponent</see>,
+    ///     which coordinates functions between BodyParts, or a <see cref="DroppedBodyPartComponent">DroppedBodyPartComponent</see>.
     /// </summary>
     public class BodyPart
     {
@@ -127,10 +127,12 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Attempts to add a Mechanism. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Use InstallDroppedMechanism if you want to easily install an IEntity with a DroppedMechanismComponent.
         /// </summary>
-        public bool InstallMechanism(Mechanism mechanism)
+        public bool TryInstallMechanism(Mechanism mechanism)
         {
             if (_sizeUsed + mechanism.Size > Size)
                 return false; //No space
+            if (!_surgeryData.CanInstallMechanism(mechanism))
+                return false; //ISurgeryData states that this mechanism cannot be installed
             _mechanisms.Add(mechanism);
             _sizeUsed += mechanism.Size;
             return true;
@@ -139,11 +141,10 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Attempts to install a DroppedMechanismComponent into the given limb, potentially deleting the dropped IEntity. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart).
         /// </summary>
-        public bool InstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
+        public bool TryInstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
         {
-            if (_sizeUsed + droppedMechanism.ContainedMechanism.Size > Size)
-                return false; //No space
-            InstallMechanism(droppedMechanism.ContainedMechanism);
+            if (!TryInstallMechanism(droppedMechanism.ContainedMechanism))
+                return false; //Installing the mechanism failed for some reason.
             droppedMechanism.Owner.Delete();
             return true;
         }
@@ -179,7 +180,7 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g. 
         /// </summary>
-        public bool SurgeryCheck(SurgeryToolType toolType)
+        public bool SurgeryCheck(SurgeryType toolType)
         {
             return _surgeryData.CheckSurgery(toolType);
         }
@@ -187,9 +188,9 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Attempts to perform surgery on this BodyPart with the given tool. Returns false if there was an error, true if successful.
         /// </summary>
-        public bool AttemptSurgery(SurgeryToolType toolType, IBodyPartContainer target, IEntity performer)
+        public bool AttemptSurgery(SurgeryType toolType, IBodyPartContainer target, ISurgeon surgeon, IEntity performer)
         {
-            return _surgeryData.PerformSurgery(toolType, target, performer);
+            return _surgeryData.PerformSurgery(toolType, target, surgeon, performer);
         }
 
         /// <summary>

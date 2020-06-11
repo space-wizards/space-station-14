@@ -18,12 +18,17 @@ using System.Globalization;
 
 namespace Content.Client.BodySystem
 {
-
     //TODO : Make window close if target or surgery tool gets too far away from user.
+
+    /// <summary>
+    ///     Client-side component representing a generic tool capable of performing surgery. This client version exclusively handles UI popups.
+    /// </summary>
     [RegisterComponent]
     public class ClientSurgeryToolComponent : SharedSurgeryToolComponent
     {
-        private SurgeryToolWindow Window; 
+        private GenericSurgeryWindow _window;
+        private SurgeryUIMessageType _currentDisplayType;
+
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -31,7 +36,7 @@ namespace Content.Client.BodySystem
             switch (message)
             {
                 case OpenSurgeryUIMessage msg:
-                    HandleOpenSurgeryUIMessage();
+                    HandleOpenSurgeryUIMessage(msg);
                     break;
                 case CloseSurgeryUIMessage msg:
                     HandleCloseSurgeryUIMessage();
@@ -44,125 +49,36 @@ namespace Content.Client.BodySystem
         public override void OnAdd()
         {
             base.OnAdd();
-            Window = new SurgeryToolWindow() { SurgeryToolEntity = this };
+            _window = new GenericSurgeryWindow(OptionSelectedCallback, CloseCallback);
         }
-
         public override void OnRemove()
         {
-            Window.Dispose();
+            _window.Dispose();
             base.OnRemove();
         }
-        
-        private void HandleOpenSurgeryUIMessage()
+
+        private void HandleOpenSurgeryUIMessage(OpenSurgeryUIMessage openSurgeryUIMessage)
         {
-            Window.Open();
+            _currentDisplayType = openSurgeryUIMessage.MessageType;
+            _window.OpenCentered();
         }
         private void HandleCloseSurgeryUIMessage()
         {
-            Window.Close();
+            _window.Close();
         }
-        private void HandleUpdateSurgeryUIMessage(UpdateSurgeryUIMessage surgeryUIState)
+        private void HandleUpdateSurgeryUIMessage(UpdateSurgeryUIMessage updateSurgeryUIMessage)
         {
-            Window.BuildDisplay(surgeryUIState.Targets);
+            _window.BuildDisplay(updateSurgeryUIMessage.Targets);
         }
-        private class SurgeryToolWindow : SS14Window
+
+        private void CloseCallback()
         {
-            private Control _VSplitContainer;
-            private VBoxContainer _bodyPartList;
-            public ClientSurgeryToolComponent SurgeryToolEntity;
-
-            protected override Vector2? CustomSize => (300, 400);
-
-            public SurgeryToolWindow()
-            {
-                Title = "Select surgery target...";
-                RectClipContent = true;
-
-                _VSplitContainer = new VBoxContainer();
-                var listScrollContainer = new ScrollContainer
-                {
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    HScrollEnabled = true,
-                    VScrollEnabled = true
-                };
-                _bodyPartList = new VBoxContainer
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-                listScrollContainer.AddChild(_bodyPartList);
-                _VSplitContainer.AddChild(listScrollContainer);
-                Contents.AddChild(_VSplitContainer);
-            }
-
-            public override void Close()
-            {
-                SurgeryToolEntity.SendNetworkMessage(new CloseSurgeryUIMessage());
-                base.Close();
-            }
-
-            public void BuildDisplay(Dictionary<string, string> targets)
-            {
-                _bodyPartList.DisposeAllChildren();
-                foreach (var(slotName, partname) in targets)
-                {
-                    var button = new BodyPartButton(slotName);
-                    button.ActualButton.OnToggled += OnButtonPressed;
-                    button.LimbName.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(slotName + " - " + partname);
-
-                    //button.SpriteView.Sprite = sprite;
-
-                    _bodyPartList.AddChild(button);
-                }
-            }
-
-            private void OnButtonPressed(BaseButton.ButtonEventArgs args)
-            {
-                var parent = (BodyPartButton) args.Button.Parent;
-                SurgeryToolEntity.SendNetworkMessage(new SelectSurgeryUIMessage(parent.LimbSlotName));
-            }
+            SendNetworkMessage(new CloseSurgeryUIMessage());
         }
-
-        private class BodyPartButton : PanelContainer
+        private void OptionSelectedCallback(string selectedOptionData)
         {
-            public Button ActualButton { get; }
-            public SpriteView SpriteView { get; }
-            public Control EntityControl { get; }
-            public Label LimbName { get; }
-            public string LimbSlotName { get; }
-
-            public BodyPartButton(string slotName)
-            {
-                LimbSlotName = slotName;
-                ActualButton = new Button
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand,
-                    SizeFlagsVertical = SizeFlags.FillExpand,
-                    ToggleMode = true,
-                    MouseFilter = MouseFilterMode.Stop
-                };
-                AddChild(ActualButton);
-
-                var hBoxContainer = new HBoxContainer();
-                SpriteView = new SpriteView
-                {
-                    CustomMinimumSize = new Vector2(32.0f, 32.0f)
-                };
-                LimbName = new Label
-                {
-                    SizeFlagsVertical = SizeFlags.ShrinkCenter,
-                    Text = "N/A",
-                };
-                hBoxContainer.AddChild(SpriteView);
-                hBoxContainer.AddChild(LimbName);
-
-                EntityControl = new Control
-                {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-                hBoxContainer.AddChild(EntityControl);
-                AddChild(hBoxContainer);
-            }
+            SendNetworkMessage(new ReceiveSurgeryUIMessage(selectedOptionData, _currentDisplayType));
         }
+   
     }
 }

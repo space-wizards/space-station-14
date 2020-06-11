@@ -169,7 +169,7 @@
     - type: ComputerVisualizer2D
       key: id_key
       screen: id
-      
+
 - type: entity
   id: computerBodyScanner
   parent: ComputerBase

@@ -1,38 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
+using Mono.Cecil;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.BodySystem {
 
     
-    public class SharedSurgeryToolComponent : Component {
-
-        protected SurgeryToolType _surgeryToolClass;
-        protected float _baseOperateTime;
+    public abstract class SharedSurgeryToolComponent : Component {
         public override string Name => "SurgeryTool";
         public override uint? NetID => ContentNetIDs.SURGERY;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _surgeryToolClass, "surgeryToolClass", SurgeryToolType.Incision);
-            serializer.DataField(ref _baseOperateTime, "baseOperateTime", 5);
-        }
     }
+
+    /// <summary>
+    ///     Used by to determine which callback is used by the server after an option is selected.
+    /// </summary>	   
+    public enum SurgeryUIMessageType { SelectBodyPart, SelectMechanism }
 
     [Serializable, NetSerializable]
     public class OpenSurgeryUIMessage : ComponentMessage
     {
-        public OpenSurgeryUIMessage()
+        public SurgeryUIMessageType MessageType;
+        public OpenSurgeryUIMessage(SurgeryUIMessageType messageType)
         {
+            MessageType = messageType;
             Directed = true;
-
         }
     }
 
@@ -57,12 +50,14 @@ namespace Content.Shared.BodySystem {
     }
 
     [Serializable, NetSerializable]
-    public class SelectSurgeryUIMessage : ComponentMessage
+    public class ReceiveSurgeryUIMessage : ComponentMessage
     {
-        public string TargetSlot;
-        public SelectSurgeryUIMessage(string target)
+        public string SelectedOptionData;
+        public SurgeryUIMessageType MessageType;
+        public ReceiveSurgeryUIMessage(string selectedOptionData, SurgeryUIMessageType messageType)
         {
-            TargetSlot = target;
+            SelectedOptionData = selectedOptionData;
+            MessageType = messageType;
         }
     }
 

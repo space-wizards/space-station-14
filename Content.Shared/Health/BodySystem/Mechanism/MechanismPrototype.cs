@@ -8,25 +8,27 @@ using YamlDotNet.RepresentationModel;
 
 
 
-namespace Content.Shared.BodySystem {
+namespace Content.Shared.BodySystem
+{
 
     /// <summary>
     ///    Prototype for the Mechanism class.
     /// </summary>	
     [Prototype("mechanism")]
     [NetSerializable, Serializable]
-    public class MechanismPrototype : IPrototype, IIndexedPrototype {
+    public class MechanismPrototype : IPrototype, IIndexedPrototype
+    {
         private string _id;
         private string _name;
-		private string _description;
-		private string _examineMessage;
+        private string _description;
+        private string _examineMessage;
         private string _spritePath;
         private string _rsiPath;
         private string _rsiState;
         private int _durability;
-		private int _destroyThreshold;
-		private int _resistance;
-		private int _size;
+        private int _destroyThreshold;
+        private int _resistance;
+        private int _size;
         private BodyPartCompatibility _compatibility;
 
         [ViewVariables]
@@ -34,12 +36,12 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public string Name => _name;
-					
-		[ViewVariables]
-        public string Description => _description;		
-  
-		[ViewVariables]
-		public string ExamineMessage => _examineMessage;
+
+        [ViewVariables]
+        public string Description => _description;
+
+        [ViewVariables]
+        public string ExamineMessage => _examineMessage;
 
         [ViewVariables]
         public string RSIPath => _rsiPath;
@@ -48,21 +50,22 @@ namespace Content.Shared.BodySystem {
         public string RSIState => _rsiState;
 
         [ViewVariables]
-		public int Durability => _durability;
-				
-		[ViewVariables]
-		public int DestroyThreshold => _destroyThreshold;	
-		
-		[ViewVariables]
-		public int Resistance => _resistance;
-			
-		[ViewVariables]
-		public int Size => _size;
+        public int Durability => _durability;
 
         [ViewVariables]
-        public BodyPartCompatibility Compatibility => _compatibility;	
-		
-        public virtual void LoadFrom(YamlMappingNode mapping){
+        public int DestroyThreshold => _destroyThreshold;
+
+        [ViewVariables]
+        public int Resistance => _resistance;
+
+        [ViewVariables]
+        public int Size => _size;
+
+        [ViewVariables]
+        public BodyPartCompatibility Compatibility => _compatibility;
+
+        public virtual void LoadFrom(YamlMappingNode mapping)
+        {
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _id, "id", string.Empty);
@@ -74,9 +77,9 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _durability, "durability", 0);
             serializer.DataField(ref _destroyThreshold, "destroyThreshold", 0);
             serializer.DataField(ref _resistance, "resistance", 0);
-            serializer.DataField(ref _size, "size", 2);  
+            serializer.DataField(ref _size, "size", 2);
             serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
-        }		
-	}
+        }
+    }
 }
 

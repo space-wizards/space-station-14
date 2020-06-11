@@ -8,14 +8,16 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.BodySystem {
+namespace Content.Server.BodySystem
+{
 
 
 
     /// <summary>
     ///     This data class represents the state of a BodyPart in regards to everything surgery related - whether there's an incision on it, whether the bone is broken, etc.
     /// </summary>	
-    public abstract class ISurgeryData {
+    public abstract class ISurgeryData
+    {
 
         /// <summary>
         ///     The BodyPart this surgeryData is attached to. The ISurgeryData class should not exist without a BodyPart that it represents, and will not work correctly without it.
@@ -27,7 +29,9 @@ namespace Content.Server.BodySystem {
         /// </summary>	
         protected BodyPartType _parentType => _parent.PartType;
 
-        public delegate void SurgeryAction(IBodyPartContainer container, IEntity performer);
+        public delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
+
+
 
         public ISurgeryData(BodyPart parent)
         {
@@ -35,19 +39,24 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Abstract ISurgeryData function. Returns whether a mechanism can be installed into the BodyPart this ISurgeryData represents. 
+        ///     Returns the description of this current limb to be shown upon observing the associated entity. 
         /// </summary>
-        protected abstract bool CanInstallMechanism(Mechanism toBeInstalled);
+        public abstract string GetDescription();
 
         /// <summary>
-        ///     Gets the delegate corresponding to the surgery step using the given SurgeryToolType. Returns null if no surgery step can be performed.
+        ///     Returns whether a mechanism can be installed into the BodyPart this ISurgeryData represents. 
         /// </summary>
-        public abstract SurgeryAction GetSurgeryStep(SurgeryToolType toolType);
+        public abstract bool CanInstallMechanism(Mechanism toBeInstalled);
 
         /// <summary>
-        ///     Returns whether the given SurgeryToolType can be used to perform a surgery.
+        ///     Gets the delegate corresponding to the surgery step using the given <see cref="SurgeryType">SurgeryType</see>. Returns null if no surgery step can be performed.
         /// </summary>
-        public bool CheckSurgery(SurgeryToolType toolType)
+        public abstract SurgeryAction GetSurgeryStep(SurgeryType toolType);
+
+        /// <summary>
+        ///     Returns whether the given <see cref="SurgeryType">SurgeryType</see> can be used to perform a surgery on the BodyPart this <see cref="ISurgeryData">ISurgeryData</see> represents.
+        /// </summary>
+        public bool CheckSurgery(SurgeryType toolType)
         {
             return GetSurgeryStep(toolType) != null;
         }
@@ -55,14 +64,14 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Attempts to perform surgery with the given tooltype. Returns whether the operation was successful.
         /// </summary>
-        /// /// <param name="toolType">The SurgeryToolType used for this surgery.</param>
-        /// /// <param name="performer">The entity performing the surgery.</param>
-        public bool PerformSurgery(SurgeryToolType toolType, IBodyPartContainer container, IEntity performer)
+        /// <param name="toolType">The <see cref="SurgeryType">SurgeryType</see> used for this surgery.</param>
+        /// <param name="performer">The entity performing the surgery.</param>
+        public bool PerformSurgery(SurgeryType surgeryType, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            SurgeryAction step = GetSurgeryStep(toolType);
+            SurgeryAction step = GetSurgeryStep(surgeryType);
             if (step == null)
                 return false;
-            step(container, performer);
+            step(container, surgeon, performer);
             return true;
         }
 

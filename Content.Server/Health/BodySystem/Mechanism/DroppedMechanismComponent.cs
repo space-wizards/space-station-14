@@ -22,9 +22,9 @@ namespace Content.Server.BodySystem {
         public sealed override string Name => "DroppedMechanism";
 
         [ViewVariables]
-        private Mechanism _containedMechanism;
-
         public Mechanism ContainedMechanism => _containedMechanism;
+
+        private Mechanism _containedMechanism;
 
         public void InitializeDroppedMechanism(Mechanism data)
         {
@@ -52,7 +52,7 @@ namespace Content.Server.BodySystem {
                     Logger.Debug("Installing a mechanism was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
                     throw new InvalidOperationException("A DroppedBodyPartComponent exists without a BodyPart in it!");
                 }
-                droppedBodyPart.ContainedBodyPart.InstallDroppedMechanism(this);
+                droppedBodyPart.ContainedBodyPart.TryInstallDroppedMechanism(this);
             }
         }
     }

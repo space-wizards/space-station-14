@@ -11,90 +11,114 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.BodySystem {
+namespace Content.Server.BodySystem
+{
 
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.
     /// </summary>	
-    public class BiologicalSurgeryData : ISurgeryData {
+    public class BiologicalSurgeryData : ISurgeryData
+    {
 
         protected bool _skinOpened = false;
         protected bool _vesselsClamped = false;
         protected bool _skinRetracted = false;
-        protected Mechanism _targetOrgan; 
+        protected List<Mechanism> _disconnectedOrgans = new List<Mechanism>();
 
         public BiologicalSurgeryData(BodyPart parent) : base(parent) { }
 
-        protected override bool CanInstallMechanism(Mechanism toBeInstalled)
+        public override bool CanInstallMechanism(Mechanism toBeInstalled)
         {
             return _skinOpened && _vesselsClamped && _skinRetracted;
         }
 
-        public override SurgeryAction GetSurgeryStep(SurgeryToolType toolType)
+
+
+        public override SurgeryAction GetSurgeryStep(SurgeryType toolType)
         {
-            if (toolType == SurgeryToolType.BoneSawing)
+            if (toolType == SurgeryType.Amputation)
             {
                 return RemoveBodyPartSurgery;
             }
-            if (_skinOpened)
+            if (!_skinOpened) //Case: skin is normal.
             {
-                if (_vesselsClamped)
-                {
-                    if (_skinRetracted) 
-                    {
-                        if (_targetOrgan != null && toolType == SurgeryToolType.VesselCompression)
-                            return RemoveOrganSurgery;
-                        if (toolType == SurgeryToolType.Incision) //_targetOrgan is potentially given a value by DisconnectOrganSurgery.
-                            return DisconnectOrganSurgery;
-                        else if (toolType == SurgeryToolType.Cauterization)
-                            return CautizerizeIncisionSurgery;
-                    }
-                    else
-                    {
-                        if (toolType == SurgeryToolType.Retraction)
-                            return RetractSkinSurgery;
-                        else if (toolType == SurgeryToolType.Cauterization)
-                            return CautizerizeIncisionSurgery;
-                    }
-                }
-                else
-                {
-                    if (toolType == SurgeryToolType.VesselCompression)
-                        return ClampVesselsSurgery;
-                    else if (toolType == SurgeryToolType.Cauterization)
-                        return CautizerizeIncisionSurgery;
-                }
-            }
-            else
-            {
-                if (toolType == SurgeryToolType.Incision)
+                if (toolType == SurgeryType.Incision)
                     return OpenSkinSurgery;
+            }
+            else if (_skinOpened && !_vesselsClamped) //Case: skin is opened, but not clamped.
+            {
+                if (toolType == SurgeryType.VesselCompression)
+                    return ClampVesselsSurgery;
+                else if (toolType == SurgeryType.Cauterization)
+                    return CautizerizeIncisionSurgery;
+            }
+            else if (_skinOpened && _vesselsClamped && !_skinRetracted) //Case: skin is opened and clamped, but not retracted.
+            {
+                if (toolType == SurgeryType.Retraction)
+                    return RetractSkinSurgery;
+                else if (toolType == SurgeryType.Cauterization)
+                    return CautizerizeIncisionSurgery;
+            }
+            else if (_skinOpened && _vesselsClamped && _skinRetracted)//Case: skin is fully open.
+            {
+                if (_parent.Mechanisms.Count > 0 && toolType == SurgeryType.VesselCompression)
+                    return RemoveOrganSurgery;
+                else if (_disconnectedOrgans.Count > 0 && toolType == SurgeryType.Incision)
+                    return DisconnectOrganSurgery;
+                else if (toolType == SurgeryType.Cauterization)
+                    return CautizerizeIncisionSurgery;
             }
             return null;
         }
 
-        protected void OpenSkinSurgery(IBodyPartContainer container, IEntity performer)
+
+
+        public override string GetDescription()
+        {
+            string toReturn = "";
+            if (_skinOpened && !_vesselsClamped) //Case: skin is opened, but not clamped.
+            {
+                toReturn += "The skin on his " + _parent.Name + " has an incision, but it is prone to bleeding.\n";
+            }
+            else if (_skinOpened && _vesselsClamped && !_skinRetracted) //Case: skin is opened and clamped, but not retracted.
+            {
+                toReturn += "The skin on his " + _parent.Name + " has an incision, but it is not retracted.\n";
+            }
+            else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
+            {
+                toReturn += "There is an incision on his " + _parent.Name + ".\n";
+                foreach (Mechanism mechanism in _disconnectedOrgans)
+                {
+                    toReturn += "His " + mechanism.Name + " is loose.\n";
+                }
+            }
+            return toReturn;
+        }
+
+
+
+        protected void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Cut open the skin..."));
             //Delay?
             _skinOpened = true;
         }
-        protected void ClampVesselsSurgery(IBodyPartContainer container, IEntity performer)
+        protected void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Clamp the vessels..."));
             //Delay?
             _vesselsClamped = true;
         }
-        protected void RetractSkinSurgery(IBodyPartContainer container, IEntity performer)
+        protected void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Retract the skin..."));
             //Delay?
             _skinRetracted = true;
         }
-        protected void CautizerizeIncisionSurgery(IBodyPartContainer container, IEntity performer)
+        protected void CautizerizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
             performer.PopupMessage(performer, localizationManager.GetString("Cauterize the incision..."));
@@ -103,33 +127,40 @@ namespace Content.Server.BodySystem {
             _vesselsClamped = false;
             _skinRetracted = false;
         }
-        protected void DisconnectOrganSurgery(IBodyPartContainer container, IEntity performer)
+        protected void DisconnectOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            Mechanism mechanismTarget = null;
-            //TODO: figureout popup, right now it just takes the first organ available if there is one
+            Mechanism target = null;
             if (_parent.Mechanisms.Count > 0)
-                mechanismTarget = _parent.Mechanisms[0];
-            if (mechanismTarget != null)
+                target = _parent.Mechanisms[0]; //TODO: Popup
+            if (target != null)
             {
                 ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
                 performer.PopupMessage(performer, localizationManager.GetString("Detach the organ..."));
                 //Delay?
-                _targetOrgan = mechanismTarget;
+                _disconnectedOrgans.Add(target);
             }
 
         }
-        protected void RemoveOrganSurgery(IBodyPartContainer container, IEntity performer)
+        protected void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            if (_targetOrgan != null)
-            {
-                ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                performer.PopupMessage(performer, localizationManager.GetString("Remove the organ..."));
-                //Delay?
-                _parent.DropMechanism(performer, _targetOrgan);
-            }
-        }
+            if (_disconnectedOrgans.Count <= 0)
+                return;
 
-        protected void RemoveBodyPartSurgery(IBodyPartContainer container, IEntity performer)
+            Mechanism target = null;
+            if (_disconnectedOrgans.Count == 1)
+                target = _disconnectedOrgans[0];
+            else
+                target = _disconnectedOrgans[0]; //TODO: Popup to select from disconnected organs
+                
+            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
+            performer.PopupMessage(performer, localizationManager.GetString("Remove the organ..."));
+            //Delay?
+            _parent.DropMechanism(performer, target);
+            _disconnectedOrgans.Remove(target);
+
+
+        }
+        protected void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.
                 return;
