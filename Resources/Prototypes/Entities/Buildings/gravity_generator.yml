@@ -16,7 +16,7 @@
     - type: SnapGrid
       offset: Center
     - type: PowerReceiver
-      powerLoad: 500
+      powerLoad: 5
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
