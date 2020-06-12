@@ -225,8 +225,8 @@ namespace Content.Server.GameObjects.Components.Doors
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
 
-            if (tool.UseTool(eventArgs.User, Owner, ToolQuality.Cutting)
-                || tool.UseTool(eventArgs.User, Owner, ToolQuality.Multitool))
+            if (tool.HasQuality(ToolQuality.Cutting)
+                || tool.HasQuality(ToolQuality.Multitool))
             {
                 if (_wires.IsPanelOpen)
                 {
