@@ -14,7 +14,6 @@ namespace Content.IntegrationTests.Tests
     /// Tests the behavior of GravityGeneratorComponent,
     /// making sure that gravity is applied to the correct grids.
     [TestFixture]
-    [NonParallelizable, SingleThreaded, RequiresThread]
     [TestOf(typeof(GravityGeneratorComponent))]
     public class GravityGridTest : ContentIntegrationTest
     {
@@ -60,12 +59,6 @@ namespace Content.IntegrationTests.Tests
             });
 
             await server.WaitIdleAsync();
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, Is.False);
         }
     }
 }

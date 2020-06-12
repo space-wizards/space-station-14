@@ -14,7 +14,6 @@ namespace Content.IntegrationTests.Tests
     ///     Tests that the
     /// </summary>
     [TestFixture]
-    [NonParallelizable, SingleThreaded, RequiresThread]
     public class SaveLoadSaveTest : ContentIntegrationTest
     {
         [Test]
@@ -51,12 +50,6 @@ namespace Content.IntegrationTests.Tests
             }
 
             Assert.That(one, Is.EqualTo(two));
-
-            await server.WaitIdleAsync();
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
         }
 
         /// <summary>
@@ -109,14 +102,6 @@ namespace Content.IntegrationTests.Tests
             }
 
             Assert.That(one, Is.EqualTo(two));
-
-            await server.WaitIdleAsync();
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, Is.False);
         }
     }
 }

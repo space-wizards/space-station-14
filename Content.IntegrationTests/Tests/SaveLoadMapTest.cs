@@ -9,7 +9,6 @@ using Robust.Shared.Maths;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [NonParallelizable, SingleThreaded, RequiresThread]
     class SaveLoadMapTest : ContentIntegrationTest
     {
         [Test]
@@ -68,12 +67,6 @@ namespace Content.IntegrationTests.Tests
             }
 
             await server.WaitIdleAsync();
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, Is.False);
         }
     }
 }

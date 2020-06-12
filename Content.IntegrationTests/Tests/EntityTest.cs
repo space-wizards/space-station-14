@@ -14,7 +14,6 @@ using Robust.Server.Interfaces.Timing;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [NonParallelizable, SingleThreaded, RequiresThread]
     [TestOf(typeof(Robust.Shared.GameObjects.Entity))]
     public class EntityTest : ContentIntegrationTest
     {
@@ -76,12 +75,6 @@ namespace Content.IntegrationTests.Tests
                 });
 
             await server.WaitIdleAsync();
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, Is.False);
         }
 
     }

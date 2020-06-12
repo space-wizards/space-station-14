@@ -16,7 +16,6 @@ namespace Content.IntegrationTests.Tests
     // i.e. the interaction between uniforms and the pocket/ID slots.
     // and also how big items don't fit in pockets.
     [TestFixture]
-    [NonParallelizable, SingleThreaded, RequiresThread]
     [TestOf(typeof(HumanInventoryControllerComponent))]
     public class HumanInventoryUniformSlotsTest : ContentIntegrationTest
     {
@@ -83,20 +82,8 @@ namespace Content.IntegrationTests.Tests
             });
 
             await server.WaitIdleAsync();
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, Is.False);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            Interlocked.MemoryBarrierProcessWide();
-
-        }
 
         private static bool IsDescendant(IEntity descendant, IEntity parent)
         {

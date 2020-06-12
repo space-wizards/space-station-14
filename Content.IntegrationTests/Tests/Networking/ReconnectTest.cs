@@ -7,7 +7,6 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
-    [NonParallelizable, SingleThreaded, RequiresThread]
     public class ReconnectTest : ContentIntegrationTest
     {
         [Test]
@@ -66,12 +65,6 @@ namespace Content.IntegrationTests.Tests.Networking
             }
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
-
-            server.Stop();
-
-            await server.WaitIdleAsync();
-
-            Assert.That(server.IsAlive, Is.False);
         }
     }
 }
