@@ -233,9 +233,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     if (eventArgs.User.TryGetComponent(out IActorComponent actor))
                     {
                         _wires.OpenInterface(actor.playerSession);
+                        return true;
                     }
                 }
-                return true;
             }
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
