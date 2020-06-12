@@ -44,6 +44,7 @@ namespace Content.Server
                 "AnimationsTest",
                 "ItemStatus",
                 "Marker",
+                "EmergencyLight",
             };
 
             foreach (var ignoreName in registerIgnore)
