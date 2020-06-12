@@ -24,6 +24,6 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Content.Tests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+      run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
     - name: Content.IntegrationTests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+      run: dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n
