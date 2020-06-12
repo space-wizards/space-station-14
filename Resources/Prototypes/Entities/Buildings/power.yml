@@ -260,8 +260,6 @@
     texture: Objects/Furniture/wirelessmachine.png
   - type: PowerReceiver
 
-#To update
-
 - type: entity
   id: SolarPanel
   name: solar panel
@@ -281,7 +279,9 @@
   - type: Icon
     sprite: Buildings/solar_panel.rsi
     state: normal
-  - type: PowerGenerator
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: PowerSupplier
   - type: SolarPanel
     supply: 1500
   - type: SnapGrid

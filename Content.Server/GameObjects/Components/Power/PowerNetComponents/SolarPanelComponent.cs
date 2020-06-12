@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;
@@ -26,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public override string Name => "SolarPanel";
 
-        private PowerGeneratorComponent _powerGenerator;
+        private PowerSupplierComponent _powerSupplier;
 
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
@@ -71,15 +72,15 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void UpdateSupply()
         {
-            if (_powerGenerator != null)
-                _powerGenerator.Supply = _maxSupply * _coverage;
+            if (_powerSupplier != null)
+                _powerSupplier.SupplyRate = (int) (_maxSupply * _coverage);
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _powerGenerator = Owner.GetComponent<PowerGeneratorComponent>();
+            _powerSupplier = Owner.GetComponent<PowerSupplierComponent>();
             UpdateSupply();
         }
 
