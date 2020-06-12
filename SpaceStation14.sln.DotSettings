@@ -49,6 +49,7 @@
     <s:Boolean x:Key="/Default/UserDictionary/Words/=freepats/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Kibibyte/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/UserDictionary/Words/=Lerp/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=likelyhood/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/UserDictionary/Words/=Noto/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/UserDictionary/Words/=occluder/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Occluders/@EntryIndexedValue">True</s:Boolean>
@@ -57,8 +58,9 @@
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Soundfont/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/UserDictionary/Words/=soundfonts/@EntryIndexedValue">True</s:Boolean>
     <s:Boolean x:Key="/Default/UserDictionary/Words/=swsl/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Trimmable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=underplating/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=uplink/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/UserDictionary/Words/=Wirecutter/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
-	<s:Boolean x:Key="/Default/UserDictionary/Words/=Stunnable/@EntryIndexedValue">True</s:Boolean>
-    <s:Boolean x:Key="/Default/UserDictionary/Words/=swsl/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Wirecutter/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Zstd/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
+	

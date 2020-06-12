@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
+    [NonParallelizable, SingleThreaded, RequiresThread]
     public class ConnectTest : ContentIntegrationTest
     {
         [Test]
@@ -51,6 +52,12 @@ namespace Content.IntegrationTests.Tests.Networking
             var lastClEntity = clEntityManager.GetEntity(lastSvEntity.Uid);
 
             Assert.That(lastClEntity.Transform.GridPosition, Is.EqualTo(lastSvEntity.Transform.GridPosition));
+
+            server.Stop();
+
+            await server.WaitIdleAsync();
+
+            Assert.That(server.IsAlive, Is.False);
         }
     }
 }
