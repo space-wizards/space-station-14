@@ -2,6 +2,7 @@
 using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -104,6 +105,12 @@ namespace Content.Server.GameObjects.Components.Doors
             _wires = Owner.GetComponent<WiresComponent>();
 
             _powerReceiver.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+        }
+
+        public override void OnRemove()
+        {
+            _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
+            base.OnRemove();
         }
 
         private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)

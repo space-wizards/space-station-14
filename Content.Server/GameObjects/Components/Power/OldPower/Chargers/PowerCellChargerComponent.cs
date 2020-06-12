@@ -38,6 +38,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             _powerReceiver.OnPowerStateChanged += PowerUpdate;
         }
 
+        public override void OnRemove()
+        {
+            _powerReceiver.OnPowerStateChanged -= PowerUpdate;
+            base.OnRemove();
+        }
+
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var result = TryInsertItem(eventArgs.Using);

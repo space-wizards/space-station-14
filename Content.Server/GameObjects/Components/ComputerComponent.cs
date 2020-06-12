@@ -23,6 +23,16 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
+        public override void OnRemove()
+        {
+            if (Owner.TryGetComponent(out PowerReceiverComponent powerReceiver))
+            {
+                powerReceiver.OnPowerStateChanged -= PowerReceiverOnOnPowerStateChanged;
+            }
+
+            base.OnRemove();
+        }
+
         private void PowerReceiverOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))

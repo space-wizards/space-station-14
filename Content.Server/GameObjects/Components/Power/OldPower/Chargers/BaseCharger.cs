@@ -58,6 +58,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             _powerReceiver.OnPowerStateChanged += PowerUpdate;
         }
 
+        public override void OnRemove()
+        {
+            _powerReceiver.OnPowerStateChanged -= PowerUpdate;
+            base.OnRemove();
+        }
+
         /// <summary>
         /// This will remove the item directly into the user's hand rather than the floor
         /// </summary>

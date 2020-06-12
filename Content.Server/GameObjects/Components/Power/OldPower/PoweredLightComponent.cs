@@ -199,8 +199,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.Initialize();
 
-            var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            powerReceiver.OnPowerStateChanged += UpdateLight;
+            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
 
             _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
 
@@ -216,6 +215,12 @@ namespace Content.Server.GameObjects.Components.Power
                         break;
                 }
             }
+        }
+
+        public override void OnRemove()
+        {
+            Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged -= UpdateLight;
+            base.OnRemove();
         }
     }
 }

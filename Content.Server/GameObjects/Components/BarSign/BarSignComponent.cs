@@ -88,6 +88,12 @@ namespace Content.Server.GameObjects.Components.BarSign
             UpdateSignInfo();
         }
 
+        public override void OnRemove()
+        {
+            _power.OnPowerStateChanged -= PowerOnOnPowerStateChanged;
+            base.OnRemove();
+        }
+
         private void PowerOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
         {
             UpdateSignInfo();
