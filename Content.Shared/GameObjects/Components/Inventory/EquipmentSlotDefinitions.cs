@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Inventory
@@ -128,5 +129,37 @@ namespace Content.Shared.GameObjects.Components.Inventory
             {Slots.EXOSUITSLOT1, SlotFlags.EXOSUITSTORAGE},
             {Slots.EXOSUITSLOT2, SlotFlags.EXOSUITSTORAGE}
         };
+
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _inventorySlotStrings =
+        {
+            "Inventory_HEAD",
+            "Inventory_EYES",
+            "Inventory_EARS",
+            "Inventory_MASK",
+            "Inventory_OUTERCLOTHING",
+            "Inventory_INNERCLOTHING",
+            "Inventory_BACKPACK",
+            "Inventory_BELT",
+            "Inventory_GLOVES",
+            "Inventory_SHOES",
+            "Inventory_IDCARD",
+            "Inventory_POCKET1",
+            "Inventory_POCKET2",
+            "Inventory_POCKET3",
+            "Inventory_POCKET4",
+            "Inventory_EXOSUITSLOT1",
+            "Inventory_EXOSUITSLOT2",
+        };
+
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _handsSlotStrings =
+        {
+            "Hands_left",
+            "Hands_right",
+        };
+
     }
 }

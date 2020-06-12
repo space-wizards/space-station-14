@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -51,6 +52,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
         }
 
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _hungerThresholdImages =
+        {
+            "/Textures/Mob/UI/Hunger/Overfed.png",
+            "/Textures/Mob/UI/Hunger/Okay.png",
+            "/Textures/Mob/UI/Hunger/Peckish.png",
+            "/Textures/Mob/UI/Hunger/Starving.png",
+            "/Textures/Mob/UI/Hunger/Dead.png",
+        };
+
         public void HungerThresholdEffect(bool force = false)
         {
             if (_currentHungerThreshold != _lastHungerThreshold || force)
@@ -66,8 +78,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatus(StatusEffect.Hunger, "/Textures/Mob/UI/Hunger/" +
-                                                                          _currentHungerThreshold + ".png");
+                statusEffectsComponent?.ChangeStatus(StatusEffect.Hunger, _hungerThresholdImages[ (int)_currentHungerThreshold ]);
 
                 switch (_currentHungerThreshold)
                 {
