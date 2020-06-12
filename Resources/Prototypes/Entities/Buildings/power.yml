@@ -307,7 +307,7 @@
   components:
   - type: PowerSupplier
     voltage: High
-    supplyRate: 10000
+    supplyRate: 100000
   
 - type: entity
   id: APC
@@ -318,6 +318,8 @@
     nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
   - type: PowerConsumer
     voltage: High
+  - type: BatteryStorage
+    activeDrawRate: 10000
 
 - type: entity
   id: SMES
