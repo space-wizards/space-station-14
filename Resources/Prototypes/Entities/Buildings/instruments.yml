@@ -1,4 +1,4 @@
- - type: entity
+﻿ - type: entity
    name: baseinstrument
    id: BaseInstrument
    abstract: true
@@ -40,6 +40,7 @@
    - type: Icon
      sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
+   - type: Anchorable
 
  - type: entity
    name: minimoog
