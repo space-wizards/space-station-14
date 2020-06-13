@@ -9,6 +9,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -22,6 +23,14 @@ namespace Content.Server.GameObjects.Components.Power
 
         /// <inheritdoc />
         public override string Name => "WirePlacer";
+
+        private string _wirePrototypeId;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _wirePrototypeId, "wirePrototypeId", "HVWire");
+        }
 
         /// <inheritdoc />
         public void AfterInteract(AfterInteractEventArgs eventArgs)
@@ -56,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
 
             GridCoordinates coordinates = grid.GridTileToLocal(snapPos);
-            var newWire = _entityManager.SpawnEntity("Wire", coordinates);
+            var newWire = _entityManager.SpawnEntity(_wirePrototypeId, coordinates);
             if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp) && hasItemSpriteComp)
             {
                 wireSpriteComp.Color = itemSpriteComp.Color;

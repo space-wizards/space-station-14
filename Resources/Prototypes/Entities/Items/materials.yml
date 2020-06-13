@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: material stack
   id: MaterialStack
   abstract: true
@@ -57,7 +57,6 @@
     count: 1
 
 - type: entity
-  name: cable coil
   id: CableStack
   parent: BaseItem
   components:
@@ -65,10 +64,37 @@
     stacktype: enum.StackType.Cable
   - type: Sprite
     texture: Objects/Tools/cable_coil.png
-    color: red
   - type: Icon
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
+
+- type: entity
+  id: HVWireStack
+  name: HV Wire Coil
+  parent: CableStack
+  components:
+  - type: WirePlacer
+    wirePrototypeId: HVWire
+
+- type: entity
+  id: MVWireStack
+  name: MV Wire Coil
+  parent: CableStack
+  components:
+  - type: Sprite
+    color: Yellow
+  - type: WirePlacer
+    wirePrototypeId: MVWire
+
+- type: entity
+  id: ApcExtensionCableStack
+  name: Apc Extension Cable Coil
+  parent: CableStack
+  components:
+  - type: Sprite
+    color: Green
+  - type: WirePlacer
+    wirePrototypeId: ApcExtensionCable
 
 - type: entity
   id: CableStack1
