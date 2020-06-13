@@ -62,7 +62,7 @@ namespace Content.Client.State
                 var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
                 var entityPos = entityToClick.Transform.MapPosition;
                 inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
-                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity != _playerManager.LocalPlayer.ControlledEntity || entity != entityToClick);
+                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick, insideBlockerValid:true);
             }
 
             InteractionOutlineComponent outline;
