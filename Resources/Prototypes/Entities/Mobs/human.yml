@@ -103,13 +103,23 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.35,-0.35,0.35,0.35"
-      mask: 30
-      layer: 4
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
   - type: Input
     context: "human"
   - type: Species
     Template: Human
     HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+
   - type: StatusEffectsUI
   - type: OverlayEffectsUI
   - type: HeatResistance
@@ -127,10 +137,13 @@
   - type: FootstepSound
   - type: HumanoidAppearance
   - type: HumanInventoryController
+  - type: Stunnable
+  - type: AnimationPlayer
 
 - type: entity
   save: false
   name: Urist McHands
+  abstract: true
   id: HumanMob_Dummy
   description: A dummy human meant to be used in character setup
   components:
@@ -222,8 +235,13 @@
       shapes:
         - !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-          mask: 30
-          layer: 4
+          mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+          layer:
+          - MobImpassable
 
     - type: Species
       Template: Human

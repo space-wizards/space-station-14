@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Chat;
@@ -127,17 +128,20 @@ namespace Content.Server.AI
             {
                 var dir = new Vector2(Random01(ref rngState) * 2 - 1, Random01(ref rngState) *2 -1).Normalized;
                 var ray = new CollisionRay(entWorldPos, dir, (int) CollisionGroup.Impassable);
-                var rayResult = _physMan.IntersectRay(SelfEntity.Transform.MapID, ray, MaxWalkDistance, SelfEntity);
+                var rayResults = _physMan.IntersectRay(SelfEntity.Transform.MapID, ray, MaxWalkDistance, SelfEntity).ToList();
 
-                if (rayResult.DidHitObject && rayResult.Distance > 1) // hit an impassable object
+                if (rayResults.Count == 1)
                 {
-                    // set the new position back from the wall a bit
-                    _walkTargetPos = entWorldPos + dir * (rayResult.Distance - 0.5f);
-                    WalkingPositiveEdge();
-                    return;
+                    var rayResult = rayResults[0];
+                    if (rayResult.Distance > 1) // hit an impassable object
+                    {
+                        // set the new position back from the wall a bit
+                        _walkTargetPos = entWorldPos + dir * (rayResult.Distance - 0.5f);
+                        WalkingPositiveEdge();
+                        return;
+                    }
                 }
-
-                if (!rayResult.DidHitObject) // hit nothing (path clear)
+                else // hit nothing (path clear)
                 {
                     _walkTargetPos = dir * MaxWalkDistance;
                     WalkingPositiveEdge();

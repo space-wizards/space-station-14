@@ -21,7 +21,7 @@
     sprite: Objects/Trash/4no_raisins.rsi
 
 - type: entity
-  name: Candy (trash)
+  name: candy (trash)
   parent: TrashBase
   id: TrashCandy
   components:
@@ -31,7 +31,7 @@
     sprite: Objects/Trash/candy.rsi
 
 - type: entity
-  name: Cheesie honkers (trash)
+  name: cheesie honkers (trash)
   parent: TrashBase
   id: TrashCheesieHonkers
   components:
@@ -41,7 +41,7 @@
     sprite: Objects/Trash/cheesie_honkers.rsi
 
 - type: entity
-  name: Chips (trash)
+  name: chips (trash)
   parent: TrashBase
   id: TrashChips
   components:
@@ -51,7 +51,7 @@
     sprite: Objects/Trash/chips.rsi
 
 - type: entity
-  name: Corn cob (trash)
+  name: corn cob (trash)
   parent: TrashBase
   id: TrashCornCob
   components:
@@ -61,7 +61,7 @@
     sprite: Objects/Trash/corncob.rsi
 
 - type: entity
-  name: Liquid food (trash)
+  name: liquid food (trash)
   parent: TrashBase
   id: TrashLiquidFood
   components:
@@ -71,7 +71,7 @@
     sprite: Objects/Trash/liquidfood.rsi
 
 - type: entity
-  name: Pistachos pack (trash)
+  name: pistachos pack (trash)
   parent: TrashBase
   id: TrashPistachiosPack
   components:
@@ -81,7 +81,7 @@
     sprite: Objects/Trash/pistachios_pack.rsi
 
 - type: entity
-  name: Messy pizza box (trash)
+  name: messy pizza box (trash)
   parent: TrashBase
   id: TrashPizzaBoxMessy
   components:
@@ -91,7 +91,7 @@
     sprite: Objects/Trash/pizzabox_messy.rsi
 
 - type: entity
-  name: Plastic bag (trash)
+  name: plastic bag (trash)
   parent: TrashBase
   id: TrashPlasticBag
   components:
@@ -101,7 +101,7 @@
     sprite: Objects/Trash/plasticbag.rsi
 
 - type: entity
-  name: Plate (trash)
+  name: plate (trash)
   parent: TrashBase
   id: TrashPlate
   components:
@@ -111,7 +111,7 @@
     sprite: Objects/Trash/plate.rsi
 
 - type: entity
-  name: Popcorn (trash)
+  name: popcorn (trash)
   parent: TrashBase
   id: TrashPopcorn
   components:
@@ -121,7 +121,7 @@
     sprite: Objects/Trash/popcorn.rsi
 
 - type: entity
-  name: Semki pack (trash)
+  name: semki pack (trash)
   parent: TrashBase
   id: TrashSemkiPack
   components:
@@ -131,7 +131,7 @@
     sprite: Objects/Trash/semki_pack.rsi
 
 - type: entity
-  name: Snack bowl (trash)
+  name: snack bowl (trash)
   parent: TrashBase
   id: TrashSnackBowl
   components:
@@ -151,7 +151,7 @@
     sprite: Objects/Trash/sosjerky.rsi
 
 - type: entity
-  name: Syndi cakes (trash)
+  name: syndi cakes (trash)
   parent: TrashBase
   id: TrashSyndiCakes
   components:
@@ -161,7 +161,7 @@
     sprite: Objects/Trash/syndi_cakes.rsi
 
 - type: entity
-  name: Tasty bread (trash)
+  name: tasty bread (trash)
   parent: TrashBase
   id: TrashTastyBread
   components:
@@ -172,7 +172,7 @@
 
 # TODO: Container
 - type: entity
-  name: Trash bag (trash)
+  name: trash bag (trash)
   parent: TrashBase
   id: TrashBag
   components:
@@ -182,7 +182,7 @@
     sprite: Objects/Trash/trashbag.rsi
 
 - type: entity
-  name: Tray (trash)
+  name: tray (trash)
   parent: TrashBase
   id: TrashTray
   components:
@@ -190,9 +190,9 @@
     sprite: Objects/Trash/tray.rsi
   - type: Icon
     sprite: Objects/Trash/tray.rsi
-  
+
 - type: entity
-  name: Waffles (trash)
+  name: waffles (trash)
   parent: TrashBase
   id: TrashWaffles
   components:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -103,8 +104,10 @@ namespace Content.Client.GameObjects.Components.Storage
             private Control VSplitContainer;
             private VBoxContainer EntityList;
             private Label Information;
-            private Button AddItemButton;
             public ClientStorageComponent StorageEntity;
+
+            private StyleBoxFlat _HoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.35f)};
+            private StyleBoxFlat  _unHoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.0f)};
 
             protected override Vector2? CustomSize => (180, 320);
 
@@ -113,7 +116,37 @@ namespace Content.Client.GameObjects.Components.Storage
                 Title = "Storage Item";
                 RectClipContent = true;
 
-                VSplitContainer = new VBoxContainer();
+                var containerButton = new ContainerButton
+                {
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                    MouseFilter = MouseFilterMode.Pass,
+                };
+
+                var innerContainerButton = new PanelContainer
+                {
+                    PanelOverride = _unHoveredBox,
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                };
+
+
+                containerButton.AddChild(innerContainerButton);
+                containerButton.OnPressed += args =>
+                {
+                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+
+                    if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                    {
+                        StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+                    }
+                };
+
+                VSplitContainer = new VBoxContainer()
+                {
+                    MouseFilter = MouseFilterMode.Ignore,
+                };
+                containerButton.AddChild(VSplitContainer);
                 Information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
@@ -126,7 +159,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     HScrollEnabled = true,
-                    VScrollEnabled = true
+                    VScrollEnabled = true,
                 };
                 EntityList = new VBoxContainer
                 {
@@ -135,16 +168,17 @@ namespace Content.Client.GameObjects.Components.Storage
                 listScrollContainer.AddChild(EntityList);
                 VSplitContainer.AddChild(listScrollContainer);
 
-                AddItemButton = new Button
-                {
-                    Text = "Add Item",
-                    ToggleMode = false,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-                AddItemButton.OnPressed += OnAddItemButtonPressed;
-                VSplitContainer.AddChild(AddItemButton);
+                Contents.AddChild(containerButton);
 
-                Contents.AddChild(VSplitContainer);
+                listScrollContainer.OnMouseEntered += args =>
+                {
+                    innerContainerButton.PanelOverride = _HoveredBox;
+                };
+
+                listScrollContainer.OnMouseExited += args =>
+                {
+                    innerContainerButton.PanelOverride = _unHoveredBox;
+                };
             }
 
             public override void Close()
@@ -168,7 +202,8 @@ namespace Content.Client.GameObjects.Components.Storage
 
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key
+                        EntityuID = entityuid.Key,
+                        MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set

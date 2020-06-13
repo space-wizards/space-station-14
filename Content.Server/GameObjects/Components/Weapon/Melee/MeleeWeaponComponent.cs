@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
@@ -28,12 +30,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
-        private int _damage = 1;
-        private float _range = 1;
-        private float _arcWidth = 90;
+        private int _damage;
+        private float _range;
+        private float _arcWidth;
         private string _arc;
         private string _hitSound;
-        private float _cooldownTime = 1f;
+        private float _cooldownTime;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Arc
@@ -75,6 +77,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
+        public virtual bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        {
+            return false;
+        }
+
         void IAttack.Attack(AttackEventArgs eventArgs)
         {
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
@@ -101,9 +108,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
             }
 
-            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            if(OnHitEntities(hitEntities)) return;
+
+            var audioSystem = EntitySystem.Get<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
-            audioSystem.Play(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
+            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
 
             if (Arc != null)
             {
@@ -122,9 +131,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private HashSet<IEntity> ArcRayCast(Vector2 position, Angle angle, IEntity ignore)
         {
-            // Maybe make this increment count depend on the width/length?
-            const int increments = 5;
             var widthRad = Angle.FromDegrees(ArcWidth);
+            var increments = 1 + (35 * (int) Math.Ceiling(widthRad / (2 * Math.PI)));
             var increment = widthRad / increments;
             var baseAngle = angle - widthRad / 2;
 
@@ -134,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), _range, ignore, ignoreNonHardCollidables: true);
+                var res = _physicsManager.IntersectRay(mapId, new CollisionRay(position, castAngle.ToVec(), 23), _range, ignore).FirstOrDefault();
                 if (res.HitEntity != null)
                 {
                     resSet.Add(res.HitEntity);

@@ -12,7 +12,7 @@
   - type: Puddle
     spill_sound: /Audio/effects/Fluids/splat.ogg
     recolor: true
-  - type: Sound
+  - type: LoopingSound
   - type: InteractionOutline
   - type: Clickable
   - type: Collidable
@@ -22,12 +22,12 @@
     hard: false
 
 - type: entity
-  name: Puddle
+  name: puddle
   id: PuddleGeneric
   parent: PuddleSmear
 
 - type: entity
-  name: Gibblets
+  name: gibblets
   id: PuddleGibblet
   parent: PuddleBase
   description: Holds spilt milk
@@ -42,7 +42,7 @@
     variants: 5
 
 - type: entity
-  name: Smear
+  name: smear
   id: PuddleSmear
   parent: PuddleBase
   description: Holds spilt milk
@@ -57,7 +57,7 @@
     variants: 7
 
 - type: entity
-  name: Splatter
+  name: splatter
   id: PuddleSplatter
   parent: PuddleBase
   description: Holds spilt milk
@@ -72,10 +72,10 @@
     variants: 6
 
 - type: entity
-  name: Vomit
+  name: vomit
   id: PuddleVomit
   parent: PuddleBase
-  description: 
+  description:
   components:
   - type: Sprite
     sprite: Fluids/vomit.rsi
@@ -88,7 +88,7 @@
     recolor: false
 
 - type: entity
-  name: Toxins vomit
+  name: toxins vomit
   id: PuddleVomitToxin
   parent: PuddleBase
   description: You probably don't want to get too close to this
@@ -104,7 +104,7 @@
     recolor: false
 
 - type: entity
-  name: Writing
+  name: writing
   id: PuddleWriting
   parent: PuddleBase
   description: Holds spilt milk

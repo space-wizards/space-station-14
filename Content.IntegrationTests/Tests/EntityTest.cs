@@ -58,7 +58,7 @@ namespace Content.IntegrationTests.Tests
                     {
                         try
                         {
-                            Logger.LogS(LogLevel.Debug, "EntityTest", "Testing: " + prototype.Name);
+                            Logger.LogS(LogLevel.Debug, "EntityTest", "Testing: " + prototype.ID);
                             testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
                             server.RunTicks(2);
                             Assert.That(testEntity.Initialized);
@@ -68,7 +68,7 @@ namespace Content.IntegrationTests.Tests
                         //Fail any exceptions thrown on spawn
                         catch (Exception e)
                         {
-                            Logger.LogS(LogLevel.Error, "EntityTest", "Entity '" + testEntity.Name + "' threw: " + e.Message);
+                            Logger.LogS(LogLevel.Error, "EntityTest", "Entity '" + prototype.ID + "' threw: " + e.Message);
                             Assert.Fail();
                         }
                     }

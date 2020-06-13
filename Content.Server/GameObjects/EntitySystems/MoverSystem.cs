@@ -1,18 +1,17 @@
-﻿using System;
-using System.Net;
-using Content.Server.GameObjects.Components;
+﻿using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.Interfaces.GameObjects.Components.Movement;
-using Content.Server.Observer;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Input;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Configuration;
@@ -21,17 +20,17 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -49,6 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IConfigurationManager _configurationManager;
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 #pragma warning restore 649
 
         private AudioSystem _audioSystem;
@@ -79,11 +79,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
 
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveUp, moveUpCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveRight, moveRightCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.MoveDown, moveDownCmdHandler);
-            input.BindMap.BindFunction(EngineKeyFunctions.Run, runCmdHandler);
+            CommandBinds.Builder
+                .Bind(EngineKeyFunctions.MoveUp, moveUpCmdHandler)
+                .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
+                .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
+                .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
+                .Bind(EngineKeyFunctions.Run, runCmdHandler)
+                .Register<MoverSystem>();
 
             SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
             SubscribeLocalEvent<PlayerDetachedSystemMessage>(PlayerDetached);
@@ -112,15 +114,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Shutdown()
         {
-            if (EntitySystemManager.TryGetEntitySystem(out InputSystem input))
-            {
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveUp);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveLeft);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveRight);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.MoveDown);
-                input.BindMap.UnbindFunction(EngineKeyFunctions.Run);
-            }
-
+            CommandBinds.Unregister<MoverSystem>();
             base.Shutdown();
         }
 
@@ -148,46 +142,40 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider = null)
         {
-            bool weightless = false;
-
-            var tile = _mapManager.GetGrid(transform.GridID).GetTileRef(transform.GridPosition).Tile;
-
-            if ((!_mapManager.GetGrid(transform.GridID).HasGravity || tile.IsEmpty) && collider != null)
+            if (physics.Controller == null)
             {
-                weightless = true;
+                // Set up controller
+                physics.SetController<MoverController>();
+            }
+
+            var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
+                             _physicsManager.IsWeightless(transform.GridPosition);
+
+            if (weightless && collider != null)
+            {
                 // No gravity: is our entity touching anything?
-                var touching = false;
-                foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
-                {
-                    if (entity.TryGetComponent<CollidableComponent>(out var otherCollider))
-                    {
-                        if (otherCollider.Owner == transform.Owner) continue; // Don't try to push off of yourself!
-                        touching |= ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
-                                     || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                                    && !entity.HasComponent<ItemComponent>(); // This can't be an item
-                    }
-                }
+                var touching = IsAroundCollider(transform, mover, collider);
+
                 if (!touching)
                 {
                     return;
                 }
             }
-            if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner))
-            {
-                if (physics.LinearVelocity != Vector2.Zero)
-                    physics.LinearVelocity = Vector2.Zero;
 
+            if (mover.VelocityDir.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
+            {
+                (physics.Controller as MoverController)?.StopMoving();
             }
             else
             {
                 if (weightless)
                 {
-                    physics.LinearVelocity = mover.VelocityDir * mover.CurrentPushSpeed;
+                    (physics.Controller as MoverController)?.Push(mover.VelocityDir, mover.CurrentPushSpeed);
                     transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
                     return;
                 }
-
-                physics.LinearVelocity = mover.VelocityDir * (mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
+                (physics.Controller as MoverController)?.Move(mover.VelocityDir,
+                    mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
@@ -229,6 +217,33 @@ namespace Content.Server.GameObjects.EntitySystems
                     }
                 }
             }
+        }
+
+        private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover, CollidableComponent collider)
+        {
+            foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
+            {
+                if (entity == transform.Owner)
+                {
+                    continue; // Don't try to push off of yourself!
+                }
+
+                if (!entity.TryGetComponent<CollidableComponent>(out var otherCollider))
+                {
+                    continue;
+                }
+
+                var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
+                                || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
+                               && !entity.HasComponent<ItemComponent>(); // This can't be an item
+
+                if (touching)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void HandleDirChange(ICommonSession session, Direction dir, bool state)
@@ -315,7 +330,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
                 var file = _robustRandom.Pick(soundCollection.PickFiles);
-                _audioSystem.Play(file, coordinates);
+                _audioSystem.PlayAtCoords(file, coordinates);
             }
             catch (UnknownPrototypeException)
             {

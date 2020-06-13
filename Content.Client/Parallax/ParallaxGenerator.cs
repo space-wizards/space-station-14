@@ -11,7 +11,7 @@ using Robust.Shared.Random;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.Primitives;
+using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Parallax
 {
@@ -28,7 +28,7 @@ namespace Content.Client.Parallax
             sawmill.Debug("Timing start!");
             var sw = new Stopwatch();
             sw.Start();
-            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, Rgba32.Black);
+            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0,0,0,0));
             var count = 0;
             foreach (var layer in generator.Layers)
             {
@@ -320,7 +320,7 @@ namespace Content.Client.Parallax
             public override void Apply(Image<Rgba32> bitmap)
             {
                 // Temporary buffer so we don't mess up blending.
-                using (var buffer = new Image<Rgba32>(Configuration.Default, bitmap.Width, bitmap.Height, Rgba32.Black))
+                using (var buffer = new Image<Rgba32>(Configuration.Default, bitmap.Width, bitmap.Height, new Rgba32(0,0,0,0)))
                 {
                     if (Masked)
                     {

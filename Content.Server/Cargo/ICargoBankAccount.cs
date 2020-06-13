@@ -7,5 +7,6 @@ namespace Content.Server.Cargo
         int Id { get; }
         string Name { get; }
         int Balance { get; }
+        public event Action OnBalanceChange;
     }
 }

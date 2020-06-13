@@ -11,11 +11,11 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Nutrition
 {
     [UsedImplicitly]
-    public sealed class DrinkFoodContainerVisualizer2D : AppearanceVisualizer
+    public sealed class FoodContainerVisualizer2D : AppearanceVisualizer
     {
         private string _baseState;
         private int _steps;
-        private DrinkFoodContainerVisualMode _mode;
+        private FoodContainerVisualMode _mode;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -25,11 +25,11 @@ namespace Content.Client.GameObjects.Components.Nutrition
             _steps = node.GetNode("steps").AsInt();
             try
             {
-                _mode = node.GetNode("mode").AsEnum<DrinkFoodContainerVisualMode>();
+                _mode = node.GetNode("mode").AsEnum<FoodContainerVisualMode>();
             }
             catch (KeyNotFoundException)
             {
-                _mode = DrinkFoodContainerVisualMode.Rounded;
+                _mode = FoodContainerVisualMode.Rounded;
             }
         }
 
@@ -37,12 +37,12 @@ namespace Content.Client.GameObjects.Components.Nutrition
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 
-            if (!component.TryGetData<int>(DrinkFoodContainerVisuals.Current, out var current))
+            if (!component.TryGetData<int>(FoodContainerVisuals.Current, out var current))
             {
                 return;
             }
 
-            if (!component.TryGetData<int>(DrinkFoodContainerVisuals.Capacity, out var capacity))
+            if (!component.TryGetData<int>(FoodContainerVisuals.Capacity, out var capacity))
             {
                 return;
             }
@@ -51,10 +51,10 @@ namespace Content.Client.GameObjects.Components.Nutrition
 
             switch (_mode)
             {
-                case DrinkFoodContainerVisualMode.Discrete:
+                case FoodContainerVisualMode.Discrete:
                     step = Math.Min(_steps - 1, current);
                     break;
-                case DrinkFoodContainerVisualMode.Rounded:
+                case FoodContainerVisualMode.Rounded:
                     step = ContentHelpers.RoundToLevels(current, capacity, _steps);
                     break;
                 default:

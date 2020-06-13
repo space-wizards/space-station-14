@@ -19,6 +19,12 @@ namespace Content.IntegrationTests
             remove { }
         }
 
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded
+        {
+            add{ }
+            remove { }
+        }
+
         public void Initialize()
         {
         }
@@ -62,6 +68,11 @@ namespace Content.IntegrationTests
         public T AddGameRule<T>() where T : GameRule, new()
         {
             return new T();
+        }
+
+        public bool HasGameRule(Type type)
+        {
+            return false;
         }
 
         public void RemoveGameRule(GameRule rule)

@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -25,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
     ///      Guns that have a magazine.
     /// </summary>
     [RegisterComponent]
-    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IAttackBy, IMapInit
+    public class BallisticMagazineWeaponComponent : BallisticWeaponComponent, IUse, IInteractUsing, IMapInit
     {
         private const float BulletOffset = 0.2f;
 
@@ -102,9 +106,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             {
                 return false;
             }
-            if (_magInSound != null)
+            if (_magInSound != null && playSound)
             {
-                Owner.GetComponent<SoundComponent>().Play(_magInSound);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_magInSound, Owner);
             }
             magazinetype.OnAmmoCountChanged += MagazineAmmoCountChanged;
             if (GetChambered(0) == null)
@@ -131,9 +135,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             if (_magazineSlot.Remove(entity))
             {
                 entity.Transform.GridPosition = Owner.Transform.GridPosition;
-                if (_magOutSound != null)
+                if (_magOutSound != null && playSound)
                 {
-                    Owner.GetComponent<SoundComponent>().Play(_magOutSound, AudioParams.Default.WithVolume(20));
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity(_magOutSound, Owner, AudioParams.Default.WithVolume(20));
                 }
                 UpdateAppearance();
                 Dirty();
@@ -144,6 +148,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             Dirty();
             return false;
         }
+
+        // these are complete strings for the sake of the shared string dict
+        [UsedImplicitly]
+        private static readonly string[] _bulletDropSounds =
+        {
+            "/Audio/Guns/Casings/casingfall1.ogg",
+            "/Audio/Guns/Casings/casingfall2.ogg",
+            "/Audio/Guns/Casings/casingfall3.ogg"
+        };
 
         protected override void CycleChamberedBullet(int chamber)
         {
@@ -158,8 +171,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             var offsetPos = (CalcBulletOffset(), CalcBulletOffset());
             entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(RandomBulletDirs).ToAngle();
-            var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
-            Owner.GetComponent<SoundComponent>().Play(effect, AudioParams.Default.WithVolume(-3));
+            var bulletDropNext = _bulletDropRandom.Next(1, 3);
+            var effect = _bulletDropSounds[bulletDropNext];
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(effect, Owner, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)
             {
@@ -190,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             EjectMagazine();
             if (_autoEjectSound != null)
             {
-                Owner.GetComponent<SoundComponent>().Play(_autoEjectSound, AudioParams.Default.WithVolume(-5));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_autoEjectSound, Owner, AudioParams.Default.WithVolume(-5));
             }
             Dirty();
         }
@@ -209,9 +223,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return true;
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.TryGetComponent(out BallisticMagazineComponent component))
+            if (!eventArgs.Using.TryGetComponent(out BallisticMagazineComponent component))
             {
                 return false;
             }
@@ -225,7 +239,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
                 Owner.PopupMessage(eventArgs.User, "Magazine doesn't fit.");
                 return false;
             }
-            return InsertMagazine(eventArgs.AttackWith);
+            return InsertMagazine(eventArgs.Using);
         }
 
         private void MagazineAmmoCountChanged()
@@ -266,14 +280,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         [Verb]
         public sealed class EjectMagazineVerb : Verb<BallisticMagazineWeaponComponent>
         {
-            protected override string GetText(IEntity user, BallisticMagazineWeaponComponent component)
+            protected override void GetData(IEntity user, BallisticMagazineWeaponComponent component, VerbData data)
             {
-                return component.Magazine == null ? "Eject magazine (magazine missing)" : "Eject magazine";
-            }
+                if (component.Magazine == null)
+                {
+                    data.Text = "Eject magazine (magazine missing)";
+                    data.Visibility = VerbVisibility.Disabled;
+                    return;
+                }
 
-            protected override VerbVisibility GetVisibility(IEntity user, BallisticMagazineWeaponComponent component)
-            {
-                return component.Magazine == null ? VerbVisibility.Disabled : VerbVisibility.Visible;
+                data.Text = "Eject magazine";
             }
 
             protected override void Activate(IEntity user, BallisticMagazineWeaponComponent component)

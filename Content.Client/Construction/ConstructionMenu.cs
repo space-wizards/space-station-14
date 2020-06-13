@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Construction;
+using Content.Client.Interfaces.GameObjects;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -47,7 +49,7 @@ namespace Content.Client.Construction
         {
             IoCManager.InjectDependencies(this);
             Placement = (PlacementManager) IoCManager.Resolve<IPlacementManager>();
-            Placement.PlacementCanceled += OnPlacementCanceled;
+            Placement.PlacementChanged += OnPlacementChanged;
 
             Title = "Construction";
 
@@ -94,7 +96,7 @@ namespace Content.Client.Construction
                 TextAlign = Label.AlignMode.Center,
                 Text = "Build!",
                 Disabled = true,
-                ToggleMode = false
+                ToggleMode = true
             };
             EraseButton = new Button
             {
@@ -107,7 +109,7 @@ namespace Content.Client.Construction
             hSplitContainer.AddChild(guide);
             Contents.AddChild(hSplitContainer);
 
-            BuildButton.OnPressed += OnBuildPressed;
+            BuildButton.OnToggled += OnBuildToggled;
             EraseButton.OnToggled += OnEraseToggled;
             SearchBar.OnTextChanged += OnTextEntered;
             RecipeList.OnItemSelected += OnItemSelected;
@@ -122,7 +124,7 @@ namespace Content.Client.Construction
 
             if (disposing)
             {
-                Placement.PlacementCanceled -= OnPlacementCanceled;
+                Placement.PlacementChanged -= OnPlacementChanged;
             }
         }
 
@@ -180,27 +182,27 @@ namespace Content.Client.Construction
 
                             break;
                         case ConstructionStepTool tool:
-                            switch (tool.Tool)
+                            switch (tool.ToolQuality)
                             {
-                                case ConstructionStepTool.ToolType.Wrench:
+                                case ToolQuality.Anchoring:
                                     icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
                                     text = "Wrench";
                                     break;
-                                case ConstructionStepTool.ToolType.Crowbar:
+                                case ToolQuality.Prying:
                                     icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
                                     text = "Crowbar";
                                     break;
-                                case ConstructionStepTool.ToolType.Screwdriver:
+                                case ToolQuality.Screwing:
                                     icon = ResourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/screwdriver.png");
                                     text = "Screwdriver";
                                     break;
-                                case ConstructionStepTool.ToolType.Welder:
+                                case ToolQuality.Welding:
                                     icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
                                         .RSI["welder"].Frame0;
                                     text = $"Welding tool ({tool.Amount} fuel)";
                                     break;
-                                case ConstructionStepTool.ToolType.Wirecutters:
+                                case ToolQuality.Cutting:
                                     icon = ResourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/wirecutter.png");
                                     text = "Wirecutters";
@@ -225,37 +227,49 @@ namespace Content.Client.Construction
             PopulateTree(string.IsNullOrWhiteSpace(str) ? null : str.ToLowerInvariant());
         }
 
-        void OnBuildPressed(BaseButton.ButtonEventArgs args)
+        void OnBuildToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
-            if (prototype == null)
+            if (args.Pressed)
             {
-                return;
+                var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
+                if (prototype == null)
+                {
+                    return;
+                }
+
+                if (prototype.Type == ConstructionType.Item)
+                {
+                    Owner.TryStartItemConstruction(prototype.ID);
+                    BuildButton.Pressed = false;
+                    return;
+                }
+
+                Placement.BeginHijackedPlacing(
+                    new PlacementInformation
+                    {
+                        IsTile = false,
+                        PlacementOption = prototype.PlacementMode
+                    },
+                    new ConstructionPlacementHijack(prototype, Owner));
             }
-
-            if (prototype.Type != ConstructionType.Structure)
+            else
             {
-                // In-hand attackby doesn't exist so this is the best alternative.
-                var loc = Owner.Owner.GetComponent<ITransformComponent>().GridPosition;
-                Owner.SpawnGhost(prototype, loc, Direction.North);
-                return;
+                Placement.Clear();
             }
-
-            var hijack = new ConstructionPlacementHijack(prototype, Owner);
-            var info = new PlacementInformation
-            {
-                IsTile = false,
-                PlacementOption = prototype.PlacementMode,
-            };
-
-
-            Placement.BeginHijackedPlacing(info, hijack);
+            BuildButton.Pressed = args.Pressed;
         }
 
         private void OnEraseToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            var hijack = new ConstructionPlacementHijack(null, Owner);
-            Placement.ToggleEraserHijacked(hijack);
+            if (args.Pressed) Placement.Clear();
+            Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(null, Owner));
+            EraseButton.Pressed = args.Pressed;
+        }
+
+        private void OnPlacementChanged(object sender, EventArgs e)
+        {
+            BuildButton.Pressed = false;
+            EraseButton.Pressed = false;
         }
 
         void PopulatePrototypeList()
@@ -360,11 +374,6 @@ namespace Content.Client.Construction
                     subItem.Metadata = prototype;
                 }
             }
-        }
-
-        private void OnPlacementCanceled(object sender, EventArgs e)
-        {
-            EraseButton.Pressed = false;
         }
 
         private static int ComparePrototype(ConstructionPrototype x, ConstructionPrototype y)

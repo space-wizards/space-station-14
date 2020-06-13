@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
 using Content.Shared.Maps;
 using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects.EntitySystems;
@@ -19,8 +20,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Items
 {
     [RegisterComponent]
-    public class RCDComponent : Component, IAfterAttack, IUse, IExamine
+    public class RCDComponent : Component, IAfterInteract, IUse, IExamine
     {
+
 #pragma warning disable 649
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -30,9 +32,9 @@ namespace Content.Server.GameObjects.Components.Items
 #pragma warning restore 649
         public override string Name => "RCD";
         private string _outputTile = "floor_steel";
-        private RCDmode mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
-        private Array modes = Enum.GetValues(typeof(RCDmode));
-        private int ammo = 5; //How much "ammo" we have left. You can refille this with RCD ammo.
+        private RCDmode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
+        private readonly Array _modes = Enum.GetValues(typeof(RCDmode));
+        private int _ammo = 5; //How much "ammo" we have left. You can refille this with RCD ammo.
 
         ///Enum to store the different mode states for clarity.
         private enum RCDmode
@@ -49,7 +51,9 @@ namespace Content.Server.GameObjects.Components.Items
         }
 
 
-        ///Method called when the RCD is clicked in-hand, this will swap the RCD's mode from "floors" to "walls".
+        ///<summary>
+        /// Method called when the RCD is clicked in-hand, this will swap the RCD's mode from "floors" to "walls".
+        ///</summary>
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
@@ -57,21 +61,18 @@ namespace Content.Server.GameObjects.Components.Items
             return true;
         }
 
-        /**
-         *
-         * Method to allow the user to swap the mode of the RCD by clicking it in hand, the actual in hand clicking bit is done over on UseEntity()
-         *
-         * @param UseEntityEventArgs = The entity which triggered this method call, used to know where to play the "click" sound.
-         *
-         */
+        ///<summary>
+        ///Method to allow the user to swap the mode of the RCD by clicking it in hand, the actual in hand clicking bit is done over on UseEntity()
+        ///@param UseEntityEventArgs = The entity which triggered this method call, used to know where to play the "click" sound.
+        ///</summary>
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
-            int mode = (int) this.mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
-            mode = (++mode) % modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
-            this.mode = (RCDmode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
-            switch (this.mode)
+            int mode = (int) this._mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
+            mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
+            this._mode = (RCDmode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
+            switch (this._mode)
             {
                 case RCDmode.Floors:
                     _outputTile = "floor_steel";
@@ -83,38 +84,34 @@ namespace Content.Server.GameObjects.Components.Items
                     _outputTile = "space";
                     break;
             }
-            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, "The RCD is now set to "+this.mode+" mode."); //Prints an overhead message above the RCD
+            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, "The RCD is now set to "+this._mode+" mode."); //Prints an overhead message above the RCD
         }
 
         /**
-         *
+         *<summary>
          * Method called when the user examines this object, it'll simply add the mode that it's in to the object's description
          * @params message = The original message from examining, like ..() in BYOND's examine
-         *
+         *</summary>
          */
-
-        void IExamine.Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently in "+mode+" mode, and holds "+this.ammo+" charges."));
+            message.AddMarkup(Loc.GetString("It's currently in "+_mode+" mode, and holds "+this._ammo+" charges."));
         }
 
-        /**
-         *
-         * Method to handle clicking on a tile to then appropriately RCD it. This can have several behaviours depending on mode.
-         * @param eventAargs = An action event telling us what tile was clicked on. We use this to exrapolate where to place the new tile / remove the old one etc.
-         *
-         */
+        ///<summary>
+        /// Method to handle clicking on a tile to then appropriately RCD it. This can have several behaviours depending on mode.
+        /// @param eventAargs = An action event telling us what tile was clicked on. We use this to exrapolate where to place the new tile / remove the old one etc.
+        ///</summary>
 
-        public void AfterAttack(AfterAttackEventArgs eventArgs)
+        public void AfterInteract(AfterInteractEventArgs   eventArgs)
         {
-            var attacked = eventArgs.Attacked;
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            float distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
+            var distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
 
-            if (distance > InteractionSystem.InteractionRange || ammo <= 0)
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs) || _ammo <= 0 || coordinates == GridCoordinates.InvalidGrid || !tile.Tile.IsEmpty)
             {
                 return;
             }
@@ -134,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Items
             var canPlaceTile = targetTile.IsSubFloor && desiredTile != null; //Boolean to check if we're able to build the desired tile. This defaults to checking for subfloors, but is overridden by "deconstruct" which sets it to the inverse.
 
 
-            switch (this.mode)
+            switch (this._mode)
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RCDmode.Floors:
@@ -154,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Items
                     var ent = _serverEntityManager.SpawnEntity("solid_wall", grid.GridTileToLocal(snapPos));
                     ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
                     _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
-                    ammo--;
+                    _ammo--;
                     return; //Alright we're done here
             }
 
@@ -162,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
                 _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
-                ammo--;
+                _ammo--;
             }
         }
     }

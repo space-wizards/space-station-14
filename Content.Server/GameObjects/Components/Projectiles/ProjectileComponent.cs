@@ -62,36 +62,32 @@ namespace Content.Server.GameObjects.Components.Projectiles
         }
 
         /// <summary>
-        /// Applys the damage when our projectile collides with its victim
+        /// Applies the damage when our projectile collides with its victim
         /// </summary>
-        /// <param name="collidedwith"></param>
-        void ICollideBehavior.CollideWith(List<IEntity> collidedwith)
+        /// <param name="entity"></param>
+        void ICollideBehavior.CollideWith(IEntity entity)
         {
-            foreach (var entity in collidedwith)
+            if (entity.TryGetComponent(out DamageableComponent damage))
             {
-                if (entity.TryGetComponent(out DamageableComponent damage))
+                Owner.EntityManager.TryGetEntity(Shooter, out var shooter);
+
+                foreach (var (damageType, amount) in _damages)
                 {
-                    Owner.EntityManager.TryGetEntity(Shooter, out var shooter);
-
-                    foreach (var (damageType, amount) in _damages)
-                    {
-
-                        damage.TakeDamage(damageType, amount, Owner, shooter);
-                    }
-                }
-
-                if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                    && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
-                {
-                    var direction = physicsComponent.LinearVelocity.Normalized;
-                    recoilComponent.Kick(direction);
+                    damage.TakeDamage(damageType, amount, Owner, shooter);
                 }
             }
 
-            if (collidedwith.Count > 0)
+            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
+                                && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
             {
-                Owner.Delete();
+                var direction = physicsComponent.LinearVelocity.Normalized;
+                recoilComponent.Kick(direction);
             }
+        }
+
+        void ICollideBehavior.PostCollide(int collideCount)
+        {
+            if (collideCount > 0) Owner.Delete();
         }
     }
 }

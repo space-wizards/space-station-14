@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -33,6 +34,7 @@ namespace Content.Client.State
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IGameTiming _timing;
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
 #pragma warning restore 649
 
         private IEntity _lastHoveredEntity;
@@ -51,16 +53,16 @@ namespace Content.Client.State
         {
             base.FrameUpdate(e);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(new ScreenCoordinates(_inputManager.MouseScreenPosition));
-            var entityToClick = GetEntityUnderPosition(mousePosWorld);
+            var mousePosWorld = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var entityToClick = _userInterfaceManager.CurrentlyHovered != null ? null : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
             if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
             {
                 var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
-                var entityPos = entityToClick.Transform.WorldPosition;
+                var entityPos = entityToClick.Transform.MapPosition;
                 inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
-                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity != _playerManager.LocalPlayer.ControlledEntity || entity != entityToClick);
+                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick, insideBlockerValid:true);
             }
 
             InteractionOutlineComponent outline;
@@ -87,7 +89,7 @@ namespace Content.Client.State
             }
         }
 
-        public IEntity GetEntityUnderPosition(GridCoordinates coordinates)
+        public IEntity GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
@@ -95,9 +97,13 @@ namespace Content.Client.State
 
         public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
         {
+            return GetEntitiesUnderPosition(coordinates.ToMap(_mapManager));
+        }
+
+        public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
+        {
             // Find all the entities intersecting our click
-            var mapCoords = coordinates.ToMap(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoords.MapId, mapCoords.Position);
+            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId, coordinates.Position);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(IEntity clicked, int drawDepth)>();
@@ -147,10 +153,15 @@ namespace Content.Client.State
             var func = args.Function;
             var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
+            var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
-            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State, mousePosWorld,
-                args.PointerLocation, entityToClick?.Uid ?? EntityUid.Invalid);
+
+            if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
+                grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+
+            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State,
+                grid.MapToGrid(mousePosWorld), args.PointerLocation,
+                entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
             var session = _playerManager.LocalPlayer.Session;

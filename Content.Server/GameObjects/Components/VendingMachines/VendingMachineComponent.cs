@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             }
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if(_description == null) { return; }
             message.AddText(_description);

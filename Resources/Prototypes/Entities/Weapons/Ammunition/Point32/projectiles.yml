@@ -1,6 +1,6 @@
 - type: entity
   id: bullet_32
-  name: .32 Bullet
+  name: .32 bullet
   parent: BulletBase
   abstract: true
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: bullet_32f
-  name: .32 Bullet (Flash)
+  name: .32 bullet (flash)
   parent: BulletBaseFlash
   abstract: true
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   id: bullet_32hv
-  name: .32 Bullet (High-Velocity)
+  name: .32 bullet (high-velocity)
   parent: BulletBaseHighVelocity
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: bullet_32l
-  name: .32 Bullet (L)
+  name: .32 bullet (L)
   parent: BulletBaseL
   abstract: true
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   id: bullet_32p
-  name: .32 Bullet (Practice)
+  name: .32 bullet (practice)
   parent: BulletBasePractice
   abstract: true
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   id: bullet_32r
-  name: .32 Bullet (Rubber)
+  name: .32 bullet (rubber)
   parent: BulletBaseRubber
   abstract: true
   components:

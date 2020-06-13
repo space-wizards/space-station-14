@@ -60,17 +60,5 @@ namespace Content.Shared.GameObjects
             }
             return true;
         }
-
-        public static bool IsVerbInvisible(Verb verb, IEntity user, IComponent target, out VerbVisibility visibility)
-        {
-            visibility = verb.GetVisibility(user, target);
-            return visibility == VerbVisibility.Invisible;
-        }
-
-        public static bool IsVerbInvisible(GlobalVerb verb, IEntity user, IEntity target, out VerbVisibility visibility)
-        {
-            visibility = verb.GetVisibility(user, target);
-            return visibility == VerbVisibility.Invisible;
-        }
     }
 }

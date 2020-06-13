@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.Components.Wires;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -27,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Doors
             var closeSound = node.GetNode("close_sound").AsString();
             var denySound = node.GetNode("deny_sound").AsString();
 
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -49,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -71,16 +72,16 @@ namespace Content.Client.GameObjects.Components.Doors
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
             }
 
-            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.45f)};
+            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 DenyAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = DoorVisualLayers.Base;
+                flick.LayerKey = DoorVisualLayers.BaseUnlit;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
             }
         }
 
@@ -126,7 +127,6 @@ namespace Content.Client.GameObjects.Components.Doors
                     unlitVisible = false;
                     break;
                 case DoorVisualState.Deny:
-                    unlitVisible = false;
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(DenyAnimation, AnimationKey);
