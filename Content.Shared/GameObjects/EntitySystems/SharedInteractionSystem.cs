@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="coords">Set of coordinates to use.</param>
         /// <param name="otherCoords">Other set of coordinates to use.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
-        /// <param name="predicate">.</param>
+        /// <param name="predicate">A predicate to check whether to ignore an entity or not. If it returns true, it will be ignored.</param>
         /// <returns>Length of resulting ray.</returns>
         public float UnobstructedRayLength(MapCoordinates coords, MapCoordinates otherCoords,
             int collisionMask = (int) CollisionGroup.Impassable, Func<IEntity, bool> predicate = null)
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <param name="otherCoords">Other set of coordinates to use.</param>
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
-        /// <param name="predicate">.</param>
+        /// <param name="predicate">A predicate to check whether to ignore an entity or not. If it returns true, it will be ignored.</param>
         /// <param name="insideBlockerValid">if coordinates inside obstructions count as obstructed or not</param>
         /// <returns>True if the two points are within a given range without being obstructed.</returns>
         public bool InRangeUnobstructed(MapCoordinates coords, MapCoordinates otherCoords, float range = InteractionRange,
