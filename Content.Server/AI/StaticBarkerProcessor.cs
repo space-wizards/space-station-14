@@ -5,6 +5,9 @@ using Robust.Server.AI;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.AI
 {
@@ -35,7 +38,7 @@ namespace Content.Server.AI
         {
             if(_timeMan.CurTime < _nextBark)
                 return;
-            
+
             var rngState = GenSeed();
             _nextBark = _timeMan.CurTime + MinimumDelay + TimeSpan.FromSeconds(Random01(ref rngState) * 10);
 

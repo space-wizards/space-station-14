@@ -488,7 +488,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             //Trigger reaction effects
             foreach (var effect in reaction.Effects)
             {
-                effect.React(Owner, unitReactions.Decimal());
+                effect.React(Owner, unitReactions.Double());
             }
 
             //Play reaction sound client-side
