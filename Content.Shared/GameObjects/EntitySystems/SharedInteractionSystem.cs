@@ -4,13 +4,12 @@ using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Shared.GameObjects.EntitySystems
 {
     /// <summary>
     /// Governs interactions during clicking on entities
