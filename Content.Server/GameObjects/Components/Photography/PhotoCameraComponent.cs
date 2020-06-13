@@ -241,7 +241,6 @@ namespace Content.Server.GameObjects.Components.Photography
             return true;
         }
 
-        // TODO: trap user's soul in a photo (take a "fullsize" photo of the user)
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
             if (HasFilm && CameraOn) 
