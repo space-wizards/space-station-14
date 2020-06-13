@@ -1,8 +1,8 @@
 - type: bodyTemplate
   id: bodyTemplate.Quadrupedal
-  name: "Quadrupedal"
+  name: "quadrupedal"
   centerSlot: "torso"
-  slots: 
+  slots:
     head: Head
     torso: Torso
     left front leg: Leg
@@ -11,7 +11,7 @@
     right front paw: Foot
     left hind leg: Leg
     left hind paw: Foot
-    right hind leg: Leg  
+    right hind leg: Leg
     right hind paw: Foot
   connections:
     head:
@@ -23,11 +23,11 @@
       - right hind paw
     left front leg:
       - left front paw
-    right front leg: 
+    right front leg:
       - right front paw
-    left hind leg: 
+    left hind leg:
       - left hind paw
-    right hind leg: 
+    right hind leg:
       - right hind paw
-      
-      
+
+

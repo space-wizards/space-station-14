@@ -114,6 +114,12 @@ namespace Content.Client.GameObjects.Components.Construction
             SendNetworkMessage(msg);
         }
 
+        public void TryStartItemConstruction(string prototypeName)
+        {
+            var msg = new TryStartItemConstructionMessage(prototypeName);
+            SendNetworkMessage(msg);
+        }
+
         public void ClearGhost(int ghostId)
         {
             if (Ghosts.TryGetValue(ghostId, out var ghost))

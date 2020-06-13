@@ -15,6 +15,7 @@ namespace Content.Server.Interfaces.GameTicking
         GameRunLevel RunLevel { get; }
 
         event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged;
+        event Action<GameRuleAddedEventArgs> OnRuleAdded;
 
         void Initialize();
         void Update(FrameEventArgs frameEventArgs);
@@ -34,6 +35,7 @@ namespace Content.Server.Interfaces.GameTicking
 
         // GameRule system.
         T AddGameRule<T>() where T : GameRule, new();
+        bool HasGameRule(Type type);
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -29,10 +30,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
 #pragma warning restore 649
-
-        private AudioSystem _audioSystem;
         public override string Name => "Drink";
 
         [ViewVariables]
@@ -95,8 +93,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 //Do the opening stuff like playing the sounds.
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
                 var file = _random.Pick(soundCollection.PickFiles);
-                _audioSystem = _entitySystem.GetEntitySystem<AudioSystem>();
-                _audioSystem.Play(file, Owner, AudioParams.Default);
+
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, args.User, AudioParams.Default);
                 _opened = true;
                 return false;
             }
@@ -109,9 +107,9 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseDrink(eventArgs.Target);
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!Opened)
+            if (!Opened || !inDetailsRange)
             {
                 return;
             }
@@ -149,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (stomachComponent.TryTransferSolution(split))
             {
                 if (_useSound == null) return false;
-                _audioSystem.Play(_useSound, Owner, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
                 target.PopupMessage(target, Loc.GetString("Slurp"));
                 UpdateAppearance();
                 return true;

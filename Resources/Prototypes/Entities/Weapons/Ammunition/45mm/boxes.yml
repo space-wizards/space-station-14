@@ -35,7 +35,7 @@
 
 - type: entity
   id: box_45f
-  name: ".45mm box (Flash)"
+  name: ".45mm box (flash)"
   parent: box_45_empty
   components:
   - type: AmmoBox
@@ -58,7 +58,7 @@
 
 - type: entity
   id: box_45p
-  name: ".45mm box (Practice)"
+  name: ".45mm box (practice)"
   parent: box_45_empty
   components:
   - type: AmmoBox
@@ -79,7 +79,7 @@
 
 - type: entity
   id: box_45r
-  name: ".45mm box (Rubber)"
+  name: ".45mm box (rubber)"
   parent: box_45_empty
   components:
   - type: AmmoBox

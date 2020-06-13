@@ -191,7 +191,7 @@ namespace Content.Server.GameObjects
             if(entity.TryGetComponent(out StunnableComponent stun))
                 stun.CancelAll();
 
-            StandingStateHelper.Down(entity, playSound:false);
+            StandingStateHelper.Down(entity);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {

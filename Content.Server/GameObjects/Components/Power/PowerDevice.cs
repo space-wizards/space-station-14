@@ -222,11 +222,11 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
-            if (!Powered)
+            if (!Powered && inDetailsRange)
             {
                 message.AddMarkup(loc.GetString("The device is [color=orange]not powered[/color]."));
             }
@@ -287,7 +287,7 @@ namespace Content.Server.GameObjects.Components.Power
         private void ConnectToBestProvider()
         {
             //Any values we can connect to or are we already connected to a node, cancel!
-            if (!AvailableProviders.Any() || Connected == DrawTypes.Node || Deleted)
+            if (!AvailableProviders.Any() || Connected == DrawTypes.Node || Deleted || Owner.Deleted)
                 return;
 
             //Get the starting value for our loop
@@ -301,6 +301,9 @@ namespace Content.Server.GameObjects.Components.Power
 
                 foreach (var availprovider in AvailableProviders)
                 {
+                    if (availprovider.Owner.Deleted)
+                        continue;
+
                     //Find distance to new provider
                     var distance = (availprovider.Owner.GetComponent<ITransformComponent>().WorldPosition - position).LengthSquared;
 

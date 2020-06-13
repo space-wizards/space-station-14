@@ -20,11 +20,11 @@
   - type: Solution
     maxVol: 10
     caps: 1
-  - type: Sound
+  - type: LoopingSound
 
 - type: entity
   parent: BaseItem
-  name: Mop Bucket
+  name: mop bucket
   id: MopBucket
   description: Holds water and the tears of the janitor.
   components:
@@ -36,7 +36,7 @@
     texture: Objects/Janitorial/mopbucket.png
   - type: InteractionOutline
   - type: Bucket
-  - type: Sound
+  - type: LoopingSound
   - type: Solution
     maxVol: 500
     caps: 3
@@ -67,7 +67,7 @@
   - type: Icon
     texture: Objects/Janitorial/bucket.png
   - type: Bucket
-  - type: Sound
+  - type: LoopingSound
   - type: Solution
     maxVol: 500
     caps: 3

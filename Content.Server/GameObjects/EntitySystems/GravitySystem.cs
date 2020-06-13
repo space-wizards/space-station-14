@@ -24,7 +24,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
@@ -94,7 +93,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId) continue;
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/effects/alert.ogg", player.AttachedEntity);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/effects/alert.ogg", player.AttachedEntity);
             }
         }
 

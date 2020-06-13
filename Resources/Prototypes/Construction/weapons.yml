@@ -1,5 +1,5 @@
 - type: construction
-  name: Crude Spear
+  name: crude spear
   id: spear
   category: Items/Weapons
   keywords: [melee]

@@ -1,5 +1,5 @@
-﻿- type: cargoProduct
-  name: "Dice"
+- type: cargoProduct
+  name: "dice"
   id: cargo.dice
   description: "Some dice"
   icon:
@@ -11,7 +11,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Medkit"
+  name: "medkit"
   id: cargo.Medkit
   description: "Everything you need to patch someone up."
   icon: Objects/Medical/medkit_r.png
@@ -21,7 +21,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Flashlight"
+  name: "flashlight"
   id: cargo.flashlight
   description: "Shine a light in the dark."
   icon:
@@ -33,7 +33,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Light Bulb"
+  name: "light bulb"
   id: cargo.lightbulb
   description: "Light up a room, anywhere, anytime. Electricity not included."
   icon:
@@ -45,7 +45,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Fire Extinguisher"
+  name: "fire extinguisher"
   id: cargo.fireextinguisher
   description: "Puts out fires. Or propels you in space."
   icon: Objects/Misc/fire_extinguisher.png
@@ -55,7 +55,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Pen"
+  name: "pen"
   id: cargo.pen
   description: "Expels ink. Use it to write, or stab someone."
   icon:
@@ -67,7 +67,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Bike Horn"
+  name: "bike horn"
   id: cargo.bikehorn
   description: "HONK!"
   icon:
@@ -79,7 +79,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Cleaver"
+  name: "cleaver"
   id: cargo.cleaver
   description: "That's not a knife, THAT'S a knife."
   icon:
@@ -91,7 +91,7 @@
   group: blackmarket
 
 - type: cargoProduct
-  name: "Fuel Tank"
+  name: "fuel tank"
   id: cargo.fueltank
   description: "Movable fuel tank for welders. No boom boom."
   icon: Buildings/weldtank.png
@@ -101,7 +101,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Medical Scanner"
+  name: "medical scanner"
   id: cargo.medscanner
   description: "Scans patients. First we stick this probe..."
   icon:
@@ -113,7 +113,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Glass Crate"
+  name: "glass crate"
   id: cargo.glass
   description: "50 sheets of glass."
   icon: Objects/Materials/sheet_glass.png
@@ -123,7 +123,7 @@
   group: market
 
 - type: cargoProduct
-  name: "Cable Crate"
+  name: "cable crate"
   id: cargo.cable
   description: "50 coils of cable."
   icon: Objects/Tools/cable_coil.png

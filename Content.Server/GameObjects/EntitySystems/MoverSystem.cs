@@ -331,7 +331,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             {
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundCollectionName);
                 var file = _robustRandom.Pick(soundCollection.PickFiles);
-                _audioSystem.Play(file, coordinates);
+                _audioSystem.PlayAtCoords(file, coordinates);
             }
             catch (UnknownPrototypeException)
             {

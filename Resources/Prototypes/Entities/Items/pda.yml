@@ -19,7 +19,7 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-  - type: Sound
+  - type: LoopingSound
 
 
 - type: entity

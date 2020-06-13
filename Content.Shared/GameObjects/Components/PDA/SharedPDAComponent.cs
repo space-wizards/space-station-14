@@ -81,6 +81,16 @@ namespace Content.Shared.GameObjects.Components.PDA
     }
 
     [Serializable, NetSerializable]
+    public sealed class PDAUplinkBuySuccessMessage : ComponentMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class PDAUplinkInsufficientFundsMessage : ComponentMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
     public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
     {
         public PDARequestUpdateInterfaceMessage()
@@ -156,18 +166,16 @@ namespace Content.Shared.GameObjects.Components.PDA
         public UplinkCategory Category;
         public string Description;
         public string ListingName;
-        public Color DisplayColor;
 
         public UplinkListingData(string listingName,string itemId,
             int price, UplinkCategory category,
-            string description, Color displayColor) : base(ContentNetIDs.PDA)
+            string description) : base(ContentNetIDs.PDA)
         {
             ListingName = listingName;
             Price = price;
             Category = category;
             Description = description;
             ItemId = itemId;
-            DisplayColor = displayColor;
         }
 
         public bool Equals(UplinkListingData other)

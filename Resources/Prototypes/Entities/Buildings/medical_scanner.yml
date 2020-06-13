@@ -1,6 +1,6 @@
-- type: entity
+﻿- type: entity
   id: MedicalScanner
-  name: Medical Scanner
+  name: medical scanner
   description: A bulky medical scanner.
   components:
   - type: Sprite
@@ -15,7 +15,7 @@
   - type: Icon
     sprite: Buildings/medical_scanner.rsi
     state: scanner_open
-
+  - type: Anchorable
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable

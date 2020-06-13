@@ -1,5 +1,5 @@
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;

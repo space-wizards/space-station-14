@@ -9,7 +9,7 @@
 - type: entity
   parent: MasksBase
   id: OldGasMaskClothing
-  name: Old Gas Mask
+  name: old gas mask
   description: An old, dusty mask. Yet still dutifully functional.
   components:
   - type: Sprite
@@ -24,7 +24,7 @@
 - type: entity
   parent: MasksBase
   id: GasMaskClothing
-  name: Gas Mask
+  name: gas mask
   description: Regulations require these to be stocked after the fourth coolant leak
   components:
   - type: Sprite
@@ -39,7 +39,7 @@
 - type: entity
   parent: MasksBase
   id: BreathMaskClothing
-  name: Breath Mask
+  name: breath mask
   description: Might as well keep this on 24/7
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
 - type: entity
   parent: MasksBase
   id: MaskClown
-  name: Clown Wig and Mask
+  name: clown wig and mask
   description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
   - type: Sprite
@@ -69,7 +69,7 @@
 - type: entity
   parent: MasksBase
   id: MaskJoy
-  name: Joy Mask
+  name: joy mask
   description:
   components:
   - type: Sprite
@@ -84,7 +84,7 @@
 - type: entity
   parent: MasksBase
   id: MaskMime
-  name: Mime Mask
+  name: mime mask
   description:
   components:
   - type: Sprite

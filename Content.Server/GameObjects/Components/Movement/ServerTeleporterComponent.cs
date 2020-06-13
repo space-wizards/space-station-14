@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (_cooldownSound != null)
             {
                 var soundPlayer = EntitySystem.Get<AudioSystem>();
-                soundPlayer.Play(_cooldownSound, Owner);
+                soundPlayer.PlayFromEntity(_cooldownSound, Owner);
             }
         }
 
@@ -249,12 +249,12 @@ namespace Content.Server.GameObjects.Components.Movement
             else
             {
                 // Departure
-                soundPlayer.Play(_departureSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_departureSound, user.Transform.GridPosition);
 
                 // Arrival
                 user.Transform.DetachParent();
                 user.Transform.WorldPosition = vector;
-                soundPlayer.Play(_arrivalSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.GridPosition);
             }
 
         }

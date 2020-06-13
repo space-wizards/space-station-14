@@ -126,14 +126,14 @@ namespace Content.Server.BodySystem {
         public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
 
-            string templateName = "";
+            string templateName = null;
             serializer.DataField(ref templateName, "BaseTemplate", "bodyTemplate.Humanoid");
             if (serializer.Reading)
             {
                 if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
                     throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
 
-                string presetName = "";
+                string presetName = null;
                 serializer.DataField(ref presetName, "BasePreset", "bodyPreset.BasicHuman");
                 if (!_prototypeManager.TryIndex(presetName, out BodyPresetPrototype presetData))
                     throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.

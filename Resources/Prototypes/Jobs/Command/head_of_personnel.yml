@@ -1,6 +1,6 @@
 - type: job
   id: HeadOfPersonnel
-  name: "Head Of Personnel"
+  name: "head of personnel"
   head: true
   positions: 1
   startingGear: HoPGear
@@ -10,11 +10,13 @@
   icon: "HeadOfPersonnel"
   access:
   - Command
-  - IdCard
+  - HeadOfPersonnel
   - Security # HoPcurity strikes again
   - Service
   - Cargo
   - Maintenance
+  - Janitor
+  - Theatre
   # I mean they'll give themselves the rest of the access levels *anyways*.
 
 - type: startingGear

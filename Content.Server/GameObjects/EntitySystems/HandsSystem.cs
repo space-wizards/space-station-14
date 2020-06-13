@@ -20,6 +20,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems.Click;
 

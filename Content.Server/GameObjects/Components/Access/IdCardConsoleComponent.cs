@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
@@ -180,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Access
                     true,
                     targetIdComponent.FullName,
                     targetIdComponent.JobTitle,
-                    targetAccessComponent.GetTags(),
+                    targetAccessComponent.Tags.ToArray(),
                     _privilegedIdContainer.ContainedEntity?.Name ?? "",
                     _targetIdContainer.ContainedEntity?.Name ?? "");
             }

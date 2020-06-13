@@ -1,5 +1,5 @@
 - type: entity
-  name: Power Debug Tool
+  name: power debug tool
   parent: BaseItem
   id: PowerDebug
   description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines

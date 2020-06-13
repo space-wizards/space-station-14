@@ -24,6 +24,8 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
+            var inputSys = EntitySystemManager.GetEntitySystem<InputSystem>();
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
                     new PointerInputCmdHandler(HandleOpenCraftingMenu))
