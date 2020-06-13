@@ -47,6 +47,9 @@
         public const uint SURGERY = 1042;
         public const uint MULTITOOLS = 1043;
         public const uint PDA = 1044;
+        public const uint PHOTO_CAMERA = 1045;
+        public const uint PHOTO_FILM = 1046;
+        public const uint PHOTO = 1047;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

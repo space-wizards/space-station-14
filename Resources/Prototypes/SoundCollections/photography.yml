@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: TakePhoto
+  files:
+    - /Audio/items/polaroid1.ogg
+    - /Audio/items/polaroid2.ogg

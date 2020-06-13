@@ -175,9 +175,9 @@ namespace Content.Server.GameObjects
         /// </summary>
         /// <param name="slot">The slot to drop the item from.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        public bool Unequip(Slots slot)
+        public bool Unequip(Slots slot, bool force = false)
         {
-            if (!CanUnequip(slot))
+            if (!CanUnequip(slot, force))
             {
                 return false;
             }
@@ -206,13 +206,25 @@ namespace Content.Server.GameObjects
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanUnequip(Slots slot)
+        public bool CanUnequip(Slots slot, bool force = false)
         {
-            if (!ActionBlockerSystem.CanUnequip(Owner))
+            if (!ActionBlockerSystem.CanUnequip(Owner) && !force)
                 return false;
 
             var InventorySlot = SlotContainers[slot];
             return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
+        }
+
+        /// <summary>
+        ///     Unequip all items
+        /// </summary>
+        /// <param name="force">Whether to force the unequip or not.</param>
+        public void UnequipAll(bool force)
+        {
+            foreach((var slot,_) in SlotContainers)
+            {
+                Unequip(slot, force);
+            }
         }
 
         /// <summary>

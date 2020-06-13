@@ -59,6 +59,7 @@ namespace Content.Client.GameObjects
 
         public IEntity GetEntity(string index)
         {
+            if (index == null) return null;
             if (_hands.TryGetValue(index, out var entity))
             {
                 return entity;

@@ -1,0 +1,56 @@
+- type: entity
+  name: camera
+  description: "Remember the moment forever. May or may not steal your soul, we still don't know."
+  parent: BaseItem
+  id: PhotoCamera
+  components:
+  - type: PhotoCamera
+  - type: Sprite
+    sprite: Objects/photography.rsi
+    layers:
+    - state: camera_base
+    - state: camera_off
+      shader: unshaded
+  - type: Icon
+    sprite: Objects/photography.rsi
+    state: camera_base
+  - type: Item
+    sprite: Objects/photography.rsi
+    HeldPrefix: camera
+    
+- type: entity
+  name: photo
+  description: "A beautiful moment frozen in time... or maybe it's just a selfie."
+  parent: BaseItem
+  id: Photo
+  components:
+  - type: Photo
+  - type: Sprite
+    sprite: Objects/photography.rsi
+    state: photo
+  - type: Icon
+    sprite: Objects/photography.rsi
+    state: photo
+  - type: Item
+    sprite: Objects/photography.rsi
+    HeldPrefix: photo
+  - type: UserInterface
+    interfaces:
+    - key: enum.PhotoUiKey.Key
+      type: PhotoBoundUserInterface
+  
+- type: entity
+  name: camera film
+  parent: BaseItem
+  id: CameraFilm
+  components:
+  - type: PhotoFilm
+  - type: Sprite
+    sprite: Objects/photography.rsi
+    state: film
+  - type: Icon
+    sprite: Objects/photography.rsi
+    state: film
+  - type: Item
+    sprite: Objects/photography.rsi
+    HeldPrefix: film
