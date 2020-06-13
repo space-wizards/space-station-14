@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
+using Content.Shared.Construction;
 using Content.Shared.Maps;
 using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects.EntitySystems;
@@ -15,6 +16,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -30,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private IServerNotifyManager _serverNotifyManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
         public override string Name => "RCD";
         private string _outputTile = "floor_steel";
@@ -108,9 +111,7 @@ namespace Content.Server.GameObjects.Components.Items
         {
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            var distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (_ammo <= 0 || coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
             {
