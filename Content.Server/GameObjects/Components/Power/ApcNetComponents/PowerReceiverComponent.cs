@@ -1,4 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Shared.GameObjects.Components.Power;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -142,7 +144,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             _hasApcPower = newHasApcPower;
             if (oldPowered != Powered)
             {
-                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+                OnNewPowerState();
             }
         }
 
@@ -169,7 +171,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             _needsPower = newNeedsPower;
             if (oldPowered != Powered)
             {
-                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+                OnNewPowerState();
             }
         }
 
@@ -179,7 +181,16 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             _powerDisabled = newPowerDisabled;
             if (oldPowered != Powered)
             {
-                OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+                OnNewPowerState();
+            }
+        }
+
+        private void OnNewPowerState()
+        {
+            OnPowerStateChanged?.Invoke(this, new PowerStateEventArgs(Powered));
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(PowerDeviceVisuals.Powered, Powered);
             }
         }
     }

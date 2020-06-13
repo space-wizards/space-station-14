@@ -17,9 +17,6 @@ namespace Content.Server.GameObjects.Components.Power
     {
         public Powernet()
         {
-            var powerSystem = EntitySystem.Get<PowerSystem>();
-            powerSystem.Powernets.Add(this);
-            Uid = powerSystem.NewUid();
         }
 
         /// <summary>
@@ -375,7 +372,6 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         private void RemoveFromSystem()
         {
-            EntitySystem.Get<PowerSystem>().Powernets.Remove(this);
         }
 
         #region Registration
