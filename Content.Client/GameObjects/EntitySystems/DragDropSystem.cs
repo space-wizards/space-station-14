@@ -213,7 +213,6 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (_draggable.ClientCanDropOn(new CanDropEventArgs(_dragger, _draggedEntity, entity)))
                 {
                     // tell the server about the drop attempt
-                    Logger.Debug("Dropped {0} on {1}", _draggedEntity.Name, entity.Name);
                     RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _draggedEntity.Uid,
                         entity.Uid));
 
