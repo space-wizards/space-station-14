@@ -78,8 +78,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatus(StatusEffect.Hunger, _hungerThresholdImages[ (int)_currentHungerThreshold ]);
-
+                statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, _hungerThresholdImages[ (int)_currentHungerThreshold ]);
                 switch (_currentHungerThreshold)
                 {
                     case HungerThreshold.Overfed:

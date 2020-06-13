@@ -66,21 +66,21 @@ namespace Content.Server.GameObjects
                         throw new InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
-                    statusEffectsComponent?.ChangeStatus(StatusEffect.Health,
+                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Health,
                             "/Textures/Mob/UI/Human/human" + modifier + ".png");
 
                     overlayComponent?.ChangeOverlay(ScreenEffects.None);
 
                     return;
                 case ThresholdType.Critical:
-                    statusEffectsComponent?.ChangeStatus(
+                    statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
                         "/Textures/Mob/UI/Human/humancrit-0.png");
                     overlayComponent?.ChangeOverlay(ScreenEffects.GradientCircleMask);
 
                     return;
                 case ThresholdType.Death:
-                    statusEffectsComponent?.ChangeStatus(
+                    statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
                         "/Textures/Mob/UI/Human/humandead.png");
                     overlayComponent?.ChangeOverlay(ScreenEffects.CircleMask);
