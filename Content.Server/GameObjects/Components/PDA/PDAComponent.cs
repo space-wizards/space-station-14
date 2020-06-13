@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAEjectIDMessage msg:
                 {
-                    HandleIDEjection(message.Session.AttachedEntity);
+                    HandleIDEjection(message.Session.AttachedEntity!);
                     break;
                 }
 

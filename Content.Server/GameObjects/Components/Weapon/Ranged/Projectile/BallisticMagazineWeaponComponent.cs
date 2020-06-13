@@ -6,6 +6,7 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -148,6 +149,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             return false;
         }
 
+        // these are complete strings for the sake of the shared string dict
+        [UsedImplicitly]
+        private static readonly string[] _bulletDropSounds =
+        {
+            "/Audio/Guns/Casings/casingfall1.ogg",
+            "/Audio/Guns/Casings/casingfall2.ogg",
+            "/Audio/Guns/Casings/casingfall3.ogg"
+        };
+
         protected override void CycleChamberedBullet(int chamber)
         {
             DebugTools.Assert(chamber == 0);
@@ -161,7 +171,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             var offsetPos = (CalcBulletOffset(), CalcBulletOffset());
             entity.Transform.GridPosition = Owner.Transform.GridPosition.Offset(offsetPos);
             entity.Transform.LocalRotation = _bulletDropRandom.Pick(RandomBulletDirs).ToAngle();
-            var effect = $"/Audio/Guns/Casings/casingfall{_bulletDropRandom.Next(1, 4)}.ogg";
+            var bulletDropNext = _bulletDropRandom.Next(1, 3);
+            var effect = _bulletDropSounds[bulletDropNext];
             EntitySystem.Get<AudioSystem>().PlayFromEntity(effect, Owner, AudioParams.Default.WithVolume(-3));
 
             if (Magazine != null)

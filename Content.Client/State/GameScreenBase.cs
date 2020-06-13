@@ -53,7 +53,7 @@ namespace Content.Client.State
         {
             base.FrameUpdate(e);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(_inputManager.MouseScreenPosition);
+            var mousePosWorld = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
             var entityToClick = _userInterfaceManager.CurrentlyHovered != null ? null : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
@@ -89,7 +89,7 @@ namespace Content.Client.State
             }
         }
 
-        public IEntity GetEntityUnderPosition(GridCoordinates coordinates)
+        public IEntity GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
@@ -97,9 +97,13 @@ namespace Content.Client.State
 
         public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
         {
+            return GetEntitiesUnderPosition(coordinates.ToMap(_mapManager));
+        }
+
+        public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
+        {
             // Find all the entities intersecting our click
-            var mapCoords = coordinates.ToMap(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoords.MapId, mapCoords.Position);
+            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId, coordinates.Position);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(IEntity clicked, int drawDepth)>();
@@ -149,10 +153,15 @@ namespace Content.Client.State
             var func = args.Function;
             var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
+            var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
-            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State, mousePosWorld,
-                args.PointerLocation, entityToClick?.Uid ?? EntityUid.Invalid);
+
+            if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
+                grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+
+            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State,
+                grid.MapToGrid(mousePosWorld), args.PointerLocation,
+                entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
             var session = _playerManager.LocalPlayer.Session;

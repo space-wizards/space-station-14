@@ -4,7 +4,7 @@ using Robust.Client.Console;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Networking
 {
     [TestFixture]
     public class ReconnectTest : ContentIntegrationTest
