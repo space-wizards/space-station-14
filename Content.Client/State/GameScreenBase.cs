@@ -2,8 +2,6 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
@@ -65,7 +63,7 @@ namespace Content.Client.State
                 var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
                 var entityPos = entityToClick.Transform.MapPosition;
                 inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
-                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick, insideBlockerValid:true);
+                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick, ignoreInsideBlocker:true);
             }
 
             InteractionOutlineComponent outline;

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Client.State;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;

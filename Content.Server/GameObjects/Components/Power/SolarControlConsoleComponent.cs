@@ -1,10 +1,7 @@
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
