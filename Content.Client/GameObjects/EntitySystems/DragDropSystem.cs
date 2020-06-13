@@ -3,7 +3,6 @@ using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Client.State;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
@@ -16,11 +15,9 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -32,7 +29,7 @@ namespace Content.Client.GameObjects.EntitySystems
     public class DragDropSystem : EntitySystem
     {
         // how long to wait on mousedown until initiating a drag
-        private const float WaitForDragTime = 0.5f;
+        private const float WaitForDragTime = 0.85f;
         // mouse must remain within this distance of
         // mousedown screen position in order for drag to be triggered.
         // any movement beyond this will cancel the drag
@@ -44,7 +41,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // if a drag ends up being cancelled and it has been under this
         // amount of time since the mousedown, we will "replay" the original
         // mousedown event so it can be treated like a regular click
-        private const float MaxMouseDownTimeForReplayingClick = 0.1f;
+        private const float MaxMouseDownTimeForReplayingClick = 0.85f;
 
         private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
         private const string ShaderDropTargetOutOfRange = "SelectionOutline";
@@ -141,8 +138,6 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool OnUseMouseDown(PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            //TODO: Should we be using args.EntityUid to see what was clicked?
-
             var dragger = args.Session.AttachedEntity;
             // cancel any current dragging if there is one (shouldn't be because they would've had to have lifted
             // the mouse, canceling the drag, but just being cautious)
@@ -152,7 +147,6 @@ namespace Content.Client.GameObjects.EntitySystems
             // check if the clicked entity is draggable
             if (_entityManager.TryGetEntity(args.EntityUid, out var entity))
             {
-                //TODO: Refactor to use a shared InteractionChecks
                 // check if the entity is reachable
                 if (_interactionSystem.InRangeUnobstructed(dragger.Transform.MapPosition,
                     entity.Transform.MapPosition, ignoredEnt: dragger) == false)
@@ -200,12 +194,9 @@ namespace Content.Client.GameObjects.EntitySystems
             // by this time we've determined the input was actually a drag attempt
 
 
-            //TODO: Some of this logic is duplicated in HighlightTargets
-
             // tell the server we are dropping if we are over a valid drop target in range.
             // We don't use args.EntityUid here because drag interactions generally should
             // work even if there's something "on top" of the drop target
-            //TODO: Refactor to use a shared InteractionChecks
             if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
                     args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger) == false)
             {
@@ -252,7 +243,6 @@ namespace Content.Client.GameObjects.EntitySystems
                 _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
                 var dragSprite = _dragShadow.GetComponent<SpriteComponent>();
                 dragSprite.CopyFrom(draggedSprite);
-                // TODO: apparently this ensures its drawn on top? Maybe refactor to method?
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
                 // keep it on top of everything
@@ -283,7 +273,6 @@ namespace Content.Client.GameObjects.EntitySystems
             // remove current highlights
             RemoveHighlights();
 
-            //TODO: Do we really want to highlight out of range stuff?
             // find possible targets on screen even if not reachable
             // TODO: Duplicated in SpriteSystem
             var pvsBounds = _eyeManager.GetWorldViewport().Enlarged(5);
@@ -299,11 +288,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (_draggable.ClientCanDropOn(new CanDropEventArgs(_dragger, _draggedEntity, pvsEntity)))
                     {
                         // highlight depending on whether its in or out of range
-                        // TODO: Concerned about the cost of doing this
-                        //TODO: Refactor to use a shared InteractionChecks
                         var inRange = _interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
                             pvsEntity.Transform.MapPosition, ignoredEnt: _dragger);
-                        //TODO: Duplicated in InteractionOutline
                         inRangeSprite.PostShader = inRange ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
                         inRangeSprite.RenderOrder = EntityManager.CurrentTick.Value;
                         highlightedSprites.Add(inRangeSprite);
@@ -316,7 +302,6 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             foreach (var highlightedSprite in highlightedSprites)
             {
-                //TODO: Duplicated in InteractionOutline
                 highlightedSprite.PostShader = null;
                 highlightedSprite.RenderOrder = 0;
             }
@@ -391,7 +376,6 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
                 // still in range of the thing we are dragging?
-                //TODO: Refactor to use a shared InteractionChecks
                 if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
                         _draggedEntity.Transform.MapPosition, ignoredEnt: _dragger) == false)
                 {
@@ -402,7 +386,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 // keep dragged entity under mouse
                 var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
                 // TODO: would use MapPosition instead if it had a setter, but it has no setter.
-                // Is this intentional, or should we add a setter for Transform.MapPosition?
+                // is that intentional, or should we add a setter for Transform.MapPosition?
                 _dragShadow.Transform.WorldPosition = mousePos.Position;
 
                 _targetRecheckTime += frameTime;
