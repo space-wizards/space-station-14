@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
@@ -32,12 +33,12 @@ namespace Content.Server.GameObjects.Components.Items
 #pragma warning restore 649
         public override string Name => "RCD";
         private string _outputTile = "floor_steel";
-        private RCDmode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
-        private readonly Array _modes = Enum.GetValues(typeof(RCDmode));
+        private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
+        private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
         private int _ammo = 5; //How much "ammo" we have left. You can refille this with RCD ammo.
 
         ///Enum to store the different mode states for clarity.
-        private enum RCDmode
+        private enum RcdMode
         {
             Floors,
             Walls,
@@ -71,16 +72,16 @@ namespace Content.Server.GameObjects.Components.Items
             _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
             int mode = (int) this._mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
-            this._mode = (RCDmode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
+            this._mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
             switch (this._mode)
             {
-                case RCDmode.Floors:
+                case RcdMode.Floors:
                     _outputTile = "floor_steel";
                     break;
-                case RCDmode.Walls:
+                case RcdMode.Walls:
                     _outputTile = "base_wall";
                     break;
-                case RCDmode.Deconstruct:
+                case RcdMode.Deconstruct:
                     _outputTile = "space";
                     break;
             }
@@ -95,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Items
          */
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently in "+_mode+" mode, and holds "+this._ammo+" charges."));
+            message.AddMarkup(Loc.GetString("It's currently placing {0}, and holds {1} charges.",_mode.ToString(), this._ammo));
         }
 
         ///<summary>
@@ -110,52 +111,40 @@ namespace Content.Server.GameObjects.Components.Items
 
             var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
             var distance = coordinates.Distance(_mapManager, Owner.Transform.GridPosition);
-
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs) || _ammo <= 0 || coordinates == GridCoordinates.InvalidGrid || !tile.Tile.IsEmpty)
+            //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
+            if (_ammo <= 0 || coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
             {
                 return;
             }
 
             var targetTile = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            ITileDefinition desiredTile = null;
-            //Try catch to assert that _outputTile is a valid key in the tiledefinition manager, failing this check, we'll abort any tile placement.
-            try
-            {
-                desiredTile = _tileDefinitionManager[_outputTile];
-            }
-            catch (Exception e)
-            {
-                desiredTile = null;
-            }
 
-            var canPlaceTile = targetTile.IsSubFloor && desiredTile != null; //Boolean to check if we're able to build the desired tile. This defaults to checking for subfloors, but is overridden by "deconstruct" which sets it to the inverse.
-
+            var canPlaceTile = targetTile.IsSubFloor; //Boolean to check if we're able to build the desired tile. This defaults to checking for subfloors, but is overridden by "deconstruct" which sets it to the inverse.
 
             switch (this._mode)
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
-                case RCDmode.Floors:
+                case RcdMode.Floors:
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
-                case RCDmode.Deconstruct:
-                    canPlaceTile = !targetTile.IsSubFloor && desiredTile != null;
+                case RcdMode.Deconstruct:
+                    canPlaceTile = !targetTile.IsSubFloor;
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
-                case RCDmode.Walls:
-                    //If for whatever reason we can't get the grid coords, something has gone horribly wrong so let's return.
-                    if (!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
-                    {
-                        return;
-                    }
-                    var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
-                    var ent = _serverEntityManager.SpawnEntity("solid_wall", grid.GridTileToLocal(snapPos));
+                case RcdMode.Walls:
+                    var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+                    var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
                     ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
-                    _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+                    _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", Owner);
                     _ammo--;
                     return; //Alright we're done here
+                default:
+                    return; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            if (canPlaceTile)
+            ITileDefinition desiredTile = null;
+            desiredTile = _tileDefinitionManager[_outputTile];
+            if (canPlaceTile) //If desiredTile is null by this point, something has gone horribly wrong and you need to fix it.
             {
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
                 _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
