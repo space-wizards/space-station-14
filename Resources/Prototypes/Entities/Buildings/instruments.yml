@@ -58,17 +58,17 @@
  - type: entity
    name: church organ
    parent: BaseInstrument
-   id: ChurchorganInstrument
+   id: ChurchOrganInstrument
    description: This thing really blows!
    components:
    - type: Instrument
      program: 20
    - type: Sprite
      sprite: Objects/Instruments/otherinstruments.rsi
-     state: church-organ
+     state: church_organ
    - type: Icon
      sprite: Objects/Instruments/otherinstruments.rsi
-     state: church-organ
+     state: church_organ
 
  - type: entity
    name: xylophone

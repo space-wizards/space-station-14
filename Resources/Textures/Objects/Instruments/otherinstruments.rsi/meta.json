@@ -80,7 +80,7 @@
       ]
     },
     {
-      "name": "church-organ",
+      "name": "church_organ",
       "directions": 4,
       "delays": [
         [
