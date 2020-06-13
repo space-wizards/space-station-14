@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Shared.GameObjects.Components.Power;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -19,8 +20,16 @@ namespace Content.Server.GameObjects.Components.NewPower
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
         private float _currentCharge;
 
+        /// <summary>
+        ///     What direction the battery's charge is currently going.
+        /// </summary>
         [ViewVariables]
         public BatteryState BatteryState { get; private set; }
+
+        [ViewVariables]
+        public ChargeState LastChargeState { get; private set; } = ChargeState.Still;
+
+        public DateTime LastChargeStateChange { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -33,6 +42,31 @@ namespace Content.Server.GameObjects.Components.NewPower
         {
             base.Initialize();
             UpdateStorageState();
+        }
+
+        public ChargeState GetChargeState()
+        {
+            if (LastChargeStateChange + TimeSpan.FromSeconds(1) > DateTime.Now)
+            {
+                return LastChargeState;
+            }
+            return ChargeState.Still;
+        }
+
+        /// <summary>
+        ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
+        /// </summary>
+        public bool TryUseCharge(float chargeToUse)
+        {
+            if (chargeToUse > CurrentCharge)
+            {
+                return false;
+            }
+            else
+            {
+                CurrentCharge -= chargeToUse;
+                return true;
+            }
         }
 
         private void UpdateStorageState()
@@ -60,24 +94,20 @@ namespace Content.Server.GameObjects.Components.NewPower
 
         private void SetCurrentCharge(float newChargeAmount)
         {
+            var oldCharge = _currentCharge;
             _currentCharge = FloatMath.Clamp(newChargeAmount, 0, MaxCharge);
+            var chargeChange = _currentCharge - oldCharge;
+            if (chargeChange > 0)
+            {
+                LastChargeState = ChargeState.Charging;
+                LastChargeStateChange = DateTime.Now;
+            }
+            else if (chargeChange < 0)
+            {
+                LastChargeState = ChargeState.Discharging;
+                LastChargeStateChange = DateTime.Now;
+            }
             UpdateStorageState();
-        }
-
-        /// <summary>
-        ///     If sufficient charge is avaiable on the battery, use it. Otherwise, don't.
-        /// </summary>
-        public bool TryUseCharge(float chargeToUse)
-        {
-            if (chargeToUse > CurrentCharge)
-            {
-                return false;
-            }
-            else
-            {
-                CurrentCharge -= chargeToUse;
-                return true;
-            }
         }
     }
 

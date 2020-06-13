@@ -144,12 +144,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public ChargeState GetChargeState()
         {
-            return GetChargeState(TimeSpan.FromSeconds(1));
-        }
-
-        public ChargeState GetChargeState(TimeSpan timeout)
-        {
-            if (LastChargeStateChange + timeout > DateTime.Now)
+            if (LastChargeStateChange + TimeSpan.FromSeconds(1) > DateTime.Now)
             {
                 return LastChargeState;
             }
