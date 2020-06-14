@@ -10,6 +10,7 @@ using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -27,53 +28,37 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
-            {
-                return;
-            }
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.OpenActionsMenu,
-                InputCmdHandler.FromDelegate(s => HandleOpenActionsMenu()));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar0,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(0, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar1,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(1, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar2,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(2, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar3,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(3, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar4,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(4, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar5,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(5, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar6,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(6, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar7,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(7, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar8,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(8, args); }));
-            inputSys.BindMap.BindFunction(ContentKeyFunctions.Hotbar9,
-                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(9, args); }));
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenActionsMenu,
+                InputCmdHandler.FromDelegate(s => HandleOpenActionsMenu()))
+                .Bind(ContentKeyFunctions.Hotbar0,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(0, args); }))
+                .Bind(ContentKeyFunctions.Hotbar1,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(1, args); }))
+                .Bind(ContentKeyFunctions.Hotbar2,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(2, args); }))
+                .Bind(ContentKeyFunctions.Hotbar3,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(3, args); }))
+                .Bind(ContentKeyFunctions.Hotbar4,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(4, args); }))
+                .Bind(ContentKeyFunctions.Hotbar5,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(5, args); }))
+                .Bind(ContentKeyFunctions.Hotbar6,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(6, args); }))
+                .Bind(ContentKeyFunctions.Hotbar7,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(7, args); }))
+                .Bind(ContentKeyFunctions.Hotbar8,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(8, args); }))
+                .Bind(ContentKeyFunctions.Hotbar9,
+                new PointerInputCmdHandler((in PointerInputCmdArgs args) => { return HandleHotbarKeybindPressed(9, args); }))
+                .Register<HotbarSystem>();
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            if (!EntitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
-            {
-                return;
-            }
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.OpenActionsMenu);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar0);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar1);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar2);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar3);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar4);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar5);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar6);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar7);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar8);
-            inputSys.BindMap.UnbindFunction(ContentKeyFunctions.Hotbar9);
+            CommandBinds.Unregister<HotbarSystem>();
         }
 
         private void HandleOpenActionsMenu()
@@ -109,6 +94,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public bool Active;
         public Action<HotbarAction, ICommonSession, GridCoordinates, EntityUid> ActivateAction;
         public Action<HotbarAction, bool> SelectAction;
+        public Action<HotbarAction> OnRemoveFromSlot;
         public TimeSpan? Start;
         public TimeSpan? End;
         public TimeSpan? Cooldown;
@@ -142,6 +128,11 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             Active = pressed;
             SelectAction?.Invoke(this, pressed);
+        }
+
+        public void RemovedFromHotbar()
+        {
+            OnRemoveFromSlot?.Invoke(this);
         }
     }
 

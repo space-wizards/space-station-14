@@ -24,19 +24,37 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
         private HotbarAction _menuActionSelected;
 
         private List<HotbarAction> _actions;
+        private List<List<HotbarAction>> _hotbars;
         private List<HotbarAction> _hotbar;
+        private int _hotbarIndex;
 
         public override void Initialize()
         {
             base.Initialize();
 
             _actions = new List<HotbarAction>();
-            _hotbar = new List<HotbarAction>();
-
-            for (int i = 0; i < 10; i++)
+            _hotbars = new List<List<HotbarAction>>();
+            for (var i = 0; i < 10; i++)
             {
-                _hotbar.Add(null);
+                var hotbar = new List<HotbarAction>();
+                for (var j = 0; j < 10; j++)
+                {
+                    hotbar.Add(null);
+                }
+                _hotbars.Add(hotbar);
             }
+
+            _hotbar = _hotbars[0];
+
+            _hotbarGui = new HotbarGui();
+            _hotbarGui.OnSlotToggled += SlotPressed;
+            _hotbarGui.SettingsButton.OnPressed += ToggleActionMenu;
+            _hotbarGui.NextHotbarButton.OnPressed += NextHotbar;
+            _hotbarGui.PreviousHotbarButton.OnPressed += PreviousHotbar;
+
+            _actionMenu = new ActionMenu();
+            _actionMenu.OnPressed += OnActionMenuItemSelected;
+            _actionMenu.OnClose += DeselectActionMenuItem;
         }
 
         public override void OnRemove()
@@ -55,28 +73,59 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             {
                 case PlayerAttachedMsg msg:
                 {
-                    if (_hotbarGui == null)
-                    {
-                        _hotbarGui = new HotbarGui();
-                        _hotbarGui.OnToggled += SlotPressed;
-
-                        _actionMenu = new ActionMenu();
-                        _actionMenu.OnPressed += OnActionMenuItemSelected;
-                        _actionMenu.OnClose += DeselectActionMenuItem;
-
-                    }
-                    else
-                    {
-                        _hotbarGui.Parent?.RemoveChild(_hotbarGui);
-                    }
-
                     _gameHud.HotbarContainer.AddChild(_hotbarGui);
                     break;
                 }
                 case PlayerDetachedMsg _:
                 {
-                    _hotbarGui?.Parent?.RemoveChild(_hotbarGui);
+                    _gameHud.HotbarContainer.RemoveChild(_hotbarGui);
                     break;
+                }
+            }
+        }
+
+        public void ToggleActionMenu(BaseButton.ButtonEventArgs args)
+        {
+            if (_actionMenu.IsOpen)
+            {
+                _actionMenu.Close();
+            }
+            else
+            {
+                OpenActionMenu();
+            }
+        }
+
+        public void NextHotbar(BaseButton.ButtonEventArgs args)
+        {
+            if (_hotbarIndex >= _hotbars.Count - 1)
+                return;
+            _hotbarIndex += 1;
+            _hotbar = _hotbars[_hotbarIndex];
+            UpdateHotbarSlots();
+        }
+
+        public void PreviousHotbar(BaseButton.ButtonEventArgs args)
+        {
+            if (_hotbarIndex <= 0)
+                return;
+            _hotbarIndex -= 1;
+            _hotbar = _hotbars[_hotbarIndex];
+            UpdateHotbarSlots();
+        }
+
+        private void UpdateHotbarSlots()
+        {
+            _hotbarGui.LoadoutNumber.Text = (_hotbarIndex + 1).ToString();
+            for (var i = 0; i < _hotbar.Count; i++)
+            {
+                if (_hotbar[i] == null)
+                {
+                    _hotbarGui.SetSlot(i, null, false);
+                }
+                else
+                {
+                    _hotbarGui.SetSlot(i, _hotbar[i].Texture, _hotbar[i].Active);
                 }
             }
         }
@@ -154,17 +203,17 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             if (_hotbar.Contains(action))
             {
                 var index = _hotbar.IndexOf(action);
-                _hotbar.Remove(action);
-                _hotbarGui?.SetSlot(index, null);
+                _hotbar[index] = null;
+                _hotbarGui?.SetSlot(index, null, false);
             }
 
             if (_hotbar[slot] != null)
             {
-                _hotbarManager.UnbindUse(action);
+                _hotbar[slot].RemovedFromHotbar();
             }
 
             _hotbar[slot] = action;
-            _hotbarGui?.SetSlot(slot, action.Texture);
+            _hotbarGui?.SetSlot(slot, action.Texture, action.Active);
         }
 
         private void SlotPressed(BaseButton.ButtonToggledEventArgs args, int slot)
@@ -177,7 +226,6 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 }
                 SetSlot(slot, _menuActionSelected);
                 DeselectActionMenuItem();
-                SetHotbarSlotPressed(slot, false);
             }
             else
             {

@@ -8,6 +8,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Physics;
@@ -54,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             serializer.DataField(ref _damage, "damage", 10);
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
-            serializer.DataField(ref _fireSound, "fireSound", "Audio/Guns/Gunshots/laser.ogg");
+            serializer.DataField(ref _fireSound, "fireSound", "/Audio/Guns/Gunshots/laser.ogg");
             serializer.DataField(ref _cooldown, "cooldown", TimeSpan.FromSeconds(0));
         }
 
@@ -87,13 +88,18 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 
-            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Impassable | CollisionGroup.MobImpassable));
-            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user).ToList();
+            var ray = new CollisionRay(userPosition, angle.ToVec(), (int)(CollisionGroup.Opaque));
+            var rayCastResults = IoCManager.Resolve<IPhysicsManager>().IntersectRay(user.Transform.MapID, ray, MaxLength, user, returnOnFirstHit: false).ToList();
 
-            if (rayCastResults.Count == 1)
+            //The first result is guaranteed to be the closest one
+            if (rayCastResults.Count >= 1)
             {
                 Hit(rayCastResults[0], user);
-                AfterEffects(user, rayCastResults[0], angle);
+                AfterEffects(user, rayCastResults[0].Distance, angle);
+            }
+            else
+            {
+                AfterEffects(user, MaxLength, angle);
             }
         }
 
@@ -105,17 +111,16 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             }
         }
 
-        protected virtual void AfterEffects(IEntity user, RayCastResults ray, Angle angle)
+        protected virtual void AfterEffects(IEntity user, float distance, Angle angle)
         {
             var time = IoCManager.Resolve<IGameTiming>().CurTime;
-            var dist = ray.Distance;
-            var offset = angle.ToVec() * dist / 2;
+            var offset = angle.ToVec() * distance / 2;
             var message = new EffectSystemMessage
             {
                 EffectSprite = _spritename,
                 Born = time,
                 DeathTime = time + TimeSpan.FromSeconds(1),
-                Size = new Vector2(dist, 1f),
+                Size = new Vector2(distance, 1f),
                 Coordinates = user.Transform.GridPosition.Translated(offset),
                 //Rotated from east facing
                 Rotation = (float) angle.Theta,
@@ -124,12 +129,8 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
 
                 Shaded = false
             };
-            var mgr = IoCManager.Resolve<IEntitySystemManager>();
-            mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            if (Owner.TryGetComponent<SoundComponent>(out var soundComponent))
-            {
-                soundComponent.Play(_fireSound, AudioParams.Default.WithVolume(-5));
-            }
+            EntitySystem.Get<EffectSystem>().CreateParticle(message);
+            EntitySystem.Get<AudioSystem>().Play(_fireSound, Owner, AudioParams.Default.WithVolume(-5));
         }
     }
 }

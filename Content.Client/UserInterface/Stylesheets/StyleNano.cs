@@ -91,12 +91,11 @@ namespace Content.Client.UserInterface.Stylesheets
             };
 
             var buttonRectTex = resCache.GetTexture("/Nano/square.png");
-            var buttonRect = new StyleBoxTexture
+            var buttonRect = new StyleBoxTexture(BaseButton)
             {
-                Texture = buttonRectTex,
                 Modulate = ButtonColorDefault
             };
-            buttonRect.SetPatchMargin(StyleBox.Margin.All, 2);
+            buttonRect.SetPatchMargin(StyleBox.Margin.All, 10);
             buttonRect.SetPadding(StyleBox.Margin.All, 2);
             buttonRect.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
             buttonRect.SetContentMarginOverride(StyleBox.Margin.Horizontal, 2);

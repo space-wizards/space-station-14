@@ -7,6 +7,7 @@ using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -24,8 +25,6 @@ namespace Content.Client.UserInterface
 #pragma warning restore 649
 
         private Dictionary<HotbarActionId, HotbarAction> _hotbarActions;
-        private InputCmdHandler _previousHandler;
-        private HotbarAction _boundHotbarAction;
 
         public void Initialize()
         {
@@ -86,45 +85,18 @@ namespace Content.Client.UserInterface
 
         public void BindUse(HotbarAction action)
         {
-            if (!_entitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
-            {
-                return;
-            }
-
-            if (inputSys.BindMap.TryGetHandler(EngineKeyFunctions.Use, out var handler))
-            {
-                _previousHandler = handler;
-                inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
-            }
-
-            _boundHotbarAction = action;
-            inputSys.BindMap.BindFunction(EngineKeyFunctions.Use,
+            CommandBinds.Builder
+                .Bind(EngineKeyFunctions.Use,
                 new PointerInputCmdHandler((in PointerInputCmdHandler.PointerInputCmdArgs args) => {
                     action.Activate(args);
                     return true;
-                }));
+                }))
+                .Register<HotbarManager>();
         }
 
         public void UnbindUse(HotbarAction action)
         {
-            if (action != _boundHotbarAction)
-            {
-                return;
-            }
-
-            if (!_entitySystemManager.TryGetEntitySystem<InputSystem>(out var inputSys))
-            {
-                return;
-            }
-
-            _boundHotbarAction = null;
-            inputSys.BindMap.UnbindFunction(EngineKeyFunctions.Use);
-
-            if (_previousHandler != null)
-            {
-                inputSys.BindMap.BindFunction(EngineKeyFunctions.Use, _previousHandler);
-                _previousHandler = null;
-            }
+            CommandBinds.Unregister<HotbarManager>();
 
             if (_playerManager.LocalPlayer.ControlledEntity == null
                 || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
