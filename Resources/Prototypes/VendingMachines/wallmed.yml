@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: NanoMed
-  name: nanomed
+  name: NanoMed
   description: Wall-mounted medical equipment dispenser.
   spriteName: wallmed

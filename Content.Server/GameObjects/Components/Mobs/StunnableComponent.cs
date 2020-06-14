@@ -6,6 +6,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Mobs;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Microsoft.Extensions.Logging;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -15,6 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -39,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables]
         public TimeSpan? StunEnd => _lastStun == null
             ? (TimeSpan?) null
-            : _gameTiming.CurTime + TimeSpan.FromSeconds(_stunnedTimer + _knockdownTimer + _slowdownTimer);
+            : _gameTiming.CurTime + (TimeSpan.FromSeconds(Math.Max(_stunnedTimer, Math.Max(_knockdownTimer, _slowdownTimer))));
 
         private const int StunLevels = 8;
 
@@ -56,7 +58,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private float _walkModifierOverride = 0f;
         private float _runModifierOverride = 0f;
-        private readonly string[] _texturesStunOverlay = new string[StunLevels];
+        private string _stunTexture;
+        private CancellationTokenSource _statusRemoveCancellation = new CancellationTokenSource();
 
         [ViewVariables] public bool Stunned => _stunnedTimer > 0f;
         [ViewVariables] public bool KnockedDown => _knockdownTimer > 0f;
@@ -73,16 +76,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
             serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            for (var i = 0; i < StunLevels; i++)
-            {
-                _texturesStunOverlay[i] = $"/Textures/UserInterface/Inventory/cooldown-{i}.png";
-            }
+            serializer.DataField(ref _stunTexture, "stunTexture", "/Textures/Objects/Melee/stunbaton.rsi/stunbaton_off.png");
         }
 
         /// <summary>
@@ -100,6 +94,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _stunnedTimer = seconds;
             _lastStun = _gameTiming.CurTime;
+
+            SetStatusEffect();
         }
 
         /// <summary>
@@ -117,6 +113,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _knockdownTimer = seconds;
             _lastStun = _gameTiming.CurTime;
+
+            SetStatusEffect();
         }
 
         /// <summary>
@@ -150,6 +148,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if(Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
                 movement.RefreshMovementSpeedModifiers();
+
+            SetStatusEffect();
         }
 
         /// <summary>
@@ -174,7 +174,19 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _knockdownTimer -= _helpKnockdownRemove;
 
+            SetStatusEffect();
+
             return true;
+        }
+
+        private void SetStatusEffect()
+        {
+            if (!Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+                return;
+
+            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture, (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
+            _statusRemoveCancellation.Cancel();
+            _statusRemoveCancellation = new CancellationTokenSource();
         }
 
         public void Update(float delta)
@@ -214,33 +226,20 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
             }
 
-            if (!_lastStun.HasValue || !StunEnd.HasValue || !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (!StunStart.HasValue || !StunEnd.HasValue || !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
                 return;
 
-            var start = _lastStun.Value;
+            var start = StunStart.Value;
             var end = StunEnd.Value;
 
             var length = (end - start).TotalSeconds;
             var progress = (_gameTiming.CurTime - start).TotalSeconds;
-            var ratio = (float)(progress / length);
 
-            var textureIndex = CalculateStunLevel(ratio);
-            if (textureIndex == StunLevels)
+            if (progress >= length)
             {
+                Timer.Spawn(250, () => status.RemoveStatusEffect(StatusEffect.Stun), _statusRemoveCancellation.Token);
                 _lastStun = null;
-                status.RemoveStatus(StatusEffect.Stun);
             }
-            else
-            {
-                status.ChangeStatus(StatusEffect.Stun, _texturesStunOverlay[textureIndex]);
-            }
-        }
-
-        private static int CalculateStunLevel(float stunValue)
-        {
-            var val = stunValue.Clamp(0, 1);
-            val *= StunLevels;
-            return (int)Math.Floor(val);
         }
 
         #region ActionBlockers

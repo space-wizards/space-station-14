@@ -18,12 +18,12 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.300
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable
     - name: Content.Tests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+      run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
     - name: Content.IntegrationTests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+      run: dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n

@@ -14,7 +14,7 @@ using Content.Server.GameObjects.EntitySystems;
 namespace Content.Server.BodySystem {
 
     /// <summary>
-    ///     Component representing the many BodyParts attached to each other. 
+    ///     Component representing the many BodyParts attached to each other.
     /// </summary>
     [RegisterComponent]
     public class BodyManagerComponent : Component, IInteractHand {
@@ -36,7 +36,7 @@ namespace Content.Server.BodySystem {
         /// </summary>
         public BodyTemplate Template => _template;
         /// <summary>
-        ///     Maps BodyTemplate slot name to the BodyPart object filling it (if there is one). 
+        ///     Maps BodyTemplate slot name to the BodyPart object filling it (if there is one).
         /// </summary>
         public Dictionary<string, BodyPart> PartDictionary => _partDictionary;
         /// <summary>
@@ -52,7 +52,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Recursive search that returns whether a given BodyPart is connected to the center BodyPart. Not efficient (O(n^2)), but most bodies don't have a ton of BodyParts.
-        /// </summary>	
+        /// </summary>
         protected bool ConnectedToCenterPart(BodyPart target)
         {
             List<string> searchedSlots = new List<string> { };
@@ -81,7 +81,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Returns the central BodyPart of this body based on the BodyTemplate. For humans, this is the torso. Returns null if not found.
-        /// </summary>			
+        /// </summary>
         protected BodyPart GetCenterBodyPart()
         {
             _partDictionary.TryGetValue(_template.CenterSlot, out BodyPart center);
@@ -90,7 +90,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Grabs the BodyPart in the given slotName if there is one. Returns true if a BodyPart is found, false otherwise. If false, result will be null.
-        /// </summary>		
+        /// </summary>
         protected bool TryGetBodyPart(string slotName, out BodyPart result)
         {
             return _partDictionary.TryGetValue(slotName, out result);
@@ -98,16 +98,16 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Grabs the slotName that the given BodyPart resides in. Returns true if the BodyPart is part of this body, false otherwise. If false, result will be null.
-        /// </summary>		
+        /// </summary>
         protected bool TryGetSlotName(BodyPart part, out string result)
         {
-            result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there. 
+            result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
             return result == null;
         }
 
         /// <summary>
         ///     Grabs the names of all connected slots to the given slotName from the template. Returns true if connections are found to the slotName, false otherwise. If false, connections will be null.
-        /// </summary>	
+        /// </summary>
         protected bool TryGetBodyPartConnections(string slotName, out List<string> connections)
         {
             return _template.Connections.TryGetValue(slotName, out connections);
@@ -119,21 +119,21 @@ namespace Content.Server.BodySystem {
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            //TODO: remove organs? 
+            //TODO: remove organs?
             return false;
         }
 
         public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
 
-            string templateName = "";
+            string templateName = null;
             serializer.DataField(ref templateName, "BaseTemplate", "bodyTemplate.Humanoid");
             if (serializer.Reading)
             {
                 if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
                     throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
 
-                string presetName = "";
+                string presetName = null;
                 serializer.DataField(ref presetName, "BasePreset", "bodyPreset.BasicHuman");
                 if (!_prototypeManager.TryIndex(presetName, out BodyPresetPrototype presetData))
                     throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
@@ -145,27 +145,27 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Loads the given preset - forcefully changes all limbs found in both the preset and this template!
-        /// </summary>		
+        /// </summary>
         public void LoadBodyPreset(BodyPreset preset)
         {
             foreach (var (slotName, type) in _template.Slots)
             {
                 if (!preset.PartIDs.TryGetValue(slotName, out string partID))
                 { //For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
-                    continue; //If the preset doesn't define anything for it, continue. 
+                    continue; //If the preset doesn't define anything for it, continue.
                 }
                 if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData))
                 { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                     throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
                 }
-                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists. 
+                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
                 _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
             }
         }
 
         /// <summary>
         ///     Changes the current BodyTemplate to the new BodyTemplate. Attempts to keep previous BodyParts if there is a slot for them in both BodyTemplates.
-        /// </summary>				
+        /// </summary>
         public void ChangeBodyTemplate(BodyTemplatePrototype newTemplate)
         {
             foreach (KeyValuePair<string, BodyPart> part in _partDictionary)
@@ -176,7 +176,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Grabs all limbs of the given type in this body.
-        /// </summary>	
+        /// </summary>
         public List<BodyPart> GetBodyPartsOfType(BodyPartType type)
         {
             List<BodyPart> toReturn = new List<BodyPart>();
@@ -189,7 +189,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        /// Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
+        /// Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it.
         /// </summary>
         /// <returns>Returns the dropped entity, or null if no part is dropped</returns>
         public IEntity DisconnectBodyPart(BodyPart part, bool dropEntity)
@@ -229,7 +229,7 @@ namespace Content.Server.BodySystem {
                 return;
             if (part != null)
             {
-                if (TryGetBodyPartConnections(name, out List<string> connections)) 
+                if (TryGetBodyPartConnections(name, out List<string> connections))
                 {
                     foreach (string connectionName in connections)
                     {

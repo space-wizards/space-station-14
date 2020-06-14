@@ -21,6 +21,7 @@ using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
+using Prometheus;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
 using Robust.Server.Interfaces.Player;
@@ -53,6 +54,14 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker : SharedGameTicker, IGameTicker
     {
+        private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
+            "ss14_round_number",
+            "Round number.");
+
+        private static readonly Gauge RoundLengthMetric = Metrics.CreateGauge(
+            "ss14_round_length",
+            "Round length in seconds.");
+
         private static readonly TimeSpan UpdateRestartDelay = TimeSpan.FromSeconds(20);
 
         private const string PlayerPrototypeName = "HumanMob_Content";
@@ -141,6 +150,11 @@ namespace Content.Server.GameTicking
 
         public void Update(FrameEventArgs frameEventArgs)
         {
+            if (RunLevel == GameRunLevel.InRound)
+            {
+                RoundLengthMetric.Inc(frameEventArgs.DeltaSeconds);
+            }
+
             if (RunLevel != GameRunLevel.PreRoundLobby || _roundStartTimeUtc > DateTime.UtcNow ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                 return;
@@ -160,6 +174,8 @@ namespace Content.Server.GameTicking
             Logger.InfoS("ticker", "Restarting round!");
 
             SendServerMessage("Restarting round...");
+
+            RoundNumberMetric.Inc();
 
             RunLevel = GameRunLevel.PreRoundLobby;
             _resettingCleanup();
@@ -198,6 +214,8 @@ namespace Content.Server.GameTicking
             }
 
             RunLevel = GameRunLevel.InRound;
+
+            RoundLengthMetric.Set(0);
 
             // Get the profiles for each player for easier lookup.
             var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);

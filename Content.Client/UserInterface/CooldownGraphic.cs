@@ -3,33 +3,54 @@ using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics;
 using Robust.Shared.Maths;
 using System;
+using Robust.Client.Graphics.Shaders;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Robust.Client.UserInterface.Controls
 {
+
     public class CooldownGraphic : Control
     {
-        public float Fraction { get; set; }
+
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
+        private ShaderInstance _shader;
+
+        public CooldownGraphic()
+        {
+            IoCManager.InjectDependencies(this);
+            _shader = _protoMan.Index<ShaderPrototype>("CooldownAnimation").InstanceUnique();
+        }
+
+        /// <summary>
+        ///     Progress of the cooldown animation.
+        ///     Possible values range from 1 to -1, where 1 to 0 is a depleting circle animation and 0 to -1 is a blink animation.
+        /// </summary>
+        public float Progress { get; set; }
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            const int maxSegments = 64;
-            const float segment = MathHelper.TwoPi / maxSegments;
+            Color color;
 
-            var segments = (int)Math.Max(2, Math.Ceiling(maxSegments * Fraction)); // ensure that we always have at least 3 vertices
-            var max = MathHelper.TwoPi * Fraction;
-            var radius = (Math.Min(SizeBox.Height, SizeBox.Width) / 2) * 0.875f; // 28/32 = 0.875 - 2 pixels inwards from the edge
-            var ring_radius = (Math.Min(SizeBox.Height, SizeBox.Width) / 2) * 0.5625f;
+            var lerp = 1f - Math.Abs(Progress); // for future bikeshedding purposes
 
-            Span <Vector2> vertices = stackalloc Vector2[segments * 2];
-            var center = PixelPosition + SizeBox.Center;
-            for (int i = 0; i < segments; i++)
+            if (Progress >= 0f)
             {
-                var angle = MathHelper.Pi + Math.Min(max, segment * i);
-                vertices[2*i] = center + new Vector2((float) Math.Sin(angle) * radius, (float) Math.Cos(angle) * radius);
-                vertices[2*i + 1] = center + new Vector2((float) Math.Sin(angle) * ring_radius, (float) Math.Cos(angle) * ring_radius);
+                var hue = (5f / 18f) * lerp;
+                color = Color.FromHsv((hue, 0.75f, 0.75f, 0.50f));
+            }
+            else
+            {
+                var alpha = Math.Clamp(0.5f * lerp, 0f, 0.5f);
+                color = new Color(1f, 1f, 1f, alpha);
             }
 
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleStrip, vertices, new Color(0.3f, 0.3f, 0.4f, 0.75f));
+            _shader.SetParameter("progress", Progress);
+            handle.UseShader(_shader);
+            handle.DrawRect(PixelSizeBox, color);
         }
+
     }
+
 }
