@@ -74,7 +74,7 @@
   parent: CableStack
   components:
   - type: WirePlacer
-    wirePrototypeId: HVWire
+    wirePrototypeID: HVWire
 
 - type: entity
   id: MVWireStack
@@ -84,7 +84,7 @@
   - type: Sprite
     color: Yellow
   - type: WirePlacer
-    wirePrototypeId: MVWire
+    wirePrototypeID: MVWire
 
 - type: entity
   id: ApcExtensionCableStack
@@ -94,10 +94,11 @@
   - type: Sprite
     color: Green
   - type: WirePlacer
-    wirePrototypeId: ApcExtensionCable
+    wirePrototypeID: ApcExtensionCable
 
 - type: entity
   id: CableStack1
+  name: Cable stack 1
   parent: CableStack
   components:
   - type: Stack
@@ -105,6 +106,7 @@
     
 - type: entity
   id: HVWireStack1
+  name: HV Wire stack 1
   parent: HVWireStack
   components:
   - type: Stack
@@ -112,6 +114,7 @@
     
 - type: entity
   id: MVWireStack1
+  name: MV Wire stack 1
   parent: MVWireStack
   components:
   - type: Stack
@@ -119,6 +122,7 @@
     
 - type: entity
   id: ApcExtensionCableStack1
+  name: Apc Extension Cable stack 1
   parent: ApcExtensionCableStack
   components:
   - type: Stack

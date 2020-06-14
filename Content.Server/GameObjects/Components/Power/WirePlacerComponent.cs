@@ -24,12 +24,12 @@ namespace Content.Server.GameObjects.Components.Power
         /// <inheritdoc />
         public override string Name => "WirePlacer";
 
-        private string _wirePrototypeId;
+        private string _wirePrototypeID;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _wirePrototypeId, "wirePrototypeId", "HVWire");
+            serializer.DataField(ref _wirePrototypeID, "wirePrototypeID", "HVWire");
         }
 
         /// <inheritdoc />
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power
             var found = false;
             foreach (var snapComp in snapCell)
             {
-                if (!snapComp.Owner.HasComponent<PowerTransferComponent>())
+                if (snapComp.Owner.Prototype.ID != _wirePrototypeID)
                     continue;
 
                 found = true;
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
 
             GridCoordinates coordinates = grid.GridTileToLocal(snapPos);
-            var newWire = _entityManager.SpawnEntity(_wirePrototypeId, coordinates);
+            var newWire = _entityManager.SpawnEntity(_wirePrototypeID, coordinates);
             if (newWire.TryGetComponent(out SpriteComponent wireSpriteComp) && hasItemSpriteComp)
             {
                 wireSpriteComp.Color = itemSpriteComp.Color;
