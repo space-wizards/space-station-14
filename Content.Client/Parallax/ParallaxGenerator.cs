@@ -28,7 +28,7 @@ namespace Content.Client.Parallax
             sawmill.Debug("Timing start!");
             var sw = new Stopwatch();
             sw.Start();
-            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0,0,0,0));
+            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0,0,0,255));
             var count = 0;
             foreach (var layer in generator.Layers)
             {
