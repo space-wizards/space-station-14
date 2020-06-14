@@ -208,6 +208,7 @@ namespace Content.Client.GameObjects
                 const int rSep = RightSeparation;
 
                 // Left column.
+                AddButton(Slots.NECK, "neck", (0, 0));
                 AddButton(Slots.EYES, "glasses", (0, size + sep));
                 AddButton(Slots.INNERCLOTHING, "uniform", (0, 2 * (size + sep)));
                 AddButton(Slots.EXOSUITSLOT1, "suit_storage", (0, 3 * (size + sep)));
