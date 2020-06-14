@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Nutrition;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Utensil;
@@ -22,22 +23,60 @@ namespace Content.Server.GameObjects.Components.Utensil
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
+        protected UtensilKind _kinds = UtensilKind.None;
+
+        [ViewVariables]
+        public override UtensilKind Kinds
+        {
+            get => _kinds;
+            set
+            {
+                _kinds = value;
+                Dirty();
+            }
+        }
+
         /// <summary>
         /// The chance that the utensil has to break with each use.
         /// A value of 0 means that it is unbreakable.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         private float _breakChance;
 
         /// <summary>
         /// The sound to be played if the utensil breaks.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables]
         private string _breakSound;
+
+        public void AddKind(UtensilKind kind)
+        {
+            Kinds |= kind;
+        }
+
+        public bool HasKind(UtensilKind kind)
+        {
+            return _kinds.HasFlag(kind);
+        }
+
+        public void RemoveKind(UtensilKind kind)
+        {
+            Kinds &= ~kind;
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            if (serializer.Reading)
+            {
+                var kinds = serializer.ReadDataField("kinds", new List<UtensilKind>());
+                foreach (var kind in kinds)
+                {
+                    AddKind(kind);
+                }
+            }
+
             serializer.DataField(ref _breakChance, "breakChance", 0);
             serializer.DataField(ref _breakSound, "breakSound", "/Audio/items/snap.ogg");
         }
