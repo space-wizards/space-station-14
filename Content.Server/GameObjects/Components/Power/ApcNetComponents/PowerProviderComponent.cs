@@ -37,6 +37,12 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public IReadOnlyList<PowerReceiverComponent> LinkedReceivers => _linkedReceivers;
         private List<PowerReceiverComponent> _linkedReceivers = new List<PowerReceiverComponent>();
 
+        /// <summary>
+        ///     If <see cref="PowerReceiverComponent"/>s should consider connecting to this.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Connectable { get; private set; } = true;
+
         public static readonly IPowerProvider NullProvider = new NullPowerProvider();
 
         public void AddReceiver(PowerReceiverComponent receiver)
@@ -61,6 +67,23 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         {
             base.Startup();
             _linkedReceivers = FindAvailableReceivers();
+        }
+
+        public override void OnRemove()
+        {
+            Connectable = false;
+            var receivers = _linkedReceivers.ToArray();
+            foreach (var receiver in receivers)
+            {
+                receiver.ClearProvider();
+            }
+            _linkedReceivers = new List<PowerReceiverComponent>();
+            Net.UpdatePowerProviderReceivers(this);
+            foreach (var receiver in receivers)
+            {
+                receiver.TryFindAndSetProvider();
+            }
+            base.OnRemove();
         }
 
         private List<PowerReceiverComponent> FindAvailableReceivers()

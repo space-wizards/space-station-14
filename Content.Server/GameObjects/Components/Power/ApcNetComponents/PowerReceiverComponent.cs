@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             base.OnRemove();
         }
 
-        private void TryFindAndSetProvider()
+        public void TryFindAndSetProvider()
         {
             if (TryFindAvailableProvider(out var provider))
             {
@@ -111,11 +111,14 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             {
                 if (entity.TryGetComponent<PowerProviderComponent>(out var provider))
                 {
-                    var distanceToProvider = provider.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition);
-                    if (distanceToProvider < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
+                    if (provider.Connectable)
                     {
-                        foundProvider = provider;
-                        return true;
+                        var distanceToProvider = provider.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition);
+                        if (distanceToProvider < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
+                        {
+                            foundProvider = provider;
+                            return true;
+                        }
                     }
                 }
             }
@@ -128,6 +131,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             _provider.RemoveReceiver(this);
             _provider = PowerProviderComponent.NullProvider;
             NeedsProvider = true;
+            HasApcPower = false;
         }
 
         private void SetProvider(IPowerProvider newProvider)

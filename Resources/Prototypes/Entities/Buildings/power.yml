@@ -236,11 +236,11 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
+    drawdepth: WallMountedItems
     netsync: false
     texture: ""
-    sprite: ""
+    sprite: "Buildings/apc.rsi"
     state: apc0
-    drawdepth: WallMountedItems
   - type: Icon
     texture: Buildings/apc.rsi/apc0.png
   - type: Appearance
