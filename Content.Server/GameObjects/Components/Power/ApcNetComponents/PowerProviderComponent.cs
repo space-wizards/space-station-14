@@ -66,7 +66,10 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         protected override void Startup()
         {
             base.Startup();
-            _linkedReceivers = FindAvailableReceivers();
+            foreach (var receiver in FindAvailableReceivers())
+            {
+                receiver.Provider = this;
+            }
         }
 
         public override void OnRemove()
