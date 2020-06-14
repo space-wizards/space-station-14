@@ -54,6 +54,11 @@ namespace Content.Server.GameObjects.Components.Utensil
             Kinds |= kind;
         }
 
+        public bool HasAnyKind(UtensilKind kind)
+        {
+            return (_kinds & kind) != UtensilKind.None;
+        }
+
         public bool HasKind(UtensilKind kind)
         {
             return _kinds.HasFlag(kind);
@@ -62,6 +67,16 @@ namespace Content.Server.GameObjects.Components.Utensil
         public void RemoveKind(UtensilKind kind)
         {
             Kinds &= ~kind;
+        }
+
+        private void TryBreak(IEntity user)
+        {
+            if (_random.Prob(_breakChance))
+            {
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(_breakSound, user, AudioParams.Default.WithVolume(-2f));
+                Owner.Delete();
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -81,16 +96,6 @@ namespace Content.Server.GameObjects.Components.Utensil
             serializer.DataField(ref _breakSound, "breakSound", "/Audio/items/snap.ogg");
         }
 
-        private void TryBreak(IEntity user)
-        {
-            if (_random.Prob(_breakChance))
-            {
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(_breakSound, user, AudioParams.Default.WithVolume(-2f));
-                Owner.Delete();
-            }
-        }
-
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.User == null || eventArgs.Target == null)
@@ -108,9 +113,33 @@ namespace Content.Server.GameObjects.Components.Utensil
                 return;
             }
 
-            if (food.TryUseFood(eventArgs.User, null))
+            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
             {
-                TryBreak(eventArgs.User);
+                return;
+            }
+
+            var held = UtensilKind.None;
+            var utensils = new List<UtensilComponent>();
+
+            foreach (var item in hands.GetAllHeldItems())
+            {
+                if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
+                {
+                    continue;
+                }
+
+                held |= utensil.Kinds;
+                utensils.Add(utensil);
+            }
+
+            if (!food.TryUseFood(eventArgs.User, null, held))
+            {
+                return;
+            }
+
+            foreach (var utensil in utensils)
+            {
+                utensil.TryBreak(eventArgs.User);
             }
         }
     }
