@@ -70,8 +70,6 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 wireSpriteComp.Color = itemSpriteComp.Color;
             }
-
-            //TODO: There is no way to set this wire as above or below the floor
         }
     }
 }

@@ -98,12 +98,32 @@
 
 - type: entity
   id: CableStack1
-  name: cable stack 1
   parent: CableStack
   components:
   - type: Stack
     count: 1
-
+    
+- type: entity
+  id: HVWireStack1
+  parent: HVWireStack
+  components:
+  - type: Stack
+    count: 1
+    
+- type: entity
+  id: MVWireStack1
+  parent: MVWireStack
+  components:
+  - type: Stack
+    count: 1
+    
+- type: entity
+  id: ApcExtensionCableStack1
+  parent: ApcExtensionCableStack
+  components:
+  - type: Stack
+    count: 1
+  
 - type: entity
   name: gold bar
   id: GoldStack

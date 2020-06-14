@@ -176,6 +176,7 @@ namespace Content.Client
                 "NewApc",
                 "NewPowerProvider",
                 "PowerReceiver",
+                "Wire",
             };
 
             foreach (var ignoreName in registerIgnore)

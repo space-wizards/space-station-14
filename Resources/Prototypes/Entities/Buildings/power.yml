@@ -14,6 +14,8 @@
   - type: Sprite  
   - type: IconSmooth
     mode: CardinalFlags
+  - type: Destructible
+    thresholdvalue: 100
   
 - type: entity
   parent: WireBase
@@ -28,6 +30,10 @@
     key: hv_cables
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: Wire
+    wireDroppedOnCutPrototype: HVWireStack1
+  - type: Destructible
+    spawnondestroy: HVWireStack1
   
 - type: entity
   parent: WireBase
@@ -43,7 +49,11 @@
     key: mv_cables
   - type: NodeContainer
     nodeTypes: { MVPower : ["AdjacentNode"] }
-  
+  - type: Wire
+    wireDroppedOnCutPrototype: MVWireStack1
+  - type: Destructible
+    spawnondestroy: MVWireStack1
+    
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
@@ -60,7 +70,11 @@
     nodeTypes: { Apc : ["AdjacentNode"] }
   - type: NewPowerProvider
     voltage: Apc
-  
+  - type: Wire
+    wireDroppedOnCutPrototype: ApcExtensionCableStack1
+  - type: Destructible
+    spawnondestroy: ApcExtensionCableStack1
+    
 - type: entity
   id: DebugGenerator 
   name: Debug Generator
