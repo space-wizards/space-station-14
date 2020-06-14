@@ -105,6 +105,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _powerReceiver.OnPowerStateChanged += UpdatePower;
+            TrySetVisualState(_powerReceiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             InitializeFromPrototype();
         }
 

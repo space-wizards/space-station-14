@@ -105,6 +105,10 @@ namespace Content.Server.GameObjects.Components.Doors
             _wires = Owner.GetComponent<WiresComponent>();
 
             _powerReceiver.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DoorVisuals.Powered, _powerReceiver.Powered);
+            }
         }
 
         public override void OnRemove()
