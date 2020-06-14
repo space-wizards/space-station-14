@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -31,11 +34,47 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private SolutionComponent _contents;
         [ViewVariables]
         private ReagentUnit _transferAmount;
+        private UtensilKind _utensilsNeeded;
 
         public int UsesRemaining => _contents.CurrentVolume == 0
             ?
             0 : Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
 
+        private bool TryUtensils(IEntity user, IEntity target)
+        {
+            if (_utensilsNeeded == UtensilKind.None)
+            {
+                return true;
+            }
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var held = UtensilKind.None;
+
+            if (!user.TryGetComponent(out HandsComponent hands))
+            {
+                return false;
+            }
+
+            foreach (var item in hands.GetAllHeldItems())
+            {
+                if (item.Owner.TryGetComponent(out UtensilComponent utensil))
+                {
+                    held |= utensil.Kinds;
+                }
+            }
+
+            if (!held.HasFlag(_utensilsNeeded))
+            {
+                target.PopupMessage(user, Loc.GetString("You need a {0} to eat that!", _utensilsNeeded));
+                return false;
+            }
+
+            return true;
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -43,6 +82,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _useSound, "useSound", "/Audio/items/eatfood.ogg");
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
             serializer.DataField(ref _trashPrototype, "trash", "TrashPlate");
+
+            if (serializer.Reading)
+            {
+                var utensils = serializer.ReadDataField("utensils", new List<UtensilKind>());
+                foreach (var utensil in utensils)
+                {
+                    _utensilsNeeded |= utensil;
+                    Dirty();
+                }
+            }
         }
 
         public override void Initialize()
@@ -76,6 +125,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             var trueTarget = target ?? user;
+
+            if (!TryUtensils(user, trueTarget))
+            {
+                return false;
+            }
 
             if (trueTarget.TryGetComponent(out StomachComponent stomachComponent))
             {
