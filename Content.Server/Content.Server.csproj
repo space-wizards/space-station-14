@@ -24,6 +24,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <!-- below are runtime refs -->
+    <Reference Include="Microsoft.AspNetCore.WebUtilities" />
+    <Reference Include="Microsoft.Net.Http.Headers" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\AspNetCore.targets" />
 </Project>
