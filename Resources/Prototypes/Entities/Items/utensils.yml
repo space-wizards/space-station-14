@@ -21,6 +21,8 @@
   - type: Icon
     state: fork
 
+  - type: Utensil
+
 - type: entity
   parent: UtensilBase
   id: ForkPlastic
@@ -31,6 +33,8 @@
 
   - type: Icon
     state: plastic_fork
+
+  - type: Utensil
 
 - type: entity
   parent: UtensilBase
@@ -44,6 +48,8 @@
   - type: Icon
     state: spoon
 
+  - type: Utensil
+
 - type: entity
   parent: UtensilBase
   id: SpoonPlastic
@@ -56,6 +62,8 @@
   - type: Icon
     state: plastic_spoon
 
+  - type: Utensil
+
 - type: entity
   parent: UtensilBase
   id: KnifePlastic
@@ -66,3 +74,5 @@
 
   - type: Icon
     state: plastic_knife
+
+  - type: Utensil

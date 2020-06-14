@@ -1,6 +1,5 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -63,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        private bool TryUseFood(IEntity user, IEntity target)
+        internal bool TryUseFood(IEntity user, IEntity target)
         {
             if (user == null)
             {
