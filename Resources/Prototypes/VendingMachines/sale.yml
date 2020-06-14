@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: Sales
-  name: sales
+  name: Sales
   description: Buy, sell, repeat.
   spriteName: sale
