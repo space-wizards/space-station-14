@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;

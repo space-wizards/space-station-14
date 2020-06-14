@@ -13,7 +13,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.Primitives;
 
 namespace Content.Client.Parallax
 {
