@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        internal bool TryUseFood(IEntity user, IEntity target, UtensilKind utensil = UtensilKind.None)
+        internal bool TryUseFood(IEntity user, IEntity target)
         {
             if (user == null)
             {
@@ -91,11 +91,34 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             var trueTarget = target ?? user;
+            IList<UtensilComponent> utensils = null;
 
-            if (!utensil.HasFlag(_utensilsNeeded))
+            if (_utensilsNeeded != UtensilKind.None)
             {
-                trueTarget.PopupMessage(user, Loc.GetString("You need to be holding a {0} to eat that!", _utensilsNeeded));
-                return false;
+                utensils = new List<UtensilComponent>();
+                var kinds = UtensilKind.None;
+
+                if (!user.TryGetComponent(out HandsComponent hands))
+                {
+                    return false;
+                }
+
+                foreach (var item in hands.GetAllHeldItems())
+                {
+                    if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
+                    {
+                        continue;
+                    }
+
+                    utensils.Add(utensil);
+                    kinds |= utensil.Kinds;
+                }
+
+                if (!kinds.HasFlag(_utensilsNeeded))
+                {
+                    trueTarget.PopupMessage(user, Loc.GetString("You need to be holding a {0} to eat that!", _utensilsNeeded));
+                    return false;
+                }
             }
 
             if (!trueTarget.TryGetComponent(out StomachComponent stomach))
@@ -115,6 +138,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _entitySystem.GetEntitySystem<AudioSystem>()
                 .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
             trueTarget.PopupMessage(user, Loc.GetString("Nom"));
+
+            // If utensils were used
+            if (utensils != null)
+            {
+                foreach (var utensil in utensils)
+                {
+                    utensil.TryBreak(user);
+                }
+            }
 
             if (UsesRemaining > 0)
             {

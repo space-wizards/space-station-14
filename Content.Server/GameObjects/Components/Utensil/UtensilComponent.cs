@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Utensil
             Kinds &= ~kind;
         }
 
-        private void TryBreak(IEntity user)
+        internal void TryBreak(IEntity user)
         {
             if (_random.Prob(_breakChance))
             {
@@ -113,34 +113,7 @@ namespace Content.Server.GameObjects.Components.Utensil
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
-            {
-                return;
-            }
-
-            var held = UtensilKind.None;
-            var utensils = new List<UtensilComponent>();
-
-            foreach (var item in hands.GetAllHeldItems())
-            {
-                if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
-                {
-                    continue;
-                }
-
-                held |= utensil.Kinds;
-                utensils.Add(utensil);
-            }
-
-            if (!food.TryUseFood(eventArgs.User, null, held))
-            {
-                return;
-            }
-
-            foreach (var utensil in utensils)
-            {
-                utensil.TryBreak(eventArgs.User);
-            }
+            food.TryUseFood(eventArgs.User, null);
         }
     }
 }
