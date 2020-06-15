@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
         private BatteryComponent _battery;
 
         [ViewVariables]
-        private PowerConsumerComponent _consumer;
+        public PowerConsumerComponent Consumer { get; private set; }
 
         [ViewVariables]
         private int _consumerDrawRate = 0;
@@ -35,14 +35,14 @@ namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
         {
             base.Initialize();
             _battery = Owner.GetComponent<BatteryComponent>();
-            _consumer = Owner.GetComponent<PowerConsumerComponent>();
+            Consumer = Owner.GetComponent<PowerConsumerComponent>();
             UpdateDrawRate();
         }
 
         public void Update(float frameTime)
         {
             //Simlified implementation - If a frame adds more power to a partially full battery than it can hold, the power is lost.
-            _battery.CurrentCharge += _consumer.ReceivedPower * frameTime;
+            _battery.CurrentCharge += Consumer.ReceivedPower * frameTime;
             UpdateDrawRate();
         }
 
@@ -61,9 +61,9 @@ namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
         private void SetConsumerDraw(int newConsumerDrawRate)
         {
             _consumerDrawRate = newConsumerDrawRate;
-            if (_consumer.DrawRate != _consumerDrawRate)
+            if (Consumer.DrawRate != _consumerDrawRate)
             {
-                _consumer.DrawRate = _consumerDrawRate;
+                Consumer.DrawRate = _consumerDrawRate;
             }
         }
 

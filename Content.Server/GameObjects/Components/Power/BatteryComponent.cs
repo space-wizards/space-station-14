@@ -1,4 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Power;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -21,13 +22,17 @@ namespace Content.Server.GameObjects.Components.NewPower
         private float _currentCharge;
 
         /// <summary>
-        ///     What direction the battery's charge is currently going.
+        ///     How full the battery is.
         /// </summary>
         [ViewVariables]
         public BatteryState BatteryState { get; private set; }
 
+        /// <summary>
+        ///     What direction the battery's charge is currently going.
+        /// </summary>
         [ViewVariables]
-        public ChargeState LastChargeState { get; private set; } = ChargeState.Still;
+        public ChargeState LastChargeState { get => _lastChargeState; set => SetLastChargeState(value); }
+        private ChargeState _lastChargeState = ChargeState.Still;
 
         public DateTime LastChargeStateChange { get; private set; }
 
@@ -96,18 +101,21 @@ namespace Content.Server.GameObjects.Components.NewPower
         {
             var oldCharge = _currentCharge;
             _currentCharge = FloatMath.Clamp(newChargeAmount, 0, MaxCharge);
-            var chargeChange = _currentCharge - oldCharge;
-            if (chargeChange > 0)
+            if (_currentCharge > oldCharge)
             {
                 LastChargeState = ChargeState.Charging;
-                LastChargeStateChange = DateTime.Now;
             }
-            else if (chargeChange < 0)
+            else if (_currentCharge < oldCharge)
             {
                 LastChargeState = ChargeState.Discharging;
-                LastChargeStateChange = DateTime.Now;
             }
             UpdateStorageState();
+        }
+
+        private void SetLastChargeState(ChargeState newChargeState)
+        {
+            _lastChargeState = newChargeState;
+            LastChargeStateChange = DateTime.Now;
         }
     }
 
