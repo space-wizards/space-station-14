@@ -203,7 +203,6 @@ namespace Content.Client.GameObjects
                     buttonDict.Add(slot, button);
                 }
 
-                const int rSep = RightSeparation;
                 const int sizep = (ButtonSize + ButtonSeparation);
 
                 // Left column.
