@@ -24,7 +24,6 @@
     max_volume: 250
     digestionDelay: 20
   - type: Inventory
-  - type: Constructor
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

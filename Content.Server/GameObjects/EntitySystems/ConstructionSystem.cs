@@ -1,26 +1,28 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Utility;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.Components.Construction;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Construction
+namespace Content.Server.GameObjects.EntitySystems
 {
-    [RegisterComponent]
-    public class ConstructorComponent : SharedConstructorComponent
+    /// <summary>
+    /// The server-side implementation of the construction system, which is used for constructing entities in game.
+    /// </summary>
+    [UsedImplicitly]
+    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.ConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -28,31 +30,40 @@ namespace Content.Server.GameObjects.Components.Construction
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
 #pragma warning restore 649
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        /// <inheritdoc />
+        public override void Initialize()
         {
-            base.HandleNetworkMessage(message, channel, session);
+            base.Initialize();
 
-            switch (message)
-            {
-                case TryStartStructureConstructionMessage tryStart:
-                    TryStartStructureConstruction(tryStart.Location, tryStart.PrototypeName, tryStart.Angle, tryStart.Ack);
-                    break;
-                case TryStartItemConstructionMessage tryStart:
-                    TryStartItemConstruction(tryStart.PrototypeName);
-                    break;
-            }
+            SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
+            SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
         }
 
-        void TryStartStructureConstruction(GridCoordinates loc, string prototypeName, Angle angle, int ack)
+        private void HandleStartStructureConstruction(TryStartStructureConstructionMessage msg, EntitySessionEventArgs args)
+        {
+            var placingEnt = args.SenderSession.AttachedEntity;
+            var result = TryStartStructureConstruction(placingEnt, msg.Location, msg.PrototypeName, msg.Angle);
+            if (!result) return;
+            var responseMsg = new AckStructureConstructionMessage(msg.Ack);
+            var channel = ((IPlayerSession) args.SenderSession).ConnectedClient;
+            RaiseNetworkEvent(responseMsg, channel);
+        }
+
+        private void HandleStartItemConstruction(TryStartItemConstructionMessage msg, EntitySessionEventArgs args)
+        {
+            var placingEnt = args.SenderSession.AttachedEntity;
+            TryStartItemConstruction(placingEnt, msg.PrototypeName);
+        }
+
+        private bool TryStartStructureConstruction(IEntity placingEnt, GridCoordinates loc, string prototypeName, Angle angle)
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
-            if (!InteractionChecks.InRangeUnobstructed(Owner, loc.ToMap(_mapManager),
-                ignoredEnt: Owner, insideBlockerValid: prototype.CanBuildInImpassable))
+            if (!InteractionChecks.InRangeUnobstructed(placingEnt, loc.ToMap(_mapManager),
+                ignoredEnt: placingEnt, insideBlockerValid: prototype.CanBuildInImpassable))
             {
-                return;
+                return false;
             }
-
 
             if (prototype.Stages.Count < 2)
             {
@@ -66,25 +77,25 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // Try to find the stack with the material in the user's hand.
-            var hands = Owner.GetComponent<HandsComponent>();
+            var hands = placingEnt.GetComponent<HandsComponent>();
             var activeHand = hands.GetActiveHand?.Owner;
             if (activeHand == null)
             {
-                return;
+                return false;
             }
 
             if (!activeHand.TryGetComponent(out StackComponent stack) || !ConstructionComponent.MaterialStackValidFor(matStep, stack))
             {
-                return;
+                return false;
             }
 
             if (!stack.Use(matStep.Amount))
             {
-                return;
+                return false;
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/items/deconstruct.ogg", loc);
+            Get<AudioSystem>().PlayAtCoords("/Audio/items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
@@ -99,11 +110,10 @@ namespace Content.Server.GameObjects.Components.Construction
                 frame.Transform.LocalRotation = angle;
             }
 
-            var msg = new AckStructureConstructionMessage(ack);
-            SendNetworkMessage(msg);
+            return true;
         }
 
-        void TryStartItemConstruction(string prototypeName)
+        private void TryStartItemConstruction(IEntity placingEnt, string prototypeName)
         {
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
@@ -119,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // Try to find the stack with the material in the user's hand.
-            var hands = Owner.GetComponent<HandsComponent>();
+            var hands = placingEnt.GetComponent<HandsComponent>();
             var activeHand = hands.GetActiveHand?.Owner;
             if (activeHand == null)
             {
@@ -137,17 +147,17 @@ namespace Content.Server.GameObjects.Components.Construction
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", placingEnt);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                var ent = _serverEntityManager.SpawnEntity(prototype.Result, Owner.Transform.GridPosition);
+                var ent = _serverEntityManager.SpawnEntity(prototype.Result, placingEnt.Transform.GridPosition);
                 hands.PutInHandOrDrop(ent.GetComponent<ItemComponent>());
             }
             else
             {
                 //TODO: Make these viable as an item and try putting them in the players hands
-                var frame = _serverEntityManager.SpawnEntity("structureconstructionframe", Owner.Transform.GridPosition);
+                var frame = _serverEntityManager.SpawnEntity("structureconstructionframe", placingEnt.Transform.GridPosition);
                 var construction = frame.GetComponent<ConstructionComponent>();
                 construction.Init(prototype);
             }
