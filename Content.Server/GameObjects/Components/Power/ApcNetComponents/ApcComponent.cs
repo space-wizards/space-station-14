@@ -29,9 +29,21 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 
         private AppearanceComponent _appearance;
 
-        private const float HighPowerThreshold = 0.7f;
+        private ApcChargeState _lastChargeState;
 
-        private const float LowPowerThreshold = 0.3f;
+        private DateTime _lastChargeStateChange;
+
+        private ApcExternalPowerState _lastExternalPowerState;
+
+        private DateTime _lastExternalPowerStateChange;
+
+        private float _lastCharge = 0f;
+
+        private bool _uiDirty = true;
+
+        private const float HighPowerThreshold = 0.9f;
+
+        private const int VisualsChangeDelay = 1;
 
         public override void Initialize()
         {
@@ -53,13 +65,6 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             apcNet.RemoveApc(this);
         }
 
-        #region Apc Visuals & UI
-
-        private ApcChargeState _lastChargeState;
-        private bool _uiDirty = true;
-        private float _lastCharge = 0f;
-        private ApcExternalPowerState _lastExternalPowerState;
-
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
             if (serverMsg.Message is ApcToggleMainBreakerMessage)
@@ -73,9 +78,10 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         public void Update()
         {
             var newState = CalcChargeState();
-            if (newState != _lastChargeState)
+            if (newState != _lastChargeState && _lastChargeStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < DateTime.Now)
             {
                 _lastChargeState = newState;
+                _lastChargeStateChange = DateTime.Now;
                 _appearance.SetData(ApcVisuals.ChargeState, newState);
             }
             var newCharge = Battery.CurrentCharge;
@@ -85,9 +91,10 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
                 _uiDirty = true;
             }
             var extPowerState = CalcExtPowerState();
-            if (extPowerState != _lastExternalPowerState)
+            if (extPowerState != _lastExternalPowerState && _lastExternalPowerStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < DateTime.Now)
             {
                 _lastExternalPowerState = extPowerState;
+                _lastExternalPowerStateChange = DateTime.Now;
                 _uiDirty = true;
             }
             if (_uiDirty)
@@ -100,17 +107,18 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         private ApcChargeState CalcChargeState()
         {
             var chargeFraction = Battery.CurrentCharge / Battery.MaxCharge;
-            if (chargeFraction < LowPowerThreshold)
-            {
-                return ApcChargeState.Lack;
-            }
-            else if (chargeFraction > HighPowerThreshold)
+            if (chargeFraction > HighPowerThreshold)
             {
                 return ApcChargeState.Full;
             }
-            else
+            var consumer = Owner.GetComponent<PowerConsumerComponent>();
+            if (consumer.DrawRate == consumer.ReceivedPower)
             {
                 return ApcChargeState.Charging;
+            }
+            else
+            {
+                return ApcChargeState.Lack;
             }
         }
 
@@ -143,7 +151,5 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
             }
             _userInterface.Open(actor.playerSession);
         }
-
-        #endregion
     }
 }

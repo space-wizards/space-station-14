@@ -27,15 +27,6 @@ namespace Content.Server.GameObjects.Components.NewPower
         [ViewVariables]
         public BatteryState BatteryState { get; private set; }
 
-        /// <summary>
-        ///     What direction the battery's charge is currently going.
-        /// </summary>
-        [ViewVariables]
-        public ChargeState LastChargeState { get => _lastChargeState; set => SetLastChargeState(value); }
-        private ChargeState _lastChargeState = ChargeState.Still;
-
-        public DateTime LastChargeStateChange { get; private set; }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -47,15 +38,6 @@ namespace Content.Server.GameObjects.Components.NewPower
         {
             base.Initialize();
             UpdateStorageState();
-        }
-
-        public ChargeState GetChargeState()
-        {
-            if (LastChargeStateChange + TimeSpan.FromSeconds(1) > DateTime.Now)
-            {
-                return LastChargeState;
-            }
-            return ChargeState.Still;
         }
 
         /// <summary>
@@ -101,21 +83,7 @@ namespace Content.Server.GameObjects.Components.NewPower
         {
             var oldCharge = _currentCharge;
             _currentCharge = FloatMath.Clamp(newChargeAmount, 0, MaxCharge);
-            if (_currentCharge > oldCharge)
-            {
-                LastChargeState = ChargeState.Charging;
-            }
-            else if (_currentCharge < oldCharge)
-            {
-                LastChargeState = ChargeState.Discharging;
-            }
             UpdateStorageState();
-        }
-
-        private void SetLastChargeState(ChargeState newChargeState)
-        {
-            _lastChargeState = newChargeState;
-            LastChargeStateChange = DateTime.Now;
         }
     }
 
