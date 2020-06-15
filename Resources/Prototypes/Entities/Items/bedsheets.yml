@@ -132,7 +132,7 @@
     Slots:
     - neck
     sprite: Clothing/neck.rsi
-    HeldPrefix: sheetclown
+    HeldPrefix: sheetrainbow
 
 - type: entity
   id: BedsheetCMO
