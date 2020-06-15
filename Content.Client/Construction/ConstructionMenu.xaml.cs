@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -218,7 +218,7 @@ namespace Content.Client.Construction
                     case PrototypeConstructionGraphStep prototypeStep:
                         return prototypeStep.Icon?.Frame0();
 
-                    case NestedConstructionGraphStep _:
+                    case NestedConstructionGraphStep:
                         return null;
                 }
 
@@ -388,13 +388,14 @@ namespace Content.Client.Construction
             EraseButton.Pressed = args.Pressed;
         }
 
-        private void ClearAllButtonPressed(BaseButton.ButtonEventArgs obj)
+        private static void ClearAllButtonPressed(BaseButton.ButtonEventArgs obj)
         {
             var constructionSystem = EntitySystem.Get<ConstructionSystem>();
 
             constructionSystem.ClearAllGhosts();
         }
 
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

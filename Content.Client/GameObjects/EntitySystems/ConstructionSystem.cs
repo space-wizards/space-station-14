@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Content.Client.Construction;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.UserInterface;
@@ -15,6 +16,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
+#nullable enable
+
 namespace Content.Client.GameObjects.EntitySystems
 {
     /// <summary>
@@ -28,12 +31,20 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private int _nextId;
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
-        private ConstructionMenu _constructionMenu;
+
+        private ConstructionMenuPresenter? _constructionMenu;
+
+        public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
+        public event EventHandler? ToggleCraftingWindow;
+
+        private bool CraftingEnabled { get; set; }
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
+
+            _constructionMenu = new ConstructionMenuPresenter(_gameHud, EntitySystemManager);
 
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
@@ -53,66 +64,40 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandlePlayerAttached(PlayerAttachSysMessage msg)
         {
-            if (msg.AttachedEntity == null)
-            {
-                _gameHud.CraftingButtonVisible = false;
-                return;
-            }
+            var available = IsCrafingAvailable(msg.AttachedEntity);
+            UpdateCraftingAvailability(available);
+        }
 
-            if (_constructionMenu == null)
-            {
-                _constructionMenu = new ConstructionMenu();
-                _constructionMenu.OnClose += () => _gameHud.CraftingButtonDown = false;
-            }
-
-            _gameHud.CraftingButtonVisible = true;
-            _gameHud.CraftingButtonToggled = b =>
-            {
-                if (b)
-                {
-                    _constructionMenu.Open();
-                }
-                else
-                {
-                    _constructionMenu.Close();
-                }
-            };
+        private bool HandleOpenCraftingMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        {
+            if (args.State == BoundKeyState.Down)
+                ToggleCraftingWindow?.Invoke(this, EventArgs.Empty);
+            return true;
         }
 
         /// <inheritdoc />
         public override void Shutdown()
         {
-            _constructionMenu?.Dispose();
-
             CommandBinds.Unregister<ConstructionSystem>();
+            _constructionMenu?.Dispose();
             base.Shutdown();
         }
 
-        private bool HandleOpenCraftingMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        private void UpdateCraftingAvailability(bool available)
         {
-            if (_playerManager.LocalPlayer.ControlledEntity == null)
-            {
+            if(CraftingEnabled == available)
+                return;
+
+            CraftingAvailabilityChanged?.Invoke(this, new CraftingAvailabilityChangedArgs(available));
+            CraftingEnabled = available;
+        }
+
+        private static bool IsCrafingAvailable(IEntity? entity)
+        {
+            if (entity == null)
                 return false;
-            }
 
-            var menu = _constructionMenu;
-
-            if (menu.IsOpen)
-            {
-                if (menu.IsAtFront())
-                {
-                    SetOpenValue(menu, false);
-                }
-                else
-                {
-                    menu.MoveToFront();
-                }
-            }
-            else
-            {
-                SetOpenValue(menu, true);
-            }
-
+            // TODO: Decide if entity can craft, using capabilities or something
             return true;
         }
 
@@ -123,26 +108,11 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var entity = EntityManager.GetEntity(args.EntityUid);
 
-            if (!entity.TryGetComponent(out ConstructionGhostComponent ghostComp))
+            if (!entity.TryGetComponent<ConstructionGhostComponent>(out var ghostComp))
                 return false;
 
             TryStartConstruction(ghostComp.GhostID);
             return true;
-
-        }
-
-        private void SetOpenValue(ConstructionMenu menu, bool value)
-        {
-            if (value)
-            {
-                _gameHud.CraftingButtonDown = true;
-                menu.OpenCentered();
-            }
-            else
-            {
-                _gameHud.CraftingButtonDown = false;
-                menu.Close();
-            }
         }
 
         /// <summary>
@@ -233,6 +203,16 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             _ghosts.Clear();
+        }
+    }
+
+    public class CraftingAvailabilityChangedArgs : EventArgs
+    {
+        public bool Available { get; }
+
+        public CraftingAvailabilityChangedArgs(bool available)
+        {
+            Available = available;
         }
     }
 }
