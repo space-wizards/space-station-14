@@ -72,8 +72,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
             return TryUseFood(eventArgs.User, null);
         }
 
+        // Feeding someone else
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (eventArgs.Target == null)
+            {
+                return;
+            }
+
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
