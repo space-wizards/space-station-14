@@ -161,17 +161,27 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             //We're empty. Become trash.
             var position = Owner.Transform.GridPosition;
-            Owner.Delete();
             var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
-            if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
+
+            // If the user is holding the item
+            if (user.TryGetComponent(out HandsComponent handsComponent) &&
+                handsComponent.IsHolding(Owner))
             {
-                if (handsComponent.CanPutInHand(itemComponent))
+                Owner.Delete();
+
+                // Put the trash in the user's hand
+                if (finisher.TryGetComponent(out ItemComponent item) &&
+                    handsComponent.CanPutInHand(item))
                 {
-                    handsComponent.PutInHand(itemComponent);
-                    return true;
+                    handsComponent.PutInHand(item);
+                    finisher.Transform.GridPosition = user.Transform.GridPosition;
                 }
             }
-            finisher.Transform.GridPosition = user.Transform.GridPosition;
+            else
+            {
+                Owner.Delete();
+            }
+
             return true;
         }
     }
