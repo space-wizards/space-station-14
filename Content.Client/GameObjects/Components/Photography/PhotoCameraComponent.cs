@@ -1,4 +1,5 @@
-﻿using Content.Client.Interfaces;
+﻿using Content.Client.GameObjects.EntitySystems;
+using Content.Client.Interfaces;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Photography;
 using Robust.Client.Graphics.ClientEye;
@@ -8,6 +9,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Resources;
 using Robust.Shared.IoC;
@@ -29,6 +31,7 @@ namespace Content.Client.GameObjects.Components.Photography
     [RegisterComponent]
     public class PhotoCameraComponent : SharedPhotoCameraComponent, IItemStatus
     {
+
 #pragma warning disable 649
         [Dependency] private readonly IClientNotifyManager _notifyManager = default;
         [Dependency] private readonly IClyde _clyde = default;
@@ -37,6 +40,7 @@ namespace Content.Client.GameObjects.Components.Photography
         [Dependency] private readonly IResourceManager _resourceManager = default;
 #pragma warning restore 649
 
+        private PhotoSystem _photoSystem;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool CameraOn { get; private set; } = false;
@@ -48,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Photography
         {
             base.Initialize();
 
-            IoCManager.InjectDependencies(this);
+            _photoSystem = EntitySystem.Get<PhotoSystem>();
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -150,52 +154,18 @@ namespace Content.Client.GameObjects.Components.Photography
 
             Logger.InfoS("photo", $"cropX:{cropX}, cropY:{cropY}, w:{screenshot.Width}, h:{screenshot.Height}");
 
-            var success = false;
-            var filename = $"MY_PHOTO";
             using (screenshot)
             {
+                //Crop screenshot to photo dimensions
                 screenshot.Mutate(
                     i => i.Crop(new Rectangle(cropX, cropY, cropDimensions, cropDimensions))
                 );
 
-                for (var i = 0; i < 5; i++)
-                {
-                    try
-                    {
-                        if (i != 0)
-                        {
-                            filename = $"MY_PHOTO-{i}";
-                        }
-
-                        await using var file =
-                            _resourceManager.UserData.Open(new ResourcePath("/Screenshots") / $"{filename}.png", FileMode.OpenOrCreate);
-
-                        await Task.Run(() =>
-                        {
-                            screenshot.SaveAsPng(file);
-                        });
-
-                        success = true;
-                        Logger.InfoS("photo", "Photo taken as {0}.png", filename);
-                        break;
-                    }
-                    catch (IOException e)
-                    {
-                        Logger.WarningS("photo", "Failed to save photo, retrying?:\n{0}", e);
-                    }
-                }
-                if (!success)
-                {
-                    Logger.ErrorS("photo", "Unable to save photo.");
-                }
-            }
-
-            //Photo's made, we can now upload it so everyone can see it on the item
-            if (success)
-            {
+                //Store it to disk as a PNG
+                var path = await _photoSystem.StoreImagePNG(screenshot);
 
                 await using var file =
-                            _resourceManager.UserData.Open(new ResourcePath("/Screenshots") / $"{filename}.png", FileMode.Open);
+                    _resourceManager.UserData.Open(path, FileMode.Open);
 
                 SendNetworkMessage(new TookPhotoMessage(author, file.CopyToArray(), suicide));
             }

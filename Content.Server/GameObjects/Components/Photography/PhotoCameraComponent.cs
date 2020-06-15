@@ -218,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Photography
             if (inDetailsRange)
             {
                 message.AddMarkup(Loc.GetString("\nFilm: [color={0}]{1}/{2}[/color], ",
-                    Film<=0 ? "red" : "white", Film, FilmMax));
+                    !HasFilm ? "red" : "white", Film, FilmMax));
                 message.AddMarkup(Loc.GetString("Radius: [color=white]{0}x{0}[/color]", Radius*2));
             }
         }

@@ -15,28 +15,16 @@ namespace Content.Shared.GameObjects.Components.Photography
     }
 
     /// <summary>
-    /// Open the photo ui.
-    /// Sets the photo to the message's data before opening it.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class SetPhotoAndOpenUiMessage : ComponentMessage
-    {
-        public byte[] Data;
-        public SetPhotoAndOpenUiMessage(byte[] data)
-        {
-            Data = data;
-        }
-    }
-
-    /// <summary>
-    /// Open the photo ui.
-    /// Does not handle changing the photo.
+    /// Open the photo UI displaying the appropriate photo known as photoId.
+    /// Client may request the photo from the server if it doesn't already have it cached.
     /// </summary>
     [Serializable, NetSerializable]
     public class OpenPhotoUiMessage : ComponentMessage
     {
-        public OpenPhotoUiMessage()
+        public readonly string PhotoId;
+        public OpenPhotoUiMessage(string photoId)
         {
+            PhotoId = photoId;
         }
     }
 }

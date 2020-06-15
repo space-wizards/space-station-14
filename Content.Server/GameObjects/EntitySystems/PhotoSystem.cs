@@ -1,48 +1,56 @@
 ﻿using Content.Server.GameObjects.Components.Photography;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.Resources;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
+using Content.Shared.GameObjects.EntitySystemMessages;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class PhotoSystem : EntitySystem
+    public class PhotoSystem : SharedPhotoSystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IResourceManager _resourceManager = default;
-#pragma warning restore 649
+        /// <summary>
+        /// Int used as photoIds for player created photos.
+        /// </summary>
+        private int _photoIdSource = 0;
 
-        private int _filenameSource = 0;
+        public override void Initialize()
+        {
+            base.Initialize();
 
-        //TODO: should probably delete these photos on server shutdown.
-        //Could also upload them to a photo site like Imgur or flickr or something?
-        //might be fun.
+            SubscribeNetworkEvent<PhotoSystemMessages.RequestPhotoMessage>(RequestPhoto);
+        }
+
+        /// <summary>
+        /// Stores data (PNG byte array) to disk as PNG in /Photos.
+        /// </summary>
+        /// <param name="data">PNG byte array of photo to save to disk.</param>
+        /// <param name="photo">A PhotoComponent to assign the resulting photoId to.</param>
+        /// <returns></returns>
         public async void StorePhoto(byte[] data, PhotoComponent photo)
         {
-            Logger.InfoS("photo", "Storing a photo...");
-
-            var filename = $"photo-{_filenameSource++}";
-            var path = new ResourcePath($"{filename}.png");
-
-            await using var file = _resourceManager.UserData.Open(path, FileMode.Create);
-
-            using (file)
-            {
-                using var writer = new BinaryWriter(file);
-                foreach (var dat in data)
-                {
-                    writer.Write(dat);
-                }
-            }
-
-            photo.Path = path;
-
-            Logger.InfoS("photo", $"Stored a photo to {path}");
+            var photoId = $"{_photoIdSource++}";
+            photo.PhotoId = photoId;
+            await StorePhotoImpl(data, photoId);
         }
+
+        /// <summary>
+        /// Send a requested photo as an array of PNG bytes to the client.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="eventArgs"></param>
+        private void RequestPhoto(PhotoSystemMessages.RequestPhotoMessage request, EntitySessionEventArgs eventArgs)
+        {
+            var player = (IPlayerSession) eventArgs.SenderSession;
+            var channel = player.ConnectedClient;
+
+            if (TryGetPhotoBytes(request.PhotoId, out var photoBytes))
+            {
+                RaiseNetworkEvent(new PhotoSystemMessages.PhotoResponseMessage(photoBytes, true), channel);
+            } else
+            {
+                RaiseNetworkEvent(new PhotoSystemMessages.PhotoResponseMessage(null, false), channel);
+            }
+        }
+
     }
 }

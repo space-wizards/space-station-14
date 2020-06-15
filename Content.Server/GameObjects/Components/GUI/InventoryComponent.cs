@@ -203,12 +203,13 @@ namespace Content.Server.GameObjects
         ///     Checks whether an item can be dropped from the specified slot.
         /// </summary>
         /// <param name="slot">The slot to check for.</param>
+        /// <param name="force">Whether to force the unequip or not, ignores checks against whether the wearer can unequip.</param>
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
         public bool CanUnequip(Slots slot, bool force = false)
         {
-            if (!ActionBlockerSystem.CanUnequip(Owner) && !force)
+            if (!force && !ActionBlockerSystem.CanUnequip(Owner))
                 return false;
 
             var InventorySlot = SlotContainers[slot];
