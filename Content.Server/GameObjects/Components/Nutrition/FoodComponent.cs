@@ -69,6 +69,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
+            if (_utensilsNeeded != UtensilType.None)
+            {
+                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
+                return false;
+            }
+
             return TryUseFood(eventArgs.User, null);
         }
 
