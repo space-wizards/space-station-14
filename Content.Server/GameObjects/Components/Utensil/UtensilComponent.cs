@@ -113,6 +113,11 @@ namespace Content.Server.GameObjects.Components.Utensil
                 return;
             }
 
+            if (!InteractionChecks.InRangeUnobstructed(user, target.Transform.MapPosition))
+            {
+                return;
+            }
+
             food.TryUseFood(user, null, this);
         }
     }
