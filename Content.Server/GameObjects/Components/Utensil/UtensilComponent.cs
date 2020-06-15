@@ -98,17 +98,22 @@ namespace Content.Server.GameObjects.Components.Utensil
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (eventArgs.User == null || eventArgs.Target == null)
+            TryUseUtensil(eventArgs.User, eventArgs.Target);
+        }
+
+        private void TryUseUtensil(IEntity user, IEntity target)
+        {
+            if (user == null || target == null)
             {
                 return;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out FoodComponent food))
+            if (!target.TryGetComponent(out FoodComponent food))
             {
                 return;
             }
 
-            food.TryUseFood(eventArgs.User, null, this);
+            food.TryUseFood(user, null, this);
         }
     }
 }
