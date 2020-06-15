@@ -108,12 +108,7 @@ namespace Content.Server.GameObjects.Components.Utensil
                 return;
             }
 
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs))
-            {
-                return;
-            }
-
-            food.TryUseFood(eventArgs.User, null);
+            food.TryUseFood(eventArgs.User, null, this);
         }
     }
 }

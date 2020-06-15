@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        internal bool TryUseFood(IEntity user, IEntity target)
+        internal bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
         {
             if (user == null)
             {
@@ -91,7 +91,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
 
             var trueTarget = target ?? user;
-            IList<UtensilComponent> utensils = null;
+
+            if (!trueTarget.TryGetComponent(out StomachComponent stomach))
+            {
+                return false;
+            }
+
+            var utensils = utensilUsed != null
+                ? new List<UtensilComponent> {utensilUsed}
+                : null;
 
             if (_utensilsNeeded != UtensilKind.None)
             {
@@ -121,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 }
             }
 
-            if (!trueTarget.TryGetComponent(out StomachComponent stomach))
+            if (!InteractionChecks.InRangeUnobstructed(user, trueTarget.Transform.MapPosition))
             {
                 return false;
             }
