@@ -106,20 +106,18 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 utensils = new List<UtensilComponent>();
                 var kinds = UtensilKind.None;
 
-                if (!user.TryGetComponent(out HandsComponent hands))
+                if (user.TryGetComponent(out HandsComponent hands))
                 {
-                    return false;
-                }
-
-                foreach (var item in hands.GetAllHeldItems())
-                {
-                    if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
+                    foreach (var item in hands.GetAllHeldItems())
                     {
-                        continue;
-                    }
+                        if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
+                        {
+                            continue;
+                        }
 
-                    utensils.Add(utensil);
-                    kinds |= utensil.Kinds;
+                        utensils.Add(utensil);
+                        kinds |= utensil.Kinds;
+                    }
                 }
 
                 if (!kinds.HasFlag(_utensilsNeeded))
