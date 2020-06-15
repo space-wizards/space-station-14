@@ -23,9 +23,6 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GameObjects\Components\Utensil" />
-  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Engine.targets" />
   <Target Name="ContentAfterBuild" DependsOnTargets="ClientAfterBuild" AfterTargets="Build" />
 </Project>
