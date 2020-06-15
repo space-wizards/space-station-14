@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        internal bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
+        public bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
         {
             if (user == null)
             {
@@ -174,7 +174,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
                     handsComponent.CanPutInHand(item))
                 {
                     handsComponent.PutInHand(item);
-                    finisher.Transform.GridPosition = user.Transform.GridPosition;
                 }
             }
             else
