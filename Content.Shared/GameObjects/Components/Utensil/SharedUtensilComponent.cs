@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.GameObjects.Components.Utensil
 {
     [Flags]
-    public enum UtensilKind : byte
+    public enum UtensilType : byte
     {
         None = 0,
         Fork = 1,
@@ -16,6 +16,6 @@ namespace Content.Shared.GameObjects.Components.Utensil
     {
         public override string Name => "Utensil";
 
-        public virtual UtensilKind Kinds { get; set; }
+        public virtual UtensilType Types { get; set; }
     }
 }

@@ -23,15 +23,15 @@ namespace Content.Server.GameObjects.Components.Utensil
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
-        protected UtensilKind _kinds = UtensilKind.None;
+        protected UtensilType _types = UtensilType.None;
 
         [ViewVariables]
-        public override UtensilKind Kinds
+        public override UtensilType Types
         {
-            get => _kinds;
+            get => _types;
             set
             {
-                _kinds = value;
+                _types = value;
                 Dirty();
             }
         }
@@ -49,24 +49,24 @@ namespace Content.Server.GameObjects.Components.Utensil
         [ViewVariables]
         private string _breakSound;
 
-        public void AddKind(UtensilKind kind)
+        public void AddType(UtensilType type)
         {
-            Kinds |= kind;
+            Types |= type;
         }
 
-        public bool HasAnyKind(UtensilKind kind)
+        public bool HasAnyType(UtensilType type)
         {
-            return (_kinds & kind) != UtensilKind.None;
+            return (_types & type) != UtensilType.None;
         }
 
-        public bool HasKind(UtensilKind kind)
+        public bool HasType(UtensilType type)
         {
-            return _kinds.HasFlag(kind);
+            return _types.HasFlag(type);
         }
 
-        public void RemoveKind(UtensilKind kind)
+        public void RemoveType(UtensilType type)
         {
-            Kinds &= ~kind;
+            Types &= ~type;
         }
 
         internal void TryBreak(IEntity user)
@@ -85,10 +85,10 @@ namespace Content.Server.GameObjects.Components.Utensil
 
             if (serializer.Reading)
             {
-                var kinds = serializer.ReadDataField("kinds", new List<UtensilKind>());
-                foreach (var kind in kinds)
+                var types = serializer.ReadDataField("types", new List<UtensilType>());
+                foreach (var type in types)
                 {
-                    AddKind(kind);
+                    AddType(type);
                 }
             }
 

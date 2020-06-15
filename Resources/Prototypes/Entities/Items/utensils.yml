@@ -19,7 +19,7 @@
   - type: Icon
     state: fork
   - type: Utensil
-    kinds:
+    types:
     - Fork
 
 - type: entity
@@ -32,7 +32,7 @@
   - type: Icon
     state: plastic_fork
   - type: Utensil
-    kinds:
+    types:
     - Fork
     breakChance: 0.20
 
@@ -47,7 +47,7 @@
   - type: Icon
     state: spoon
   - type: Utensil
-    kinds:
+    types:
     - Spoon
 
 - type: entity
@@ -61,7 +61,7 @@
   - type: Icon
     state: plastic_spoon
   - type: Utensil
-    kinds:
+    types:
     - Spoon
     breakChance: 0.20
 
@@ -75,6 +75,6 @@
   - type: Icon
     state: plastic_knife
   - type: Utensil
-    kinds:
+    types:
     - Knife
     breakChance: 0.20

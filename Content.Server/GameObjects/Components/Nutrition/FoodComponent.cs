@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private SolutionComponent _contents;
         [ViewVariables]
         private ReagentUnit _transferAmount;
-        private UtensilKind _utensilsNeeded;
+        private UtensilType _utensilsNeeded;
 
         public int UsesRemaining => _contents.CurrentVolume == 0
             ?
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (serializer.Reading)
             {
-                var utensils = serializer.ReadDataField("utensils", new List<UtensilKind>());
+                var utensils = serializer.ReadDataField("utensils", new List<UtensilType>());
                 foreach (var utensil in utensils)
                 {
                     _utensilsNeeded |= utensil;
@@ -101,10 +101,10 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 ? new List<UtensilComponent> {utensilUsed}
                 : null;
 
-            if (_utensilsNeeded != UtensilKind.None)
+            if (_utensilsNeeded != UtensilType.None)
             {
                 utensils = new List<UtensilComponent>();
-                var kinds = UtensilKind.None;
+                var types = UtensilType.None;
 
                 if (user.TryGetComponent(out HandsComponent hands))
                 {
@@ -116,11 +116,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                         }
 
                         utensils.Add(utensil);
-                        kinds |= utensil.Kinds;
+                        types |= utensil.Types;
                     }
                 }
 
-                if (!kinds.HasFlag(_utensilsNeeded))
+                if (!types.HasFlag(_utensilsNeeded))
                 {
                     trueTarget.PopupMessage(user, Loc.GetString("You need to be holding a {0} to eat that!", _utensilsNeeded));
                     return false;
