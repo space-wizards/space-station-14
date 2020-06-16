@@ -27,7 +27,7 @@ namespace Content.Client.GameObjects.Components.Mobs.Actions
         {
             base.Initialize();
 
-            _hotbarAction = new HotbarAction("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerHotbarAction, ToggleHotbarAction, new TimeSpan(10));
+            _hotbarAction = new HotbarAction("Laser", "/Textures/Objects/Guns/Laser/laser_retro.rsi/laser_retro.png", TriggerHotbarAction, ToggleHotbarAction);
         }
 
         public override void OnRemove()

@@ -20,7 +20,6 @@ namespace Content.Client.UserInterface
     {
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
@@ -31,7 +30,7 @@ namespace Content.Client.UserInterface
             _hotbarActions = new Dictionary<HotbarActionId, HotbarAction>();
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<HotbarActionPrototype>())
             {
-                var hotbarAction = new HotbarAction(prototype.Name, prototype.TexturePath, ToggleAction, SelectAction, new TimeSpan(0));
+                var hotbarAction = new HotbarAction(prototype.Name, prototype.TexturePath, ToggleAction, SelectAction);
                 hotbarAction.Id = prototype.HotbarActionId;
                 _hotbarActions.Add(prototype.HotbarActionId, hotbarAction);
             }
@@ -67,7 +66,7 @@ namespace Content.Client.UserInterface
 
         public void AddHotbarAction(string name, string texturePath,
             Action<ICommonSession, GridCoordinates, EntityUid, HotbarAction> activateAction,
-            Action<bool> selectAction, TimeSpan? cooldown)
+            Action<bool> selectAction)
         {
         }
 

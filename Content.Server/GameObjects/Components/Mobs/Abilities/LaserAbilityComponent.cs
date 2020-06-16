@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Mobs.Abilities
             serializer.DataField(ref _baseFireCost, "baseFireCost", 300);
             serializer.DataField(ref _lowerChargeLimit, "lowerChargeLimit", 10);
             serializer.DataField(ref _fireSound, "fireSound", "/Audio/Guns/Gunshots/laser.ogg");
-            serializer.DataField(ref _cooldown, "cooldown", TimeSpan.FromSeconds(0));
+            serializer.DataField(ref _cooldown, "cooldown", TimeSpan.FromSeconds(1));
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.HUD.Hotbar;
@@ -8,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.HUD.Hotbar
 {
@@ -25,8 +27,8 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
 
         private List<HotbarAction> _actions;
         private List<List<HotbarAction>> _hotbars;
-        private List<HotbarAction> _hotbar;
-        private int _hotbarIndex;
+        private int _hotbarIndex = 0;
+        private List<HotbarAction> _hotbar => _hotbars[_hotbarIndex];
 
         public override void Initialize()
         {
@@ -43,8 +45,6 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 }
                 _hotbars.Add(hotbar);
             }
-
-            _hotbar = _hotbars[0];
 
             _hotbarGui = new HotbarGui();
             _hotbarGui.OnSlotToggled += SlotPressed;
@@ -101,7 +101,6 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             if (_hotbarIndex >= _hotbars.Count - 1)
                 return;
             _hotbarIndex += 1;
-            _hotbar = _hotbars[_hotbarIndex];
             UpdateHotbarSlots();
         }
 
@@ -110,7 +109,6 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
             if (_hotbarIndex <= 0)
                 return;
             _hotbarIndex -= 1;
-            _hotbar = _hotbars[_hotbarIndex];
             UpdateHotbarSlots();
         }
 
@@ -252,6 +250,45 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
                 _hotbar[slot].Active = pressed;
             }
             _hotbarGui?.SetSlotPressed(slot, pressed);
+        }
+
+        public void UpdateCooldown(TimeSpan curTime)
+        {
+            for (var i = 0; i < _hotbar.Count; i++)
+            {
+                if (_hotbar[i] == null)
+                {
+                    continue;
+                }
+
+                if (_hotbar[i].Start.HasValue
+                    && _hotbar[i].End.HasValue)
+                {
+                    var start = _hotbar[i].Start.Value;
+                    var end = _hotbar[i].End.Value;
+
+                    var length = (end - start).TotalSeconds;
+                    var progress = (curTime - start).TotalSeconds / length;
+                    var ratio = (progress <= 1 ? (1 - progress) : (curTime - end).TotalSeconds * -5);
+
+                    _hotbarGui.SetSlotCooldown(i, (float) ratio.Clamp(-1, 1));
+
+                    if (ratio > -1f)
+                    {
+                        _hotbarGui.SetSlotCooldownVisible(i, true);
+                    }
+                    else
+                    {
+                        _hotbarGui.SetSlotCooldownVisible(i, false);
+                        _hotbar[i].Start = null;
+                        _hotbar[i].End = null;
+                    }
+                }
+                else
+                {
+                    _hotbarGui.SetSlotCooldownVisible(i, false);
+                }
+            }
         }
     }
 }

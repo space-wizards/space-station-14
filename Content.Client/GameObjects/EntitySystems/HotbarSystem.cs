@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
@@ -22,6 +23,7 @@ namespace Content.Client.GameObjects.EntitySystems
     {
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         public override void Initialize()
@@ -61,6 +63,25 @@ namespace Content.Client.GameObjects.EntitySystems
             CommandBinds.Unregister<HotbarSystem>();
         }
 
+        public override void FrameUpdate(float frameTime)
+        {
+            base.FrameUpdate(frameTime);
+
+            if (!_gameTiming.IsFirstTimePredicted)
+            {
+                return;
+            }
+
+            var playerEnt = _playerManager.LocalPlayer.ControlledEntity;
+            if (playerEnt == null
+                || !playerEnt.TryGetComponent(out HotbarComponent clientHotbar))
+            {
+                return;
+            }
+
+            clientHotbar.UpdateCooldown(_gameTiming.CurTime);
+        }
+
         private void HandleOpenActionsMenu()
         {
             var playerEnt = _playerManager.LocalPlayer.ControlledEntity;
@@ -97,9 +118,8 @@ namespace Content.Client.GameObjects.EntitySystems
         public Action<HotbarAction> OnRemoveFromSlot;
         public TimeSpan? Start;
         public TimeSpan? End;
-        public TimeSpan? Cooldown;
 
-        public HotbarAction(string name, string texturePath, Action<HotbarAction, ICommonSession, GridCoordinates, EntityUid> activateAction, Action<HotbarAction, bool> selectAction, TimeSpan? cooldown)
+        public HotbarAction(string name, string texturePath, Action<HotbarAction, ICommonSession, GridCoordinates, EntityUid> activateAction, Action<HotbarAction, bool> selectAction)
         {
             Name = name;
             if (texturePath != null)
@@ -116,7 +136,6 @@ namespace Content.Client.GameObjects.EntitySystems
             SelectAction = selectAction;
             Start = null;
             End = null;
-            Cooldown = cooldown;
         }
 
         public void Activate(PointerInputCmdArgs args)

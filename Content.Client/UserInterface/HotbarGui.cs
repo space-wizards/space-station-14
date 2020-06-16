@@ -142,11 +142,30 @@ namespace Content.Client.UserInterface
             _slots[index].Pressed = pressed;
         }
 
+        public void SetSlotCooldownVisible(int index, bool visible)
+        {
+            if (index < 0 || index >= _slots.Count)
+            {
+                return;
+            }
+            _slots[index].Cooldown.Visible = visible;
+        }
+
+        public void SetSlotCooldown(int index, float progress)
+        {
+            if (index < 0 || index >= _slots.Count)
+            {
+                return;
+            }
+            _slots[index].Cooldown.Progress = progress;
+        }
+
         public class HotbarButton : ContainerButton
         {
             public const string StyleClassButtonRect = "buttonRect";
 
             public TextureRect Texture;
+            public CooldownGraphic Cooldown;
 
             public int Index;
 
@@ -171,6 +190,12 @@ namespace Content.Client.UserInterface
                     Stretch = TextureRect.StretchMode.Scale
                 };
                 AddChild(Texture);
+
+                Cooldown = new CooldownGraphic
+                {
+                    Visible = false
+                };
+                AddChild(Cooldown);
             }
         }
     }
