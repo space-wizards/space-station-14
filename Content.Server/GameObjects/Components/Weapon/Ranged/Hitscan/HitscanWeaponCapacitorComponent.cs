@@ -48,18 +48,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             return chargeChangedBy;
         }
 
-        public void FillFrom(PowerStorageComponent battery)
+        public void FillFrom(BatteryComponent battery)
         {
             var capacitorPowerDeficit = MaxCharge - CurrentCharge;
-            if (battery.CanDeductCharge(capacitorPowerDeficit))
+            if (battery.TryUseCharge(capacitorPowerDeficit))
             {
-                battery.DeductCharge(capacitorPowerDeficit);
-                this.AddCharge(capacitorPowerDeficit);
+                AddCharge(capacitorPowerDeficit);
             }
             else
             {
-                this.AddCharge(battery.Charge);
-                battery.DeductCharge(battery.Charge);
+                AddCharge(battery.CurrentCharge);
+                battery.CurrentCharge = 0;
             }
             UpdateAppearance();
         }

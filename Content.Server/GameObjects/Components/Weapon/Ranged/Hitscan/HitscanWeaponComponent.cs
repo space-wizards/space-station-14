@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.NewPower;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
@@ -70,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out PowerStorageComponent component))
+            if (!eventArgs.Using.TryGetComponent(out BatteryComponent component))
             {
                 return false;
             }
