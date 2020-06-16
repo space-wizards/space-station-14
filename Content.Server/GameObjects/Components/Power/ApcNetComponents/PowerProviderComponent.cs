@@ -92,9 +92,9 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         private List<PowerReceiverComponent> FindAvailableReceivers()
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
-            return IoCManager.Resolve<IServerEntityManager>()
-                .GetEntitiesInRange(Owner.Transform.GridPosition, PowerTransferRange)
-                .Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
+            var nearbyEntities = IoCManager.Resolve<IServerEntityManager>()
+                .GetEntitiesInRange(Owner.Transform.GridPosition, PowerTransferRange);
+            return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
                 .Where(receiver => receiver != null)
                 .Where(receiver => receiver.NeedsProvider)
                 .Where(receiver => receiver.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition) < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
@@ -113,6 +113,10 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
 
         private void SetPowerTransferRange(int newPowerTransferRange)
         {
+            foreach (var receiver in _linkedReceivers)
+            {
+                receiver.ClearProvider();
+            }
             _powerTransferRange = newPowerTransferRange;
             _linkedReceivers = FindAvailableReceivers();
             Net.UpdatePowerProviderReceivers(this);
