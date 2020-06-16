@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NewPower;
+﻿using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using System.Collections.Generic;
 using System.Linq;

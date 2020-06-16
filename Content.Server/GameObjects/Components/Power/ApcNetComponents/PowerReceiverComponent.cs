@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 
-namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {
     /// <summary>
     ///     Attempts to link with a nearby <see cref="IPowerProvider"/>s so that it can receive power from a <see cref="IApcNet"/>.

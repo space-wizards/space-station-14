@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 
-namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
+namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     public abstract class BasePowerNetComponent : BaseNetConnectorComponent<IPowerNet>
     {

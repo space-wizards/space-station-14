@@ -1,13 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Power;
-using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
     public class BatteryComponent : Component

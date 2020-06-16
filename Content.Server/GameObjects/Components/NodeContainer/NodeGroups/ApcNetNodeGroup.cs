@@ -1,5 +1,5 @@
-﻿using Content.Server.GameObjects.Components.NewPower;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+﻿using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;

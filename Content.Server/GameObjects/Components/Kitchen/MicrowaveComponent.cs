@@ -26,7 +26,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {

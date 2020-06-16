@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 
-namespace Content.Server.GameObjects.Components.NewPower
+namespace Content.Server.GameObjects.Components.Power
 {
     public abstract class BaseNetConnectorComponent<TNetType> : Component
     {

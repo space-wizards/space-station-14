@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Utility;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Research
 {

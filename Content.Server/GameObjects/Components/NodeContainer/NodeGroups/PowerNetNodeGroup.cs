@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;

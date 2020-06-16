@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.NewPower;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;

@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
@@ -12,7 +12,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
 using System;
 
-namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

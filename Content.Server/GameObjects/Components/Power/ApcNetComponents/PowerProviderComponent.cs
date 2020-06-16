@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {
     /// <summary>
     ///     Relays <see cref="PowerReceiverComponent"/>s in an area to a <see cref="IApcNet"/> so they can receive power.

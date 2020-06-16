@@ -20,7 +20,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Research
 {

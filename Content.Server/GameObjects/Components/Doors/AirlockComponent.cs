@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
-using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;

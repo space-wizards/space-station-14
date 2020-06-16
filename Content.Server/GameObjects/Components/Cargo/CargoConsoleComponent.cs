@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Utility;
 using Robust.Shared.Map;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {

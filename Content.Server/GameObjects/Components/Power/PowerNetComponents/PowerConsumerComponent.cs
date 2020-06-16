@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Diagnostics;
 
-namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
+namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
     public class PowerConsumerComponent : BasePowerNetComponent

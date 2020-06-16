@@ -5,7 +5,7 @@ namespace Content.Server.GameObjects.Components.Power
 {
     //Placeholder while map prototypes are fixed
     [RegisterComponent]
-    public sealed class ApcComponent : SharedApcComponent { }
+    public sealed class OldApcComponent : SharedApcComponent { }
     [RegisterComponent]
     public class PowerDebugTool : SharedPowerDebugTool { }
     [RegisterComponent]
@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power
         public override string Name => "PowerNode";
     }
     [RegisterComponent]
-    public class PowerProviderComponent : PowerDeviceComponent
+    public class OldPowerProviderComponent : Component
     {
         public override string Name => "PowerProvider";
     }

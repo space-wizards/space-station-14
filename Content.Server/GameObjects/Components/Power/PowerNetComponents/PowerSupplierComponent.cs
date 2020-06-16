@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.NewPower.PowerNetComponents
+namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
     public class PowerSupplierComponent : BasePowerNetComponent

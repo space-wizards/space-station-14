@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;

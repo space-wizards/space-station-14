@@ -1,11 +1,9 @@
-﻿using Content.Server.GameObjects.Components.NewPower;
-using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace Content.Server.GameObjects.Components.Power
 {

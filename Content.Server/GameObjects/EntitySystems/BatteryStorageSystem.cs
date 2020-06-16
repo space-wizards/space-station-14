@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 

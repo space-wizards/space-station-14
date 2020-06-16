@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.NewPower.PowerNetComponents;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;

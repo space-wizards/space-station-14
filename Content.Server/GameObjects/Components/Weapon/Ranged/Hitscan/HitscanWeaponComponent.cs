@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.NewPower;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
@@ -21,7 +18,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {

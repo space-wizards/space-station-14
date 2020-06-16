@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Gravity;
-using Content.Server.GameObjects.Components.NewPower.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
