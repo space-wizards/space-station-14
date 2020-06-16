@@ -295,7 +295,7 @@ namespace Content.Server.GameObjects.Components.Doors
             if (IsBolted())
             {
                 var notify = IoCManager.Resolve<IServerNotifyManager>();
-                notify.PopupMessage(Owner, eventArgs.User, "The door won't budge!");
+                notify.PopupMessage(Owner, eventArgs.User, "The airlock's bolts prevent it from being forced!");
                 return true;
             }
 
