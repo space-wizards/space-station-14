@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Doors
@@ -20,5 +20,6 @@ namespace Content.Shared.GameObjects.Components.Doors
         Open,
         Closing,
         Deny,
+        Light,
     }
 }

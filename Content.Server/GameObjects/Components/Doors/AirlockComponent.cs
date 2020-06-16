@@ -52,15 +52,27 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private bool _boltsToggled;
+        private bool _boltsDown;
         private bool BoltsDown
         {
-            get => _boltsToggled;
+            get => _boltsDown;
             set
             {
-                _boltsToggled = value;
+                _boltsDown = value;
                 UpdateWiresStatus();
-                UpdateBoltedStatus();
+                UpdateBoltLightStatus();
+            }
+        }
+
+        private bool _boltLights = true;
+        private bool BoltLightsOn
+        {
+            get => _boltLights;
+            set
+            {
+                _boltLights = value;
+                UpdateWiresStatus();
+                UpdateBoltLightStatus();
             }
         }
 
@@ -77,11 +89,12 @@ namespace Content.Server.GameObjects.Components.Doors
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
 
-            var boltLight = new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
+            var boltStatus = new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
+            var boltLightsStatus = new StatusLightData(Color.Lime, BoltLightsOn ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltLight);
-            _wires.SetStatus(2, new StatusLightData(Color.Lime, StatusLightState.On, "BLTL"));
+            _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
+            _wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
             _wires.SetStatus(3, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
             _wires.SetStatus(4, new StatusLightData(Color.Orange, StatusLightState.Off, "TIME"));
             _wires.SetStatus(5, new StatusLightData(Color.Red, StatusLightState.Off, "SAFE"));
@@ -101,16 +114,14 @@ namespace Content.Server.GameObjects.Components.Doors
                                       _wires.IsWireCut(Wires.BackupPower);
         }
 
-        private void UpdateBoltedStatus()
+        private void UpdateBoltLightStatus()
         {
-            if (IsBolted() && State == DoorState.Closed)
+            if (State == DoorState.Closed) //only shown when door is closed
             {
-                SetAppearance(DoorVisualState.Deny);
-            }
-            else
-            {
-                // Depending on current state, reset the appearance
-                SetAppearance(State == DoorState.Closed ? DoorVisualState.Closed : DoorVisualState.Open);
+                if (BoltsDown)
+                    SetAppearance(BoltLightsOn ? DoorVisualState.Light : DoorVisualState.Closed);
+                else
+                    SetAppearance(DoorVisualState.Closed);
             }
         }
 
@@ -174,6 +185,13 @@ namespace Content.Server.GameObjects.Components.Doors
             /// Mending does nothing
             /// </summary>
             Bolts,
+
+            /// <summary>
+            /// Pulsing causes light to toggle
+            /// Cutting causes light to go out
+            /// Mending causes them to go on again
+            /// </summary>
+            BoltLight,
         }
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
@@ -181,7 +199,7 @@ namespace Content.Server.GameObjects.Components.Doors
             builder.CreateWire(Wires.MainPower);
             builder.CreateWire(Wires.BackupPower);
             builder.CreateWire(Wires.Bolts);
-            builder.CreateWire(3);
+            builder.CreateWire(Wires.BoltLight);
             builder.CreateWire(4);
             builder.CreateWire(5);
             /*builder.CreateWire(5);
@@ -222,6 +240,9 @@ namespace Content.Server.GameObjects.Components.Doors
                             }
                         }
                         break;
+                    case Wires.BoltLight:
+                        BoltLightsOn = !BoltLightsOn;
+                        break;
                 }
             }
 
@@ -235,6 +256,9 @@ namespace Content.Server.GameObjects.Components.Doors
                         _powerWiresPulsedTimerCancel?.Cancel();
                         PowerWiresPulsed = false;
                         break;
+                    case Wires.BoltLight:
+                        BoltLightsOn = true;
+                        break;
                 }
             }
 
@@ -244,6 +268,9 @@ namespace Content.Server.GameObjects.Components.Doors
                 {
                     case Wires.Bolts:
                         BoltsDown = true;
+                        break;
+                    case Wires.BoltLight:
+                        BoltLightsOn = false;
                         break;
                 }
             }
@@ -274,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsBolted()
         {
-            return _boltsToggled;
+            return _boltsDown;
         }
 
         private bool IsPowered()

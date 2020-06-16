@@ -19,6 +19,7 @@ namespace Content.Client.GameObjects.Components.Doors
         private Animation CloseAnimation;
         private Animation OpenAnimation;
         private Animation DenyAnimation;
+        private Animation LightAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -83,6 +84,14 @@ namespace Content.Client.GameObjects.Components.Doors
                 DenyAnimation.AnimationTracks.Add(sound);
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
             }
+
+            LightAnimation = new Animation { Length = TimeSpan.FromSeconds(0.3f) };
+            {
+                var flick = new AnimationTrackSpriteFlick();
+                LightAnimation.AnimationTracks.Add(flick);
+                flick.LayerKey = DoorVisualLayers.BaseUnlit;
+                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
+            }
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -130,6 +139,12 @@ namespace Content.Client.GameObjects.Components.Doors
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(DenyAnimation, AnimationKey);
+                    }
+                    break;
+                case DoorVisualState.Light:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(LightAnimation, AnimationKey);
                     }
                     break;
                 default:
