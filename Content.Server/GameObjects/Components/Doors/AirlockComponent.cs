@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Doors
         }
 
         private bool _boltsToggled;
-        private bool BoltsToggled
+        private bool BoltsDown
         {
             get => _boltsToggled;
             set
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
 
-            var boltLight = new StatusLightData(Color.Red, BoltsToggled ? StatusLightState.On : StatusLightState.Off, "BOLT");
+            var boltLight = new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
 
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltLight);
@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Doors
             BackupPower,
 
             /// <summary>
-            /// Pulsing causes for bolts to toggle
+            /// Pulsing causes for bolts to toggle (but only raise if power is on)
             /// Cutting causes Bolts to drop
             /// Mending does nothing
             /// </summary>
@@ -210,7 +210,17 @@ namespace Content.Server.GameObjects.Components.Doors
                             _powerWiresPulsedTimerCancel.Token);
                         break;
                     case Wires.Bolts:
-                        BoltsToggled = !BoltsToggled;
+                        if (!BoltsDown)
+                        {
+                            BoltsDown = true;
+                        }
+                        else
+                        {
+                            if (IsPowered())
+                            {
+                                BoltsDown = false;
+                            }
+                        }
                         break;
                 }
             }
@@ -233,7 +243,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 switch (args.Identifier)
                 {
                     case Wires.Bolts:
-                        BoltsToggled = true;
+                        BoltsDown = true;
                         break;
                 }
             }
