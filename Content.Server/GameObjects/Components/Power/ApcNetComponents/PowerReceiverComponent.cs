@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         private bool TryFindAvailableProvider(out IPowerProvider foundProvider)
         {
             var nearbyEntities = IoCManager.Resolve<IServerEntityManager>()
-                .GetEntitiesInRange(Owner.Transform.GridPosition, PowerReceptionRange);
+                .GetEntitiesInRange(Owner, PowerReceptionRange);
             var mapManager = IoCManager.Resolve<IMapManager>();
             foreach (var entity in nearbyEntities)
             {

@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.NewPower.ApcNetComponents
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
             var nearbyEntities = IoCManager.Resolve<IServerEntityManager>()
-                .GetEntitiesInRange(Owner.Transform.GridPosition, PowerTransferRange);
+                .GetEntitiesInRange(Owner, PowerTransferRange);
             return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
                 .Where(receiver => receiver != null)
                 .Where(receiver => receiver.NeedsProvider)
