@@ -241,7 +241,7 @@ namespace Content.Server.GameObjects.Components.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/machine_switch.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/id_swipe.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
