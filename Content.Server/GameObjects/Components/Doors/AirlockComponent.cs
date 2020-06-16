@@ -52,6 +52,18 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
+        private bool _boltsToggled;
+        private bool BoltsToggled
+        {
+            get => _boltsToggled;
+            set
+            {
+                _boltsToggled = value;
+                UpdateWiresStatus();
+                UpdateBoltedStatus();
+            }
+        }
+
         private void UpdateWiresStatus()
         {
             var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
@@ -65,8 +77,10 @@ namespace Content.Server.GameObjects.Components.Doors
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
 
+            var boltLight = new StatusLightData(Color.Red, BoltsToggled ? StatusLightState.On : StatusLightState.Off, "BOLT");
+
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
-            _wires.SetStatus(1, new StatusLightData(Color.Red, StatusLightState.Off, "BOLT"));
+            _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltLight);
             _wires.SetStatus(2, new StatusLightData(Color.Lime, StatusLightState.On, "BLTL"));
             _wires.SetStatus(3, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
             _wires.SetStatus(4, new StatusLightData(Color.Orange, StatusLightState.Off, "TIME"));
@@ -85,6 +99,19 @@ namespace Content.Server.GameObjects.Components.Doors
             _powerDevice.IsPowerCut = PowerWiresPulsed ||
                                       _wires.IsWireCut(Wires.MainPower) ||
                                       _wires.IsWireCut(Wires.BackupPower);
+        }
+
+        private void UpdateBoltedStatus()
+        {
+            if (IsBolted() && State == DoorState.Closed)
+            {
+                SetAppearance(DoorVisualState.Deny);
+            }
+            else
+            {
+                // Depending on current state, reset the appearance
+                SetAppearance(State == DoorState.Closed ? DoorVisualState.Closed : DoorVisualState.Open);
+            }
         }
 
         protected override DoorState State
@@ -140,16 +167,23 @@ namespace Content.Server.GameObjects.Components.Doors
 
             /// <see cref="MainPower"/>
             BackupPower,
+
+            /// <summary>
+            /// Pulsing causes for bolts to toggle
+            /// Cutting causes Bolts to drop
+            /// Mending does nothing
+            /// </summary>
+            Bolts,
         }
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
         {
             builder.CreateWire(Wires.MainPower);
             builder.CreateWire(Wires.BackupPower);
-            builder.CreateWire(1);
-            builder.CreateWire(2);
+            builder.CreateWire(Wires.Bolts);
             builder.CreateWire(3);
             builder.CreateWire(4);
+            builder.CreateWire(5);
             /*builder.CreateWire(5);
             builder.CreateWire(6);
             builder.CreateWire(7);
@@ -175,6 +209,9 @@ namespace Content.Server.GameObjects.Components.Doors
                             () => PowerWiresPulsed = false,
                             _powerWiresPulsedTimerCancel.Token);
                         break;
+                    case Wires.Bolts:
+                        BoltsToggled = !BoltsToggled;
+                        break;
                 }
             }
 
@@ -191,28 +228,43 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
             }
 
+            if (args.Action == Cut)
+            {
+                switch (args.Identifier)
+                {
+                    case Wires.Bolts:
+                        BoltsToggled = true;
+                        break;
+                }
+            }
+
             UpdateWiresStatus();
             UpdatePowerCutStatus();
         }
 
         public override bool CanOpen()
         {
-            return IsPowered();
+            return IsPowered() && !IsBolted();
         }
 
         public override bool CanClose()
         {
-            return IsPowered();
+            return IsPowered() && !IsBolted();
         }
 
         public override void Deny()
         {
-            if (!IsPowered())
+            if (!IsPowered() || IsBolted())
             {
                 return;
             }
 
             base.Deny();
+        }
+
+        private bool IsBolted()
+        {
+            return _boltsToggled;
         }
 
         private bool IsPowered()
@@ -239,6 +291,13 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
+
+            if (IsBolted())
+            {
+                var notify = IoCManager.Resolve<IServerNotifyManager>();
+                notify.PopupMessage(Owner, eventArgs.User, "The door won't budge!");
+                return true;
+            }
 
             if (IsPowered())
             {
