@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects
             }
         }
 
-        protected void SetAppearance(DoorVisualState state)
+        protected virtual void SetAppearance(DoorVisualState state)
         {
             if (_appearance != null || Owner.TryGetComponent(out _appearance))
                 _appearance.SetData(DoorVisuals.VisualState, state);

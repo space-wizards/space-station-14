@@ -81,6 +81,15 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
+        protected override void SetAppearance(DoorVisualState state)
+        {
+            if (state == DoorVisualState.Closed && BoltsDown && BoltLightsOn)
+            {
+                state = DoorVisualState.Light;
+            }
+            base.SetAppearance(state);
+        }
+
         private void UpdateWiresStatus()
         {
             var powerLight = new StatusLightData(Color.Yellow, StatusLightState.On, "POWR");
