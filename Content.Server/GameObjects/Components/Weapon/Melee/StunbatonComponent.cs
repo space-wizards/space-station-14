@@ -83,9 +83,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
         {
             var cell = Cell;
-            if (!Activated || entities.Count == 0 || cell == null || !cell.CanDeductCharge(EnergyPerUse))
+            if (!Activated || entities.Count == 0 || cell == null)
                 return false;
-
+            if (!cell.TryUseCharge(EnergyPerUse))
+            {
+                return false;
+            }
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
@@ -97,8 +100,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 else
                     stunnable.Slowdown(_slowdownTime);
             }
-
-            cell.DeductCharge(EnergyPerUse);
             if(cell.Charge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));

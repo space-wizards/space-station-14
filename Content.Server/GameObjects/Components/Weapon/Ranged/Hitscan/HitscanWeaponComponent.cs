@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             {
                 return false;
             }
-            if (capacitorComponent.Full)
+            if (capacitorComponent.CurrentCharge == capacitorComponent.MaxCharge)
             {
                 Owner.PopupMessage(eventArgs.User, "Capacitor at max charge");
                 return false;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.NewPower;
 using Content.Server.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
@@ -8,6 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
     [RegisterComponent]
+    [ComponentReference(typeof(BatteryComponent))]
     public class HitscanWeaponCapacitorComponent : PowerCellComponent
     {
         private AppearanceComponent _appearance;
@@ -20,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             set
             {
                 base.Charge = value;
-                _updateAppearance();
+                UpdateAppearance();
             }
         }
 
@@ -33,24 +35,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         {
             base.Initialize();
 
-            Charge = Capacity;
+            Charge = MaxCharge;
             Owner.TryGetComponent(out _appearance);
 
         }
 
         public float GetChargeFrom(float toDeduct)
         {
-            //Use this function when you want to shoot even though you don't have enough energy for basecost
-            ChargeChanged();
-            var chargeChangedBy = Math.Min(this.Charge, toDeduct);
+            var chargeChangedBy = Math.Min(Charge, toDeduct);
             this.DeductCharge(chargeChangedBy);
-            _updateAppearance();
+            UpdateAppearance();
             return chargeChangedBy;
         }
 
         public void FillFrom(PowerStorageComponent battery)
         {
-            var capacitorPowerDeficit = this.Capacity - this.Charge;
+            var capacitorPowerDeficit = MaxCharge - CurrentCharge;
             if (battery.CanDeductCharge(capacitorPowerDeficit))
             {
                 battery.DeductCharge(capacitorPowerDeficit);
@@ -61,12 +61,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
                 this.AddCharge(battery.Charge);
                 battery.DeductCharge(battery.Charge);
             }
-            _updateAppearance();
+            UpdateAppearance();
         }
 
-        private void _updateAppearance()
+        private void UpdateAppearance()
         {
-            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / Capacity);
+            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / MaxCharge);
         }
     }
 

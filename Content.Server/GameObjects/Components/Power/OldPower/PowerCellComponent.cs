@@ -1,3 +1,4 @@
+﻿using Content.Server.GameObjects.Components.NewPower;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -5,20 +6,20 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
-    [ComponentReference(typeof(PowerStorageComponent))]
-    public class PowerCellComponent : PowerStorageComponent
+    [ComponentReference(typeof(BatteryComponent))]
+    public class PowerCellComponent : BatteryComponent
     {
         public override string Name => "PowerCell";
 
         private AppearanceComponent _appearance;
 
-        public override float Charge
+        public virtual float Charge
         {
-            get => base.Charge;
+            get => CurrentCharge;
             set
             {
-                base.Charge = value;
-                _updateAppearance();
+                CurrentCharge = value;
+                UpdateAppearance();
             }
         }
 
@@ -29,25 +30,21 @@ namespace Content.Server.GameObjects.Components.Power
             Owner.TryGetComponent(out _appearance);
         }
 
-        public override void DeductCharge(float toDeduct)
+        public void DeductCharge(float toDeduct)
         {
-            base.DeductCharge(toDeduct);
-
-            _updateAppearance();
-            ChargeChanged();
+            CurrentCharge -= toDeduct;
+            UpdateAppearance();
         }
 
-        public override void AddCharge(float charge)
+        public void AddCharge(float charge)
         {
-            base.AddCharge(charge);
-
-            _updateAppearance();
-            ChargeChanged();
+            CurrentCharge += charge;
+            UpdateAppearance();
         }
 
-        private void _updateAppearance()
+        private void UpdateAppearance()
         {
-            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / Capacity);
+            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / MaxCharge);
         }
     }
 }
