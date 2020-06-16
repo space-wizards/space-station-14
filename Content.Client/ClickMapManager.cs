@@ -18,7 +18,7 @@ namespace Content.Client
     internal class ClickMapManager : IClickMapManager, IPostInjectInit
     {
         private const float Threshold = 0.25f;
-        private const int ClickRadius = 0;
+        private const int ClickRadius = 2;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
