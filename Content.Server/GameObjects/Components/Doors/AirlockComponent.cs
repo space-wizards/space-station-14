@@ -8,8 +8,10 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -59,6 +61,9 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _boltsDown = value;
+                EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity(value ? "/Audio/machines/boltsdown.ogg" : "/Audio/machines/boltsup.ogg",
+                    Owner);
                 UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
