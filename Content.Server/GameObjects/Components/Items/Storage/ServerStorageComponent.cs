@@ -366,6 +366,15 @@ namespace Content.Server.GameObjects
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
+            switch (eventArgs.Severity)
+            {
+                case ExplosionSeverity.Destruction:
+                case ExplosionSeverity.Heavy:
+                    break;
+                default:
+                    return;
+            }
+
             var storedEntities = storage.ContainedEntities.ToList();
             foreach (var entity in storedEntities)
             {
