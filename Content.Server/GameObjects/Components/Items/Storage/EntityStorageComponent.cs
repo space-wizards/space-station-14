@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
     {
         public override string Name => "EntityStorage";
 
@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetclose.ogg", Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/closetopen.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetopen.ogg", Owner);
 
         }
 
@@ -379,6 +379,11 @@ namespace Content.Server.GameObjects.Components
 
             IsWeldedShut ^= true;
             return true;
+        }
+
+        public void OnDestroy(DestructionEventArgs eventArgs)
+        {
+            EmptyContents();
         }
     }
 }

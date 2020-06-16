@@ -1,5 +1,5 @@
 - type: vendingMachineInventory
   id: soviet
-  name: Товарищ-vend
+  name: товарищ-vend
   description: Rodina-mat' zovyot!
   spriteName: soviet

@@ -10,7 +10,7 @@
 - type: entity
   parent: GlassesBase
   id: MesonGlasses
-  name: Optical Meson Scanners
+  name: optical meson scanners
   description: The pinnacle of modern science, wallhacks in real life
   components:
   - type: Sprite
@@ -26,7 +26,7 @@
 - type: entity
   parent: GlassesBase
   id: SunGlasses
-  name: Sun Glasses
+  name: sun glasses
   description: Useful both for security and cargonia
   components:
   - type: Sprite
@@ -41,7 +41,7 @@
 - type: entity
   parent: GlassesBase
   id: SecGlasses
-  name: Security Sunglasses
+  name: security sunglasses
   description: Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes. Often worn by budget security officers.
   components:
   - type: Sprite

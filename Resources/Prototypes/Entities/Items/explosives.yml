@@ -1,5 +1,5 @@
 - type: entity
-  name: Explosive Grenade
+  name: explosive grenade
   description: Grenade that creates small devastating explosion
   parent: BaseItem
   id: ExGrenade
@@ -36,7 +36,7 @@
       countdown_sound: /Audio/effects/countdown.ogg
 
 - type: entity
-  name: Syndicate Minibomb
+  name: syndicate minibomb
   description: A syndicate manufactured explosive used to sow destruction and chaos.
   parent: BaseItem
   id: SyndieMiniBomb

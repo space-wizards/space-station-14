@@ -1,6 +1,6 @@
 - type: entity
   id: ComputerBase
-  name: Computer
+  name: computer
   abstract: true
   components:
   - type: Physics
@@ -50,7 +50,7 @@
 - type: entity
   id: ComputerAlert
   parent: ComputerBase
-  name: Alerts Computer
+  name: alerts computer
   components:
   - type: Appearance
     visuals:
@@ -62,7 +62,7 @@
 - type: entity
   id: ComputerPowerMonitoring
   parent: ComputerBase
-  name: Power Monitoring Computer
+  name: power monitoring computer
   components:
   - type: Appearance
     visuals:
@@ -74,7 +74,7 @@
 - type: entity
   id: ComputerSupplyOrdering
   parent: ComputerBase
-  name: Cargo Ordering Computer
+  name: cargo ordering computer
   components:
   - type: Appearance
     visuals:
@@ -106,7 +106,7 @@
 - type: entity
   id: ComputerSupplyRequest
   parent: ComputerSupplyOrdering
-  name: Cargo Request Computer
+  name: cargo request computer
   components:
   - type: Appearance
     visuals:
@@ -119,7 +119,7 @@
 - type: entity
   id: ComputerMedicalRecords
   parent: ComputerBase
-  name: Medical Records Computer
+  name: medical records computer
   components:
   - type: Appearance
     visuals:
@@ -131,7 +131,7 @@
 - type: entity
   id: ComputerResearchAndDevelopment
   parent: ComputerBase
-  name: R&D Computer
+  name: R&D computer
   components:
   - type: Appearance
     visuals:
@@ -155,7 +155,7 @@
 - type: entity
   id: ComputerId
   parent: ComputerBase
-  name: ID Card Computer
+  name: ID card computer
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
@@ -173,7 +173,7 @@
 - type: entity
   id: computerBodyScanner
   parent: ComputerBase
-  name: Body Scanner Computer
+  name: body scanner computer
   components:
   - type: BodyScanner
   - type: UserInterface
@@ -189,7 +189,7 @@
 - type: entity
   id: ComputerComms
   parent: ComputerBase
-  name: Communications Computer
+  name: communications computer
   components:
   - type: Appearance
     visuals:

@@ -1,7 +1,7 @@
 - type: entity
   id: WarpPoint
   parent: MarkerBase
-  name: Warp Point
+  name: warp point
   components:
   - type: WarpPoint
   - type: Sprite

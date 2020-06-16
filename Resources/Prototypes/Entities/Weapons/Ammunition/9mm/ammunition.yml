@@ -9,7 +9,7 @@
     caliber: A9mm
     magazine: A9mm
     capacity: 10
-  - type: Sprite 
+  - type: Sprite
     netsync: false
 
 - type: entity
@@ -28,7 +28,7 @@
 # Magazines
 - type: entity
   id: magazine_9mmtm
-  name: "9mm Magazine (Top-Mounted)"
+  name: "9mm magazine (top-mounted)"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -50,7 +50,7 @@
 
 - type: entity
   id: magazine_9mm
-  name: "9mm Magazine"
+  name: "9mm magazine"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -71,7 +71,7 @@
 
 - type: entity
   id: magazine_9mmf
-  name: "9mm Magazine (Flash)"
+  name: "9mm magazine (flash)"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -92,7 +92,7 @@
 
 - type: entity
   id: magazine_9mmhv
-  name: "9mm Magazine (High Velocity)"
+  name: "9mm magazine (high velocity)"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -113,7 +113,7 @@
 
 - type: entity
   id: magazine_9mml
-  name: "9mm Magazine (L)"
+  name: "9mm magazine (L)"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -134,7 +134,7 @@
 
 - type: entity
   id: magazine_9mmp
-  name: "9mm Magazine (Practice)"
+  name: "9mm magazine (practice)"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -155,7 +155,7 @@
 
 - type: entity
   id: magazine_9mmr
-  name: "9mm Magazine (Rubber)"
+  name: "9mm magazine (rubber)"
   parent: magazine_9mm_empty
   components:
   - type: BallisticMagazine
@@ -176,7 +176,7 @@
 
 - type: entity
   id: magazine_9mm_smg
-  name: "9mm SMG Magazine"
+  name: "9mm SMG magazine"
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -197,7 +197,7 @@
 
 - type: entity
   id: magazine_9mmf_smg
-  name: "9mm SMG Magazine (Flash)"
+  name: "9mm SMG magazine (flash)"
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -218,7 +218,7 @@
 
 - type: entity
   id: magazine_9mmhv_smg
-  name: "9mm SMG Magazine (High Velocity)"
+  name: "9mm SMG magazine (high velocity)"
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -239,7 +239,7 @@
 
 - type: entity
   id: magazine_9mml_smg
-  name: "9mm SMG Magazine (L)"
+  name: "9mm SMG magazine (L)"
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -260,7 +260,7 @@
 
 - type: entity
   id: magazine_9mmp_smg
-  name: "9mm SMG Magazine (Practice)"
+  name: "9mm SMG magazine (practice)"
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -281,7 +281,7 @@
 
 - type: entity
   id: magazine_9mmr_smg
-  name: "9mm SMG Magazine (Rubber)"
+  name: "9mm SMG magazine (rubber)"
   parent: magazine_9mm_smg_empty
   components:
   - type: BallisticMagazine
@@ -319,7 +319,7 @@
 
 - type: entity
   id: ammo_casing_9mm_flash
-  name: "9mm casing (Flash)"
+  name: "9mm casing (flash)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -335,7 +335,7 @@
 
 - type: entity
   id: ammo_casing_9mm_hv
-  name: "9mm casing (High Velocity)"
+  name: "9mm casing (high velocity)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -367,7 +367,7 @@
 
 - type: entity
   id: ammo_casing_9mm_p
-  name: "9mm casing (Practice)"
+  name: "9mm casing (practice)"
   parent: BaseItem
   components:
   - type: BallisticBullet
@@ -383,7 +383,7 @@
 
 - type: entity
   id: ammo_casing_9mm_r
-  name: "9mm casing (Rubber)"
+  name: "9mm casing (rubber)"
   parent: BaseItem
   components:
   - type: BallisticBullet

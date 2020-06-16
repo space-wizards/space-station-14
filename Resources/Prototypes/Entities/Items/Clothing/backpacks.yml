@@ -1,7 +1,7 @@
 - type: entity
   parent: Clothing
   id: BackpackClothing
-  name: Backpack
+  name: backpack
   description: A convenient storage pack
   components:
   - type: Sprite
@@ -23,7 +23,7 @@
 - type: entity
   parent: BackpackClothing
   id: ClownPack
-  name: Giggles Von Honkerton
+  name: giggles von honkerton
   description: It's a backpack made by Honk! Co.
   components:
   - type: Sprite
@@ -38,7 +38,7 @@
 - type: entity
   parent: BackpackClothing
   id: SecPack
-  name: Security Backpack
+  name: security backpack
   description: It's a very robust backpack.
   components:
   - type: Sprite
@@ -54,7 +54,7 @@
 - type: entity
   parent: BackpackClothing
   id: BackpackEngineering
-  name: Engineering Backpack
+  name: engineering backpack
   components:
   - type: Sprite
     state: engineering
@@ -69,7 +69,7 @@
 - type: entity
   parent: BackpackClothing
   id: BackpackMedical
-  name: Medical Backpack
+  name: medical backpack
   components:
   - type: Sprite
     state: medical
@@ -84,7 +84,7 @@
 - type: entity
   parent: BackpackClothing
   id: BackpackCaptain
-  name: Captain's Backpack
+  name: captain's backpack
   components:
   - type: Sprite
     state: captain
@@ -99,7 +99,7 @@
 - type: entity
   parent: BackpackClothing
   id: BackpackHolding
-  name: Bag of Holding
+  name: bag of holding
   components:
   - type: Sprite
     layers:
@@ -117,7 +117,7 @@
 - type: entity
   parent: BackpackClothing
   id: Satchel
-  name: Satchel
+  name: satchel
   components:
   - type: Sprite
     state: satchel
@@ -135,7 +135,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelEngineering
-  name: Engineering Satchel
+  name: engineering satchel
   components:
   - type: Sprite
     state: satchel-engineering
@@ -151,7 +151,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelMedical
-  name: Medical Satchel
+  name: medical satchel
   components:
   - type: Sprite
     state: satchel-medical
@@ -167,7 +167,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelChemistry
-  name: Chemistry Satchel
+  name: chemistry satchel
   components:
   - type: Sprite
     state: satchel-chemistry
@@ -183,7 +183,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelGenetics
-  name: Genetics Satchel
+  name: genetics satchel
   components:
   - type: Sprite
     state: satchel-genetics
@@ -199,7 +199,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelVirology
-  name: Virology Satchel
+  name: virology satchel
   components:
   - type: Sprite
     state: satchel-virology
@@ -215,7 +215,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelScience
-  name: Science Satchel
+  name: science satchel
   components:
   - type: Sprite
     state: satchel-science
@@ -230,7 +230,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelSecurity
-  name: Security Satchel
+  name: security satchel
   components:
   - type: Sprite
     state: satchel-security
@@ -246,7 +246,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelCaptain
-  name: Captain's Satchel
+  name: captain's satchel
   components:
   - type: Sprite
     state: satchel-captain
@@ -262,7 +262,7 @@
 - type: entity
   parent: BackpackClothing
   id: SatchelHydroponics
-  name: Hydroponics Satchel
+  name: hydroponics satchel
   components:
   - type: Sprite
     state: satchel-hydroponics
@@ -277,7 +277,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBag
-  name: Messenger Bag
+  name: messenger bag
   components:
   - type: Sprite
     state: courier
@@ -292,7 +292,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagChemistry
-  name: Chemistry Messenger Bag
+  name: chemistry messenger bag
   components:
   - type: Sprite
     state: courier-chemistry
@@ -308,7 +308,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagMedical
-  name: Medical Messenger Bag
+  name: medical messenger bag
   components:
   - type: Sprite
     state: courier-medical
@@ -324,7 +324,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagVirology
-  name: Virology Messenger Bag
+  name: virology messenger bag
   components:
   - type: Sprite
     state: courier-virology
@@ -340,7 +340,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagEngineering
-  name: Engineering Messenger Bag
+  name: engineering messenger bag
   components:
   - type: Sprite
     state: courier-engineering
@@ -356,7 +356,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagScience
-  name: Science Messenger Bag
+  name: science messenger bag
   components:
   - type: Sprite
     state: courier-science
@@ -371,7 +371,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagCaptain
-  name: Captain's Messenger Bag
+  name: captain's messenger bag
   components:
   - type: Sprite
     state: courier-captain
@@ -387,7 +387,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagHydroponics
-  name: Hydroponics Messenger Bag
+  name: hydroponics messenger bag
   components:
   - type: Sprite
     state: courier-hydroponics
@@ -402,7 +402,7 @@
 - type: entity
   parent: BackpackClothing
   id: MessengerBagSecurity
-  name: Security Messenger Bag
+  name: security messenger bag
   components:
   - type: Sprite
     state: courier-security

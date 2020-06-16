@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
 
 
             Dirty();
@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
 
         }
 
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (cell == null)
             {
 
-                EntitySystem.Get<AudioSystem>().Play("/Audio/machines/button.ogg", Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             // Simple enough.
             if (cell.AvailableCharge(1) < Wattage)
             {
-                EntitySystem.Get<AudioSystem>().Play("/Audio/machines/button.ogg", Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             SetState(true);
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
 
         }
 
@@ -215,7 +215,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magout.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magout.ogg", Owner);
 
         }
 

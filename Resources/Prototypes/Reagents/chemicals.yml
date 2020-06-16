@@ -1,6 +1,6 @@
 - type: reagent
   id: chem.Nutriment
-  name: Nutriment
+  name: nutriment
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   color: "#664330"
   metabolism:
@@ -9,13 +9,13 @@
 
 - type: reagent
   id: chem.H2SO4
-  name: Sulfuric Acid
+  name: sulfuric acid
   desc: A highly corrosive, oily, colorless liquid.
   color: "#BF8C00"
 
 - type: reagent
   id: chem.H2O
-  name: Water
+  name: water
   desc: A tasty colorless liquid.
   color: "#DEF7F5"
   metabolism:
@@ -24,90 +24,90 @@
 
 - type: reagent
   id: chem.Ice
-  name: Ice
+  name: ice
   desc: Frozen water.
   color: "#bed8e6"
 
 - type: reagent
   id: chem.Plasma
-  name: Plasma
+  name: plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   color: "#500064"
 
 - type: reagent
   id: chem.Ethanol
-  name: Ethanol
+  name: ethanol
   desc: A simple alcohol, makes you drunk if consumed, flammable.
   color: "#b05b3c"
 
 - type: reagent
   id: chem.Glucose
-  name: Glucose
+  name: glucose
   desc: A simple sugar found in many foods.
   color: "#ffffff"
 
 - type: reagent
   id: chem.Ammonia
-  name: Ammonia
+  name: ammonia
   desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
   color: "#77b58e"
 
 - type: reagent
   id: chem.Bleach
-  name: Bleach
+  name: bleach
   desc: Heavy duty cleaner that can clean tiles the same as Space Cleaner and also decontaminate clothes. Extremely toxic when ingested.
   color: "#a1000b"
 
 - type: reagent
   id: chem.Diethylamine
-  name: Diethylamine
+  name: diethylamine
   desc: A very potent fertilizer.
   color: "#a1000b"
 
 - type: reagent
   id: chem.FoamingAgent
-  name: Foaming Agent
+  name: foaming agent
   desc: Makes foam such as that required in metal foam grenades
   color: "#215263"
 
 - type: reagent
   id: chem.PolytrinicAcid
-  name: Polytrinic Acid
+  name: polytrinic acid
   desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it. Spraying it on other items will usually melt them too, which does make it useful if the clown has covered the entire hallway in banana peels.
   color: "#a1000b"
 
 - type: reagent
   id: chem.SpaceCleaner
-  name: Space Cleaner
+  name: space cleaner
   desc: This is able to clean almost all surfaces of almost anything that may dirty them. The janitor is likely to appreciate refills.
   color: "#215263"
 
 - type: reagent
   id: chem.SpaceLube
-  name: Space Lube
+  name: space lube
   desc: Space Lube is a high performance lubricant intended for maintenance of extremely complex mechanical equipment (and certainly not used to make people slip).
   color: "#77b58e"
 
 - type: reagent
   id: chem.TableSalt
-  name: Table Salt
+  name: table salt
   desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
   color: "#a1000b"
 
 - type: reagent
   id: chem.Thermite
-  name: Thermite
+  name: thermite
   desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
   color: "#77b58e"
 
 - type: reagent
   id: chem.UnstableMutagen
-  name: Unstable Mutagen
+  name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
   color: "#77b58e"
 
 - type: reagent
   id: chem.WeldingFuel
-  name: Welding Fuel
+  name: welding fuel
   desc: Used by welders to weld.
   color: "#a76b1c"

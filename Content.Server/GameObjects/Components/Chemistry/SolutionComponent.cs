@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private Solution _containedSolution = new Solution();
         private ReagentUnit _maxVolume;
         private SolutionCaps _capabilities;
-        private string _fillInitState = "";
+        private string _fillInitState;
         private int _fillInitSteps;
         private string _fillPathString = "Objects/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
@@ -288,7 +288,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     }
                     else
                     {
-                        //This is trash but it shows the general idea 
+                        //This is trash but it shows the general idea
                         var color = proto.SubstanceColor;
                         var colorIsh = "Red";
                         if (color.G > color.R)
@@ -492,7 +492,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Play reaction sound client-side
-            _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+            _audioSystem.PlayAtCoords("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
 
         /// <summary>

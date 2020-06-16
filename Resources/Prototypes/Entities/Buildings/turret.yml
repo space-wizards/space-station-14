@@ -1,6 +1,6 @@
 - type: entity
   id: TurretBase
-  name: Turret Base
+  name: turret base
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -10,7 +10,7 @@
 
 - type: entity
   id: TurretTopGun
-  name: Turret (Gun)
+  name: turret (gun)
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -25,7 +25,7 @@
 
 - type: entity
   id: TurretTopLight
-  name: Turret (Light)
+  name: turret (light)
   components:
   - type: Clickable
   - type: InteractionOutline

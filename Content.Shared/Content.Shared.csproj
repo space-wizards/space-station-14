@@ -5,13 +5,13 @@
     <TargetFramework>$(TargetFramework)</TargetFramework>
     <LangVersion>8</LangVersion>
     <IsPackable>false</IsPackable>
-    <Platforms>x64</Platforms>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>../bin/Content.Shared</OutputPath>
+    <Configurations>Release;Debug</Configurations>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="YamlDotNet" Version="8.1.0" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +26,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="GameObjects\Components\Construction\" />
     <Folder Include="GameObjects\Components\Trigger\" />
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>

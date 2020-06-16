@@ -1,6 +1,6 @@
 - type: entity
   id: bullet_20mm
-  name: 20mm Bullet
+  name: 20mm bullet
   parent: BulletBase
   abstract: true
   components:

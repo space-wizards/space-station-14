@@ -12,7 +12,7 @@
     hitSound: "/Audio/weapons/smash.ogg"
 
 - type: entity
-  name: Emergency Toolbox
+  name: emergency toolbox
   parent: ToolboxBase
   id: ToolboxEmergency
   description: A bright red toolbox, stocked with emergency tools
@@ -28,14 +28,14 @@
 
 - type: entity
   id: ToolboxEmergencyFilled
-  name: Emergency Toolbox
+  name: emergency toolbox
   parent: ToolboxEmergency
   suffix: Filled
   components:
   - type: ToolboxEmergencyFill
 
 - type: entity
-  name: Mechanical Toolbox
+  name: mechanical toolbox
   parent: ToolboxBase
   id: ToolboxMechanical
   description: A blue box, stocked with mechanical tools
@@ -50,7 +50,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
 
 - type: entity
-  name: Electrical Toolbox
+  name: electrical toolbox
   parent: ToolboxBase
   id: ToolboxElectrical
   description: A toolbox typically stocked with electrical gear
@@ -66,14 +66,14 @@
 
 - type: entity
   id: ToolboxElectricalFilled
-  name: Electrical Toolbox
+  name: electrical toolbox
   suffix: Filled
   parent: ToolboxElectrical
   components:
   - type: ToolboxElectricalFill
 
 - type: entity
-  name: Artistic Toolbox
+  name: artistic toolbox
   parent: ToolboxBase
   id: ToolboxArtistic
   description: A toolbox typically stocked with artistic supplies
@@ -88,7 +88,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_green.rsi
 
 - type: entity
-  name: Syndicate Toolbox
+  name: syndicate toolbox
   parent: ToolboxBase
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
@@ -103,7 +103,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
 
 - type: entity
-  name: Golden Toolbox
+  name: golden toolbox
   parent: ToolboxBase
   id: ToolboxGolden
   description: A solid gold toolbox. A rapper would kill for this.
@@ -119,7 +119,7 @@
 
 - type: entity
   id: ToolboxGoldFilled
-  name: Golden Toolbox
+  name: golden toolbox
   parent: ToolboxGolden
   suffix: Filled
   components:

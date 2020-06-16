@@ -92,6 +92,7 @@ namespace Content.Client.State
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+            _lobby.CreditsButton.OnPressed += args => new CreditsWindow().Open();
 
             UpdatePlayerList();
 

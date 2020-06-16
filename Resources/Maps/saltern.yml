@@ -23219,4 +23219,186 @@ entities:
     pos: 0.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+- uid: 2987
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -20.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2988
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -28.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2989
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -29.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2990
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -0.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2991
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 6.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2992
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 10.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2993
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 15.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2994
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 10.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2995
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 18.5,-24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2996
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 17.5,-20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2997
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: 22.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2998
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 23.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 2999
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -2.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3000
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -14.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3001
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -32.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3002
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -18.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3003
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -31.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3004
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -20.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3005
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -7.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3006
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: -7.5,21.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3007
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: 6.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3008
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 0.5,28.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3009
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 6.5,28.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3010
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 0
+    pos: -13.5,24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3011
+  type: SuspicionMeleeSpawner
+  components:
+  - parent: 0
+    pos: -4.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3012
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 0
+    pos: 5.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...

@@ -8,6 +8,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -428,7 +429,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
 
-                            _audioSystem.Play("/Audio/effects/multitool_pulse.ogg", Owner);
+                            _audioSystem.PlayFromEntity("/Audio/effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -474,7 +475,7 @@ namespace Content.Server.GameObjects.Components
 
             IsPanelOpen = !IsPanelOpen;
             EntitySystem.Get<AudioSystem>()
-                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
+                .PlayFromEntity(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
                     Owner);
             return true;
         }

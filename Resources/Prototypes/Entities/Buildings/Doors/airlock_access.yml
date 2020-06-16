@@ -16,6 +16,14 @@
     access: [["External"]]
 
 - type: entity
+  parent: AirlockFreezer
+  id: AirlockFreezerLocked
+  suffix: Service, Locked
+  components:
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
   parent: AirlockEngineering
   id: AirlockEngineeringLocked
   suffix: Engineering, Locked
