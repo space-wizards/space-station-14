@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Strap;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
@@ -29,6 +31,19 @@ namespace Content.Server.GameObjects.Components.Mobs
         private IEntity _buckledTo;
 
         [ViewVariables] public IEntity BuckledTo => _buckledTo;
+
+        private IEnumerable<StrapComponent> FindStrappables()
+        {
+            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
+
+            foreach (var intersect in intersecting)
+            {
+                if (intersect.TryGetComponent(out StrapComponent strap))
+                {
+                    yield return strap;
+                }
+            }
+        }
 
         private void BuckleStatus()
         {
@@ -70,21 +85,15 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             // Find the first entity with a strap component to buckle the owner to
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
-            foreach (var intersect in intersecting)
+            foreach (var intersect in FindStrappables())
             {
-                if (!intersect.TryGetComponent(out StrapComponent strap))
-                {
-                    continue;
-                }
-
                 _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
-                _buckledTo = intersect;
-                Owner.Transform.GridPosition = intersect.Transform.GridPosition;
-                Owner.Transform.AttachParent(intersect.Transform);
+                    .PlayFromEntity(intersect.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+                _buckledTo = intersect.Owner;
+                Owner.Transform.GridPosition = intersect.Owner.Transform.GridPosition;
+                Owner.Transform.AttachParent(intersect.Owner.Transform);
 
-                switch (strap.Position)
+                switch (intersect.Position)
                 {
                     case StrapPosition.Stand:
                         StandingStateHelper.Standing(Owner);
@@ -164,6 +173,12 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             protected override void GetData(IEntity user, BuckleableComponent component, VerbData data)
             {
+                if (!component.FindStrappables().Any())
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = component.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
             }
 
