@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Mobs;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Players;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -58,6 +61,51 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             Dirty();
+        }
+
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
+        {
+            base.HandleNetworkMessage(message, netChannel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
+
+            switch (message)
+            {
+                case ClickStatusMessage msg:
+                {
+                    var player = session.AttachedEntity;
+
+                    if (player != Owner)
+                    {
+                        break;
+                    }
+
+                    switch (msg.Effect)
+                    {
+                        case StatusEffect.Health:
+                            break;
+                        case StatusEffect.Hunger:
+                            break;
+                        case StatusEffect.Thirst:
+                            break;
+                        case StatusEffect.Stun:
+                            break;
+                        case StatusEffect.Buckled:
+                            if (!player.TryGetComponent(out BuckleableComponent buckleable))
+                            {
+                                break;
+                            }
+
+                            buckleable.TryUnbuckle();
+                            break;
+                    }
+
+                    break;
+                }
+            }
         }
     }
 

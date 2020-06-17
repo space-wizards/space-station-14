@@ -26,6 +26,21 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
     }
 
+    /// <summary>
+    /// A message that calls the click interaction on a status effect
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class ClickStatusMessage : ComponentMessage
+    {
+        public readonly StatusEffect Effect;
+
+        public ClickStatusMessage(StatusEffect effect)
+        {
+            Directed = true;
+            Effect = effect;
+        }
+    }
+
     [Serializable, NetSerializable]
     public struct StatusEffectStatus
     {

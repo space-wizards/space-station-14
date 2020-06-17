@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             return false;
         }
 
-        private bool TryUnbuckle()
+        public bool TryUnbuckle()
         {
             if (_buckledTo == null)
             {
