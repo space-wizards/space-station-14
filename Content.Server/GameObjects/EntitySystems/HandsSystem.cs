@@ -7,23 +7,18 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using System;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -33,7 +28,6 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -53,7 +47,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
-                .Bind(ContentKeyFunctions.BuckleEntity, new PointerInputCmdHandler(HandleBuckleEntity))
                 .Register<HandsSystem>();
         }
 
@@ -225,63 +218,6 @@ namespace Content.Server.GameObjects.EntitySystems
                         handsComp.PutInHandOrDrop(lastStoredEntity.GetComponent<ItemComponent>());
                 }
             }
-        }
-
-        private bool HandleBuckleEntity(ICommonSession session, GridCoordinates coords, EntityUid uid)
-        {
-            // client sanitization
-            if (!_mapManager.GridExists(coords.GridID))
-            {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
-                return true;
-            }
-
-            if (uid.IsClientSide())
-            {
-                Logger.WarningS("system.interaction",
-                    $"Client sent attack with client-side entity. Session={session}, Uid={uid}");
-                return true;
-            }
-
-            var player = ((IPlayerSession) session).AttachedEntity;
-
-            if (player == null || !player.IsValid())
-            {
-                return false;
-            }
-
-            var plyCoords = player.Transform.GridPosition.Position;
-            var plyBucklingCoords = coords.Position - plyCoords;
-            // InteractionRange is reduced due to InRange not dealing with floating point error
-            var targetLength = Math.Min(plyBucklingCoords.Length, InteractionSystem.InteractionRange - 0.001f);
-            var newCoords = new GridCoordinates(plyBucklingCoords.Normalized * targetLength + plyCoords, coords.GridID);
-            var rayLength = Get<SharedInteractionSystem>().UnobstructedRayLength(player.Transform.MapPosition,
-                newCoords.ToMap(_mapManager), ignoredEnt: player);
-
-            if (!_entityManager.TryGetEntity(uid, out var entity))
-            {
-                return false;
-            }
-
-            if (!entity.TryGetComponent(out BuckleableComponent buckleableComp))
-            {
-                _notifyManager.PopupMessage(player, player,
-                    Loc.GetString("You can't buckle {0:them}!", entity));
-                return false;
-            }
-
-            var intersecting = _entityManager.GetEntitiesIntersecting(entity, true);
-            foreach (var intersect in intersecting)
-            {
-                if (!intersect.HasComponent<StrapComponent>())
-                {
-                    continue;
-                }
-
-                return buckleableComp.TryBuckle(player, intersect);
-            }
-
-            return false;
         }
     }
 }

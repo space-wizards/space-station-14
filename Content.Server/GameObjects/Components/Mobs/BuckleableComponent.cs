@@ -2,6 +2,8 @@
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -14,76 +16,115 @@ namespace Content.Server.GameObjects.Components.Mobs
     public class BuckleableComponent : Component, IActionBlocker, IInteractHand, IMoveSpeedModifier
     {
 #pragma warning disable 649
+        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override string Name => "Buckleable";
 
-        private IEntity _buckled;
+        private IEntity _buckledTo;
 
-        [ViewVariables] public IEntity Buckled => _buckled;
-        public float WalkSpeedModifier => Buckled == null ? 1f : 0f;
-        public float SprintSpeedModifier => Buckled == null ? 1f : 0f;
+        [ViewVariables] public IEntity BuckledTo => _buckledTo;
+        public float WalkSpeedModifier => BuckledTo == null ? 1f : 0f;
+        public float SprintSpeedModifier => BuckledTo == null ? 1f : 0f;
 
-        public bool TryBuckle(IEntity buckler, IEntity to)
+        private bool TryBuckle(IEntity user)
         {
-            if (buckler == null || to == null)
+            if (user == null)
             {
                 return false;
             }
 
-            if (!buckler.TryGetComponent(out HandsComponent hands))
+            if (!user.TryGetComponent(out HandsComponent hands))
             {
-                _notifyManager.PopupMessage(buckler, buckler,
+                _notifyManager.PopupMessage(user, user,
                     Loc.GetString("You don't have hands!"));
                 return false;
             }
 
             if (hands.GetActiveHand != null)
             {
-                _notifyManager.PopupMessage(buckler, buckler,
+                _notifyManager.PopupMessage(user, user,
                     Loc.GetString("Your hand isn't free!"));
                 return false;
             }
 
-            if (_buckled != null)
+            if (_buckledTo != null)
             {
-                _notifyManager.PopupMessage(Owner, buckler,
+                _notifyManager.PopupMessage(Owner, user,
                     Loc.GetString("{0:They} are already buckled in!", Owner));
                 return false;
             }
 
-            if (!to.HasComponent<StrapComponent>())
+            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
+            foreach (var intersect in intersecting)
             {
-                _notifyManager.PopupMessage(Owner, buckler,
-                    Loc.GetString("You can't buckle {0:them} there!", Owner));
+                if (!intersect.HasComponent<StrapComponent>())
+                {
+                    continue;
+                }
+
+                _buckledTo = intersect;
+                return true;
+            }
+
+            _notifyManager.PopupMessage(Owner, user,
+                Loc.GetString("You can't buckle {0:them} there!", Owner));
+            return false;
+        }
+
+        private bool TryUnbuckle()
+        {
+            if (_buckledTo == null)
+            {
                 return false;
             }
 
-            _buckled = to;
+            _buckledTo = null;
             return true;
         }
 
-        public void TryUnbuckle()
-        {
-            _buckled = null;
-        }
-
-        public bool TryReBuckle(IEntity buckler, IEntity to)
+        private bool TryReBuckle(IEntity user)
         {
             TryUnbuckle();
-            return TryBuckle(buckler, to);
+            return TryBuckle(user);
+        }
+
+        private bool ToggleBuckle(IEntity user)
+        {
+            if (BuckledTo == null)
+            {
+                return TryBuckle(user);
+            }
+            else
+            {
+                return TryUnbuckle();
+            }
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            _buckled = null;
+            _buckledTo = null;
             return true;
         }
 
         public bool CanMove()
         {
-            return Buckled == null;
+            return BuckledTo == null;
+        }
+
+        [Verb]
+        private sealed class BuckleVerb : Verb<BuckleableComponent>
+        {
+            protected override void GetData(IEntity user, BuckleableComponent component, VerbData data)
+            {
+                data.Text = component.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
+            }
+
+            protected override void Activate(IEntity user, BuckleableComponent component)
+            {
+                component.ToggleBuckle(user);
+            }
         }
     }
 }

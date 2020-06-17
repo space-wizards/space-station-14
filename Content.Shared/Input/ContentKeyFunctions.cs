@@ -27,6 +27,5 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction OpenTileSpawnWindow = "OpenTileSpawnWindow";
         public static readonly BoundKeyFunction TakeScreenshot = "TakeScreenshot";
         public static readonly BoundKeyFunction TakeScreenshotNoUI = "TakeScreenshotNoUI";
-        public static readonly BoundKeyFunction BuckleEntity = "BuckleEntity";
     }
 }
