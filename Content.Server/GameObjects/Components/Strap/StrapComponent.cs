@@ -7,7 +7,7 @@ namespace Content.Server.GameObjects.Components.Strap
     [RegisterComponent]
     public class StrapComponent : SharedStrapComponent
     {
-        private StrapPosition _position = StrapPosition.Standing;
+        private StrapPosition _position;
 
         public override StrapPosition Position
         {
@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Strap
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _position, "position", StrapPosition.Standing);
+            serializer.DataField(ref _position, "position", StrapPosition.None);
         }
     }
 }

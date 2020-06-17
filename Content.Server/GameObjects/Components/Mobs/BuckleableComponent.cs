@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                 switch (strap.Position)
                 {
-                    case StrapPosition.Standing:
+                    case StrapPosition.Stand:
                         StandingStateHelper.Standing(Owner);
                         break;
                     case StrapPosition.Down:

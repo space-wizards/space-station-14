@@ -5,12 +5,17 @@ namespace Content.Shared.GameObjects.Components.Strap
     public enum StrapPosition
     {
         /// <summary>
-        /// (Default) Mob is standing up
+        /// (Default) Makes no change to the buckled mob
         /// </summary>
-        Standing = 0,
+        None = 0,
 
         /// <summary>
-        /// Mob is laying down
+        /// Makes the mob stand up
+        /// </summary>
+        Stand,
+
+        /// <summary>
+        /// Makes the mob lie down
         /// </summary>
         Down
     }
