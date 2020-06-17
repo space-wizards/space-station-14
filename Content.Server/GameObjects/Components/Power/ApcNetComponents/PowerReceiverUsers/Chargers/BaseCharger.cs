@@ -33,12 +33,17 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         [ViewVariables]
         protected float _transferEfficiency;
 
+        public int ChargeRate { get => _chargeRate; set => _chargeRate = value; }
+        private int _chargeRate;
+
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _transferRatio, "transfer_ratio", 0.1f);
             serializer.DataField(ref _transferEfficiency, "transfer_efficiency", 0.85f);
+            serializer.DataField(ref _chargeRate, "chargeRate", 100);
         }
 
         public override void Initialize()

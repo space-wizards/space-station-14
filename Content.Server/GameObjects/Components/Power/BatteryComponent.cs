@@ -19,9 +19,6 @@ namespace Content.Server.GameObjects.Components.Power
         public float CurrentCharge { get => _currentCharge; set => SetCurrentCharge(value); }
         private float _currentCharge;
 
-        /// <summary>
-        ///     How full the battery is.
-        /// </summary>
         [ViewVariables]
         public BatteryState BatteryState { get; private set; }
 
@@ -87,27 +84,6 @@ namespace Content.Server.GameObjects.Components.Power
         }
 
         protected virtual void OnChargeChanged() { }
-
-        //Temp refactor trash
-        private float _wattage = 1;
-        public float RequestCharge(float frameTime)
-        {
-            return Math.Min(_wattage * frameTime, MaxCharge - CurrentCharge);
-        }
-        public float AvailableCharge(float frameTime)
-        {
-            return Math.Min(_wattage * frameTime, CurrentCharge);
-        }
-        public bool TryDeductWattage(float wattage, float frameTime)
-        {
-            var avail = AvailableCharge(frameTime);
-            if (avail < wattage * frameTime)
-            {
-                return false;
-            }
-            CurrentCharge -= wattage * frameTime;
-            return true;
-        }
     }
 
     public enum BatteryState

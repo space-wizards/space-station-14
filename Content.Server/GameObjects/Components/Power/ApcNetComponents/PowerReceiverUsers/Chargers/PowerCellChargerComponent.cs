@@ -164,7 +164,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
             _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
-            var chargeLoss = cellComponent.RequestCharge(frameTime) * _transferRatio;
+            var chargeLoss = Math.Min(ChargeRate * frameTime, cellComponent.MaxCharge - cellComponent.CurrentCharge) * _transferRatio;
             _powerReceiver.Load = chargeLoss;
 
             if (!_powerReceiver.Powered)
