@@ -40,5 +40,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Hunger,
         Thirst,
         Stun,
+        Buckled,
     }
 }

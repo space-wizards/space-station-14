@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -25,6 +26,17 @@ namespace Content.Server.GameObjects.Components.Mobs
         private IEntity _buckledTo;
 
         [ViewVariables] public IEntity BuckledTo => _buckledTo;
+
+        public void BuckleEffect()
+        {
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            {
+                status.ChangeStatusEffectIcon(StatusEffect.Buckled,
+                    _buckledTo == null
+                        ? "/Textures/Mob/UI/Buckle/unbuckled.png"
+                        : "/Textures/Mob/UI/Buckle/buckled.png");
+            }
+        }
 
         private bool TryBuckle(IEntity user)
         {
@@ -77,6 +89,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                 }
 
+                BuckleEffect();
+
                 return true;
             }
 
@@ -101,6 +115,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                 species.CurrentDamageState.EnterState(Owner);
             }
 
+            BuckleEffect();
+
             return true;
         }
 
@@ -114,6 +130,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 return TryUnbuckle();
             }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+            BuckleEffect();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
