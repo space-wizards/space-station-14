@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Strap;
+﻿using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Mobs;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Strap;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -59,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
             foreach (var intersect in intersecting)
             {
-                if (!intersect.HasComponent<StrapComponent>())
+                if (!intersect.TryGetComponent(out StrapComponent strap))
                 {
                     continue;
                 }
@@ -67,6 +66,17 @@ namespace Content.Server.GameObjects.Components.Mobs
                 _buckledTo = intersect;
                 Owner.Transform.GridPosition = intersect.Transform.GridPosition;
                 Owner.Transform.AttachParent(intersect.Transform);
+
+                switch (strap.Position)
+                {
+                    case StrapPosition.Standing:
+                        StandingStateHelper.Standing(Owner);
+                        break;
+                    case StrapPosition.Down:
+                        StandingStateHelper.Down(Owner);
+                        break;
+                }
+
                 return true;
             }
 
@@ -84,13 +94,14 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _buckledTo = null;
             Owner.Transform.DetachParent();
-            return true;
-        }
+            StandingStateHelper.Standing(Owner);
 
-        private bool TryReBuckle(IEntity user)
-        {
-            TryUnbuckle();
-            return TryBuckle(user);
+            if (Owner.TryGetComponent(out SpeciesComponent species))
+            {
+                species.CurrentDamageState.EnterState(Owner);
+            }
+
+            return true;
         }
 
         public bool ToggleBuckle(IEntity user)

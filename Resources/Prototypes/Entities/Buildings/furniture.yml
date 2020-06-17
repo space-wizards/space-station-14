@@ -91,5 +91,7 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: bed
+  - type: Strap
+    position: Down
   placement:
     mode: SnapgridCenter

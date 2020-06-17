@@ -1,10 +1,28 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Shared.GameObjects.Components.Strap;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
-    public class StrapComponent : Component
+    public class StrapComponent : SharedStrapComponent
     {
-        public override string Name => "Strap";
+        private StrapPosition _position = StrapPosition.Standing;
+
+        public override StrapPosition Position
+        {
+            get => _position;
+            set
+            {
+                _position = value;
+                Dirty();
+            }
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _position, "position", StrapPosition.Standing);
+        }
     }
 }
