@@ -68,7 +68,7 @@
     key: lv_cables
   - type: NodeContainer
     nodeTypes: { Apc : ["AdjacentNode"] }
-  - type: NewPowerProvider
+  - type: PowerProvider
     voltage: Apc
   - type: Wire
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
@@ -269,9 +269,9 @@
     voltage: Medium
   - type: BatteryStorage
     activeDrawRate: 1000
-  - type: NewPowerProvider
+  - type: PowerProvider
     voltage: Apc
-  - type: NewApc
+  - type: Apc
     voltage: Apc
   - type: UserInterface
     interfaces:

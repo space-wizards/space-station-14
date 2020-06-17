@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [RegisterComponent]
     public class PowerProviderComponent : BaseApcNetComponent, IPowerProvider
     {
-        public override string Name => "NewPowerProvider";
+        public override string Name => "PowerProvider";
 
         /// <summary>
         ///     The max distance this can transmit power to <see cref="PowerReceiverComponent"/>s from.

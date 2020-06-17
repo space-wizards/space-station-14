@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [ComponentReference(typeof(IActivate))]
     public class ApcComponent : BaseApcNetComponent, IActivate
     {
-        public override string Name => "NewApc";
+        public override string Name => "Apc";
 
         [ViewVariables]
         public BatteryComponent Battery { get; private set; }
