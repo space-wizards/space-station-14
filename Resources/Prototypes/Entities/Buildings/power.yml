@@ -11,11 +11,13 @@
     offset: Center
   - type: Icon
     texture: Objects/Power/eightdirwire.png
-  - type: Sprite  
+  - type: Sprite
+    drawdepth: BelowFloor  
   - type: IconSmooth
     mode: CardinalFlags
   - type: Destructible
     thresholdvalue: 100
+  - type: SubFloorHide
   
 - type: entity
   parent: WireBase
@@ -97,7 +99,7 @@
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
-    supplyRate: 1000
+    supplyRate: 3000
     
 - type: entity
   id: DebugConsumer
@@ -197,7 +199,7 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
-    activeDrawRate: 1000
+    activeDrawRate: 1500
   - type: PowerSupplier
   - type: BatteryDischarger
     activeSupplyRate: 1000
@@ -214,13 +216,9 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Buildings/smes.rsi
-    state: smes
-    layers:
-    - state: smes-display
-      shader: unshaded
+    texture: Objects\Power\storage.png
   - type: Icon
-    sprite: Buildings/smes.rsi
+    texture: Objects\Power\storage.png
     state: smes
   - type: Battery
     maxCharge: 1000
@@ -229,7 +227,7 @@
     nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
-    activeDrawRate: 1000
+    activeDrawRate: 1500
   - type: PowerSupplier
     voltage: Medium
   - type: BatteryDischarger

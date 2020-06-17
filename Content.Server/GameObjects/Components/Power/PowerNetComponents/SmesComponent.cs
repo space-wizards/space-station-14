@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Power
         public void OnUpdate()
         {
             var newLevel = GetNewChargeLevel();
-            if (newLevel != _lastChargeLevel && _lastChargeLevelChange + TimeSpan.FromSeconds(VisualsChangeDelay) > DateTime.Now)
+            if (newLevel != _lastChargeLevel && _lastChargeLevelChange + TimeSpan.FromSeconds(VisualsChangeDelay) < DateTime.Now)
             {
                 _lastChargeLevel = newLevel;
                 _lastChargeLevelChange = DateTime.Now;
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
 
             var newChargeState = GetNewChargeState();
-            if (newChargeState != _lastChargeState && _lastChargeStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) > DateTime.Now)
+            if (newChargeState != _lastChargeState && _lastChargeStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < DateTime.Now)
             {
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = DateTime.Now;
