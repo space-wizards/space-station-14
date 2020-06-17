@@ -1,4 +1,4 @@
-meta:
+﻿meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
@@ -2688,8 +2688,6 @@ entities:
         - 666
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 364
   type: Table
   components:
@@ -5504,8 +5502,6 @@ entities:
     pos: 40.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - supply: 1000000
-    type: PowerGenerator
 - uid: 763
   type: APC
   components:
@@ -5693,8 +5689,6 @@ entities:
         - 2643
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 789
   type: PoweredSmallLight
   components:
@@ -5710,8 +5704,6 @@ entities:
         - 790
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 790
   type: LightBulb
   components:
@@ -5732,8 +5724,6 @@ entities:
         - 787
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 792
   type: APC
   components:
@@ -12079,8 +12069,6 @@ entities:
         - 1749
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1692
   type: Window
   components:
@@ -12488,8 +12476,6 @@ entities:
         - 1882
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1749
   type: LightTube
   components:
@@ -12617,8 +12603,6 @@ entities:
         - 1765
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1767
   type: ReinforcedWindow
   components:
@@ -13870,8 +13854,6 @@ entities:
         - 1945
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1945
   type: LightTube
   components:
@@ -13891,8 +13873,6 @@ entities:
         - 1947
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1947
   type: LightTube
   components:
@@ -13918,8 +13898,6 @@ entities:
         - 1948
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1950
   type: LightTube
   components:
@@ -13940,8 +13918,6 @@ entities:
         - 1950
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1952
   type: LightBulb
   components:
@@ -13962,8 +13938,6 @@ entities:
         - 1952
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1954
   type: PoweredSmallLight
   components:
@@ -13978,8 +13952,6 @@ entities:
         - 1955
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1955
   type: LightBulb
   components:
@@ -13999,8 +13971,6 @@ entities:
         - 1957
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1957
   type: LightBulb
   components:
@@ -14021,8 +13991,6 @@ entities:
         - 1959
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1959
   type: LightTube
   components:
@@ -14043,8 +14011,6 @@ entities:
         - 1961
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1961
   type: LightTube
   components:
@@ -14064,8 +14030,6 @@ entities:
         - 1963
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1963
   type: LightTube
   components:
@@ -14144,8 +14108,6 @@ entities:
         - 1974
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1974
   type: LightTube
   components:
@@ -14165,8 +14127,6 @@ entities:
         - 1976
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1976
   type: LightTube
   components:
@@ -14187,8 +14147,6 @@ entities:
         - 1978
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1978
   type: LightTube
   components:
@@ -14209,8 +14167,6 @@ entities:
         - 1980
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1980
   type: LightTube
   components:
@@ -14230,8 +14186,6 @@ entities:
         - 1982
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1982
   type: LightTube
   components:
@@ -14252,8 +14206,6 @@ entities:
         - 1984
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1984
   type: LightTube
   components:
@@ -14274,8 +14226,6 @@ entities:
         - 1986
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1986
   type: LightTube
   components:
@@ -14295,8 +14245,6 @@ entities:
         - 1988
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1988
   type: LightTube
   components:
@@ -14359,8 +14307,6 @@ entities:
         - 1996
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1996
   type: LightBulb
   components:
@@ -14381,8 +14327,6 @@ entities:
         - 1998
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 1998
   type: LightBulb
   components:
@@ -14403,8 +14347,6 @@ entities:
         - 2000
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2000
   type: LightBulb
   components:
@@ -14425,8 +14367,6 @@ entities:
         - 2002
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2002
   type: LightBulb
   components:
@@ -14446,8 +14386,6 @@ entities:
         - 2004
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2004
   type: LightBulb
   components:
@@ -14467,8 +14405,6 @@ entities:
         - 2006
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2006
   type: LightBulb
   components:
@@ -14488,8 +14424,6 @@ entities:
         - 2008
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2008
   type: LightBulb
   components:
@@ -14510,8 +14444,6 @@ entities:
         - 2010
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2010
   type: LightBulb
   components:
@@ -14546,8 +14478,6 @@ entities:
         - 1361
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2014
   type: APC
   components:
@@ -14659,8 +14589,6 @@ entities:
         - 2027
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2029
   type: PoweredSmallLight
   components:
@@ -14676,8 +14604,6 @@ entities:
         - 2030
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2030
   type: LightBulb
   components:
@@ -14698,8 +14624,6 @@ entities:
         - 2032
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2032
   type: LightBulb
   components:
@@ -14720,8 +14644,6 @@ entities:
         - 2034
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2034
   type: LightTube
   components:
@@ -14747,8 +14669,6 @@ entities:
         - 2035
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2037
   type: Poweredlight
   components:
@@ -14764,8 +14684,6 @@ entities:
         - 2038
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2038
   type: LightTube
   components:
@@ -14786,8 +14704,6 @@ entities:
         - 2040
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2040
   type: LightTube
   components:
@@ -14808,8 +14724,6 @@ entities:
         - 2042
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2042
   type: LightTube
   components:
@@ -14857,8 +14771,6 @@ entities:
         - 2048
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2048
   type: LightTube
   components:
@@ -14879,8 +14791,6 @@ entities:
         - 2050
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2050
   type: LightTube
   components:
@@ -14901,8 +14811,6 @@ entities:
         - 2052
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2052
   type: LightTube
   components:
@@ -14922,8 +14830,6 @@ entities:
         - 2054
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2054
   type: LightTube
   components:
@@ -14973,8 +14879,6 @@ entities:
         - 2061
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2061
   type: LightTube
   components:
@@ -14995,8 +14899,6 @@ entities:
         - 2063
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2063
   type: LightTube
   components:
@@ -15038,8 +14940,6 @@ entities:
         - 2068
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2068
   type: LightTube
   components:
@@ -15060,8 +14960,6 @@ entities:
         - 2070
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2070
   type: LightTube
   components:
@@ -15086,8 +14984,6 @@ entities:
         - 2071
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2073
   type: Poweredlight
   components:
@@ -15103,8 +14999,6 @@ entities:
         - 2074
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2074
   type: LightTube
   components:
@@ -15125,8 +15019,6 @@ entities:
         - 2076
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2076
   type: LightTube
   components:
@@ -15147,8 +15039,6 @@ entities:
         - 2078
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2078
   type: LightTube
   components:
@@ -15236,8 +15126,6 @@ entities:
         - 2088
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2090
   type: Poweredlight
   components:
@@ -15252,8 +15140,6 @@ entities:
         - 2091
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2091
   type: LightTube
   components:
@@ -15274,8 +15160,6 @@ entities:
         - 2093
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2093
   type: LightTube
   components:
@@ -15295,8 +15179,6 @@ entities:
         - 2095
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2095
   type: LightTube
   components:
@@ -15317,8 +15199,6 @@ entities:
         - 2097
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2097
   type: LightTube
   components:
@@ -15344,8 +15224,6 @@ entities:
         - 2098
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2100
   type: Poweredlight
   components:
@@ -15361,8 +15239,6 @@ entities:
         - 2101
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2101
   type: LightTube
   components:
@@ -15383,8 +15259,6 @@ entities:
         - 2103
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2103
   type: LightTube
   components:
@@ -15410,8 +15284,6 @@ entities:
         - 2104
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2106
   type: Poweredlight
   components:
@@ -15426,8 +15298,6 @@ entities:
         - 2107
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2107
   type: LightTube
   components:
@@ -15448,8 +15318,6 @@ entities:
         - 2109
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2109
   type: LightBulb
   components:
@@ -15469,8 +15337,6 @@ entities:
         - 2111
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2111
   type: LightBulb
   components:
@@ -15490,8 +15356,6 @@ entities:
         - 2113
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2113
   type: LightBulb
   components:
@@ -15625,8 +15489,6 @@ entities:
         - 2130
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2132
   type: Poweredlight
   components:
@@ -15642,8 +15504,6 @@ entities:
         - 2133
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2133
   type: LightTube
   components:
@@ -15664,8 +15524,6 @@ entities:
         - 2135
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2135
   type: LightTube
   components:
@@ -15686,8 +15544,6 @@ entities:
         - 2137
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2137
   type: LightTube
   components:
@@ -15707,8 +15563,6 @@ entities:
         - 2139
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2139
   type: LightTube
   components:
@@ -15729,8 +15583,6 @@ entities:
         - 2141
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2141
   type: LightTube
   components:
@@ -15751,8 +15603,6 @@ entities:
         - 2143
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2143
   type: LightTube
   components:
@@ -15773,8 +15623,6 @@ entities:
         - 2145
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2145
   type: LightTube
   components:
@@ -15795,8 +15643,6 @@ entities:
         - 2147
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2147
   type: LightTube
   components:
@@ -15816,8 +15662,6 @@ entities:
         - 2149
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2149
   type: LightTube
   components:
@@ -15838,8 +15682,6 @@ entities:
         - 2151
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2151
   type: LightTube
   components:
@@ -15864,8 +15706,6 @@ entities:
         - 2152
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2154
   type: PoweredSmallLight
   components:
@@ -15881,8 +15721,6 @@ entities:
         - 2155
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2155
   type: LightBulb
   components:
@@ -15917,8 +15755,6 @@ entities:
         - 2159
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2159
   type: LightBulb
   components:
@@ -15981,8 +15817,6 @@ entities:
         - 2167
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2167
   type: LightTube
   components:
@@ -16002,8 +15836,6 @@ entities:
         - 2169
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2169
   type: LightTube
   components:
@@ -16024,8 +15856,6 @@ entities:
         - 2171
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2171
   type: LightTube
   components:
@@ -16046,8 +15876,6 @@ entities:
         - 2173
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2173
   type: LightTube
   components:
@@ -16067,8 +15895,6 @@ entities:
         - 2175
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2175
   type: LightTube
   components:
@@ -16088,8 +15914,6 @@ entities:
         - 2177
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2177
   type: LightTube
   components:
@@ -16110,8 +15934,6 @@ entities:
         - 2179
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2179
   type: LightTube
   components:
@@ -16132,8 +15954,6 @@ entities:
         - 2181
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2181
   type: LightBulb
   components:
@@ -16154,8 +15974,6 @@ entities:
         - 2183
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2183
   type: LightBulb
   components:
@@ -16176,8 +15994,6 @@ entities:
         - 2185
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2185
   type: LightTube
   components:
@@ -16197,8 +16013,6 @@ entities:
         - 2187
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2187
   type: LightTube
   components:
@@ -16218,8 +16032,6 @@ entities:
         - 2189
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2189
   type: LightTube
   components:
@@ -16239,8 +16051,6 @@ entities:
         - 2191
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2191
   type: LightTube
   components:
@@ -16260,8 +16070,6 @@ entities:
         - 2193
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2193
   type: LightTube
   components:
@@ -16281,8 +16089,6 @@ entities:
         - 2195
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2195
   type: LightTube
   components:
@@ -16308,8 +16114,6 @@ entities:
         - 2196
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2198
   type: Poweredlight
   components:
@@ -16325,8 +16129,6 @@ entities:
         - 2199
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2199
   type: LightTube
   components:
@@ -16384,8 +16186,6 @@ entities:
         - 2206
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2206
   type: LightTube
   components:
@@ -16406,8 +16206,6 @@ entities:
         - 2208
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2208
   type: LightTube
   components:
@@ -16428,8 +16226,6 @@ entities:
         - 2210
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2210
   type: LightTube
   components:
@@ -16450,8 +16246,6 @@ entities:
         - 2212
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2212
   type: LightTube
   components:
@@ -16472,8 +16266,6 @@ entities:
         - 2214
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2214
   type: LightBulb
   components:
@@ -16494,8 +16286,6 @@ entities:
         - 2216
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2216
   type: LightBulb
   components:
@@ -16516,8 +16306,6 @@ entities:
         - 2218
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2218
   type: LightBulb
   components:
@@ -16543,8 +16331,6 @@ entities:
         - 2219
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2221
   type: PoweredSmallLight
   components:
@@ -16560,8 +16346,6 @@ entities:
         - 2222
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2222
   type: LightBulb
   components:
@@ -16582,8 +16366,6 @@ entities:
         - 2224
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2224
   type: LightBulb
   components:
@@ -16708,8 +16490,6 @@ entities:
         - 2241
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2241
   type: LightTube
   components:
@@ -16730,8 +16510,6 @@ entities:
         - 2243
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2243
   type: LightTube
   components:
@@ -16784,8 +16562,6 @@ entities:
         - 2249
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2249
   type: LightBulb
   components:
@@ -16806,8 +16582,6 @@ entities:
         - 664
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2251
   type: LockerToolFilled
   components:
@@ -16836,8 +16610,6 @@ entities:
         - 2253
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2253
   type: LightBulb
   components:
@@ -16857,8 +16629,6 @@ entities:
         - 2255
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2255
   type: LightBulb
   components:
@@ -16879,8 +16649,6 @@ entities:
         - 2257
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2257
   type: LightBulb
   components:
@@ -16914,8 +16682,6 @@ entities:
         - 2261
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2261
   type: LightBulb
   components:
@@ -16935,8 +16701,6 @@ entities:
         - 2263
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2263
   type: LightTube
   components:
@@ -16978,8 +16742,6 @@ entities:
         - 2267
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2267
   type: LightTube
   components:
@@ -17000,8 +16762,6 @@ entities:
         - 2269
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2269
   type: LightTube
   components:
@@ -17022,8 +16782,6 @@ entities:
         - 2271
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2271
   type: LightTube
   components:
@@ -17044,8 +16802,6 @@ entities:
         - 2273
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2273
   type: LightTube
   components:
@@ -17065,8 +16821,6 @@ entities:
         - 2275
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2275
   type: LightTube
   components:
@@ -17087,8 +16841,6 @@ entities:
         - 2277
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2277
   type: LightTube
   components:
@@ -17108,8 +16860,6 @@ entities:
         - 2279
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2279
   type: LightTube
   components:
@@ -17130,8 +16880,6 @@ entities:
         - 2281
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2281
   type: LightTube
   components:
@@ -17152,8 +16900,6 @@ entities:
         - 2283
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2283
   type: LightBulb
   components:
@@ -17174,8 +16920,6 @@ entities:
         - 2285
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2285
   type: LightBulb
   components:
@@ -17211,8 +16955,6 @@ entities:
         - 2289
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2289
   type: LightBulb
   components:
@@ -17233,8 +16975,6 @@ entities:
         - 2291
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2291
   type: LightBulb
   components:
@@ -17255,8 +16995,6 @@ entities:
         - 2293
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2293
   type: LightBulb
   components:
@@ -17277,8 +17015,6 @@ entities:
         - 2295
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2295
   type: LightBulb
   components:
@@ -17299,8 +17035,6 @@ entities:
         - 2297
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2297
   type: LightBulb
   components:
@@ -17335,8 +17069,6 @@ entities:
         - 2301
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2301
   type: LightBulb
   components:
@@ -17357,8 +17089,6 @@ entities:
         - 2303
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2303
   type: LightTube
   components:
@@ -17378,8 +17108,6 @@ entities:
         - 2305
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2305
   type: LightTube
   components:
@@ -17400,8 +17128,6 @@ entities:
         - 2307
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2307
   type: LightTube
   components:
@@ -17422,8 +17148,6 @@ entities:
         - 2309
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2309
   type: LightTube
   components:
@@ -17444,8 +17168,6 @@ entities:
         - 1754
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2311
   type: solid_wall
   components:
@@ -17882,8 +17604,6 @@ entities:
         - 2363
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2363
   type: LightTube
   components:
@@ -17903,8 +17623,6 @@ entities:
         - 2365
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2365
   type: LightTube
   components:
@@ -17925,8 +17643,6 @@ entities:
         - 2367
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2367
   type: LightTube
   components:
@@ -17947,8 +17663,6 @@ entities:
         - 2369
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2369
   type: LightTube
   components:
@@ -18080,8 +17794,6 @@ entities:
         - 2384
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2384
   type: LightTube
   components:
@@ -18267,8 +17979,6 @@ entities:
         - 2409
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2409
   type: LightTube
   components:
@@ -18288,8 +17998,6 @@ entities:
         - 2411
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2411
   type: LightTube
   components:
@@ -18310,8 +18018,6 @@ entities:
         - 2413
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2413
   type: LightTube
   components:
@@ -18337,8 +18043,6 @@ entities:
         - 2414
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2416
   type: Poweredlight
   components:
@@ -18354,8 +18058,6 @@ entities:
         - 2417
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2417
   type: LightTube
   components:
@@ -18376,8 +18078,6 @@ entities:
         - 2419
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2419
   type: LightTube
   components:
@@ -18398,8 +18098,6 @@ entities:
         - 2421
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2421
   type: LightTube
   components:
@@ -18419,8 +18117,6 @@ entities:
         - 2423
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2423
   type: LightBulb
   components:
@@ -18451,8 +18147,6 @@ entities:
         - 2425
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2427
   type: Poweredlight
   components:
@@ -18467,8 +18161,6 @@ entities:
         - 2428
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2428
   type: LightTube
   components:
@@ -18489,8 +18181,6 @@ entities:
         - 2430
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2430
   type: LightTube
   components:
@@ -18511,8 +18201,6 @@ entities:
         - 2432
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2432
   type: LightTube
   components:
@@ -18533,8 +18221,6 @@ entities:
         - 2434
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2434
   type: LightTube
   components:
@@ -18580,8 +18266,6 @@ entities:
         - 2438
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2440
   type: Table
   components:
@@ -18737,8 +18421,6 @@ entities:
         - 2462
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2462
   type: LightTube
   components:
@@ -20129,8 +19811,6 @@ entities:
         - 2654
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2654
   type: LightTube
   components:
@@ -20151,8 +19831,6 @@ entities:
         - 2656
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2656
   type: LightTube
   components:
@@ -20173,8 +19851,6 @@ entities:
         - 2658
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2658
   type: LightBulb
   components:
@@ -20195,8 +19871,6 @@ entities:
         - 2660
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2660
   type: LightTube
   components:
@@ -20545,8 +20219,6 @@ entities:
         - 2709
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2709
   type: LightTube
   components:
@@ -20567,8 +20239,6 @@ entities:
         - 2711
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2711
   type: LightTube
   components:
@@ -23136,8 +22806,6 @@ entities:
         - 2978
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2978
   type: LightTube
   components:
@@ -23158,8 +22826,6 @@ entities:
         - 2980
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2980
   type: LightTube
   components:
@@ -23180,8 +22846,6 @@ entities:
         - 2982
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 2982
   type: LightTube
   components:
