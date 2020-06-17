@@ -5,6 +5,8 @@ using Content.Server.Mobs;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -18,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystem;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
@@ -27,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         [ViewVariables] public IEntity BuckledTo => _buckledTo;
 
-        public void BuckleEffect()
+        private void BuckleStatus()
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
@@ -75,6 +78,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                     continue;
                 }
 
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
                 _buckledTo = intersect;
                 Owner.Transform.GridPosition = intersect.Transform.GridPosition;
                 Owner.Transform.AttachParent(intersect.Transform);
@@ -89,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                 }
 
-                BuckleEffect();
+                BuckleStatus();
 
                 return true;
             }
@@ -106,6 +111,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
+            if (_buckledTo.TryGetComponent(out StrapComponent strap))
+            {
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(strap.UnbuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+            }
+
             _buckledTo = null;
             Owner.Transform.DetachParent();
             StandingStateHelper.Standing(Owner);
@@ -115,7 +126,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 species.CurrentDamageState.EnterState(Owner);
             }
 
-            BuckleEffect();
+            BuckleStatus();
 
             return true;
         }
@@ -135,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         protected override void Startup()
         {
             base.Startup();
-            BuckleEffect();
+            BuckleStatus();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
