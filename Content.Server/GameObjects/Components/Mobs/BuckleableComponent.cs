@@ -92,6 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 _buckledTo = intersect.Owner;
                 Owner.Transform.GridPosition = intersect.Owner.Transform.GridPosition;
                 Owner.Transform.AttachParent(intersect.Owner.Transform);
+                Owner.Transform.WorldRotation = intersect.Owner.Transform.WorldRotation;
 
                 switch (intersect.Position)
                 {
