@@ -1,9 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Movement;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
-using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -13,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleableComponent : Component, IActionBlocker, IInteractHand, IMoveSpeedModifier
+    public class BuckleableComponent : Component, IActionBlocker, IInteractHand
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
@@ -25,8 +26,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         private IEntity _buckledTo;
 
         [ViewVariables] public IEntity BuckledTo => _buckledTo;
-        public float WalkSpeedModifier => BuckledTo == null ? 1f : 0f;
-        public float SprintSpeedModifier => BuckledTo == null ? 1f : 0f;
 
         private bool TryBuckle(IEntity user)
         {
@@ -65,6 +64,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
 
                 _buckledTo = intersect;
+                Owner.Transform.GridPosition = intersect.Transform.GridPosition;
+                Owner.Transform.AttachParent(intersect.Transform);
                 return true;
             }
 
@@ -81,6 +82,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             _buckledTo = null;
+            Owner.Transform.DetachParent();
             return true;
         }
 
@@ -90,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             return TryBuckle(user);
         }
 
-        private bool ToggleBuckle(IEntity user)
+        public bool ToggleBuckle(IEntity user)
         {
             if (BuckledTo == null)
             {
@@ -102,13 +104,13 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             _buckledTo = null;
             return true;
         }
 
-        public bool CanMove()
+        bool IActionBlocker.CanMove()
         {
             return BuckledTo == null;
         }
