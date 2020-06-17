@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     {
         public override string Name => "WeaponCapacitorCharger";
         public override double CellChargePercent => _container.ContainedEntity != null ?
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().Charge /
+            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().CurrentCharge /
             _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().MaxCharge * 100 : 0.0f;
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
 
             if (_container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent component) &&
-                Math.Abs(component.MaxCharge - component.Charge) < 0.01)
+                Math.Abs(component.MaxCharge - component.CurrentCharge) < 0.01)
             {
                 return CellChargerStatus.Charged;
             }
@@ -159,11 +159,11 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             var chargeAmount = chargeLoss * _transferEfficiency;
 
-            weaponCapacitorComponent.AddCharge(chargeAmount);
+            weaponCapacitorComponent.CurrentCharge += chargeAmount;
             // Just so the sprite won't be set to 99.99999% visibility
-            if (weaponCapacitorComponent.MaxCharge - weaponCapacitorComponent.Charge < 0.01)
+            if (weaponCapacitorComponent.MaxCharge - weaponCapacitorComponent.CurrentCharge < 0.01)
             {
-                weaponCapacitorComponent.Charge = weaponCapacitorComponent.MaxCharge;
+                weaponCapacitorComponent.CurrentCharge = weaponCapacitorComponent.MaxCharge;
             }
             UpdateStatus();
         }

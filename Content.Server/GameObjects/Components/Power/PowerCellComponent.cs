@@ -12,38 +12,22 @@ namespace Content.Server.GameObjects.Components.Power
 
         private AppearanceComponent _appearance;
 
-        public virtual float Charge
-        {
-            get => CurrentCharge;
-            set
-            {
-                CurrentCharge = value;
-                UpdateAppearance();
-            }
-        }
-
         public override void Initialize()
         {
             base.Initialize();
-
             Owner.TryGetComponent(out _appearance);
+            UpdateVisuals();
         }
 
-        public void DeductCharge(float toDeduct)
+        protected override void OnChargeChanged()
         {
-            CurrentCharge -= toDeduct;
-            UpdateAppearance();
+            base.OnChargeChanged();
+            UpdateVisuals();
         }
 
-        public void AddCharge(float charge)
+        private void UpdateVisuals()
         {
-            CurrentCharge += charge;
-            UpdateAppearance();
-        }
-
-        private void UpdateAppearance()
-        {
-            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / MaxCharge);
+            _appearance?.SetData(PowerCellVisuals.ChargeLevel, CurrentCharge / MaxCharge);
         }
     }
 }

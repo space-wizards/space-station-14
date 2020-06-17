@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 
         private void Fire(IEntity user, GridCoordinates clickLocation)
         {
-            if (capacitorComponent.Charge < _lowerChargeLimit)
+            if (capacitorComponent.CurrentCharge < _lowerChargeLimit)
             {//If capacitor has less energy than the lower limit, do nothing
                 return;
             }

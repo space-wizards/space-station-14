@@ -75,6 +75,7 @@ namespace Content.Server.GameObjects.Components.Power
             _maxCharge = Math.Max(newMax, 0);
             _currentCharge = Math.Min( _currentCharge, MaxCharge);
             UpdateStorageState();
+            OnChargeChanged();
         }
 
         private void SetCurrentCharge(float newChargeAmount)
@@ -82,7 +83,10 @@ namespace Content.Server.GameObjects.Components.Power
             var oldCharge = _currentCharge;
             _currentCharge = FloatMath.Clamp(newChargeAmount, 0, MaxCharge);
             UpdateStorageState();
+            OnChargeChanged();
         }
+
+        protected virtual void OnChargeChanged() { }
 
         //Temp refactor trash
         private float _wattage = 1;

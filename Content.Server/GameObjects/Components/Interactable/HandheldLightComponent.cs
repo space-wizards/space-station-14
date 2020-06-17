@@ -230,7 +230,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return new HandheldLightComponentState(0);
             }
 
-            return new HandheldLightComponentState(Cell.Charge / Cell.MaxCharge);
+            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge);
         }
 
         [Verb]

@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     {
         public override string Name => "PowerCellCharger";
         public override double CellChargePercent => _container.ContainedEntity != null ?
-            _container.ContainedEntity.GetComponent<PowerCellComponent>().Charge /
+            _container.ContainedEntity.GetComponent<PowerCellComponent>().CurrentCharge /
             _container.ContainedEntity.GetComponent<PowerCellComponent>().MaxCharge * 100 : 0.0f;
 
         public override void Initialize()
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
 
             if (_container.ContainedEntity.TryGetComponent(out PowerCellComponent component) &&
-                Math.Abs(component.MaxCharge - component.Charge) < 0.01)
+                Math.Abs(component.MaxCharge - component.CurrentCharge) < 0.01)
             {
                 return CellChargerStatus.Charged;
             }
@@ -175,11 +175,11 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             var chargeAmount = chargeLoss * _transferEfficiency;
 
-            cellComponent.AddCharge(chargeAmount);
+            cellComponent.CurrentCharge += chargeAmount;
             // Just so the sprite won't be set to 99.99999% visibility
-            if (cellComponent.MaxCharge - cellComponent.Charge < 0.01)
+            if (cellComponent.MaxCharge - cellComponent.CurrentCharge < 0.01)
             {
-                cellComponent.Charge = cellComponent.MaxCharge;
+                cellComponent.CurrentCharge = cellComponent.MaxCharge;
             }
             UpdateStatus();
         }

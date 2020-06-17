@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 else
                     stunnable.Slowdown(_slowdownTime);
             }
-            if(cell.Charge < EnergyPerUse)
+            if(cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 TurnOff();
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return;
             }
 
-            if (cell.Charge < EnergyPerUse)
+            if (cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));

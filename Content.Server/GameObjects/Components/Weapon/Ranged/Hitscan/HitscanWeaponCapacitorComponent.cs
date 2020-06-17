@@ -1,9 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Power;
-using Content.Shared.GameObjects.Components.Power;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
 {
@@ -11,39 +8,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
     [ComponentReference(typeof(BatteryComponent))]
     public class HitscanWeaponCapacitorComponent : PowerCellComponent
     {
-        private AppearanceComponent _appearance;
-
         public override string Name => "HitscanWeaponCapacitor";
-
-        public override float Charge
-        {
-            get => base.Charge;
-            set
-            {
-                base.Charge = value;
-                UpdateAppearance();
-            }
-        }
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-        }
 
         public override void Initialize()
         {
             base.Initialize();
-
-            Charge = MaxCharge;
-            Owner.TryGetComponent(out _appearance);
-
+            CurrentCharge = MaxCharge;
         }
 
         public float GetChargeFrom(float toDeduct)
         {
-            var chargeChangedBy = Math.Min(Charge, toDeduct);
-            this.DeductCharge(chargeChangedBy);
-            UpdateAppearance();
+            var chargeChangedBy = Math.Min(CurrentCharge, toDeduct);
+            CurrentCharge -= chargeChangedBy;
             return chargeChangedBy;
         }
 
@@ -52,21 +28,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             var capacitorPowerDeficit = MaxCharge - CurrentCharge;
             if (battery.TryUseCharge(capacitorPowerDeficit))
             {
-                AddCharge(capacitorPowerDeficit);
+                CurrentCharge += capacitorPowerDeficit;
             }
             else
             {
-                AddCharge(battery.CurrentCharge);
+                CurrentCharge += battery.CurrentCharge;
                 battery.CurrentCharge = 0;
             }
-            UpdateAppearance();
-        }
-
-        private void UpdateAppearance()
-        {
-            _appearance?.SetData(PowerCellVisuals.ChargeLevel, Charge / MaxCharge);
         }
     }
-
-
 }
