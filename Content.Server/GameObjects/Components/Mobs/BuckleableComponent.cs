@@ -55,6 +55,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
+            // Find the first entity with a strap component to buckle the owner to
             var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
             foreach (var intersect in intersecting)
             {
@@ -106,8 +107,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            _buckledTo = null;
-            return true;
+            return TryUnbuckle();
         }
 
         bool IActionBlocker.CanMove()
