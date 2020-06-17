@@ -69,25 +69,16 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private bool _boltLights = true;
-        private bool BoltLightsOn
+        private bool _boltLightsWirePulsed = true;
+        private bool BoltLightsVisible
         {
-            get => _boltLights;
+            get => _boltLightsWirePulsed && BoltsDown && IsPowered() && State == DoorState.Closed;
             set
             {
-                _boltLights = value;
+                _boltLightsWirePulsed = value;
                 UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
-        }
-
-        protected override void SetAppearance(DoorVisualState state)
-        {
-            if (state == DoorVisualState.Closed && BoltsDown && BoltLightsOn)
-            {
-                state = DoorVisualState.Light;
-            }
-            base.SetAppearance(state);
         }
 
         private void UpdateWiresStatus()
@@ -104,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             var boltStatus = new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
-            var boltLightsStatus = new StatusLightData(Color.Lime, BoltLightsOn ? StatusLightState.On : StatusLightState.Off, "BLTL");
+            var boltLightsStatus = new StatusLightData(Color.Lime, _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
@@ -130,12 +121,9 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdateBoltLightStatus()
         {
-            if (State == DoorState.Closed) //only shown when door is closed
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                if (BoltsDown)
-                    SetAppearance(BoltLightsOn ? DoorVisualState.Light : DoorVisualState.Closed);
-                else
-                    SetAppearance(DoorVisualState.Closed);
+                appearance.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
         }
 
@@ -146,6 +134,8 @@ namespace Content.Server.GameObjects.Components.Doors
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed
                 _wires.IsPanelVisible = value != DoorState.Open;
+                // If the door is closed, we should look if the bolt was locked while closing
+                UpdateBoltLightStatus();
             }
         }
 
@@ -164,6 +154,8 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 appearance.SetData(DoorVisuals.Powered, e.Powered);
             }
+            // BoltLights also got out
+            UpdateBoltLightStatus();
         }
 
         protected override void ActivateImpl(ActivateEventArgs args)
@@ -216,7 +208,7 @@ namespace Content.Server.GameObjects.Components.Doors
             builder.CreateWire(Wires.BoltLight);
             builder.CreateWire(4);
             builder.CreateWire(5);
-            /*builder.CreateWire(5);
+            /*
             builder.CreateWire(6);
             builder.CreateWire(7);
             builder.CreateWire(8);
@@ -248,14 +240,15 @@ namespace Content.Server.GameObjects.Components.Doors
                         }
                         else
                         {
-                            if (IsPowered())
+                            if (IsPowered()) // only raise again if powered
                             {
                                 BoltsDown = false;
                             }
                         }
                         break;
                     case Wires.BoltLight:
-                        BoltLightsOn = !BoltLightsOn;
+                        // we need to change the property here to set the appearance again
+                        BoltLightsVisible = !_boltLightsWirePulsed;
                         break;
                 }
             }
@@ -271,7 +264,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         PowerWiresPulsed = false;
                         break;
                     case Wires.BoltLight:
-                        BoltLightsOn = true;
+                        BoltLightsVisible = true;
                         break;
                 }
             }
@@ -284,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         BoltsDown = true;
                         break;
                     case Wires.BoltLight:
-                        BoltLightsOn = false;
+                        BoltLightsVisible = false;
                         break;
                 }
             }

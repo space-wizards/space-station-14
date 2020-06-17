@@ -19,7 +19,6 @@ namespace Content.Client.GameObjects.Components.Doors
         private Animation CloseAnimation;
         private Animation OpenAnimation;
         private Animation DenyAnimation;
-        private Animation LightAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -84,14 +83,6 @@ namespace Content.Client.GameObjects.Components.Doors
                 DenyAnimation.AnimationTracks.Add(sound);
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
             }
-
-            LightAnimation = new Animation { Length = TimeSpan.FromSeconds(0.3f) };
-            {
-                var flick = new AnimationTrackSpriteFlick();
-                LightAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = DoorVisualLayers.BaseUnlit;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
-            }
         }
 
         public override void InitializeEntity(IEntity entity)
@@ -112,11 +103,13 @@ namespace Content.Client.GameObjects.Components.Doors
             }
 
             var unlitVisible = true;
+            var boltedVisible = false;
             switch (state)
             {
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
                     sprite.LayerSetState(WiresVisualizer2D.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Closing:
@@ -141,12 +134,6 @@ namespace Content.Client.GameObjects.Components.Doors
                         animPlayer.Play(DenyAnimation, AnimationKey);
                     }
                     break;
-                case DoorVisualState.Light:
-                    if (!animPlayer.HasRunningAnimation(AnimationKey))
-                    {
-                        animPlayer.Play(LightAnimation, AnimationKey);
-                    }
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -155,14 +142,20 @@ namespace Content.Client.GameObjects.Components.Doors
             {
                 unlitVisible = false;
             }
+            if (component.TryGetData(DoorVisuals.BoltLights, out bool lights) && lights)
+            {
+                boltedVisible = true;
+            }
 
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+            sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, boltedVisible);
         }
     }
 
     public enum DoorVisualLayers
     {
         Base,
-        BaseUnlit
+        BaseUnlit,
+        BaseBolted
     }
 }

@@ -8,7 +8,8 @@ namespace Content.Shared.GameObjects.Components.Doors
     public enum DoorVisuals
     {
         VisualState,
-        Powered
+        Powered,
+        BoltLights
     }
 
     [NetSerializable]
@@ -20,6 +21,5 @@ namespace Content.Shared.GameObjects.Components.Doors
         Open,
         Closing,
         Deny,
-        Light,
     }
 }
