@@ -167,6 +167,8 @@ namespace Content.Client
                 "SecureEntityStorage",
                 "PresetIdCard",
                 "SolarControlConsole",
+                "Buckleable",
+                "Strap"
             };
 
             foreach (var ignoreName in registerIgnore)

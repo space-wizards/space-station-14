@@ -68,6 +68,7 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: chair
+  - type: Strap
 
 - type: entity
   name: wooden chair

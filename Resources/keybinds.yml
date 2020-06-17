@@ -250,3 +250,7 @@ binds:
   type: state
   key: Tab
   mod1: Shift
+- function: BuckleEntity
+  type: state
+  key: V
+  mod1: Shift
