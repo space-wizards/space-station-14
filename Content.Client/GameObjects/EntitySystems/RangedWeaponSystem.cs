@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!_mapManager.TryFindGridAt(worldPos, out var grid))
                 grid = _mapManager.GetDefaultGrid(worldPos.MapId);
 
-            weapon.SyncFirePos(worldPos);
+            weapon.SyncFirePos(grid.MapToGrid(worldPos));
         }
     }
 }
