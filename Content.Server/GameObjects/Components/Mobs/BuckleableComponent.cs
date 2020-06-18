@@ -30,7 +30,21 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private IEntity _buckledTo;
 
-        [ViewVariables] public IEntity BuckledTo => _buckledTo;
+        [ViewVariables]
+        public IEntity BuckledTo
+        {
+            get => _buckledTo;
+            set
+            {
+                var old = value ?? _buckledTo;
+                _buckledTo = value;
+
+                if (old != null && old.TryGetComponent(out StrapComponent strap))
+                {
+                    strap.BuckledEntity = value == null ? null : Owner;
+                }
+            }
+        }
 
         private void BuckleStatus()
         {
@@ -95,9 +109,16 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
+            if (strap.BuckledEntity != null)
+            {
+                _notifyManager.PopupMessage(Owner, user,
+                    Loc.GetString("Someone is already buckled there!"));
+                return false;
+            }
+
             _entitySystem.GetEntitySystem<AudioSystem>()
                 .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
-            _buckledTo = strap.Owner;
+            BuckledTo = strap.Owner;
 
             var ownTransform = Owner.Transform;
             var closestTransform = strap.Owner.Transform;
@@ -154,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             Owner.Transform.DetachParent();
             Owner.Transform.WorldRotation = _buckledTo.Transform.WorldRotation;
-            _buckledTo = null;
+            BuckledTo = null;
             StandingStateHelper.Standing(Owner);
 
             if (Owner.TryGetComponent(out SpeciesComponent species))
@@ -169,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool ToggleBuckle(IEntity user, IEntity to)
         {
-            if (BuckledTo == null)
+            if (_buckledTo == null)
             {
                 return TryBuckle(user, to);
             }
@@ -205,13 +226,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             protected override void GetData(IEntity user, BuckleableComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(component.Owner))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component.BuckledTo == null)
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    component.BuckledTo == null)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

@@ -20,6 +20,11 @@ namespace Content.Server.GameObjects.Components.Strap
         private string _unbuckleSound;
 
         /// <summary>
+        /// The entity that is currently buckled here, synced from <see cref="BuckleableComponent.BuckledTo"/>
+        /// </summary>
+        public IEntity BuckledEntity = null;
+
+        /// <summary>
         /// The change in position to the strapped mob
         /// </summary>
         public override StrapPosition Position
@@ -58,22 +63,13 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             protected override void GetData(IEntity user, StrapComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(component.Owner))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (!user.TryGetComponent(out BuckleableComponent buckle))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
                 var strapPosition = component.Owner.Transform.MapPosition;
                 var range = SharedInteractionSystem.InteractionRange / 2;
 
-                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+                if (!ActionBlockerSystem.CanInteract(component.Owner) ||
+                    !user.TryGetComponent(out BuckleableComponent buckle) ||
+                    buckle.BuckledTo != null && buckle.BuckledTo != component.Owner ||
+                    !InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
