@@ -2,8 +2,11 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
+using Content.Server.Utility;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -19,7 +22,6 @@ namespace Content.Server.GameObjects.Components.Mobs
     public class BuckleableComponent : Component, IActionBlocker, IInteractHand
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IEntitySystemManager _entitySystem;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
@@ -45,6 +47,23 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             if (user == null)
             {
+                return false;
+            }
+
+            if (!ActionBlockerSystem.CanInteract(user))
+            {
+                _notifyManager.PopupMessage(user, user,
+                    Loc.GetString("You can't do that!"));
+                return false;
+            }
+
+            var strapPosition = Owner.Transform.MapPosition;
+            var range = SharedInteractionSystem.InteractionRange / 2;
+
+            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+            {
+                _notifyManager.PopupMessage(user, user,
+                    Loc.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -103,10 +122,27 @@ namespace Content.Server.GameObjects.Components.Mobs
             return true;
         }
 
-        public bool TryUnbuckle()
+        public bool TryUnbuckle(IEntity user)
         {
             if (_buckledTo == null)
             {
+                return false;
+            }
+
+            if (!ActionBlockerSystem.CanInteract(user))
+            {
+                _notifyManager.PopupMessage(user, user,
+                    Loc.GetString("You can't do that!"));
+                return false;
+            }
+
+            var strapPosition = Owner.Transform.MapPosition;
+            var range = SharedInteractionSystem.InteractionRange / 2;
+
+            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+            {
+                _notifyManager.PopupMessage(user, user,
+                    Loc.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -139,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
             else
             {
-                return TryUnbuckle();
+                return TryUnbuckle(user);
             }
         }
 
@@ -151,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            return TryUnbuckle();
+            return TryUnbuckle(eventArgs.User);
         }
 
         bool IActionBlocker.CanMove()
@@ -162,6 +198,32 @@ namespace Content.Server.GameObjects.Components.Mobs
         bool IActionBlocker.CanChangeDirection()
         {
             return BuckledTo == null;
+        }
+
+        [Verb]
+        private sealed class BuckleVerb : Verb<BuckleableComponent>
+        {
+            protected override void GetData(IEntity user, BuckleableComponent component, VerbData data)
+            {
+                if (!ActionBlockerSystem.CanInteract(component.Owner))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                if (component.BuckledTo == null)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                data.Text = Loc.GetString("Unbuckle");
+            }
+
+            protected override void Activate(IEntity user, BuckleableComponent component)
+            {
+                component.TryUnbuckle(user);
+            }
         }
     }
 }

@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                                 break;
                             }
 
-                            buckleable.TryUnbuckle();
+                            buckleable.TryUnbuckle(player);
                             break;
                     }
 

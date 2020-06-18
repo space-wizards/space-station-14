@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Strap;
@@ -58,8 +58,15 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             protected override void GetData(IEntity user, StrapComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(component.Owner))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (!user.TryGetComponent(out BuckleableComponent buckle))
                 {
+                    data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
@@ -69,6 +76,7 @@ namespace Content.Server.GameObjects.Components.Strap
                 if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
                 {
                     data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
 
                 data.Text = buckle.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
