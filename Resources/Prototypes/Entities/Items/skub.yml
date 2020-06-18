@@ -18,7 +18,7 @@
 
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/skub.ogg
+    sound: /Audio/Items/skub.ogg
 
   - type: UseDelay
     delay: 2.0

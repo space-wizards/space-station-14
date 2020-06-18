@@ -3,12 +3,14 @@
   parent: LockerSecureBase
   name: "botanist's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/hydro.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: hydro
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/hydro.rsi
     state: hydro_door
 
 

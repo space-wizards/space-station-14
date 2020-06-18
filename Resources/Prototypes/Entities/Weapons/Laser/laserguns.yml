@@ -6,10 +6,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Laser/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Laser/laser_retro.rsi
     state: laser_retro_100
   - type: Icon
-    sprite: Objects/Guns/Laser/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Laser/laser_retro.rsi
     state: laser_retro_100
   - type: RangedWeapon
   - type: HitscanWeapon
@@ -21,7 +21,7 @@
     capacity: 1200
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Laser/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Laser/laser_retro.rsi
     prefix: laser_retro_100
   - type: Appearance
     visuals:
@@ -37,10 +37,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Laser/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Laser/laser_cannon.rsi
     state: laser_cannon_100
   - type: Icon
-    sprite: Objects/Guns/Laser/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Laser/laser_cannon.rsi
     state: laser_cannon_100
   - type: HitscanWeapon
     damage: 90
@@ -51,7 +51,7 @@
     capacity: 2400
   - type: Item
     Size: 32
-    sprite: Objects/Guns/Laser/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Laser/laser_cannon.rsi
     prefix: laser_cannon_100
   - type: Appearance
     visuals:

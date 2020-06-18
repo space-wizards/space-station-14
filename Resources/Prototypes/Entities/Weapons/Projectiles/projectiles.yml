@@ -8,10 +8,10 @@
   - type: Clickable
   - type: Sprite
     directional: false
-    texture: Objects/Projectiles/bullet.png
+    texture: Objects/Weapons/Guns/Projectiles/bullet.png
     #rotation: -180
   - type: Icon
-    texture: Objects/Projectiles/bullet.png
+    texture: Objects/Weapons/Guns/Projectiles/bullet.png
   - type: Collidable
     hard: false
     shapes:

@@ -30,10 +30,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     state: l6-4
   - type: Icon
-    sprite: Objects/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     state: l6-4
   - type: RangedWeapon
     spreadstddev: 30
@@ -51,7 +51,7 @@
       steps: 5
   - type: Item
     Size: 24
-    sprite: Objects/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
 
 - type: entity
   name: PK
@@ -61,10 +61,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/LMGs/pk.rsi
+    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
     state: pk-4
   - type: Icon
-    sprite: Objects/Guns/LMGs/pk.rsi
+    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
     state: pk-4
   - type: RangedWeapon
     spreadstddev: 10
@@ -82,4 +82,4 @@
       steps: 5
   - type: Item
     Size: 24
-    sprite: Objects/Guns/LMGs/pk.rsi
+    sprite: Objects/Weapons/Guns/LMGs/pk.rsi

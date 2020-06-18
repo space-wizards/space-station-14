@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (!Activated || entities.Count == 0 || cell == null || !cell.CanDeductCharge(EnergyPerUse))
                 return false;
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell == null)
             {
-                EntitySystem.Get<AudioSystem>().Play("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().Play("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell.Charge < EnergyPerUse)
             {
-                EntitySystem.Get<AudioSystem>().Play("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().Play("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -192,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magin.ogg");
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Items/Weapons/pistol_magin.ogg");
 
             Dirty();
 
@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Items/Weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

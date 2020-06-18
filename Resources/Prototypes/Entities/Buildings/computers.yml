@@ -19,7 +19,7 @@
       - VaultImpassable
       - Opaque
   - type: Icon
-    sprite: Buildings/computer.rsi
+    sprite: Constructible/Power/computers.rsi
     state: computer
   - type: Computer
   - type: PowerDevice
@@ -27,7 +27,7 @@
   - type: Anchorable
 
   - type: Sprite
-    sprite: Buildings/computer.rsi
+    sprite: Constructible/Power/computers.rsi
     layers:
     - state: computer
       map: ["enum.ComputerVisualizer2D+Layers.Body"]

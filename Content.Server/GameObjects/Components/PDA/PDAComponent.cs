@@ -222,7 +222,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _lightOn = !_lightOn;
             _pdaLight.Enabled = _lightOn;
-            EntitySystem.Get<AudioSystem>().Play("/Audio/items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -241,7 +241,7 @@ namespace Content.Server.GameObjects.Components.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Machines/machine_switch.ogg", Owner);
             UpdatePDAUserInterface();
         }
 

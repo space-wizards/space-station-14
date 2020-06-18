@@ -5,14 +5,14 @@
   description: Literally just a dummy for a screenshot at this point, sorry!
   components:
   - type: Sprite
-    sprite: "Objects/Guns/Energy/taser.rsi"
+    sprite: "Objects/Weapons/Guns/Energy/taser.rsi"
     state: taser
 
   - type: Icon
-    sprite: "Objects/Guns/Energy/taser.rsi"
+    sprite: "Objects/Weapons/Guns/Energy/taser.rsi"
     state: taser
 
   - type: Item
-    sprite: "Objects/Guns/Energy/taser.rsi"
+    sprite: "Objects/Weapons/Guns/Energy/taser.rsi"
     HeldPrefix: taser2
 

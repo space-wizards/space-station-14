@@ -23,10 +23,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/a762_magazine.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/a762_magazine.rsi
     state: a762_magazine-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/a762_magazine.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/a762_magazine.rsi
     state: a762_magazine-1
   - type: Appearance
     visuals:
@@ -44,10 +44,10 @@
     caliber: A762mm
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AK_short_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AK_short_r.rsi
     state: AK_short_r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AK_short_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AK_short_r.rsi
     state: AK_short_r-1
   - type: Appearance
     visuals:
@@ -65,10 +65,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag.rsi
     state: AKMag-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag.rsi
     state: AKMag-1
   - type: Appearance
     visuals:
@@ -86,10 +86,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_f.rsi
     state: AKMag_f-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_f.rsi
     state: AKMag_f-1
   - type: Appearance
     visuals:
@@ -107,10 +107,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_hv.rsi
     state: AKMag_hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_hv.rsi
     state: AKMag_hv-1
   - type: Appearance
     visuals:
@@ -128,10 +128,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_l.rsi
     state: AKMag_l-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_l.rsi
     state: AKMag_l-1
   - type: Appearance
     visuals:
@@ -149,10 +149,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_p.rsi
     state: AKMag_p-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_p.rsi
     state: AKMag_p-1
   - type: Appearance
     visuals:
@@ -170,10 +170,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_r.rsi
     state: AKMag_r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/AKMag_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/AKMag_r.rsi
     state: AKMag_r-1
   - type: Appearance
     visuals:
@@ -191,10 +191,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762.rsi
     state: c762-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762.rsi
     state: c762-1
   - type: Appearance
     visuals:
@@ -212,10 +212,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762f.rsi
     state: c762f-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762f.rsi
     state: c762f-1
   - type: Appearance
     visuals:
@@ -233,10 +233,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762hv.rsi
     state: c762hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762hv.rsi
     state: c762hv-1
   - type: Appearance
     visuals:
@@ -254,10 +254,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762l.rsi
     state: c762l-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762l.rsi
     state: c762l-1
   - type: Appearance
     visuals:
@@ -275,10 +275,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762p.rsi
     state: c762p-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762p.rsi
     state: c762p-1
   - type: Appearance
     visuals:
@@ -296,10 +296,10 @@
     caliber: A762mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762r.rsi
     state: c762r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/c762r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/c762r.rsi
     state: c762r-1
   - type: Appearance
     visuals:
@@ -318,10 +318,10 @@
     magazine: Maxim
     capacity: 96
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/maxim.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/maxim.rsi
     state: maxim-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/maxim.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/maxim.rsi
     state: maxim-1
   - type: Appearance
     visuals:
@@ -339,10 +339,10 @@
     caliber: A762mm
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/pk_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/pk_box.rsi
     state: pk_box-4
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/7.62mm/pk_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/7.62mm/pk_box.rsi
     state: pk_box-4
   - type: Appearance
     visuals:
@@ -360,11 +360,11 @@
     caliber: A762mm
     projectile: bullet_762mm
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -376,11 +376,11 @@
     caliber: A762mm
     projectile: bullet_762mmf
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -392,11 +392,11 @@
     caliber: A762mm
     projectile: bullet_762mmhv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -408,11 +408,11 @@
     caliber: A762mm
     projectile: bullet_762mml
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -424,11 +424,11 @@
     caliber: A762mm
     projectile: bullet_762mmp
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -440,9 +440,9 @@
     caliber: A762mm
     projectile: bullet_762mmr
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

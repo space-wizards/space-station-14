@@ -22,7 +22,7 @@
   name: "autolathe"
   components:
   - type: Sprite
-    sprite: Buildings/autolathe.rsi
+    sprite: Constructible/Structures/autolathe.rsi
     layers:
     - state: autolathe
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -30,7 +30,7 @@
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
   - type: Icon
-    sprite: Buildings/autolathe.rsi
+    sprite: Constructible/Structures/autolathe.rsi
     state: autolathe
   - type: Collidable
     shapes:
@@ -69,7 +69,7 @@
   name: "protolathe"
   components:
   - type: Sprite
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/protolathe.rsi
     layers:
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.Base"]
@@ -79,7 +79,7 @@
     - state: protolathe
       map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
   - type: Icon
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/protolathe.rsi
     state: protolathe
   - type: Collidable
     shapes:

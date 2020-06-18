@@ -1,16 +1,18 @@
 # Base syndicate closet
 - type: entity
   id: LockerSyndicateBase
-  name: armory closet
   parent: LockerGeneric
+  name: armory closet
   abstract: true
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/syndicate.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: syndicate
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/syndicate.rsi
     state: syndicate_door
 
 # Personal syndicate closet
@@ -23,5 +25,5 @@
 # LockerSyndicatePersonal Filled
 - type: entity
   id: LockerSyndicatePersonalFilled
-  suffix: Filled
   parent: LockerSyndicatePersonal
+  suffix: Filled

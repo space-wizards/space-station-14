@@ -22,10 +22,10 @@
     caliber: A50
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50.rsi
     state: box50-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50.rsi
     state: box50-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A50
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50-flash.rsi
     state: box50-flash-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50-flash.rsi
     state: box50-flash-1
   - type: Appearance
     visuals:
@@ -66,10 +66,10 @@
     caliber: A50
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50-practice.rsi
     state: box50-practice-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50-practice.rsi
     state: box50-practice-1
   - type: Appearance
     visuals:
@@ -87,10 +87,10 @@
     caliber: A50
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50-rubber.rsi
     state: box50-rubber-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.50/box50-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.50/box50-rubber.rsi
     state: box50-rubber-1
   - type: Appearance
     visuals:

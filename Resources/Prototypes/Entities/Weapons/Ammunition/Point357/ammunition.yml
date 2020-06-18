@@ -23,11 +23,11 @@
 #    caliber: A357
 #    projectile: bullet_357
 #  - type: Sprite
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #    drawdepth: FloorObjects
 #  - type: Icon
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #
 #- type: entity
@@ -39,11 +39,11 @@
 #    caliber: A357
 #    projectile: bullet_357f
 #  - type: Sprite
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #    drawdepth: FloorObjects
 #  - type: Icon
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #
 #- type: entity
@@ -55,11 +55,11 @@
 #    caliber: A357
 #    projectile: bullet_357hv
 #  - type: Sprite
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #    drawdepth: FloorObjects
 #  - type: Icon
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #
 #- type: entity
@@ -71,11 +71,11 @@
 #    caliber: A357
 #    projectile: bullet_357l
 #  - type: Sprite
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #    drawdepth: FloorObjects
 #  - type: Icon
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #
 #- type: entity
@@ -87,11 +87,11 @@
 #    caliber: A357
 #    projectile: bullet_357p
 #  - type: Sprite
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #    drawdepth: FloorObjects
 #  - type: Icon
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #
 #- type: entity
@@ -103,9 +103,9 @@
 #    caliber: A357
 #    projectile: bullet_357r
 #  - type: Sprite
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing
 #    drawdepth: FloorObjects
 #  - type: Icon
-#    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+#    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
 #    state: s-casing

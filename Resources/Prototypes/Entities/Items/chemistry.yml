@@ -5,9 +5,9 @@
   id: Beaker
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/beaker.png
+    texture: Objects/Departmental/Chemistry/beakers.rsi/beaker.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/beaker.png
+    texture: Objects/Departmental/Chemistry/beakers.rsi/beaker.png
   - type: Solution
     fillingState: beaker
     maxVol: 50
@@ -22,9 +22,9 @@
   id: LargeBeaker
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
+    texture: Objects/Departmental/Chemistry/beakers.rsi/beakerlarge.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
+    texture: Objects/Departmental/Chemistry/beakers.rsi/beakerlarge.png
   - type: Solution
     fillingState: beakerlarge
     maxVol: 100
@@ -39,9 +39,9 @@
   id: Dropper
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/dropper.png
+    texture: Objects/Departmental/Chemistry/dropper.rsi/dropper.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/dropper.png
+    texture: Objects/Departmental/Chemistry/dropper.rsi/dropper.png
   - type: Solution
     fillingState: dropper
     fillingSteps: 2
@@ -57,9 +57,9 @@
   id: Syringe
   components:
   - type: Sprite
-    texture: Objects/Chemistry/syringe.rsi/0.png
+    texture: Objects/Departmental/Chemistry/syringe.rsi/0.png
   - type: Icon
-    texture: Objects/Chemistry/syringe.rsi/0.png
+    texture: Objects/Departmental/Chemistry/syringe.rsi/0.png
   - type: Solution
     fillingState: syringe
     fillingSteps: 5

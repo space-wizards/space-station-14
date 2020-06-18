@@ -6,10 +6,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: cross_blue
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: cross_blue
     - type: Marker
     - type: Clickable
@@ -27,10 +27,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_rifle
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_rifle
     - type: ConditionalSpawner
       prototypes:
@@ -54,10 +54,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_pistol
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_pistol
     - type: ConditionalSpawner
       prototypes:
@@ -82,10 +82,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_melee
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_melee
     - type: ConditionalSpawner
       prototypes:

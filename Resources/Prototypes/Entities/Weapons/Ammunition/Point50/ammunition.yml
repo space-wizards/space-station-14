@@ -22,10 +22,10 @@
     fill: ammo_casing_50
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50ae.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50ae.rsi
     state: 50ae-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50ae.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50ae.rsi
     state: 50ae-1
   - type: Appearance
     visuals:
@@ -42,10 +42,10 @@
     fill: ammo_casing_50_f
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aef.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aef.rsi
     state: 50aef-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aef.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aef.rsi
     state: 50aef-1
   - type: Appearance
     visuals:
@@ -62,10 +62,10 @@
     fill: ammo_casing_50_hv
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aehv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aehv.rsi
     state: 50aehv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aehv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aehv.rsi
     state: 50aehv-1
   - type: Appearance
     visuals:
@@ -82,10 +82,10 @@
     fill: ammo_casing_50_l
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50ael.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50ael.rsi
     state: 50ael-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50ael.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50ael.rsi
     state: 50ael-1
   - type: Appearance
     visuals:
@@ -102,10 +102,10 @@
     fill: ammo_casing_50_p
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aep.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aep.rsi
     state: 50aep-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aep.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aep.rsi
     state: 50aep-1
   - type: Appearance
     visuals:
@@ -122,10 +122,10 @@
     fill: ammo_casing_50_r
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aer.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aer.rsi
     state: 50aer-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.50/50aer.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.50/50aer.rsi
     state: 50aer-1
   - type: Appearance
     visuals:
@@ -143,11 +143,11 @@
     caliber: A50
     projectile: bullet_50
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -159,11 +159,11 @@
     caliber: A50
     projectile: bullet_50f
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -175,11 +175,11 @@
     caliber: A50
     projectile: bullet_50hv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -191,11 +191,11 @@
     caliber: A50
     projectile: bullet_50l
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -207,11 +207,11 @@
     caliber: A50
     projectile: bullet_50p
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -223,9 +223,9 @@
     caliber: A50
     projectile: bullet_50r
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

@@ -25,9 +25,9 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/golden_cup.rsi
+    sprite: Objects/Consumable/Drinks/golden_cup.rsi
   - type: Icon
-    sprite: Objects/Drinks/golden_cup.rsi
+    sprite: Objects/Consumable/Drinks/golden_cup.rsi
 
 - type: entity
   parent: DrinkBaseCup
@@ -38,10 +38,10 @@
   - type: Solution
     maxVol: 15
   - type: Sprite
-    sprite: Objects/Drinks/pitcher.rsi
+    sprite: Objects/Consumable/Drinks/pitcher.rsi
     state: icon-6
   - type: Icon
-    sprite: Objects/Drinks/pitcher.rsi
+    sprite: Objects/Consumable/Drinks/pitcher.rsi
     state: icon-6
   - type: Appearance
     visuals:
@@ -57,10 +57,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug.rsi
+    sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug.rsi
+    sprite: Objects/Consumable/Drinks/mug.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -76,10 +76,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_black.rsi
+    sprite: Objects/Consumable/Drinks/mug_black.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_black.rsi
+    sprite: Objects/Consumable/Drinks/mug_black.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -95,10 +95,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_blue.rsi
+    sprite: Objects/Consumable/Drinks/mug_blue.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_blue.rsi
+    sprite: Objects/Consumable/Drinks/mug_blue.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -114,10 +114,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_green.rsi
+    sprite: Objects/Consumable/Drinks/mug_green.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_green.rsi
+    sprite: Objects/Consumable/Drinks/mug_green.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -133,10 +133,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_heart.rsi
+    sprite: Objects/Consumable/Drinks/mug_heart.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_heart.rsi
+    sprite: Objects/Consumable/Drinks/mug_heart.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -152,10 +152,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_metal.rsi
+    sprite: Objects/Consumable/Drinks/mug_metal.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_metal.rsi
+    sprite: Objects/Consumable/Drinks/mug_metal.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -171,10 +171,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_moebius.rsi
+    sprite: Objects/Consumable/Drinks/mug_moebius.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_moebius.rsi
+    sprite: Objects/Consumable/Drinks/mug_moebius.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -190,10 +190,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_one.rsi
+    sprite: Objects/Consumable/Drinks/mug_one.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_one.rsi
+    sprite: Objects/Consumable/Drinks/mug_one.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -209,10 +209,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_rainbow.rsi
+    sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_rainbow.rsi
+    sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -228,10 +228,10 @@
   - type: Solution
     maxVol: 10
   - type: Sprite
-    sprite: Objects/Drinks/mug_red.rsi
+    sprite: Objects/Consumable/Drinks/mug_red.rsi
     state: icon-3
   - type: Icon
-    sprite: Objects/Drinks/mug_red.rsi
+    sprite: Objects/Consumable/Drinks/mug_red.rsi
     state: icon-3
   - type: Appearance
     visuals:
@@ -246,9 +246,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/hot_coco.rsi
+    sprite: Objects/Consumable/Drinks/hot_coco.rsi
   - type: Icon
-    sprite: Objects/Drinks/hot_coco.rsi
+    sprite: Objects/Consumable/Drinks/hot_coco.rsi
 
 - type: entity
   parent: DrinkBaseCup
@@ -263,9 +263,9 @@
       - ReagentId: chem.Coffee
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/hot_coffee.rsi
+    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
   - type: Icon
-    sprite: Objects/Drinks/hot_coffee.rsi
+    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
 
 - type: entity
   parent: DrinkBaseCup
@@ -280,10 +280,10 @@
       - ReagentId: chem.Tea
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/teacup.rsi
+    sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-1
   - type: Icon
-    sprite: Objects/Drinks/teacup.rsi
+    sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-1
   - type: Appearance
     visuals:

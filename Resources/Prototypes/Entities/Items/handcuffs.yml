@@ -23,14 +23,14 @@
   parent: Handcuffs
   components:
   - type: Sprite
-    sprite: Objects/Misc/cablecuffs.rsi
+    sprite: Objects/Departmental/Security/cablecuffs.rsi
     state: cuff
     color: red
 
   - type: Icon
-    sprite: Objects/Misc/cablecuffs.rsi
+    sprite: Objects/Departmental/Security/cablecuffs.rsi
     state: cuff
 
   - type: Clothing
-    sprite: Objects/Misc/cablecuffs.rsi
+    sprite: Objects/Departmental/Security/cablecuffs.rsi
     Slots: [belt]

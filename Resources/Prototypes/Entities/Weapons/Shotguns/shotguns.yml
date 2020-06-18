@@ -29,10 +29,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     state: c20r-5
   - type: Icon
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     state: c20r-5
   - type: Appearance
     visuals:
@@ -41,4 +41,4 @@
       steps: 6
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi

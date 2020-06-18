@@ -26,10 +26,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
     state: clarissa-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
     state: clarissa-0
   - type: RangedWeapon
     spreadstddev: 3
@@ -48,7 +48,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
 
 - type: entity
   name: clarissa (silenced)
@@ -58,10 +58,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/clarissa_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa_s.rsi
     state: clarissa_s-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/clarissa_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa_s.rsi
     state: clarissa_s-0
   - type: RangedWeapon
     spreadstddev: 3
@@ -80,7 +80,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/clarissa_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa_s.rsi
 
 - type: entity
   name: Deagle
@@ -90,10 +90,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/deagle.rsi
+    sprite: Objects/Weapons/Guns/Pistols/deagle.rsi
     state: deagle-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/deagle.rsi
+    sprite: Objects/Weapons/Guns/Pistols/deagle.rsi
     state: deagle-0
   - type: RangedWeapon
     spreadstddev: 3
@@ -116,7 +116,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/deagle.rsi
+    sprite: Objects/Weapons/Guns/Pistols/deagle.rsi
 
 - type: entity
   name: Deckard
@@ -126,10 +126,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/deckard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/deckard.rsi
     state: deckard-2
   - type: Icon
-    sprite: Objects/Guns/Pistols/deckard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/deckard.rsi
     state: deckard-2
   - type: LoopingSound
   - type: RangedWeapon
@@ -151,7 +151,7 @@
       steps: 3
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/deckard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/deckard.rsi
 
 - type: entity
   name: giskard
@@ -161,10 +161,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/giskard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
     state: giskard-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/giskard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
     state: giskard-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -183,7 +183,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/giskard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
 
 - type: entity
   name: giskard (silenced)
@@ -193,10 +193,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/giskard_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard_s.rsi
     state: giskard_s-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/giskard_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard_s.rsi
     state: giskard_s-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -215,7 +215,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/giskard_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard_s.rsi
 
 - type: entity
   name: gyro pistol
@@ -225,10 +225,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/gyropistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/gyropistol.rsi
     state: gyropistol-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/gyropistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/gyropistol.rsi
     state: gyropistol-0
   - type: RangedWeapon
     spreadstddev: 0.5
@@ -252,7 +252,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/gyropistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/gyropistol.rsi
 
 - type: entity
   name: IH machine pistol
@@ -262,10 +262,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/ih_mp.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_mp.rsi
     state: ih_mp-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/ih_mp.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_mp.rsi
     state: ih_mp-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -286,7 +286,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/ih_mp.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_mp.rsi
 
 - type: entity
   name: IH machine pistol (silenced)
@@ -296,10 +296,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/ih_mp_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_mp_s.rsi
     state: ih_mp_s-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/ih_mp_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_mp_s.rsi
     state: ih_mp_s-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -320,7 +320,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/ih_mp_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_mp_s.rsi
 
 - type: entity
   name: IH sidearm
@@ -330,10 +330,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/ih_sidearm.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_sidearm.rsi
     state: ih_sidearm-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/ih_sidearm.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_sidearm.rsi
     state: ih_sidearm-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -353,7 +353,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/ih_sidearm.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_sidearm.rsi
 
 - type: entity
   name: IH sidearm (silenced)
@@ -363,10 +363,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/ih_sidearm_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_sidearm_s.rsi
     state: ih_sidearm_s-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/ih_sidearm_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_sidearm_s.rsi
     state: ih_sidearm_s-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -386,7 +386,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/ih_sidearm_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/ih_sidearm_s.rsi
 
 - type: entity
   name: lamia
@@ -396,10 +396,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/lamia.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
     state: lamia-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/lamia.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
     state: lamia-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -423,7 +423,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/lamia.rsi
+    sprite: Objects/Weapons/Guns/Pistols/lamia.rsi
 
 - type: entity
   name: makarov
@@ -433,10 +433,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/makarov.rsi
+    sprite: Objects/Weapons/Guns/Pistols/makarov.rsi
     state: makarov-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/makarov.rsi
+    sprite: Objects/Weapons/Guns/Pistols/makarov.rsi
     state: makarov-0
   - type: RangedWeapon
     spreadstddev: 3
@@ -455,7 +455,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/makarov.rsi
+    sprite: Objects/Weapons/Guns/Pistols/makarov.rsi
 
 - type: entity
   name: makarov (silenced)
@@ -465,10 +465,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/makarov_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/makarov_s.rsi
     state: makarov_s-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/makarov_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/makarov_s.rsi
     state: makarov_s-0
   - type: RangedWeapon
     spreadstddev: 3
@@ -487,7 +487,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/makarov_s.rsi
+    sprite: Objects/Weapons/Guns/Pistols/makarov_s.rsi
 
 - type: entity
   name: mk 58
@@ -497,10 +497,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/mk58.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: mk58-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/mk58.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: mk58-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -519,7 +519,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/mk58.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
 
 - type: entity
   name: mk 58 (wood)
@@ -529,10 +529,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/mk58_wood.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
     state: mk58_wood-1
   - type: Icon
-    sprite: Objects/Guns/Pistols/mk58_wood.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
     state: mk58_wood-1
   - type: RangedWeapon
     spreadstddev: 3
@@ -551,7 +551,7 @@
       steps: 2
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/mk58_wood.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
 
 - type: entity
   name: olivaw civil
@@ -561,10 +561,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/olivawcivil.rsi
+    sprite: Objects/Weapons/Guns/Pistols/olivawcivil.rsi
     state: olivawcivil-0
   - type: Icon
-    sprite: Objects/Guns/Pistols/olivawcivil.rsi
+    sprite: Objects/Weapons/Guns/Pistols/olivawcivil.rsi
     state: olivawcivil-0
   - type: RangedWeapon
     spreadstddev: 3
@@ -583,4 +583,4 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/olivawcivil.rsi
+    sprite: Objects/Weapons/Guns/Pistols/olivawcivil.rsi

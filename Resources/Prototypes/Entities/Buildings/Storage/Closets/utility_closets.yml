@@ -1,31 +1,34 @@
 # Tool closet
 - type: entity
   id: LockerTool
-  name: tool closet
   parent: LockerGeneric
+  name: tool closet
   description: "It's a storage unit for tools."
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/engineering.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: eng
       state_closed: eng_tool_door
   - type: Icon
+    sprite: Constructible/Storage/Closet/engineering.rsi
     state: eng_tool_door
 
 # Filled tool closet
 - type: entity
   id: LockerToolFilled
-  suffix: Filled
   parent: LockerTool
+  suffix: Filled
   components:
   - type: ToolLockerFill
 
 # Radiation suit closet
 - type: entity
   id: LockerRadiationSuit
+  parent: LockerTool
   name: radiation suit closet
-  parent: LockerGeneric
   description: "It's a storage unit for rad-protective suits."
   components:
   - type: Appearance
@@ -33,7 +36,6 @@
     - type: StorageVisualizer2D
       state: eng
       state_closed: eng_rad_door
-
   - type: Icon
     state: eng_rad_door
 
@@ -46,16 +48,18 @@
 # Emergency closet
 - type: entity
   id: LockerEmergency
-  name: emergency closet
   parent: LockerGeneric
+  name: emergency closet
   description: "It's a storage unit for emergency breath masks and O2 tanks."
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/emergency.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: emergency
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/emergency.rsi
     state: emergency_door
 
 # Filled random
@@ -69,16 +73,18 @@
 # Fire safety closet
 - type: entity
   id: LockerFire
-  name: fire-safety closet
   parent: LockerGeneric
+  name: fire-safety closet
   description: "It's a storage unit for fire-fighting supplies."
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/fire.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: fire
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/fire.rsi
     state: fire_door
 
 # Filled
@@ -90,16 +96,18 @@
 # EOD closet
 - type: entity
   id: LockerBomb
-  name: EOD closet
   parent: LockerGeneric
+  name: EOD closet
   description: "It's a storage unit for explosion-protective suits."
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/bomb.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bomb
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/bomb.rsi
     state: bomb_door
 
 # Filled

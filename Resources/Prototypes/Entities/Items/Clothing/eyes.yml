@@ -14,7 +14,7 @@
   description: The pinnacle of modern science, wallhacks in real life
   components:
   - type: Sprite
-    sprite: Clothing/meson_scanners.rsi
+    sprite: Clothing/Glasses/meson_scanners.rsi
     state: meson
   - type: Icon
     sprite: Clothing/Glasses/meson_scanners.rsi

@@ -1,0 +1,1 @@
+{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "draw", "directions": 1, "delays": [[1.0]]},{"name": "inject", "directions": 1, "delays": [[1.0]]}]}

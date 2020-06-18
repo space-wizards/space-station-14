@@ -24,10 +24,10 @@
     magazine: A12g
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/10mm/12mml.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/10mm/12mml.rsi
     state: 12mml-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/10mm/12mml.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/10mm/12mml.rsi
     state: 12mml-1
   - type: Appearance
     visuals:
@@ -46,9 +46,9 @@
     projectile: pellet_12g
     projectilesfired : 6
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

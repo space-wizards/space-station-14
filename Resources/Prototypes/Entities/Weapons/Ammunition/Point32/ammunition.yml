@@ -23,10 +23,10 @@
     caliber: A32
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma.rsi
     state: 32trauma-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma.rsi
     state: 32trauma-1
   - type: Appearance
     visuals:
@@ -44,10 +44,10 @@
     caliber: A32
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_f.rsi
     state: 32trauma_f-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_f.rsi
     state: 32trauma_f-1
   - type: Appearance
     visuals:
@@ -65,10 +65,10 @@
     caliber: A32
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_hv.rsi
     state: 32trauma_hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_hv.rsi
     state: 32trauma_hv-1
   - type: Appearance
     visuals:
@@ -86,10 +86,10 @@
     caliber: A32
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_l.rsi
     state: 32trauma_l-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_l.rsi
     state: 32trauma_l-1
   - type: Appearance
     visuals:
@@ -107,10 +107,10 @@
     caliber: A32
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_p.rsi
     state: 32trauma_p-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_p.rsi
     state: 32trauma_p-1
   - type: Appearance
     visuals:
@@ -128,10 +128,10 @@
     caliber: A32
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_r.rsi
     state: 32trauma_r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.32/32trauma_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.32/32trauma_r.rsi
     state: 32trauma_r-1
   - type: Appearance
     visuals:
@@ -149,11 +149,11 @@
     caliber: A32
     projectile: bullet_32
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -165,11 +165,11 @@
     caliber: A32
     projectile: bullet_32f
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -181,11 +181,11 @@
     caliber: A32
     projectile: bullet_32hv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -197,11 +197,11 @@
     caliber: A32
     projectile: bullet_32l
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -213,11 +213,11 @@
     caliber: A32
     projectile: bullet_32p
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -229,9 +229,9 @@
     caliber: A32
     projectile: bullet_32r
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

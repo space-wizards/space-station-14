@@ -6,24 +6,6 @@
     },
     "states": [
         {
-            "name": "black_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "blue_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "generic",
             "directions": 1,
             "delays": [
@@ -51,33 +33,6 @@
             ]
         },
         {
-            "name": "green_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "grey_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "mixed_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "oldcloset",
             "directions": 1,
             "delays": [
@@ -87,7 +42,7 @@
             ]
         },
         {
-            "name": "orange_door",
+            "name": "egun",
             "directions": 1,
             "delays": [
                 [
@@ -96,7 +51,28 @@
             ]
         },
         {
-            "name": "pink_door",
+            "name": "locked",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+	{
+            "name": "sparking",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "unlocked",
             "directions": 1,
             "delays": [
                 [
@@ -105,25 +81,7 @@
             ]
         },
         {
-            "name": "red_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "white_door",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "yellow_door",
+            "name": "welded",
             "directions": 1,
             "delays": [
                 [

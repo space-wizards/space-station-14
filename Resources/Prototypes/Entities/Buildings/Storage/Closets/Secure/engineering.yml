@@ -4,12 +4,14 @@
   parent: LockerSecureBase
   name: "chief engineer's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/ce.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: ce
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/ce.rsi
     state: ce_door
 
 # Electrical supplies
@@ -18,19 +20,21 @@
   parent: LockerSecureBase
   name: "electrical supplies locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/engineering.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: eng
       state_closed: eng_elec_door
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/engineering.rsi
     state: eng_elec_door
 
 # Welding supplies
 - type: entity
   id: LockerWeldingSupplies
-  parent: LockerSecureBase
+  parent: LockerElectricalSupplies
   name: "welding supplies locker"
   components:
   - type: Appearance
@@ -38,7 +42,6 @@
     - type: StorageVisualizer2D
       state: eng
       state_closed: eng_weld_door
-
   - type: Icon
     state: eng_weld_door
 
@@ -48,12 +51,14 @@
   parent: LockerSecureBase
   name: "atmospheric technician's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/atmos.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: atmos
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/atmos.rsi
     state: atmos_door
 
 # Engineer
@@ -62,12 +67,14 @@
   parent: LockerSecureBase
   name: "engineer's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/engineering_secure.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: eng_secure
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/engineering_secure.rsi
     state: eng_secure_door
 
 

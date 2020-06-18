@@ -4,7 +4,7 @@
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Buildings/Walls/solid.rsi
+    sprite: Constructible/Structures/Walls/solid.rsi
     state: full
   objecttype: Structure
   result: solid_wall
@@ -26,7 +26,7 @@
   id: Table
   category: Structures
   icon:
-    sprite: Buildings/tables.rsi
+    sprite: Constructible/Structures/Tables/generic.rsi
     state: plain_preview
   result: Table
   placementmode: SnapgridCenter
@@ -40,7 +40,7 @@
   category: Structures
   description: Clear.
   icon:
-    sprite: Buildings/window.rsi
+    sprite: Constructible/Structures/Windows/window.rsi
     state: full
   objecttype: Structure
   result: Window
@@ -55,7 +55,7 @@
   category: Structures
   description: A low wall used for mounting windows.
   icon:
-    sprite: Buildings/low_wall.rsi
+    sprite: Constructible/Structures/Walls/Walls/low_wall.rsi
     state: metal
   objecttype: Structure
   result: LowWall
@@ -78,7 +78,7 @@
   category: Structures
   description: Clear but tough.
   icon:
-    sprite: Buildings/rwindow.rsi
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
   objecttype: Structure
   result: ReinforcedWindow

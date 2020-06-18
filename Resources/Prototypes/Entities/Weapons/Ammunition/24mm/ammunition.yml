@@ -23,10 +23,10 @@
     caliber: A24mm
     capacity: 99
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/24mm/10x24.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/24mm/10x24.rsi
     state: 10x24-4
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/24mm/10x24.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/24mm/10x24.rsi
     state: 10x24-4
   - type: Appearance
     visuals:
@@ -44,9 +44,9 @@
     caliber: A24mm
     projectile: bullet_24mm
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

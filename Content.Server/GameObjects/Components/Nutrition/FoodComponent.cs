@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/items/eatfood.ogg");
+            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/eatfood.ogg");
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
             serializer.DataField(ref _trashPrototype, "trash", "TrashPlate");
         }

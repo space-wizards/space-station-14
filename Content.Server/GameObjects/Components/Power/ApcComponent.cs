@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void _clickSound()
         {
-            EntitySystem.Get<AudioSystem>().Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
+            EntitySystem.Get<AudioSystem>().Play("/Audio/Machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
         }
     }
 }

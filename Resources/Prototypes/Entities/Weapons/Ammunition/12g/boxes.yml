@@ -22,10 +22,10 @@
     caliber: A12g
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm.rsi
     state: box10mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm.rsi
     state: box10mm-1
   - type: Appearance
     visuals:

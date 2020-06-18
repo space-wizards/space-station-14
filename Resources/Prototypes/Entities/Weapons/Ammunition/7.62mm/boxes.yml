@@ -22,10 +22,10 @@
     caliber: A762mm
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/7.62mm/box762mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/7.62mm/box762mm.rsi
     state: box762mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/7.62mm/box762mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/7.62mm/box762mm.rsi
     state: box762mm-1
   - type: Appearance
     visuals:

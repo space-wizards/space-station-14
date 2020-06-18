@@ -10,7 +10,7 @@
   - type: Solution
     caps: 1
   - type: Puddle
-    spill_sound: /Audio/effects/Fluids/splat.ogg
+    spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: LoopingSound
   - type: InteractionOutline

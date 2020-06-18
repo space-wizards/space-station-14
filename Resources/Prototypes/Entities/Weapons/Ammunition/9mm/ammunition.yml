@@ -37,10 +37,10 @@
     magazine: A9mmTopMounted
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9mmt.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9mmt.rsi
     state: 9mmt-5
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9mmt.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9mmt.rsi
     state: 9mmt-5
   - type: Appearance
     visuals:
@@ -58,10 +58,10 @@
     caliber: A9mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19p.rsi
     state: 9x19p-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19p.rsi
     state: 9x19p-1
   - type: Appearance
     visuals:
@@ -79,10 +79,10 @@
     caliber: A9mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pf.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pf.rsi
     state: 9x19pf-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pf.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pf.rsi
     state: 9x19pf-1
   - type: Appearance
     visuals:
@@ -100,10 +100,10 @@
     caliber: A9mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19phv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19phv.rsi
     state: 9x19phv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19phv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19phv.rsi
     state: 9x19phv-1
   - type: Appearance
     visuals:
@@ -121,10 +121,10 @@
     caliber: A9mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pl.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pl.rsi
     state: 9x19pl-0
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pl.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pl.rsi
     state: 9x19pl-0
   - type: Appearance
     visuals:
@@ -142,10 +142,10 @@
     caliber: A9mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pp.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pp.rsi
     state: 9x19pp-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pp.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pp.rsi
     state: 9x19pp-1
   - type: Appearance
     visuals:
@@ -163,10 +163,10 @@
     caliber: A9mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pr.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pr.rsi
     state: 9x19pr-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/9x19pr.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/9x19pr.rsi
     state: 9x19pr-1
   - type: Appearance
     visuals:
@@ -184,10 +184,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mm.rsi
     state: smg9mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mm.rsi
     state: smg9mm-1
   - type: Appearance
     visuals:
@@ -205,10 +205,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmf.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmf.rsi
     state: smg9mmf-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmf.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmf.rsi
     state: smg9mmf-1
   - type: Appearance
     visuals:
@@ -226,10 +226,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmhv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmhv.rsi
     state: smg9mmhv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmhv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmhv.rsi
     state: smg9mmhv-1
   - type: Appearance
     visuals:
@@ -247,10 +247,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mml.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mml.rsi
     state: smg9mml-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mml.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mml.rsi
     state: smg9mml-1
   - type: Appearance
     visuals:
@@ -268,10 +268,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmp.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmp.rsi
     state: smg9mmp-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmp.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmp.rsi
     state: smg9mmp-1
   - type: Appearance
     visuals:
@@ -289,10 +289,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmr.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmr.rsi
     state: smg9mmr-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/9mm/smg9mmr.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/9mm/smg9mmr.rsi
     state: smg9mmr-1
   - type: Appearance
     visuals:
@@ -310,11 +310,11 @@
     caliber: A9mm
     projectile: bullet_9mm
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -326,11 +326,11 @@
     caliber: A9mm
     projectile: bullet_9mmf
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -342,11 +342,11 @@
     caliber: A9mm
     projectile: bullet_9mmhv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -358,11 +358,11 @@
     caliber: A9mm
     projectile: bullet_9mml
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -374,11 +374,11 @@
     caliber: A9mm
     projectile: bullet_9mmp
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -390,9 +390,9 @@
     caliber: A9mm
     projectile: bullet_9mmr
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

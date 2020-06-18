@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/effects/Fluids/slosh.ogg");
+            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
             // The turbo mop will pickup more
             serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
         }

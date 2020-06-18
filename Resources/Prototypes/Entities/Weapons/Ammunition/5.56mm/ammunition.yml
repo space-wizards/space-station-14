@@ -24,10 +24,10 @@
     magazine: A556mm
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/5.56.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/5.56.rsi
     state: 5.56-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/5.56.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/5.56.rsi
     state: 5.56-1
   - type: Appearance
     visuals:
@@ -46,10 +46,10 @@
     magazine: A556mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/5.56s.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/5.56s.rsi
     state: 5.56s-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/5.56s.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/5.56s.rsi
     state: 5.56s-1
   - type: Appearance
     visuals:
@@ -68,10 +68,10 @@
     magazine: A556mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/WinMag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/WinMag.rsi
     state: WinMag-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/WinMag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/WinMag.rsi
     state: WinMag-1
   - type: Appearance
     visuals:
@@ -90,10 +90,10 @@
     magazine: A556mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/WinMag_h.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/WinMag_h.rsi
     state: WinMag_h-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/WinMag_h.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/WinMag_h.rsi
     state: WinMag_h-1
   - type: Appearance
     visuals:
@@ -112,10 +112,10 @@
     magazine: A556mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/WinMag_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/WinMag_r.rsi
     state: WinMag_r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/5.56mm/WinMag_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/5.56mm/WinMag_r.rsi
     state: WinMag_r-1
   - type: Appearance
     visuals:
@@ -133,11 +133,11 @@
     caliber: A556mm
     projectile: bullet_556mm
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -149,11 +149,11 @@
     caliber: A556mm
     projectile: bullet_556mmf
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -165,11 +165,11 @@
     caliber: A556mm
     projectile: bullet_556mmhv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -181,11 +181,11 @@
     caliber: A556mm
     projectile: bullet_556mml
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -197,11 +197,11 @@
     caliber: A556mm
     projectile: bullet_556mmp
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -213,9 +213,9 @@
     caliber: A556mm
     projectile: bullet_556mmr
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

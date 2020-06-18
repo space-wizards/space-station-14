@@ -22,10 +22,10 @@
     caliber: A556mm
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/5.56mm/box556mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/5.56mm/box556mm.rsi
     state: box556mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/5.56mm/box556mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/5.56mm/box556mm.rsi
     state: box556mm-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A556mm
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/5.56mm/box556mm-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/5.56mm/box556mm-practice.rsi
     state: box556mm-practice-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/5.56mm/box556mm-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/5.56mm/box556mm-practice.rsi
     state: box556mm-practice-1
   - type: Appearance
     visuals:

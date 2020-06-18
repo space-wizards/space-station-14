@@ -12,7 +12,7 @@
     netsync: false
     drawdepth: BelowFloor
     color: Red
-    sprite: Objects/Power/power_cable.rsi
+    sprite: Constructible/Power/power_cable.rsi
     state: cable_0
   - type: Icon
     texture: Objects/Power/eightdirwire.png
@@ -55,9 +55,9 @@
       bounds: "-0.5, -0.5, 0.3, 0.5"
       layer: [MobMask, Opaque]
   - type: Sprite
-    texture: Objects/Power/generator.png
+    texture: Constructible/Power/generator.png
   - type: Icon
-    texture: Objects/Power/generator.png
+    texture: Constructible/Power/generator.png
   - type: PowerGenerator
   - type: SnapGrid
     offset: Center
@@ -76,10 +76,10 @@
     - !type:PhysShapeAabb
       layer: [MobMask, Opaque]
   - type: Sprite
-    sprite: Buildings/solar_panel.rsi
+    sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: Icon
-    sprite: Buildings/solar_panel.rsi
+    sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: PowerGenerator
   - type: SolarPanel
@@ -105,9 +105,9 @@
       layer: [Clickable]
   - type: Sprite
     drawdepth: WallMountedItems
-    texture: Objects/Power/provider.png
+    texture: Constructible/Power/provider.png
   - type: Icon
-    texture: Objects/Power/provider.png
+    texture: Constructible/Power/provider.png
   - type: PowerProvider
     range: 8
     priority: Provider
@@ -136,7 +136,7 @@
   - type: Sprite
     netsync: false
     texture: ""
-    sprite: "Buildings/apc.rsi"
+    sprite: "Constructible/apc.rsi"
     state: apc0
   - type: Appearance
     visuals:
@@ -167,13 +167,13 @@
       layer: [MobMask, Opaque]
   - type: Sprite
     netsync: false
-    sprite: Buildings/smes.rsi
+    sprite: Constructible/Power/smes.rsi
     state: smes
     layers:
     - state: smes-display
       shader: unshaded
   - type: Icon
-    sprite: Buildings/smes.rsi
+    sprite: Constructible/Power/smes.rsi
     state: smes
   - type: PowerStorage
     capacity: 3000
@@ -210,9 +210,9 @@
       bounds: "-0.5, -0.25, 0.5, 0.25"
       layer: [MobMask, Opaque]
   - type: Sprite
-    texture: Objects/Power/wiredmachine.png
+    texture: Constructible/Power/wiredmachine.png
   - type: Icon
-    texture: Objects/Power/wiredmachine.png
+    texture: Constructible/Power/wiredmachine.png
   - type: PowerDevice
     drawtype: Node
     load: 100
@@ -235,9 +235,9 @@
       bounds: "-0.5, -0.25, 0.5, 0.25"
       layer: [MobMask, Opaque]
   - type: Sprite
-    texture: Objects/Furniture/wirelessmachine.png
+    texture: Constructible/Power/wirelessmachine.png
   - type: Icon
-    texture: Objects/Furniture/wirelessmachine.png
+    texture: Constructible/Power/wirelessmachine.png
   - type: PowerDevice
     drawtype: Both
     load: 200

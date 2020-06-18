@@ -22,10 +22,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45.rsi
     state: box45-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45.rsi
     state: box45-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45-flash.rsi
     state: box45-flash-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45-flash.rsi
     state: box45-flash-1
   - type: Appearance
     visuals:
@@ -66,10 +66,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45-practice.rsi
     state: box45-practice-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45-practice.rsi
     state: box45-practice-1
   - type: Appearance
     visuals:
@@ -87,10 +87,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45-rubber.rsi
     state: box45-rubber-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.45mm/box45-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.45mm/box45-rubber.rsi
     state: box45-rubber-1
   - type: Appearance
     visuals:

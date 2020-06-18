@@ -22,10 +22,10 @@
     caliber: A24mm
     capacity: 200
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/24mm/box10x24.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/24mm/box10x24.rsi
     state: box10x24-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/24mm/box10x24.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/24mm/box10x24.rsi
     state: box10x24-1
   - type: Appearance
     visuals:

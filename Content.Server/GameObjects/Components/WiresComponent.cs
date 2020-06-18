@@ -428,7 +428,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
 
-                            _audioSystem.Play("/Audio/effects/multitool_pulse.ogg", Owner);
+                            _audioSystem.Play("/Audio/Effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -474,7 +474,7 @@ namespace Content.Server.GameObjects.Components
 
             IsPanelOpen = !IsPanelOpen;
             EntitySystem.Get<AudioSystem>()
-                .Play(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
+                .Play(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
                     Owner);
             return true;
         }

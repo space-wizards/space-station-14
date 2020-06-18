@@ -22,10 +22,10 @@
     caliber: A357
     capacity: 40
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357.rsi
     state: box357-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357.rsi
     state: box357-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A357
     capacity: 40
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-flash.rsi
     state: box357-flash-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-flash.rsi
     state: box357-flash-1
   - type: Appearance
     visuals:
@@ -64,10 +64,10 @@
     caliber: A357
     capacity: 40
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-hv.rsi
     state: box357-hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-hv.rsi
     state: box357-hv-1
   - type: Appearance
     visuals:
@@ -85,10 +85,10 @@
     caliber: A357
     capacity: 40
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-practice.rsi
     state: box357-practice-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-practice.rsi
     state: box357-practice-1
   - type: Appearance
     visuals:
@@ -106,10 +106,10 @@
     caliber: A357
     capacity: 40
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-rubber.rsi
     state: box357-rubber-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/.357/box357-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/.357/box357-rubber.rsi
     state: box357-rubber-1
   - type: Appearance
     visuals:

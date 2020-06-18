@@ -181,7 +181,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
                                 },
                                 (_chamberedBullet = new TextureRect
                                 {
-                                    Texture = ResC.GetTexture("/Textures/UserInterface/status/bullets/chambered.png"),
+                                    Texture = ResC.GetTexture("/Textures/Interface/Status/Bullets/chambered.png"),
                                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
                                     SizeFlagsHorizontal = SizeFlags.ShrinkEnd | SizeFlags.Fill,
                                 })
@@ -212,15 +212,15 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
                 string texturePath;
                 if (capacity <= 20)
                 {
-                    texturePath = "/Textures/UserInterface/status/bullets/normal.png";
+                    texturePath = "/Textures/Interface/Status/Bullets/normal.png";
                 }
                 else if (capacity <= 30)
                 {
-                    texturePath = "/Textures/UserInterface/status/bullets/small.png";
+                    texturePath = "/Textures/Interface/Status/Bullets/small.png";
                 }
                 else
                 {
-                    texturePath = "/Textures/UserInterface/status/bullets/tiny.png";
+                    texturePath = "/Textures/Interface/Status/Bullets/tiny.png";
                 }
 
                 var texture = ResC.GetTexture(texturePath);

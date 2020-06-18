@@ -23,10 +23,10 @@
     caliber: A65mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol.rsi
     state: mg_ih_sol-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol.rsi
     state: mg_ih_sol-1
   - type: Appearance
     visuals:
@@ -44,10 +44,10 @@
     caliber: A65mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_f.rsi
     state: mg_ih_sol_f-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_f.rsi
     state: mg_ih_sol_f-1
   - type: Appearance
     visuals:
@@ -65,10 +65,10 @@
     caliber: A65mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_hv.rsi
     state: mg_ih_sol_hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_hv.rsi
     state: mg_ih_sol_hv-1
   - type: Appearance
     visuals:
@@ -86,10 +86,10 @@
     caliber: A65mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_l.rsi
     state: mg_ih_sol_l-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_l.rsi
     state: mg_ih_sol_l-1
   - type: Appearance
     visuals:
@@ -107,10 +107,10 @@
     caliber: A65mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_p.rsi
     state: mg_ih_sol_p-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_p.rsi
     state: mg_ih_sol_p-1
   - type: Appearance
     visuals:
@@ -128,10 +128,10 @@
     caliber: A65mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_r.rsi
     state: mg_ih_sol_r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/6.5mm/mg_ih_sol_r.rsi
     state: mg_ih_sol_r-1
   - type: Appearance
     visuals:
@@ -149,11 +149,11 @@
     caliber: A65mm
     projectile: bullet_65mm
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -165,11 +165,11 @@
     caliber: A65mm
     projectile: bullet_65mmf
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -181,11 +181,11 @@
     caliber: A65mm
     projectile: bullet_65mmhv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -197,11 +197,11 @@
     caliber: A65mm
     projectile: bullet_65mml
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -213,11 +213,11 @@
     caliber: A65mm
     projectile: bullet_65mmp
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -229,9 +229,9 @@
     caliber: A65mm
     projectile: bullet_65mmr
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

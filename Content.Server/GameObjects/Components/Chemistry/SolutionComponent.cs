@@ -492,7 +492,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Play reaction sound client-side
-            _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+            _audioSystem.Play("/Audio/Effects/Chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
 
         /// <summary>

@@ -1,11 +1,12 @@
 - type: entity
-  id: LockerGeneric
+  id: LockerParent
   name: closet
   description: A standard-issue Nanotrasen storage unit.
+  abstract: true
   components:
   - type: Sprite
     netsync: false
-    sprite: Buildings/closet.rsi
+    sprite: Constructible/Storage/Closet/generic.rsi
     layers:
     - state: generic
     - state: generic_door
@@ -14,8 +15,19 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Buildings/closet.rsi
+    sprite: Constructible/Storage/Closet/generic.rsi
     state: generic_door
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: generic_door
+
+- type: entity
+  id: LockerGeneric
+  parent: LockerParent
+  name: closet
+  components:
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -42,11 +54,6 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer2D
-      state_open: generic_open
-      state_closed: generic_door
   - type: LoopingSound
   placement:
     snap:

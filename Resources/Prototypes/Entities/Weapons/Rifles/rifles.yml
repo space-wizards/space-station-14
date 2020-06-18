@@ -25,10 +25,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/ak.rsi
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     state: ak-0
   - type: Icon
-    sprite: Objects/Guns/Rifles/ak.rsi
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     state: ak-0
   - type: LoopingSound
   - type: RangedWeapon
@@ -48,7 +48,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/ak.rsi
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
 
 - type: entity
   name: black ak
@@ -58,10 +58,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/black-ak.rsi
+    sprite: Objects/Weapons/Guns/Rifles/black-ak.rsi
     state: black-ak-0
   - type: Icon
-    sprite: Objects/Guns/Rifles/black-ak.rsi
+    sprite: Objects/Weapons/Guns/Rifles/black-ak.rsi
     state: black-ak-0
   - type: LoopingSound
   - type: RangedWeapon
@@ -81,7 +81,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/black-ak.rsi
+    sprite: Objects/Weapons/Guns/Rifles/black-ak.rsi
 
 - type: entity
   name: carbine
@@ -91,10 +91,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/carbine.rsi
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     state: carbine-5
   - type: Icon
-    sprite: Objects/Guns/Rifles/carbine.rsi
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     state: carbine-5
   - type: LoopingSound
   - type: RangedWeapon
@@ -114,7 +114,7 @@
       steps: 6
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/carbine.rsi
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
 
 - type: entity
   name: dallas
@@ -124,10 +124,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/dallas.rsi
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
     state: dallas-0
   - type: Icon
-    sprite: Objects/Guns/Rifles/dallas.rsi
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
     state: dallas-0
   - type: LoopingSound
   - type: RangedWeapon
@@ -148,7 +148,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/dallas.rsi
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
 
 - type: entity
   name: IH heavy rifle
@@ -158,10 +158,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/ih_heavyrifle.rsi
+    sprite: Objects/Weapons/Guns/Rifles/ih_heavyrifle.rsi
     state: ih_heavyrifle-0
   - type: Icon
-    sprite: Objects/Guns/Rifles/ih_heavyrifle.rsi
+    sprite: Objects/Weapons/Guns/Rifles/ih_heavyrifle.rsi
     state: ih_heavyrifle-0
   - type: LoopingSound
   - type: RangedWeapon
@@ -182,7 +182,7 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/ih_heavyrifle.rsi
+    sprite: Objects/Weapons/Guns/Rifles/ih_heavyrifle.rsi
 
 - type: entity
   name: sol-eot
@@ -192,10 +192,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/sol-eot.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sol-eot.rsi
     state: sol-eot-4
   - type: Icon
-    sprite: Objects/Guns/Rifles/sol-eot.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sol-eot.rsi
     state: sol-eot-4
   - type: RangedWeapon
     spreadstddev: 2.8
@@ -217,7 +217,7 @@
       steps: 5
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/sol-eot.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sol-eot.rsi
 
 - type: entity
   name: sol-para
@@ -227,10 +227,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/sol-para.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sol-para.rsi
     state: sol-para-4
   - type: Icon
-    sprite: Objects/Guns/Rifles/sol-para.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sol-para.rsi
     state: sol-para-4
   - type: RangedWeapon
     spreadstddev: 3
@@ -252,7 +252,7 @@
       steps: 5
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/sol-para.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sol-para.rsi
 
 - type: entity
   name: sts
@@ -262,10 +262,10 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Rifles/sts.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
     state: sts-0
   - type: Icon
-    sprite: Objects/Guns/Rifles/sts.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
     state: sts-0
   - type: RangedWeapon
     spreadstddev: 2
@@ -284,4 +284,4 @@
       steps: 1
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Rifles/sts.rsi
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi

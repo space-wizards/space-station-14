@@ -5,13 +5,13 @@
   id: ExGrenade
   components:
   - type: Sprite
-    sprite: Objects/Grenades/grenade.rsi
+    sprite: Objects/Weapons/Grenades/grenade.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
 
   - type: Icon
-    sprite: Objects/Grenades/grenade.rsi
+    sprite: Objects/Weapons/Grenades/grenade.rsi
     state: icon
 
   - type: Item
@@ -33,7 +33,7 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: syndicate minibomb
@@ -42,13 +42,13 @@
   id: SyndieMiniBomb
   components:
   - type: Sprite
-    sprite: Objects/Grenades/syndgrenade.rsi
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
 
   - type: Icon
-    sprite: Objects/Grenades/syndgrenade.rsi
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     state: icon
 
   - type: Item
@@ -70,4 +70,4 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg

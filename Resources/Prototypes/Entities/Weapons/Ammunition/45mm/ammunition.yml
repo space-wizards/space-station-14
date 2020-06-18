@@ -36,10 +36,10 @@
     caliber: A45mm
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45.rsi
     state: 45-8
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45.rsi
     state: 45-8
   - type: Appearance
     visuals:
@@ -57,10 +57,10 @@
     caliber: A45mm
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45f.rsi
     state: 45f-8
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45f.rsi
     state: 45f-8
   - type: Appearance
     visuals:
@@ -78,10 +78,10 @@
     caliber: A45mm
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45hv.rsi
     state: 45hv-8
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45hv.rsi
     state: 45hv-8
   - type: Appearance
     visuals:
@@ -99,10 +99,10 @@
     caliber: A45mm
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45l.rsi
     state: 45l-8
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45l.rsi
     state: 45l-8
   - type: Appearance
     visuals:
@@ -120,10 +120,10 @@
     caliber: A45mm
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45p.rsi
     state: 45p-8
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45p.rsi
     state: 45p-8
   - type: Appearance
     visuals:
@@ -141,10 +141,10 @@
     caliber: A45mm
     capacity: 7
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45r.rsi
     state: 45r-8
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/45r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/45r.rsi
     state: 45r-8
   - type: Appearance
     visuals:
@@ -162,10 +162,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45.rsi
     state: smg45-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45.rsi
     state: smg45-1
   - type: Appearance
     visuals:
@@ -183,10 +183,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45f.rsi
     state: smg45f-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45f.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45f.rsi
     state: smg45f-1
   - type: Appearance
     visuals:
@@ -204,10 +204,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45hv.rsi
     state: smg45hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45hv.rsi
     state: smg45hv-1
   - type: Appearance
     visuals:
@@ -225,10 +225,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45l.rsi
     state: smg45l-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45l.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45l.rsi
     state: smg45l-1
   - type: Appearance
     visuals:
@@ -246,10 +246,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45p.rsi
     state: smg45p-0
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45p.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45p.rsi
     state: smg45p-0
   - type: Appearance
     visuals:
@@ -267,10 +267,10 @@
     caliber: A45mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45r.rsi
     state: smg45r-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/.45mm/smg45r.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/.45mm/smg45r.rsi
     state: smg45r-1
   - type: Appearance
     visuals:
@@ -288,11 +288,11 @@
     caliber: A45mm
     projectile: bullet_45mm
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -304,11 +304,11 @@
     caliber: A45mm
     projectile: bullet_45mmf
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -320,11 +320,11 @@
     caliber: A45mm
     projectile: bullet_45mmhv
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -336,11 +336,11 @@
     caliber: A45mm
     projectile: bullet_45mml
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -352,11 +352,11 @@
     caliber: A45mm
     projectile: bullet_45mmp
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
 
 - type: entity
@@ -368,9 +368,9 @@
     caliber: A45mm
     projectile: bullet_45mmr
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/ammo_casing.rsi
     state: s-casing

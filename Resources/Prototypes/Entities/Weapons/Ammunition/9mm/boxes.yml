@@ -22,10 +22,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm.rsi
     state: box9mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm.rsi
     state: box9mm-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-flash.rsi
     state: box9mm-flash-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-flash.rsi
     state: box9mm-flash-1
   - type: Appearance
     visuals:
@@ -64,10 +64,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-hv.rsi
     state: box9mm-hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-hv.rsi
     state: box9mm-hv-1
   - type: Appearance
     visuals:
@@ -85,10 +85,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-practice.rsi
     state: box9mm-practice-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-practice.rsi
     state: box9mm-practice-1
   - type: Appearance
     visuals:
@@ -106,10 +106,10 @@
     caliber: A9mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-rubber.rsi
     state: box9mm-rubber-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/9mm/box9mm-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/9mm/box9mm-rubber.rsi
     state: box9mm-rubber-1
   - type: Appearance
     visuals:

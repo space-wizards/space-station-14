@@ -22,10 +22,10 @@
     caliber: A65mm
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/6.5mm/box65mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/6.5mm/box65mm.rsi
     state: box65mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/6.5mm/box65mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/6.5mm/box65mm.rsi
     state: box65mm-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A65mm
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/6.5mm/box65mm-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/6.5mm/box65mm-rubber.rsi
     state: box65mm-rubber-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/6.5mm/box65mm-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/6.5mm/box65mm-rubber.rsi
     state: box65mm-rubber-1
   - type: Appearance
     visuals:

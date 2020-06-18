@@ -6,11 +6,11 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: stool_base
     color: "#8e9799"
   - type: Icon
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: stool_base
 
 - type: entity
@@ -33,10 +33,10 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: officechair_white
   - type: Icon
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: officechair_white
 
 - type: entity
@@ -48,10 +48,10 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: officechair_dark
   - type: Icon
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: officechair_dark
 
 - type: entity
@@ -62,11 +62,11 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: chair
     color: "#8e9799"
   - type: Icon
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: chair
 
 - type: entity
@@ -85,10 +85,10 @@
   id: Bed
   components:
   - type: Sprite
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: bed
   - type: Icon
-    sprite: Buildings/furniture.rsi
+    sprite: Constructible/Misc/furniture.rsi
     state: bed
   placement:
     mode: SnapgridCenter

@@ -4,12 +4,14 @@
   parent: LockerSecureBase
   name: "head of security's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/hos.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: hos
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/hos.rsi
     state: hos_door
 
 # Warden
@@ -18,12 +20,14 @@
   parent: LockerSecureBase
   name: "warden's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/warden.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: warden
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/warden.rsi
     state: warden_door
 
 # Security Officer
@@ -32,12 +36,14 @@
   parent: LockerSecureBase
   name: "security officer's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/sec.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: sec
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/sec.rsi
     state: sec_door
 
 # LockerHeadOfSecurity Filled

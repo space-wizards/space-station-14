@@ -22,10 +22,10 @@
     caliber: A10mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm.rsi
     state: box10mm-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm.rsi
     state: box10mm-1
   - type: Appearance
     visuals:
@@ -43,10 +43,10 @@
     caliber: A10mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-flash.rsi
     state: box10mm-flash-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-flash.rsi
     state: box10mm-flash-1
   - type: Appearance
     visuals:
@@ -64,10 +64,10 @@
     caliber: A10mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-hv.rsi
     state: box10mm-hv-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-hv.rsi
     state: box10mm-hv-1
   - type: Appearance
     visuals:
@@ -85,10 +85,10 @@
     caliber: A10mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-practice.rsi
     state: box10mm-practice-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-practice.rsi
     state: box10mm-practice-1
   - type: Appearance
     visuals:
@@ -106,10 +106,10 @@
     caliber: A10mm
     capacity: 30
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-rubber.rsi
     state: box10mm-rubber-1
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/10mm/box10mm-rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/10mm/box10mm-rubber.rsi
     state: box10mm-rubber-1
   - type: Appearance
     visuals:

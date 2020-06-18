@@ -13,9 +13,9 @@
     color: "#DDDDDD"
     netsync: false
     drawdepth: WallTops
-    sprite: Buildings/window.rsi
+    sprite: Constructible/Structures/window.rsi
   - type: Icon
-    sprite: Buildings/window.rsi
+    sprite: Constructible/Structures/window.rsi
     state: full
   - type: Collidable
     shapes:
@@ -41,9 +41,9 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Buildings/rwindow.rsi
+    sprite: Constructible/Structures/reinforced_windowrsi
   - type: Window
     base: rwindow
   - type: Icon
-    sprite: Buildings/rwindow.rsi
+    sprite: Constructible/Structures/reinforced_windowrsi
     state: full

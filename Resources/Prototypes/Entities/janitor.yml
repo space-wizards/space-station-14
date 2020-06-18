@@ -5,16 +5,16 @@
   description: A mop that can't be stopped, viscera cleanup detail awaits.
   components:
   - type: Sprite
-    sprite: Objects/Janitorial/mop.rsi
+    sprite: Objects/Departmental/Janitorial/mop.rsi
     state: mop
 
   - type: Icon
-    sprite: Objects/Janitorial/mop.rsi
+    sprite: Objects/Departmental/Janitorial/mop.rsi
     state: mop
 
   - type: Item
     Size: 10
-    sprite: Objects/Janitorial/mop.rsi
+    sprite: Objects/Departmental/Janitorial/mop.rsi
 
   - type: Mop
   - type: Solution
@@ -30,10 +30,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Janitorial/mopbucket.png
+    texture: Objects/Departmental/Janitorial/mopbucket.png
     drawdepth: Objects
   - type: Icon
-    texture: Objects/Janitorial/mopbucket.png
+    texture: Objects/Departmental/Janitorial/mopbucket.png
   - type: InteractionOutline
   - type: Bucket
   - type: LoopingSound
@@ -62,10 +62,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Janitorial/bucket.png
+    texture: Objects/Departmental/Janitorial/bucket.png
     drawdepth: Objects
   - type: Icon
-    texture: Objects/Janitorial/bucket.png
+    texture: Objects/Departmental/Janitorial/bucket.png
   - type: Bucket
   - type: LoopingSound
   - type: Solution
@@ -92,13 +92,13 @@
   description: Caution! Wet Floor!
   components:
   - type: Sprite
-    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    sprite: Objects/Departmental/Janitorial/wet_floor_sign.rsi
     state: caution
 
   - type: Icon
-    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    sprite: Objects/Departmental/Janitorial/wet_floor_sign.rsi
     state: caution
 
   - type: Item
-    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    sprite: Objects/Departmental/Janitorial/wet_floor_sign.rsi
 

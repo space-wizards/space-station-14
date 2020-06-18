@@ -4,12 +4,14 @@
   parent: LockerSecureBase
   name: "captain's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/captain.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: cap
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/captain.rsi
     state: cap_door
 
 # HoP
@@ -18,12 +20,14 @@
   parent: LockerSecureBase
   name: "head of personnel's locker"
   components:
+  - type: Sprite
+    sprite: Constructible/Storage/Closet/hop.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: hop
-
   - type: Icon
+    sprite: Constructible/Storage/Closet/hop.rsi
     state: hop_door
 
 

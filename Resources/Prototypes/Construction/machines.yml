@@ -7,7 +7,7 @@
   placementmode: SnapgridBorder
   canbuildinimpassable: true
   icon:
-    sprite: Objects/Lighting/lighting.rsi
+    sprite: Constructible/Lighting/lighting.rsi
     state: on
 
   result: Poweredlight
@@ -15,14 +15,14 @@
   - material: Metal
     amount: 1
     icon:
-      sprite: Objects/Lighting/lighting.rsi
+      sprite: Constructible/Lighting/lighting.rsi
       state: construct
 
 
   - material: Cable
     amount: 1
     icon:
-      sprite: Objects/Lighting/lighting.rsi
+      sprite: Constructible/Lighting/lighting.rsi
       state: empty
 
   - material: Glass
