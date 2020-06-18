@@ -7,7 +7,6 @@ using static Robust.Client.GameObjects.SpriteComponent;
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IconSmoothComponent))]
     public class ReinforcedWallComponent : IconSmoothComponent
     {
         public override string Name => "ReinforcedWall";

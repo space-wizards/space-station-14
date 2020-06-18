@@ -16,8 +16,6 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ItemComponent))]
-    [ComponentReference(typeof(StoreableComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
 #pragma warning disable 649

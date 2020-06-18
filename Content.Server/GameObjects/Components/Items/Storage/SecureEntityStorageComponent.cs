@@ -18,9 +18,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
-    [ComponentReference(typeof(EntityStorageComponent))]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IStorageComponent))]
     public class SecureEntityStorageComponent : EntityStorageComponent
     {
         public override string Name => "SecureEntityStorage";

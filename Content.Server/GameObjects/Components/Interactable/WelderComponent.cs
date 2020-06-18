@@ -21,7 +21,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ToolComponent))]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct
     {
 #pragma warning disable 649

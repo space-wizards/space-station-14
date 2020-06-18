@@ -20,8 +20,6 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(ServerDoorComponent))]
     public class AirlockComponent : ServerDoorComponent, IWires, IInteractUsing
     {
         public override string Name => "Airlock";

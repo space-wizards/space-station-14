@@ -30,7 +30,6 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    [ComponentReference(typeof(StoreableComponent))]
     public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
     {
         public override string Name => "Item";

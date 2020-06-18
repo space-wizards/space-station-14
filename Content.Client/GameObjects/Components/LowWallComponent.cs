@@ -19,7 +19,6 @@ namespace Content.Client.GameObjects.Components
     ///     Override of icon smoothing to handle the specific complexities of low walls.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IconSmoothComponent))]
     public class LowWallComponent : IconSmoothComponent
     {
         public override string Name => "LowWall";

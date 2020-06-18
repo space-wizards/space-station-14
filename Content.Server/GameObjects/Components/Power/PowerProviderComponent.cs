@@ -18,7 +18,6 @@ namespace Content.Server.GameObjects.Components.Power
     /// Component that wirelessly connects and powers devices, connects to powernet via node and can be combined with internal storage component
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(PowerDeviceComponent))]
     public class PowerProviderComponent : PowerDeviceComponent
     {
         public override string Name => "PowerProvider";

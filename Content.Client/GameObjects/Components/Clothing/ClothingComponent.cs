@@ -9,7 +9,6 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.Clothing
 {
     [RegisterComponent]
-    [ComponentReference(typeof(ItemComponent))]
     public class ClothingComponent : ItemComponent
     {
         private FemaleClothingMask _femaleMask;
