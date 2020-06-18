@@ -1,17 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.Components.Strap;
+﻿using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -34,19 +30,6 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         [ViewVariables] public IEntity BuckledTo => _buckledTo;
 
-        private IEnumerable<StrapComponent> FindStrappables()
-        {
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
-
-            foreach (var intersect in intersecting)
-            {
-                if (intersect.TryGetComponent(out StrapComponent strap))
-                {
-                    yield return strap;
-                }
-            }
-        }
-
         private void BuckleStatus()
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
@@ -58,7 +41,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        private bool TryBuckle(IEntity user)
+        private bool TryBuckle(IEntity user, IEntity to)
         {
             if (user == null)
             {
@@ -86,24 +69,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            // Find the closest entity with a strap component to buckle the owner to
-            var straps = FindStrappables();
-            (StrapComponent strap, float distance) closest = (null, float.PositiveInfinity);
-
-            foreach (var strap in straps)
-            {
-                var pos = strap.Owner.Transform.WorldPosition;
-                var distance = (pos - Owner.Transform.WorldPosition).LengthSquared;
-
-                if (distance > closest.distance)
-                {
-                    continue;
-                }
-
-                closest = (strap, distance);
-            }
-
-            if (closest.strap == null)
+            if (!to.TryGetComponent(out StrapComponent strap))
             {
                 _notifyManager.PopupMessage(Owner, user,
                     Loc.GetString("You can't buckle {0:them} there!", Owner));
@@ -111,16 +77,16 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(closest.strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
-            _buckledTo = closest.strap.Owner;
+                .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+            _buckledTo = strap.Owner;
 
             var ownTransform = Owner.Transform;
-            var closestTransform = closest.strap.Owner.Transform;
+            var closestTransform = strap.Owner.Transform;
 
             ownTransform.GridPosition = closestTransform.GridPosition;
             ownTransform.AttachParent(closestTransform);
 
-            switch (closest.strap.Position)
+            switch (strap.Position)
             {
                 case StrapPosition.Stand:
                     StandingStateHelper.Standing(Owner);
@@ -165,11 +131,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             return true;
         }
 
-        public bool ToggleBuckle(IEntity user)
+        public bool ToggleBuckle(IEntity user, IEntity to)
         {
             if (BuckledTo == null)
             {
-                return TryBuckle(user);
+                return TryBuckle(user, to);
             }
             else
             {
@@ -196,26 +162,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         bool IActionBlocker.CanChangeDirection()
         {
             return BuckledTo == null;
-        }
-
-        [Verb]
-        private sealed class BuckleVerb : Verb<BuckleableComponent>
-        {
-            protected override void GetData(IEntity user, BuckleableComponent component, VerbData data)
-            {
-                if (!component.FindStrappables().Any())
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = component.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
-            }
-
-            protected override void Activate(IEntity user, BuckleableComponent component)
-            {
-                component.ToggleBuckle(user);
-            }
         }
     }
 }
