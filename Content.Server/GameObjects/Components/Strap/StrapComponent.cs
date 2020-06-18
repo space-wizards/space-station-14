@@ -1,7 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Strap;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -10,8 +8,6 @@ namespace Content.Server.GameObjects.Components.Strap
     [RegisterComponent]
     public class StrapComponent : SharedStrapComponent
     {
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-
         private StrapPosition _position;
         private string _buckleSound;
         private string _unbuckleSound;

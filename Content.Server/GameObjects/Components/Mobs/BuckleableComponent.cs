@@ -169,6 +169,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             return BuckledTo == null;
         }
 
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return BuckledTo == null;
+        }
+
         [Verb]
         private sealed class BuckleVerb : Verb<BuckleableComponent>
         {
