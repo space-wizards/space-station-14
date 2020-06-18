@@ -14,7 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup submodule
-      run: git submodule update --init --recursive
+      run: |
+        git submodule update --init --recursive
+        touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
+    - name: Pull engine updates
+      uses: ivanbakel/submodule-dependency@v0.1.1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:

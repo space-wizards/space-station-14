@@ -1,25 +1,22 @@
-using System;
+﻿using System;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Construction
+namespace Content.Shared.GameObjects.EntitySystems
 {
-    /// <summary>
-    ///     Basically handles the logic of "this mob can do construction".
-    /// </summary>
-    public abstract class SharedConstructorComponent : Component
+    [UsedImplicitly]
+    public class ConstructionSystem : EntitySystem
     {
-        public override string Name => "Constructor";
-        public override uint? NetID => ContentNetIDs.CONSTRUCTOR;
-
         /// <summary>
         ///     Sent client -> server to to tell the server that we started building
         ///     a structure-construction.
         /// </summary>
         [Serializable, NetSerializable]
-        protected class TryStartStructureConstructionMessage : ComponentMessage
+        public class TryStartStructureConstructionMessage : EntitySystemMessage
         {
             /// <summary>
             ///     Position to start building.
@@ -40,7 +37,6 @@ namespace Content.Shared.GameObjects.Components.Construction
 
             public TryStartStructureConstructionMessage(GridCoordinates loc, string prototypeName, Angle angle, int ack)
             {
-                Directed = true;
                 Location = loc;
                 PrototypeName = prototypeName;
                 Angle = angle;
@@ -53,7 +49,7 @@ namespace Content.Shared.GameObjects.Components.Construction
         ///     an item-construction.
         /// </summary>
         [Serializable, NetSerializable]
-        protected class TryStartItemConstructionMessage : ComponentMessage
+        public class TryStartItemConstructionMessage : EntitySystemMessage
         {
             /// <summary>
             ///     The construction prototype to start building.
@@ -62,21 +58,21 @@ namespace Content.Shared.GameObjects.Components.Construction
 
             public TryStartItemConstructionMessage(string prototypeName)
             {
-                Directed = true;
                 PrototypeName = prototypeName;
             }
         }
 
-
+        /// <summary>
+        /// Send server -> client to tell the client that a ghost has started to be constructed.
+        /// </summary>
         [Serializable, NetSerializable]
-        protected class AckStructureConstructionMessage : ComponentMessage
+        public class AckStructureConstructionMessage : EntitySystemMessage
         {
-            public readonly int Ack;
+            public readonly int GhostId;
 
-            public AckStructureConstructionMessage(int ack)
+            public AckStructureConstructionMessage(int ghostId)
             {
-                Directed = true;
-                Ack = ack;
+                GhostId = ghostId;
             }
         }
     }
