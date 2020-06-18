@@ -100,7 +100,8 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
     supplyRate: 3000
-    
+  - type: Anchorable
+
 - type: entity
   id: DebugConsumer
   name: Debug Consumer
@@ -120,6 +121,10 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
     drawRate: 50
+  - type: Damageable
+  - type: Breakable
+    thresholdvalue: 100
+  - type: Anchorable
 
 - type: entity
   id: DebugBatteryStorage
@@ -203,7 +208,8 @@
   - type: PowerSupplier
   - type: BatteryDischarger
     activeSupplyRate: 1000
-    
+  - type: Anchorable
+
 - type: entity
   id: DebugSubstation
   name: Debug Substation

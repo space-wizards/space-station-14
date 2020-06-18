@@ -15,7 +15,7 @@
   - type: Icon
     sprite: Buildings/medical_scanner.rsi
     state: scanner_open
-
+  - type: Anchorable
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable

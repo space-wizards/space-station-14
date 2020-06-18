@@ -58,3 +58,7 @@
     visuals:
     - type: PowerDeviceVisualizer2D
   - type: PowerReceiver
+  - type: Anchorable
+  - type: Physics
+    mass: 25
+    Anchored: true

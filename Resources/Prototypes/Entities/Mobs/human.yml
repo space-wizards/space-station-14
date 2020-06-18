@@ -24,7 +24,6 @@
     max_volume: 250
     digestionDelay: 20
   - type: Inventory
-  - type: Constructor
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -143,6 +142,7 @@
 - type: entity
   save: false
   name: Urist McHands
+  abstract: true
   id: HumanMob_Dummy
   description: A dummy human meant to be used in character setup
   components:
