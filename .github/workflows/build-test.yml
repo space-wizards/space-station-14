@@ -14,7 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup submodule
-      run: git submodule update --init --recursive
+      run: |
+        git submodule update --init --recursive
+        touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
+    - name: Pull engine updates
+      uses: ivanbakel/submodule-dependency@v0.1.1
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
@@ -22,8 +26,8 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable
     - name: Content.Tests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+      run: dotnet test --no-build Content.Tests/Content.Tests.csproj -v n
     - name: Content.IntegrationTests
-      run: dotnet test --no-build Content.Tests/Content.Tests.csproj
+      run: dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -v n

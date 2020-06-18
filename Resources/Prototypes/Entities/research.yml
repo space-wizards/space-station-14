@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: ResearchAndDevelopmentServer
   name: "R&D server"
   components:
@@ -59,3 +59,7 @@
     visuals:
     - type: PowerDeviceVisualizer2D
   - type: PowerDevice
+  - type: Anchorable
+  - type: Physics
+    mass: 25
+    Anchored: true

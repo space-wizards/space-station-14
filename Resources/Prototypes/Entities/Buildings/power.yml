@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: Wire
   name: wire
   description: Transfers power, avoid letting things come down it
@@ -61,6 +61,7 @@
   - type: PowerGenerator
   - type: SnapGrid
     offset: Center
+  - type: Anchorable
 
 - type: entity
   id: SolarPanel
@@ -89,6 +90,7 @@
   - type: Damageable
   - type: Breakable
     thresholdvalue: 100
+  - type: Anchorable
 
 - type: entity
   id: WPPnobattery
@@ -187,6 +189,7 @@
     - type: SmesVisualizer2D
   - type: SnapGrid
     offset: Center
+  - type: Anchorable
 
 - type: entity
   id: SmesDry

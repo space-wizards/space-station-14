@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.GameObjects.Components.Wires;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -80,7 +81,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
             }
         }
 

@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
@@ -512,17 +513,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on object {attacked.Name} that isn't currently on the map somehow");
                 return;
-            }
-
-            // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
-            if (attacked.TryGetComponent(out ICollidableComponent collideComp))
-            {
-                if (!collideComp.WorldAABB.Contains(coordinates.ToMapPos(_mapManager)))
-                {
-                    Logger.WarningS("system.interaction",
-                        $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
-                    return;
-                }
             }
 
             // RangedInteract/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function

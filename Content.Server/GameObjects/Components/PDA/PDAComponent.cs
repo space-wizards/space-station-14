@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAEjectIDMessage msg:
                 {
-                    HandleIDEjection(message.Session.AttachedEntity);
+                    HandleIDEjection(message.Session.AttachedEntity!);
                     break;
                 }
 
@@ -241,7 +241,7 @@ namespace Content.Server.GameObjects.Components.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/machine_switch.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/id_swipe.ogg", Owner);
             UpdatePDAUserInterface();
         }
 

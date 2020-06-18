@@ -214,7 +214,7 @@ namespace Content.Server.AI
             if(Random01(ref rngState) < 0.5f)
                 return;
 
-            var pick = (int) Math.Round(Random01(ref rngState) * (_normalAssistantConversation.Count - 1));
+            var pick = (int) MathF.Round(Random01(ref rngState) * (_normalAssistantConversation.Count - 1));
             _chatMan.EntitySay(SelfEntity, _normalAssistantConversation[pick]);
         }
 
