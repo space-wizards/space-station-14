@@ -129,8 +129,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 return false;
             }
 
-            _heldItem = entity;
-            if (!_container.Insert(_heldItem))
+            HeldItem = entity;
+            if (!_container.Insert(HeldItem))
             {
                 return false;
             }

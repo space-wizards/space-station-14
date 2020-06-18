@@ -38,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
 
         [ViewVariables] private string _defaultMagazine;
 
+        public ContainerSlot MagazineSlot => _magazineSlot;
         [ViewVariables] private ContainerSlot _magazineSlot;
         private List<BallisticMagazineType> _magazineTypes;
 

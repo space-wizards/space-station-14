@@ -8,6 +8,6 @@ namespace Content.Shared.Interfaces
     /// </summary>
     public interface IReactionEffect : IExposeData
     {
-        void React(IEntity solutionEntity, decimal intensity);
+        void React(IEntity solutionEntity, double intensity);
     }
 }

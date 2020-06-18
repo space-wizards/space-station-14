@@ -1,6 +1,7 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
+﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
@@ -45,6 +46,7 @@ namespace Content.Server
                 "ItemStatus",
                 "Marker",
                 "EmergencyLight",
+                "Clickable",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -87,6 +89,7 @@ namespace Content.Server
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
         }
 
