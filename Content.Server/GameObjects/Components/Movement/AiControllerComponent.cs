@@ -1,4 +1,6 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
+﻿using Content.Server.AI.Utility;
+using Content.Server.AI.Utility.AiLogic;
+using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Robust.Server.AI;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -56,6 +58,12 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            Processor.Shutdown();
+        }
+
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
@@ -103,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Is the entity Sprinting (running)?
         /// </summary>
         [ViewVariables]
-        public bool Sprinting { get; set; }
+        public bool Sprinting { get; set; } = true;
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.

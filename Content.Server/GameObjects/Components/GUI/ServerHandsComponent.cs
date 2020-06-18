@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
         /// </summary>
-        private IEnumerable<string> ActivePriorityEnumerable()
+        public IEnumerable<string> ActivePriorityEnumerable()
         {
             yield return ActiveIndex;
             foreach (var hand in hands.Keys)
@@ -557,6 +557,7 @@ namespace Content.Server.GameObjects
                 }
 
                 Dirty();
+
                 if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
                 {
                     return;
