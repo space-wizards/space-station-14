@@ -48,8 +48,7 @@
         public const uint SURGERY = 1042;
         public const uint MULTITOOLS = 1043;
         public const uint PDA = 1044;
-		public const uint SURGERY = 1043;
-        public const uint FLASHABLE = 1044;
+        public const uint FLASHABLE = 1045;
 		
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
