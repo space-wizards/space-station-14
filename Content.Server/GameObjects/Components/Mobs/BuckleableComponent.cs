@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -85,35 +86,60 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            // Find the first entity with a strap component to buckle the owner to
-            foreach (var strap in FindStrappables())
-            {
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
-                _buckledTo = strap.Owner;
-                Owner.Transform.GridPosition = strap.Owner.Transform.GridPosition;
-                Owner.Transform.AttachParent(strap.Owner.Transform);
+            // Find the closest entity with a strap component to buckle the owner to
+            var straps = FindStrappables();
+            (StrapComponent strap, float distance) closest = (null, float.PositiveInfinity);
 
-                switch (strap.Position)
+            foreach (var strap in straps)
+            {
+                if (!strap.Owner.TryGetComponent(out ITransformComponent transform))
                 {
-                    case StrapPosition.Stand:
-                        StandingStateHelper.Standing(Owner);
-                        Owner.Transform.WorldRotation = strap.Owner.Transform.WorldRotation;
-                        break;
-                    case StrapPosition.Down:
-                        StandingStateHelper.Down(Owner);
-                        Owner.Transform.WorldRotation = Angle.South;
-                        break;
+                    continue;
                 }
 
-                BuckleStatus();
+                var pos = transform.WorldPosition;
+                var distance = (pos - Owner.Transform.WorldPosition).LengthSquared;
 
-                return true;
+                if (distance > closest.distance)
+                {
+                    continue;
+                }
+
+                closest = (strap, distance);
             }
 
-            _notifyManager.PopupMessage(Owner, user,
-                Loc.GetString("You can't buckle {0:them} there!", Owner));
-            return false;
+            if (closest.strap == null)
+            {
+                _notifyManager.PopupMessage(Owner, user,
+                    Loc.GetString("You can't buckle {0:them} there!", Owner));
+                return false;
+            }
+
+            _entitySystem.GetEntitySystem<AudioSystem>()
+                .PlayFromEntity(closest.strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+            _buckledTo = closest.strap.Owner;
+
+            var ownTransform = Owner.Transform;
+            var closestTransform = closest.strap.Owner.Transform;
+
+            ownTransform.GridPosition = closestTransform.GridPosition;
+            ownTransform.AttachParent(closestTransform);
+
+            switch (closest.strap.Position)
+            {
+                case StrapPosition.Stand:
+                    StandingStateHelper.Standing(Owner);
+                    ownTransform.WorldRotation = closestTransform.WorldRotation;
+                    break;
+                case StrapPosition.Down:
+                    StandingStateHelper.Down(Owner);
+                    ownTransform.WorldRotation = Angle.South;
+                    break;
+            }
+
+            BuckleStatus();
+
+            return true;
         }
 
         public bool TryUnbuckle()
