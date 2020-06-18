@@ -515,17 +515,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
-            if (attacked.TryGetComponent(out ICollidableComponent collideComp))
-            {
-                if (!collideComp.WorldAABB.Contains(coordinates.ToMapPos(_mapManager)))
-                {
-                    Logger.WarningS("system.interaction",
-                        $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
-                    return;
-                }
-            }
-
             // RangedInteract/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function
             // TODO: have range based upon the item being used? or base it upon some variables of the player himself?
             var distance = (playerTransform.WorldPosition - attacked.Transform.WorldPosition).LengthSquared;
