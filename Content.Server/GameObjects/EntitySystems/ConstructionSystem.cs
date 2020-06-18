@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Construction;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -28,15 +32,27 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
+
+
+        private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
+
 
         /// <inheritdoc />
         public override void Initialize()
         {
             base.Initialize();
 
+            foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
+            {
+                _craftRecipes.Add(prototype.Result, prototype);
+            }
+
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+
+            SubscribeLocalEvent<AfterAttackMessage>(HandleToolInteraction);
         }
 
         private void HandleStartStructureConstruction(TryStartStructureConstructionMessage msg, EntitySessionEventArgs args)
@@ -53,6 +69,57 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             var placingEnt = args.SenderSession.AttachedEntity;
             TryStartItemConstruction(placingEnt, msg.PrototypeName);
+        }
+
+        private void HandleToolInteraction(AfterAttackMessage msg)
+        {
+            if(msg.Handled)
+                return;
+
+            var targetEnt = msg.Attacked;
+            var handEnt = msg.ItemInHand;
+
+            // A tool has to interact with an entity.
+            if(targetEnt is null || handEnt is null)
+                return;
+
+            // A tool was not used on the entity.
+            if (!handEnt.TryGetComponent<IToolComponent>(out var toolComp))
+                return;
+
+            // Cannot deconstruct an entity with no prototype.
+            var targetPrototype = targetEnt.MetaData.EntityPrototype;
+            if (targetPrototype is null)
+                return;
+
+            // the target entity is in the process of being constructed
+            if (msg.Attacked.TryGetComponent<ConstructionComponent>(out var constructComp))
+            {
+                //TODO: Continue constructing
+                _notifyManager.PopupMessage(msg.Attacked, msg.User,
+                    "TODO: Continue Construction.");
+
+                return;
+            }
+            else // try to start the deconstruction process
+            {
+                // no known recipe for entity
+                if (!_craftRecipes.TryGetValue(targetPrototype.Name, out var prototype))
+                {
+                    _notifyManager.PopupMessage(msg.Attacked, msg.User,
+                        "Cannot be deconstructed.");
+                    msg.Handled = false;
+                    return;
+                }
+
+                // there is a recipe, but you have the wrong tool
+
+                //TODO: start the deconstruct process
+                _notifyManager.PopupMessage(msg.Attacked, msg.User,
+                    "TODO: Start Deconstruct.");
+
+                return;
+            }
         }
 
         private bool TryStartStructureConstruction(IEntity placingEnt, GridCoordinates loc, string prototypeName, Angle angle)

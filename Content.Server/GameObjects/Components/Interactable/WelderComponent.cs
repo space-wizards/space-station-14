@@ -22,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
+    [ComponentReference(typeof(IToolComponent))]
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct
     {
 #pragma warning disable 649
