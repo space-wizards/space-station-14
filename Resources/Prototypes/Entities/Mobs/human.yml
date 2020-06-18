@@ -129,6 +129,7 @@
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
+    - type: BuckleVisualizer2D
   - type: CombatMode
   - type: Teleportable
   - type: Examiner

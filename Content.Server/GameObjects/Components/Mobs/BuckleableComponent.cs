@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -85,22 +86,23 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             // Find the first entity with a strap component to buckle the owner to
-            foreach (var intersect in FindStrappables())
+            foreach (var strap in FindStrappables())
             {
                 _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(intersect.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
-                _buckledTo = intersect.Owner;
-                Owner.Transform.GridPosition = intersect.Owner.Transform.GridPosition;
-                Owner.Transform.AttachParent(intersect.Owner.Transform);
-                Owner.Transform.WorldRotation = intersect.Owner.Transform.WorldRotation;
+                    .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+                _buckledTo = strap.Owner;
+                Owner.Transform.GridPosition = strap.Owner.Transform.GridPosition;
+                Owner.Transform.AttachParent(strap.Owner.Transform);
 
-                switch (intersect.Position)
+                switch (strap.Position)
                 {
                     case StrapPosition.Stand:
                         StandingStateHelper.Standing(Owner);
+                        Owner.Transform.WorldRotation = strap.Owner.Transform.WorldRotation;
                         break;
                     case StrapPosition.Down:
                         StandingStateHelper.Down(Owner);
+                        Owner.Transform.WorldRotation = Angle.South;
                         break;
                 }
 
