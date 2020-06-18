@@ -366,6 +366,11 @@
   parent: DebugSmes
 
 - type: entity
+  id: SmesDry
+  name: Depriciated Smes
+  parent: DebugSmes
+
+- type: entity
   id: WiredMachine
   name: Depriciated WiredMachine
   parent: DebugConsumer
