@@ -92,6 +92,9 @@
   name: bed
   id: Bed
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
     state: bed
