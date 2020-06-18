@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -319,7 +320,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUseItemInHand))
+                    new PointerInputCmdHandler(HandleClientUseItemInHand))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -421,7 +422,31 @@ namespace Content.Server.GameObjects.EntitySystems
             return true;
         }
 
-        private bool HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        /// <summary>
+        /// Entity will try and use their active hand at the target location.
+        /// Don't use for players
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="coords"></param>
+        /// <param name="uid"></param>
+        internal void UseItemInHand(IEntity entity, GridCoordinates coords, EntityUid uid)
+        {
+            if (entity.HasComponent<BasicActorComponent>())
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(entity, coords);
+            }
+            else
+            {
+                UserInteraction(entity, coords, uid);
+            }
+        }
+
+        private bool HandleClientUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
