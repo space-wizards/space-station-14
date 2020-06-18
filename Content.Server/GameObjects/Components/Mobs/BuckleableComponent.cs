@@ -7,6 +7,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -28,20 +29,27 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override string Name => "Buckleable";
 
-        private IEntity _buckledTo;
+        [CanBeNull] private IEntity _buckledTo;
 
         [ViewVariables]
         public IEntity BuckledTo
         {
             get => _buckledTo;
-            set
+            private set
             {
                 var old = value ?? _buckledTo;
                 _buckledTo = value;
 
                 if (old != null && old.TryGetComponent(out StrapComponent strap))
                 {
-                    strap.BuckledEntity = value == null ? null : Owner;
+                    if (value == null)
+                    {
+                        strap.RemoveEntity(Owner);
+                    }
+                    else
+                    {
+                        strap.AddEntity(Owner);
+                    }
                 }
             }
         }
@@ -167,6 +175,16 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
+            return ForceUnbuckle();
+        }
+
+        public bool ForceUnbuckle()
+        {
+            if (_buckledTo == null)
+            {
+                return false;
+            }
+
             if (_buckledTo.TryGetComponent(out StrapComponent strap))
             {
                 _entitySystem.GetEntitySystem<AudioSystem>()
@@ -204,6 +222,16 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.Startup();
             BuckleStatus();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            if (BuckledTo != null && BuckledTo.TryGetComponent(out StrapComponent strap))
+            {
+                strap.RemoveEntity(Owner);
+            }
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
