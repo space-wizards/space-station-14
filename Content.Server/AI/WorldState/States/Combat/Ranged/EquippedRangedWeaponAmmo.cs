@@ -1,4 +1,4 @@
-using Content.Server.GameObjects;
+﻿using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Projectile;
 using JetBrains.Annotations;
@@ -25,7 +25,7 @@ namespace Content.Server.AI.WorldState.States.Combat.Ranged
 
             if (equippedItem.TryGetComponent(out HitscanWeaponComponent hitscanWeaponComponent))
             {
-                return (int) hitscanWeaponComponent.CapacitorComponent.Charge / hitscanWeaponComponent.BaseFireCost;
+                return (int) hitscanWeaponComponent.CapacitorComponent.CurrentCharge / hitscanWeaponComponent.BaseFireCost;
             }
 
             if (equippedItem.TryGetComponent(out BallisticMagazineWeaponComponent ballisticComponent))

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -22,14 +22,14 @@ namespace Content.Server.AI.Operators.Combat.Ranged
 
         public override Outcome Execute(float frameTime)
         {
-            if (_hitscan.CapacitorComponent.Capacity - _hitscan.CapacitorComponent.Charge < 0.01f)
+            if (_hitscan.CapacitorComponent.MaxCharge - _hitscan.CapacitorComponent.CurrentCharge < 0.01f)
             {
                 return Outcome.Success;
             }
 
             // If we're not charging then just stop
-            _lastFill = _hitscan.CapacitorComponent.Charge - _lastCharge;
-            _lastCharge = _hitscan.CapacitorComponent.Charge;
+            _lastFill = _hitscan.CapacitorComponent.CurrentCharge - _lastCharge;
+            _lastCharge = _hitscan.CapacitorComponent.CurrentCharge;
 
             if (_lastFill == 0.0f)
             {

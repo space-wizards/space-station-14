@@ -1,4 +1,4 @@
-using Content.Server.AI.Utility.Curves;
+﻿using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
@@ -18,7 +18,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
                 return 0.0f;
             }
 
-            return hitscanWeaponComponent.CapacitorComponent.Charge / hitscanWeaponComponent.CapacitorComponent.Capacity;
+            return hitscanWeaponComponent.CapacitorComponent.CurrentCharge / hitscanWeaponComponent.CapacitorComponent.MaxCharge;
         }
     }
 }
