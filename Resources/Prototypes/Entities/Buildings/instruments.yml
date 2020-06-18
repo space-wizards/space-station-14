@@ -41,6 +41,13 @@
      sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
    - type: Anchorable
+   - type: Collidable
+     shapes:
+       - !type:PhysShapeAabb
+         mask:
+           - Impassable
+           - MobImpassable
+           - VaultImpassable
 
  - type: entity
    name: minimoog
