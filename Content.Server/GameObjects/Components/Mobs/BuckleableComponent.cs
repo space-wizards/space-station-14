@@ -92,12 +92,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             foreach (var strap in straps)
             {
-                if (!strap.Owner.TryGetComponent(out ITransformComponent transform))
-                {
-                    continue;
-                }
-
-                var pos = transform.WorldPosition;
+                var pos = strap.Owner.Transform.WorldPosition;
                 var distance = (pos - Owner.Transform.WorldPosition).LengthSquared;
 
                 if (distance > closest.distance)
@@ -155,8 +150,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                     .PlayFromEntity(strap.UnbuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
             }
 
-            _buckledTo = null;
             Owner.Transform.DetachParent();
+            Owner.Transform.WorldRotation = _buckledTo.Transform.WorldRotation;
+            _buckledTo = null;
             StandingStateHelper.Standing(Owner);
 
             if (Owner.TryGetComponent(out SpeciesComponent species))
