@@ -13,6 +13,9 @@ using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using System;
 using Robust.Shared.Interfaces.Physics;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Throw
 {
@@ -146,7 +149,7 @@ namespace Content.Server.Throw
             var forceNecessary = impulseNecessary * (1f / timing.TickRate);
 
             // Then clamp it to the max force allowed and call Throw().
-            Throw(thrownEnt, Math.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
+            Throw(thrownEnt, MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
         }
     }
 }
