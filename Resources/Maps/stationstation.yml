@@ -1054,8 +1054,6 @@ entities:
     pos: -1.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 3000
-    type: PowerStorage
 - uid: 133
   type: SmesDry
   components:
@@ -1063,8 +1061,6 @@ entities:
     pos: -2.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 3000
-    type: PowerStorage
 - uid: 134
   type: SmesDry
   components:
@@ -1072,8 +1068,6 @@ entities:
     pos: -3.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 3000
-    type: PowerStorage
 - uid: 135
   type: Multitool
   components:
