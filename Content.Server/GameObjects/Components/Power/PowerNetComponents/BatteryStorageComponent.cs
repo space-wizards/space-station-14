@@ -22,9 +22,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         [ViewVariables]
         public PowerConsumerComponent Consumer { get; private set; }
 
-        [ViewVariables]
-        private int _consumerDrawRate = 0;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -41,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         public void Update(float frameTime)
         {
-            //Simlified implementation - If a frame adds more power to a partially full battery than it can hold, the power is lost.
+            //Simplified implementation - If a frame adds more power to a partially full battery than it can hold, the power is lost.
             _battery.CurrentCharge += Consumer.ReceivedPower * frameTime;
             UpdateDrawRate();
         }
@@ -60,10 +57,9 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void SetConsumerDraw(int newConsumerDrawRate)
         {
-            _consumerDrawRate = newConsumerDrawRate;
-            if (Consumer.DrawRate != _consumerDrawRate)
+            if (Consumer.DrawRate != newConsumerDrawRate)
             {
-                Consumer.DrawRate = _consumerDrawRate;
+                Consumer.DrawRate = newConsumerDrawRate;
             }
         }
 

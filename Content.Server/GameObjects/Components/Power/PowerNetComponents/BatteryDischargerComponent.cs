@@ -22,9 +22,6 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         public int ActiveSupplyRate { get => _activeSupplyRate; set => SetActiveSupplyRate(value); }
         private int _activeSupplyRate;
 
-        [ViewVariables]
-        private int _supplierSupplyRate = 0;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -61,10 +58,9 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private void SetSupplierSupplyRate(int newSupplierSupplyRate)
         {
-            _supplierSupplyRate = newSupplierSupplyRate;
-            if (_supplier.SupplyRate != _supplierSupplyRate)
+            if (_supplier.SupplyRate != newSupplierSupplyRate)
             {
-                _supplier.SupplyRate = _supplierSupplyRate;
+                _supplier.SupplyRate = newSupplierSupplyRate;
             }
         }
 
