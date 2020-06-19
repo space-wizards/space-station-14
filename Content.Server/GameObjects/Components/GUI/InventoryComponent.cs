@@ -393,7 +393,7 @@ namespace Content.Server.GameObjects
             return new InventoryComponentState(list);
         }
 
-        public void OnExplosion(ExplosionEventArgs eventArgs)
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
             switch (eventArgs.Severity)
             {
