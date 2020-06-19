@@ -283,6 +283,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
         {
             protected override void GetData(IEntity user, BallisticMagazineWeaponComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component.Magazine == null)
                 {
                     data.Text = "Eject magazine (magazine missing)";
