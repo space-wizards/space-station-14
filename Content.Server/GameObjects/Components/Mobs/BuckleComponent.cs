@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             _entitySystem.GetEntitySystem<AudioSystem>()
-                .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+                .PlayFromEntity(strap.BuckleSound, Owner);
 
             if (!strap.TryAdd(this))
             {
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 strap.Remove(this);
                 _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(strap.UnbuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+                    .PlayFromEntity(strap.UnbuckleSound, Owner);
             }
 
             Owner.Transform.DetachParent();
