@@ -32,9 +32,9 @@ namespace Content.Server.GameObjects.Components.Power
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>
-        private float _maxSupply = 1500;
+        private int _maxSupply = 1500;
         [ViewVariables(VVAccess.ReadWrite)]
-        public float MaxSupply
+        public int MaxSupply
         {
             get => _maxSupply;
             set {
