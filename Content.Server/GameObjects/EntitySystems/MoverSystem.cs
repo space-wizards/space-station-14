@@ -175,9 +175,8 @@ namespace Content.Server.GameObjects.EntitySystems
                     transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
                     return;
                 }
-
-                var speed = mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed;
-                (physics.Controller as MoverController)?.Move(mover.VelocityDir, speed);
+                (physics.Controller as MoverController)?.Move(mover.VelocityDir,
+                    mover.Sprinting ? mover.CurrentSprintSpeed : mover.CurrentWalkSpeed);
                 transform.LocalRotation = mover.VelocityDir.GetDir().ToAngle();
 
                 // Handle footsteps.
