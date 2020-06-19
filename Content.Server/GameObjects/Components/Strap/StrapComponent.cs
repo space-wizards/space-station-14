@@ -76,6 +76,12 @@ namespace Content.Server.GameObjects.Components.Strap
             return OccupiedSize + buckle.Size <= _size;
         }
 
+        /// <summary>
+        /// Adds a buckled entity. Called from <see cref="BuckleComponent.TryBuckle"/>
+        /// </summary>
+        /// <param name="buckle">The component to add</param>
+        /// <param name="force">Whether or not to check if the strap has enough space</param>
+        /// <returns>True if added, false otherwise</returns>
         public bool TryAdd(BuckleComponent buckle, bool force = false)
         {
             if (!force && !HasSpace(buckle))
@@ -98,6 +104,10 @@ namespace Content.Server.GameObjects.Components.Strap
             return true;
         }
 
+        /// <summary>
+        /// Removes a buckled entity. Called from <see cref="BuckleComponent.TryUnbuckle"/>
+        /// </summary>
+        /// <param name="buckle">The component to remove</param>
         public void Remove(BuckleComponent buckle)
         {
             if (BuckledEntities.Remove(buckle.Owner))
