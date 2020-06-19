@@ -250,6 +250,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             BuckledTo = null;
+            BuckleStatus();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
