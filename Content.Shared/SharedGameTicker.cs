@@ -117,26 +117,26 @@ namespace Content.Shared
             }
         }
 
-        protected class MsgTickerStartExtend : NetMessage
+        protected class MsgTickerDelayStart : NetMessage
         {
             #region REQUIRED
 
             public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerStartExtend);
-            public MsgTickerStartExtend(INetChannel channel) : base(NAME, GROUP) { }
+            public const string NAME = nameof(MsgTickerDelayStart);
+            public MsgTickerDelayStart(INetChannel channel) : base(NAME, GROUP) { }
 
             #endregion
 
-            public int Time { get; set; }
+            public int Seconds { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                Time = buffer.ReadInt32();
+                Seconds = buffer.ReadInt32();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
-                buffer.Write(Time);
+                buffer.Write(Seconds);
             }
         }
 

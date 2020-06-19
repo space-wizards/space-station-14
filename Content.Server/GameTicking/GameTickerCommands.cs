@@ -9,10 +9,10 @@ using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking
 {
-    class ExtendRoundStart : IClientCommand
+    class DelayStart : IClientCommand
     {
-        public string Command => "extendroundstart";
-        public string Description => "Extends the round start timer.";
+        public string Command => "delaystart";
+        public string Description => "Delays the round start.";
         public string Help => $"Usage: {Command} <seconds>";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
@@ -37,7 +37,7 @@ namespace Content.Server.GameTicking
             }
 
             var time = TimeSpan.FromSeconds(seconds);
-            if (!ticker.ExtendStart(time))
+            if (!ticker.DelayStart(time))
             {
                 shell.SendText(player, "An unknown error has occurred.");
             }

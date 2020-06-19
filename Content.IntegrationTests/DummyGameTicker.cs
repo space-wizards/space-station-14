@@ -89,7 +89,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public bool ExtendStart(TimeSpan time)
+        public bool DelayStart(TimeSpan time)
         {
             return true;
         }

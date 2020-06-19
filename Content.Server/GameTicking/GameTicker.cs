@@ -127,7 +127,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
-            _netManager.RegisterNetMessage<MsgTickerStartExtend>(nameof(MsgTickerStartExtend));
+            _netManager.RegisterNetMessage<MsgTickerDelayStart>(nameof(MsgTickerDelayStart));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
@@ -394,7 +394,7 @@ namespace Content.Server.GameTicking
                 _ => throw new NotSupportedException()
             });
 
-        public bool ExtendStart(TimeSpan time)
+        public bool DelayStart(TimeSpan time)
         {
             if (_runLevel != GameRunLevel.PreRoundLobby)
             {
@@ -403,8 +403,8 @@ namespace Content.Server.GameTicking
 
             _roundStartTimeUtc += time;
 
-            var roundEndMessage = _netManager.CreateNetMessage<MsgTickerStartExtend>();
-            roundEndMessage.Time = time.Seconds;
+            var roundEndMessage = _netManager.CreateNetMessage<MsgTickerDelayStart>();
+            roundEndMessage.Seconds = time.Seconds;
             _netManager.ServerSendToAll(roundEndMessage);
 
             return true;
