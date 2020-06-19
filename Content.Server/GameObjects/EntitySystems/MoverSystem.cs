@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
-                .Bind(EngineKeyFunctions.Run, runCmdHandler)
+                .Bind(EngineKeyFunctions.Walk, runCmdHandler)
                 .Register<MoverSystem>();
 
             SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
