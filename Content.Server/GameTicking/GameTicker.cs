@@ -116,7 +116,7 @@ namespace Content.Server.GameTicking
         {
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", true, CVar.ARCHIVE); // TODO Yell at me in the pr review if I left this in
+            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
