@@ -7,6 +7,7 @@ using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -144,13 +145,22 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             protected override void GetData(IEntity user, StrapComponent component, VerbData data)
             {
-                var strapPosition = component.Owner.Transform.MapPosition;
-                var range = SharedInteractionSystem.InteractionRange / 2;
-
                 if (!ActionBlockerSystem.CanInteract(component.Owner) ||
                     !user.TryGetComponent(out BuckleComponent buckle) ||
-                    buckle.BuckledTo != null && buckle.BuckledTo != component.Owner ||
-                    !InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+                    buckle.BuckledTo != null && buckle.BuckledTo != component.Owner)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                var userPosition = user.Transform.MapPosition;
+                var strapPosition = component.Owner.Transform.MapPosition;
+                var range = SharedInteractionSystem.InteractionRange / 2;
+                var inRange = EntitySystem.Get<SharedInteractionSystem>()
+                    .InRangeUnobstructed(userPosition, strapPosition, range,
+                        predicate: entity => entity == user || entity == component.Owner);
+
+                if (!inRange)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
