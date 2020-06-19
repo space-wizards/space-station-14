@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _drawRate, "drawRate", 0);
-            serializer.DataField(ref _priority, "priorty", Priority.First);
+            serializer.DataField(ref _priority, "priority", Priority.First);
         }
 
         protected override void AddSelfToNet(IPowerNet powerNet)

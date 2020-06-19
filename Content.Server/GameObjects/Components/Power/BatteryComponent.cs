@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Power
         /// </summary>
         public bool TryUseCharge(float chargeToUse)
         {
-            if (chargeToUse > CurrentCharge)
+            if (chargeToUse >= CurrentCharge)
             {
                 return false;
             }
@@ -77,7 +77,6 @@ namespace Content.Server.GameObjects.Components.Power
 
         private void SetCurrentCharge(float newChargeAmount)
         {
-            var oldCharge = _currentCharge;
             _currentCharge = FloatMath.Clamp(newChargeAmount, 0, MaxCharge);
             UpdateStorageState();
             OnChargeChanged();
