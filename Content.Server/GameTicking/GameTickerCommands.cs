@@ -17,6 +17,13 @@ namespace Content.Server.GameTicking
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
+            {
+                shell.SendText(player, "This can only be executed while the game is in the pre-round lobby.");
+                return;
+            }
+
             if (args.Length != 1)
             {
                 shell.SendText(player, "Need exactly one argument.");
@@ -26,13 +33,6 @@ namespace Content.Server.GameTicking
             if (!uint.TryParse(args[0], out var seconds))
             {
                 shell.SendText(player, $"{args[0]} isn't a valid amount of seconds.");
-                return;
-            }
-
-            var ticker = IoCManager.Resolve<IGameTicker>();
-            if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
-            {
-                shell.SendText(player, "This can only be executed while the game is in the pre-round lobby.");
                 return;
             }
 
@@ -236,6 +236,13 @@ namespace Content.Server.GameTicking
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
+            {
+                shell.SendText(player, "This can only be executed while the game is in the pre-round lobby.");
+                return;
+            }
+
             if (args.Length != 1)
             {
                 shell.SendText(player, "Need exactly one argument.");
@@ -243,8 +250,6 @@ namespace Content.Server.GameTicking
             }
 
             var name = args[0];
-            var ticker = IoCManager.Resolve<IGameTicker>();
-
             if (!ticker.TryGetPreset(name, out _))
             {
                 shell.SendText(player, $"No preset exists with name {name}.");
