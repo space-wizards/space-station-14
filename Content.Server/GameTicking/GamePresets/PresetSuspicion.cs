@@ -29,14 +29,16 @@ namespace Content.Server.GameTicking.GamePresets
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            if (!force && readyPlayers.Count > MinPlayers || readyPlayers.Count == 0) // TODO Yell at me in the pr review if I left this in
+            if (!force && readyPlayers.Count > MinPlayers || readyPlayers.Count < 2) // TODO Yell at me in the pr review if I left this in
             {
-                _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {readyPlayers.Count} players readied up out of {MinPlayers} needed.");
+                _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {readyPlayers.Count} players readied up out of {(force ? 2 : MinPlayers)} needed.");
                 return false;
             }
 
             var list = new List<IPlayerSession>(readyPlayers);
-            var numTraitors = Math.Max(readyPlayers.Count % PlayersPerTraitor, MinTraitors);
+            var numTraitors = Math.Min(
+                Math.Max(readyPlayers.Count % PlayersPerTraitor, MinTraitors),
+                readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)
             {
