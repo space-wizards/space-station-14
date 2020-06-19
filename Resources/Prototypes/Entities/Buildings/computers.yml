@@ -18,6 +18,10 @@
       - MobImpassable
       - VaultImpassable
       - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: Icon
     sprite: Buildings/computer.rsi
     state: computer

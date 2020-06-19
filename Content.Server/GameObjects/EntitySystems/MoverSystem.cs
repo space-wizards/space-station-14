@@ -73,9 +73,9 @@ namespace Content.Server.GameObjects.EntitySystems
             var moveDownCmdHandler = InputCmdHandler.FromDelegate(
                 session => HandleDirChange(session, Direction.South, true),
                 session => HandleDirChange(session, Direction.South, false));
-            var runCmdHandler = InputCmdHandler.FromDelegate(
-                session => HandleRunChange(session, false),
-                session => HandleRunChange(session, true));
+            var walkCmdHandler = InputCmdHandler.FromDelegate(
+                session => HandleRunChange(session, true),
+                session => HandleRunChange(session, false));
 
             var input = EntitySystemManager.GetEntitySystem<InputSystem>();
 
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
-                .Bind(EngineKeyFunctions.Run, runCmdHandler)
+                .Bind(EngineKeyFunctions.Walk, walkCmdHandler)
                 .Register<MoverSystem>();
 
             SubscribeLocalEvent<PlayerAttachSystemMessage>(PlayerAttached);
@@ -265,12 +265,12 @@ namespace Content.Server.GameObjects.EntitySystems
             moverComp.SetVelocityDirection(dir, state);
         }
 
-        private static void HandleRunChange(ICommonSession session, bool running)
+        private static void HandleRunChange(ICommonSession session, bool walking)
         {
             if (!TryGetAttachedComponent(session as IPlayerSession, out PlayerInputMoverComponent moverComp))
                 return;
 
-            moverComp.Sprinting = running;
+            moverComp.Sprinting = !walking;
         }
 
         private static bool TryGetAttachedComponent<T>(IPlayerSession session, out T component)

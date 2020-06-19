@@ -160,6 +160,7 @@ namespace Content.Client
                 "SecureEntityStorage",
                 "PresetIdCard",
                 "SolarControlConsole",
+                "Utensil",
                 "NodeContainer",
                 "PowerSupplier",
                 "PowerConsumer",
