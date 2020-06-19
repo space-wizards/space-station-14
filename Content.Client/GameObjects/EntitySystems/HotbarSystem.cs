@@ -72,7 +72,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var playerEnt = _playerManager.LocalPlayer.ControlledEntity;
+            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEnt == null
                 || !playerEnt.TryGetComponent(out HotbarComponent clientHotbar))
             {
@@ -84,7 +84,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleOpenActionsMenu()
         {
-            var playerEnt = _playerManager.LocalPlayer.ControlledEntity;
+            var playerEnt = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEnt == null
                 || !playerEnt.TryGetComponent(out HotbarComponent clientHotbar))
             {
@@ -96,7 +96,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private bool HandleHotbarKeybindPressed(int index, in PointerInputCmdArgs args)
         {
-            if (_playerManager.LocalPlayer.ControlledEntity == null
+            if (_playerManager.LocalPlayer?.ControlledEntity == null
                 || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
             {
                 return false;

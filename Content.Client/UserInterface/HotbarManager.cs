@@ -73,7 +73,7 @@ namespace Content.Client.UserInterface
         public void RemoveAction(HotbarAction action)
         {
             // Maybe this can be replaced by a variable here set by the HotbarComponent OnPlayerAttached and OnPlayerDetached?
-            if (_playerManager.LocalPlayer.ControlledEntity == null
+            if (_playerManager.LocalPlayer?.ControlledEntity == null
                 || !_playerManager.LocalPlayer.ControlledEntity.TryGetComponent(out HotbarComponent hotbarComponent))
             {
                 return;
