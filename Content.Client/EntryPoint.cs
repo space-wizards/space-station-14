@@ -167,6 +167,7 @@ namespace Content.Client
                 "SecureEntityStorage",
                 "PresetIdCard",
                 "SolarControlConsole",
+                "Utensil",
             };
 
             foreach (var ignoreName in registerIgnore)
