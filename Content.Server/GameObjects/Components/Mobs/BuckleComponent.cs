@@ -33,27 +33,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         [CanBeNull] private IEntity _buckledTo;
 
-        [ViewVariables]
+        [ViewVariables, CanBeNull]
         public IEntity BuckledTo
         {
             get => _buckledTo;
-            private set
-            {
-                var old = value ?? _buckledTo;
-                _buckledTo = value;
-
-                if (old != null && old.TryGetComponent(out StrapComponent strap))
-                {
-                    if (value == null)
-                    {
-                        strap.TryRemoveEntity(this, true);
-                    }
-                    else
-                    {
-                        strap.TryAddEntity(this, true);
-                    }
-                }
-            }
+            private set => _buckledTo = value;
         }
 
         [ViewVariables]
@@ -131,6 +115,14 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             _entitySystem.GetEntitySystem<AudioSystem>()
                 .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+
+            if (!strap.TryAdd(this))
+            {
+                _notifyManager.PopupMessage(Owner, user,
+                    Loc.GetString("You can't buckle {0:them} there!", Owner));
+                return false;
+            }
+
             BuckledTo = strap.Owner;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -195,15 +187,16 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (_buckledTo.TryGetComponent(out StrapComponent strap))
-            {
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(strap.UnbuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
-            }
-
             Owner.Transform.DetachParent();
             Owner.Transform.WorldRotation = _buckledTo.Transform.WorldRotation;
             BuckledTo = null;
+
+            if (_buckledTo.TryGetComponent(out StrapComponent strap))
+            {
+                strap.Remove(this);
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(strap.UnbuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
+            }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
@@ -250,6 +243,12 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void OnRemove()
         {
             base.OnRemove();
+
+            if (BuckledTo != null && BuckledTo.TryGetComponent(out StrapComponent strap))
+            {
+                strap.Remove(this);
+            }
+
             BuckledTo = null;
         }
 

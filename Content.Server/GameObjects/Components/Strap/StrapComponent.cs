@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Strap
             return OccupiedSize + buckle.Size <= _size;
         }
 
-        public bool TryAddEntity(BuckleComponent buckle, bool force = false)
+        public bool TryAdd(BuckleComponent buckle, bool force = false)
         {
             if (!force && !HasSpace(buckle))
             {
@@ -95,16 +95,12 @@ namespace Content.Server.GameObjects.Components.Strap
             return true;
         }
 
-        public bool TryRemoveEntity(BuckleComponent buckle, bool force = false)
+        public void Remove(BuckleComponent buckle)
         {
-            var removed = BuckledEntities.Remove(buckle.Owner);
-
-            if (removed)
+            if (BuckledEntities.Remove(buckle.Owner))
             {
                 OccupiedSize -= buckle.Size;
             }
-
-            return removed;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
