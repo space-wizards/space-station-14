@@ -381,11 +381,11 @@ namespace Content.Server.GameTicking
 
         private bool TryGetPreset(string name, out Type type)
         {
-            type = name switch
+            type = name.ToLower() switch
             {
-                "Sandbox" => typeof(PresetSandbox),
-                "DeathMatch" => typeof(PresetDeathMatch),
-                "Suspicion" => typeof(PresetSuspicion),
+                "sandbox" => typeof(PresetSandbox),
+                "deathmatch" => typeof(PresetDeathMatch),
+                "suspicion" => typeof(PresetSuspicion),
                 _ => default
             };
 
