@@ -94,12 +94,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                         case StatusEffect.Stun:
                             break;
                         case StatusEffect.Buckled:
-                            if (!player.TryGetComponent(out BuckleableComponent buckleable))
+                            if (!player.TryGetComponent(out BuckleComponent buckle))
                             {
                                 break;
                             }
 
-                            buckleable.TryUnbuckle(player);
+                            buckle.TryUnbuckle(player);
                             break;
                     }
 

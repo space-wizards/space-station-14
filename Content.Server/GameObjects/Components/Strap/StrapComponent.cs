@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Strap
         private int _rotation;
 
         /// <summary>
-        /// The entity that is currently buckled here, synced from <see cref="BuckleableComponent.BuckledTo"/>
+        /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
         /// </summary>
         [CanBeNull] public IEntity BuckledEntity { get; private set; }
 
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             base.OnRemove();
 
-            if (BuckledEntity != null && BuckledEntity.TryGetComponent(out BuckleableComponent buckle))
+            if (BuckledEntity != null && BuckledEntity.TryGetComponent(out BuckleComponent buckle))
             {
                 buckle.ForceUnbuckle();
             }
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Strap
                 var range = SharedInteractionSystem.InteractionRange / 2;
 
                 if (!ActionBlockerSystem.CanInteract(component.Owner) ||
-                    !user.TryGetComponent(out BuckleableComponent buckle) ||
+                    !user.TryGetComponent(out BuckleComponent buckle) ||
                     buckle.BuckledTo != null && buckle.BuckledTo != component.Owner ||
                     !InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
                 {
@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Strap
 
             protected override void Activate(IEntity user, StrapComponent component)
             {
-                if (!user.TryGetComponent(out BuckleableComponent buckle))
+                if (!user.TryGetComponent(out BuckleComponent buckle))
                 {
                     return;
                 }

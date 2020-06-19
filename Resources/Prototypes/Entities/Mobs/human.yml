@@ -139,7 +139,7 @@
   - type: HumanInventoryController
   - type: Stunnable
   - type: AnimationPlayer
-  - type: Buckleable
+  - type: Buckle
 
 - type: entity
   save: false

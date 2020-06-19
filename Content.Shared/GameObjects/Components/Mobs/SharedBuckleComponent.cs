@@ -4,9 +4,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
-    public class SharedBuckleableComponent : Component
+    public class SharedBuckleComponent : Component
     {
-        public sealed override string Name => "Buckleable";
+        public sealed override string Name => "Buckle";
 
         [Serializable, NetSerializable]
         public enum BuckleVisuals

@@ -167,7 +167,7 @@ namespace Content.Client
                 "SecureEntityStorage",
                 "PresetIdCard",
                 "SolarControlConsole",
-                "Buckleable",
+                "Buckle",
                 "Strap"
             };
 

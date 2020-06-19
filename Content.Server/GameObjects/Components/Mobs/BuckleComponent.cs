@@ -21,7 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleableComponent : SharedBuckleableComponent, IActionBlocker, IInteractHand
+    public class BuckleComponent : SharedBuckleComponent, IActionBlocker, IInteractHand
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem;
@@ -260,9 +260,9 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
 
         [Verb]
-        private sealed class BuckleVerb : Verb<BuckleableComponent>
+        private sealed class BuckleVerb : Verb<BuckleComponent>
         {
-            protected override void GetData(IEntity user, BuckleableComponent component, VerbData data)
+            protected override void GetData(IEntity user, BuckleComponent component, VerbData data)
             {
                 if (!ActionBlockerSystem.CanInteract(user) ||
                     component.BuckledTo == null)
@@ -274,7 +274,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 data.Text = Loc.GetString("Unbuckle");
             }
 
-            protected override void Activate(IEntity user, BuckleableComponent component)
+            protected override void Activate(IEntity user, BuckleComponent component)
             {
                 component.TryUnbuckle(user);
             }
