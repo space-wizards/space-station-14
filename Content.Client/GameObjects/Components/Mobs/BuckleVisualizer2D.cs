@@ -1,4 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Strap;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
@@ -10,15 +11,17 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (component.TryGetData<SharedSpeciesComponent.MobState>(SharedSpeciesComponent.MobVisuals.RotationState, out var state))
+            if (!component.TryGetData<bool>(SharedBuckleableComponent.BuckleVisuals.Buckled, out var buckled) || !buckled)
             {
-                switch (state)
-                {
-                    case SharedSpeciesComponent.MobState.Down:
-                        SetRotation(component, Angle.FromDegrees(-90));
-                        break;
-                }
+                return;
             }
+
+            if (!component.TryGetData<int>(SharedStrapComponent.StrapVisuals.RotationAngle, out var angle))
+            {
+                return;
+            }
+
+            SetRotation(component, Angle.FromDegrees(angle));
         }
     }
 }

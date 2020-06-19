@@ -5,6 +5,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
@@ -19,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Strap
         private StrapPosition _position;
         private string _buckleSound;
         private string _unbuckleSound;
+        private int _rotation;
 
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleableComponent.BuckledTo"/>
@@ -50,9 +52,20 @@ namespace Content.Server.GameObjects.Components.Strap
         [ViewVariables]
         public string UnbuckleSound => _unbuckleSound;
 
+        /// <summary>
+        /// The angle in degrees to rotate the player by when they get strapped
+        /// </summary>
+        [ViewVariables]
+        public int Rotation => _rotation;
+
         public void AddEntity(IEntity entity)
         {
             BuckledEntity = entity;
+
+            if (entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(StrapVisuals.RotationAngle, _rotation);
+            }
         }
 
         public void RemoveEntity(IEntity entity)
@@ -70,6 +83,7 @@ namespace Content.Server.GameObjects.Components.Strap
             serializer.DataField(ref _position, "position", StrapPosition.None);
             serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/effects/buckle.ogg");
             serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/effects/unbuckle.ogg");
+            serializer.DataField(ref _rotation, "rotation", 0);
         }
 
         public override void OnRemove()

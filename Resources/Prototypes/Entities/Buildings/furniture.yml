@@ -103,5 +103,6 @@
     state: bed
   - type: Strap
     position: Down
+    rotation: -90
   placement:
     mode: SnapgridCenter

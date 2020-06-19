@@ -8,6 +8,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -20,14 +21,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleableComponent : Component, IActionBlocker, IInteractHand
+    public class BuckleableComponent : SharedBuckleableComponent, IActionBlocker, IInteractHand
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
-
-        public override string Name => "Buckleable";
 
         [CanBeNull] private IEntity _buckledTo;
 
@@ -128,6 +127,11 @@ namespace Content.Server.GameObjects.Components.Mobs
                 .PlayFromEntity(strap.BuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
             BuckledTo = strap.Owner;
 
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(BuckleVisuals.Buckled, true);
+            }
+
             var ownTransform = Owner.Transform;
             var closestTransform = strap.Owner.Transform;
 
@@ -194,6 +198,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             Owner.Transform.DetachParent();
             Owner.Transform.WorldRotation = _buckledTo.Transform.WorldRotation;
             BuckledTo = null;
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(BuckleVisuals.Buckled, false);
+            }
+
             StandingStateHelper.Standing(Owner);
 
             if (Owner.TryGetComponent(out SpeciesComponent species))

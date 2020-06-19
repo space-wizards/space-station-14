@@ -1,4 +1,6 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Strap
 {
@@ -25,5 +27,11 @@ namespace Content.Shared.GameObjects.Components.Strap
         public sealed override string Name => "Strap";
 
         public virtual StrapPosition Position { get; set; }
+
+        [Serializable, NetSerializable]
+        public enum StrapVisuals
+        {
+            RotationAngle
+        }
     }
 }
