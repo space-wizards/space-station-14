@@ -6,14 +6,16 @@ using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -31,13 +33,10 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
-
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
-
 
         /// <inheritdoc />
         public override void Initialize()
@@ -96,9 +95,12 @@ namespace Content.Server.GameObjects.EntitySystems
             if (msg.Attacked.TryGetComponent<ConstructionComponent>(out var constructComp))
             {
                 //TODO: Continue constructing
+                var result = TryConstructEntity(constructComp, handEnt, msg.User);
+
                 _notifyManager.PopupMessage(msg.Attacked, msg.User,
                     "TODO: Continue Construction.");
 
+                msg.Handled = result;
                 return;
             }
             else // try to start the deconstruction process
@@ -108,7 +110,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     _notifyManager.PopupMessage(msg.Attacked, msg.User,
                         "Cannot be deconstructed.");
-                    msg.Handled = false;
                     return;
                 }
 
@@ -151,7 +152,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (!activeHand.TryGetComponent(out StackComponent stack) || !ConstructionComponent.MaterialStackValidFor(matStep, stack))
+            if (!activeHand.TryGetComponent(out StackComponent stack) || !MaterialStackValidFor(matStep, stack))
             {
                 return false;
             }
@@ -166,14 +167,14 @@ namespace Content.Server.GameObjects.EntitySystems
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                var ent = _serverEntityManager.SpawnEntity(prototype.Result, loc);
+                var ent = EntityManager.SpawnEntity(prototype.Result, loc);
                 ent.Transform.LocalRotation = angle;
             }
             else
             {
-                var frame = _serverEntityManager.SpawnEntity("structureconstructionframe", loc);
+                var frame = EntityManager.SpawnEntity("structureconstructionframe", loc);
                 var construction = frame.GetComponent<ConstructionComponent>();
-                construction.Init(prototype);
+                SetupComponent(construction, prototype);
                 frame.Transform.LocalRotation = angle;
             }
 
@@ -203,7 +204,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            if (!activeHand.TryGetComponent(out StackComponent stack) || !ConstructionComponent.MaterialStackValidFor(matStep, stack))
+            if (!activeHand.TryGetComponent(out StackComponent stack) || !MaterialStackValidFor(matStep, stack))
             {
                 return;
             }
@@ -218,16 +219,143 @@ namespace Content.Server.GameObjects.EntitySystems
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                var ent = _serverEntityManager.SpawnEntity(prototype.Result, placingEnt.Transform.GridPosition);
+                var ent = EntityManager.SpawnEntity(prototype.Result, placingEnt.Transform.GridPosition);
                 hands.PutInHandOrDrop(ent.GetComponent<ItemComponent>());
             }
             else
             {
                 //TODO: Make these viable as an item and try putting them in the players hands
-                var frame = _serverEntityManager.SpawnEntity("structureconstructionframe", placingEnt.Transform.GridPosition);
+                var frame = EntityManager.SpawnEntity("structureconstructionframe", placingEnt.Transform.GridPosition);
                 var construction = frame.GetComponent<ConstructionComponent>();
-                construction.Init(prototype);
+                SetupComponent(construction, prototype);
             }
+
+        }
+
+        private bool TryConstructEntity(ConstructionComponent constructionComponent, IEntity handTool, IEntity user)
+        {
+            var constructEntity = constructionComponent.Owner;
+            var spriteComponent = constructEntity.GetComponent<SpriteComponent>();
+            var transformComponent = constructEntity.GetComponent<ITransformComponent>();
+
+            // default interaction check for AttackBy allows inside blockers, so we will check if its blocked if
+            // we're not allowed to build on impassable stuff
+            var constructPrototype = constructionComponent.Prototype;
+            if (constructPrototype.CanBuildInImpassable == false)
+            {
+                if (!InteractionChecks.InRangeUnobstructed(user, constructEntity.Transform.MapPosition))
+                    return false;
+            }
+
+            var stage = constructPrototype.Stages[constructionComponent.Stage];
+
+            if (TryProcessStep(constructEntity, stage.Forward, handTool, user, transformComponent.GridPosition))
+            {
+                constructionComponent.Stage++;
+                if (constructionComponent.Stage == constructPrototype.Stages.Count - 1)
+                {
+                    // Oh boy we get to finish construction!
+                    var ent = EntityManager.SpawnEntity(constructPrototype.Result, transformComponent.GridPosition);
+                    ent.Transform.LocalRotation = transformComponent.LocalRotation;
+                    constructEntity.Delete();
+                    return true;
+                }
+
+                stage = constructPrototype.Stages[constructionComponent.Stage];
+                if (stage.Icon != null)
+                {
+                    spriteComponent.LayerSetSprite(0, stage.Icon);
+                }
+            }
+
+            else if (TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
+            {
+                constructionComponent.Stage--;
+                if (constructionComponent.Stage == 0)
+                {
+                    // Deconstruction complete.
+                    constructEntity.Delete();
+                    return true;
+                }
+
+                stage = constructPrototype.Stages[constructionComponent.Stage];
+                if (stage.Icon != null)
+                {
+                    spriteComponent.LayerSetSprite(0, stage.Icon);
+                }
+            }
+
+            return true;
+        }
+
+        private bool TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
+        {
+            if (step == null)
+            {
+                return false;
+            }
+            
+            var sound = EntitySystemManager.GetEntitySystem<AudioSystem>();
+
+            switch (step)
+            {
+                case ConstructionStepMaterial matStep:
+                    if (!slapped.TryGetComponent(out StackComponent stack)
+                        || !MaterialStackValidFor(matStep, stack)
+                        || !stack.Use(matStep.Amount))
+                    {
+                        return false;
+                    }
+                    if (matStep.Material == ConstructionStepMaterial.MaterialType.Cable)
+                        sound.PlayAtCoords("/Audio/items/zip.ogg", gridCoords);
+                    else
+                        sound.PlayAtCoords("/Audio/items/deconstruct.ogg", gridCoords);
+                    return true;
+                case ConstructionStepTool toolStep:
+                    if (!slapped.TryGetComponent<ToolComponent>(out var tool))
+                        return false;
+
+                    // Handle welder manually since tool steps specify fuel amount needed, for some reason.
+                    if (toolStep.ToolQuality.HasFlag(ToolQuality.Welding))
+                        return slapped.TryGetComponent<WelderComponent>(out var welder)
+                               && welder.UseTool(user, constructEntity, toolStep.ToolQuality, toolStep.Amount);
+
+                    return tool.UseTool(user, constructEntity, toolStep.ToolQuality);
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        // Really this should check the actual materials at play..
+        private static readonly Dictionary<StackType, ConstructionStepMaterial.MaterialType> StackTypeMap
+            = new Dictionary<StackType, ConstructionStepMaterial.MaterialType>
+            {
+                { StackType.Cable, ConstructionStepMaterial.MaterialType.Cable },
+                { StackType.Gold, ConstructionStepMaterial.MaterialType.Gold },
+                { StackType.Glass, ConstructionStepMaterial.MaterialType.Glass },
+                { StackType.Metal, ConstructionStepMaterial.MaterialType.Metal }
+            };
+
+        private static bool MaterialStackValidFor(ConstructionStepMaterial step, StackComponent stack)
+        {
+            return StackTypeMap.TryGetValue((StackType)stack.StackType, out var should) && should == step.Material;
+        }
+
+        private static void SetupComponent(ConstructionComponent constructionComponent, ConstructionPrototype prototype)
+        {
+            constructionComponent.Prototype = prototype;
+            constructionComponent.Stage = 1;
+            var spriteComp = constructionComponent.Owner.GetComponent<SpriteComponent>();
+            if(prototype.Stages[1].Icon != null)
+            {
+                spriteComp.AddLayerWithSprite(prototype.Stages[1].Icon);
+            }
+            else
+            {
+                spriteComp.AddLayerWithSprite(prototype.Icon);
+            }
+
 
         }
     }
