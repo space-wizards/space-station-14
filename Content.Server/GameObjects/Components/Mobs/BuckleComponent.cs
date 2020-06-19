@@ -31,10 +31,10 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private int _size;
 
-        [CanBeNull] private IEntity _buckledTo;
+        [CanBeNull] private StrapComponent _buckledTo;
 
         [ViewVariables, CanBeNull]
-        public IEntity BuckledTo
+        public StrapComponent BuckledTo
         {
             get => _buckledTo;
             private set => _buckledTo = value;
@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            BuckledTo = strap.Owner;
+            BuckledTo = strap;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
@@ -188,10 +188,10 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             Owner.Transform.DetachParent();
-            Owner.Transform.WorldRotation = _buckledTo.Transform.WorldRotation;
+            Owner.Transform.WorldRotation = _buckledTo.Owner.Transform.WorldRotation;
             BuckledTo = null;
 
-            if (_buckledTo.TryGetComponent(out StrapComponent strap))
+            if (_buckledTo.Owner.TryGetComponent(out StrapComponent strap))
             {
                 strap.Remove(this);
                 _entitySystem.GetEntitySystem<AudioSystem>()
@@ -244,7 +244,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.OnRemove();
 
-            if (BuckledTo != null && BuckledTo.TryGetComponent(out StrapComponent strap))
+            if (BuckledTo != null && BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
             {
                 strap.Remove(this);
             }
