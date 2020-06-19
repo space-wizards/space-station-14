@@ -19,7 +19,7 @@ namespace Content.Server.GameTicking
         {
             if (args.Length != 1)
             {
-                shell.SendText(player, "No time in seconds to extend the round start by has been specified.");
+                shell.SendText(player, "Need exactly one argument.");
                 return;
             }
 
