@@ -88,5 +88,10 @@ namespace Content.IntegrationTests
         public void SetStartPreset(string type)
         {
         }
+
+        public bool ExtendStart(TimeSpan time)
+        {
+            return true;
+        }
     }
 }

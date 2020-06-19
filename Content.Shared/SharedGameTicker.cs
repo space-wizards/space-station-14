@@ -116,6 +116,30 @@ namespace Content.Shared
                 buffer.Write(TextBlob);
             }
         }
+
+        protected class MsgTickerStartExtend : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerStartExtend);
+            public MsgTickerStartExtend(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public int Time { get; set; }
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Time = buffer.ReadInt32();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Time);
+            }
+        }
+
         public struct RoundEndPlayerInfo
         {
             public string PlayerOOCName;

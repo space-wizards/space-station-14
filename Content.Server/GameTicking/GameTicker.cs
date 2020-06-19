@@ -116,7 +116,7 @@ namespace Content.Server.GameTicking
         {
             DebugTools.Assert(!_initialized);
 
-            _configurationManager.RegisterCVar("game.lobbyenabled", false, CVar.ARCHIVE);
+            _configurationManager.RegisterCVar("game.lobbyenabled", true, CVar.ARCHIVE); // TODO Yell at me in the pr review if I left this in
             _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
@@ -127,6 +127,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame));
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
+            _netManager.RegisterNetMessage<MsgTickerStartExtend>(nameof(MsgTickerStartExtend));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
@@ -392,6 +393,22 @@ namespace Content.Server.GameTicking
                 "Suspicion" => typeof(PresetSuspicion),
                 _ => throw new NotSupportedException()
             });
+
+        public bool ExtendStart(TimeSpan time)
+        {
+            if (_runLevel != GameRunLevel.PreRoundLobby)
+            {
+                return false;
+            }
+
+            _roundStartTimeUtc += time;
+
+            var roundEndMessage = _netManager.CreateNetMessage<MsgTickerStartExtend>();
+            roundEndMessage.Time = time.Seconds;
+            _netManager.ServerSendToAll(roundEndMessage);
+
+            return true;
+        }
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)
         {

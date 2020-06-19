@@ -41,5 +41,7 @@ namespace Content.Server.Interfaces.GameTicking
 
         void SetStartPreset(Type type);
         void SetStartPreset(string type);
+
+        bool ExtendStart(TimeSpan time);
     }
 }

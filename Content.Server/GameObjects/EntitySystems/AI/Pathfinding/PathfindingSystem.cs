@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (!_graph.ContainsKey(removal.GridId))
             {
-                throw new InvalidOperationException();
+                // throw new InvalidOperationException(); // TODO Yell at me in the pr review if I left this in
             }
 
             _graph.Remove(removal.GridId);

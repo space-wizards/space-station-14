@@ -36,6 +36,7 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
+            _netManager.RegisterNetMessage<MsgTickerStartExtend>(nameof(MsgTickerStartExtend), StartExtend);
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
 
             _initialized = true;
@@ -67,6 +68,11 @@ namespace Content.Client.GameTicking
         private void JoinGame(MsgTickerJoinGame message)
         {
             _stateManager.RequestStateChange<GameScreen>();
+        }
+
+        private void StartExtend(MsgTickerStartExtend message)
+        {
+            StartTime += TimeSpan.FromSeconds(message.Time);
         }
 
         private void RoundEnd(MsgRoundEndMessage message)

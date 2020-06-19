@@ -9,6 +9,40 @@ using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking
 {
+    class ExtendRoundStart : IClientCommand
+    {
+        public string Command => "extendroundstart";
+        public string Description => "Extends the round start timer.";
+        public string Help => $"Usage: {Command} <seconds>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "No time in seconds to extend the round start by has been specified.");
+                return;
+            }
+
+            if (!int.TryParse(args[0], out var seconds))
+            {
+                shell.SendText(player, $"{args[0]} isn't a valid amount of seconds.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+            if (ticker.RunLevel != GameRunLevel.PreRoundLobby)
+            {
+                shell.SendText(player, "This can only be executed while the game is in the pre-round lobby.");
+                return;
+            }
+
+            var time = TimeSpan.FromSeconds(seconds);
+            if (!ticker.ExtendStart(time))
+            {
+                shell.SendText(player, "An unknown error has occurred.");
+            }
+        }
+    }
 
     class StartRoundCommand : IClientCommand
     {

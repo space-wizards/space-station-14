@@ -55,6 +55,7 @@
   - tp
   - tpgrid
   - setgamepreset
+  - extendroundstart
   - startround
   - endround
   - restartround
@@ -98,6 +99,7 @@
   - tp
   - tpgrid
   - setgamepreset
+  - extendroundstart
   - startround
   - endround
   - restartround
