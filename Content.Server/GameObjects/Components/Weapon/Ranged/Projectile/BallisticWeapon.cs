@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
@@ -68,6 +69,22 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             serializer.DataField(ref _chamberCount, "chambers", 1);
         }
 
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        private static readonly string[] _ballisticsChambersStrings =
+        {
+            "ballistics_chamber_0",
+            "ballistics_chamber_1",
+            "ballistics_chamber_2",
+            "ballistics_chamber_3",
+            "ballistics_chamber_4",
+            "ballistics_chamber_5",
+            "ballistics_chamber_6",
+            "ballistics_chamber_7",
+            "ballistics_chamber_8",
+            "ballistics_chamber_9",
+        };
+
         public override void Initialize()
         {
             base.Initialize();
@@ -99,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             FireAtCoord(user, clickLocation, ammo.ProjectileID, total_stdev, ammo.ProjectilesFired, final_evenspread, final_velocity);
         }
 
-        protected IEntity GetChambered(int chamber) => _chambers[chamber].Slot.ContainedEntity;
+        public IEntity GetChambered(int chamber) => _chambers[chamber].Slot.ContainedEntity;
 
         /// <summary>
         ///     Loads the next ammo casing into the chamber.

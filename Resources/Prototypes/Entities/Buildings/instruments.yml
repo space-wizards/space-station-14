@@ -1,4 +1,4 @@
- - type: entity
+﻿ - type: entity
    name: baseinstrument
    id: BaseInstrument
    abstract: true
@@ -40,6 +40,14 @@
    - type: Icon
      sprite: Objects/Instruments/otherinstruments.rsi
      state: piano
+   - type: Anchorable
+   - type: Collidable
+     shapes:
+       - !type:PhysShapeAabb
+         mask:
+           - Impassable
+           - MobImpassable
+           - VaultImpassable
 
  - type: entity
    name: minimoog
@@ -54,6 +62,21 @@
    - type: Icon
      sprite: Objects/Instruments/otherinstruments.rsi
      state: minimoog
+
+ - type: entity
+   name: church organ
+   parent: BaseInstrument
+   id: ChurchOrganInstrument
+   description: This thing really blows!
+   components:
+   - type: Instrument
+     program: 20
+   - type: Sprite
+     sprite: Objects/Instruments/otherinstruments.rsi
+     state: church_organ
+   - type: Icon
+     sprite: Objects/Instruments/otherinstruments.rsi
+     state: church_organ
 
  - type: entity
    name: xylophone

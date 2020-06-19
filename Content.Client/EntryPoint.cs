@@ -165,6 +165,9 @@ namespace Content.Client
                 "ConditionalSpawner",
                 "PottedPlantHide",
                 "SecureEntityStorage",
+                "PresetIdCard",
+                "SolarControlConsole",
+                "Utensil",
             };
 
             foreach (var ignoreName in registerIgnore)
