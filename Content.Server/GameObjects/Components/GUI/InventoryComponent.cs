@@ -395,13 +395,9 @@ namespace Content.Server.GameObjects
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
-            switch (eventArgs.Severity)
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
             {
-                case ExplosionSeverity.Destruction:
-                case ExplosionSeverity.Heavy:
-                    break;
-                default:
-                    return;
+                return;
             }
 
             foreach (var slot in SlotContainers.Values.ToList())
