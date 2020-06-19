@@ -104,6 +104,12 @@ namespace Content.Server.BodySystem {
             return _template.Connections.TryGetValue(slotName, out connections);
         }
 
+
+
+
+
+
+
         /////////
         /////////  Server-specific stuff
         /////////
@@ -218,5 +224,6 @@ namespace Content.Server.BodySystem {
                 }
             }
         }
+
     }
 }

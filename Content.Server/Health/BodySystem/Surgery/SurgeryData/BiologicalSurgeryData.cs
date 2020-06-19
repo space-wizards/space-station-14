@@ -160,6 +160,7 @@ namespace Content.Server.BodySystem
 
 
         }
+
         protected void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.

@@ -33,7 +33,8 @@ namespace Content.Server.BodySystem
         private SurgeryType _surgeryType;
         private HashSet<IPlayerSession> _subscribedSessions = new HashSet<IPlayerSession>();
 
-        private Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
+        private Dictionary<string, BodyPart> _bodyPartOptionsCache = new Dictionary<string, BodyPart>();
+        private Dictionary<string, Mechanism> _mechanismOptionsCache = new Dictionary<string, Mechanism>();
         private IEntity _performerCache;
         private BodyManagerComponent _bodyManagerComponentCache;
 
@@ -41,18 +42,21 @@ namespace Content.Server.BodySystem
         {
             if (eventArgs.Target == null)
                 return;
+            _bodyPartOptionsCache.Clear();
+            _mechanismOptionsCache.Clear();
+            _performerCache = null;
+            _bodyManagerComponentCache = null;
             if (eventArgs.Target.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager)) //Attempt surgery on a BodyManagerComponent by sending a list of operatable BodyParts to the client to choose from
             {
-                _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();
                 foreach (var(key, value) in bodyManager.PartDictionary) {
                     if (value.SurgeryCheck(_surgeryType))
                     {
-                        _surgeryOptionsCache.Add(key, value);
+                        _bodyPartOptionsCache.Add(key, value);
                         toSend.Add(key + ": " + value.Name, key);
                     }
                 }
-                if (_surgeryOptionsCache.Count > 0)
+                if (_bodyPartOptionsCache.Count > 0)
                 {
                     OpenSurgeryUI(eventArgs.User, SurgeryUIMessageType.SelectBodyPart);
                     UpdateSurgeryUI(eventArgs.User, toSend);
@@ -91,10 +95,10 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Called after the client chooses from a list of possible BodyParts that can be operated on. 
         /// </summary>
-        private void PerformSurgeryOnBodyManagerSlot(string targetSlot)
+        private void HandleReceiveBodyPart(string targetSlot)
         {
             //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!_surgeryOptionsCache.TryGetValue(targetSlot, out BodyPart target))
+            if (!_bodyPartOptionsCache.TryGetValue(targetSlot, out BodyPart target))
             {
                 _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
             }
@@ -108,14 +112,20 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///     Called after the client chooses from a list of possible Mechanisms to choose from.
         /// </summary>
-        private void PassMechanismToSurgeryData(string mechanismName)
+        private void HandleReceiveMechanism(string mechanismName)
         {
-
+            
         }
+
+
 
         public void RequestMechanism(List<Mechanism> options, ISurgeon.MechanismRequestCallback callback)
         {
+            Dictionary<string, string> toSend;
+            foreach (Mechanism mechanism in options)
+            {
 
+            }
         }
 
 
@@ -145,9 +155,9 @@ namespace Content.Server.BodySystem
         private void HandleReceiveSurgeryUIMessage(ReceiveSurgeryUIMessage msg)
         {
             if(msg.MessageType == SurgeryUIMessageType.SelectBodyPart)
-               PerformSurgeryOnBodyManagerSlot(msg.SelectedOptionData);
+                HandleReceiveBodyPart(msg.SelectedOptionData);
             else if(msg.MessageType == SurgeryUIMessageType.SelectMechanism)
-               PerformSurgeryOnBodyManagerSlot(msg.SelectedOptionData);
+                HandleReceiveMechanism(msg.SelectedOptionData);
         }
 
 
