@@ -15,6 +15,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using UsernameHelpers = Robust.Shared.AuthLib.UsernameHelpers;
 
 namespace Content.Client.State
 {
@@ -104,10 +105,9 @@ namespace Content.Client.State
         private void TryConnect(string address)
         {
             var inputName = _mainMenuControl.UserNameBox.Text.Trim();
-            var (nameValid, invalidReason) = UsernameHelpers.IsNameValid(inputName);
-            if (!nameValid)
+            if (!UsernameHelpers.IsNameValid(inputName, out var reason))
             {
-                invalidReason = _loc.GetString(invalidReason);
+                var invalidReason = _loc.GetString(reason.ToText());
                 userInterfaceManager.Popup(
                     _loc.GetString("Invalid username:\n{0}", invalidReason),
                     _loc.GetString("Invalid Username"));

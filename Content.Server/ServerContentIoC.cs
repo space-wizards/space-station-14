@@ -1,4 +1,5 @@
-﻿using Content.Server.Cargo;
+﻿using Content.Server.AI.WorldState;
+using Content.Server.Cargo;
 using Content.Server.Chat;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
@@ -30,6 +31,7 @@ namespace Content.Server
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
+            IoCManager.Register<BlackboardManager, BlackboardManager>();
         }
     }
 }

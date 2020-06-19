@@ -32,6 +32,7 @@ namespace Content.Client
             IoCManager.Register<IItemSlotManager, ItemSlotManager>();
             IoCManager.Register<IStylesheetManager, StylesheetManager>();
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
+            IoCManager.Register<IClickMapManager, ClickMapManager>();
         }
     }
 }

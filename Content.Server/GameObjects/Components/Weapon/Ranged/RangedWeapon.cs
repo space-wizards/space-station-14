@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -60,6 +61,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             }
         }
 
+        // Probably shouldn't be a separate method but don't want anything except NPCs calling this,
+        // and currently ranged combat is handled via player only messages
+        public void AiFire(IEntity entity, GridCoordinates coordinates)
+        {
+            if (!entity.HasComponent<AiControllerComponent>())
+            {
+                throw new InvalidOperationException("Only AIs should call AiFire");
+            }
+
+            _tryFire(entity, coordinates);
+        }
+
         private void _tryFire(IEntity user, GridCoordinates coordinates)
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
@@ -75,11 +88,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             {
                 return;
             }
-
-            // Firing delays are quite complicated.
-            // Sometimes the client's fire messages come in just too early.
-            // Generally this is a frame or two of being early.
-            // In that case we try them a few times the next frames to avoid having to drop them.
+            
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / FireRate)
