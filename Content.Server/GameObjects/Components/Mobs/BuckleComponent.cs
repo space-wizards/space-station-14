@@ -89,21 +89,27 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (BuckledTo != null)
             {
                 _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString("{0:They} are already buckled in!", Owner));
+                    Loc.GetString(Owner == user
+                        ? "You are already buckled in!"
+                        : "{0:They} are already buckled in!", Owner));
                 return false;
             }
 
             if (!to.TryGetComponent(out StrapComponent strap))
             {
                 _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString("You can't buckle {0:them} there!", Owner));
+                    Loc.GetString(Owner == user
+                        ? "You can't buckle yourself there!"
+                        : "You can't buckle {0:them} there!", Owner));
                 return false;
             }
 
             if (!strap.HasSpace(this))
             {
                 _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString("{0:They} can't fit there!", Owner));
+                    Loc.GetString(Owner == user
+                        ? "You can't fit there!"
+                        : "{0:They} can't fit there!", Owner));
                 return false;
             }
 
@@ -113,7 +119,9 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!strap.TryAdd(this))
             {
                 _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString("You can't buckle {0:them} there!", Owner));
+                    Loc.GetString(Owner == user
+                        ? "You can't buckle yourself there!"
+                        : "You can't buckle {0:them} there!", Owner));
                 return false;
             }
 
