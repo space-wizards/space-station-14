@@ -34,7 +34,7 @@ binds:
 - function: MoveDown
   type: State
   key: S
-- function: Walk
+- function: Run
   type: State
   key: Shift
 - function: ShowEscapeMenu
