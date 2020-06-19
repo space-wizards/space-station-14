@@ -94,17 +94,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             // This hard-to-read area's dealing with recoil
             // Use degrees in yaml as it's easier to read compared to "0.0125f"
-            var minAngle = serializer.ReadDataField("minAngle", 0) / 2;
-            _minAngle = Angle.FromDegrees(minAngle);
-            // Random doubles it as it's +/- so uhh we'll just half it here for readability 
-            var maxAngle = serializer.ReadDataField("maxAngle", 45) / 2;
-            _maxAngle = Angle.FromDegrees(maxAngle);
-            var angleIncrease = serializer.ReadDataField("angleIncrease", (40 / _fireRate));
-            _angleIncrease = angleIncrease * (float) Math.PI / 180;
-            var angleDecay = serializer.ReadDataField("angleDecay", (float) 20);
-            _angleDecay = angleDecay * (float) Math.PI / 180;
-            serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
-            
+            if (serializer.Reading)
+            {
+                var minAngle = serializer.ReadDataField("minAngle", 0) / 2;
+                _minAngle = Angle.FromDegrees(minAngle);
+                // Random doubles it as it's +/- so uhh we'll just half it here for readability 
+                var maxAngle = serializer.ReadDataField("maxAngle", 45) / 2;
+                _maxAngle = Angle.FromDegrees(maxAngle);
+                var angleIncrease = serializer.ReadDataField("angleIncrease", (40 / _fireRate));
+                _angleIncrease = angleIncrease * (float) Math.PI / 180;
+                var angleDecay = serializer.ReadDataField("angleDecay", (float) 20);
+                _angleDecay = angleDecay * (float) Math.PI / 180;
+                serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
+            }
+
             // For simplicity we'll enforce it this way; ammo determines max spread
             if (_spreadRatio > 1.0f)
             {
