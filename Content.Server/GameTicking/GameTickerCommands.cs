@@ -228,9 +228,9 @@ namespace Content.Server.GameTicking
         }
     }
 
-    class ForceGamePresetCommand : IClientCommand
+    class ForcePresetCommand : IClientCommand
     {
-        public string Command => "forcegamepreset";
+        public string Command => "forcepreset";
         public string Description => "Forces a specific game preset to start for the current lobby.";
         public string Help => $"Usage: {Command} <preset>";
 
@@ -244,7 +244,7 @@ namespace Content.Server.GameTicking
 
             var ticker = IoCManager.Resolve<IGameTicker>();
 
-            ticker.ForceStartPreset(args[0]);
+            ticker.SetStartPreset(args[0], true);
         }
     }
 }

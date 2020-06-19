@@ -81,19 +81,11 @@ namespace Content.IntegrationTests
 
         public IEnumerable<GameRule> ActiveGameRules { get; } = Array.Empty<GameRule>();
 
-        public void SetStartPreset(Type type)
+        public void SetStartPreset(Type type, bool force = false)
         {
         }
 
-        public void SetStartPreset(string name)
-        {
-        }
-
-        public void ForceStartPreset(Type type)
-        {
-        }
-
-        public void ForceStartPreset(string name)
+        public void SetStartPreset(string name, bool force = false)
         {
         }
 

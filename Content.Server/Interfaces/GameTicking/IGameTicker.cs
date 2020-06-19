@@ -39,10 +39,8 @@ namespace Content.Server.Interfaces.GameTicking
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
 
-        void SetStartPreset(Type type);
-        void SetStartPreset(string name);
-        void ForceStartPreset(Type type);
-        void ForceStartPreset(string name);
+        void SetStartPreset(Type type, bool force = false);
+        void SetStartPreset(string name, bool force = false);
 
         bool DelayStart(TimeSpan time);
     }

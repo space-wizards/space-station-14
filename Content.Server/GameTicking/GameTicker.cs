@@ -379,7 +379,7 @@ namespace Content.Server.GameTicking
 
         public IEnumerable<GameRule> ActiveGameRules => _gameRules;
 
-        public bool TryGetPreset(string name, out Type type)
+        private bool TryGetPreset(string name, out Type type)
         {
             type = name switch
             {
@@ -392,45 +392,27 @@ namespace Content.Server.GameTicking
             return type != default;
         }
 
-        public void SetStartPreset(Type type)
+        public void SetStartPreset(Type type, bool force = false)
         {
             if (!typeof(GamePreset).IsAssignableFrom(type)) throw new ArgumentException("type must inherit GamePreset");
 
             _presetType = type;
             UpdateInfoText();
+
+            if (force)
+            {
+                StartRound(true);
+            }
         }
 
-        public void SetStartPreset(string name)
+        public void SetStartPreset(string name, bool force = false)
         {
-            if (TryGetPreset(name, out var type))
-            {
-                SetStartPreset(type);
-            }
-            else
+            if (!TryGetPreset(name, out var type))
             {
                 throw new NotSupportedException();
             }
-        }
 
-        public void ForceStartPreset(Type type)
-        {
-            if (!typeof(GamePreset).IsAssignableFrom(type)) throw new ArgumentException("type must inherit GamePreset");
-
-            _presetType = type;
-            UpdateInfoText();
-            StartRound(true);
-        }
-
-        public void ForceStartPreset(string name)
-        {
-            if (TryGetPreset(name, out var type))
-            {
-                ForceStartPreset(type);
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            SetStartPreset(type, force);
         }
 
         public bool DelayStart(TimeSpan time)
