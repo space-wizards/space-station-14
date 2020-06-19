@@ -8,6 +8,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -48,6 +49,8 @@ namespace Content.Server.GameObjects.Components
         private bool _showContents;
         private bool _open;
         private bool _isWeldedShut;
+        private int _collisionMaskStorage;
+        private int _collisionLayerStorage;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -181,9 +184,21 @@ namespace Content.Server.GameObjects.Components
 
         private void ModifyComponents()
         {
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
+            if (!IsCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
-                collidableComponent.CanCollide = IsCollidableWhenOpen || !Open;
+                var physShape = collidableComponent.PhysicsShapes[0];
+                if (Open)
+                {
+                    _collisionMaskStorage = physShape.CollisionMask;
+                    physShape.CollisionMask = (int)CollisionGroup.Impassable;
+                    _collisionLayerStorage = physShape.CollisionLayer;
+                    physShape.CollisionLayer = (int)CollisionGroup.None;
+                }
+                else
+                {
+                    physShape.CollisionMask = _collisionMaskStorage;
+                    physShape.CollisionLayer = _collisionLayerStorage;
+                }
             }
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
