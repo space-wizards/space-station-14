@@ -83,7 +83,11 @@ namespace Content.Server.GameObjects.Components.Strap
                 return false;
             }
 
-            BuckledEntities.Add(buckle.Owner);
+            if (!BuckledEntities.Add(buckle.Owner))
+            {
+                return false;
+            }
+
             OccupiedSize += buckle.Size;
 
             if (buckle.Owner.TryGetComponent(out AppearanceComponent appearance))
