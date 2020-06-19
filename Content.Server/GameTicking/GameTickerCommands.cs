@@ -242,7 +242,14 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            var name = args[0];
             var ticker = IoCManager.Resolve<IGameTicker>();
+
+            if (!ticker.TryGetPreset(name, out _))
+            {
+                shell.SendText(player, $"No preset exists with name {name}.");
+                return;
+            }
 
             ticker.SetStartPreset(args[0], true);
         }

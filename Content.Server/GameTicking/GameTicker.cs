@@ -379,7 +379,7 @@ namespace Content.Server.GameTicking
 
         public IEnumerable<GameRule> ActiveGameRules => _gameRules;
 
-        private bool TryGetPreset(string name, out Type type)
+        public bool TryGetPreset(string name, out Type type)
         {
             type = name.ToLower() switch
             {

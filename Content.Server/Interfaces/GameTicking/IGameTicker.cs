@@ -39,6 +39,7 @@ namespace Content.Server.Interfaces.GameTicking
         void RemoveGameRule(GameRule rule);
         IEnumerable<GameRule> ActiveGameRules { get; }
 
+        bool TryGetPreset(string name, out Type type);
         void SetStartPreset(Type type, bool force = false);
         void SetStartPreset(string name, bool force = false);
 
