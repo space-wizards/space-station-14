@@ -18,6 +18,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.State
@@ -55,7 +56,9 @@ namespace Content.Client.State
             base.FrameUpdate(e);
 
             var mousePosWorld = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-            var entityToClick = _userInterfaceManager.CurrentlyHovered != null ? null : GetEntityUnderPosition(mousePosWorld);
+            var entityToClick = _userInterfaceManager.CurrentlyHovered != null
+                ? null
+                : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
             if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
@@ -63,7 +66,10 @@ namespace Content.Client.State
                 var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
                 var entityPos = entityToClick.Transform.MapPosition;
                 inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
-                    .InRangeUnobstructed(playerPos, entityPos, predicate:entity => entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick, ignoreInsideBlocker:true);
+                    .InRangeUnobstructed(playerPos, entityPos,
+                        predicate: entity =>
+                            entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick,
+                        ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent outline;
@@ -73,6 +79,7 @@ namespace Content.Client.State
                 {
                     outline.UpdateInRange(inRange);
                 }
+
                 return;
             }
 
@@ -104,17 +111,18 @@ namespace Content.Client.State
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId, coordinates.Position);
+            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId,
+                Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(IEntity clicked, int drawDepth)>();
+            var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent<IClientClickableComponent>(out var component)
+                if (entity.TryGetComponent<ClickableComponent>(out var component)
                     && entity.Transform.IsMapTransform
-                    && component.CheckClick(coordinates.Position, out var drawDepthClicked))
+                    && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {
-                    foundEntities.Add((entity, drawDepthClicked));
+                    foundEntities.Add((entity, drawDepthClicked, renderOrder));
                 }
             }
 
@@ -126,7 +134,6 @@ namespace Content.Client.State
             foundEntities.Reverse();
             return foundEntities.Select(a => a.clicked).ToList();
         }
-
 
         /// <summary>
         /// Gets all entities intersecting the given position.
@@ -147,9 +154,10 @@ namespace Content.Client.State
             return ImmutableList<IEntity>.Empty;
         }
 
-        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth)>
+        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth, uint renderOrder)>
         {
-            public int Compare((IEntity clicked, int depth) x, (IEntity clicked, int depth) y)
+            public int Compare((IEntity clicked, int depth, uint renderOrder) x,
+                (IEntity clicked, int depth, uint renderOrder) y)
             {
                 var val = x.depth.CompareTo(y.depth);
                 if (val != 0)
@@ -157,9 +165,24 @@ namespace Content.Client.State
                     return val;
                 }
 
+                // Turning this off it can make picking stuff out of lockers and such up a bit annoying.
+                /*
+                val = x.renderOrder.CompareTo(y.renderOrder);
+                if (val != 0)
+                {
+                    return val;
+                }
+                */
+
                 var transx = x.clicked.Transform;
                 var transy = y.clicked.Transform;
-                return transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                val = transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                if (val != 0)
+                {
+                    return val;
+                }
+
+                return x.clicked.Uid.CompareTo(y.clicked.Uid);
             }
         }
 

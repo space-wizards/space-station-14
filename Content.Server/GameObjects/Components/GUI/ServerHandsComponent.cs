@@ -3,6 +3,8 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
@@ -69,6 +71,8 @@ namespace Content.Server.GameObjects
                     AddHand(handsname);
                 }
             }
+
+            serializer.DataField(ref activeIndex, "defaultHand", orderedHands.LastOrDefault());
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
@@ -105,7 +109,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
         /// </summary>
-        private IEnumerable<string> ActivePriorityEnumerable()
+        public IEnumerable<string> ActivePriorityEnumerable()
         {
             yield return ActiveIndex;
             foreach (var hand in hands.Keys)
@@ -558,6 +562,7 @@ namespace Content.Server.GameObjects
                 }
 
                 Dirty();
+
                 if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
                 {
                     return;

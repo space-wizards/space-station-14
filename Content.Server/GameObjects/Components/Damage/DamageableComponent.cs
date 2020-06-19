@@ -55,6 +55,21 @@ namespace Content.Server.GameObjects
             });
         }
 
+        public bool IsDead()
+        {
+            var currentDamage = _currentDamage[DamageType.Total];
+            foreach (var threshold in Thresholds[DamageType.Total])
+            {
+                if (threshold.Value <= currentDamage)
+                {
+                    if (threshold.ThresholdType != ThresholdType.Death) continue;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /// <inheritdoc />
         public override void Initialize()
         {

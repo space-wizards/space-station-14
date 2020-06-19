@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this};
+                {StorageEntity = this, Title = Owner.Name};
         }
 
         public override void OnRemove()

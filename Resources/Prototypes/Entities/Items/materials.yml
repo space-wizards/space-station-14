@@ -69,6 +69,9 @@
   - type: Icon
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
+  - type: Clickable
+    bounds:
+      all: -0.15,-0.15,0.15,0.15
 
 - type: entity
   id: CableStack1

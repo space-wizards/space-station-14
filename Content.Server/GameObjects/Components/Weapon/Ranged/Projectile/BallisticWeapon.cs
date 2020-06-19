@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Projectile
             FireAtCoord(user, clickLocation, ammo.ProjectileID, total_stdev, ammo.ProjectilesFired, final_evenspread, final_velocity);
         }
 
-        protected IEntity GetChambered(int chamber) => _chambers[chamber].Slot.ContainedEntity;
+        public IEntity GetChambered(int chamber) => _chambers[chamber].Slot.ContainedEntity;
 
         /// <summary>
         ///     Loads the next ammo casing into the chamber.

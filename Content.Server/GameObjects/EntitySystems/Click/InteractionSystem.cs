@@ -9,6 +9,8 @@ using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -41,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
-                    new PointerInputCmdHandler(HandleUseItemInHand))
+                    new PointerInputCmdHandler(HandleClientUseItemInHand))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -167,7 +169,31 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return true;
         }
 
-        private bool HandleUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        /// <summary>
+        /// Entity will try and use their active hand at the target location.
+        /// Don't use for players
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="coords"></param>
+        /// <param name="uid"></param>
+        internal void UseItemInHand(IEntity entity, GridCoordinates coords, EntityUid uid)
+        {
+            if (entity.HasComponent<BasicActorComponent>())
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (entity.TryGetComponent(out CombatModeComponent combatMode) && combatMode.IsInCombatMode)
+            {
+                DoAttack(entity, coords);
+            }
+            else
+            {
+                UserInteraction(entity, coords, uid);
+            }
+        }
+
+        private bool HandleClientUseItemInHand(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
@@ -259,17 +285,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 Logger.WarningS("system.interaction",
                     $"Player named {player.Name} clicked on object {attacked.Name} that isn't currently on the map somehow");
                 return;
-            }
-
-            // Check if ClickLocation is in object bounds here, if not lets log as warning and see why
-            if (attacked.TryGetComponent(out ICollidableComponent collideComp))
-            {
-                if (!collideComp.WorldAABB.Contains(coordinates.ToMapPos(_mapManager)))
-                {
-                    Logger.WarningS("system.interaction",
-                        $"Player {player.Name} clicked {attacked.Name} outside of its bounding box component somehow");
-                    return;
-                }
             }
 
             // RangedInteract/AfterInteract: Check distance between user and clicked item, if too large parse it in the ranged function

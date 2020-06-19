@@ -19,6 +19,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.State
 {
@@ -93,6 +96,7 @@ namespace Content.Client.State
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+            _lobby.CreditsButton.OnPressed += args => new CreditsWindow().Open();
 
             UpdatePlayerList();
 

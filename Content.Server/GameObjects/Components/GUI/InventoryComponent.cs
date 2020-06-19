@@ -119,6 +119,7 @@ namespace Content.Server.GameObjects
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
+
             return true;
         }
 
@@ -197,6 +198,7 @@ namespace Content.Server.GameObjects
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
+
             return true;
         }
 
@@ -271,7 +273,7 @@ namespace Content.Server.GameObjects
 
         /// <summary>
         /// The underlying Container System just notified us that an entity was removed from it.
-        /// We need to make sure we process that removed entity as being unequpped from the slot.
+        /// We need to make sure we process that removed entity as being unequipped from the slot.
         /// </summary>
         private void ForceUnequip(IContainer container, IEntity entity)
         {
@@ -282,7 +284,9 @@ namespace Content.Server.GameObjects
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
+            {
                 itemComp.RemovedFromSlot();
+            }
 
             Dirty();
         }

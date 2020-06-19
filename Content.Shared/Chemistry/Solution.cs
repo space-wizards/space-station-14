@@ -136,7 +136,7 @@ namespace Content.Shared.Chemistry
             if(quantity <= 0)
                 return;
 
-            var ratio = (TotalVolume - quantity).Decimal() / TotalVolume.Decimal();
+            var ratio = (TotalVolume - quantity).Double() / TotalVolume.Double();
 
             if (ratio <= 0)
             {
@@ -180,13 +180,13 @@ namespace Content.Shared.Chemistry
             }
 
             newSolution = new Solution();
-            var newTotalVolume = ReagentUnit.New(0M);
+            var newTotalVolume = ReagentUnit.New(0);
             var remainingVolume = TotalVolume;
 
             for (var i = 0; i < _contents.Count; i++)
             {
                 var reagent = _contents[i];
-                var ratio = (remainingVolume - quantity).Decimal() / remainingVolume.Decimal();
+                var ratio = (remainingVolume - quantity).Double() / remainingVolume.Double();
                 remainingVolume -= reagent.Quantity;
 
                 var newQuantity = reagent.Quantity * ratio;

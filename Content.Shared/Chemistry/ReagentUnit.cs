@@ -30,11 +30,6 @@ namespace Content.Shared.Chemistry
             return new ReagentUnit(value * (int) Math.Pow(10, Shift));
         }
 
-        public static ReagentUnit New(decimal value)
-        {
-            return new ReagentUnit((int) Math.Round(value * (decimal) Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
-        }
-
         public static ReagentUnit New(float value)
         {
             return new ReagentUnit(FromFloat(value));
@@ -42,7 +37,7 @@ namespace Content.Shared.Chemistry
 
         private static int FromFloat(float value)
         {
-            return (int) Math.Round(value * (float) Math.Pow(10, Shift), MidpointRounding.AwayFromZero);
+            return (int) MathF.Round(value * MathF.Pow(10, Shift), MidpointRounding.AwayFromZero);
         }
 
         public static ReagentUnit New(double value)
@@ -80,12 +75,6 @@ namespace Content.Shared.Chemistry
         public static ReagentUnit operator *(ReagentUnit a, float b)
         {
             var aD = (float) a.ShiftDown();
-            return New(aD * b);
-        }
-
-        public static ReagentUnit operator *(ReagentUnit a, decimal b)
-        {
-            var aD = (decimal) a.ShiftDown();
             return New(aD * b);
         }
 
@@ -164,11 +153,6 @@ namespace Content.Shared.Chemistry
         public float Float()
         {
             return (float) ShiftDown();
-        }
-
-        public decimal Decimal()
-        {
-            return (decimal) ShiftDown();
         }
 
         public double Double()

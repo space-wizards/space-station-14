@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0M));
+            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0));
         }
 
         /// <summary>
