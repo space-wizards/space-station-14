@@ -21,7 +21,7 @@ namespace Content.Server.Interfaces.GameTicking
         void Update(FrameEventArgs frameEventArgs);
 
         void RestartRound();
-        void StartRound();
+        void StartRound(bool force = false);
         void EndRound();
 
         void Respawn(IPlayerSession targetPlayer);
@@ -40,7 +40,9 @@ namespace Content.Server.Interfaces.GameTicking
         IEnumerable<GameRule> ActiveGameRules { get; }
 
         void SetStartPreset(Type type);
-        void SetStartPreset(string type);
+        void SetStartPreset(string name);
+        void ForceStartPreset(Type type);
+        void ForceStartPreset(string name);
 
         bool DelayStart(TimeSpan time);
     }

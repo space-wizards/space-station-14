@@ -9,7 +9,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking
 {
-    class DelayStart : IClientCommand
+    class DelayStartCommand : IClientCommand
     {
         public string Command => "delaystart";
         public string Description => "Delays the round start.";
@@ -225,6 +225,26 @@ namespace Content.Server.GameTicking
             var ticker = IoCManager.Resolve<IGameTicker>();
 
             ticker.SetStartPreset(args[0]);
+        }
+    }
+
+    class ForceGamePresetCommand : IClientCommand
+    {
+        public string Command => "forcegamepreset";
+        public string Description => "Forces a specific game preset to start for the current lobby.";
+        public string Help => $"Usage: {Command} <preset>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Need exactly one argument.");
+                return;
+            }
+
+            var ticker = IoCManager.Resolve<IGameTicker>();
+
+            ticker.ForceStartPreset(args[0]);
         }
     }
 }

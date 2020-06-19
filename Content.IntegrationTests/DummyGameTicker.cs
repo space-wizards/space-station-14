@@ -37,7 +37,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void StartRound()
+        public void StartRound(bool force = false)
         {
         }
 
@@ -85,7 +85,15 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void SetStartPreset(string type)
+        public void SetStartPreset(string name)
+        {
+        }
+
+        public void ForceStartPreset(Type type)
+        {
+        }
+
+        public void ForceStartPreset(string name)
         {
         }
 

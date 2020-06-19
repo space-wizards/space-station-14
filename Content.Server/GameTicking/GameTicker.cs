@@ -197,7 +197,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public void StartRound()
+        public void StartRound(bool force = false)
         {
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
@@ -247,13 +247,15 @@ namespace Content.Server.GameTicking
             // Time to start the preset.
             var preset = MakeGamePreset();
 
-            if (!preset.Start(assignedJobs.Keys.ToList()))
+            if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
                 SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
                 var newPreset = MakeGamePreset();
                 _chatManager.DispatchServerAnnouncement($"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
-                if(!newPreset.Start(readyPlayers))
+                if (!newPreset.Start(readyPlayers, force))
+                {
                     throw new ApplicationException("Fallback preset failed to start!");
+                }
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
@@ -297,7 +299,7 @@ namespace Content.Server.GameTicking
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity.Name,
-                        Role = antag ? mind.AllRoles.First(role => role.Antag).Name : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unkown"),
+                        Role = antag ? mind.AllRoles.First(role => role.Antag).Name : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
                         Antag = antag
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
@@ -377,6 +379,19 @@ namespace Content.Server.GameTicking
 
         public IEnumerable<GameRule> ActiveGameRules => _gameRules;
 
+        public bool TryGetPreset(string name, out Type type)
+        {
+            type = name switch
+            {
+                "Sandbox" => typeof(PresetSandbox),
+                "DeathMatch" => typeof(PresetDeathMatch),
+                "Suspicion" => typeof(PresetSuspicion),
+                _ => default
+            };
+
+            return type != default;
+        }
+
         public void SetStartPreset(Type type)
         {
             if (!typeof(GamePreset).IsAssignableFrom(type)) throw new ArgumentException("type must inherit GamePreset");
@@ -385,14 +400,38 @@ namespace Content.Server.GameTicking
             UpdateInfoText();
         }
 
-        public void SetStartPreset(string type) =>
-            SetStartPreset(type switch
+        public void SetStartPreset(string name)
+        {
+            if (TryGetPreset(name, out var type))
             {
-                "Sandbox" => typeof(PresetSandbox),
-                "DeathMatch" => typeof(PresetDeathMatch),
-                "Suspicion" => typeof(PresetSuspicion),
-                _ => throw new NotSupportedException()
-            });
+                SetStartPreset(type);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
+
+        public void ForceStartPreset(Type type)
+        {
+            if (!typeof(GamePreset).IsAssignableFrom(type)) throw new ArgumentException("type must inherit GamePreset");
+
+            _presetType = type;
+            UpdateInfoText();
+            StartRound(true);
+        }
+
+        public void ForceStartPreset(string name)
+        {
+            if (TryGetPreset(name, out var type))
+            {
+                ForceStartPreset(type);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        }
 
         public bool DelayStart(TimeSpan time)
         {
