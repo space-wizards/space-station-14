@@ -31,14 +31,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private int _size;
 
-        [CanBeNull] private StrapComponent _buckledTo;
-
         [ViewVariables, CanBeNull]
-        public StrapComponent BuckledTo
-        {
-            get => _buckledTo;
-            private set => _buckledTo = value;
-        }
+        public StrapComponent BuckledTo { get; private set; }
 
         [ViewVariables]
         public int Size => _size;
@@ -48,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Buckled,
-                    _buckledTo == null
+                    BuckledTo == null
                         ? "/Textures/Mob/UI/Buckle/unbuckled.png"
                         : "/Textures/Mob/UI/Buckle/buckled.png");
             }
@@ -92,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (_buckledTo != null)
+            if (BuckledTo != null)
             {
                 _notifyManager.PopupMessage(Owner, user,
                     Loc.GetString("{0:They} are already buckled in!", Owner));
@@ -155,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool TryUnbuckle(IEntity user)
         {
-            if (_buckledTo == null)
+            if (BuckledTo == null)
             {
                 return false;
             }
@@ -182,21 +176,21 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool ForceUnbuckle()
         {
-            if (_buckledTo == null)
+            if (BuckledTo == null)
             {
                 return false;
             }
 
-            Owner.Transform.DetachParent();
-            Owner.Transform.WorldRotation = _buckledTo.Owner.Transform.WorldRotation;
-            BuckledTo = null;
-
-            if (_buckledTo.Owner.TryGetComponent(out StrapComponent strap))
+            if (BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
             {
                 strap.Remove(this);
                 _entitySystem.GetEntitySystem<AudioSystem>()
                     .PlayFromEntity(strap.UnbuckleSound, Owner, AudioParams.Default.WithVolume(-2f));
             }
+
+            Owner.Transform.DetachParent();
+            Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+            BuckledTo = null;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
@@ -217,7 +211,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool ToggleBuckle(IEntity user, IEntity to)
         {
-            if (_buckledTo == null)
+            if (BuckledTo == null)
             {
                 return TryBuckle(user, to);
             }
