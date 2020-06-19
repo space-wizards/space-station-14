@@ -1,7 +1,7 @@
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -28,7 +28,7 @@ namespace Content.Server.AI.Operators.Combat
             {
                 return true;
             }
-            
+
             if (!_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
             {
                 return false;
