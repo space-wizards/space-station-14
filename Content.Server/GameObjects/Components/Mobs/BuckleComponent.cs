@@ -16,6 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -27,6 +28,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         [Dependency] private readonly IEntitySystemManager _entitySystem;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
+
+        private int _size;
 
         [CanBeNull] private IEntity _buckledTo;
 
@@ -43,15 +46,18 @@ namespace Content.Server.GameObjects.Components.Mobs
                 {
                     if (value == null)
                     {
-                        strap.RemoveEntity(Owner);
+                        strap.TryRemoveEntity(this, true);
                     }
                     else
                     {
-                        strap.AddEntity(Owner);
+                        strap.TryAddEntity(this, true);
                     }
                 }
             }
         }
+
+        [ViewVariables]
+        public int Size => _size;
 
         private void BuckleStatus()
         {
@@ -116,10 +122,10 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (strap.BuckledEntity != null)
+            if (!strap.HasSpace(this))
             {
                 _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString("Someone is already buckled there!"));
+                    Loc.GetString("{0:They} can't fit there!", Owner));
                 return false;
             }
 
@@ -228,6 +234,13 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _size, "size", 100);
+        }
+
         protected override void Startup()
         {
             base.Startup();
@@ -237,11 +250,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void OnRemove()
         {
             base.OnRemove();
-
-            if (BuckledTo != null && BuckledTo.TryGetComponent(out StrapComponent strap))
-            {
-                strap.RemoveEntity(Owner);
-            }
+            BuckledTo = null;
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
