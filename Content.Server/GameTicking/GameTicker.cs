@@ -404,7 +404,7 @@ namespace Content.Server.GameTicking
             _roundStartTimeUtc += time;
 
             var roundEndMessage = _netManager.CreateNetMessage<MsgTickerDelayStart>();
-            roundEndMessage.Seconds = (int) time.TotalSeconds;
+            roundEndMessage.Seconds = (uint) time.TotalSeconds;
             _netManager.ServerSendToAll(roundEndMessage);
 
             return true;

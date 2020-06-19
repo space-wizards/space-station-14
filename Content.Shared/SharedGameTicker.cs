@@ -127,11 +127,11 @@ namespace Content.Shared
 
             #endregion
 
-            public int Seconds { get; set; }
+            public uint Seconds { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                Seconds = buffer.ReadInt32();
+                Seconds = buffer.ReadUInt32();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
