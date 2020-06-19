@@ -72,7 +72,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         /// <param name="range">maximum distance between the two sets of coordinates.</param>
         /// <param name="collisionMask">the mask to check for collisions</param>
         /// <param name="predicate">A predicate to check whether to ignore an entity or not. If it returns true, it will be ignored.</param>
-        /// <param name="ignoreInsideBlocker">if true, if coordinates are inside the obstruction, ignores the obstruction and
+        /// <param name="ignoreInsideBlocker">if true and the coordinates are inside the obstruction, ignores the obstruction and
         /// considers the interaction unobstructed. Therefore, setting this to true makes this check more permissive, such
         /// as allowing an interaction to occur inside something impassable (like a wall). The default, false,
         /// makes the check more restrictive.</param>
