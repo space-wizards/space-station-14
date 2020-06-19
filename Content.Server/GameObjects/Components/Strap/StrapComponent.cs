@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Strap
         /// <summary>
         /// The entity that is currently buckled here, synced from <see cref="BuckleComponent.BuckledTo"/>
         /// </summary>
-        public HashSet<IEntity> BuckledEntities { get; private set; }
+        private HashSet<IEntity> BuckledEntities { get; set; }
 
         /// <summary>
         /// The change in position to the strapped mob
