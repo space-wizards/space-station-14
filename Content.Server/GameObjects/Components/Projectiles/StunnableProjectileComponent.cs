@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             base.ExposeData(serializer);
             serializer.DataField(ref _stunAmount, "stunAmount", 0);
             serializer.DataField(ref _knockdownAmount, "knockdownAmount", 0);
-            serializer.DataField(ref _paralyzeAmount, "paralyzeAmount", 5);
+            serializer.DataField(ref _paralyzeAmount, "paralyzeAmount", 0);
         }
 
         public override void Initialize()
