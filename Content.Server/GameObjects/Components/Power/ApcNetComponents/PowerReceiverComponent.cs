@@ -46,8 +46,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         ///     Amount of charge this needs from an APC per second to function.
         /// </summary>
         [ViewVariables]
-        public float Load { get => _load; set => SetLoad(value); }
-        private float _load;
+        public int Load { get => _load; set => SetLoad(value); }
+        private int _load;
 
         /// <summary>
         ///     The fraction of APC charge below which this shuts off and stops using power.
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             TryFindAndSetProvider();
         }
 
-        private void SetLoad(float newLoad)
+        private void SetLoad(int newLoad)
         {
             _load = newLoad;
         }

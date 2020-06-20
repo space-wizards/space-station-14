@@ -68,8 +68,8 @@ namespace Content.Server.GameObjects.Components.Power
         private int _burningTemperature;
         public int BurningTemperature => _burningTemperature;
 
-        private float _powerUse;
-        public float PowerUse => _powerUse;
+        private int _powerUse;
+        public int PowerUse => _powerUse;
 
         /// <summary>
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.

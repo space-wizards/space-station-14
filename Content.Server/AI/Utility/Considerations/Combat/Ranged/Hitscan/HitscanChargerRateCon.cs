@@ -1,6 +1,7 @@
 ﻿using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.Chargers;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
@@ -12,13 +13,13 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
         public override float GetScore(Blackboard context)
         {
             var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null || !target.TryGetComponent(out PowerCellChargerComponent weaponCharger))
+            if (target == null || !target.TryGetComponent(out PowerCellChargerComponent weaponCharger) || weaponCharger.CompatibleCellType == CellType.Weapon)
             {
                 return 0.0f;
             }
 
             // AI don't care about efficiency, psfft!
-            return weaponCharger.TransferRatio;
+            return weaponCharger.ChargeRate;
         }
     }
 }

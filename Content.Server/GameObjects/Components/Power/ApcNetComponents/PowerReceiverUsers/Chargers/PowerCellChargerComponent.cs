@@ -40,14 +40,13 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         private AppearanceComponent _appearanceComponent;
 
         [ViewVariables]
-        public float TransferRatio => _transferRatio;
-        private float _transferRatio;
-
-        [ViewVariables]
-        private float _transferEfficiency;
-
-        [ViewVariables]
+        public int ChargeRate => _chargeRate;
         private int _chargeRate;
+
+        [ViewVariables]
+        private float _chargingEfficiency;
+
+        private int ActiveDrawRate => (int) (ChargeRate / _chargingEfficiency);
 
         [ViewVariables]
         public CellType CompatibleCellType => _compatibleCellType;
@@ -56,11 +55,9 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            serializer.DataField(ref _transferRatio, "transfer_ratio", 0.1f);
-            serializer.DataField(ref _transferEfficiency, "transfer_efficiency", 0.85f);
             serializer.DataField(ref _chargeRate, "chargeRate", 100);
             serializer.DataField(ref _compatibleCellType, "compatibleCellType", CellType.PlainCell);
+            serializer.DataField(ref _chargingEfficiency, "chargingEfficiency", 1);
         }
 
         public override void Initialize()
@@ -236,23 +233,10 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             return CellChargerStatus.Charging;
         }
 
-        protected void TransferPower(float frameTime)
+        protected void TransferPower()
         {
-            // Two numbers: One for how much power actually goes into the device (chargeAmount) and
-            // chargeLoss which is how much is drawn from the powernet
             _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
-            var chargeLoss = Math.Min(_chargeRate * frameTime, cellComponent.MaxCharge - cellComponent.CurrentCharge) * _transferRatio;
-            _powerReceiver.Load = chargeLoss;
-
-            if (!_powerReceiver.Powered)
-            {
-                // No power: Event should update to Off status
-                return;
-            }
-
-            var chargeAmount = chargeLoss * _transferEfficiency;
-
-            cellComponent.CurrentCharge += chargeAmount;
+            cellComponent.CurrentCharge += _chargeRate;
             // Just so the sprite won't be set to 99.99999% visibility
             if (cellComponent.MaxCharge - cellComponent.CurrentCharge < 0.01)
             {
@@ -275,7 +259,6 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             switch (_status)
             {
-                // Update load just in case
                 case CellChargerStatus.Off:
                     _powerReceiver.Load = 0;
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Off);
@@ -285,6 +268,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Empty); ;
                     break;
                 case CellChargerStatus.Charging:
+                    _powerReceiver.Load = ActiveDrawRate;
                     _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charging);
                     break;
                 case CellChargerStatus.Charged:
@@ -294,27 +278,18 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
             _appearanceComponent?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
-
             _status = status;
         }
 
         public void OnUpdate(float frameTime)
         {
             if (_status == CellChargerStatus.Empty || _status == CellChargerStatus.Charged ||
-                _container.ContainedEntity == null)
+                _container.ContainedEntity == null || !_powerReceiver.Powered)
             {
                 return;
             }
-
-            TransferPower(frameTime);
+            TransferPower();
         }
-    }
-
-    public enum BatteryChargerType
-    {
-        Cell,
-        Weapon,
     }
 }
