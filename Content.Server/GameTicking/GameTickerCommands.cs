@@ -264,7 +264,7 @@ namespace Content.Server.GameTicking
             }
 
             ticker.SetStartPreset(type, true);
-            shell.SendText(player, $"Forced the game to start with preset {name}");
+            shell.SendText(player, $"Forced the game to start with preset {name}.");
         }
     }
 }
