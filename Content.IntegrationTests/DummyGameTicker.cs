@@ -99,5 +99,15 @@ namespace Content.IntegrationTests
         {
             return true;
         }
+
+        public bool PauseStart(bool pause = true)
+        {
+            return true;
+        }
+
+        public bool TogglePause()
+        {
+            return false;
+        }
     }
 }

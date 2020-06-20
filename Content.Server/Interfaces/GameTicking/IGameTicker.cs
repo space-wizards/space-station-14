@@ -43,6 +43,12 @@ namespace Content.Server.Interfaces.GameTicking
         void SetStartPreset(Type type, bool force = false);
         void SetStartPreset(string name, bool force = false);
 
+        /// <returns>true if changed, false otherwise</returns>
+        bool PauseStart(bool pause = true);
+
+        /// <returns>true if paused, false otherwise</returns>
+        bool TogglePause();
+
         bool DelayStart(TimeSpan time);
     }
 }

@@ -13,7 +13,7 @@ namespace Content.Server.GameTicking
     {
         public string Command => "delaystart";
         public string Description => "Delays the round start.";
-        public string Help => $"Usage: {Command} <seconds>";
+        public string Help => $"Usage: {Command} <seconds>\nPauses/Resumes the countdown if no argument is provided.";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -24,9 +24,16 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            if (args.Length == 0)
+            {
+                var paused = ticker.TogglePause();
+                shell.SendText(player, paused ? "Paused the countdown." : "Resumed the countdown.");
+                return;
+            }
+
             if (args.Length != 1)
             {
-                shell.SendText(player, "Need exactly one argument.");
+                shell.SendText(player, "Need zero or one arguments.");
                 return;
             }
 
@@ -250,13 +257,14 @@ namespace Content.Server.GameTicking
             }
 
             var name = args[0];
-            if (!ticker.TryGetPreset(name, out _))
+            if (!ticker.TryGetPreset(name, out var type))
             {
                 shell.SendText(player, $"No preset exists with name {name}.");
                 return;
             }
 
-            ticker.SetStartPreset(args[0], true);
+            ticker.SetStartPreset(type, true);
+            shell.SendText(player, $"Forced the game to start with preset {name}");
         }
     }
 }

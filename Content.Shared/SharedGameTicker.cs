@@ -117,26 +117,36 @@ namespace Content.Shared
             }
         }
 
-        protected class MsgTickerDelayStart : NetMessage
+        protected class MsgTickerLobbyCountdown : NetMessage
         {
             #region REQUIRED
 
             public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgTickerDelayStart);
-            public MsgTickerDelayStart(INetChannel channel) : base(NAME, GROUP) { }
+            public const string NAME = nameof(MsgTickerLobbyCountdown);
+            public MsgTickerLobbyCountdown(INetChannel channel) : base(NAME, GROUP) { }
 
             #endregion
 
+            /// <summary>
+            /// The total amount of seconds to go until the countdown finishes
+            /// </summary>
             public uint Seconds { get; set; }
+
+            /// <summary>
+            /// Whether or not the countdown is paused
+            /// </summary>
+            public bool Paused { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 Seconds = buffer.ReadUInt32();
+                Paused = buffer.ReadBoolean();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(Seconds);
+                buffer.Write(Paused);
             }
         }
 

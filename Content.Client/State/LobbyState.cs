@@ -123,6 +123,13 @@ namespace Content.Client.State
             }
 
             string text;
+
+            if (_clientGameTicker.Paused)
+            {
+                _lobby.StartTime.Text = Loc.GetString("Paused");
+                return;
+            }
+
             var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
             if (difference.Ticks < 0)
             {
