@@ -52,6 +52,7 @@ namespace Content.Server.GameObjects
 
         [ViewVariables] private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
         [ViewVariables] private List<string> orderedHands = new List<string>();
+        private Dictionary<string, string> _equippedItems;
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
@@ -59,9 +60,9 @@ namespace Content.Server.GameObjects
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            // TODO: This does not serialize what objects are held.
+            
             serializer.DataField(ref orderedHands, "hands", new List<string>(0));
+            serializer.DataField(ref _equippedItems, "equippedItems", new Dictionary<string, string>(0));
             if (serializer.Reading)
             {
                 foreach (var handsname in orderedHands)
@@ -71,6 +72,20 @@ namespace Content.Server.GameObjects
             }
 
             serializer.DataField(ref activeIndex, "defaultHand", orderedHands.LastOrDefault());
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            if (_equippedItems.Count > 0)
+            {
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                foreach (var (handIndex, prototype) in _equippedItems)
+                {
+                    var item = entityManager.SpawnEntity(prototype, Owner.Transform.GridPosition);
+                    PutInHand(item.GetComponent<ItemComponent>(), handIndex);
+                }
+            }
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
