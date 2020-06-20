@@ -36,9 +36,8 @@ namespace Content.Server.GameTicking.GamePresets
             }
 
             var list = new List<IPlayerSession>(readyPlayers);
-            var numTraitors = Math.Min(
-                Math.Max(readyPlayers.Count % PlayersPerTraitor, MinTraitors),
-                readyPlayers.Count);
+            var numTraitors = Math.Clamp(readyPlayers.Count % PlayersPerTraitor,
+                MinTraitors, readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)
             {
