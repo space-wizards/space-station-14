@@ -109,8 +109,6 @@ entities:
     pos: -1.47174,4.550247
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
 - uid: 2
   type: LaserGun
   components:
@@ -118,8 +116,6 @@ entities:
     pos: -0.6748645,4.487747
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
 - uid: 3
   type: Brutepack
   components:
