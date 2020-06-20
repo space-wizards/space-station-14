@@ -130,7 +130,7 @@ namespace Content.Shared
             /// <summary>
             /// The total amount of seconds to go until the countdown finishes
             /// </summary>
-            public uint Seconds { get; set; }
+            public DateTime StartTime { get; set; }
 
             /// <summary>
             /// Whether or not the countdown is paused
@@ -139,13 +139,13 @@ namespace Content.Shared
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                Seconds = buffer.ReadUInt32();
+                StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
                 Paused = buffer.ReadBoolean();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
-                buffer.Write(Seconds);
+                buffer.Write(StartTime.Ticks);
                 buffer.Write(Paused);
             }
         }

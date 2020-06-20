@@ -432,7 +432,7 @@ namespace Content.Server.GameTicking
             _roundStartTimeUtc += time;
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.Seconds = (uint) time.TotalSeconds;
+            lobbyCountdownMessage.StartTime = _roundStartTimeUtc;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
@@ -458,7 +458,7 @@ namespace Content.Server.GameTicking
             }
 
             var lobbyCountdownMessage = _netManager.CreateNetMessage<MsgTickerLobbyCountdown>();
-            lobbyCountdownMessage.Seconds = (uint) (_roundStartTimeUtc - DateTime.UtcNow).TotalSeconds;
+            lobbyCountdownMessage.StartTime = _roundStartTimeUtc;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
@@ -469,18 +469,6 @@ namespace Content.Server.GameTicking
         {
             PauseStart(!Paused);
             return Paused;
-        }
-
-        public bool TryGetPauseTime(out DateTime time)
-        {
-            time = default;
-
-            if (Paused)
-            {
-                time = _pauseTime;
-            }
-
-            return time != default;
         }
 
         private IEntity _spawnPlayerMob(Job job, bool lateJoin = true)

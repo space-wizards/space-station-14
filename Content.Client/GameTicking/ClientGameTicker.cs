@@ -73,7 +73,7 @@ namespace Content.Client.GameTicking
 
         private void LobbyCountdown(MsgTickerLobbyCountdown message)
         {
-            StartTime = DateTime.UtcNow + TimeSpan.FromSeconds(message.Seconds);
+            StartTime = message.StartTime;
             Paused = message.Paused;
         }
 
