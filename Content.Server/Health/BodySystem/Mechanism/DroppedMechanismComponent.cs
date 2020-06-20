@@ -10,6 +10,7 @@ using System.Globalization;
 using Robust.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Log;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.BodySystem {
 
@@ -19,6 +20,11 @@ namespace Content.Server.BodySystem {
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
+
+#pragma warning disable 649
+        [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
+#pragma warning restore 649
+
         public sealed override string Name => "DroppedMechanism";
 
         [ViewVariables]
@@ -52,7 +58,10 @@ namespace Content.Server.BodySystem {
                     Logger.Debug("Installing a mechanism was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
                     throw new InvalidOperationException("A DroppedBodyPartComponent exists without a BodyPart in it!");
                 }
-                droppedBodyPart.ContainedBodyPart.TryInstallDroppedMechanism(this);
+                if (!droppedBodyPart.ContainedBodyPart.TryInstallDroppedMechanism(this))
+                {
+                    _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, "You can't fit it in!");
+                }
             }
         }
     }

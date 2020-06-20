@@ -59,12 +59,12 @@ namespace Content.Server.BodySystem
                 else if (toolType == SurgeryType.Cauterization)
                     return CautizerizeIncisionSurgery;
             }
-            else if (_skinOpened && _vesselsClamped && _skinRetracted)//Case: skin is fully open.
+            else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
             {
                 if (_parent.Mechanisms.Count > 0 && toolType == SurgeryType.VesselCompression)
-                    return RemoveOrganSurgery;
+                    return LoosenOrganSurgery;
                 else if (_disconnectedOrgans.Count > 0 && toolType == SurgeryType.Incision)
-                    return DisconnectOrganSurgery;
+                    return RemoveOrganSurgery;
                 else if (toolType == SurgeryType.Cauterization)
                     return CautizerizeIncisionSurgery;
             }
@@ -127,40 +127,44 @@ namespace Content.Server.BodySystem
             _vesselsClamped = false;
             _skinRetracted = false;
         }
-        protected void DisconnectOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        protected void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            Mechanism target = null;
-            if (_parent.Mechanisms.Count > 0)
-                target = _parent.Mechanisms[0]; //TODO: Popup
-            if (target != null)
+            if (_parent.Mechanisms.Count <= 0)
+                return;
+            surgeon.RequestMechanism(_parent.Mechanisms, LoosenOrganSurgeryCallback);
+        }
+        public void LoosenOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        {
+            if (target != null && _parent.Mechanisms.Contains(target))
             {
                 ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                performer.PopupMessage(performer, localizationManager.GetString("Detach the organ..."));
+                performer.PopupMessage(performer, localizationManager.GetString("Loosen the organ..."));
                 //Delay?
                 _disconnectedOrgans.Add(target);
             }
-
         }
         protected void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (_disconnectedOrgans.Count <= 0)
                 return;
-
-            Mechanism target = null;
             if (_disconnectedOrgans.Count == 1)
-                target = _disconnectedOrgans[0];
+                RemoveOrganSurgeryCallback(_disconnectedOrgans[0], container, surgeon, performer);
             else
-                target = _disconnectedOrgans[0]; //TODO: Popup to select from disconnected organs
-                
-            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            performer.PopupMessage(performer, localizationManager.GetString("Remove the organ..."));
-            //Delay?
-            _parent.DropMechanism(performer, target);
-            _disconnectedOrgans.Remove(target);
+                surgeon.RequestMechanism(_parent.Mechanisms, RemoveOrganSurgeryCallback);
 
 
         }
-
+        public void RemoveOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        {
+            if (target != null && _parent.Mechanisms.Contains(target))
+            {
+                ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                performer.PopupMessage(performer, localizationManager.GetString("Remove the organ..."));
+                //Delay?
+                _parent.DropMechanism(performer, target);
+                _disconnectedOrgans.Remove(target);
+            }
+        }
         protected void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.

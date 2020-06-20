@@ -1,9 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using Robust.Client.GameObjects.Components.UserInterface;
+using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
 using Content.Shared.BodySystem;
+
+namespace Content.Client.BodySystem
+{
+    public class GenericSurgeryBoundUserInterface : BoundUserInterface
+    {
+
+#pragma warning disable CS0649
+        [Dependency] private IPrototypeManager _prototypeManager;
+#pragma warning restore
+        
+
+
+        public GenericSurgeryBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        {
+
+        }
+
+        protected override void Open()
+        {
+
+        }
+
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            switch (message)
+            {
+                
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+
+        }
+    }
+}
+
+
+
 
 namespace Content.Client.BodySystem
 {
@@ -68,6 +111,6 @@ namespace Content.Client.BodySystem
         {
             SendNetworkMessage(new ReceiveSurgeryUIMessage(selectedOptionData, _currentDisplayType));
         }
-   
+
     }
 }

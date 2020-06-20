@@ -12,7 +12,7 @@ namespace Content.Client.BodySystem
     public class GenericSurgeryWindow : SS14Window
     {
         public delegate void CloseCallback();
-        public delegate void OptionSelectedCallback(string selectedOptionData);
+        public delegate void OptionSelectedCallback(object selectedOptionData);
 
         private Control _vSplitContainer;
         private VBoxContainer _optionsBox;
@@ -51,8 +51,12 @@ namespace Content.Client.BodySystem
             _closeCallback();
             base.Close();
         }
+        public void CloseNoCallback()
+        {
+            base.Close();
+        }
 
-        public void BuildDisplay(Dictionary<string, string> data)
+        public void BuildDisplay(Dictionary<string, object> data)
         {
             _optionsBox.DisposeAllChildren();
             foreach (var (displayText, callbackData) in data)
@@ -79,9 +83,9 @@ namespace Content.Client.BodySystem
         private SpriteView SpriteView { get; }
         private Control EntityControl { get; }
         private Label DisplayText { get; }
-        public string CallbackData { get; }
+        public object CallbackData { get; }
 
-        public SurgeryButton(string callbackData)
+        public SurgeryButton(object callbackData)
         {
             CallbackData = callbackData;
 

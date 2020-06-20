@@ -20,7 +20,7 @@ namespace Content.Server.BodySystem
     {
 
         /// <summary>
-        ///     The BodyPart this surgeryData is attached to. The ISurgeryData class should not exist without a BodyPart that it represents, and will not work correctly without it.
+        ///     The BodyPart this surgeryData is attached to. The ISurgeryData class should not exist without a BodyPart that it represents, and will not work correctly without it (will throw errors if null).
         /// </summary>	
         protected BodyPart _parent;
 

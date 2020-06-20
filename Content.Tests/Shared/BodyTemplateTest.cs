@@ -25,8 +25,8 @@ namespace Content.Tests.Shared
             a.Connections.Add("torso", new List<string>() { "left arm" });
             a.CenterSlot = "torso";
 
-            b.Slots.Add("torso", BodyPartType.Torso);
             b.Slots.Add("left arm", BodyPartType.Arm);
+            b.Slots.Add("torso", BodyPartType.Torso);
             b.Connections.Add("left arm", new List<string>() { "torso" });
             b.CenterSlot = "torso";
 
@@ -47,9 +47,9 @@ namespace Content.Tests.Shared
             e.Connections.Add("left arm", new List<string>() { "torso" });
             e.CenterSlot = "left hand";
 
-            Assert.That(a.Equals(b) && a.Hash != 0 && b.Hash != 0);
-            Assert.That(!a.Equals(c) && a.Hash != 0 && c.Hash != 0);
-            Assert.That(!d.Equals(e) && d.Hash != 0 && e.Hash != 0);
+            Assert.That(a.Equals(b) && a.GetHashCode() != 0 && b.GetHashCode() != 0);
+            Assert.That(!a.Equals(c) && a.GetHashCode() != 0 && c.GetHashCode() != 0);
+            Assert.That(!d.Equals(e) && d.GetHashCode() != 0 && e.GetHashCode() != 0);
         }
     }
 }
