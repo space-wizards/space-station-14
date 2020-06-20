@@ -1,6 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.AI.Utils;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.Chargers;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
@@ -22,9 +23,12 @@ namespace Content.Server.AI.WorldState.States.Combat.Nearby
             }
 
             foreach (var result in Visibility
-                .GetNearestEntities(Owner.Transform.GridPosition, typeof(WeaponCapacitorChargerComponent), controller.VisionRadius))
+                .GetNearestEntities(Owner.Transform.GridPosition, typeof(PowerCellChargerComponent), controller.VisionRadius))
             {
-                nearby.Add(result);
+                if (result.GetComponent<PowerCellChargerComponent>().CompatibleCellType == CellType.Weapon)
+                {
+                    nearby.Add(result);
+                }
             }
 
             return nearby;

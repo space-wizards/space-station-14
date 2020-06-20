@@ -10,28 +10,64 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.Chargers
 {
     /// <summary>
-    /// This is used for the standalone cell rechargers (e.g. from a flashlight)
+    ///     Accepts an entity with a <see cref="PowerCellComponent"/>, and adds charge to it if receiving powered from a <see cref="PowerReceiverComponent"/>.
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public sealed class PowerCellChargerComponent : BaseCharger, IActivate, IInteractUsing
+    public class PowerCellChargerComponent : Component, IActivate, IInteractUsing
     {
         public override string Name => "PowerCellCharger";
-        public override double CellChargePercent => _container.ContainedEntity != null ?
-            _container.ContainedEntity.GetComponent<PowerCellComponent>().CurrentCharge /
-            _container.ContainedEntity.GetComponent<PowerCellComponent>().MaxCharge * 100 : 0.0f;
+
+        [ViewVariables]
+        public IEntity HeldItem { get; private set; }
+
+        [ViewVariables]
+        private ContainerSlot _container;
+
+        [ViewVariables]
+        private PowerReceiverComponent _powerReceiver;
+
+        [ViewVariables]
+        private CellChargerStatus _status;
+
+        private AppearanceComponent _appearanceComponent;
+
+        [ViewVariables]
+        public float TransferRatio => _transferRatio;
+        private float _transferRatio;
+
+        [ViewVariables]
+        private float _transferEfficiency;
+
+        [ViewVariables]
+        private int _chargeRate;
+
+        [ViewVariables]
+        public CellType CompatibleCellType => _compatibleCellType;
+        private CellType _compatibleCellType;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _transferRatio, "transfer_ratio", 0.1f);
+            serializer.DataField(ref _transferEfficiency, "transfer_efficiency", 0.85f);
+            serializer.DataField(ref _chargeRate, "chargeRate", 100);
+            serializer.DataField(ref _compatibleCellType, "compatibleCellType", CellType.PlainCell);
+        }
 
         public override void Initialize()
         {
             base.Initialize();
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _container =
-                ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
+            _container = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-powerCellContainer", Owner);
             _appearanceComponent = Owner.GetComponent<AppearanceComponent>();
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
             _powerReceiver.OnPowerStateChanged += PowerUpdate;
@@ -43,23 +79,20 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             base.OnRemove();
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            var result = TryInsertItem(eventArgs.Using);
-            if (result)
-            {
-                return true;
-            }
-
-            var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            eventArgs.User.PopupMessage(Owner, localizationManager.GetString("Unable to insert capacitor"));
-
-            return false;
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             RemoveItemToHand(eventArgs.User);
+        }
+
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            var result = TryInsertItem(eventArgs.Using);
+            if (!result)
+            {
+                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                eventArgs.User.PopupMessage(Owner, localizationManager.GetString("Unable to insert capacitor"));
+            }
+            return result;
         }
 
         [Verb]
@@ -123,8 +156,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         public bool TryInsertItem(IEntity entity)
         {
-            if (!entity.HasComponent<PowerCellComponent>() ||
-                _container.ContainedEntity != null)
+            if (!entity.TryGetComponent<PowerCellComponent>(out var powerCell) || _container.ContainedEntity != null)
+            {
+                return false;
+            }
+
+            if (powerCell.CellType != _compatibleCellType)
             {
                 return false;
             }
@@ -138,7 +175,47 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             return true;
         }
 
-        protected override CellChargerStatus GetStatus()
+        /// <summary>
+        /// This will remove the item directly into the user's hand rather than the floor
+        /// </summary>
+        /// <param name="user"></param>
+        public void RemoveItemToHand(IEntity user)
+        {
+            var heldItem = _container.ContainedEntity;
+            if (heldItem == null)
+            {
+                return;
+            }
+            RemoveItem();
+
+            if (user.TryGetComponent(out HandsComponent handsComponent) &&
+                heldItem.TryGetComponent(out ItemComponent itemComponent))
+            {
+                handsComponent.PutInHand(itemComponent);
+            }
+        }
+
+        /// <summary>
+        ///  Will put the charger's item on the floor if available
+        /// </summary>
+        public void RemoveItem()
+        {
+            if (_container.ContainedEntity == null)
+            {
+                return;
+            }
+
+            _container.Remove(HeldItem);
+            HeldItem = null;
+            UpdateStatus();
+        }
+
+        protected void PowerUpdate(object sender, PowerStateEventArgs eventArgs)
+        {
+            UpdateStatus();
+        }
+
+        protected CellChargerStatus GetStatus()
         {
             if (!_powerReceiver.Powered)
             {
@@ -159,12 +236,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             return CellChargerStatus.Charging;
         }
 
-        protected override void TransferPower(float frameTime)
+        protected void TransferPower(float frameTime)
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
             _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
-            var chargeLoss = Math.Min(ChargeRate * frameTime, cellComponent.MaxCharge - cellComponent.CurrentCharge) * _transferRatio;
+            var chargeLoss = Math.Min(_chargeRate * frameTime, cellComponent.MaxCharge - cellComponent.CurrentCharge) * _transferRatio;
             _powerReceiver.Load = chargeLoss;
 
             if (!_powerReceiver.Powered)
@@ -183,5 +260,61 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
             UpdateStatus();
         }
+
+        protected void UpdateStatus()
+        {
+            // Not called UpdateAppearance just because it messes with the load
+            var status = GetStatus();
+
+            if (_status == status)
+            {
+                return;
+            }
+
+            _status = status;
+
+            switch (_status)
+            {
+                // Update load just in case
+                case CellChargerStatus.Off:
+                    _powerReceiver.Load = 0;
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Off);
+                    break;
+                case CellChargerStatus.Empty:
+                    _powerReceiver.Load = 0;
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Empty); ;
+                    break;
+                case CellChargerStatus.Charging:
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charging);
+                    break;
+                case CellChargerStatus.Charged:
+                    _powerReceiver.Load = 0;
+                    _appearanceComponent?.SetData(CellVisual.Light, CellChargerStatus.Charged);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _appearanceComponent?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
+
+            _status = status;
+        }
+
+        public void OnUpdate(float frameTime)
+        {
+            if (_status == CellChargerStatus.Empty || _status == CellChargerStatus.Charged ||
+                _container.ContainedEntity == null)
+            {
+                return;
+            }
+
+            TransferPower(frameTime);
+        }
+    }
+
+    public enum BatteryChargerType
+    {
+        Cell,
+        Weapon,
     }
 }

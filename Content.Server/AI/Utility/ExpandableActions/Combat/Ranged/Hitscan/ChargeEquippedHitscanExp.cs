@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan;
@@ -22,7 +22,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
                 throw new InvalidOperationException();
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(WeaponCapacitorChargerComponent),
+            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(PowerCellChargerComponent),
                 controller.VisionRadius))
             {
                 yield return new PutHitscanInCharger(owner, entity, Bonus);

@@ -1,4 +1,4 @@
-using Content.Server.AI.Utility.Curves;
+﻿using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Power.Chargers;
@@ -12,7 +12,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
         public override float GetScore(Blackboard context)
         {
             var target = context.GetState<TargetEntityState>().GetValue();
-            if (target == null || !target.TryGetComponent(out WeaponCapacitorChargerComponent weaponCharger))
+            if (target == null || !target.TryGetComponent(out PowerCellChargerComponent weaponCharger))
             {
                 return 0.0f;
             }

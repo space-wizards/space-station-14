@@ -18,6 +18,7 @@
     fireSound: "/Audio/Guns/Gunshots/laser.ogg"
     lowerDischargeLimit: 10
   - type: PowerCell
+    cellType: Weapon
     capacity: 1200
   - type: Item
     Size: 24
@@ -48,6 +49,7 @@
     fireSound: "/Audio/Guns/Gunshots/laser_cannon.ogg"
     lowerDischargeLimit: 10
   - type: PowerCell
+    cellType: Weapon
     capacity: 2400
   - type: Item
     Size: 32

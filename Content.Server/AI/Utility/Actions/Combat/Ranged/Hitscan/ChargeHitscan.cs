@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Operators.Movement;
@@ -31,7 +31,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
         {
             var weapon = context.GetState<EquippedEntityState>().GetValue();
 
-            if (weapon == null || _charger.GetComponent<WeaponCapacitorChargerComponent>().HeldItem != null)
+            if (weapon == null || _charger.GetComponent<PowerCellChargerComponent>().HeldItem != null)
             {
                 ActionOperators = new Queue<AiOperator>();
                 return;
