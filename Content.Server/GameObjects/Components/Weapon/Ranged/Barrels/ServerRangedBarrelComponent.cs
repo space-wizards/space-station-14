@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
-        private int _allRateSelectors;
+        private FireRateSelector _allRateSelectors;
         public override float FireRate => _fireRate;
         private float _fireRate;
         
@@ -90,7 +90,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _fireRateSelector, "currentSelector", FireRateSelector.Safety);
-            serializer.DataField(ref _allRateSelectors, "allSelectors", 0, WithFormat.Flags<FireRateSelector>());
             serializer.DataField(ref _fireRate, "fireRate", 2.0f);
 
             // This hard-to-read area's dealing with recoil
@@ -107,6 +106,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var angleDecay = serializer.ReadDataField("angleDecay", (float) 20);
                 _angleDecay = angleDecay * (float) Math.PI / 180;
                 serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
+                
+                // FireRate options
+                var allFireRates = serializer.ReadDataField("allSelectors", new List<FireRateSelector>());
+                foreach (var fireRate in allFireRates)
+                {
+                    _allRateSelectors |= fireRate;
+                }
             }
 
             // For simplicity we'll enforce it this way; ammo determines max spread

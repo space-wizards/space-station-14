@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -29,8 +30,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
         private ContainerSlot _magazineContainer;
 
-        [ViewVariables] public MagazineType MagazineTypes => (MagazineType) _magazineTypes;
-        private int _magazineTypes;
+        [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
+        private MagazineType _magazineTypes;
         [ViewVariables] public BallisticCaliber Caliber => _caliber;
         private BallisticCaliber _caliber;
 
@@ -89,7 +90,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _magazineTypes, "magazineTypes", 0, WithFormat.Flags<MagazineType>());
+            if (serializer.Reading)
+            {
+                var magTypes = serializer.ReadDataField("magazineTypes", new List<MagazineType>());
+                foreach (var mag in magTypes)
+                {
+                    _magazineTypes |= mag;
+                }
+            }
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
             serializer.DataField(ref _magNeedsOpenBolt, "magNeedsOpenBolt", false);
@@ -431,7 +439,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     }
 
     [Flags]
-    [FlagsFor(typeof(MagazineType))]
     public enum MagazineType
     {
 
