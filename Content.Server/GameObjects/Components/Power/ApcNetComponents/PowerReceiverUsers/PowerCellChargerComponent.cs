@@ -13,7 +13,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power.Chargers
+namespace Content.Server.GameObjects.Components.Power
 {
     /// <summary>
     ///     Accepts an entity with a <see cref="PowerCellComponent"/>, and adds charge to it if receiving powered from a <see cref="PowerReceiverComponent"/>.
