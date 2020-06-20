@@ -51,6 +51,29 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
+        public float UseCharge(float toDeduct)
+        {
+            var chargeChangedBy = Math.Min(CurrentCharge, toDeduct);
+            CurrentCharge -= chargeChangedBy;
+            return chargeChangedBy;
+        }
+
+        public void FillFrom(BatteryComponent battery)
+        {
+            var powerDeficit = MaxCharge - CurrentCharge;
+            if (battery.TryUseCharge(powerDeficit))
+            {
+                CurrentCharge += powerDeficit;
+            }
+            else
+            {
+                CurrentCharge += battery.CurrentCharge;
+                battery.CurrentCharge = 0;
+            }
+        }
+
+        protected virtual void OnChargeChanged() { }
+
         private void UpdateStorageState()
         {
             if (CurrentCharge == MaxCharge)
@@ -81,8 +104,6 @@ namespace Content.Server.GameObjects.Components.Power
             UpdateStorageState();
             OnChargeChanged();
         }
-
-        protected virtual void OnChargeChanged() { }
     }
 
     public enum BatteryState

@@ -21,8 +21,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     {
         public override string Name => "WeaponCapacitorCharger";
         public override double CellChargePercent => _container.ContainedEntity != null ?
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().CurrentCharge /
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().MaxCharge * 100 : 0.0f;
+            _container.ContainedEntity.GetComponent<PowerCellComponent>().CurrentCharge /
+            _container.ContainedEntity.GetComponent<PowerCellComponent>().MaxCharge * 100 : 0.0f;
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         public bool TryInsertItem(IEntity entity)
         {
-            if (!entity.HasComponent<HitscanWeaponCapacitorComponent>() ||
+            if (!entity.HasComponent<PowerCellComponent>() ||
                 _container.ContainedEntity != null)
             {
                 return false;
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 return CellChargerStatus.Empty;
             }
 
-            if (_container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent component) &&
+            if (_container.ContainedEntity.TryGetComponent(out PowerCellComponent component) &&
                 Math.Abs(component.MaxCharge - component.CurrentCharge) < 0.01)
             {
                 return CellChargerStatus.Charged;
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            _container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent weaponCapacitorComponent);
+            _container.ContainedEntity.TryGetComponent(out PowerCellComponent weaponCapacitorComponent);
             var chargeLoss = Math.Min(ChargeRate * frameTime, weaponCapacitorComponent.MaxCharge - weaponCapacitorComponent.CurrentCharge) * _transferRatio;
             _powerReceiver.Load = chargeLoss;
 

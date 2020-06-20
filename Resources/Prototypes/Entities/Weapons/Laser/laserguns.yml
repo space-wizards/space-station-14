@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: retro laser gun
   parent: BaseItem
   id: LaserGun
@@ -17,7 +17,7 @@
     fireSprite: "Objects/Projectiles/laser.png"
     fireSound: "/Audio/Guns/Gunshots/laser.ogg"
     lowerDischargeLimit: 10
-  - type: HitscanWeaponCapacitor
+  - type: PowerCell
     capacity: 1200
   - type: Item
     Size: 24
@@ -47,7 +47,7 @@
     fireSprite: "Objects/Projectiles/heavylaser.png"
     fireSound: "/Audio/Guns/Gunshots/laser_cannon.ogg"
     lowerDischargeLimit: 10
-  - type: HitscanWeaponCapacitor
+  - type: PowerCell
     capacity: 2400
   - type: Item
     Size: 32

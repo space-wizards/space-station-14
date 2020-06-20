@@ -37,13 +37,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         //we just declare the field and then use GetComponent later to actually get it.
         //Do remember to add it in both the .yaml prototype and the factory in EntryPoint.cs
         //Otherwise you will get errors
-        private HitscanWeaponCapacitorComponent capacitorComponent;
+        private PowerCellComponent capacitorComponent;
 
         public int Damage => _damage;
 
         public int BaseFireCost => _baseFireCost;
 
-        public HitscanWeaponCapacitorComponent CapacitorComponent => capacitorComponent;
+        public PowerCellComponent CapacitorComponent => capacitorComponent;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
         {
             base.Initialize();
             var rangedWeapon = Owner.GetComponent<RangedWeaponComponent>();
-            capacitorComponent = Owner.GetComponent<HitscanWeaponCapacitorComponent>();
+            capacitorComponent = Owner.GetComponent<PowerCellComponent>();
             rangedWeapon.FireHandler = Fire;
 
         }
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan
             {//If capacitor has less energy than the lower limit, do nothing
                 return;
             }
-            float energyModifier = capacitorComponent.GetChargeFrom(_baseFireCost) / _baseFireCost;
+            float energyModifier = capacitorComponent.UseCharge(_baseFireCost) / _baseFireCost;
             var userPosition = user.Transform.WorldPosition; //Remember world positions are ephemeral and can only be used instantaneously
             var angle = new Angle(clickLocation.Position - userPosition);
 

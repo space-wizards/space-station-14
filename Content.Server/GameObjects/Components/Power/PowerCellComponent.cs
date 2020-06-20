@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using System;
 
 namespace Content.Server.GameObjects.Components.Power
 {
@@ -16,6 +17,7 @@ namespace Content.Server.GameObjects.Components.Power
         {
             base.Initialize();
             Owner.TryGetComponent(out _appearance);
+            CurrentCharge = MaxCharge;
             UpdateVisuals();
         }
 
