@@ -10,6 +10,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -97,8 +98,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     _ammoContainer.Insert(entity);
                     if (_soundInsert != null)
                     {
-                        var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                        soundSystem.PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                        EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                     }
 
                     // Dirty();
@@ -128,8 +128,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _currentSlot = random;
             if (_soundSpin != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_soundSpin, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundSpin, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
         }
 
@@ -182,8 +181,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundEject != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
                 }
             }
 

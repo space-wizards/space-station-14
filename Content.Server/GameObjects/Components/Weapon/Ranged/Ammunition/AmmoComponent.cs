@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -150,8 +151,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
                 Shaded = false
             };
-            var mgr = IoCManager.Resolve<IEntitySystemManager>();
-            mgr.GetEntitySystem<EffectSystem>().CreateParticle(message);
+            EntitySystem.Get<EffectSystem>().CreateParticle(message);
         }
     }
 

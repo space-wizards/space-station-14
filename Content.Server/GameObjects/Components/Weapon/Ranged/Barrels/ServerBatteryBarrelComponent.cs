@@ -11,6 +11,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -206,8 +207,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             if (_soundPowerCellInsert != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_soundPowerCellInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
 
             _powerCellContainer.Insert(entity);
@@ -227,8 +227,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _powerCellContainer.Remove(entity);
             if (_soundPowerCellEject != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
             
             UpdateAppearance();

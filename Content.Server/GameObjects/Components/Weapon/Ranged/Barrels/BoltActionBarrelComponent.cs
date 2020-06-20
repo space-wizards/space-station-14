@@ -12,6 +12,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -60,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return;
                 }
 
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+                var soundSystem = EntitySystem.Get<AudioSystem>();
                 
                 if (value)
                 {
@@ -212,8 +213,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundCycle != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
             }
             
@@ -245,8 +245,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _chamberContainer.Insert(ammo);
                 if (_soundInsert != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
                 // Dirty();
                 UpdateAppearance();
@@ -259,8 +258,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _spawnedAmmo.Push(ammo);
                 if (_soundInsert != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
                 // Dirty();
                 UpdateAppearance();

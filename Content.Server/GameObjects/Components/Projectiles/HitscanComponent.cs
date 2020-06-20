@@ -4,6 +4,7 @@ using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Interfaces.Timing;
@@ -59,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)
         {
-            var effectSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EffectSystem>();
+            var effectSystem = EntitySystem.Get<EffectSystem>();
             _startTime = IoCManager.Resolve<IGameTiming>().CurTime;
             _deathTime = _startTime + TimeSpan.FromSeconds(1);
 
@@ -87,10 +88,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
             if (hitEntity != null && _soundHitWall != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
-                soundSystem.PlayAtCoords(_soundHitWall, user.Transform.GridPosition.Translated(offset));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.GridPosition.Translated(offset));
             }
             
             Timer.Spawn((int) _deathTime.TotalMilliseconds, () =>

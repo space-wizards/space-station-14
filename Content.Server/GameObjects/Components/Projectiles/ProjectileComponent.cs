@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -80,12 +81,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
         {
             if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
             } else if (_soundHit != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_soundHit, entity.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
             
             if (entity.TryGetComponent(out DamageableComponent damage))

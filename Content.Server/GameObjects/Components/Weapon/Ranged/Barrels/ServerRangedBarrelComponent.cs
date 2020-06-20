@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
@@ -173,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private void Fire(IEntity shooter, GridCoordinates target)
         {
-            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var soundSystem = EntitySystem.Get<AudioSystem>();
             if (ShotsLeft == 0)
             {
                 if (_soundEmpty != null)
@@ -242,14 +243,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <param name="playSound"></param>
         /// <param name="robustRandom"></param>
         /// <param name="prototypeManager"></param>
-        /// <param name="entitySystemManager"></param>
         /// <param name="ejectDirections"></param>
         public static void EjectCasing(
             IEntity entity, 
             bool playSound = true,
             IRobustRandom robustRandom = null, 
             IPrototypeManager prototypeManager = null,
-            IEntitySystemManager entitySystemManager = null,
             Direction[] ejectDirections = null)
         {
             if (robustRandom == null)
@@ -278,15 +277,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             }
 
-            if (entitySystemManager == null)
-            {
-                entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            }
-                
             var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
             var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-            var soundSystem = entitySystemManager.GetEntitySystem<AudioSystem>();
-            soundSystem.PlayAtCoords(randomFile, entity.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(randomFile, entity.Transform.GridPosition, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -298,14 +291,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
             var ejectDirections = new[] {Direction.East, Direction.North, Direction.South, Direction.West};
             var soundPlayCount = 0;
             var playSound = true;
 
             foreach (var entity in entities)
             {
-                EjectCasing(entity, playSound, robustRandom, prototypeManager, entitySystemManager, ejectDirections);
+                EjectCasing(entity, playSound, robustRandom, prototypeManager, ejectDirections);
                 soundPlayCount++;
                 if (soundPlayCount > 3)
                 {

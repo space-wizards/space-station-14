@@ -10,6 +10,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -134,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // For magazines only when we normally set BoltOpen we'll defer the UpdateAppearance until everything is done
             // Whereas this will just call it straight up.
             BoltOpen = !BoltOpen;
-            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var soundSystem = EntitySystem.Get<AudioSystem>();
             if (BoltOpen)
             {
                 if (_soundBoltOpen != null)
@@ -198,7 +199,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 _chamberContainer.Insert(nextRound);
             }
             
-            var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var soundSystem = EntitySystem.Get<AudioSystem>();
 
             if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
             {
@@ -259,8 +260,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundBoltClosed != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-5));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundBoltClosed, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-5));
                 }
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("Bolt closed"));
                 BoltOpen = false;
@@ -293,8 +293,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             _magazineContainer.Remove(mag);
             if (_soundMagEject != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_soundMagEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundMagEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
 
             if (user.TryGetComponent(out HandsComponent handsComponent))
@@ -333,8 +332,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     if (_soundMagInsert != null)
                     {
-                        var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                        soundSystem.PlayAtCoords(_soundMagInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                        EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundMagInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                     }
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("Magazine inserted"));
                     _magazineContainer.Insert(eventArgs.Using);

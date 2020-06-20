@@ -10,6 +10,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -161,8 +162,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (_soundCycle != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
             }
             
@@ -183,23 +183,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
-            // So we never put straight into the chamber which means if a single shell is put in it
-            // has to be pumped coz it's cooler. If this changes then here ya's code
-            /*
-            if (_chamberContainer.ContainedEntity == null)
-            {
-                _chamberContainer.Insert(eventArgs.Using);
-                // Dirty();
-                UpdateAppearance();
-                if (_soundInsert != null)
-                {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.Play(_soundInsert);
-                }
-                return true;
-            }
-            */
-
             if (_ammoContainer.ContainedEntities.Count < Capacity - 1)
             {
                 _ammoContainer.Insert(eventArgs.Using);
@@ -208,8 +191,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 UpdateAppearance();
                 if (_soundInsert != null)
                 {
-                    var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                    soundSystem.PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundInsert, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
                 return true;
             }

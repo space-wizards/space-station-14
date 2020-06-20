@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
@@ -43,8 +44,7 @@ namespace Content.Server.GameObjects.Components.Explosion
 
             if (_sound != null)
             {
-                var soundSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundSystem.PlayAtCoords(_sound, Owner.Transform.GridPosition);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(_sound, Owner.Transform.GridPosition);
             }
 
             if (_deleteOnFlash && !Owner.Deleted)
