@@ -37,7 +37,7 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            if (!uint.TryParse(args[0], out var seconds))
+            if (!uint.TryParse(args[0], out var seconds) || seconds == 0)
             {
                 shell.SendText(player, $"{args[0]} isn't a valid amount of seconds.");
                 return;
