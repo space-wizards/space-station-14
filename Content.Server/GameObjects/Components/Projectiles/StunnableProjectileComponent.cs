@@ -19,14 +19,14 @@ namespace Content.Server.GameObjects.Components.Projectiles
         // See stunnable for what these do
         private int _stunAmount;
         private int _knockdownAmount;
-        private int _paralyzeAmount;
+        private int _slowdownAmount;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _stunAmount, "stunAmount", 0);
             serializer.DataField(ref _knockdownAmount, "knockdownAmount", 0);
-            serializer.DataField(ref _paralyzeAmount, "paralyzeAmount", 0);
+            serializer.DataField(ref _slowdownAmount, "slowdownAmount", 0);
         }
 
         public override void Initialize()
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 stunnableComponent.Stun(_stunAmount);
                 stunnableComponent.Knockdown(_knockdownAmount);
-                stunnableComponent.Paralyze(_paralyzeAmount);
+                stunnableComponent.Slowdown(_slowdownAmount);
             }
         }
 

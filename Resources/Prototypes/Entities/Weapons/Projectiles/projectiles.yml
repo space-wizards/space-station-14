@@ -92,7 +92,8 @@
     damages:
       Heat: 5
   - type: StunnableProjectile
-    paralyzeAmount: 5
+    stunAmount: 5
+    knockdownAmount: 5
   - type: Sprite
     directional: false
     sprite: Objects/Guns/Projectiles/spark.rsi
