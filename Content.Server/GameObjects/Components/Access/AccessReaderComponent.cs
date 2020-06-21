@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.GraphUpdates;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -69,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         [CanBeNull]
-        private static ICollection<string> FindAccessTags(IEntity entity)
+        public static ICollection<string> FindAccessTags(IEntity entity)
         {
             if (entity.TryGetComponent(out IAccess accessComponent))
             {

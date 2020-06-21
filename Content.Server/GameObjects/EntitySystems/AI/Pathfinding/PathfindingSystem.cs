@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.GraphUpdates;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
+using Content.Shared.Physics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
@@ -41,6 +44,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         // Need to store previously known entity positions for collidables for when they move
         private readonly Dictionary<IEntity, TileRef> _lastKnownPositions = new Dictionary<IEntity, TileRef>();
 
+        public const int TrackedCollisionLayers = (int)
+            (CollisionGroup.Impassable | 
+             CollisionGroup.MobImpassable |
+             CollisionGroup.SmallImpassable | 
+             CollisionGroup.VaultImpassable);
+        
         /// <summary>
         /// Ask for the pathfinder to gimme somethin
         /// </summary>
@@ -73,6 +82,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 var update = _queuedGraphUpdates.Dequeue();
                 switch (update)
                 {
+                    case AccessReaderChangeUpdate access:
+                        if (access.Enabled)
+                        {
+                            HandleAccessAdd(access.Entity);
+                        }
+                        else
+                        {
+                            HandleAccessRemove(access.Entity);
+                        }
+
+                        break;
                     case CollidableMove move:
                         HandleCollidableMove(move);
                         break;
@@ -182,6 +202,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             IoCManager.InjectDependencies(this);
             SubscribeLocalEvent<CollisionChangeEvent>(QueueCollisionEnabledEvent);
             SubscribeLocalEvent<MoveEvent>(QueueCollidableMove);
+            SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeEvent);
 
             // Handle all the base grid changes
             // Anything that affects traversal (i.e. collision layer) is handled separately.
@@ -193,6 +214,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         public override void Shutdown()
         {
             base.Shutdown();
+            UnsubscribeLocalEvent<CollisionChangeEvent>();
+            UnsubscribeLocalEvent<MoveEvent>();
+            UnsubscribeLocalEvent<AccessReaderChangeMessage>();
+            
             _mapManager.OnGridRemoved -= QueueGridRemoval;
             _mapManager.GridChanged -= QueueGridChange;
             _mapManager.TileChanged -= QueueTileChange;
@@ -216,6 +241,42 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _queuedGraphUpdates.Enqueue(new TileUpdate(eventArgs.NewTile));
         }
 
+        private void QueueAccessChangeEvent(AccessReaderChangeMessage message)
+        {
+            var entity = IoCManager.Resolve<IEntityManager>().GetEntity(message.Uid);
+            _queuedGraphUpdates.Enqueue(new AccessReaderChangeUpdate(entity, message.Enabled));
+        }
+
+        private void HandleAccessAdd(IEntity entity)
+        {
+            if (entity.Deleted || !entity.HasComponent<AccessReader>())
+            {
+                return;
+            }
+            
+            var grid = _mapManager.GetGrid(entity.Transform.GridID);
+            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
+
+            var chunk = GetChunk(tileRef);
+            var node = chunk.GetNode(tileRef);
+            node.AddEntity(entity);
+        }
+
+        private void HandleAccessRemove(IEntity entity)
+        {
+            if (entity.Deleted || !entity.HasComponent<AccessReader>())
+            {
+                return;
+            }
+            
+            var grid = _mapManager.GetGrid(entity.Transform.GridID);
+            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
+
+            var chunk = GetChunk(tileRef);
+            var node = chunk.GetNode(tileRef);
+            node.RemoveEntity(entity);
+        }
+
         #region collidable
         /// <summary>
         /// If an entity's collision gets turned on then we need to update its current position
@@ -223,25 +284,22 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="entity"></param>
         private void HandleCollidableAdd(IEntity entity)
         {
-            // It's a grid / gone / a door / we already have it (which probably shouldn't happen)
             if (entity.Prototype == null ||
                 entity.Deleted ||
-                entity.HasComponent<ServerDoorComponent>() ||
-                entity.HasComponent<AirlockComponent>() ||
-                _lastKnownPositions.ContainsKey(entity))
+                _lastKnownPositions.ContainsKey(entity) || 
+                !entity.TryGetComponent(out CollidableComponent collidableComponent) || 
+                !collidableComponent.CanCollide || 
+                (TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
             {
                 return;
             }
 
             var grid = _mapManager.GetGrid(entity.Transform.GridID);
             var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
-
-            var collisionLayer = entity.GetComponent<CollidableComponent>().CollisionLayer;
-
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
-            node.AddCollisionLayer(collisionLayer);
 
+            node.AddEntity(entity);
             _lastKnownPositions.Add(entity, tileRef);
         }
 
@@ -253,28 +311,21 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             if (entity.Prototype == null ||
                 entity.Deleted ||
-                entity.HasComponent<ServerDoorComponent>() ||
-                entity.HasComponent<AirlockComponent>() ||
-                !_lastKnownPositions.ContainsKey(entity))
+                !_lastKnownPositions.ContainsKey(entity) || 
+                !entity.TryGetComponent(out CollidableComponent collidableComponent) || 
+                !collidableComponent.CanCollide || 
+                (TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
             {
                 return;
             }
-
-            _lastKnownPositions.Remove(entity);
 
             var grid = _mapManager.GetGrid(entity.Transform.GridID);
             var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
-
-            if (!entity.TryGetComponent(out CollidableComponent collidableComponent))
-            {
-                return;
-            }
-
-            var collisionLayer = collidableComponent.CollisionLayer;
-
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
-            node.RemoveCollisionLayer(collisionLayer);
+
+            node.RemoveEntity(entity);
+            _lastKnownPositions.Remove(entity);
         }
 
         private void QueueCollidableMove(MoveEvent moveEvent)
@@ -309,13 +360,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             _lastKnownPositions[moveEvent.Sender] = newTile;
 
-            if (!moveEvent.Sender.TryGetComponent(out CollidableComponent collidableComponent))
+            if (!moveEvent.Sender.HasComponent<CollidableComponent>())
             {
                 HandleCollidableRemove(moveEvent.Sender);
                 return;
             }
-
-            var collisionLayer = collidableComponent.CollisionLayer;
 
             var gridIds = new HashSet<GridId>(2) {oldTile.GridIndex, newTile.GridIndex};
 
@@ -325,14 +374,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 {
                     var oldChunk = GetChunk(oldTile);
                     var oldNode = oldChunk.GetNode(oldTile);
-                    oldNode.RemoveCollisionLayer(collisionLayer);
+                    oldNode.RemoveEntity(moveEvent.Sender);
                 }
 
                 if (newTile.GridIndex == gridId)
                 {
                     var newChunk = GetChunk(newTile);
                     var newNode = newChunk.GetNode(newTile);
-                    newNode.RemoveCollisionLayer(collisionLayer);
+                    newNode.AddEntity(moveEvent.Sender);
                 }
             }
         }
@@ -353,5 +402,36 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
         }
         #endregion
+
+        // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
+        // Otherwise you get the steerer using this and the pathfinders using a different traversable.
+        // Also look at increasing tile cost the more physics entities are on it
+        public bool CanTraverse(IEntity entity, GridCoordinates grid)
+        {
+            var tile = _mapManager.GetGrid(grid.GridID).GetTileRef(grid);
+            var node = GetNode(tile);
+            return CanTraverse(entity, node);
+        }
+
+        public bool CanTraverse(IEntity entity, PathfindingNode node)
+        {
+            if (entity.TryGetComponent(out CollidableComponent collidableComponent) &&
+                (collidableComponent.CollisionMask & node.BlockedCollisionMask) != 0)
+            {
+                return false;
+            }
+
+            var access = AccessReader.FindAccessTags(entity);
+            
+            foreach (var reader in node.AccessReaders)
+            {
+                if (!reader.IsAllowed(access))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
