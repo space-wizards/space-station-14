@@ -3,6 +3,7 @@ using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -24,14 +25,14 @@ namespace Content.Server.AI.Operators.Inventory
         
         public override Outcome Execute(float frameTime)
         {
-            if (!InteractionChecks.InRangeUnobstructed(_owner, _target.Transform.MapPosition))
-            {
-                return Outcome.Failed;
-            }
-
             if (!ContainerHelpers.TryGetContainer(_target, out var container))
             {
                 return Outcome.Success;
+            }
+            
+            if (!InteractionChecks.InRangeUnobstructed(_owner, container.Owner.Transform.MapPosition, ignoredEnt: container.Owner))
+            {
+                return Outcome.Failed;
             }
 
             if (!container.Owner.TryGetComponent(out EntityStorageComponent storageComponent) || 
