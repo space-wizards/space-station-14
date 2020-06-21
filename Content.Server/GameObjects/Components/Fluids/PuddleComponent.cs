@@ -329,6 +329,11 @@ namespace Content.Server.GameObjects.Components.Fluids
 
                 if (entity.TryGetComponent(out PuddleComponent puddleComponent))
                 {
+                    if (puddleComponent._overflown)
+                    {
+                        return false;
+                    }
+
                     puddle = puddleComponent;
                 }
             }
@@ -351,7 +356,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             foreach (var direction in RandomDirections())
             {
-                if (TryGetAdjacentOverflow(direction, out var puddle) && !puddle._overflown)
+                if (TryGetAdjacentOverflow(direction, out var puddle))
                 {
                     yield return puddle;
                 }
