@@ -8,6 +8,7 @@
   drawdepth: Mobs
   abstract: true
   components:
+  - type: Flashable
   - type: Hands
     hands:
     - left
@@ -24,6 +25,9 @@
   - type: Stomach
     max_volume: 250
     digestionDelay: 20
+  # StatusEffects
+  - type: Stunnable
+  # EndStatusEffects
   - type: Inventory
   - type: Clickable
   - type: InteractionOutline

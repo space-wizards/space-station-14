@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            RemoveItemToHand(eventArgs.User);
+            RemoveItem(eventArgs.User);
         }
 
         [Verb]
@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             protected override void Activate(IEntity user, PowerCellChargerComponent component)
             {
-                component.RemoveItem();
+                component.RemoveItem(user);
             }
         }
 
@@ -122,9 +122,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             {
                 return false;
             }
-
-            HeldItem = entity;
-            if (!_container.Insert(HeldItem))
+            
+            if (!_container.Insert(entity))
             {
                 return false;
             }
@@ -157,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
+            var cellComponent = _container.ContainedEntity.GetComponent<PowerCellComponent>();
             var chargeLoss = cellComponent.RequestCharge(frameTime) * _transferRatio;
             _powerDevice.Load = chargeLoss;
 
