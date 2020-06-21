@@ -95,6 +95,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             for (var i = 0; i < _agentLists.Count; i++)
             {
                 var agentList = _agentLists[i];
+                // Register shouldn't be called twice; if it is then someone dun fucked up
+                DebugTools.Assert(!agentList.ContainsKey(entity));
                 
                 if (agentList.Count < lowestListCount)
                 {
@@ -102,17 +104,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     lowestListIndex = i;
                 }
             }
-
-            if (_agentLists[lowestListIndex].ContainsKey(entity))
-            {
-                Logger.ErrorS("ai", $"Tried to re-register an AI with the steering system");
-                return;
-            }
+            
             _agentLists[lowestListIndex].Add(entity, steeringRequest);
         }
 
         /// <summary>
-        /// Stops the steering behavior for the AI
+        /// Stops the steering behavior for the AI and cleans up
         /// </summary>
         /// <param name="entity"></param>
         /// <exception cref="InvalidOperationException"></exception>
@@ -128,7 +125,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 request.Item1.Cancel();
                 _pathfindingRequests.Remove(entity);
             }
-            else if (_paths.ContainsKey(entity))
+            
+            if (_paths.ContainsKey(entity))
             {
                 _paths.Remove(entity);
             }
@@ -157,7 +155,27 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 }
             }
             
+            Logger.ErrorS("ai", "Tried to unregister an agent that isn't registered");
+            throw new InvalidOperationException();
             // If we get here then they were never registered
+        }
+
+        /// <summary>
+        /// Is the entity currently registered for steering?
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool IsRegistered(IEntity entity)
+        {
+            foreach (var agentList in _agentLists)
+            {
+                if (agentList.ContainsKey(entity))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override void Update(float frameTime)

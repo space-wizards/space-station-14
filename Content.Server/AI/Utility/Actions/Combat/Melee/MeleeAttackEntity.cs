@@ -29,11 +29,17 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
         public override void SetupOperators(Blackboard context)
         {
-            var moveOperator = new MoveToEntityOperator(Owner, _entity);
             var equipped = context.GetState<EquippedEntityState>().GetValue();
+            MoveToEntityOperator moveOperator;
             if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent))
             {
-                moveOperator.DesiredRange = meleeWeaponComponent.Range - 0.01f;
+                moveOperator = new MoveToEntityOperator(Owner, _entity, meleeWeaponComponent.Range - 0.01f);
+            }
+            // I think it's possible for this to happen given planning is time-sliced?
+            // TODO: At this point we should abort
+            else
+            {
+                moveOperator = new MoveToEntityOperator(Owner, _entity);
             }
 
             ActionOperators = new Queue<AiOperator>(new AiOperator[]

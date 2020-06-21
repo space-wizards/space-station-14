@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems.AI.Steering;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Operators.Movement
 {
@@ -45,12 +46,14 @@ namespace Content.Server.AI.Operators.Movement
             switch (_request.Status)
             {
                 case SteeringStatus.Pending:
+                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
                 case SteeringStatus.NoPath:
                     return Outcome.Failed;
                 case SteeringStatus.Arrived:
                     return Outcome.Success;
                 case SteeringStatus.Moving:
+                    DebugTools.Assert(EntitySystem.Get<AiSteeringSystem>().IsRegistered(_owner));
                     return Outcome.Continuing;
                 default:
                     throw new ArgumentOutOfRangeException();
