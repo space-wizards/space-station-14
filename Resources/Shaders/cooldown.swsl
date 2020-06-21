@@ -19,7 +19,7 @@ void fragment() {
     float angle_delta = (progress * PI * 2) - angle;
     float arc_length = angle_delta * dist;
     
-    float angle_alpha = progress > 0 ? smoothstep(dist_fwidth, 0.0, arc_length) : 0.0;
+    float angle_alpha = progress >= 0 ? smoothstep(dist_fwidth, 0.0, arc_length) : 0.0;
 
-    COLOR = vec4(col.xyz, 1-max(dist_alpha, angle_alpha));
+    COLOR = col * vec4(1,1,1,1-max(dist_alpha, angle_alpha));
 }

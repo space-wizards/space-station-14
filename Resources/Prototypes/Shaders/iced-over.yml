@@ -1,0 +1,6 @@
+- type: shader
+  id: IcedOver
+  kind: source
+  path: "/Shaders/iced-over.swsl"
+  params:
+    time: 0
