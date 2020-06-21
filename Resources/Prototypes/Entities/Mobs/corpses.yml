@@ -1,0 +1,56 @@
+- type: entity
+  id: CorpseBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mob/remains.rsi
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Mob/remains.rsi
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.5,0.5,0.5"
+    hard: false
+  - type: InteractionOutline
+
+- type: entity
+  name: human remains
+  id: HumanRemains
+  parent: CorpseBase
+  components:
+  - type: Sprite
+    state: remains
+  - type: Icon
+    state: remains
+
+- type: entity
+  name: mouse remains
+  id: MouseRemains
+  parent: CorpseBase
+  components:
+  - type: Sprite
+    state: mouse
+  - type: Icon
+    state: mouse
+
+- type: entity
+  name: xeno remains
+  id: XenoRemains
+  parent: CorpseBase
+  components:
+  - type: Sprite
+    state: remainsxeno
+  - type: Icon
+    state: remainsxeno
+
+- type: entity
+  name: xeno corpse
+  id: XenoCorpse
+  parent: CorpseBase
+  components:
+  - type: Sprite
+    state: xgibup1
+  - type: Icon
+    state: xgibup1
