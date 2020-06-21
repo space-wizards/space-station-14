@@ -1,7 +1,10 @@
-using Content.Server.Atmos;
+﻿using Content.Shared.Atmos;
+using Robust.Shared.Serialization;
+using System;
 
-namespace Content.Server.Interfaces.Atmos
+namespace Content.Shared.Atmos
 {
+    [Serializable, NetSerializable]
     public struct GasProperty
     {
         /// <summary>
@@ -10,9 +13,9 @@ namespace Content.Server.Interfaces.Atmos
         public Gas Gas;
 
         /// <summary>
-        /// The volume, in mols, of the gas
+        /// The quantity, in mols, of the gas
         /// </summary>
-        public float Volume;
+        public float Quantity;
 
         /// <summary>
         /// The partial pressure of this gas, in kilopascals

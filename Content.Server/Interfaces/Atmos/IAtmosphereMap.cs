@@ -1,5 +1,6 @@
-using System.Collections.Generic;
-using Content.Server.Atmos;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Atmos;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Map;
 
@@ -51,6 +52,10 @@ namespace Content.Server.Interfaces.Atmos
     /// Airlocks separate
     /// atmospheres (as the name implies) and thus the station will have many different
     /// atmospheres.
+    ///
+    /// Every cell in an atmosphere has a path to every other cell
+    /// without passing through any solid walls, or passing through airlocks
+    /// and similar objects which can block gas flow.
     /// </remarks>
     public interface IGridAtmosphereManager
     {
@@ -61,40 +66,39 @@ namespace Content.Server.Interfaces.Atmos
         /// This operation may perform expensive tasks (such as finding the outline of
         /// the room), however repeat calls must be fast.
         /// </remarks>
-        /// <param name="coordinates">The position on the grid</param>
+        /// <param name="indices">The position on the grid</param>
         /// <returns>The relevant atmosphere, or <code>null</code> if this cell
         /// is connected to space</returns>
-        IAtmosphere GetAtmosphere(GridCoordinates coordinates);
+        IAtmosphere GetAtmosphere(MapIndices indices);
 
         /// <summary>
         /// Notify the atmosphere system that something at a given position may have changed.
         /// </summary>
-        /// <param name="coordinates"></param>
-        void Invalidate(GridCoordinates coordinates);
+        /// <param name="indices"></param>
+        void Invalidate(MapIndices indices);
     }
 
     /// <summary>
-    /// Represents a single 'region' of the station, inside which air can mix freely.
+    /// Represents a single gas container inside which air can mix freely.
     /// </summary>
-    /// <remarks>
-    /// Every cell in a region has a path to every other cell
-    /// without passing through any solid walls, or passing through airlocks
-    /// and similar objects which can block gas flow.
-    /// </remarks>
     public interface IAtmosphere
     {
+        /// <summary>The universal gas constant, in (cubic meters*pascals)/(kelvin*mols)</summary> 
+        /// <remarks>Note this is in pascals, NOT kilopascals - divide by 1000 to convert it</remarks>
+        public const float R = 8.314462618f;
+
         /// <summary>
         /// All the gasses contained in this atmosphere
         /// </summary>
         IEnumerable<GasProperty> Gasses { get; }
 
         /// <summary>
-        /// The volume of the room enclosed by this atmosphere, in cubic meters
+        /// The volume enclosed by this atmosphere, in cubic meters
         /// </summary>
         float Volume { get; }
 
         /// <summary>
-        /// The total pressure of this room, in kilopascals
+        /// The total pressure of this atmosphere, in kilopascals
         /// </summary>
         /// <remarks>
         /// Governed by the ideal gas law
@@ -102,7 +106,7 @@ namespace Content.Server.Interfaces.Atmos
         float Pressure { get; }
 
         /// <summary>
-        /// The combined quantity of all gasses in this room, in mols
+        /// The combined quantity of all gasses in this atmosphere, in mols
         /// </summary>
         /// <remarks>
         /// This function must be constant time with respect to the contents of the atmosphere.
@@ -137,14 +141,20 @@ namespace Content.Server.Interfaces.Atmos
         /// </summary>
         /// <param name="gas">The type of gas to look for</param>
         /// <returns>The quantity of the gas in mols</returns>
-        float QuantityOf(Gas gas);
+        float QuantityOf(Gas gas)
+        {
+            return Gasses.Where(prop => prop.Gas == gas).Sum(prop => prop.Quantity);
+        }
 
         /// <summary>
         /// The partial pressure of a specific gas
         /// </summary>
         /// <param name="gas">The gas in question</param>
         /// <returns>The partial pressure in kilopascals</returns>
-        float PartialPressureOf(Gas gas);
+        float PartialPressureOf(Gas gas)
+        {
+            return QuantityOf(gas) * PressureRatio;
+        }
 
         /// <summary>
         /// Adds a quantity of gas to this room
@@ -175,5 +185,15 @@ namespace Content.Server.Interfaces.Atmos
         /// <param name="volume">The desired volume</param>
         /// <returns>The actual volume</returns>
         float SetQuantity(Gas gas, float quantity);
+
+        /// <summary>
+        /// Remove a given volume of gas from the atmosphere, getting the mixture removed.
+        /// </summary>
+        /// <remarks>
+        /// This should not reduce the volume of the atmosphere.
+        /// </remarks>
+        /// <param name="volume">The volume of gas to remove.</param>
+        /// <returns>A new <see cref="IAtmosphere"/> containing the removed gases.</returns>
+        IAtmosphere Take(float volume);
     }
 }

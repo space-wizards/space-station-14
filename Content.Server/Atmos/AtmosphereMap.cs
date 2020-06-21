@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Atmos;
+﻿using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
+using Content.Shared.Atmos;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -11,36 +8,47 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Content.Server.Atmos
 {
-    internal class AtmosphereMap : IAtmosphereMap
+    /// <inheritdoc cref="IAtmosphereMap"/>
+    internal class AtmosphereMap : IAtmosphereMap, IPostInjectInit
     {
 #pragma warning disable 649
-        // ReSharper disable once InconsistentNaming
-        [Dependency] private readonly IMapManager MapManager;
+        [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IPauseManager _pauseManager;
 #pragma warning restore 649
 
         private readonly Dictionary<GridId, GridAtmosphereManager> _gridAtmosphereManagers =
             new Dictionary<GridId, GridAtmosphereManager>();
 
+        public void PostInject()
+        {
+            _mapManager.TileChanged += AtmosphereMapOnTileChanged;
+        }
+
         public IGridAtmosphereManager GetGridAtmosphereManager(GridId grid)
         {
             if (_gridAtmosphereManagers.TryGetValue(grid, out var manager))
                 return manager;
 
-            if (!MapManager.GridExists(grid))
+            if (!_mapManager.GridExists(grid))
                 throw new ArgumentException("Cannot get atmosphere of missing grid", nameof(grid));
 
-            manager = new GridAtmosphereManager(MapManager.GetGrid(grid));
+            manager = new GridAtmosphereManager(_mapManager.GetGrid(grid));
             _gridAtmosphereManagers[grid] = manager;
             return manager;
         }
 
-        public IAtmosphere GetAtmosphere(ITransformComponent position) =>
-            GetGridAtmosphereManager(position.GridID).GetAtmosphere(position.GridPosition);
+        public IAtmosphere GetAtmosphere(ITransformComponent position)
+        {
+            var indices = _mapManager.GetGrid(position.GridID).SnapGridCellFor(position.GridPosition, SnapGridOffset.Center);
+            return GetGridAtmosphereManager(position.GridID).GetAtmosphere(indices);
+        }
 
         public void Update(float frameTime)
         {
@@ -52,55 +60,85 @@ namespace Content.Server.Atmos
                 atmos.Update(frameTime);
             }
         }
+
+        private void AtmosphereMapOnTileChanged(object sender, TileChangedEventArgs eventArgs)
+        {
+            // When a tile changes, we want to update it only if it's gone from
+            // space -> not space or vice versa. So if the old tile is the
+            // same as the new tile in terms of space-ness, ignore the change
+
+            if (eventArgs.NewTile.Tile.IsEmpty == eventArgs.OldTile.IsEmpty)
+            {
+                return;
+            }
+
+            // If the grid itself has no atmosphere simulation, there's no need
+            // create one - since the atmospheres will be built correctly as
+            // necessary later. That's why we *don't* use GetGridAtmosphereManager()
+
+            if (!_gridAtmosphereManagers.TryGetValue(eventArgs.NewTile.GridIndex, out var gridManager))
+            {
+                return;
+            }
+
+            gridManager.Invalidate(eventArgs.NewTile.GridIndices);
+        }
     }
 
+    /// <inheritdoc cref="IGridAtmosphereManager"/>
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
         // Arbitrarily define rooms as being 2.5m high
         private const float ROOM_HEIGHT = 2.5f;
 
         private readonly IMapGrid _grid;
-        private Dictionary<MapIndices, Atmosphere> _atmospheres = new Dictionary<MapIndices, Atmosphere>();
+        private Dictionary<MapIndices, ZoneAtmosphere> _atmospheres = new Dictionary<MapIndices, ZoneAtmosphere>();
 
-        private HashSet<MapIndices> _invalidatedPositions = new HashSet<MapIndices>();
+        private HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
         public GridAtmosphereManager(IMapGrid grid)
         {
             _grid = grid;
         }
 
-        public IAtmosphere GetAtmosphere(GridCoordinates coordinates) => GetAtmosphere(GridToMapCoord(coordinates));
+        public IAtmosphere GetAtmosphere(MapIndices indices) => GetZoneAtmosphere(indices);
 
-        private Atmosphere GetAtmosphere(MapIndices pos)
+        private ZoneAtmosphere GetZoneAtmosphere(MapIndices indices)
         {
-            if (_atmospheres.TryGetValue(pos, out var atmosphere))
+            if (_atmospheres.TryGetValue(indices, out var atmosphere))
                 return atmosphere;
 
             // If this is clearly space - such as someone moving round outside the station - just return immediately
             // and don't add anything to the grid map
-            if (IsSpace(pos))
+            if (IsSpace(indices))
                 return null;
 
             // If the block is obstructed:
             // If the air blocker is marked as 'use adjacent atmosphere' then the cell behaves as if
             // you got one of it's adjacent atmospheres. If not, it returns null.
-            var obstruction = GetObstructingComponent(pos);
+            var obstruction = GetObstructingComponent(indices);
             if (obstruction != null)
-                return obstruction.UseAdjacentAtmosphere ? GetAdjacentAtmospheres(pos).FirstOrDefault().Value : null;
+                return obstruction.UseAdjacentAtmosphere ? GetAdjacentAtmospheres(indices).FirstOrDefault().Value : null;
 
-            var connected = FindConnectedCells(pos);
+            var connected = FindConnectedCells(indices);
 
             if (connected == null)
             {
                 // Since this is on a floor tile, it's fairly likely this is a room with
                 // a breach. As such, cache this position for sake of static objects like
                 // air vents which call this constantly.
-                _atmospheres[pos] = null;
+                _atmospheres[indices] = null;
                 return null;
             }
 
-            // TODO create default atmosphere
-            atmosphere = new Atmosphere(GetVolumeForCells(connected.Count));
+            atmosphere = new ZoneAtmosphere(this, connected);
+            // TODO: Not hardcode this
+            //var oneAtmosphere = 101325; // 1 atm in Pa
+            //var roomTemp = 293.15f; // 20c in k
+            // Calculating moles to add: n = (PV)/(RT)
+            //var totalMoles = (oneAtmosphere * atmosphere.Volume) / (IAtmosphere.R * roomTemp);
+            //atmosphere.Add(new Gas("oxygen"), totalMoles * 0.2f, roomTemp);
+            //atmosphere.Add(new Gas("nitrogen"), totalMoles * 0.8f, roomTemp);
 
             foreach (var c in connected)
                 _atmospheres[c] = atmosphere;
@@ -108,17 +146,35 @@ namespace Content.Server.Atmos
             return atmosphere;
         }
 
-        public void Invalidate(GridCoordinates coordinates)
+        public void Invalidate(MapIndices indices)
         {
-            _invalidatedPositions.Add(GridToMapCoord(coordinates));
+            _invalidatedCoords.Add(indices);
         }
 
-        private MapIndices GridToMapCoord(GridCoordinates pos) => _grid.SnapGridCellFor(pos, SnapGridOffset.Center);
-
-        private List<MapIndices> FindConnectedCells(MapIndices start)
+        /// <summary>
+        /// Get the collection of grid cells connected to a given cell.
+        /// </summary>
+        /// <param name="start">The cell to start building the collection from.</param>
+        /// <returns>
+        /// <c>null</c>, if the cell is somehow connected to space. Otherwise, the
+        /// collection of all cells connected to the starting cell (inclusive).
+        /// </returns>
+        private ISet<MapIndices> FindConnectedCells(MapIndices start)
         {
             var inner = new HashSet<MapIndices>();
             var edge = new HashSet<MapIndices> {start};
+
+            void Check(MapIndices pos, Direction dir)
+            {
+                pos = pos.Offset(dir);
+                if (IsObstructed(pos))
+                    return;
+
+                if (inner.Contains(pos))
+                    return;
+
+                edge.Add(pos);
+            }
 
             // Basic inner/edge finder
             // The inner list is all the positions we know are empty, and take no further actions.
@@ -128,7 +184,7 @@ namespace Content.Server.Atmos
 
             while (edge.Count > 0)
             {
-                var temp = new List<MapIndices>(edge);
+                var temp = new HashSet<MapIndices>(edge);
                 edge.Clear();
                 foreach (var pos in temp)
                 {
@@ -137,33 +193,22 @@ namespace Content.Server.Atmos
                     if (IsSpace(pos))
                         return null;
 
-                    Check(inner, edge, pos, Direction.North);
-                    Check(inner, edge, pos, Direction.South);
-                    Check(inner, edge, pos, Direction.East);
-                    Check(inner, edge, pos, Direction.West);
+                    foreach (var dir in Cardinal())
+                    {
+                        Check(pos, dir);
+                    }
                 }
             }
 
-            return new List<MapIndices>(inner);
+            return inner;
         }
 
-        private void Check(ICollection<MapIndices> inner, ISet<MapIndices> edges, MapIndices pos, Direction dir)
+
+        private bool IsObstructed(MapIndices indices) => GetObstructingComponent(indices) != null;
+
+        private AirtightComponent GetObstructingComponent(MapIndices indices)
         {
-            pos += (MapIndices) dir.CardinalToIntVec();
-            if (IsObstructed(pos))
-                return;
-
-            if (inner.Contains(pos))
-                return;
-
-            edges.Add(pos);
-        }
-
-        private bool IsObstructed(MapIndices pos) => GetObstructingComponent(pos) != null;
-
-        private AirtightComponent GetObstructingComponent(MapIndices pos)
-        {
-            foreach (var v in _grid.GetSnapGridCell(pos, SnapGridOffset.Center))
+            foreach (var v in _grid.GetSnapGridCell(indices, SnapGridOffset.Center))
             {
                 if (v.Owner.TryGetComponent<AirtightComponent>(out var ac))
                     return ac;
@@ -172,136 +217,150 @@ namespace Content.Server.Atmos
             return null;
         }
 
-        private bool IsSpace(MapIndices pos)
+        private bool IsSpace(MapIndices indices)
         {
             // TODO use ContentTileDefinition to define in YAML whether or not a tile is considered space
-            return _grid.GetTileRef(pos).Tile.IsEmpty;
+            return _grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
         public void Update(float frameTime)
         {
-            if (_invalidatedPositions.Count != 0)
+            if (_invalidatedCoords.Count != 0)
                 Revalidate();
         }
 
         private void Revalidate()
         {
-            foreach (var pos in _invalidatedPositions)
+            foreach (var indices in _invalidatedCoords)
             {
-                if (IsObstructed(pos))
-                    SplitAtmospheres(pos);
+                if (IsSpace(indices))
+                {
+                    ClearAtmospheres(indices);
+                }
+                else if (IsObstructed(indices))
+                {
+                    SplitAtmospheres(indices);
+                }
                 else
-                    MergeAtmospheres(pos);
+                {
+                    MergeAtmospheres(indices);
+                }
             }
 
-            _invalidatedPositions.Clear();
+            _invalidatedCoords.Clear();
         }
 
-        private void SplitAtmospheres(MapIndices pos)
+        private void SplitAtmospheres(MapIndices indices)
         {
-            // Remove the now-covered atmosphere
-            _atmospheres.Remove(pos);
+            Debug.Assert(IsObstructed(indices));
 
-            var adjacent = GetAdjacentAtmospheres(pos);
-            var adjacentPositions = adjacent.Select(p => pos.Offset(p.Key)).ToList();
-            var adjacentAtmospheres = new HashSet<Atmosphere>(adjacent.Values);
-
-            foreach (var atmos in adjacentAtmospheres)
+            // Remove the now-covered atmosphere (if there was one)
+            if (_atmospheres.TryGetValue(indices, out var coveredAtmos))
             {
-                var i = 0;
-                int? spaceIdx = null;
-                var sides = new Dictionary<MapIndices, int>();
+                _atmospheres.Remove(indices);
 
-                foreach (var pair in adjacent.Where(p => p.Value == atmos))
-                {
-                    var edgePos = pos.Offset(pair.Key);
-                    if (sides.ContainsKey(edgePos))
-                        continue;
+                if (coveredAtmos != null)
+                    coveredAtmos.RemoveCell(indices);
+            }
 
-                    var connected = FindConnectedCells(edgePos);
-                    if (connected == null)
-                    {
-                        if (spaceIdx == null)
-                            spaceIdx = i++;
-                        sides[edgePos] = (int) spaceIdx;
-                        continue;
-                    }
+            // The collection of split atmosphere components - each one is a collection
+            // of connected grid indices
+            var sides = new HashSet<ISet<MapIndices>>();
 
-                    foreach (var connectedPos in connected.Intersect(adjacentPositions))
-                        sides[connectedPos] = i;
-
-                    i++;
-                }
-
-                // If the sides were all connected, this atmosphere is intact
-                // TODO in some way adjust the atmosphere volume
-                if (i == 1)
+            foreach (var edgeCoordinate in Cardinal().Select(dir => indices.Offset(dir)))
+            {
+                // If this is true, this edge is already contained in another edge's connected area
+                if (sides.Any(collection => collection != null && collection.Contains(edgeCoordinate)))
                     continue;
 
-                // If any of the sides that used to have this atmosphere are now exposed to space, remove
-                // all the old atmosphere's cells.
-                if (spaceIdx != null)
+                // If this is true, the edge has no atmosphere to split anyways
+                if (IsObstructed(edgeCoordinate))
+                    continue;
+
+                // Otherwise, this is a new connected area (now that zones are split)
+                var connected = FindConnectedCells(edgeCoordinate);
+                // So add it to the map, and increase the number of split atmospheres
+                sides.Add(connected);
+            }
+
+            // If the sides were all connected (or have no air), this atmosphere is intact
+            if (sides.Count <= 1)
+            {
+                return;
+            }
+
+            // Split up each of the sides
+            foreach(var connected in sides)
+            {
+                if (connected == null)
+                    continue;
+
+                var newAtmos = new ZoneAtmosphere(this, connected);
+
+                // Copy over contents of atmos, scaling it down to maintain the partial pressure
+                if (coveredAtmos != null)
                 {
-                    foreach (var rpos in FindRoomContents(atmos))
-                        _atmospheres.Remove(rpos);
+                    newAtmos.Temperature = coveredAtmos.Temperature;
+                    foreach (var gas in coveredAtmos.Gasses)
+                        newAtmos.SetQuantity(gas.Gas, gas.Quantity * newAtmos.Volume / coveredAtmos.Volume);
                 }
 
-                // Split up each of the sides
-                for (var j = 0; j < i; j++)
-                {
-                    // Find a position to represent this
-                    var basePos = sides.First(p => p.Value == j).Key;
-
-                    var connected = FindConnectedCells(basePos);
-
-                    if (connected == null)
-                        continue;
-
-                    var newAtmos = new Atmosphere(GetVolumeForCells(connected.Count));
-
-                    // Copy over contents of atmos, scaling it down to maintain the partial pressure
-                    if (atmos != null)
-                    {
-                        newAtmos.Temperature = atmos.Temperature;
-                        foreach (var gas in atmos.Gasses)
-                            newAtmos.SetQuantity(gas.Gas, gas.Volume * newAtmos.Volume / atmos.Volume);
-                    }
-
-                    foreach (var cpos in connected)
-                        _atmospheres[cpos] = newAtmos;
-                }
+                foreach (var cpos in connected)
+                    _atmospheres[cpos] = newAtmos;
             }
         }
 
-        private void MergeAtmospheres(MapIndices pos)
+        private void MergeAtmospheres(MapIndices indices)
         {
-            var adjacent = new HashSet<Atmosphere>(GetAdjacentAtmospheres(pos).Values);
+            Debug.Assert(!IsObstructed(indices));
 
-            // If this block doesn't separate two atmospheres, there's nothing to do
+            var adjacent = new HashSet<ZoneAtmosphere>(GetAdjacentAtmospheres(indices).Values);
+
+            // If this block doesn't separate two atmospheres, there's no merging to do
             if (adjacent.Count <= 1)
-                return;
+            {
+                var joinedAtmos = adjacent.FirstOrDefault();
 
-            var allCells = new List<MapIndices> {pos};
-            foreach (var atmos in adjacent)
-                allCells.AddRange(FindRoomContents(atmos));
+                if (joinedAtmos != null)
+                {
+                    // If the block is not in space, just add it to the existing zone
+                    joinedAtmos.AddCell(indices);
+                    _atmospheres[indices] = joinedAtmos;
+                    return;
+                }
+                else
+                {
+                    // Otherwise, try to create a new zone around the block
+                    var connectedCells = FindConnectedCells(indices);
+
+                    if (connectedCells != null)
+                    {
+                        var newZone = new ZoneAtmosphere(this, connectedCells);
+                        foreach (var cell in connectedCells)
+                            _atmospheres[cell] = newZone;
+                    }
+                }
+                return;
+            }
+
+            var allCells = new List<MapIndices> {indices};
+            foreach (var atmos in adjacent.Where(zone => zone != null))
+                allCells.AddRange(atmos.Cells);
 
             // Fuse all adjacent atmospheres
-            Atmosphere replacement;
+            ZoneAtmosphere replacement;
             if (adjacent.Contains(null))
             {
                 replacement = null;
             }
             else
             {
-                replacement = new Atmosphere(GetVolumeForCells(allCells.Count));
+                replacement = new ZoneAtmosphere(this, allCells);
                 foreach (var atmos in adjacent)
                 {
-                    if (atmos == null)
-                        continue;
-
                     // Copy all the gasses across
                     foreach (var gas in atmos.Gasses)
-                        replacement.Add(gas.Gas, gas.Volume, atmos.Temperature);
+                        replacement.Add(gas.Gas, gas.Quantity, atmos.Temperature);
                 }
             }
 
@@ -309,32 +368,41 @@ namespace Content.Server.Atmos
                 _atmospheres[cellPos] = replacement;
         }
 
-        private Dictionary<Direction, Atmosphere> GetAdjacentAtmospheres(MapIndices pos)
+        /// <summary>
+        /// Empty the atmospheres of a tile known to be space.
+        /// </summary>
+        /// <param name="indices"></param>
+        private void ClearAtmospheres(MapIndices indices)
         {
-            var sides = new Dictionary<Direction, Atmosphere>();
+            Debug.Assert(IsSpace(indices));
+
+            _atmospheres[indices] = null;
+
+            foreach (var (_, atmosphere) in GetAdjacentAtmospheres(indices))
+            {
+                if (atmosphere == null)
+                    continue;
+
+                foreach (var cell in atmosphere.Cells)
+                {
+                    _atmospheres[cell] = null;
+                }
+            }
+        }
+
+        private Dictionary<Direction, ZoneAtmosphere> GetAdjacentAtmospheres(MapIndices coords)
+        {
+            var sides = new Dictionary<Direction, ZoneAtmosphere>();
             foreach (var dir in Cardinal())
             {
-                var side = pos.Offset(dir);
+                var side = coords.Offset(dir);
                 if (IsObstructed(side))
                     continue;
 
-                sides[dir] = GetAtmosphere(side);
+                sides[dir] = GetZoneAtmosphere(side);
             }
 
             return sides;
-        }
-
-        private IEnumerable<MapIndices> FindRoomContents(Atmosphere atmos)
-        {
-            // TODO this is O(n) with respect to the map size, so solve this some other way
-            var poses = new List<MapIndices>();
-            foreach (var (pos, cellAtmos) in _atmospheres)
-            {
-                if (cellAtmos == atmos)
-                    poses.Add(pos);
-            }
-
-            return poses;
         }
 
         private static IEnumerable<Direction> Cardinal() =>
@@ -343,115 +411,65 @@ namespace Content.Server.Atmos
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
 
-        private float GetVolumeForCells(int cellCount)
+        internal float GetVolumeForCells(int cellCount)
         {
             int scale = _grid.TileSize;
             return scale * scale * cellCount * ROOM_HEIGHT;
         }
     }
 
-    internal class Atmosphere : IAtmosphere
+    internal class ZoneAtmosphere : Atmosphere
     {
-        // The universal gas constant, in cubic meters/pascals/kelvin/mols
-        // Note this is in pascals, NOT kilopascals - divide by 1000 to convert it
-        private const float R = 8.314462618f;
+        private readonly GridAtmosphereManager _parentGridManager;
+        private readonly ISet<MapIndices> _cells;
 
-        private readonly Dictionary<Gas, float> _quantities = new Dictionary<Gas, float>();
-        private float _temperature;
+        /// <summary>
+        /// The collection of grid cells which are a part of this zone.
+        /// </summary>
+        /// <remarks>
+        /// This should be kept in sync with the corresponding entries in <see cref="GridAtmosphereManager"/>.
+        /// </remarks>
+        public IEnumerable<MapIndices> Cells => _cells;
 
-        public Atmosphere(float volume)
+        /// <summary>
+        /// The volume of this zone.
+        /// </summary>
+        /// <remarks>
+        /// This is directly calculated from the number of cells in the zone.
+        /// </remarks>
+        public override float Volume => _parentGridManager.GetVolumeForCells(_cells.Count);
+
+        public ZoneAtmosphere(GridAtmosphereManager parent, IEnumerable<MapIndices> cells)
         {
-            Volume = volume;
+            _parentGridManager = parent;
+            _cells = new HashSet<MapIndices>(cells);
             UpdateCached();
         }
 
-        public IEnumerable<GasProperty> Gasses => _quantities.Select(p => new GasProperty
+        /// <summary>
+        /// Add a cell to the zone.
+        /// </summary>
+        /// <remarks>
+        /// This does not update the parent <see cref="GridAtmosphereManager"/>.
+        /// </remarks>
+        /// <param name="cell">The indices of the cell to add.</param>
+        public void AddCell(MapIndices cell)
         {
-            Gas = p.Key,
-            Volume = p.Value,
-            PartialPressure = p.Value * PressureRatio
-        });
-
-        public float Volume { get; }
-
-        public float Pressure => Quantity * PressureRatio;
-
-        public float Quantity { get; private set; }
-
-        public float Mass => throw new NotImplementedException();
-
-        public float Temperature
-        {
-            get => _temperature;
-            set
-            {
-                _temperature = value;
-                UpdateCached();
-            }
-        }
-
-        public float PressureRatio { get; private set; }
-
-        public float QuantityOf(Gas gas)
-        {
-            return _quantities.ContainsKey(gas) ? _quantities[gas] : 0;
-        }
-
-        public float PartialPressureOf(Gas gas)
-        {
-            return QuantityOf(gas) * PressureRatio;
-        }
-
-        public float Add(Gas gas, float quantity, float temperature)
-        {
-            if (quantity < 0)
-                throw new NotImplementedException();
-
-            if (_quantities.ContainsKey(gas))
-            {
-                _quantities[gas] += quantity;
-
-                // Convert things to doubles while averaging the temperatures, otherwise
-                // small amounts of inaccuracy creep in
-                var newTotal = 1d * Quantity + quantity;
-                Temperature = (float) ((1d * Temperature * Quantity + 1d * temperature * quantity) / newTotal);
-            }
-            else
-            {
-                _quantities[gas] = quantity;
-                Temperature = temperature;
-            }
-
-            // Setting temperature does the update for us, no need to call it manually
-
-            return quantity;
-        }
-
-        public float SetQuantity(Gas gas, float quantity)
-        {
-            if (quantity < 0)
-                throw new ArgumentException("Cannot set a negative quantity of gas", nameof(quantity));
-
-            // Discard tiny amounts of gasses
-            if (Math.Abs(quantity) < 0.001)
-            {
-                _quantities.Remove(gas);
-                UpdateCached();
-                return 0;
-            }
-
-            _quantities[gas] = quantity;
+            _cells.Add(cell);
             UpdateCached();
-            return quantity;
         }
 
-        private void UpdateCached()
+        /// <summary>
+        /// Remove a cell from the zone.
+        /// </summary>
+        /// <remarks>
+        /// This does not update the parent <see cref="GridAtmosphereManager"/>.
+        /// </remarks>
+        /// <param name="cell">The indices of the cell to remove.</param>
+        public void RemoveCell(MapIndices cell)
         {
-            float q = 0;
-            foreach (var value in _quantities.Values) q += value;
-            Quantity = q;
-
-            PressureRatio = R * Temperature / Volume;
+            _cells.Remove(cell);
+            UpdateCached();
         }
     }
 }

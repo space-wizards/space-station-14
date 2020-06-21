@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.Interfaces.Atmos;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -11,14 +12,14 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class AirtightComponent : Component
+    public class AirtightComponent : Component, IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly IAtmosphereMap _atmosphereMap;
 #pragma warning restore 649
 
         private SnapGridComponent _snapGrid;
-        private (GridId, GridCoordinates) _lastPosition;
+        private (GridId, MapIndices) _lastPosition;
 
         public override string Name => "Airtight";
 
@@ -43,11 +44,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 throw new Exception("Airtight entities must have a SnapGrid component");
         }
 
-        protected override void Startup()
+        public void MapInit()
         {
-            base.Startup();
             _snapGrid.OnPositionChanged += OnTransformMove;
-            _lastPosition = (Owner.Transform.GridID, Owner.Transform.GridPosition);
+            _lastPosition = (Owner.Transform.GridID, _snapGrid.Position);
             UpdatePosition();
         }
 
@@ -62,14 +62,15 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             UpdatePosition(_lastPosition.Item1, _lastPosition.Item2);
             UpdatePosition();
-            _lastPosition = (Owner.Transform.GridID, Owner.Transform.GridPosition);
+            _lastPosition = (Owner.Transform.GridID, _snapGrid.Position);
         }
 
-        private void UpdatePosition() => UpdatePosition(Owner.Transform.GridID, Owner.Transform.GridPosition);
+        private void UpdatePosition() => UpdatePosition(Owner.Transform.GridID, _snapGrid.Position);
 
-        private void UpdatePosition(GridId gridId, GridCoordinates pos)
+        private void UpdatePosition(GridId gridId, MapIndices pos)
         {
             _atmosphereMap.GetGridAtmosphereManager(gridId).Invalidate(pos);
         }
+
     }
 }
