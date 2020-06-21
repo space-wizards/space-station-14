@@ -15,7 +15,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -244,11 +243,8 @@ namespace Content.Server.GameObjects.Components.Fluids
                     foreach (var adjacent in adjacentPuddles)
                     {
                         var quantity = ReagentUnit.Min(OverflowLeft / numberOfAdjacent, adjacent.OverflowVolume);
-
-                        Logger.Debug(
-                            $"Spilling {quantity} units of {_contents.GetMajorReagentId()} to adjacent puddle with volume {adjacent.CurrentVolume}, max volume {adjacent.MaxVolume} and overflow threshold {adjacent.OverflowVolume}. Overflow remaining: {OverflowLeft}");
-
                         var spillAmount = _contents.SplitSolution(quantity);
+
                         adjacent.TryAddSolution(spillAmount, false, false, false);
                         nextPuddles.Add(adjacent);
                     }
