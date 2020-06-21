@@ -476,14 +476,25 @@ namespace Content.Server.GameTicking
         {
             GridCoordinates coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
             var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
+            var startingGear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
             if (entity.TryGetComponent(out InventoryComponent inventory))
             {
-                var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear).Equipment;
+                var gear = startingGear.Equipment;
 
                 foreach (var (slot, equipmentStr) in gear)
                 {
                     var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.GridPosition);
                     inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
+                }
+            }
+
+            if (entity.TryGetComponent(out HandsComponent handsComponent))
+            {
+                var inhand = startingGear.Inhand;
+                foreach (var (hand, prototype) in inhand)
+                {
+                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.GridPosition);
+                    handsComponent.PutInHand(inhandEntity.GetComponent<ItemComponent>(), hand);
                 }
             }
 
