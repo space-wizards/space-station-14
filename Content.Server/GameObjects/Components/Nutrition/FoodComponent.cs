@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             base.ExposeData(serializer);
             serializer.DataField(ref _useSound, "useSound", "/Audio/items/eatfood.ogg");
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
-            serializer.DataField(ref _trashPrototype, "trash", "TrashPlate");
+            serializer.DataField(ref _trashPrototype, "trash", null);
 
             if (serializer.Reading)
             {
@@ -168,6 +168,12 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UsesRemaining > 0)
             {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(_trashPrototype))
+            {
+                Owner.Delete();
                 return true;
             }
 

@@ -3,6 +3,7 @@
   id: FoodBase
   abstract: true
   components:
+  - type: Food
   - type: LoopingSound
   - type: Sprite
     state: icon
