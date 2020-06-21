@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
@@ -13,6 +14,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -46,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
         private float _evaporateTime;
         private string _spillSound;
-        private DateTime _lastOverflow = DateTime.Now;
+        private bool _overflown;
         private SpriteComponent _spriteComponent;
 
         private SnapGridComponent _snapGrid;
@@ -65,6 +67,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public ReagentUnit OverflowVolume => _overflowVolume;
         [ViewVariables]
         private ReagentUnit _overflowVolume;
+        private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
         private SolutionComponent _contents;
         private int _spriteVariants;
@@ -113,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         }
 
         // Flow rate should probably be controlled globally so this is it for now
-        internal bool TryAddSolution(Solution solution, bool sound = true, bool checkForEvaporate = true)
+        internal bool TryAddSolution(Solution solution, bool sound = true, bool checkForEvaporate = true, bool checkForOverflow = true)
         {
             if (solution.TotalVolume == 0)
             {
@@ -126,7 +129,12 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
 
             UpdateStatus();
-            CheckOverflow();
+
+            if (checkForOverflow)
+            {
+                CheckOverflow();
+            }
+
             if (checkForEvaporate)
             {
                 CheckEvaporate();
@@ -206,80 +214,48 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// </summary>
         private void CheckOverflow()
         {
-            if (CurrentVolume <= _overflowVolume)
+            if (CurrentVolume <= _overflowVolume || _overflown)
             {
                 return;
             }
 
-            // Essentially:
-            // Spill at least 1 solution to each neighbor (so most of the time each puddle is getting 1 max)
-            // If there's no puddle at the neighbor then add one.
+            var nextPuddles = new List<PuddleComponent>() {this};
+            var overflownPuddles = new List<PuddleComponent>();
 
-            // Setup
-            // If there's more neighbors to spill to then there are reagents to go around (coz integers)
-            var overflowAmount = CurrentVolume - OverflowVolume;
-
-            var neighborPuddles = new List<IEntity>(8);
-
-            // Will overflow to each neighbor; if it already has a puddle entity then add to that
-
-            foreach (var direction in RandomDirections())
+            while (OverflowLeft > ReagentUnit.Zero && nextPuddles.Count > 0)
             {
-                // Can't spill < 1 reagent so stop overflowing
-                if ((ReagentUnit.Epsilon * neighborPuddles.Count) == overflowAmount)
+                foreach (var next in nextPuddles.ToArray())
                 {
-                    break;
-                }
+                    nextPuddles.Remove(next);
 
-                // If we found an existing puddle on that tile then we don't need to spawn a new one
-                var noSpawn = false;
+                    next._overflown = true;
+                    overflownPuddles.Add(next);
 
-                foreach (var entity in _snapGrid.GetInDir(direction))
-                {
-                    // Don't overflow to walls
-                    if (entity.TryGetComponent(out CollidableComponent collidableComponent) &&
-                        collidableComponent.CollisionLayer == (int) CollisionGroup.Impassable)
-                    {
-                        noSpawn = true;
-                        break;
-                    }
-
-                    if (!entity.TryGetComponent(out PuddleComponent puddleComponent))
-                    {
-                        continue;
-                    }
-
-                    // If we've overflowed recently don't include it
-                    noSpawn = true;
-                    // TODO: PauseManager
-                    if ((DateTime.Now - puddleComponent._lastOverflow).TotalSeconds < 1)
+                    var adjacentPuddles = next.GetAllAdjacentOverflow().ToArray();
+                    if (OverflowLeft <= ReagentUnit.Epsilon * adjacentPuddles.Length)
                     {
                         break;
                     }
 
-                    neighborPuddles.Add(entity);
-                    break;
-                }
+                    var numberOfAdjacent = ReagentUnit.New(adjacentPuddles.Length);
+                    foreach (var adjacent in adjacentPuddles)
+                    {
+                        var quantity = ReagentUnit.Min(OverflowLeft / numberOfAdjacent, adjacent.OverflowVolume);
 
-                if (noSpawn)
-                {
-                    continue;
-                }
+                        Logger.Debug(
+                            $"Spilling {quantity} units of {_contents.GetMajorReagentId()} to adjacent puddle with volume {adjacent.CurrentVolume}, max volume {adjacent.MaxVolume} and overflow threshold {adjacent.OverflowVolume}. Overflow remaining: {OverflowLeft}");
 
-                var grid = _snapGrid.DirectionToGrid(direction);
-                // We'll just add the co-ordinates as we need to figure out how many puddles we need to spawn first
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                neighborPuddles.Add(entityManager.SpawnEntity(Owner.Prototype.ID, grid));
+                        var spillAmount = _contents.SplitSolution(quantity);
+                        adjacent.TryAddSolution(spillAmount, false, false, false);
+                        nextPuddles.Add(adjacent);
+                    }
+                }
             }
 
-            if (neighborPuddles.Count == 0)
+            foreach (var puddle in overflownPuddles)
             {
-                return;
+                puddle._overflown = false;
             }
-
-            var spillAmount = overflowAmount / ReagentUnit.New(neighborPuddles.Count);
-
-            SpillToNeighbours(neighborPuddles, spillAmount);
         }
 
         // TODO: Move the below to SnapGrid?
@@ -319,14 +295,53 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        private void SpillToNeighbours(IEnumerable<IEntity> neighbors, ReagentUnit spillAmount)
+        /// <summary>
+        /// Tries to get or create an adjacent puddle unless it is blocked by a wall on the same tile
+        /// </summary>
+        /// <param name="direction">The direction to get the puddle from, respective to this one</param>
+        /// <param name="puddle">The puddle that was found or created, or null if there is a wall in the way</param>
+        /// <returns>true if a puddle was found or created, false otherwise</returns>
+        private bool TryGetAdjacentOverflow(Direction direction, out PuddleComponent puddle)
         {
-            foreach (var neighborPuddle in neighbors)
+            puddle = default;
+
+            foreach (var entity in _snapGrid.GetInDir(direction))
             {
-                var solution = _contents.SplitSolution(spillAmount);
+                if (entity.TryGetComponent(out CollidableComponent collidable) &&
+                    (collidable.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                {
+                    puddle = default;
+                    return false;
+                }
 
-                neighborPuddle.GetComponent<PuddleComponent>().TryAddSolution(solution, false, false);
+                if (entity.TryGetComponent(out PuddleComponent puddleComponent))
+                {
+                    puddle = puddleComponent;
+                }
+            }
 
+            if (puddle == default)
+            {
+                var grid = _snapGrid.DirectionToGrid(direction);
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                puddle = entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
+            }
+
+            return puddle != default;
+        }
+
+        /// <summary>
+        /// Finds or creates adjacent puddles in random directions from this one
+        /// </summary>
+        /// <returns>Enumerable of the puddles found or created</returns>
+        private IEnumerable<PuddleComponent> GetAllAdjacentOverflow()
+        {
+            foreach (var direction in RandomDirections())
+            {
+                if (TryGetAdjacentOverflow(direction, out var puddle) && !puddle._overflown)
+                {
+                    yield return puddle;
+                }
             }
         }
     }
