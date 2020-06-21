@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -41,6 +42,8 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         // based on behaviour (e.g. someone being punched vs slashed with a sword would have different blood sprite)
         // to check for low volumes for evaporation or whatever
+
+        [Dependency] private readonly IMapManager _mapManager;
 
         public override string Name => "Puddle";
 
@@ -296,7 +299,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         }
 
         /// <summary>
-        /// Tries to get or create an adjacent puddle unless it is blocked by a wall on the same tile
+        /// Tries to get an adjacent puddle to overflow to, creating it if it doesn't exist, unless it is
+        /// blocked by a wall on the same tile or the tile is empty
         /// </summary>
         /// <param name="direction">The direction to get the puddle from, respective to this one</param>
         /// <param name="puddle">The puddle that was found or created, or null if there is a wall in the way</param>
@@ -304,6 +308,15 @@ namespace Content.Server.GameObjects.Components.Fluids
         private bool TryGetAdjacentOverflow(Direction direction, out PuddleComponent puddle)
         {
             puddle = default;
+
+            var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+
+            // If space return early, let that spill go out into the void
+            var tileRef = mapGrid.GetTileRef(Owner.Transform.GridPosition.Offset(direction.ToVec()));
+            if (tileRef.Tile.IsEmpty)
+            {
+                return false;
+            }
 
             foreach (var entity in _snapGrid.GetInDir(direction))
             {
