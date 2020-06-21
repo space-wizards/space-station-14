@@ -152,6 +152,12 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 return;
             }
+            
+            var currentOp = CurrentAction?.ActionOperators.Peek();
+            if (currentOp != null && currentOp.HasStartup)
+            {
+                currentOp.Shutdown(Outcome.Failed);
+            }
 
             CurrentAction = action;
             action.SetupOperators(_blackboard);

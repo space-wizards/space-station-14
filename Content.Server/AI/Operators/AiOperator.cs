@@ -5,6 +5,7 @@ namespace Content.Server.AI.Operators
 {
     public abstract class AiOperator
     {
+        public bool HasStartup => _hasStartup;
         private bool _hasStartup = false;
         private bool _hasShutdown = false;
 

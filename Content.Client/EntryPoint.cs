@@ -175,6 +175,7 @@ namespace Content.Client
                 "BatteryBarrel",
                 "FlashExplosive",
                 "FlashProjectile",
+                "Utensil",
             };
 
             foreach (var ignoreName in registerIgnore)

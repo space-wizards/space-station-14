@@ -3,6 +3,7 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
@@ -68,6 +69,8 @@ namespace Content.Server.GameObjects
                     AddHand(handsname);
                 }
             }
+
+            serializer.DataField(ref activeIndex, "defaultHand", orderedHands.LastOrDefault());
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
