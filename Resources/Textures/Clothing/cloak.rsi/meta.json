@@ -6,7 +6,7 @@
   },
   "states": [
     {
-      "name": "capcloak-equipped-BACKPACK",
+      "name": "capcloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -24,7 +24,7 @@
       ]
     },
     {
-      "name": "cecloak-equipped-BACKPACK",
+      "name": "cecloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -42,7 +42,7 @@
       ]
     },
     {
-      "name": "cmocloak-equipped-BACKPACK",
+      "name": "cmocloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "name": "hopcloak-equipped-BACKPACK",
+      "name": "hopcloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "name": "hoscloak-equipped-BACKPACK",
+      "name": "hoscloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "name": "qmcloak-equipped-BACKPACK",
+      "name": "qmcloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -114,7 +114,7 @@
       ]
     },
     {
-      "name": "rdcloak-equipped-BACKPACK",
+      "name": "rdcloak-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -189,6 +189,33 @@
       "name": "rdcloak",
       "directions": 1,
       "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "heraldcloak",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "heraldcloak-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
         [
           1
         ]

@@ -8,7 +8,7 @@
   "copyright": "https://github.com/tgstation/tgstation",
   "states": [
     {
-      "name": "sheetNT-equipped-BACKPACK",
+      "name": "sheetNT-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -26,7 +26,7 @@
       ]
     },
     {
-      "name": "sheetUSA-equipped-BACKPACK",
+      "name": "sheetUSA-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "name": "sheetblack-equipped-BACKPACK",
+      "name": "sheetblack-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "name": "sheetblue-equipped-BACKPACK",
+      "name": "sheetblue-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -80,7 +80,7 @@
       ]
     },
     {
-      "name": "sheetbrown-equipped-BACKPACK",
+      "name": "sheetbrown-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -98,7 +98,7 @@
       ]
     },
     {
-      "name": "sheetcaptain-equipped-BACKPACK",
+      "name": "sheetcaptain-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -116,7 +116,7 @@
       ]
     },
     {
-      "name": "sheetce-equipped-BACKPACK",
+      "name": "sheetce-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -134,7 +134,7 @@
       ]
     },
     {
-      "name": "sheetcentcom-equipped-BACKPACK",
+      "name": "sheetcentcom-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -152,7 +152,7 @@
       ]
     },
     {
-      "name": "sheetclown-equipped-BACKPACK",
+      "name": "sheetclown-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -170,7 +170,7 @@
       ]
     },
     {
-      "name": "sheetcmo-equipped-BACKPACK",
+      "name": "sheetcmo-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -188,7 +188,7 @@
       ]
     },
     {
-      "name": "sheetcosmos-equipped-BACKPACK",
+      "name": "sheetcosmos-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -226,7 +226,7 @@
       ]
     },
     {
-      "name": "sheetcult-equipped-BACKPACK",
+      "name": "sheetcult-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -256,7 +256,7 @@
       ]
     },
     {
-      "name": "sheetgreen-equipped-BACKPACK",
+      "name": "sheetgreen-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -274,7 +274,7 @@
       ]
     },
     {
-      "name": "sheetgrey-equipped-BACKPACK",
+      "name": "sheetgrey-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -292,7 +292,7 @@
       ]
     },
     {
-      "name": "sheethop-equipped-BACKPACK",
+      "name": "sheethop-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -310,7 +310,7 @@
       ]
     },
     {
-      "name": "sheethos-equipped-BACKPACK",
+      "name": "sheethos-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -328,7 +328,7 @@
       ]
     },
     {
-      "name": "sheetian-equipped-BACKPACK",
+      "name": "sheetian-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -346,7 +346,7 @@
       ]
     },
     {
-      "name": "sheetmedical-equipped-BACKPACK",
+      "name": "sheetmedical-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -364,7 +364,7 @@
       ]
     },
     {
-      "name": "sheetmime-equipped-BACKPACK",
+      "name": "sheetmime-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -382,7 +382,7 @@
       ]
     },
     {
-      "name": "sheetorange-equipped-BACKPACK",
+      "name": "sheetorange-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -400,7 +400,7 @@
       ]
     },
     {
-      "name": "sheetpurple-equipped-BACKPACK",
+      "name": "sheetpurple-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -418,7 +418,7 @@
       ]
     },
     {
-      "name": "sheetqm-equipped-BACKPACK",
+      "name": "sheetqm-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -436,7 +436,7 @@
       ]
     },
     {
-      "name": "sheetrainbow-equipped-BACKPACK",
+      "name": "sheetrainbow-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -454,7 +454,7 @@
       ]
     },
     {
-      "name": "sheetrd-equipped-BACKPACK",
+      "name": "sheetrd-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -472,7 +472,7 @@
       ]
     },
     {
-      "name": "sheetred-equipped-BACKPACK",
+      "name": "sheetred-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -490,7 +490,7 @@
       ]
     },
     {
-      "name": "sheetsyndie-equipped-BACKPACK",
+      "name": "sheetsyndie-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -508,7 +508,7 @@
       ]
     },
     {
-      "name": "sheetwhite-equipped-BACKPACK",
+      "name": "sheetwhite-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -526,7 +526,7 @@
       ]
     },
     {
-      "name": "sheetwiz-equipped-BACKPACK",
+      "name": "sheetwiz-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -556,7 +556,7 @@
       ]
     },
     {
-      "name": "sheetyellow-equipped-BACKPACK",
+      "name": "sheetyellow-equipped-NECK",
       "directions": 4,
       "delays": [
         [
@@ -1600,6 +1600,336 @@
         [
           1
         ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bling-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "redtie-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stethoscope-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stripedbluescarf-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stripedredscarf-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stripedgreenscarf-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "zebrascarf-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "dettie-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "headphones_on-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "headphones_off-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "headphones_on-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "headphones_on-inhand-left",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bling",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stripedgreenscarf",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stripedbluescarf",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stripedredscarf",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "zebrascarf",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stethoscope",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "dettie",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "redtie",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "headphones_off",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "headphones_on",
+      "directions": 1,
+      "delays": [
         [
           1
         ]
