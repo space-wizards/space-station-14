@@ -52,9 +52,11 @@ namespace Content.Server.GameObjects.Components.Fluids
         private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
         private float _evaporateTime;
         private string _spillSound;
-        private bool _overflown;
-        private SpriteComponent _spriteComponent;
 
+        // Whether or not this puddle is currently overflowing onto its neighbors
+        private bool _overflown;
+
+        private SpriteComponent _spriteComponent;
         private SnapGridComponent _snapGrid;
 
         public ReagentUnit MaxVolume
