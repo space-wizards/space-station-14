@@ -154,10 +154,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     return;
                 }
             }
-            
-            Logger.ErrorS("ai", "Tried to unregister an agent that isn't registered");
-            throw new InvalidOperationException();
-            // If we get here then they were never registered
         }
 
         /// <summary>
