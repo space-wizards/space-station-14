@@ -28,8 +28,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetblack
 
 - type: entity
@@ -45,8 +45,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetblue
 
 - type: entity
@@ -62,8 +62,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetbrown
 
 - type: entity
@@ -79,8 +79,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetcaptain
 
 - type: entity
@@ -96,8 +96,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetce
 
 - type: entity
@@ -113,8 +113,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetcentcom
 
 - type: entity
@@ -130,9 +130,9 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
-    HeldPrefix: sheetclown
+    - neck
+    sprite: Clothing/neck.rsi
+    HeldPrefix: sheetrainbow
 
 - type: entity
   id: BedsheetCMO
@@ -147,8 +147,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetcmo
 
 - type: entity
@@ -164,8 +164,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetcosmos
 
 - type: entity
@@ -181,8 +181,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetcult
 
 - type: entity
@@ -198,8 +198,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetgreen
 
 - type: entity
@@ -215,8 +215,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetgrey
 
 - type: entity
@@ -232,8 +232,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheethop
 
 - type: entity
@@ -249,8 +249,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheethos
 
 - type: entity
@@ -266,8 +266,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetian
 
 - type: entity
@@ -283,8 +283,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetmedical
 
 - type: entity
@@ -300,8 +300,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetmime
 
 - type: entity
@@ -317,8 +317,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetNT
 
 - type: entity
@@ -334,8 +334,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetorange
 
 - type: entity
@@ -351,8 +351,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetpurple
 
 - type: entity
@@ -368,8 +368,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetqm
 
 - type: entity
@@ -385,8 +385,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetrainbow
 
 - type: entity
@@ -402,8 +402,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetrd
 
 - type: entity
@@ -419,8 +419,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetred
 
 - type: entity
@@ -436,8 +436,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetsyndie
 
 - type: entity
@@ -453,8 +453,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetUSA
 
 - type: entity
@@ -470,8 +470,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetwhite
 
 - type: entity
@@ -487,8 +487,8 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetwiz
 
 - type: entity
@@ -504,6 +504,6 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
-    sprite: Clothing/back.rsi
+    - neck
+    sprite: Clothing/neck.rsi
     HeldPrefix: sheetyellow

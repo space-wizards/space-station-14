@@ -102,8 +102,8 @@ namespace Content.Server.GameObjects.EntitySystems
     }
     public enum ExplosionSeverity
     {
-        Destruction,
-        Heavy,
         Light,
+        Heavy,
+        Destruction,
     }
 }

@@ -198,6 +198,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _mapManager.TileChanged -= QueueTileChange;
         }
 
+        public void ResettingCleanup()
+        {
+            _queuedGraphUpdates.Clear();
+        }
+
         private void QueueGridRemoval(GridId gridId)
         {
             _queuedGraphUpdates.Enqueue(new GridRemoval(gridId));

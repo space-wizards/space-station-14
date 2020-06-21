@@ -26,7 +26,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
             new StoredStateIsNullCon<LastOpenedStorageState, IEntity>(
                 new InverseBoolCurve()),
             new DistanceCon(
-                new QuadraticCurve(1.0f, 1.0f, 0.02f, 0.0f)),
+                new QuadraticCurve(-1.0f, 1.0f, 1.02f, 0.0f)),
         };
         public override void SetupOperators(Blackboard context)
         {
