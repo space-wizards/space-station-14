@@ -16,11 +16,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            foreach (var entity in context.GetState<NearbySpeciesState>().GetValue())
-            {
-                yield return new HitscanAttackEntity(owner, entity, Bonus);
-                yield return new BallisticAttackEntity(owner, entity, Bonus);
-            }
+            yield break;
         }
     }
 }
