@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Observer
 {
@@ -17,16 +18,28 @@ namespace Content.Server.GameObjects.Components.Observer
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
     public class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
+        public override string Name => "GhostRoleMobSpawner";
+
         [Dependency] private readonly IServerEntityManager _entityMan = default!;
 
-        public override string Name => "GhostRoleMobSpawner";
-        [CanBeNull] public string Prototype { get; set; }
+        [ViewVariables]
+        private bool _deleteOnSpawn = true;
+
+        [ViewVariables]
+        private int _availableTakeovers = 1;
+
+        [ViewVariables]
+        private int _currentTakeovers = 0;
+
+        [CanBeNull, ViewVariables] public string Prototype { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(this, x => Prototype, "prototype", null);
+            serializer.DataField(ref _deleteOnSpawn, "deleteOnSpawn", true);
+            serializer.DataField(ref _availableTakeovers, "availableTakeovers", 1);
         }
 
         public override bool Take(IPlayerSession session)
@@ -37,15 +50,21 @@ namespace Content.Server.GameObjects.Components.Observer
             if(string.IsNullOrEmpty(Prototype))
                 throw new NullReferenceException("Prototype string cannot be null or empty!");
 
-            Taken = true;
             var mob = _entityMan.SpawnEntity(Prototype, Owner.Transform.GridPosition);
 
             mob.EnsureComponent<MindComponent>();
             session.ContentData().Mind.TransferTo(mob);
 
-            Owner.Delete();
+            if (++_currentTakeovers <= _availableTakeovers) return true;
+
+            Taken = true;
+
+            if (_deleteOnSpawn)
+                Owner.Delete();
+
 
             return true;
+
         }
     }
 }

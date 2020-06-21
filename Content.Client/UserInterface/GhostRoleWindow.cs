@@ -9,8 +9,6 @@ namespace Content.Client.UserInterface
         protected override void Opened()
         {
             base.Opened();
-
-            EntitySystem.Get<GhostRoleSystem>()
         }
     }
 }
