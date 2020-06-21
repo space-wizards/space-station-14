@@ -208,7 +208,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             _spriteComponent.Color = newColor;
 
             _spriteComponent.Dirty();
-
         }
 
         /// <summary>
@@ -240,10 +239,11 @@ namespace Content.Server.GameObjects.Components.Fluids
                     }
 
                     var numberOfAdjacent = ReagentUnit.New(adjacentPuddles.Length);
+                    var overflowSplit = OverflowLeft / numberOfAdjacent;
                     foreach (var adjacent in adjacentPuddles)
                     {
                         var adjacentPuddle = adjacent();
-                        var quantity = ReagentUnit.Min(OverflowLeft / numberOfAdjacent, adjacentPuddle.OverflowVolume);
+                        var quantity = ReagentUnit.Min(overflowSplit, adjacentPuddle.OverflowVolume);
                         var spillAmount = _contents.SplitSolution(quantity);
 
                         adjacentPuddle.TryAddSolution(spillAmount, false, false, false);
