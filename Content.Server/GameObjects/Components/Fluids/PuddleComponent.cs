@@ -343,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 puddle = () => entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
             }
 
-            return puddle != default;
+            return true;
         }
 
         /// <summary>
