@@ -53,6 +53,7 @@
   - type: Physics
     mass: 5
     Anchored: false
+  - type: CanSpill
 
 - type: entity
   parent: BaseItem
@@ -84,6 +85,7 @@
   - type: Physics
     mass: 5
     Anchored: false
+  - type: CanSpill
 
 - type: entity
   name: wet floor sign
