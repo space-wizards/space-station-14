@@ -3,6 +3,7 @@
   id: FoodBase
   abstract: true
   components:
+  - type: Food
   - type: LoopingSound
   - type: Sprite
     state: icon
@@ -2988,3 +2989,22 @@
     sprite: Objects/Food/stew.rsi
   - type: Icon
     sprite: Objects/Food/stew.rsi
+
+- type: entity
+  parent: FoodBase
+  id: MilkApe
+  name: Milk Ape
+# Milk Ape's a proper noun you fuck
+  description: He sighed for your grins.
+  components:
+  - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Food/milkape.rsi
+  - type: Icon
+    sprite: Objects/Food/milkape.rsi

@@ -230,6 +230,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             node.UpdateTile(tile);
         }
 
+        public void ResettingCleanup()
+        {
+            _queuedGraphUpdates.Clear();
+        }
+
         private void HandleGridRemoval(GridId gridId)
         {
             _graph.Remove(gridId);

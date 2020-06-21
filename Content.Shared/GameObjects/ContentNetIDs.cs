@@ -5,7 +5,7 @@
     {
         public const uint DAMAGEABLE = 1000;
         public const uint DESTRUCTIBLE = 1001;
-        public const uint BALLISTIC_MAGAZINE_WEAPON = 1002;
+        public const uint MAGAZINE_BARREL = 1002;
         public const uint HANDS = 1003;
         public const uint SOLUTION = 1004;
         public const uint STORAGE = 1005;
@@ -50,7 +50,8 @@
         public const uint PDA = 1044;
         public const uint PATHFINDER_DEBUG = 1045;
         public const uint AI_DEBUG = 1046;
-
+        public const uint FLASHABLE = 1047;
+		
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
     }
