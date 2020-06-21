@@ -242,11 +242,12 @@ namespace Content.Server.GameObjects.Components.Fluids
                     var numberOfAdjacent = ReagentUnit.New(adjacentPuddles.Length);
                     foreach (var adjacent in adjacentPuddles)
                     {
-                        var quantity = ReagentUnit.Min(OverflowLeft / numberOfAdjacent, adjacent.OverflowVolume);
+                        var adjacentPuddle = adjacent();
+                        var quantity = ReagentUnit.Min(OverflowLeft / numberOfAdjacent, adjacentPuddle.OverflowVolume);
                         var spillAmount = _contents.SplitSolution(quantity);
 
-                        adjacent.TryAddSolution(spillAmount, false, false, false);
-                        nextPuddles.Add(adjacent);
+                        adjacentPuddle.TryAddSolution(spillAmount, false, false, false);
+                        nextPuddles.Add(adjacentPuddle);
                     }
                 }
             }
@@ -295,13 +296,14 @@ namespace Content.Server.GameObjects.Components.Fluids
         }
 
         /// <summary>
-        /// Tries to get an adjacent puddle to overflow to, creating it if it doesn't exist, unless it is
-        /// blocked by a wall on the same tile or the tile is empty
+        /// Tries to get an adjacent coordinate to overflow to, unless it is blocked by a wall on the
+        /// same tile or the tile is empty
         /// </summary>
         /// <param name="direction">The direction to get the puddle from, respective to this one</param>
-        /// <param name="puddle">The puddle that was found or created, or null if there is a wall in the way</param>
+        /// <param name="puddle">The puddle that was found or is to be created, or null if there
+        /// is a wall in the way</param>
         /// <returns>true if a puddle was found or created, false otherwise</returns>
-        private bool TryGetAdjacentOverflow(Direction direction, out PuddleComponent puddle)
+        private bool TryGetAdjacentOverflow(Direction direction, out Func<PuddleComponent> puddle)
         {
             puddle = default;
 
@@ -323,14 +325,14 @@ namespace Content.Server.GameObjects.Components.Fluids
                     return false;
                 }
 
-                if (entity.TryGetComponent(out PuddleComponent puddleComponent))
+                if (entity.TryGetComponent(out PuddleComponent existingPuddle))
                 {
-                    if (puddleComponent._overflown)
+                    if (existingPuddle._overflown)
                     {
                         return false;
                     }
 
-                    puddle = puddleComponent;
+                    puddle = () => existingPuddle;
                 }
             }
 
@@ -338,7 +340,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             {
                 var grid = _snapGrid.DirectionToGrid(direction);
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                puddle = entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
+                puddle = () => entityManager.SpawnEntity(Owner.Prototype.ID, grid).GetComponent<PuddleComponent>();
             }
 
             return puddle != default;
@@ -347,8 +349,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <summary>
         /// Finds or creates adjacent puddles in random directions from this one
         /// </summary>
-        /// <returns>Enumerable of the puddles found or created</returns>
-        private IEnumerable<PuddleComponent> GetAllAdjacentOverflow()
+        /// <returns>Enumerable of the puddles found or to be created</returns>
+        private IEnumerable<Func<PuddleComponent>> GetAllAdjacentOverflow()
         {
             foreach (var direction in RandomDirections())
             {
