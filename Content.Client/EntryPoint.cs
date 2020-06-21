@@ -168,6 +168,7 @@ namespace Content.Client
                 "PresetIdCard",
                 "SolarControlConsole",
                 "Utensil",
+                "SurgeryTool"
             };
 
             foreach (var ignoreName in registerIgnore)

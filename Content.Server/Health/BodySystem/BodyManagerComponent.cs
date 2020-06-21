@@ -17,12 +17,11 @@ namespace Content.Server.BodySystem {
     ///     Component representing the many BodyParts attached to each other.
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component, IBodyPartContainer, IInteractHand {
+    public class BodyManagerComponent : Component, IBodyPartContainer {
 
         public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649
-        [Dependency]
-        private IPrototypeManager _prototypeManager;
+        [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
         [ViewVariables]
@@ -40,6 +39,29 @@ namespace Content.Server.BodySystem {
         ///     Maps BodyTemplate slot name to the BodyPart object filling it (if there is one).
         /// </summary>
         public Dictionary<string, BodyPart> PartDictionary => _partDictionary;
+
+        /// <summary>
+        ///     List of all occupied slots in this body, taken from the values of _parts.
+        /// </summary>
+        public IEnumerable<string> AllSlots
+        {
+            get
+            {
+                return _template.Slots.Keys;
+            }
+        }
+
+        /// <summary>
+        ///     List of all occupied slots in this body, taken from the values of _parts.
+        /// </summary>
+        public IEnumerable<string> OccupiedSlots
+        {
+            get
+            {
+                return _partDictionary.Keys;
+            }
+        }
+
         /// <summary>
         ///     List of all BodyParts in this body, taken from the keys of _parts.
         /// </summary>
@@ -52,14 +74,13 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Recursive search that returns whether a given BodyPart is connected to the center BodyPart. Not efficient (O(n^2)), but most bodies don't have a ton of BodyParts.
         /// </summary>
-        protected bool ConnectedToCenterPart(BodyPart target) {
+        public bool ConnectedToCenterPart(BodyPart target) {
             List<string> searchedSlots = new List<string> { };
             if (TryGetSlotName(target, out string result))
                 return false;
             return ConnectedToCenterPartRecursion(searchedSlots, result);
         }
-
-        protected bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName) {
+        private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName) {
             TryGetBodyPart(slotName, out BodyPart part);
             if (part == GetCenterBodyPart())
                 return true;
@@ -77,31 +98,70 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Returns the central BodyPart of this body based on the BodyTemplate. For humans, this is the torso. Returns null if not found.
         /// </summary>
-        protected BodyPart GetCenterBodyPart() {
+        public BodyPart GetCenterBodyPart() {
             _partDictionary.TryGetValue(_template.CenterSlot, out BodyPart center);
             return center;
         }
 
         /// <summary>
+        ///     Returns whether the given slot name exists within the current BodyTemplate. 
+        /// </summary>
+        public bool SlotExists(string slotName)
+        {
+            return _template.SlotExists(slotName);
+        }
+
+
+        /// <summary>
         ///     Grabs the BodyPart in the given slotName if there is one. Returns true if a BodyPart is found, false otherwise. If false, result will be null.
         /// </summary>
-        protected bool TryGetBodyPart(string slotName, out BodyPart result) {
+        public bool TryGetBodyPart(string slotName, out BodyPart result) {
             return _partDictionary.TryGetValue(slotName, out result);
         }
 
         /// <summary>
-        ///     Grabs the slotName that the given BodyPart resides in. Returns true if the BodyPart is part of this body, false otherwise. If false, result will be null.
+        ///     Grabs the slotName that the given BodyPart resides in. Returns true if the BodyPart is part of this body and a slot is found, false otherwise. If false, result will be null.
         /// </summary>
-        protected bool TryGetSlotName(BodyPart part, out string result) {
+        public bool TryGetSlotName(BodyPart part, out string result) {
             result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
             return result == null;
         }
 
         /// <summary>
+        ///     Grabs the BodyPartType of the given slotName if there is one. Returns true if the slot is found, false otherwise. If false, result will be null.
+        /// </summary>
+        public bool TryGetSlotType(string slotName, out BodyPartType result)
+        {
+            return _template.Slots.TryGetValue(slotName, out result);
+        }
+
+        /// <summary>
         ///     Grabs the names of all connected slots to the given slotName from the template. Returns true if connections are found to the slotName, false otherwise. If false, connections will be null.
         /// </summary>
-        protected bool TryGetBodyPartConnections(string slotName, out List<string> connections) {
+        public bool TryGetBodyPartConnections(string slotName, out List<string> connections) {
             return _template.Connections.TryGetValue(slotName, out connections);
+        }
+
+        /// <summary>
+        ///     Grabs all occupied slots connected to the given slot, regardless of whether the target slot is occupied. Returns true if successful, false if there was an error or no connected BodyParts were found.
+        /// </summary>
+        public bool TryGetBodyPartConnections(string slotName, out List<BodyPart> result)
+        {
+            result = null;
+            if (!_template.Connections.TryGetValue(slotName, out List<string> connections))
+                return false;
+            List<BodyPart> toReturn = new List<BodyPart>();
+            foreach (string connection in connections)
+            {
+                if (TryGetBodyPart(connection, out BodyPart bodyPartResult))
+                {
+                    toReturn.Add(bodyPartResult);
+                }
+            }
+            if (toReturn.Count <= 0)
+                return false;
+            result = toReturn;
+            return true;
         }
 
 
@@ -113,11 +173,6 @@ namespace Content.Server.BodySystem {
         /////////
         /////////  Server-specific stuff
         /////////
-
-        public bool InteractHand(InteractHandEventArgs eventArgs) {
-            //TODO: remove organs?
-            return false;
-        }
 
         public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
@@ -175,13 +230,68 @@ namespace Content.Server.BodySystem {
             return toReturn;
         }
 
+
+
         /// <summary>
-        /// Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it.
+        ///     Installs the given BodyPart into the given slot. Returns true if successful, false otherwise.
         /// </summary>
-        /// <returns>Returns the dropped entity, or null if no part is dropped</returns>
-        public IEntity DisconnectBodyPart(BodyPart part, bool dropEntity) {
+        public bool InstallBodyPart(BodyPart part, string slotName)
+        {
+            if (!SlotExists(slotName)) //Make sure the given slot exists
+                return false;
+            if (TryGetBodyPart(slotName, out BodyPart result)) //And that nothing is in it
+                return false;
+            _partDictionary.Add(slotName, part);
+            return true;
+        }
+        /// <summary>
+        ///     Installs the given DroppedBodyPart into the given slot, deleting it afterwards. Returns true if successful, false otherwise.
+        /// </summary>
+        public bool InstallDroppedBodyPart(DroppedBodyPartComponent part, string slotName)
+        {
+            if (!InstallBodyPart(part.ContainedBodyPart, slotName))
+                return false;
+            part.Owner.Delete();
+            return true;
+        }
+
+
+
+        /// <summary>
+        ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it.
+        /// </summary>
+        /// <returns>The IEntity representing the dropped BodyPart.</returns>
+        public IEntity DropBodyPart(BodyPart part)
+        {
             if (!_partDictionary.ContainsValue(part))
                 return null;
+            if (part != null)
+            {
+                string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
+                if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
+                {
+                    foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    {
+                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result))
+                        {
+                            DisconnectBodyPartByName(connectionName, true);
+                        }
+                    }
+                }
+                _partDictionary.Remove(slotName);
+                var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+                return partEntity;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
+        /// </summary>
+        public void DisconnectBodyPart(BodyPart part, bool dropEntity) {
+            if (!_partDictionary.ContainsValue(part))
+                return;
             if (part != null) {
                 string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
                 if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
@@ -197,14 +307,12 @@ namespace Content.Server.BodySystem {
                 if (dropEntity) {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                    return partEntity;
                 }
             }
-            return null;
         }
 
         /// <summary>
-        ///     Internal string version of DisconnectBodyPart for performance purposes.
+        ///     Internal string version of DisconnectBodyPart for performance purposes. Yes, it is actually more performant. 
         /// </summary>
         private void DisconnectBodyPartByName(string name, bool dropEntity) {
             if (!TryGetBodyPart(name, out BodyPart part))

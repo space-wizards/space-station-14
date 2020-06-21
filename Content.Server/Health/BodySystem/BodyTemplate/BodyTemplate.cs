@@ -31,7 +31,8 @@ namespace Content.Shared.BodySystem {
 
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs. For instance, on the humanoid template "torso" is mapped to a list containing "right arm", "left arm",
-        ///     "left leg", and "right leg". Only one of the limbs in a connection has to map it, i.e. humanoid template chooses to map "head" to "torso" and not the other way around.
+        ///     "left leg", and "right leg". This is mapped both ways during runtime, but in the prototype only one way has to be defined, i.e., "torso" to "left arm" will automatically
+        ///     map "left arm" to "torso".
         /// </summary>			
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; set; }
@@ -53,7 +54,20 @@ namespace Content.Shared.BodySystem {
         {
             return GetHashCode() == other.GetHashCode();
         }
-  
+
+        /// <summary>
+        ///     Returns whether the given slot exists in this BodyTemplate.
+        /// </summary>		
+        public bool SlotExists(string slotName)
+        {
+            foreach (string slot in Slots.Keys)
+            {
+                if (slot == slotName) //string comparison xd
+                    return true;
+            }
+            return false;
+        }
+
         /// <summary>
         ///     Returns an integer unique to this BodyTemplate's layout. It does not matter in which order the Connections or Slots are defined.
         /// </summary>		

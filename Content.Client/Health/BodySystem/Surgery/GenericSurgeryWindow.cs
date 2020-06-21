@@ -16,13 +16,12 @@ namespace Content.Client.BodySystem
 
         private Control _vSplitContainer;
         private VBoxContainer _optionsBox;
-        private CloseCallback _closeCallback;
         private OptionSelectedCallback _optionSelectedCallback;
 
 
         protected override Vector2? CustomSize => (300, 400);
 
-        public GenericSurgeryWindow(OptionSelectedCallback optionSelectedCallback, CloseCallback closeCallback)
+        public GenericSurgeryWindow(OptionSelectedCallback optionSelectedCallback)
         {
             Title = "Select surgery target...";
             RectClipContent = true;
@@ -43,17 +42,6 @@ namespace Content.Client.BodySystem
             Contents.AddChild(_vSplitContainer);
 
             _optionSelectedCallback = optionSelectedCallback;
-            _closeCallback = closeCallback;
-        }
-
-        public override void Close()
-        {
-            _closeCallback();
-            base.Close();
-        }
-        public void CloseNoCallback()
-        {
-            base.Close();
         }
 
         public void BuildDisplay(Dictionary<string, object> data)

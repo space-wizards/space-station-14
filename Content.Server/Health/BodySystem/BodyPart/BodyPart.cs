@@ -121,21 +121,35 @@ namespace Content.Server.BodySystem
             LoadFromPrototype(data);
         }
 
+        public bool CanAttachBodyPart(BodyPart toBeConnected)
+        {
+            return _surgeryData.CanAttachBodyPart(toBeConnected);
+        }
 
-
+        /// <summary>
+        ///     Returns whether the given <see cref="Mechanism">Mechanism</see> can be installed on this BodyPart.
+        /// </summary>
+        public bool CanInstallMechanism(Mechanism mechanism)
+        {
+            if (_sizeUsed + mechanism.Size > Size)
+                return false; //No space
+            if (!_surgeryData.CanInstallMechanism(mechanism))
+                return false; //ISurgeryData states that this mechanism cannot be installed
+            return true;
+        }
 
         /// <summary>
         ///     Attempts to add a Mechanism. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Use InstallDroppedMechanism if you want to easily install an IEntity with a DroppedMechanismComponent.
         /// </summary>
         public bool TryInstallMechanism(Mechanism mechanism)
         {
-            if (_sizeUsed + mechanism.Size > Size)
-                return false; //No space
-            if (!_surgeryData.CanInstallMechanism(mechanism))
-                return false; //ISurgeryData states that this mechanism cannot be installed
-            _mechanisms.Add(mechanism);
-            _sizeUsed += mechanism.Size;
-            return true;
+            if (CanInstallMechanism(mechanism))
+            {
+                _mechanisms.Add(mechanism);
+                _sizeUsed += mechanism.Size;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -178,7 +192,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g. 
+        ///     Returns whether the given <see cref="SurgeryToolType">SurgeryToolType</see> can be used on the current state of this BodyPart.
         /// </summary>
         public bool SurgeryCheck(SurgeryType toolType)
         {

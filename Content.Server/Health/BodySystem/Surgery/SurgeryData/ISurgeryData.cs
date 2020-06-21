@@ -49,6 +49,11 @@ namespace Content.Server.BodySystem
         public abstract bool CanInstallMechanism(Mechanism toBeInstalled);
 
         /// <summary>
+        ///     Returns whether the given BodyPart can be connected to the BodyPart this ISurgeryData represents.
+        /// </summary>
+        public abstract bool CanAttachBodyPart(BodyPart toBeConnected);
+
+        /// <summary>
         ///     Gets the delegate corresponding to the surgery step using the given <see cref="SurgeryType">SurgeryType</see>. Returns null if no surgery step can be performed.
         /// </summary>
         public abstract SurgeryAction GetSurgeryStep(SurgeryType toolType);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.BodySystem;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
@@ -26,13 +27,6 @@ namespace Content.Server.BodySystem
         protected List<Mechanism> _disconnectedOrgans = new List<Mechanism>();
 
         public BiologicalSurgeryData(BodyPart parent) : base(parent) { }
-
-        public override bool CanInstallMechanism(Mechanism toBeInstalled)
-        {
-            return _skinOpened && _vesselsClamped && _skinRetracted;
-        }
-
-
 
         public override SurgeryAction GetSurgeryStep(SurgeryType toolType)
         {
@@ -61,7 +55,7 @@ namespace Content.Server.BodySystem
             }
             else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
             {
-                if (_parent.Mechanisms.Count > 0 && toolType == SurgeryType.VesselCompression)
+                if (_parent.Mechanisms.Count > 0 && toolType == SurgeryType.VesselCompression && (_disconnectedOrgans.Except(_parent.Mechanisms).Count() != 0 || _parent.Mechanisms.Except(_disconnectedOrgans).Count() != 0))
                     return LoosenOrganSurgery;
                 else if (_disconnectedOrgans.Count > 0 && toolType == SurgeryType.Incision)
                     return RemoveOrganSurgery;
@@ -70,8 +64,6 @@ namespace Content.Server.BodySystem
             }
             return null;
         }
-
-
 
         public override string GetDescription()
         {
@@ -95,6 +87,20 @@ namespace Content.Server.BodySystem
             return toReturn;
         }
 
+        public override bool CanInstallMechanism(Mechanism toBeInstalled)
+        {
+            return _skinOpened && _vesselsClamped && _skinRetracted;
+        }
+
+        public override bool CanAttachBodyPart(BodyPart toBeConnected)
+        {
+            return true;
+            //TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
+        }
+
+
+
+
 
 
         protected void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
@@ -104,6 +110,8 @@ namespace Content.Server.BodySystem
             //Delay?
             _skinOpened = true;
         }
+
+
         protected void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
@@ -111,6 +119,8 @@ namespace Content.Server.BodySystem
             //Delay?
             _vesselsClamped = true;
         }
+
+
         protected void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
@@ -118,6 +128,8 @@ namespace Content.Server.BodySystem
             //Delay?
             _skinRetracted = true;
         }
+
+
         protected void CautizerizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
@@ -127,11 +139,20 @@ namespace Content.Server.BodySystem
             _vesselsClamped = false;
             _skinRetracted = false;
         }
+
+
         protected void LoosenOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (_parent.Mechanisms.Count <= 0)
                 return;
-            surgeon.RequestMechanism(_parent.Mechanisms, LoosenOrganSurgeryCallback);
+            List<Mechanism> toSend = new List<Mechanism>();
+            foreach (Mechanism mechanism in _parent.Mechanisms)
+            {
+                if (!_disconnectedOrgans.Contains(mechanism))
+                    toSend.Add(mechanism);
+            }
+            if (toSend.Count > 0)
+                surgeon.RequestMechanism(toSend, LoosenOrganSurgeryCallback);
         }
         public void LoosenOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
@@ -143,6 +164,8 @@ namespace Content.Server.BodySystem
                 _disconnectedOrgans.Add(target);
             }
         }
+
+
         protected void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (_disconnectedOrgans.Count <= 0)
@@ -150,7 +173,7 @@ namespace Content.Server.BodySystem
             if (_disconnectedOrgans.Count == 1)
                 RemoveOrganSurgeryCallback(_disconnectedOrgans[0], container, surgeon, performer);
             else
-                surgeon.RequestMechanism(_parent.Mechanisms, RemoveOrganSurgeryCallback);
+                surgeon.RequestMechanism(_disconnectedOrgans, RemoveOrganSurgeryCallback);
 
 
         }
@@ -165,6 +188,8 @@ namespace Content.Server.BodySystem
                 _disconnectedOrgans.Remove(target);
             }
         }
+
+
         protected void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.

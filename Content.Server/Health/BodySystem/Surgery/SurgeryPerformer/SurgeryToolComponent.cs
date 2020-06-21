@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.BodySystem;
+using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.BodySystem
@@ -23,23 +22,33 @@ namespace Content.Server.BodySystem
     ///     Server-side component representing a generic tool capable of performing surgery. For instance, the scalpel.
     /// </summary>
     [RegisterComponent]
-    public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, ISurgeon, IAfterInteract
+    public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
     {
-        
+        public override string Name => "SurgeryTool";
+        public override uint? NetID => ContentNetIDs.SURGERY;
+
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
+        [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
         private float _baseOperateTime;
         private SurgeryType _surgeryType;
         private HashSet<IPlayerSession> _subscribedSessions = new HashSet<IPlayerSession>();
-        private Random _random = new Random();
+        private BoundUserInterface _userInterface;
 
         private Dictionary<object, object> _optionsCache = new Dictionary<object, object>();
         private IEntity _performerCache;
         private BodyManagerComponent _bodyManagerComponentCache;
         private ISurgeon.MechanismRequestCallback _callbackCache;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(GenericSurgeryUiKey.Key);
+            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+        }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -65,8 +74,8 @@ namespace Content.Server.BodySystem
                 }
                 if (_optionsCache.Count > 0)
                 {
-                    OpenSurgeryUI(eventArgs.User, SurgeryUIMessageType.SelectBodyPart); 
-                    UpdateSurgeryUI(eventArgs.User, toSend);
+                    OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession); 
+                    UpdateSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession, SurgeryUIMessageType.SelectBodyPart, toSend);
                     _performerCache = eventArgs.User; //Also, cache the data.
                     _bodyManagerComponentCache = bodyManager;
                 }
@@ -97,44 +106,6 @@ namespace Content.Server.BodySystem
             }
         }
 
-
-
-        /// <summary>
-        ///     Called after the client chooses from a list of possible BodyParts that can be operated on. 
-        /// </summary>
-        private void HandleReceiveBodyPart(int key)
-        {
-            CloseSurgeryUI(_performerCache);
-            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!_optionsCache.TryGetValue(key, out object targetObject))
-            {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
-            }
-            BodyPart target = targetObject as BodyPart;
-            if (!target.AttemptSurgery(_surgeryType, _bodyManagerComponentCache, this, _performerCache))
-            {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
-            }
-            
-        }
-
-        /// <summary>
-        ///     Called after the client chooses from a list of possible Mechanisms to choose from.
-        /// </summary>
-        private void HandleReceiveMechanism(int key)
-        {
-            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
-            if (!_optionsCache.TryGetValue(key, out object targetObject))
-            {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
-            }
-            Mechanism target = targetObject as Mechanism;
-            CloseSurgeryUI(_performerCache);
-            _callbackCache(target, _bodyManagerComponentCache, this, _performerCache);
-        }
-
-
-
         public void RequestMechanism(List<Mechanism> options, ISurgeon.MechanismRequestCallback callback)
         {
             Dictionary<string, object> toSend = new Dictionary<string, object>();
@@ -146,8 +117,8 @@ namespace Content.Server.BodySystem
             }
             if (_optionsCache.Count > 0)
             {
-                OpenSurgeryUI(_performerCache, SurgeryUIMessageType.SelectMechanism);
-                UpdateSurgeryUI(_performerCache, toSend);
+                OpenSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
+                UpdateSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession, SurgeryUIMessageType.SelectMechanism, toSend);
                 _callbackCache = callback;
             }
             else
@@ -159,87 +130,81 @@ namespace Content.Server.BodySystem
 
 
 
-        public void OpenSurgeryUI(IEntity character, SurgeryUIMessageType messageType)
+
+
+
+
+        public void OpenSurgeryUI(IPlayerSession session)
         {
-            var user_session = character.GetComponent<BasicActorComponent>().playerSession;
-            SubscribeSession(user_session);
-            SendNetworkMessage(new OpenSurgeryUIMessage(messageType), user_session.ConnectedClient);
+            _userInterface.Open(session);
         }
-        public void UpdateSurgeryUI(IEntity character, Dictionary<string, object> options)
+        public void UpdateSurgeryUI(IPlayerSession session, SurgeryUIMessageType messageType, Dictionary<string, object> options)
         {
-            var user_session = character.GetComponent<BasicActorComponent>().playerSession;
-            if (user_session.AttachedEntity == null)
-            {
-                UnsubscribeSession(user_session);
-                return;
-            }
-            SendNetworkMessage(new UpdateSurgeryUIMessage(options), user_session.ConnectedClient);
+            _userInterface.SendMessage(new UpdateSurgeryUIMessage(messageType, options), session);
         }
-        public void CloseSurgeryUI(IEntity character)
+        public void CloseSurgeryUI(IPlayerSession session)
         {
-            var user_session = character.GetComponent<BasicActorComponent>().playerSession;
-            UnsubscribeSession(user_session);
+            _userInterface.Close(session);
         }
         public void CloseAllSurgeryUIs()
         {
-            foreach (var session in _subscribedSessions)
-            {
-                UnsubscribeSession(session);
-            }
-        }
-        private void HandleReceiveSurgeryUIMessage(ReceiveSurgeryUIMessage msg)
-        {
-            if(msg.MessageType == SurgeryUIMessageType.SelectBodyPart)
-                HandleReceiveBodyPart((int)msg.SelectedOptionData);
-            else if(msg.MessageType == SurgeryUIMessageType.SelectMechanism)
-                HandleReceiveMechanism((int)msg.SelectedOptionData);
+            _userInterface.CloseAll();
         }
 
 
 
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            base.HandleNetworkMessage(message, channel, session);
-
-            if (session == null)
+            switch (message.Message)
             {
-                throw new ArgumentException(nameof(session));
-            }
-
-            switch (message)
-            {
-                case CloseSurgeryUIMessage msg:
-                    UnsubscribeSession(session as IPlayerSession);
-                    break;
                 case ReceiveSurgeryUIMessage msg:
                     HandleReceiveSurgeryUIMessage(msg);
                     break;
             }
         }
-        private void SubscribeSession(IPlayerSession session)
+        private void HandleReceiveSurgeryUIMessage(ReceiveSurgeryUIMessage msg)
         {
-            if (!_subscribedSessions.Contains(session))
-            {
-                session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
-                _subscribedSessions.Add(session);
-            }
+            if (msg.MessageType == SurgeryUIMessageType.SelectBodyPart)
+                HandleReceiveBodyPart((int) msg.SelectedOptionData);
+            else if (msg.MessageType == SurgeryUIMessageType.SelectMechanism)
+                HandleReceiveMechanism((int) msg.SelectedOptionData);
         }
-        private void UnsubscribeSession(IPlayerSession session)
+
+
+        /// <summary>
+        ///     Called after the client chooses from a list of possible BodyParts that can be operated on. 
+        /// </summary>
+        private void HandleReceiveBodyPart(int key)
         {
-            if (_subscribedSessions.Contains(session))
+            CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
+            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+            if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                _subscribedSessions.Remove(session);
-                SendNetworkMessage(new CloseSurgeryUIMessage(), session.ConnectedClient);
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
             }
+            BodyPart target = targetObject as BodyPart;
+            if (!target.AttemptSurgery(_surgeryType, _bodyManagerComponentCache, this, _performerCache))
+            {
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
+            }
+
         }
-        private void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs SSEA)
+        /// <summary>
+        ///     Called after the client chooses from a list of possible Mechanisms to choose from.
+        /// </summary>
+        private void HandleReceiveMechanism(int key)
         {
-            if (SSEA.NewStatus != SessionStatus.InGame)
+            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+            if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                UnsubscribeSession(SSEA.Session);
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
             }
+            Mechanism target = targetObject as Mechanism;
+            CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
+            _callbackCache(target, _bodyManagerComponentCache, this, _performerCache);
         }
+
 
 
         public override void ExposeData(ObjectSerializer serializer)
