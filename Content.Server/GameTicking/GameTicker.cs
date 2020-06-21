@@ -9,6 +9,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -505,6 +506,9 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
+
+            // Reset pathing system
+            EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
 
             _spawnedPositions.Clear();
             _manifest.Clear();
