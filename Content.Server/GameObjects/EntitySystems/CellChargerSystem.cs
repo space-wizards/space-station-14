@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.Power.Chargers;
+﻿using Content.Server.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;

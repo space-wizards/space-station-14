@@ -2,7 +2,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Power.Chargers;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
 {

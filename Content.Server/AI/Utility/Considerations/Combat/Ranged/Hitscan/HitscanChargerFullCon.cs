@@ -1,7 +1,7 @@
 ﻿using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects.Components.Power.Chargers;
+using Content.Server.GameObjects.Components.Power;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
 {
@@ -15,7 +15,8 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Ranged.Hitscan
 
             if (target == null ||
                 !target.TryGetComponent(out PowerCellChargerComponent chargerComponent) ||
-                chargerComponent.HeldItem != null
+                chargerComponent.HeldItem != null ||
+                chargerComponent.CompatibleCellType != CellType.Weapon
                 )
             {
                 return 1.0f;

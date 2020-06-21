@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Power.Chargers;
-using Content.Shared.GameObjects.Components.Power;
+﻿using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;

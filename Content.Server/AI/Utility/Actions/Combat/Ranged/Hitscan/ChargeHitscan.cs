@@ -10,7 +10,7 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.AI.WorldState.States.Movement;
-using Content.Server.GameObjects.Components.Power.Chargers;
+using Content.Server.GameObjects.Components.Power;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
@@ -30,8 +30,8 @@ namespace Content.Server.AI.Utility.Actions.Combat.Ranged.Hitscan
         public override void SetupOperators(Blackboard context)
         {
             var weapon = context.GetState<EquippedEntityState>().GetValue();
-
-            if (weapon == null || _charger.GetComponent<PowerCellChargerComponent>().HeldItem != null)
+            var chargerComponent = _charger.GetComponent<PowerCellChargerComponent>();
+            if (weapon == null || chargerComponent.HeldItem != null || chargerComponent.CompatibleCellType != CellType.Weapon)
             {
                 ActionOperators = new Queue<AiOperator>();
                 return;

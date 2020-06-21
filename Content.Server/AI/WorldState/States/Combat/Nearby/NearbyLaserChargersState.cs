@@ -2,7 +2,6 @@
 using Content.Server.AI.Utils;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Power.Chargers;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 

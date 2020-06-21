@@ -6,7 +6,7 @@ using Content.Server.AI.Utils;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Power.Chargers;
+using Content.Server.GameObjects.Components.Power;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
 {
@@ -25,9 +25,9 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Ranged.Hitscan
             foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(PowerCellChargerComponent),
                 controller.VisionRadius))
             {
-                var contained = entity.GetComponent<PowerCellChargerComponent>().HeldItem;
-
-                if (contained != null)
+                var charger = entity.GetComponent<PowerCellChargerComponent>();
+                var contained = charger.HeldItem;
+                if (charger.CompatibleCellType == CellType.Weapon && contained != null)
                 {
                     yield return new PickUpHitscanFromCharger(owner, entity, contained, Bonus);
                 }
