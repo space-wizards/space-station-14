@@ -16,10 +16,9 @@ namespace Content.Server.AI.Utility.Considerations.Movement
             {
                 return 0.0f;
             }
-
-            // TODO: Remove 1 -
+            
             // Kind of just pulled a max distance out of nowhere. Add 0.01 just in case it's reaally far and we have no choice so it'll still be considered at least.
-            return 1 - ((target.Transform.GridPosition.Position - self.Transform.GridPosition.Position).Length / 100 + 0.01f);
+            return (target.Transform.GridPosition.Position - self.Transform.GridPosition.Position).Length / 100 + 0.01f;
         }
     }
 }

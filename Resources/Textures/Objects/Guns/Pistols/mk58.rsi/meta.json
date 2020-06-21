@@ -8,52 +8,28 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/e1a3cbe9ba2e6e29b7f1cad1bb456b390aac936d/icons/obj/guns/projectile.dmi",
     "states": [
         {
-            "name": "mk58",
+            "name": "icon",
             "directions": 1
         },
         {
-            "name": "mk58-0",
+            "name": "base",
             "directions": 1
         },
         {
-            "name": "mk58-1",
+            "name": "bolt-closed",
+            "directions": 1
+        },
+        {
+            "name": "bolt-open",
             "directions": 1
         },
         {
             "name": "inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         }
     ]
 }

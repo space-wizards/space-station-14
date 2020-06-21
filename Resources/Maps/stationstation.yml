@@ -1,4 +1,4 @@
-meta:
+﻿meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
@@ -2468,7 +2468,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 263
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.605512,7.638151
@@ -2479,7 +2479,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 264
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.339887,7.669401
@@ -2490,7 +2490,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 265
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.027387,7.622526
