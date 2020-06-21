@@ -53,7 +53,9 @@ namespace Content.Server.GameObjects.Components.Fluids
         private float _evaporateTime;
         private string _spillSound;
 
-        // Whether or not this puddle is currently overflowing onto its neighbors
+        /// <summary>
+        /// Whether or not this puddle is currently overflowing onto its neighbors
+        /// </summary>
         private bool _overflown;
 
         private SpriteComponent _spriteComponent;
