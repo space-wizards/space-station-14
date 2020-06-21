@@ -25,13 +25,13 @@ namespace Content.Client.GameObjects.Components.HUD.Hotbar
         public string Name => _name;
 
         /// <summary>
-        ///     Short description of the product.
+        ///     Short description of the hotbar action.
         /// </summary>
         [ViewVariables]
         public string Description => _description;
 
         /// <summary>
-        ///     Texture path used in the CargoConsole GUI.
+        ///     Texture path for UI.
         /// </summary>
         [ViewVariables]
         public string TexturePath => _texturePath;
