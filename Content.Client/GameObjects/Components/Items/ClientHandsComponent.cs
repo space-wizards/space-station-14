@@ -59,7 +59,7 @@ namespace Content.Client.GameObjects
 
         public IEntity GetEntity(string index)
         {
-            if (_hands.TryGetValue(index, out var entity))
+            if (!string.IsNullOrEmpty(index) && _hands.TryGetValue(index, out var entity))
             {
                 return entity;
             }
@@ -166,6 +166,8 @@ namespace Content.Client.GameObjects
             {
                 _hands.Add(slot, null);
             }
+
+            serializer.DataField(this, x => ActiveIndex, "defaultHand", _hands.Keys.LastOrDefault());
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

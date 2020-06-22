@@ -24,6 +24,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
+        [ViewVariables] public bool Paused { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
@@ -36,6 +37,7 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
+            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
 
             _initialized = true;
@@ -67,6 +69,12 @@ namespace Content.Client.GameTicking
         private void JoinGame(MsgTickerJoinGame message)
         {
             _stateManager.RequestStateChange<GameScreen>();
+        }
+
+        private void LobbyCountdown(MsgTickerLobbyCountdown message)
+        {
+            StartTime = message.StartTime;
+            Paused = message.Paused;
         }
 
         private void RoundEnd(MsgRoundEndMessage message)

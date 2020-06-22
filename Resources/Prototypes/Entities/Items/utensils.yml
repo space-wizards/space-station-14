@@ -5,7 +5,6 @@
   components:
   - type: Sprite
     sprite: Objects/utensils.rsi
-
   - type: Icon
     sprite: Objects/utensils.rsi
 
@@ -17,9 +16,11 @@
   components:
   - type: Sprite
     state: fork
-
   - type: Icon
     state: fork
+  - type: Utensil
+    types:
+    - Fork
 
 - type: entity
   parent: UtensilBase
@@ -28,9 +29,12 @@
   components:
   - type: Sprite
     state: plastic_fork
-
   - type: Icon
     state: plastic_fork
+  - type: Utensil
+    types:
+    - Fork
+    breakChance: 0.20
 
 - type: entity
   parent: UtensilBase
@@ -40,9 +44,11 @@
   components:
   - type: Sprite
     state: spoon
-
   - type: Icon
     state: spoon
+  - type: Utensil
+    types:
+    - Spoon
 
 - type: entity
   parent: UtensilBase
@@ -52,9 +58,12 @@
   components:
   - type: Sprite
     state: plastic_spoon
-
   - type: Icon
     state: plastic_spoon
+  - type: Utensil
+    types:
+    - Spoon
+    breakChance: 0.20
 
 - type: entity
   parent: UtensilBase
@@ -63,6 +72,9 @@
   components:
   - type: Sprite
     state: plastic_knife
-
   - type: Icon
     state: plastic_knife
+  - type: Utensil
+    types:
+    - Knife
+    breakChance: 0.20

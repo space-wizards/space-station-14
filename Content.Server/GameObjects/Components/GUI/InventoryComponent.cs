@@ -22,7 +22,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent
+    public class InventoryComponent : SharedInventoryComponent, IExAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -118,6 +118,7 @@ namespace Content.Server.GameObjects
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
+
             return true;
         }
 
@@ -196,6 +197,7 @@ namespace Content.Server.GameObjects
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
+
             return true;
         }
 
@@ -270,7 +272,7 @@ namespace Content.Server.GameObjects
 
         /// <summary>
         /// The underlying Container System just notified us that an entity was removed from it.
-        /// We need to make sure we process that removed entity as being unequpped from the slot.
+        /// We need to make sure we process that removed entity as being unequipped from the slot.
         /// </summary>
         private void ForceUnequip(IContainer container, IEntity entity)
         {
@@ -281,7 +283,9 @@ namespace Content.Server.GameObjects
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
+            {
                 itemComp.RemovedFromSlot();
+            }
 
             Dirty();
         }
@@ -391,6 +395,26 @@ namespace Content.Server.GameObjects
                 }
             }
             return new InventoryComponentState(list);
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            foreach (var slot in SlotContainers.Values.ToList())
+            {
+                foreach (var entity in slot.ContainedEntities)
+                {
+                    var exActs = entity.GetAllComponents<IExAct>();
+                    foreach (var exAct in exActs)
+                    {
+                        exAct.OnExplosion(eventArgs);
+                    }
+                }
+            }
         }
     }
 }
