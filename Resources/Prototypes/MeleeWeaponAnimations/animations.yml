@@ -1,0 +1,55 @@
+- type: MeleeWeaponAnimation
+  id: default
+  state: slash
+  arcType: Slash
+  length: 0.1
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: Bite
+  state: bite
+  arcType: Poke
+  length: 0.4
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: Claw
+  state: claw
+  arcType: Slash
+  length: 0.4
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: Disarm
+  state: disarm
+  arcType: Poke
+  length: 0.3
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: Kick
+  state: kick
+  arcType: Poke
+  length: 0.3
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: Punch
+  state: punch
+  arcType: Poke
+  length: 0.5
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
+
+- type: MeleeWeaponAnimation
+  id: Smash
+  state: smash
+  arcType: Poke
+  length: 0.3
+  color: 255,255,255,1020
+  colorDelta: 0,0,0,-5100
