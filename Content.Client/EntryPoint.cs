@@ -96,6 +96,7 @@ namespace Content.Client
                 "HitscanWeaponCapacitor",
                 "PowerCell",
                 "PowerCellCharger",
+                "WeaponCapacitorCharger",
                 "AiController",
                 "PlayerInputMover",
                 "Computer",

@@ -106,8 +106,6 @@
     sprite: Objects/Power/PowerCells/cell_recharger.rsi
     drawdepth: Items
   - type: PowerCellCharger
-    compatibleCellType: PlainCell
-    transfer_ratio: 0.10
     transfer_efficiency: 0.85
   - type: PowerReceiver
   - type: Icon
@@ -137,9 +135,7 @@
     netsync: false
     sprite: Objects/Power/PowerCells/recharger.rsi
     drawdepth: Items
-  - type: PowerCellCharger
-    compatibleCellType: Weapon
-    transfer_ratio: 0.10
+  - type: WeaponCapacitorCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
   - type: Icon
@@ -169,9 +165,7 @@
     netsync: false
     sprite: Objects/Power/PowerCells/wall_recharger.rsi
     drawdepth: Items
-  - type: PowerCellCharger
-    compatibleCellType: Weapon
-    transfer_ratio: 0.15
+  - type: WeaponCapacitorCharger
     transfer_efficiency: 0.95
   - type: PowerReceiver
   - type: Icon
