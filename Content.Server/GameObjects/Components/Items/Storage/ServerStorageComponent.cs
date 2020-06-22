@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 10000);
-            serializer.DataField(ref StorageUsed, "used", 0);
+            //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Content.Server.GameObjects
 
             foreach (var entity in storage.ContainedEntities)
             {
-                var item = entity.GetComponent<ItemComponent>();
+                var item = entity.GetComponent<StoreableComponent>();
                 StorageUsed += item.ObjectSize;
             }
 
