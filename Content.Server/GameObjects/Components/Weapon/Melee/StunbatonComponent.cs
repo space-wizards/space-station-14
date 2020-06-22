@@ -252,6 +252,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             protected override void GetData(IEntity user, StunbatonComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component.Cell == null)
                 {
                     data.Text = "Eject cell (cell missing)";

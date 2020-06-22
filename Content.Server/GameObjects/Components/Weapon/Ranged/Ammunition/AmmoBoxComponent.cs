@@ -63,9 +63,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                     _ammoContainer.Insert(entity);
                 }
             }
-            
+
         }
-        
+
         void IMapInit.MapInit()
         {
             _unspawnedCount += _capacity;
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 Owner.PopupMessage(user, Loc.GetString("No room"));
                 return false;
             }
-            
+
             _spawnedAmmo.Push(entity);
             _ammoContainer.Insert(entity);
             UpdateAppearance();
@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 for (var i = 0; i < Math.Max(10, rangedMagazine.ShotsLeft); i++)
                 {
                     var ammo = rangedMagazine.TakeAmmo();
-                    
+
                     if (!TryInsertAmmo(eventArgs.User, ammo))
                     {
                         rangedMagazine.TryInsertAmmo(eventArgs.User, ammo);
@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
 
                 return true;
             }
-            
+
             return false;
         }
 
@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         {
             var ejectCount = Math.Min(count, Capacity);
             var ejectAmmo = new List<IEntity>(ejectCount);
-            
+
             for (var i = 0; i < Math.Min(count, Capacity); i++)
             {
                 var ammo = TakeAmmo();
@@ -200,13 +200,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         {
             return TryUse(eventArgs.User);
         }
-        
+
         // So if you have 200 rounds in a box and that suddenly creates 200 entities you're not having a fun time
         [Verb]
         private sealed class DumpVerb : Verb<AmmoBoxComponent>
         {
             protected override void GetData(IEntity user, AmmoBoxComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = Loc.GetString("Dump 10");
                 data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }
