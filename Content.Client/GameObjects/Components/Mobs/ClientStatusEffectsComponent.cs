@@ -129,7 +129,10 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             foreach (var (effect, cooldownGraphic) in _cooldown)
             {
-                var status = _status[effect];
+                if(!_status.TryGetValue(effect, out var status))
+                {
+                    continue;
+                }
                 if (!status.Cooldown.HasValue)
                 {
                     cooldownGraphic.Progress = 0;
