@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables] private string _ammoPrototype;
 
         [ViewVariables] public IEntity PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public PowerCellComponent PowerCell => _powerCellContainer.ContainedEntity.GetComponent<PowerCellComponent>();
+        public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity.GetComponent<BatteryComponent>();
         private ContainerSlot _powerCellContainer;
         private ContainerSlot _ammoContainer;
         private string _powerCellPrototype;
@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return 0;
                 }
 
-                return (int) Math.Ceiling(powerCell.GetComponent<PowerCellComponent>().CurrentCharge / _baseFireCost);
+                return (int) Math.Ceiling(powerCell.GetComponent<BatteryComponent>().CurrentCharge / _baseFireCost);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return 0;
                 }
 
-                return (int) Math.Ceiling((float) (powerCell.GetComponent<PowerCellComponent>().MaxCharge / _baseFireCost));
+                return (int) Math.Ceiling((float) (powerCell.GetComponent<BatteryComponent>().MaxCharge / _baseFireCost));
             }
         }
         
@@ -144,7 +144,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return null;
             }
 
-            var capacitor = powerCellEntity.GetComponent<PowerCellComponent>();
+            var capacitor = powerCellEntity.GetComponent<BatteryComponent>();
             if (capacitor.CurrentCharge < _lowerChargeLimit)
             {
                 return null;
@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
-            if (!entity.HasComponent<PowerCellComponent>())
+            if (!entity.HasComponent<BatteryComponent>())
             {
                 return false;
             }
@@ -264,7 +264,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>())
+            if (!eventArgs.Using.HasComponent<BatteryComponent>())
             {
                 return false;
             }

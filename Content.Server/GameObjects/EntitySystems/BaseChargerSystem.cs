@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power.Chargers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -6,19 +6,18 @@ using Robust.Shared.GameObjects.Systems;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal class CellChargerSystem : EntitySystem
+    internal class BaseChargerSystem : EntitySystem
     {
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(PowerCellChargerComponent));
+            EntityQuery = new TypeEntityQuery(typeof(BaseCharger));
         }
 
         public override void Update(float frameTime)
         {
             foreach (var entity in RelevantEntities)
             {
-                var comp = entity.GetComponent<PowerCellChargerComponent>();
-                comp.OnUpdate(frameTime);
+                entity.GetComponent<BaseCharger>().OnUpdate(frameTime);
             }
         }
     }

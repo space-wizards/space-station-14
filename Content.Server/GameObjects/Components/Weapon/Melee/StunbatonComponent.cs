@@ -53,13 +53,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public bool Activated => _activated;
 
         [ViewVariables]
-        private PowerCellComponent Cell
+        private BatteryComponent Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
+                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
                 return cell;
             }
         }
@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
             if (Cell != null) return false;
 
