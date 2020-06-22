@@ -250,6 +250,12 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = Loc.GetString("Eject ID");
                 data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }

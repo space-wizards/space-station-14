@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             }
 
             // If we couldn't get a nearby node that's good enough
-            if (!Utils.TryEndNode(ref _endNode, _pathfindingArgs))
+            if (!PathfindingHelpers.TryEndNode(ref _endNode, _pathfindingArgs))
             {
                 return null;
             }
@@ -88,9 +88,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     }
 
                     // If tile is untraversable it'll be null
-                    var tileCost = Utils.GetTileCost(_pathfindingArgs, currentNode, nextNode);
+                    var tileCost = PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, nextNode);
 
-                    if (tileCost == null || !Utils.DirectionTraversable(_pathfindingArgs.CollisionMask, currentNode, direction))
+                    if (tileCost == null || !PathfindingHelpers.DirectionTraversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, currentNode, direction))
                     {
                         continue;
                     }
@@ -107,7 +107,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     // pFactor is tie-breaker where the fscore is otherwise equal.
                     // See http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties
                     // There's other ways to do it but future consideration
-                    var fScore = gScores[nextNode] + Utils.OctileDistance(_endNode, nextNode) * (1.0f + 1.0f / 1000.0f);
+                    var fScore = gScores[nextNode] + PathfindingHelpers.OctileDistance(_endNode, nextNode) * (1.0f + 1.0f / 1000.0f);
                     openTiles.Add((fScore, nextNode));
                 }
             }
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 return null;
             }
 
-            var route = Utils.ReconstructPath(cameFrom, currentNode);
+            var route = PathfindingHelpers.ReconstructPath(cameFrom, currentNode);
 
             if (route.Count == 1)
             {

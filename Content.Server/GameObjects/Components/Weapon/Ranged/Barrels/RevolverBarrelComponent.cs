@@ -221,6 +221,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             protected override void GetData(IEntity user, RevolverBarrelComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = Loc.GetString("Spin");
                 if (component.Capacity <= 1)
                 {

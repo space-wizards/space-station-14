@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -10,19 +11,19 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
-    public static class Utils
+    public static class PathfindingHelpers
     {
         public static bool TryEndNode(ref PathfindingNode endNode, PathfindingArgs pathfindingArgs)
         {
-            if (!Traversable(pathfindingArgs.CollisionMask, endNode.CollisionMask))
+            if (!Traversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, endNode))
             {
                 if (pathfindingArgs.Proximity > 0.0f)
                 {
                     // TODO: Should make this account for proximities,
                     // probably some kind of breadth-first search to find a valid one
-                    foreach (var (direction, node) in endNode.Neighbors)
+                    foreach (var (_, node) in endNode.Neighbors)
                     {
-                        if (Traversable(pathfindingArgs.CollisionMask, node.CollisionMask))
+                        if (Traversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, node))
                         {
                             endNode = node;
                             return true;
@@ -36,7 +37,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return true;
         }
 
-        public static bool DirectionTraversable(int collisionMask, PathfindingNode currentNode, Direction direction)
+        public static bool DirectionTraversable(int collisionMask, ICollection<string> access, PathfindingNode currentNode, Direction direction)
          {
             // If it's a diagonal we need to check NSEW to see if we can get to it and stop corner cutting, NE needs N and E etc.
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
@@ -51,32 +52,32 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             {
                 case Direction.NorthEast:
                     if (northNeighbor == null || eastNeighbor == null) return false;
-                    if (!Traversable(collisionMask, northNeighbor.CollisionMask) ||
-                        !Traversable(collisionMask, eastNeighbor.CollisionMask))
+                    if (!Traversable(collisionMask, access, northNeighbor) ||
+                        !Traversable(collisionMask, access, eastNeighbor))
                     {
                         return false;
                     }
                     break;
                 case Direction.NorthWest:
                     if (northNeighbor == null || westNeighbor == null) return false;
-                    if (!Traversable(collisionMask, northNeighbor.CollisionMask) ||
-                        !Traversable(collisionMask, westNeighbor.CollisionMask))
+                    if (!Traversable(collisionMask, access, northNeighbor) ||
+                        !Traversable(collisionMask, access, westNeighbor))
                     {
                         return false;
                     }
                     break;
                 case Direction.SouthWest:
                     if (southNeighbor == null || westNeighbor == null) return false;
-                    if (!Traversable(collisionMask, southNeighbor.CollisionMask) ||
-                        !Traversable(collisionMask, westNeighbor.CollisionMask))
+                    if (!Traversable(collisionMask, access, southNeighbor) ||
+                        !Traversable(collisionMask, access, westNeighbor))
                     {
                         return false;
                     }
                     break;
                 case Direction.SouthEast:
                     if (southNeighbor == null || eastNeighbor == null) return false;
-                    if (!Traversable(collisionMask, southNeighbor.CollisionMask) ||
-                        !Traversable(collisionMask, eastNeighbor.CollisionMask))
+                    if (!Traversable(collisionMask, access, southNeighbor) ||
+                        !Traversable(collisionMask, access, eastNeighbor))
                     {
                         return false;
                     }
@@ -86,11 +87,24 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return true;
         }
 
-        public static bool Traversable(int collisionMask, int nodeMask)
+        public static bool Traversable(int collisionMask, ICollection<string> access, PathfindingNode node)
         {
-            return (collisionMask & nodeMask) == 0;
-        }
+            if ((collisionMask & node.BlockedCollisionMask) != 0)
+            {
+                return false;
+            }
 
+            foreach (var reader in node.AccessReaders)
+            {
+                if (!reader.IsAllowed(access))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
         public static Queue<TileRef> ReconstructPath(Dictionary<PathfindingNode, PathfindingNode> cameFrom, PathfindingNode current)
         {
             var running = new Stack<TileRef>();
@@ -194,6 +208,20 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             return 1.4f * dstX + (dstY - dstX);
         }
+        
+        public static float OctileDistance(TileRef endTile, TileRef startTile)
+        {
+            // "Fast Euclidean" / octile.
+            // This implementation is written down in a few sources; it just saves doing sqrt.
+            int dstX = Math.Abs(startTile.X - endTile.X);
+            int dstY = Math.Abs(startTile.Y - endTile.Y);
+            if (dstX > dstY)
+            {
+                return 1.4f * dstY + (dstX - dstY);
+            }
+
+            return 1.4f * dstX + (dstY - dstX);
+        }
 
         public static float ManhattanDistance(PathfindingNode endNode, PathfindingNode currentNode)
         {
@@ -202,7 +230,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public static float? GetTileCost(PathfindingArgs pathfindingArgs, PathfindingNode start, PathfindingNode end)
         {
-            if (!pathfindingArgs.NoClip && !Traversable(pathfindingArgs.CollisionMask, end.CollisionMask))
+            if (!pathfindingArgs.NoClip && !Traversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, end))
             {
                 return null;
             }
