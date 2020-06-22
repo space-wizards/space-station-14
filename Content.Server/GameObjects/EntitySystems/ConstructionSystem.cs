@@ -82,38 +82,70 @@ namespace Content.Server.GameObjects.EntitySystems
             if(targetEnt is null || handEnt is null)
                 return;
 
-            // A tool was not used on the entity.
-            if (!handEnt.TryGetComponent<IToolComponent>(out var toolComp))
-                return;
-
             // Cannot deconstruct an entity with no prototype.
             var targetPrototype = targetEnt.MetaData.EntityPrototype;
             if (targetPrototype is null)
                 return;
 
-            // the target entity is in the process of being constructed
+            // the target entity is in the process of being constructed/deconstructed
             if (msg.Attacked.TryGetComponent<ConstructionComponent>(out var constructComp))
             {
+                var pos = msg.Attacked.Transform.GridPosition;
                 //TODO: Continue constructing
                 var result = TryConstructEntity(constructComp, handEnt, msg.User);
 
-                _notifyManager.PopupMessage(msg.Attacked, msg.User,
-                    "TODO: Continue Construction.");
+                // TryConstructEntity may delete the existing entity, so we need to use the position
+                _notifyManager.PopupMessage(pos, msg.User,
+                     "TODO: Continue Construction.");
 
                 msg.Handled = result;
                 return;
             }
             else // try to start the deconstruction process
             {
+                // A tool was not used on the entity.
+                if (!handEnt.TryGetComponent<IToolComponent>(out var toolComp))
+                    return;
+
                 // no known recipe for entity
-                if (!_craftRecipes.TryGetValue(targetPrototype.Name, out var prototype))
+                if (!_craftRecipes.TryGetValue(targetPrototype.ID, out var prototype))
                 {
                     _notifyManager.PopupMessage(msg.Attacked, msg.User,
                         "Cannot be deconstructed.");
                     return;
                 }
 
-                // there is a recipe, but you have the wrong tool
+                // there is a recipe, but it can't be deconstructed.
+                var lastStep = prototype.Stages[^1].Backward;
+                if (!(lastStep is ConstructionStepTool))
+                {
+                    _notifyManager.PopupMessage(msg.Attacked, msg.User,
+                        "Cannot be deconstructed.");
+                    return;
+                }
+
+                // wrong tool
+                var caps = ((ConstructionStepTool) lastStep).ToolQuality;
+                if ((toolComp.Qualities & caps) == 0)
+                {
+                    _notifyManager.PopupMessage(msg.Attacked, msg.User,
+                        "Wrong tool to start deconstruct.");
+                    return;
+                }
+
+                // ask around and see if the deconstruction prerequisites are satisfied
+                // (remove bulbs, approved access, open panels, etc)
+                var deconCompMsg = new BeginDeconstructCompMsg(msg.User);
+                targetEnt.SendMessage(null, deconCompMsg);
+                if(deconCompMsg.BlockDeconstruct)
+                    return;
+
+                var deconEntMsg = new BeginDeconstructEntityMsg(msg.User, handEnt, targetEnt);
+                RaiseLocalEvent(deconEntMsg);
+                if(deconEntMsg.BlockDeconstruct)
+                    return;
+
+                // --- GOOD TO GO ---
 
                 //TODO: start the deconstruct process
                 _notifyManager.PopupMessage(msg.Attacked, msg.User,
@@ -357,6 +389,70 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
 
+        }
+    }
+
+    /// <summary>
+    /// A system message that is raised when an entity is trying to be deconstructed.
+    /// </summary>
+    public class BeginDeconstructEntityMsg : EntitySystemMessage
+    {
+        /// <summary>
+        /// Entity that initiated the deconstruction.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        /// Tool in the active hand of the user.
+        /// </summary>
+        public IEntity Hand { get; }
+
+        /// <summary>
+        /// Target entity that is trying to be deconstructed.
+        /// </summary>
+        public IEntity Target { get; }
+
+        /// <summary>
+        /// Set this to true if you would like to block the deconstruction from happening.
+        /// </summary>
+        public bool BlockDeconstruct { get; set; }
+
+        /// <summary>
+        /// Constructs a new instance of <see cref="BeginDeconstructEntityMsg"/>.
+        /// </summary>
+        /// <param name="user">Entity that initiated the deconstruction.</param>
+        /// <param name="hand">Tool in the active hand of the user.</param>
+        /// <param name="target">Target entity that is trying to be deconstructed.</param>
+        public BeginDeconstructEntityMsg(IEntity user, IEntity hand, IEntity target)
+        {
+            User = user;
+            Hand = hand;
+            Target = target;
+        }
+    }
+
+    /// <summary>
+    /// A component message that is raised when an entity is trying to be deconstructed.
+    /// </summary>
+    public class BeginDeconstructCompMsg : ComponentMessage
+    {
+        /// <summary>
+        /// Entity that initiated the deconstruction.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        /// Set this to true if you would like to block the deconstruction from happening.
+        /// </summary>
+        public bool BlockDeconstruct { get; set; }
+
+        /// <summary>
+        /// Constructs a new instance of <see cref="BeginDeconstructCompMsg"/>.
+        /// </summary>
+        /// <param name="user">Entity that initiated the deconstruction.</param>
+        public BeginDeconstructCompMsg(IEntity user)
+        {
+            User = user;
         }
     }
 }
