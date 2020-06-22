@@ -133,6 +133,12 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = "Enter";
                 data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
@@ -148,6 +154,12 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = "Eject";
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }

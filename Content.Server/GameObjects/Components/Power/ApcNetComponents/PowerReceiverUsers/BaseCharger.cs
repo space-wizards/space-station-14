@@ -117,6 +117,11 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -155,6 +160,11 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
                 if (component._container.ContainedEntity == null)
                 {
                     data.Text = "Eject";

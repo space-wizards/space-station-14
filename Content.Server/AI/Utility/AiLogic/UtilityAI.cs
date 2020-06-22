@@ -126,6 +126,9 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 damageableComponent.DamageThresholdPassed -= DeathHandle;
             }
+
+            var currentOp = CurrentAction?.ActionOperators.Peek();
+            currentOp?.Shutdown(Outcome.Failed);
         }
 
         private void DeathHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
