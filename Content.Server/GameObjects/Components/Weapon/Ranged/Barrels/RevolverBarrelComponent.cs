@@ -42,8 +42,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-            var capacity = serializer.ReadDataField("capacity", 6);
-            _ammoSlots = new IEntity[capacity];
+
+            if (serializer.Reading)
+            {
+                var capacity = serializer.ReadDataField("capacity", 6);
+                _ammoSlots = new IEntity[capacity];
+            }
+
+            // TODO: Writing?
+
 
             // Sounds
             serializer.DataField(ref _soundEject, "soundEject", "/Audio/Guns/MagOut/revolver_magout.ogg");
@@ -60,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
-            
+
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
@@ -78,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 return false;
             }
-            
+
             if (ammoComponent.Caliber != _caliber)
             {
                 Owner.PopupMessage(user, Loc.GetString("Wrong caliber"));
@@ -208,7 +215,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }
-        
+
         [Verb]
         private sealed class SpinRevolverVerb : Verb<RevolverBarrelComponent>
         {
