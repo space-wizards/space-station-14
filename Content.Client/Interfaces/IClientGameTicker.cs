@@ -8,6 +8,7 @@ namespace Content.Client.Interfaces
         string ServerInfoBlob { get; }
         bool AreWeReady { get; }
         DateTime StartTime { get; }
+        bool Paused { get; }
 
         void Initialize();
         event Action InfoBlobUpdated;

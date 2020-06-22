@@ -61,7 +61,7 @@ namespace Content.Server.GameObjects.Components.Movement
         protected override void Shutdown()
         {
             base.Shutdown();
-            Processor.Shutdown();
+            Processor?.Shutdown();
         }
 
         /// <summary>

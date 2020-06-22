@@ -64,7 +64,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
                 new QuadraticCurve(-0.8f, 1.0f, 1.0f, 0.0f)),
             // Somewhat prioritise distance
             new DistanceCon(
-                new QuadraticCurve(1.0f, 1.0f, 0.02f, 0.0f)),
+                new QuadraticCurve(-1.0f, 1.0f, 1.02f, 0.0f)),
             // Prefer weaker targets
             new TargetHealthCon(
                 new QuadraticCurve(1.0f, 0.4f, 0.0f, -0.02f)),

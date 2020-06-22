@@ -123,21 +123,29 @@ namespace Content.Client.State
             }
 
             string text;
-            var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
-            if (difference.Ticks < 0)
+
+            if (_clientGameTicker.Paused)
             {
-                if (difference.TotalSeconds < -5)
-                {
-                    text = Loc.GetString("Right Now?");
-                }
-                else
-                {
-                    text = Loc.GetString("Right Now");
-                }
+                text = Loc.GetString("Paused");
             }
             else
             {
-                text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+                var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
+                if (difference.Ticks < 0)
+                {
+                    if (difference.TotalSeconds < -5)
+                    {
+                        text = Loc.GetString("Right Now?");
+                    }
+                    else
+                    {
+                        text = Loc.GetString("Right Now");
+                    }
+                }
+                else
+                {
+                    text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+                }
             }
 
             _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);
