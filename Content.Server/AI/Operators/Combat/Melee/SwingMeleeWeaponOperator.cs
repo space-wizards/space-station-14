@@ -5,7 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Operators.Combat
+namespace Content.Server.AI.Operators.Combat.Melee
 {
     public class SwingMeleeWeaponOperator : AiOperator
     {
