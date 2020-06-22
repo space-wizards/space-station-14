@@ -18,7 +18,7 @@
     hard: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+      bounds: "-0.1,-0.1,0.1,0.1"
       layer: [Clickable]
       mask:
       - Impassable
