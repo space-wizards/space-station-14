@@ -3,6 +3,7 @@ using Content.Client.Animations;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
@@ -112,10 +113,10 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels
 
             switch (message)
             {
-                /*
-                case BmwComponentAutoEjectedMessage _:
+                
+                case MagazineAutoEjectMessage _:
                     _statusControl?.PlayAlarmAnimation();
-                    return;*/
+                    return;
             }
         }
 
