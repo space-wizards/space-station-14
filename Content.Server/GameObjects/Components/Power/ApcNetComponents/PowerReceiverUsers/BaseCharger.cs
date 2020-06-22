@@ -17,6 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Power.Chargers
 {
     [ComponentReference(typeof(IActivate))]
+    [ComponentReference(typeof(IInteractUsing))]
     public abstract class BaseCharger : Component, IActivate, IInteractUsing
     {
         [ViewVariables]

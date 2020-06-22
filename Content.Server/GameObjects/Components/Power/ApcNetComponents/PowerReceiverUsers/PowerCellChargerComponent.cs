@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Power.Chargers
@@ -7,6 +8,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     /// Recharges an entity with a <see cref="BatteryComponent"/>.
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(BaseCharger))]
     public sealed class PowerCellChargerComponent : BaseCharger
     {
