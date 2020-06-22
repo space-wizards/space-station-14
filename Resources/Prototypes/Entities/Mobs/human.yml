@@ -134,6 +134,7 @@
   - type: HumanoidAppearance
   - type: Stunnable
   - type: AnimationPlayer
+  - type: UnarmedCombat
 
 - type: entity
   save: false
