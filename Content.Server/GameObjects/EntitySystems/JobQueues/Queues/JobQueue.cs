@@ -20,13 +20,18 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues.Queues
         /// How long the job's allowed to run for before suspending
         /// </summary>
         public virtual double MaxTime => 0.002;
-
+        
         private readonly Queue<IJob> _pendingQueue = new Queue<IJob>();
         private readonly List<IJob> _waitingJobs = new List<IJob>();
 
         public void EnqueueJob(IJob job)
         {
             _pendingQueue.Enqueue(job);
+        }
+
+        public void Clear()
+        {
+            _pendingQueue.Clear();
         }
 
         public void Process()

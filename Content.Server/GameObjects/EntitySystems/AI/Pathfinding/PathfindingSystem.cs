@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
@@ -131,11 +132,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             {
                 moveUpdateCount = _moveUpdateQueue.Count - 100;
             }
+
+            moveUpdateCount = Math.Min(moveUpdateCount, _moveUpdateQueue.Count);
             
-            for (var i = 0; i < Math.Min(moveUpdateCount, _moveUpdateQueue.Count); i++)
+            for (var i = 0; i < moveUpdateCount; i++)
             {
                 HandleCollidableMove(_moveUpdateQueue.Dequeue());
             }
+            
+            DebugTools.Assert(_moveUpdateQueue.Count < 1000);
         }
 
         public PathfindingChunk GetChunk(TileRef tile)
@@ -232,12 +237,20 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public void ResettingCleanup()
         {
-            _queuedGraphUpdates.Clear();
+            _graph.Clear();
+            _pathfindingQueue.Clear();
+            _collidableUpdateQueue.Clear();
+            _moveUpdateQueue.Clear();
+            _accessReaderUpdateQueue.Clear();
+            _tileUpdateQueue.Clear();
         }
 
         private void HandleGridRemoval(GridId gridId)
         {
-            _graph.Remove(gridId);
+            if (_graph.ContainsKey(gridId))
+            {
+                _graph.Remove(gridId);
+            }
         }
 
         private void QueueGridChange(object sender, GridChangedEventArgs eventArgs)
