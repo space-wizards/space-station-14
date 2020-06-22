@@ -3,7 +3,6 @@ using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
-using Content.Server.AI.Utility.Considerations.Combat.Ranged;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
@@ -40,9 +39,6 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
         protected override Consideration[] Considerations { get; } = {
             new MeleeWeaponEquippedCon(
-                new InverseBoolCurve()),
-            // We'll prioritise equipping ranged weapons; If we try and score this then it'll just keep swapping between ranged and melee
-            new RangedWeaponEquippedCon(
                 new InverseBoolCurve()),
             new CanPutTargetInHandsCon(
                 new BoolCurve()),

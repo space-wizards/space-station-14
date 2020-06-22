@@ -28,11 +28,12 @@ namespace Content.Shared.GameObjects
 
         private static readonly Dictionary<Slots, int> _slotDrawingOrder = new Dictionary<Slots, int>
         {
-            {Slots.POCKET1, 12},
-            {Slots.POCKET2, 11},
-            {Slots.HEAD, 10},
-            {Slots.MASK, 9},
-            {Slots.EARS, 8},
+            {Slots.POCKET1, 13},
+            {Slots.POCKET2, 12},
+            {Slots.HEAD, 11},
+            {Slots.MASK, 10},
+            {Slots.EARS, 9},
+            {Slots.NECK, 8},
             {Slots.BACKPACK, 7},
             {Slots.EYES, 6},
             {Slots.OUTERCLOTHING, 5},
@@ -46,9 +47,10 @@ namespace Content.Shared.GameObjects
         public override IReadOnlyList<Slots> SlotMasks { get; } = new List<Slots>()
         {
             Slots.EYES, Slots.HEAD, Slots.EARS,
-            Slots.OUTERCLOTHING, Slots.MASK, Slots.INNERCLOTHING,
+            Slots.OUTERCLOTHING, Slots.MASK, Slots.INNERCLOTHING, 
             Slots.BACKPACK, Slots.BELT, Slots.GLOVES,
-            Slots.NONE, Slots.SHOES, Slots.IDCARD, Slots.POCKET1, Slots.POCKET2
+            Slots.NONE, Slots.SHOES, Slots.IDCARD, Slots.POCKET1, Slots.POCKET2,
+            Slots.NECK
         };
 
         public override int SlotDrawingOrder(Slots slot)

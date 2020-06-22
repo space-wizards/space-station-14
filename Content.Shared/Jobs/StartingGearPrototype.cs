@@ -15,6 +15,12 @@ namespace Content.Shared.Jobs
         private string _id;
         private Dictionary<Slots, string> _equipment;
 
+        public IReadOnlyDictionary<string, string> Inhand => _inHand;
+        /// <summary>
+        /// hand index, item prototype
+        /// </summary>
+        private Dictionary<string, string> _inHand;
+
         [ViewVariables] public string ID => _id;
 
         [ViewVariables] public IReadOnlyDictionary<Slots, string> Equipment => _equipment;
@@ -24,6 +30,7 @@ namespace Content.Shared.Jobs
             var serializer = YamlObjectSerializer.NewReader(mapping);
 
             serializer.DataField(ref _id, "id", string.Empty);
+            serializer.DataField(ref _inHand, "inhand", new Dictionary<string, string>(0));
 
             var equipment = serializer.ReadDataField<Dictionary<string, string>>("equipment");
 
