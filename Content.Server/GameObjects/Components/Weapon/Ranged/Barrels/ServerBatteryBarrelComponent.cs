@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 if (energyRatio < 1.0)
                 {
-                    var newDamages = new Dictionary<DamageType, int>(projectileComponent.Damages);
+                    var newDamages = new Dictionary<DamageType, int>(projectileComponent.Damages.Count);
                     foreach (var (damageType, damage) in projectileComponent.Damages)
                     {
                         newDamages.Add(damageType, (int) (damage * energyRatio));
