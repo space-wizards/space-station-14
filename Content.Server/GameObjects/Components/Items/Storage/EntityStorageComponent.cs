@@ -338,6 +338,12 @@ namespace Content.Server.GameObjects.Components
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 component.OpenVerbGetData(user, component, data);
             }
 
