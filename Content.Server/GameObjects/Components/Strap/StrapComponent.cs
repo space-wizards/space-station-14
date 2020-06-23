@@ -156,7 +156,8 @@ namespace Content.Server.GameObjects.Components.Strap
             {
                 if (!ActionBlockerSystem.CanInteract(component.Owner) ||
                     !user.TryGetComponent(out BuckleComponent buckle) ||
-                    buckle.BuckledTo != null && buckle.BuckledTo != component)
+                    buckle.BuckledTo != null && buckle.BuckledTo != component ||
+                    user == component.Owner)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
