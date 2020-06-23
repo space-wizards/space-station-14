@@ -133,16 +133,19 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var ownTransform = Owner.Transform;
-            var closestTransform = strap.Owner.Transform;
+            var strapTransform = strap.Owner.Transform;
 
-            ownTransform.GridPosition = closestTransform.GridPosition;
-            ownTransform.AttachParent(closestTransform);
+            ownTransform.GridPosition = strapTransform.GridPosition;
+            ownTransform.AttachParent(strapTransform);
 
             switch (strap.Position)
             {
+                case StrapPosition.None:
+                    ownTransform.WorldRotation = strapTransform.WorldRotation;
+                    break;
                 case StrapPosition.Stand:
                     StandingStateHelper.Standing(Owner);
-                    ownTransform.WorldRotation = closestTransform.WorldRotation;
+                    ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
                     StandingStateHelper.Down(Owner);
