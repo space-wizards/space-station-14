@@ -838,6 +838,7 @@ namespace Content.Server.GameTicking
             msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
             msg.StartTime = _roundStartTimeUtc;
             msg.YouAreReady = ready;
+            msg.Paused = Paused;
             return msg;
         }
 
