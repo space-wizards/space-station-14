@@ -13,8 +13,6 @@
     hands:
     - left
     - right
-    equippedItems:
-      right: MeleeClaw
   - type: MovementSpeedModifier
   # Organs
   - type: InteractionOutline
