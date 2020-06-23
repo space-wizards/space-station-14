@@ -73,7 +73,7 @@
     fireRate: 0.5
     capacity: 1
     soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Guns/Gunshots/bang.ogg
+    soundGunshot: /Audio/Guns/Gunshots/rpgfire.ogg
     soundInsert: /Audio/Guns/MagIn/batrifle_magin.ogg
   - type: Appearance
     visuals:
