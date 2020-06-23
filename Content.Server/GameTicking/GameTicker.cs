@@ -437,6 +437,8 @@ namespace Content.Server.GameTicking
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
 
+            _chatManager.DispatchServerAnnouncement($"Round start has been delayed for {time.TotalSeconds} seconds.");
+
             return true;
         }
 
@@ -462,6 +464,10 @@ namespace Content.Server.GameTicking
             lobbyCountdownMessage.StartTime = _roundStartTimeUtc;
             lobbyCountdownMessage.Paused = Paused;
             _netManager.ServerSendToAll(lobbyCountdownMessage);
+
+            _chatManager.DispatchServerAnnouncement(Paused
+                ? "Round start has been paused."
+                : "Round start countdown is now resumed.");
 
             return true;
         }
