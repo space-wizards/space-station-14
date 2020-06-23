@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Markers
         public float Chance { get; set; } = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int IntervalSeconds { get; set; } = 5;
+        public int IntervalSeconds { get; set; } = 60;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int MinimumEntitiesSpawned { get; set; } = 1;
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Markers
 
             serializer.DataField(this, x => Prototypes, "prototypes", new List<string>());
             serializer.DataField(this, x => Chance, "chance", 1.0f);
-            serializer.DataField(this, x => IntervalSeconds, "intervalSeconds", 5);
+            serializer.DataField(this, x => IntervalSeconds, "intervalSeconds", 60);
             serializer.DataField(this, x => MinimumEntitiesSpawned, "minimumEntitiesSpawned", 1);
             serializer.DataField(this, x => MaximumEntitiesSpawned, "maximumEntitiesSpawned", 1);
 
