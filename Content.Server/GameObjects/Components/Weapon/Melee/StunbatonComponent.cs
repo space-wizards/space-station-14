@@ -39,7 +39,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables] private ContainerSlot _cellContainer;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _paralyzeChance = 0.25f;
+        private float _paralyzeChanceNoSlowdown = 0.35f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _paralyzeChanceWithSlowdown = 0.85f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _paralyzeTime = 10f;
@@ -75,7 +78,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _paralyzeChance, "paralyzeChance", 0.25f);
+            serializer.DataField(ref _paralyzeChanceNoSlowdown, "paralyzeChanceNoSlowdown", 0.35f);
+            serializer.DataField(ref _paralyzeChanceWithSlowdown, "paralyzeChanceWithSlowdown", 0.85f);
             serializer.DataField(ref _paralyzeTime, "paralyzeTime", 10f);
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
@@ -92,10 +96,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             {
                 if (!entity.TryGetComponent(out StunnableComponent stunnable)) continue;
 
-                if(_robustRandom.Prob(_paralyzeChance))
-                    stunnable.Paralyze(_paralyzeTime);
+                if(!stunnable.SlowedDown)
+                    if(_robustRandom.Prob(_paralyzeChanceNoSlowdown))
+                        stunnable.Paralyze(_paralyzeTime);
+                    else
+                        stunnable.Slowdown(_slowdownTime);
                 else
-                    stunnable.Slowdown(_slowdownTime);
+                    if(_robustRandom.Prob(_paralyzeChanceWithSlowdown))
+                        stunnable.Paralyze(_paralyzeTime);
+                    else
+                        stunnable.Slowdown(_slowdownTime);
             }
 
             cell.DeductCharge(EnergyPerUse);
