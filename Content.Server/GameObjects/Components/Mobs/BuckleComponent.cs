@@ -173,38 +173,31 @@ namespace Content.Server.GameObjects.Components.Mobs
             return true;
         }
 
-        public bool TryUnbuckle(IEntity user)
+        public bool TryUnbuckle(IEntity user, bool force = false)
         {
             if (BuckledTo == null)
             {
                 return false;
             }
 
-            if (!ActionBlockerSystem.CanInteract(user))
+            if (!force)
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You can't do that!"));
-                return false;
-            }
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    _notifyManager.PopupMessage(user, user,
+                        Loc.GetString("You can't do that!"));
+                    return false;
+                }
 
-            var strapPosition = Owner.Transform.MapPosition;
-            var range = SharedInteractionSystem.InteractionRange / 2;
+                var strapPosition = Owner.Transform.MapPosition;
+                var range = SharedInteractionSystem.InteractionRange / 2;
 
-            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
-            {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You can't reach there!"));
-                return false;
-            }
-
-            return ForceUnbuckle();
-        }
-
-        public bool ForceUnbuckle()
-        {
-            if (BuckledTo == null)
-            {
-                return false;
+                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+                {
+                    _notifyManager.PopupMessage(user, user,
+                        Loc.GetString("You can't reach there!"));
+                    return false;
+                }
             }
 
             if (BuckledTo.Owner.TryGetComponent(out StrapComponent strap))

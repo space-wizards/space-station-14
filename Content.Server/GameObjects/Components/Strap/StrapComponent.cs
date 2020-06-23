@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Strap
             {
                 if (entity.TryGetComponent(out BuckleComponent buckle))
                 {
-                    buckle.ForceUnbuckle();
+                    buckle.TryUnbuckle(entity, true);
                 }
             }
 
