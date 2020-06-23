@@ -104,6 +104,21 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
+            var parent = to.Transform.Parent;
+            while (parent != null)
+            {
+                if (parent == user.Transform)
+                {
+                    _notifyManager.PopupMessage(Owner, user,
+                        Loc.GetString(Owner == user
+                            ? "You can't buckle yourself there!"
+                            : "You can't buckle {0:them} there!", Owner));
+                    return false;
+                }
+
+                parent = parent.Parent;
+            }
+
             if (!strap.HasSpace(this))
             {
                 _notifyManager.PopupMessage(Owner, user,
