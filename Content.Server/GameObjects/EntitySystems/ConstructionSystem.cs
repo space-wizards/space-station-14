@@ -90,16 +90,11 @@ namespace Content.Server.GameObjects.EntitySystems
             // the target entity is in the process of being constructed/deconstructed
             if (msg.Attacked.TryGetComponent<ConstructionComponent>(out var constructComp))
             {
-                var pos = msg.Attacked.Transform.GridPosition;
-                //TODO: Continue constructing
                 var result = TryConstructEntity(constructComp, handEnt, msg.User);
 
-                // TryConstructEntity may delete the existing entity, so we need to use the position
-                _notifyManager.PopupMessage(pos, msg.User,
-                     "TODO: Continue Construction.");
+                // TryConstructEntity may delete the existing entity
 
                 msg.Handled = result;
-                return;
             }
             else // try to start the deconstruction process
             {
@@ -147,13 +142,63 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 // --- GOOD TO GO ---
 
-                //TODO: start the deconstruct process
-                _notifyManager.PopupMessage(msg.Attacked, msg.User,
-                    "TODO: Start Deconstruct.");
+                // pop off the material and switch to frame
+                var targetEntPos = targetEnt.Transform.MapPosition;
+                if (prototype.Stages.Count <= 2) // there are no intermediate stages
+                {
+                    targetEnt.Delete();
 
-                return;
+                    SpawnIngredient(targetEntPos, prototype.Stages[(prototype.Stages.Count - 2)].Forward as ConstructionStepMaterial);
+                }
+                else // replace ent with intermediate
+                {
+                    // Spawn frame
+                    var frame = EntityManager.SpawnEntity("structureconstructionframe", targetEntPos);
+                    var construction = frame.GetComponent<ConstructionComponent>();
+                    SetupComponent(construction, prototype);
+                    frame.Transform.LocalRotation = targetEnt.Transform.LocalRotation;
+
+                    // remove target
+                    targetEnt.Delete();
+
+                    // spawn material
+                    SpawnIngredient(targetEntPos, prototype.Stages[(prototype.Stages.Count-2)].Forward as ConstructionStepMaterial);
+                }
             }
         }
+
+        private void SpawnIngredient(MapCoordinates position, ConstructionStepMaterial lastStep)
+        {
+            if(lastStep is null)
+                return;
+
+            var material = lastStep.Material;
+            var quantity = lastStep.Amount;
+
+            var matEnt = EntityManager.SpawnEntity(MaterialPrototypes[material], position);
+            if (matEnt.TryGetComponent<StackComponent>(out var stackComp))
+            {
+                stackComp.Count = quantity;
+            }
+            else
+            {
+                quantity--; // already spawned one above
+                while (quantity > 0)
+                {
+                    EntityManager.SpawnEntity(MaterialPrototypes[material], position);
+                    quantity--;
+                }
+            }
+        }
+
+        private static readonly Dictionary<ConstructionStepMaterial.MaterialType, string> MaterialPrototypes =
+            new Dictionary<ConstructionStepMaterial.MaterialType, string>
+            {
+                { ConstructionStepMaterial.MaterialType.Cable, "CableStack1" },
+                { ConstructionStepMaterial.MaterialType.Gold, "GoldStack1" },
+                { ConstructionStepMaterial.MaterialType.Metal, "SteelSheet1" },
+                { ConstructionStepMaterial.MaterialType.Glass, "GlassSheet1" }
+            };
 
         private bool TryStartStructureConstruction(IEntity placingEnt, GridCoordinates loc, string prototypeName, Angle angle)
         {
@@ -303,6 +348,11 @@ namespace Content.Server.GameObjects.EntitySystems
             else if (TryProcessStep(constructEntity, stage.Backward, handTool, user, transformComponent.GridPosition))
             {
                 constructionComponent.Stage--;
+                stage = constructPrototype.Stages[constructionComponent.Stage];
+
+                // If forward needed a material, drop it
+                SpawnIngredient(constructEntity.Transform.MapPosition, stage.Forward as ConstructionStepMaterial);
+
                 if (constructionComponent.Stage == 0)
                 {
                     // Deconstruction complete.
@@ -310,7 +360,6 @@ namespace Content.Server.GameObjects.EntitySystems
                     return true;
                 }
 
-                stage = constructPrototype.Stages[constructionComponent.Stage];
                 if (stage.Icon != null)
                 {
                     spriteComponent.LayerSetSprite(0, stage.Icon);

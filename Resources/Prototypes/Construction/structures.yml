@@ -48,6 +48,8 @@
   steps:
   - material: Glass
     amount: 2
+    reverse:
+      tool: Screwing
 
 - type: construction
   name: low wall
