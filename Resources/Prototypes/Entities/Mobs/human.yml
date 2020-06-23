@@ -155,6 +155,7 @@
   - type: CameraRecoil
   - type: Examiner
   - type: HumanInventoryController
+  - type: Item
 
 - type: entity
   save: false
