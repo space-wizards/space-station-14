@@ -248,9 +248,13 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 return TryBuckle(user, to);
             }
-            else
+            else if (BuckledTo.Owner == to)
             {
                 return TryUnbuckle(user);
+            }
+            else
+            {
+                return false;
             }
         }
 
