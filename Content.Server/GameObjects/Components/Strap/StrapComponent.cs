@@ -154,13 +154,25 @@ namespace Content.Server.GameObjects.Components.Strap
         {
             protected override void GetData(IEntity user, StrapComponent component, VerbData data)
             {
+                data.Visibility = VerbVisibility.Invisible;
+
                 if (!ActionBlockerSystem.CanInteract(component.Owner) ||
                     !user.TryGetComponent(out BuckleComponent buckle) ||
                     buckle.BuckledTo != null && buckle.BuckledTo != component ||
                     user == component.Owner)
                 {
-                    data.Visibility = VerbVisibility.Invisible;
                     return;
+                }
+
+                var parent = component.Owner.Transform.Parent;
+                while (parent != null)
+                {
+                    if (parent == user.Transform)
+                    {
+                        return;
+                    }
+
+                    parent = parent.Parent;
                 }
 
                 var userPosition = user.Transform.MapPosition;
@@ -172,10 +184,10 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 if (!inRange)
                 {
-                    data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
 
+                data.Visibility = VerbVisibility.Visible;
                 data.Text = buckle.BuckledTo == null ? Loc.GetString("Buckle") : Loc.GetString("Unbuckle");
             }
 
