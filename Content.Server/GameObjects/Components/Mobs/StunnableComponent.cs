@@ -109,10 +109,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             seconds = MathF.Min(_knockdownTimer + (seconds * KnockdownTimeModifier), _knockdownCap);
 
-            if (seconds <= 0f)
+            if (seconds <= 0f || !StandingStateHelper.Down(Owner))
+            {
                 return;
-
-            StandingStateHelper.Down(Owner);
+            }
 
             _knockdownTimer = seconds;
             _lastStun = _gameTiming.CurTime;

@@ -22,7 +22,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent, IActionBlocker, IInteractHand
+    public class BuckleComponent : SharedBuckleComponent, IActionBlocker, IInteractHand, IEffectBlocker
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem;
@@ -266,6 +266,11 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
 
         bool IActionBlocker.CanChangeDirection()
+        {
+            return BuckledTo == null;
+        }
+
+        bool IEffectBlocker.CanFall()
         {
             return BuckledTo == null;
         }
