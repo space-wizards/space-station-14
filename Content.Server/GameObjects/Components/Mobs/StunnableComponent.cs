@@ -192,6 +192,17 @@ namespace Content.Server.GameObjects.Components.Mobs
             _statusRemoveCancellation = new CancellationTokenSource();
         }
 
+        public void ResetStuns()
+        {
+            _stunnedTimer = 0f;
+            _slowdownTimer = 0f;
+
+            if (KnockedDown)
+                StandingStateHelper.Standing(Owner);
+
+            _knockdownTimer = 0f;
+        }
+
         public void Update(float delta)
         {
             if (Stunned)
