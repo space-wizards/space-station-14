@@ -1,6 +1,4 @@
-﻿
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
