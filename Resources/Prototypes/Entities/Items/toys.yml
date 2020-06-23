@@ -1,0 +1,18 @@
+- type: entity
+  name: bee plushie
+  parent: BaseItem
+  id: PlushieBee
+  description:
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
+  - type: Icon
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_h
+  - type: ItemCooldown
+  - type: LoopingSound
+  - type: EmitSoundOnUse
+    sound: /Audio/items/skub.ogg, /Audio/items/canopen.ogg
+  - type: UseDelay
+    delay: 2.0
