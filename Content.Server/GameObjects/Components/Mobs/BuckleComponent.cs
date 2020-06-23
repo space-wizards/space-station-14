@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         private bool TryBuckle(IEntity user, IEntity to)
         {
-            if (user == null)
+            if (user == null || user == to)
             {
                 return false;
             }

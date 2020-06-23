@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Strap
 {
     [RegisterComponent]
-    public class StrapComponent : SharedStrapComponent
+    public class StrapComponent : SharedStrapComponent, IInteractHand
     {
         private StrapPosition _position;
         private string _buckleSound;
@@ -200,6 +200,16 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
+        }
+
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out BuckleComponent buckle))
+            {
+                return false;
+            }
+
+            return buckle.ToggleBuckle(eventArgs.User, Owner);
         }
     }
 }
