@@ -208,7 +208,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                 appearance.SetData(BuckleVisuals.Buckled, false);
             }
 
-            StandingStateHelper.Standing(Owner);
+            if (Owner.TryGetComponent(out StunnableComponent stunnable) && stunnable.KnockedDown)
+            {
+                StandingStateHelper.Down(Owner);
+            }
+            else
+            {
+                StandingStateHelper.Standing(Owner);
+            }
 
             if (Owner.TryGetComponent(out SpeciesComponent species))
             {
