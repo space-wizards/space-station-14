@@ -134,6 +134,10 @@
   - type: HumanoidAppearance
   - type: Stunnable
   - type: AnimationPlayer
+  - type: UnarmedCombat
+    range: 0.8
+    arcwidth: 30
+    arc: fist
 
 - type: entity
   save: false
