@@ -19,6 +19,12 @@ namespace Content.IntegrationTests
             remove { }
         }
 
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded
+        {
+            add{ }
+            remove { }
+        }
+
         public void Initialize()
         {
         }
@@ -31,7 +37,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void StartRound()
+        public void StartRound(bool force = false)
         {
         }
 
@@ -64,18 +70,44 @@ namespace Content.IntegrationTests
             return new T();
         }
 
+        public bool HasGameRule(Type type)
+        {
+            return false;
+        }
+
         public void RemoveGameRule(GameRule rule)
         {
         }
 
         public IEnumerable<GameRule> ActiveGameRules { get; } = Array.Empty<GameRule>();
 
-        public void SetStartPreset(Type type)
+        public bool TryGetPreset(string name, out Type type)
+        {
+            type = default;
+            return false;
+        }
+
+        public void SetStartPreset(Type type, bool force = false)
         {
         }
 
-        public void SetStartPreset(string type)
+        public void SetStartPreset(string name, bool force = false)
         {
+        }
+
+        public bool DelayStart(TimeSpan time)
+        {
+            return true;
+        }
+
+        public bool PauseStart(bool pause = true)
+        {
+            return true;
+        }
+
+        public bool TogglePause()
+        {
+            return false;
         }
     }
 }

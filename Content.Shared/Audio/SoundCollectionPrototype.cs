@@ -5,7 +5,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Audio
 {
-    [Prototype("sound_collection")]
+    [Prototype("soundCollection")]
     public sealed class SoundCollectionPrototype : IPrototype, IIndexedPrototype
     {
         public string ID { get; private set; }

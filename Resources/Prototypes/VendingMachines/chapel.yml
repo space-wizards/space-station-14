@@ -3,7 +3,7 @@
   name: PietyVend
   description: "A vending machine containing religious supplies and clothing. A label reads: \"A holy vendor for a pious man.\""
   spriteName: chapel
-  startinginventory:
+  startingInventory:
     OuterclothingChaplainhoodie: 1
     OuterclothingAcolyte: 4
     OuterclothingBedsheet: 4

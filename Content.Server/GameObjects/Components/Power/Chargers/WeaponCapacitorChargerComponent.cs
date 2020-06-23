@@ -1,17 +1,13 @@
 using System;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
-using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.Chargers
 {
@@ -20,17 +16,17 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IAttackBy))]
-    public sealed class WeaponCapacitorChargerComponent : BaseCharger, IActivate, IAttackBy
+    [ComponentReference(typeof(IInteractUsing))]
+    public sealed class WeaponCapacitorChargerComponent : BaseCharger, IActivate, IInteractUsing
     {
         public override string Name => "WeaponCapacitorCharger";
         public override double CellChargePercent => _container.ContainedEntity != null ?
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().Charge /
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().Capacity * 100 : 0.0f;
+            _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell.Charge /
+            _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell.Capacity * 100 : 0.0f;
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var result = TryInsertItem(eventArgs.AttackWith);
+            var result = TryInsertItem(eventArgs.Using);
             if (!result)
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();
@@ -42,34 +38,39 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            RemoveItemToHand(eventArgs.User);
+            RemoveItem(eventArgs.User);
         }
 
         [Verb]
         private sealed class InsertVerb : Verb<WeaponCapacitorChargerComponent>
         {
-            protected override string GetText(IEntity user, WeaponCapacitorChargerComponent component)
+            protected override void GetData(IEntity user, WeaponCapacitorChargerComponent component, VerbData data)
             {
-                if (!user.TryGetComponent(out HandsComponent handsComponent) || handsComponent.GetActiveHand == null)
+                if (!ActionBlockerSystem.CanInteract(user))
                 {
-                    return "Insert";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
-                return $"Insert {handsComponent.GetActiveHand.Owner.Name}";
-            }
 
-            protected override VerbVisibility GetVisibility(IEntity user, WeaponCapacitorChargerComponent component)
-            {
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
-                    return VerbVisibility.Invisible;
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
 
-                if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
+                if (handsComponent.GetActiveHand == null)
                 {
-                    return VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Disabled;
+                    data.Text = "Insert";
+                    return;
                 }
 
-                return VerbVisibility.Visible;
+                if (component._container.ContainedEntity != null)
+                {
+                    data.Visibility = VerbVisibility.Disabled;
+                }
+
+                data.Text = $"Insert {handsComponent.GetActiveHand.Owner.Name}";
             }
 
             protected override void Activate(IEntity user, WeaponCapacitorChargerComponent component)
@@ -92,40 +93,39 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         [Verb]
         private sealed class EjectVerb : Verb<WeaponCapacitorChargerComponent>
         {
-            protected override string GetText(IEntity user, WeaponCapacitorChargerComponent component)
+            protected override void GetData(IEntity user, WeaponCapacitorChargerComponent component, VerbData data)
             {
-                if (component._container.ContainedEntity == null)
+                if (!ActionBlockerSystem.CanInteract(user))
                 {
-                    return "Eject";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
-                return $"Eject {component._container.ContainedEntity.Name}";
-            }
 
-            protected override VerbVisibility GetVisibility(IEntity user, WeaponCapacitorChargerComponent component)
-            {
                 if (component._container.ContainedEntity == null)
                 {
-                    return VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Disabled;
+                    data.Text = "Eject";
+                    return;
                 }
-                return VerbVisibility.Visible;
+
+                data.Text = $"Eject {component._container.ContainedEntity.Name}";
             }
 
             protected override void Activate(IEntity user, WeaponCapacitorChargerComponent component)
             {
-                component.RemoveItem();
+                component.RemoveItem(user);
             }
         }
 
         public bool TryInsertItem(IEntity entity)
         {
-            if (!entity.HasComponent<HitscanWeaponCapacitorComponent>() ||
+            if (!entity.HasComponent<ServerBatteryBarrelComponent>() ||
                 _container.ContainedEntity != null)
             {
                 return false;
             }
 
-            _heldItem = entity;
-            if (!_container.Insert(_heldItem))
+            if (!_container.Insert(entity))
             {
                 return false;
             }
@@ -145,8 +145,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 return CellChargerStatus.Empty;
             }
 
-            if (_container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent component) &&
-                Math.Abs(component.Capacity - component.Charge) < 0.01)
+            if (_container.ContainedEntity.TryGetComponent(out ServerBatteryBarrelComponent component) &&
+                Math.Abs(component.PowerCell.Capacity - component.PowerCell.Charge) < 0.01)
             {
                 return CellChargerStatus.Charged;
             }
@@ -158,8 +158,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            _container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent weaponCapacitorComponent);
-            var chargeLoss = weaponCapacitorComponent.RequestCharge(frameTime) * _transferRatio;
+            var powerCell = _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell;
+            var chargeLoss = powerCell.RequestCharge(frameTime) * _transferRatio;
             _powerDevice.Load = chargeLoss;
 
             if (!_powerDevice.Powered)
@@ -170,14 +170,13 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             var chargeAmount = chargeLoss * _transferEfficiency;
 
-            weaponCapacitorComponent.AddCharge(chargeAmount);
+            powerCell.AddCharge(chargeAmount);
             // Just so the sprite won't be set to 99.99999% visibility
-            if (weaponCapacitorComponent.Capacity - weaponCapacitorComponent.Charge < 0.01)
+            if (powerCell.Capacity - powerCell.Charge < 0.01)
             {
-                weaponCapacitorComponent.Charge = weaponCapacitorComponent.Capacity;
+                powerCell.Charge = powerCell.Capacity;
             }
             UpdateStatus();
         }
-
     }
 }

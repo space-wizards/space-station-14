@@ -8,7 +8,20 @@ namespace Content.Server.Cargo
 
         public string Name { get; }
 
-        public int Balance { get; set; }
+        private int _balance;
+        public int Balance
+        {
+            get => _balance;
+            set
+            {
+                if (_balance == value)
+                    return;
+                _balance = value;
+                OnBalanceChange?.Invoke();
+            }
+        }
+
+        public event Action OnBalanceChange;
 
         public CargoBankAccount(int id, string name, int balance)
         {

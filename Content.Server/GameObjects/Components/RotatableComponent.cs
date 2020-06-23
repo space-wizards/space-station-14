@@ -1,3 +1,4 @@
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
@@ -35,16 +36,17 @@ namespace Content.Server.GameObjects.Components
         [Verb]
         public sealed class RotateVerb : Verb<RotatableComponent>
         {
-            protected override string GetText(IEntity user, RotatableComponent component)
+            protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                return "Rotate clockwise";
-            }
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
-            protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
-
-            protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
-            {
-                return VerbVisibility.Visible;
+                data.CategoryData = VerbCategories.Rotate;
+                data.Text = "Rotate clockwise";
+                data.IconTexture = "/Textures/UserInterface/VerbIcons/rotate_cw.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, RotatableComponent component)
@@ -56,16 +58,17 @@ namespace Content.Server.GameObjects.Components
         [Verb]
         public sealed class RotateCounterVerb : Verb<RotatableComponent>
         {
-            protected override string GetText(IEntity user, RotatableComponent component)
+            protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
             {
-                return "Rotate counter-clockwise";
-            }
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
-            protected override string GetCategory(IEntity user, RotatableComponent component) => "Rotate";
-
-            protected override VerbVisibility GetVisibility(IEntity user, RotatableComponent component)
-            {
-                return VerbVisibility.Visible;
+                data.CategoryData = VerbCategories.Rotate;
+                data.Text = "Rotate counter-clockwise";
+                data.IconTexture = "/Textures/UserInterface/VerbIcons/rotate_ccw.svg.96dpi.png";
             }
 
             protected override void Activate(IEntity user, RotatableComponent component)

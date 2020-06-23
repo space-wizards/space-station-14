@@ -1,5 +1,5 @@
 - type: entity
-  name: Butcher's Cleaver
+  name: butcher's cleaver
   parent: BaseItem
   id: ButchCleaver
   desc: A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products.

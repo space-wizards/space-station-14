@@ -12,7 +12,7 @@ namespace Content.Shared.Materials
     ///     Materials are read-only storage for the properties of specific materials.
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
-public class Material : IExposeData
+    public class Material : IExposeData
     {
         public string Name => _name;
         private string _name = "unobtanium";

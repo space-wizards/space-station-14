@@ -1,11 +1,16 @@
 - type: entity
   id: WallLight
-  name: "Unpowered Light"
+  name: "unpowered light"
   components:
   - type: Clickable
+    bounds:
+      south: 0.25,-0.5,0.75,0.5
+      north: -0.25,-0.5,0.25,0.5
+      east: -0.5,-0.5,0.5,0
+      west: -0.5,0,0.5,0.5
   - type: InteractionOutline
   - type: Collidable
-  - type: Sound
+  - type: LoopingSound
   - type: Sprite
     sprite: Buildings/light_tube.rsi
     state: on
@@ -22,7 +27,7 @@
     - Wallmount
 
 - type: entity
-  name: Light
+  name: light
   id: Poweredlight
   parent: WallLight
   components:
@@ -43,7 +48,7 @@
     bulb: Tube
 
 - type: entity
-  name: Small Light
+  name: small light
   id: PoweredSmallLight
   parent: WallLight
   components:

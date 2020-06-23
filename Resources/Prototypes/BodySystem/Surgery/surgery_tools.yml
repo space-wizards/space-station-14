@@ -1,5 +1,5 @@
 - type: entity
-  name: Scalpel
+  name: scalpel
   parent: BaseItem
   id: scalpel
   desc: A surgical tool used to make incisions into flesh.
@@ -7,7 +7,7 @@
   - type: SurgeryTool
     surgeryToolClass: Incision
     baseOperateTime: 3
-    
+
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: scalpel
@@ -17,11 +17,11 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
-  
-  
-  
+
+
+
 - type: entity
-  name: Retractor
+  name: retractor
   parent: BaseItem
   id: retractor
   desc: A surgical tool used to hold open incisions.
@@ -29,7 +29,7 @@
   - type: SurgeryTool
     surgeryToolClass: Retraction
     baseOperateTime: 3
-    
+
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: retractor
@@ -39,11 +39,11 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
-  
-  
-  
+
+
+
 - type: entity
-  name: Cautery
+  name: cautery
   parent: BaseItem
   id: cautery
   desc: A surgical tool used to cauterize open wounds.
@@ -51,7 +51,7 @@
   - type: SurgeryTool
     surgeryToolClass: Cauterization
     baseOperateTime: 3
-    
+
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: cautery
@@ -61,11 +61,11 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
-  
-  
-  
+
+
+
 - type: entity
-  name: Drill
+  name: drill
   parent: BaseItem
   id: drill
   desc: A surgical drill for making holes into hard material.
@@ -73,7 +73,7 @@
   - type: SurgeryTool
     surgeryToolClass: Drilling
     baseOperateTime: 3
-    
+
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: drill
@@ -83,11 +83,11 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
-  
-  
-  
+
+
+
 - type: entity
-  name: Bone Saw
+  name: bone saw
   parent: BaseItem
   id: bone_saw
   desc: A surgical tool used to cauterize open wounds.
@@ -95,7 +95,7 @@
   - type: SurgeryTool
     surgeryToolClass: BoneSawing
     baseOperateTime: 3
-    
+
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: bone_saw
@@ -105,9 +105,9 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
-  
+
 - type: entity
-  name: Hemostat
+  name: hemostat
   parent: BaseItem
   id: hemostat
   desc: A surgical tool used to compress blood vessels to prevent bleeding.
@@ -115,7 +115,7 @@
   - type: SurgeryTool
     surgeryToolClass: VesselCompression
     baseOperateTime: 3
-    
+
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: hemostat
@@ -125,4 +125,4 @@
 
   - type: ItemCooldown
   - type: MeleeWeapon
-  
+

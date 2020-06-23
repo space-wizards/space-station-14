@@ -1,0 +1,49 @@
+- type: entity
+  id: BulletClRifle
+  name: bullet (.25 caseless)
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 27
+
+- type: entity
+  id: BulletClRifleFlash
+  name: bullet (.25 caseless flash)
+  parent: BulletBaseFlash
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 27
+
+- type: entity
+  id: BulletClRifleHV
+  name: bullet (.25 caseless high-velocity)
+  parent: BulletBaseHV
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 32
+
+- type: entity
+  id: BulletClRiflePractice
+  name: bullet (.25 caseless practice)
+  parent: BulletBasePractice
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 2
+
+- type: entity
+  id: BulletClRifleRubber
+  name: bullet (.25 caseless rubber)
+  parent: BulletBaseRubber
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 3

@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Server.GameObjects.Components.Container;
@@ -18,6 +19,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -29,8 +32,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IAttackBy))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IAttackBy, ISolutionChange
+    [ComponentReference(typeof(IInteractUsing))]
+    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -277,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs args)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
@@ -319,10 +322,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void ClickSound()
         {
-            if (Owner.TryGetComponent(out SoundComponent sound))
-            {
-                sound.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
-            }
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+
         }
 
 

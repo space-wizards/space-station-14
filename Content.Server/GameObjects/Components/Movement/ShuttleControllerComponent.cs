@@ -65,8 +65,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 if (!gridEntity.HasComponent<ICollidableComponent>())
                 {
                     var collideComp = gridEntity.AddComponent<CollidableComponent>();
-                    collideComp.CollisionEnabled = true;
-                    collideComp.IsHardCollidable = true;
+                    collideComp.CanCollide = true;
+                    //collideComp.IsHardCollidable = true;
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
@@ -133,11 +133,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (!removed)
             {
-                mindComp.Mind.Visit(Owner);
+                mindComp.Mind?.Visit(Owner);
             }
             else
             {
-                mindComp.Mind.UnVisit();
+                mindComp.Mind?.UnVisit();
             }
         }
     }

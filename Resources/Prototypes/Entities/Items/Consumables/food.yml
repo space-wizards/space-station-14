@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Food
-  - type: Sound
+  - type: LoopingSound
   - type: Sprite
     state: icon
     netsync: false
@@ -20,29 +20,30 @@
 # Some of the conversions here have definitely been screwed up
 # Glorious food
 - type: entity
-  name: 4no Raisins
+  name: 4no raisins
   parent: FoodBase
   id: Food4NoRaisins
   description: Dried raisins
   components:
   - type: Food
+    trash: TrashRaisins
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashRaisins
   - type: Sprite
     sprite: Objects/Food/4no_raisins.rsi
   - type: Icon
     sprite: Objects/Food/4no_raisins.rsi
 
 - type: entity
-  name: Aesir salad
+  name: aesir salad
   parent: FoodBase
   id: FoodAesirSalad
   description: Probably too incredible for mortal men to fully enjoy.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -54,12 +55,12 @@
     sprite: Objects/Food/aesirsalad.rsi
 
 - type: entity
-  name: Amanita pie
+  name: amanita pie
   parent: FoodBase
   id: FoodAmanitaPie
   description: Sweet and tasty poison pie.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -70,29 +71,31 @@
     sprite: Objects/Food/amanita_pie.rsi
 
 - type: entity
-  name: Amanita jelly
+  name: amanita jelly
   parent: FoodBase
   id: FoodAmanitaJelly
   description: Looks curiously toxic
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/amanitajelly.rsi
   - type: Icon
     sprite: Objects/Food/amanitajelly.rsi
 
 #- type: entity
-#  name: Ambrosia vulgar is crushed
+#  name: ambrosia vulgar is crushed
 #  parent: FoodBase
 #  id: FoodAmbrosiaVulgarIsCrushed
 #  description:
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Food/ambrosiavulgariscrushed.rsi
@@ -100,29 +103,30 @@
 #    sprite: Objects/Food/ambrosiavulgariscrushed.rsi
 
 - type: entity
-  name: Apple cake (slice)
+  name: apple cake (slice)
   parent: FoodBase
   id: FoodAppleCakeSlice
   description: A slice of heavenly cake.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/apple_cake_slice.rsi
   - type: Icon
     sprite: Objects/Food/apple_cake_slice.rsi
 
 - type: entity
-  name: Apple pie
+  name: apple pie
   parent: FoodBase
   id: FoodApplePie
   description: A pie containing sweet sweet love... or apple.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -134,12 +138,13 @@
 
 # TODO: BREADSLICE?
 #- type: entity
-#  name: Bacon
+#  name: bacon
 #  parent: FoodBase
 #  id: FoodBacon
 #  description:
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Food/bacon.rsi
@@ -147,12 +152,12 @@
 #    sprite: Objects/Food/bacon.rsi
 
 - type: entity
-  name: Bad recipe
+  name: bad recipe
   parent: FoodBase
   id: FoodBadRecipe
   description: Someone should be demoted from chef for this.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -163,12 +168,12 @@
     sprite: Objects/Food/badrecipe.rsi
 
 - type: entity
-  name: Baguette
+  name: baguette
   parent: FoodBase
   id: FoodBaguette
   description: Bon appetit!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -179,34 +184,36 @@
     sprite: Objects/Food/baguette.rsi
 
 - type: entity
-  name: Bread (slice)
+  name: bread (slice)
   parent: FoodBase
   id: FoodBreadSlice
   description:
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/breadslice.rsi
   - type: Icon
     sprite: Objects/Food/breadslice.rsi
 
 - type: entity
-  name: Banana bread (slice)
+  name: banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice
   description:
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/bananabreadslice.rsi
   - type: Icon
@@ -215,27 +222,29 @@
 - type: entity
   parent: FoodBase
   id: FoodBananaCreamPie
-  name: Banana cream pie
+  name: banana cream pie
   description: Just like back home, on clown planet! HONK!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/pie.rsi
   - type: Icon
     sprite: Objects/Food/pie.rsi
 
 #- type: entity
-#  name: Bear meat
+#  name: bear meat
 #  parent: FoodBase
 #  id: FoodBearMeat
 #  description:
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #  - type: Sprite
 #    sprite: Objects/Food/bearmeat.rsi
@@ -243,51 +252,54 @@
 #    sprite: Objects/Food/bearmeat.rsi
 
 - type: entity
-  name: Beet soup
+  name: beet soup
   parent: FoodBase
   id: FoodBeetSoup  # Bears, beets, battlestar galactica
   description: Wait, how do you spell it again..?
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/beetsoup.rsi
   - type: Icon
     sprite: Objects/Food/beetsoup.rsi
 
 - type: entity
-  name: Berry Clafoutis
+  name: berry clafoutis
   parent: FoodBase
   id: FoodBerryClafoutis
   description: No black birds, this is a good sign.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/berryclafoutis.rsi
   - type: Icon
     sprite: Objects/Food/berryclafoutis.rsi
 
 - type: entity
-  name: Birthday cake (slice)
+  name: birthday cake (slice)
   parent: FoodBase
   id: FoodBirthdayCakeSlice
   description: A slice of your birthday.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/birthday_cake_slice.rsi
   - type: Icon
@@ -295,62 +307,65 @@
 
 - type: entity
   parent: FoodBase
-  id: FoodSpagettiBoiled
-  name: Boiled spaghetti
+  id: FoodSpaghettiBoiled
+  name: boiled spaghetti
   description: A plain dish of noodles, this sucks.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/spaghettiboiled.rsi
   - type: Icon
     sprite: Objects/Food/spaghettiboiled.rsi
 
 - type: entity
-  name: Brain cake (slice)
+  name: brain cake (slice)
   parent: FoodBase
   id: FoodBrainCakeSlice
   description: ''
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/brain_cake_slice.rsi
   - type: Icon
     sprite: Objects/Food/brain_cake_slice.rsi
 
 - type: entity
-  name: Candy
+  name: candy
   parent: FoodBase
   id: FoodCandy
   description: Nougat, love it or hate it.
   components:
   - type: Food
+    trash: TrashCandy
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 20
-    spawn_on_finish: TrashCandy
   - type: Sprite
     sprite: Objects/Food/candy.rsi
   - type: Icon
     sprite: Objects/Food/candy.rsi
 
 - type: entity
-  name: Candy corn
+  name: candy corn
   parent: FoodBase
   id: FoodCandyCorn
   description: It's a handful of candy corn. Cannot be stored in a detective's hat, alas.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -361,63 +376,66 @@
     sprite: Objects/Food/candy_corn.rsi
 
 - type: entity
-  name: Carrot cake (slice)
+  name: carrot cake (slice)
   parent: FoodBase
   id: FoodCarrotCakeSlice
   description: Carrotty slice of Carrot Cake, carrots are good for your eyes! Also not a lie.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 10
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/carrotcake_slice.rsi
   - type: Icon
     sprite: Objects/Food/carrotcake_slice.rsi
 
 - type: entity
-  name: Carrot fries
+  name: carrot fries
   parent: FoodBase
   id: FoodCarrotFries
   description: Tasty fries from fresh Carrots.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/carrotfries.rsi
   - type: Icon
     sprite: Objects/Food/carrotfries.rsi
 
 - type: entity
-  name: Chawan Mushi
+  name: chawan mushi
   parent: FoodBase
   id: FoodChawanMushi
   description: A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 10
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/chawanmushi.rsi
   - type: Icon
     sprite: Objects/Food/chawanmushi.rsi
 
 - type: entity
-  name: Cheeseburger
+  name: cheeseburger
   parent: FoodBase
   id: FoodCheeseburger
   description: The cheese adds a good flavor.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -428,29 +446,30 @@
     sprite: Objects/Food/cheeseburger.rsi
 
 - type: entity
-  name: Cheesecake (slice)
+  name: cheesecake (slice)
   parent: FoodBase
   id: FoodCheeseCakeSlice
   description: Slice of pure cheestisfaction
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/cheesecake_slice.rsi
   - type: Icon
     sprite: Objects/Food/cheesecake_slice.rsi
 
 - type: entity
-  name: Cheese wedge
+  name: cheese wedge
   parent: FoodBase
   id: FoodCheeseWedge
   description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -461,46 +480,48 @@
     sprite: Objects/Food/cheesewedge.rsi
 
 - type: entity
-  name: Cheesie honkers
+  name: cheesie honkers
   parent: FoodBase
   id: FoodCheesieHonkers
   description: Bite sized cheesie snacks that will honk all over your mouth
   components:
   - type: Food
+    trash: TrashCheesieHonkers
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashCheesieHonkers
   - type: Sprite
     sprite: Objects/Food/cheesie_honkers.rsi
   - type: Icon
     sprite: Objects/Food/cheesie_honkers.rsi
 
 - type: entity
-  name: Cheesy fries
+  name: cheesy fries
   parent: FoodBase
   id: FoodCheesyFries
   description: Fries. Covered in cheese. Duh.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/cheesyfries.rsi
   - type: Icon
     sprite: Objects/Food/cheesyfries.rsi
 
 - type: entity
-  name: Cherry pie
+  name: cherry pie
   parent: FoodBase
   id: FoodCherryPie
   description: Taste so good, make a grown man cry.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -511,29 +532,30 @@
     sprite: Objects/Food/cherrypie.rsi
 
 - type: entity
-  name: Chips
+  name: chips
   parent: FoodBase
   id: FoodChips
   description: Commander Riker's What-The-Crisps
   components:
   - type: Food
+    trash: TrashChips
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashChips
   - type: Sprite
     sprite: Objects/Food/chips.rsi
   - type: Icon
     sprite: Objects/Food/chips.rsi
 
 - type: entity
-  name: Chocolate bar
+  name: chocolate bar
   parent: FoodBase
   id: FoodChocolateBar
   description: Such sweet, fattening food.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -544,29 +566,30 @@
     sprite: Objects/Food/chocolatebar.rsi
 
 - type: entity
-  name: Chocolate cake (slice)
+  name: chocolate cake (slice)
   parent: FoodBase
   id: FoodChocolateCakeSlice
   description: A cake with added chocolate
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/chocolatecake_slice.rsi
   - type: Icon
     sprite: Objects/Food/chocolatecake_slice.rsi
 
 - type: entity
-  name: Chocolate egg
+  name: chocolate egg
   parent: FoodBase
   id: FoodChocolateEgg
   description: Such sweet, fattening food.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -577,12 +600,12 @@
     sprite: Objects/Food/chocolateegg.rsi
 
 - type: entity
-  name: Clown burger
+  name: clown burger
   parent: FoodBase
   id: FoodClownBurger
   description: This tastes funny...
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -593,12 +616,12 @@
     sprite: Objects/Food/clownburger.rsi
 
 - type: entity
-  name: Clown's tears
+  name: clown's tears
   parent: FoodBase
   id: FoodClownsTears
   description: Not very funny.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -609,12 +632,13 @@
     sprite: Objects/Food/clownstears.rsi
 
 #- type: entity
-#  name: Cocoa
+#  name: cocoa
 #  parent: FoodBase
 #  id: FoodCocoa
 #  description:
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 3
 #  - type: Sprite
@@ -625,15 +649,16 @@
 - type: entity
   parent: FoodBase
   id: FoodColdchili
-  name: Cold chili
+  name: cold chili
   description: This slush is barely a liquid!
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/coldchili.rsi
   - type: Icon
@@ -642,10 +667,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodColdsauce
-#  name: Coldsauce
+#  name: coldsauce
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -656,10 +682,10 @@
 - type: entity
   parent: FoodBase
   id: FoodCookie
-  name: Cookie!!!
+  name: cookie!!!
   description: COOKIE!!!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -672,10 +698,10 @@
 - type: entity
   parent: FoodBase
   id: FoodCracker
-  name: Cracker
+  name: cracker
   description: It's a salted cracker.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -688,15 +714,16 @@
 - type: entity
   parent: FoodBase
   id: FoodCreamCheeseBreadSlice
-  name: Cream cheese bread (slice)
+  name: cream cheese bread (slice)
   description: A slice of yum!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/creamcheesebreadslice.rsi
   - type: Icon
@@ -705,15 +732,16 @@
 - type: entity
   parent: FoodBase
   id: FoodCubanCarp
-  name: Cuban carp
+  name: cuban carp
   description: A sandwich that burns your tongue and then leaves it numb!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/cubancarp.rsi
   - type: Icon
@@ -722,10 +750,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodDionaRoast
-#  name: Diona roast
+#  name: diona roast
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -736,10 +765,10 @@
 - type: entity
   parent: FoodBase
   id: FoodDonkPocket
-  name: Donk-pocket
+  name: donk-pocket
   description: The food of choice for the seasoned traitor.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -752,10 +781,10 @@
 - type: entity
   parent: FoodBase
   id: FoodDonut
-  name: Donut
+  name: donut
   description: Goes great with Robust Coffee.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -768,10 +797,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFrostedDonut
-  name: Frosted Donut
+  name: frosted donut
   description: Goes great with Robust Coffee.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -784,10 +813,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-blue
-  name: Egg-blue
+  name: egg-blue
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -800,10 +829,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-green
-  name: Egg-green
+  name: egg-green
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -816,10 +845,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-mime
-  name: Egg-mime
+  name: egg-mime
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -832,10 +861,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-orange
-  name: Egg-orange
+  name: egg-orange
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -848,10 +877,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-purple
-  name: Egg-purple
+  name: egg-purple
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -864,10 +893,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-rainbow
-  name: Egg-rainbow
+  name: egg-rainbow
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -880,10 +909,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-red
-  name: Egg-red
+  name: egg-red
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -896,10 +925,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg-yellow
-  name: Egg-yellow
+  name: egg-yellow
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -912,10 +941,10 @@
 - type: entity
   parent: FoodBase
   id: FoodEgg
-  name: Egg
+  name: egg
   description: An egg!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -928,15 +957,16 @@
 - type: entity
   parent: FoodBase
   id: FoodEggplantparm
-  name: Eggplant parmigiana  # Parma or parmi
+  name: eggplant parmigiana  # parma or parmi
   description: The only good recipe for eggplant.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/eggplantparm.rsi
   - type: Icon
@@ -945,10 +975,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodEmptycondiment
-#  name: Empty condiment
+#  name: empty condiment
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -959,15 +990,16 @@
 - type: entity
   parent: FoodBase
   id: FoodEnchiladas
-  name: Enchiladas
+  name: enchiladas
   description: Viva La Mexico!
   components:
   - type: Food
+    trash: TrashTray
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashTray
   - type: Sprite
     sprite: Objects/Food/enchiladas.rsi
   - type: Icon
@@ -976,10 +1008,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodEnchiladasold
-#  name: Enchiladas (old)
+#  name: enchiladas (old)
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -990,10 +1023,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodEnzyme
-#  name: Enzyme
+#  name: enzyme
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1004,10 +1038,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFishAndChips
-  name: Fish and chips
+  name: fish and chips
   description: I do say so myself chap.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1020,10 +1054,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFishBurger
-  name: Fillet -o- Carp Sandwich
+  name: fillet -o- carp sandwich
   description: Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1036,10 +1070,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodFishfillet
-#  name: Fishfillet
+#  name: fishfillet
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1050,10 +1085,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFishfingers
-  name: Fish fingers
+  name: fish fingers
   description: A finger of fish.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1066,10 +1101,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodFlour
-#  name: Flour
+#  name: flour
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1080,10 +1116,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFortuneCookie
-  name: Fortune cookie
+  name: fortune cookie
   description: A true prophecy in each cookie!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1096,10 +1132,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFriedegg
-  name: Fried egg
+  name: fried egg
   description: A fried egg, with a touch of salt and pepper.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1112,15 +1148,16 @@
 - type: entity
   parent: FoodBase
   id: FoodFries
-  name: Space fries
+  name: space fries
   description: "AKA: French Fries, Freedom Fries, etc."
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/fries.rsi
   - type: Icon
@@ -1129,15 +1166,16 @@
 - type: entity
   parent: FoodBase
   id: FoodGappleTart
-  name: Golden apple streusel tart
+  name: golden apple streusel tart
   description: A tasty dessert that won't make it through a metal detector.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/gappletart.rsi
   - type: Icon
@@ -1146,15 +1184,16 @@
 - type: entity
   parent: FoodBase
   id: FoodGrilledCheese
-  name: Grilled cheese sandwich
+  name: grilled cheese sandwich
   description: Goes great with Tomato soup!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/toastedsandwich.rsi
   - type: Icon
@@ -1163,10 +1202,10 @@
 - type: entity
   parent: FoodBase
   id: FoodHumanBurger
-  name: Human-burger
+  name: human-burger
   description: A bloody burger.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1179,15 +1218,16 @@
 - type: entity
   parent: FoodBase
   id: FoodHerbSalad
-  name: Tossed salad
+  name: tossed salad
   description: A proper salad, basic and simple, with little bits of carrot, tomato and apple intermingled. Vegan!
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/herbsalad.rsi
   - type: Icon
@@ -1196,10 +1236,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodHoneycomb
-#  name: Honeycomb
+#  name: honeycomb
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1210,15 +1251,16 @@
 - type: entity
   parent: FoodBase
   id: FoodHotchili
-  name: Hot chili
+  name: hot chili
   description: A five alarm Texan Chili!
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/hotchili.rsi
   - type: Icon
@@ -1227,10 +1269,10 @@
 - type: entity
   parent: FoodBase
   id: FoodHotdog
-  name: Hotdog
+  name: hotdog
   description: Unrelated to dogs, maybe.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1243,10 +1285,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodHotsauce
-#  name: Hotsauce
+#  name: hotsauce
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1257,10 +1300,10 @@
 - type: entity
   parent: FoodBase
   id: FoodHugeMushroomSlice
-  name: Huge mushroom (slice)
+  name: huge mushroom (slice)
   description: A slice from a huge mushroom.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1273,15 +1316,16 @@
 - type: entity
   parent: FoodBase
   id: FoodKabobHuman
-  name: Human-Kabob
+  name: human-kabob
   description: A human meat, on a stick.
   components:
   - type: Food
+    # trash: TODO
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    # spawn_on_finish: TODO
   - type: Sprite
     sprite: Objects/Food/kabob.rsi
   - type: Icon
@@ -1290,10 +1334,10 @@
 - type: entity
   parent: FoodBase
   id: FoodJellyDonut
-  name: Jelly donut
+  name: jelly donut
   description: You jelly?
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1306,10 +1350,10 @@
 - type: entity
   parent: FoodBase
   id: FoodFrostedJellyDonut
-  name: Frosted Jelly Donut
+  name: frosted jelly donut
   description: You jelly?
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1322,10 +1366,10 @@
 - type: entity
   parent: FoodBase
   id: FoodJellyBurger
-  name: Jelly burger
+  name: jelly burger
   description: Culinary delight..?
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1338,15 +1382,16 @@
 - type: entity
   parent: FoodBase
   id: FoodJellySandwich
-  name: Jelly sandwich
+  name: jelly sandwich
   description: You wish you had some peanut butter to go with this...
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/jellysandwich.rsi
   - type: Icon
@@ -1355,15 +1400,16 @@
 - type: entity
   parent: FoodBase
   id: FoodJellyToast
-  name: Jellied toast
+  name: jellied toast
   description: A slice of bread covered with delicious jam.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 2
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/jellytoast.rsi
   - type: Icon
@@ -1373,15 +1419,16 @@
 - type: entity
   parent: FoodBase
   id: FoodKabobMeat
-  name: Meat-Kabob
+  name: meat-kabob
   description: Delicious meat, on a stick.
   components:
   - type: Food
+    # trash: TODO
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    # spawn_on_finish: TODO
   - type: Sprite
     sprite: Objects/Food/kabob.rsi
   - type: Icon
@@ -1390,10 +1437,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodKetchup
-#  name: Ketchup
+#  name: ketchup
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1404,10 +1452,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodKetchupold
-#  name: Ketchup (old)
+#  name: ketchup (old)
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1418,15 +1467,16 @@
 - type: entity
   parent: FoodBase
   id: FoodLemonCakeSlice
-  name: Lemon cake (Slice)
+  name: lemon cake (slice)
   description: Just a slice of cake, it is enough for everyone.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/lemoncake_slice.rsi
   - type: Icon
@@ -1435,15 +1485,16 @@
 - type: entity
   parent: FoodBase
   id: FoodLimeCakeSlice
-  name: Lime cake (Slice)
+  name: lime cake (slice)
   description: Just a slice of cake, it is enough for everyone.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/limecake_slice.rsi
   - type: Icon
@@ -1452,15 +1503,14 @@
 - type: entity
   parent: FoodBase
   id: FoodLiquidFood
-  name: LiquidFood ration #\improper?
+  name: liquidfood ration #\improper?
   description: A prepackaged grey slurry of all the essential nutrients for a spacefarer on the go. Should this be crunchy?
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 40
-    spawn_on_finish: TrashLiquidFood
   - type: Sprite
     sprite: Objects/Food/liquidfood.rsi
   - type: Icon
@@ -1469,10 +1519,10 @@
 - type: entity
   parent: FoodBase
   id: FoodLoadedBakedPotato
-  name: Loaded baked potato
+  name: loaded baked potato
   description: Totally baked.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1485,10 +1535,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMeat
-  name: Meat
+  name: meat
   description: A slab of meat.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1501,10 +1551,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatball
-  name: Meatball
+  name: meatball
   description: A great meal all round.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1517,15 +1567,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatballSoup
-  name: Meatball soup
+  name: meatball soup
   description: You've got balls kid, BALLS!
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/meatballsoup.rsi
   - type: Icon
@@ -1534,15 +1585,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatballSpaghetti
-  name: Spaghetti & meatballs
+  name: spaghetti & meatballs
   description: Now thats a nic'e meatball!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/meatballspaghetti.rsi
   - type: Icon
@@ -1551,15 +1603,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatBreadSlice
-  name: Meat bread (slice)
+  name: meat bread (slice)
   description: A slice of delicious meatbread.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/meatbreadslice.rsi
   - type: Icon
@@ -1568,15 +1621,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatpie
-  name: Meat pie
+  name: meat pie
   description: An old barber recipe, very delicious!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 20
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/meatpie.rsi
   - type: Icon
@@ -1585,10 +1639,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatPizzaSlice
-  name: Meat pizza (slice)
+  name: meat pizza (slice)
   description: A slice of a meaty pizza.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1601,15 +1655,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMeatSteak
-  name: Meat steak
+  name: meat steak
   description: A piece of hot spicy meat.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/meatsteak.rsi
   - type: Icon
@@ -1618,15 +1673,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMiloSoup
-  name: Milo soup
+  name: milo soup
   description: The universes best soup! Yum!!!
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/milosoup.rsi
   - type: Icon
@@ -1635,10 +1691,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMimeBurger
-  name: Mime burger
+  name: mime burger
   description: Its taste defies language.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1651,10 +1707,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMint
-  name: Mint
+  name: mint
   description: It is only wafer thin.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1667,10 +1723,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodMixedcondiments
-#  name: Mixedcondiments
+#  name: mixedcondiments
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1681,10 +1738,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMonkeyBurger
-  name: Monkey-burger
+  name: monkey-burger
   description: The cornerstone of every nutritious breakfast.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1697,10 +1754,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMonkeyCube
-  name: Monkey cube
+  name: monkey cube
   description: Just add water!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1713,15 +1770,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMonkeysDelight
-  name: Monkey's delight
+  name: monkey's delight
   description: Eeee Eee!
   components:
   - type: Food
+    trash: TrashTray
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 30
-    spawn_on_finish: TrashTray
   - type: Sprite
     sprite: Objects/Food/monkeysdelight.rsi
   - type: Icon
@@ -1730,10 +1788,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMonkiesDelightOld
-  name: Monkies delight (old)
+  name: monkies delight (old)
   description: ''
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1746,10 +1804,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodMtearp
-#  name: Mtearp
+#  name: mtearp
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1760,10 +1819,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodMuffin
-#  name: Muffin
+#  name: muffin
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1774,10 +1834,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMushroomPizzaSlice
-  name: Mushroom pizza slice
+  name: mushroom pizza slice
   description: Maybe it is the last slice of pizza in your life.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1790,15 +1850,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMushroomSoup
-  name: Mushroom soup
+  name: mushroom soup
   description: A delicious and hearty mushroom soup.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/mushroomsoup.rsi
   - type: Icon
@@ -1808,15 +1869,16 @@
 - type: entity
   parent: FoodBase
   id: FoodMysterySoup
-  name: Mystery soup
+  name: mystery soup
   description: The mystery is, why aren't you eating it?
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 1
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/mysterysoup.rsi
   - type: Icon
@@ -1825,15 +1887,16 @@
 - type: entity
   parent: FoodBase
   id: FoodNettlesoup
-  name: Nettlesoup
+  name: nettlesoup
   description: To think, the botanist would've beat you to death with one of these.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/nettlesoup.rsi
   - type: Icon
@@ -1842,10 +1905,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodOliveoil
-#  name: Oliveoil
+#  name: oliveoil
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1856,15 +1920,16 @@
 - type: entity
   parent: FoodBase
   id: FoodOmelette
-  name: Omelette du fromage
+  name: omelette du fromage
   description: That's all you can say!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/omelette.rsi
   - type: Icon
@@ -1873,15 +1938,16 @@
 - type: entity
   parent: FoodBase
   id: FoodOrangeCakeSlice
-  name: Orange cake (slice)
+  name: orange cake (slice)
   description: Just a slice of cake, it is enough for everyone.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/orangecake_slice.rsi
   - type: Icon
@@ -1890,15 +1956,16 @@
 - type: entity
   parent: FoodBase
   id: FoodPastaTomato
-  name: Spaghetti
+  name: spaghetti
   description: Spaghetti and crushed tomatoes. Just like your abusive father used to make!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/pastatomato.rsi
   - type: Icon
@@ -1907,10 +1974,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodPeppermillsmall
-#  name: Peppermillsmall
+#  name: peppermillsmall
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -1921,10 +1989,10 @@
 - type: entity
   parent: FoodBase
   id: FoodPhelmbiscuit
-  name: Plump helm biscuit
+  name: plump helm biscuit
   description: This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1937,10 +2005,10 @@
 - type: entity
   parent: FoodBase
   id: FoodMargheritaPizzaSlice
-  name: Margherita pizza (slice)
+  name: margherita pizza (slice)
   description: A slice of the classic pizza.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1953,15 +2021,16 @@
 - type: entity
   parent: FoodBase
   id: FoodPlainCakeSlice
-  name: Plain cake (Slice)
+  name: plain cake (slice)
   description: Just a slice of cake, it is enough for everyone.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/plaincake_slice.rsi
   - type: Icon
@@ -1970,10 +2039,10 @@
 - type: entity
   parent: FoodBase
   id: FoodPlumpPie
-  name: Plump Pie
+  name: plump pie
   description: I bet you love stuff made out of plump helmets!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -1986,16 +2055,17 @@
 - type: entity
   parent: FoodBase
   id: FoodPopcorn
-  name: Popcorn
+  name: popcorn
   description: Now let's find some cinema.
   components:
   - type: Food
+    trash: TrashPopcorn
+  - type: Solution
     transfer_amount: 1
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashPopcorn
   - type: Sprite
     sprite: Objects/Food/popcorn.rsi
   - type: Icon
@@ -2004,10 +2074,10 @@
 - type: entity
   parent: FoodBase
   id: FoodPoppyPretzel
-  name: Poppy pretzel
+  name: poppy pretzel
   description: It's all twisted up!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2020,15 +2090,16 @@
 - type: entity
   parent: FoodBase
   id: FoodPumpkinPieSlice
-  name: Pumpkin pie (slice)
+  name: pumpkin pie (slice)
   description: A slice of pumpkin pie, with whipped cream on top. Perfection.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/pumpkinpieslice.rsi
   - type: Icon
@@ -2038,10 +2109,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodRice
-#  name: Rice
+#  name: rice
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2052,10 +2124,10 @@
 - type: entity
   parent: FoodBase
   id: FoodRoburger
-  name: Roburger
+  name: roburger
   description: The lettuce is the only organic component. Beep.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2068,15 +2140,16 @@
 - type: entity
   parent: FoodBase
   id: FoodRoffleWaffles
-  name: Roffle waffles
+  name: roffle waffles
   description: Waffles from Roffle. Co.
   components:
   - type: Food
+    trash: TrashWaffles
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashWaffles
   - type: Sprite
     sprite: Objects/Food/rofflewaffles.rsi
   - type: Icon
@@ -2085,10 +2158,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodRoroSoup
-#  name: Roro soup
+#  name: roro soup
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2099,10 +2173,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodRottenmeat
-#  name: Rottenmeat
+#  name: rottenmeat
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2113,15 +2188,16 @@
 - type: entity
   parent: FoodBase
   id: FoodRicePudding
-  name: Rice pudding
+  name: rice pudding
   description: Where's the jam?
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/rpudding.rsi
   - type: Icon
@@ -2130,15 +2206,16 @@
 - type: entity
   parent: FoodBase
   id: FoodSandwich
-  name: Sandwich
+  name: sandwich
   description: A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/sandwich.rsi
   - type: Icon
@@ -2147,10 +2224,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodSandwichFilling
-#  name: Sandwich Filling
+#  name: sandwich filling
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2161,10 +2239,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodSandwichTop
-#  name: Sandwich Top
+#  name: sandwich top
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2175,10 +2254,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSausage
-  name: Sausage  # Sanga
+  name: sausage  # sanga
   description: A piece of mixed, long meat.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2191,10 +2270,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodShandp
-#  name: Shandp
+#  name: shandp
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2205,10 +2285,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodSkrellsnacks
-#  name: Skrellsnacks
+#  name: skrellsnacks
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2219,10 +2300,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSosJerky
-  name: Scaredy's Private Reserve Beef Jerky
+  name: scaredy's private reserve beef jerky
   description: Beef jerky made from the finest space cows.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2236,15 +2317,16 @@
 - type: entity
   parent: FoodBase
   id: FoodSoyDope
-  name: Soy dope
+  name: soy dope
   description: Dope from a soy.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/soydope.rsi
   - type: Icon
@@ -2253,33 +2335,35 @@
 - type: entity
   parent: FoodBase
   id: FoodSoylentGreen
-  name: Soylent green
+  name: soylent green
   description: Not made of people. Honest.
   components:
   - type: Food
+    trash: TrashWaffles
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashWaffles
   - type: Sprite
     sprite: Objects/Food/soylent_green.rsi
   - type: Icon
     sprite: Objects/Food/soylent_green.rsi
 
-# Why these were named different I have no idea
+# why these were named different i have no idea
 - type: entity
   parent: FoodBase
   id: FoodSoylentYellow
-  name: Soylen virdians
+  name: soylen virdians
   description: Not made of people. Honest.
   components:
   - type: Food
+    trash: TrashWaffles
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashWaffles
   - type: Sprite
     sprite: Objects/Food/soylent_yellow.rsi
   - type: Icon
@@ -2288,10 +2372,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodSoysauce
-#  name: Soysauce
+#  name: soysauce
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2302,10 +2387,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSpaceTwinkie
-  name: Space twinkie
+  name: space twinkie
   description: Guaranteed to survive longer then you will.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2318,15 +2403,16 @@
 - type: entity
   parent: FoodBase
   id: FoodSpacylibertyDuff
-  name: Spacy liberty duff
+  name: spacy liberty duff
   description: Jello gelatin, from Alfred Hubbard's cookbook
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/spacylibertyduff.rsi
   - type: Icon
@@ -2335,10 +2421,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSpaghetti
-  name: Spaghetti
+  name: spaghetti
   description: A bundle of raw spaghetti.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2351,10 +2437,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSpellBurger
-  name: Spell burger
+  name: spell burger
   description: This is absolutely Ei Nath.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2367,10 +2453,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSpellburgerold
-  name: Spell burger (old)
+  name: spell burger (old)
   description: This is absolutely Ei Nath.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2383,10 +2469,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSpesslaw
-  name: Spesslaw
+  name: spesslaw
   description: A lawyers favourite
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2399,10 +2485,10 @@
 - type: entity
   parent: FoodBase
   id: FoodStew
-  name: Stew
+  name: stew
   description: A nice and warm stew. Healthy and strong.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2415,15 +2501,16 @@
 - type: entity
   parent: FoodBase
   id: FoodStewedsoymeat
-  name: Stewed soy meat
+  name: stewed soy meat
   description: Even non-vegetarians will LOVE this!
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/stewedsoymeat.rsi
   - type: Icon
@@ -2432,10 +2519,10 @@
 - type: entity
   parent: FoodBase
   id: FoodStuffing
-  name: Stuffing
+  name: stuffing
   description: Moist, peppery breadcrumbs for filling the body cavities of dead birds. Dig in!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2448,10 +2535,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodSugar
-#  name: Sugar
+#  name: sugar
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2462,10 +2550,11 @@
 #- type: entity
 #  parent: FoodBase
 #  id: FoodSugarsmall
-#  name: Sugarsmall
+#  name: sugarsmall
 #  description: ''
 #  components:
 #  - type: Food
+#  - type: Solution
 #    uses: 1
 #    restore_amount: 1
 #  - type: Sprite
@@ -2476,10 +2565,10 @@
 - type: entity
   parent: FoodBase
   id: FoodSuperBiteBurger
-  name: Super bite burger
+  name: Super Bite Burger
   description: This is a mountain of a burger. FOOD!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2492,15 +2581,16 @@
 - type: entity
   parent: FoodBase
   id: FoodSyndiCakes
-  name: Syndi-cakes
+  name: syndi-cakes
   description: An extremely moist snack cake that tastes just as good after being nuked.
   components:
   - type: Food
+    trash: TrashSyndiCakes
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 8
-    spawn_on_finish: TrashSyndiCakes
   - type: Sprite
     sprite: Objects/Food/syndi_cakes.rsi
   - type: Icon
@@ -2509,10 +2599,10 @@
 - type: entity
   parent: FoodBase
   id: FoodTaco
-  name: Taco
+  name: taco
   description: Take a bite!
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2525,15 +2615,16 @@
 - type: entity
   parent: FoodBase
   id: FoodTastyBread
-  name: Tasty bread
+  name: tasty bread
   description: Bread in a tube. Chewy...and surprisingly tasty.
   components:
   - type: Food
+    trash: TrashTastyBread
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashTastyBread
   - type: Sprite
     sprite: Objects/Food/tastybread.rsi
   - type: Icon
@@ -2542,15 +2633,16 @@
 - type: entity
   parent: FoodBase
   id: FoodToastedsandwich
-  name: Toasted sandwich
+  name: toasted sandwich
   description: Now if you only had a pepper bar.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 6
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/toastedsandwich.rsi
   - type: Icon
@@ -2559,10 +2651,10 @@
 - type: entity
   parent: FoodBase
   id: FoodTofu
-  name: Tofu
+  name: tofu
   description: We all love tofu.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2575,15 +2667,16 @@
 - type: entity
   parent: FoodBase
   id: FoodTofuBreadSlice
-  name: Tofu bread (slice)
+  name: tofu bread (slice)
   description: A slice of delicious tofubread.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/tofubreadslice.rsi
   - type: Icon
@@ -2592,10 +2685,10 @@
 - type: entity
   parent: FoodBase
   id: FoodTofuBurger
-  name: Tofu burger
+  name: tofu burger
   description: What.. is that meat?
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2608,15 +2701,16 @@
 - type: entity
   parent: FoodBase
   id: FoodKabobTofu
-  name: Tofu-Kabob
+  name: tofu-kabob
   description: Vegan meat, on a stick.
   components:
   - type: Food
+    # trash: TODO
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    # spawn_on_finish: TODO
   - type: Sprite
     sprite: Objects/Food/kabob.rsi
   - type: Icon
@@ -2625,10 +2719,10 @@
 - type: entity
   parent: FoodBase
   id: FoodTofurkey
-  name: Tofurkey
+  name: tofurkey
   description: A fake turkey made from tofu.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2641,10 +2735,10 @@
 - type: entity
   parent: FoodBase
   id: FoodTomatoSlice
-  name: Tomato slice
+  name: tomato slice
   description: A slice from a huge tomato
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2657,15 +2751,16 @@
 - type: entity
   parent: FoodBase
   id: FoodTomatoSoup
-  name: Tomato soup
+  name: tomato soup
   description: Smells like copper.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 4
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/tomatosoup.rsi
   - type: Icon
@@ -2674,10 +2769,10 @@
 - type: entity
   parent: FoodBase
   id: FoodTwoBread
-  name: Two bread
+  name: two bread
   description: It is very bitter and winy.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2690,15 +2785,16 @@
 - type: entity
   parent: FoodBase
   id: FoodValidSalad
-  name: Valid salad
+  name: valid salad
   description: It's just a salad of questionable 'herbs' with meatballs and fried potato slices. Nothing suspicious about it.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/validsalad.rsi
   - type: Icon
@@ -2707,10 +2803,10 @@
 - type: entity
   parent: FoodBase
   id: FoodVegetablePizzaSlice
-  name: Vegetable pizza (slice)
+  name: vegetable pizza (slice)
   description: A slice of the most green pizza of all pizzas not containing green ingredients
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2723,15 +2819,16 @@
 - type: entity
   parent: FoodBase
   id: FoodVegetableSoup
-  name: Vegetable soup
+  name: vegetable soup
   description: A true vegan meal
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/vegetablesoup.rsi
   - type: Icon
@@ -2740,15 +2837,16 @@
 - type: entity
   parent: FoodBase
   id: FoodWaffles
-  name: Waffles
+  name: waffles
   description: Mmm, waffles
   components:
   - type: Food
+    trash: TrashWaffles
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 16
-    spawn_on_finish: TrashWaffles
   - type: Sprite
     sprite: Objects/Food/waffles.rsi
   - type: Icon
@@ -2757,10 +2855,10 @@
 - type: entity
   parent: FoodBase
   id: FoodWatermelonSlice
-  name: Watermelon (slice)
+  name: watermelon (slice)
   description: A slice of watery goodness.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2773,15 +2871,16 @@
 - type: entity
   parent: FoodBase
   id: FoodWingFangChu
-  name: Wing fang chu
+  name: wing fang chu
   description: A savory dish of alien wing wang in soy.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 12
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/wingfangchu.rsi
   - type: Icon
@@ -2790,15 +2889,16 @@
 - type: entity
   parent: FoodBase
   id: FoodWishSoup
-  name: Wish soup
+  name: wish soup
   description: I wish this was soup.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 2
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/wishsoup.rsi
   - type: Icon
@@ -2807,10 +2907,10 @@
 - type: entity
   parent: FoodBase
   id: FoodXenoburger
-  name: Xenoburger
+  name: xenoburger
   description: Smells caustic. Tastes like heresy.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2823,15 +2923,16 @@
 - type: entity
   parent: FoodBase
   id: FoodXenoMeatbreadslice
-  name: Xenomeat bread (slice)
+  name: xenomeat bread (slice)
   description: A slice of delicious meatbread. Extra Heretical.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 20
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/xenobreadslice.rsi
   - type: Icon
@@ -2840,10 +2941,10 @@
 - type: entity
   parent: FoodBase
   id: FoodXenomeat
-  name: Xenomeat
+  name: xenomeat
   description: Yum.
   components:
-  - type: Food
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
@@ -2856,15 +2957,16 @@
 - type: entity
   parent: FoodBase
   id: FoodXenomeatPie
-  name: Xeno-pie
+  name: xeno-pie
   description: A delicious meatpie. Probably heretical.
   components:
   - type: Food
+    trash: TrashPlate
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Nutriment
         Quantity: 20
-    spawn_on_finish: TrashPlate
   - type: Sprite
     sprite: Objects/Food/xenomeatpie.rsi
   - type: Icon
@@ -2873,16 +2975,36 @@
 - type: entity
   parent: FoodBase
   id: DisgustingSweptSoup
-  name: Salty Sweet Miso Cola Soup
+  name: salty sweet miso cola soup
   description: Jesus christ.
   components:
   - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
     contents:
       reagents:
       - ReagentId: chem.Bleach
         Quantity: 15
-    spawn_on_finish: TrashSnackBowl
   - type: Sprite
     sprite: Objects/Food/stew.rsi
   - type: Icon
     sprite: Objects/Food/stew.rsi
+
+- type: entity
+  parent: FoodBase
+  id: MilkApe
+  name: Milk Ape
+# Milk Ape's a proper noun you fuck
+  description: He sighed for your grins.
+  components:
+  - type: Food
+    trash: TrashSnackBowl
+  - type: Solution
+    contents:
+      reagents:
+      - ReagentId: chem.Nutriment
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Food/milkape.rsi
+  - type: Icon
+    sprite: Objects/Food/milkape.rsi
