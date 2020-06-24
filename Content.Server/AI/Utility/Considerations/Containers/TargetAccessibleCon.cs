@@ -31,6 +31,12 @@ namespace Content.Server.AI.Utility.Considerations.Containers
                         return 0.0f;
                     }
                 }
+                else
+                {
+                    // If we're in a container (e.g. held or whatever) then we probably can't get it. Only exception
+                    // Is a locker / crate
+                    return 0.0f;
+                }
             }
 
             return 1.0f;

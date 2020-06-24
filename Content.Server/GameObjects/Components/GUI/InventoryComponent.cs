@@ -23,7 +23,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent
+    public class InventoryComponent : SharedInventoryComponent, IExAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -396,6 +396,26 @@ namespace Content.Server.GameObjects
                 }
             }
             return new InventoryComponentState(list);
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            foreach (var slot in SlotContainers.Values.ToList())
+            {
+                foreach (var entity in slot.ContainedEntities)
+                {
+                    var exActs = entity.GetAllComponents<IExAct>();
+                    foreach (var exAct in exActs)
+                    {
+                        exAct.OnExplosion(eventArgs);
+                    }
+                }
+            }
         }
     }
 }

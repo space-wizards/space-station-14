@@ -11,7 +11,7 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly ISandboxManager _sandboxManager;
 #pragma warning restore 649
 
-        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
             _sandboxManager.IsSandboxEnabled = true;
             return true;

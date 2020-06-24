@@ -12,6 +12,7 @@ using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
@@ -36,6 +37,8 @@ namespace Content.Client.State
         [Dependency] private readonly IGameTiming _timing;
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         private IEntity _lastHoveredEntity;
@@ -72,6 +75,15 @@ namespace Content.Client.State
             }
 
             InteractionOutlineComponent outline;
+            if(!_configurationManager.GetCVar<bool>("outline.enabled"))
+            {
+                if(entityToClick != null && entityToClick.TryGetComponent(out outline))
+                {
+                    outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
+                }
+                return;
+            }
+
             if (entityToClick == _lastHoveredEntity)
             {
                 if (entityToClick != null && entityToClick.TryGetComponent(out outline))

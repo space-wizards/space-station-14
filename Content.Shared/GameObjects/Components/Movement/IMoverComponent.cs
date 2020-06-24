@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// <param name="enabled">If the direction is active.</param>
         void SetVelocityDirection(Direction direction, ushort subTick, bool enabled);
 
-        void SetSprinting(ushort subTick, bool enabled);
+        void SetSprinting(ushort subTick, bool walking);
 
     }
 }

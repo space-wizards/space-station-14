@@ -24,6 +24,7 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -41,6 +42,7 @@ namespace Content.Client
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
         [Dependency] private readonly IGameController _gameController;
         [Dependency] private readonly IStateManager _stateManager;
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         public override void Init()
@@ -85,8 +87,6 @@ namespace Content.Client
                 "Multitool",
                 "Wrench",
                 "Crowbar",
-                "HitscanWeapon",
-                "ProjectileWeapon",
                 "Projectile",
                 "MeleeWeapon",
                 "Storeable",
@@ -100,8 +100,8 @@ namespace Content.Client
                 "LightBulb",
                 "Healing",
                 "Catwalk",
-                "BallisticMagazine",
-                "BallisticBullet",
+                "RangedMagazine",
+                "Ammo",
                 "HitscanWeaponCapacitor",
                 "PowerCell",
                 "WeaponCapacitorCharger",
@@ -144,6 +144,13 @@ namespace Content.Client
                 "Bucket",
                 "Puddle",
                 "CanSpill",
+                "SpeedLoader",
+                "Hitscan",
+                "BoltActionBarrel",
+                "PumpBarrel",
+                "RevolverBarrel",
+                "ExplosiveProjectile",
+                "StunnableProjectile",
                 "RandomPottedPlant",
                 "CommunicationsConsole",
                 "BarSign",
@@ -162,6 +169,10 @@ namespace Content.Client
                 "SecureEntityStorage",
                 "PresetIdCard",
                 "SolarControlConsole",
+                "BatteryBarrel",
+                "FlashExplosive",
+                "FlashProjectile",
+                "Utensil",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -209,6 +220,8 @@ namespace Content.Client
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
+
+             _configurationManager.RegisterCVar("outline.enabled", true);
         }
 
         /// <summary>

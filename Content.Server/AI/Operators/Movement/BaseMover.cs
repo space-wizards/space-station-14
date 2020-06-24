@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
@@ -240,10 +241,11 @@ namespace Content.Server.AI.Operators.Movement
 
             var startGrid = _mapManager.GetGrid(Owner.Transform.GridID).GetTileRef(Owner.Transform.GridPosition);
             var endGrid = _mapManager.GetGrid(TargetGrid.GridID).GetTileRef(TargetGrid);;
-            // _routeCancelToken = new CancellationTokenSource();
+            var access = AccessReader.FindAccessTags(Owner);
 
             RouteJob = _pathfinder.RequestPath(new PathfindingArgs(
                 Owner.Uid,
+                access,
                 collisionMask,
                 startGrid,
                 endGrid,

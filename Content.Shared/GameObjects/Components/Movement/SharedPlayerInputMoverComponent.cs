@@ -77,7 +77,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         public float CurrentPushSpeed => 5;
         public float GrabRange => 0.2f;
-        public bool Sprinting => !_heldMoveButtons.HasFlag(MoveButtons.Sprint);
+        public bool Sprinting => !_heldMoveButtons.HasFlag(MoveButtons.Walk);
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
@@ -207,11 +207,11 @@ namespace Content.Shared.GameObjects.Components.Movement
             Dirty();
         }
 
-        public void SetSprinting(ushort subTick, bool enabled)
+        public void SetSprinting(ushort subTick, bool walking)
         {
             // Logger.Info($"[{_gameTiming.CurTick}/{subTick}] Sprint: {enabled}");
 
-            SetMoveInput(subTick, enabled, MoveButtons.Sprint);
+            SetMoveInput(subTick, walking, MoveButtons.Walk);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -281,7 +281,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             Down = 2,
             Left = 4,
             Right = 8,
-            Sprint = 16,
+            Walk = 16,
         }
     }
 }

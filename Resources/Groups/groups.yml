@@ -55,6 +55,8 @@
   - tp
   - tpgrid
   - setgamepreset
+  - forcepreset
+  - delaystart
   - startround
   - endround
   - restartround
@@ -98,6 +100,8 @@
   - tp
   - tpgrid
   - setgamepreset
+  - forcepreset
+  - delaystart
   - startround
   - endround
   - restartround

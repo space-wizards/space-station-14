@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Movement
         protected override void Shutdown()
         {
             base.Shutdown();
-            Processor.Shutdown();
+            Processor?.Shutdown();
         }
 
         /// <summary>
@@ -125,6 +125,6 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
 
         public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
-        public void SetSprinting(ushort subTick, bool enabled) { }
+        public void SetSprinting(ushort subTick, bool walking) { }
     }
 }

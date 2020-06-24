@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            RemoveItemToHand(eventArgs.User);
+            RemoveItem(eventArgs.User);
         }
 
         [Verb]
@@ -61,6 +62,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             protected override void GetData(IEntity user, PowerCellChargerComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -99,6 +106,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             protected override void GetData(IEntity user, PowerCellChargerComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component._container.ContainedEntity == null)
                 {
                     data.Text = "Eject";
@@ -111,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             protected override void Activate(IEntity user, PowerCellChargerComponent component)
             {
-                component.RemoveItem();
+                component.RemoveItem(user);
             }
         }
 
@@ -122,9 +135,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             {
                 return false;
             }
-
-            HeldItem = entity;
-            if (!_container.Insert(HeldItem))
+            
+            if (!_container.Insert(entity))
             {
                 return false;
             }
@@ -157,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
+            var cellComponent = _container.ContainedEntity.GetComponent<PowerCellComponent>();
             var chargeLoss = cellComponent.RequestCharge(frameTime) * _transferRatio;
             _powerDevice.Load = chargeLoss;
 

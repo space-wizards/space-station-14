@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -139,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             protected override void GetData(IEntity user, SecureEntityStorageComponent component, VerbData data)
             {
-                if (component.Open)
+                if (!ActionBlockerSystem.CanInteract(user) || component.Open)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

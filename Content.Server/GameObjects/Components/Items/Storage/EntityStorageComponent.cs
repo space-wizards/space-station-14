@@ -7,6 +7,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -338,8 +339,13 @@ namespace Content.Server.GameObjects.Components
         {
             protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
             {
-                component.OpenVerbGetData(user, component, data);
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
+                component.OpenVerbGetData(user, component, data);
             }
 
             /// <inheritdoc />
@@ -351,6 +357,12 @@ namespace Content.Server.GameObjects.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
+            if (!ActionBlockerSystem.CanInteract(user))
+            {
+                data.Visibility = VerbVisibility.Invisible;
+                return;
+            }
+
             if (IsWeldedShut)
             {
                 data.Visibility = VerbVisibility.Disabled;

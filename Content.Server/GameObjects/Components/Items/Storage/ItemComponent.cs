@@ -117,7 +117,9 @@ namespace Content.Server.GameObjects
         {
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
-                if (ContainerHelpers.IsInContainer(component.Owner) || !component.CanPickup(user))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    ContainerHelpers.IsInContainer(component.Owner) ||
+                    !component.CanPickup(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

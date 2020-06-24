@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
         }
 
-        public void SetSprinting(ushort subTick, bool enabled)
+        public void SetSprinting(ushort subTick, bool walking)
         {
             // Shuttles can't sprint.
         }

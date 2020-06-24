@@ -50,7 +50,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
-                .Bind(EngineKeyFunctions.Run, new SprintInputCmdHandler())
+                .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler())
                 .Register<SharedMoverSystem>();
 
             _configurationManager.RegisterCVar("game.diagonalmovement", true, CVar.ARCHIVE);
@@ -170,14 +170,14 @@ namespace Content.Shared.GameObjects.EntitySystems
             moverComp.SetVelocityDirection(dir, subTick, state);
         }
 
-        private static void HandleRunChange(ICommonSession? session, ushort subTick, bool running)
+        private static void HandleRunChange(ICommonSession? session, ushort subTick, bool walking)
         {
             if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
             {
                 return;
             }
 
-            moverComp.SetSprinting(subTick, running);
+            moverComp.SetSprinting(subTick, walking);
         }
 
         private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
@@ -218,7 +218,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
         }
 
-        private sealed class SprintInputCmdHandler : InputCmdHandler
+        private sealed class WalkInputCmdHandler : InputCmdHandler
         {
             public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
             {

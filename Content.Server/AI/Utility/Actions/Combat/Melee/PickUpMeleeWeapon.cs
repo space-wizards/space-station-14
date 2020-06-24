@@ -42,7 +42,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             new HasMeleeWeaponCon(
                 new InverseBoolCurve()),
             new DistanceCon(
-                new QuadraticCurve(1.0f, 1.0f, 0.02f, 0.0f)),
+                new QuadraticCurve(-1.0f, 1.0f, 1.02f, 0.0f)),
             new MeleeWeaponDamageCon(
                 new QuadraticCurve(1.0f, 0.25f, 0.0f, 0.0f)),
             new MeleeWeaponSpeedCon(

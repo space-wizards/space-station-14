@@ -1,18 +1,14 @@
 using System;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
-using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.Chargers
 {
@@ -26,8 +22,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     {
         public override string Name => "WeaponCapacitorCharger";
         public override double CellChargePercent => _container.ContainedEntity != null ?
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().Charge /
-            _container.ContainedEntity.GetComponent<HitscanWeaponCapacitorComponent>().Capacity * 100 : 0.0f;
+            _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell.Charge /
+            _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell.Capacity * 100 : 0.0f;
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -43,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            RemoveItemToHand(eventArgs.User);
+            RemoveItem(eventArgs.User);
         }
 
         [Verb]
@@ -51,6 +47,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             protected override void GetData(IEntity user, WeaponCapacitorChargerComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -94,6 +96,12 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             protected override void GetData(IEntity user, WeaponCapacitorChargerComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component._container.ContainedEntity == null)
                 {
                     data.Visibility = VerbVisibility.Disabled;
@@ -106,21 +114,19 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             protected override void Activate(IEntity user, WeaponCapacitorChargerComponent component)
             {
-                component.RemoveItem();
+                component.RemoveItem(user);
             }
         }
 
         public bool TryInsertItem(IEntity entity)
         {
-            if (!entity.HasComponent<HitscanWeaponCapacitorComponent>() ||
+            if (!entity.HasComponent<ServerBatteryBarrelComponent>() ||
                 _container.ContainedEntity != null)
             {
                 return false;
             }
 
-            HeldItem = entity;
-
-            if (!_container.Insert(HeldItem))
+            if (!_container.Insert(entity))
             {
                 return false;
             }
@@ -140,8 +146,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
                 return CellChargerStatus.Empty;
             }
 
-            if (_container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent component) &&
-                Math.Abs(component.Capacity - component.Charge) < 0.01)
+            if (_container.ContainedEntity.TryGetComponent(out ServerBatteryBarrelComponent component) &&
+                Math.Abs(component.PowerCell.Capacity - component.PowerCell.Charge) < 0.01)
             {
                 return CellChargerStatus.Charged;
             }
@@ -153,8 +159,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            _container.ContainedEntity.TryGetComponent(out HitscanWeaponCapacitorComponent weaponCapacitorComponent);
-            var chargeLoss = weaponCapacitorComponent.RequestCharge(frameTime) * _transferRatio;
+            var powerCell = _container.ContainedEntity.GetComponent<ServerBatteryBarrelComponent>().PowerCell;
+            var chargeLoss = powerCell.RequestCharge(frameTime) * _transferRatio;
             _powerDevice.Load = chargeLoss;
 
             if (!_powerDevice.Powered)
@@ -165,14 +171,13 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
             var chargeAmount = chargeLoss * _transferEfficiency;
 
-            weaponCapacitorComponent.AddCharge(chargeAmount);
+            powerCell.AddCharge(chargeAmount);
             // Just so the sprite won't be set to 99.99999% visibility
-            if (weaponCapacitorComponent.Capacity - weaponCapacitorComponent.Charge < 0.01)
+            if (powerCell.Capacity - powerCell.Charge < 0.01)
             {
-                weaponCapacitorComponent.Charge = weaponCapacitorComponent.Capacity;
+                powerCell.Charge = powerCell.Capacity;
             }
             UpdateStatus();
         }
-
     }
 }
