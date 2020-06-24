@@ -538,11 +538,5 @@
   - type: Item
     Size: 24
     sprite: Objects/Fun/toys.rsi
-    prefix: foamblade
+    HeldPrefix: foamblade
   - type: ItemCooldown
-- type: MeleeWeaponAnimation
-  id: spear
-  state: spear
-  length: 0.10
-  speed: 6
-  arcType: Poke
