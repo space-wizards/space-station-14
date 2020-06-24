@@ -10,14 +10,11 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 
 #nullable enable
 
@@ -25,11 +22,6 @@ namespace Content.Shared.GameObjects.EntitySystems
 {
     public abstract class SharedMoverSystem : EntitySystem
     {
-        // [Dependency] private readonly IPauseManager _pauseManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPhysicsManager _physicsManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
