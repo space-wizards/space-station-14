@@ -5,6 +5,7 @@ using System.Threading.Tasks.Dataflow;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;

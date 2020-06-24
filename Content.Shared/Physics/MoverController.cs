@@ -30,7 +30,7 @@ namespace Content.Shared.Physics
         public void Move(Vector2 velocityDirection, float speed)
         {
             if (!_component.Owner.HasComponent<MovementIgnoreGravityComponent>() && IoCManager
-                .Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition)) return;
+                .Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition) && false) return;
             Push(velocityDirection, speed);
         }
 

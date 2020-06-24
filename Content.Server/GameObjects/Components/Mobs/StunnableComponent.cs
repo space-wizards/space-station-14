@@ -1,50 +1,40 @@
 using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
 using Content.Server.Mobs;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
-using Microsoft.Extensions.Logging;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timers;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
-using CannyFastMath;
+using Content.Shared.GameObjects.Components.Movement;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class StunnableComponent : Component, IActionBlocker, IInteractHand, IMoveSpeedModifier
+    [ComponentReference(typeof(SharedStunnableComponent))]
+    public class StunnableComponent : SharedStunnableComponent, IInteractHand
     {
-        public override string Name => "Stunnable";
-
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
 #pragma warning restore 649
 
         private TimeSpan? _lastStun;
 
-        [ViewVariables]
-        public TimeSpan? StunStart => _lastStun;
+        [ViewVariables] public TimeSpan? StunStart => _lastStun;
 
         [ViewVariables]
         public TimeSpan? StunEnd => _lastStun == null
             ? (TimeSpan?) null
-            : _gameTiming.CurTime + (TimeSpan.FromSeconds(Math.Max(_stunnedTimer, Math.Max(_knockdownTimer, _slowdownTimer))));
+            : _gameTiming.CurTime +
+              (TimeSpan.FromSeconds(Math.Max(_stunnedTimer, Math.Max(_knockdownTimer, _slowdownTimer))));
 
         private const int StunLevels = 8;
 
@@ -59,14 +49,12 @@ namespace Content.Server.GameObjects.Components.Mobs
         private float _knockdownTimer = 0f;
         private float _slowdownTimer = 0f;
 
-        private float _walkModifierOverride = 0f;
-        private float _runModifierOverride = 0f;
         private string _stunTexture;
         private CancellationTokenSource _statusRemoveCancellation = new CancellationTokenSource();
 
-        [ViewVariables] public bool Stunned => _stunnedTimer > 0f;
-        [ViewVariables] public bool KnockedDown => _knockdownTimer > 0f;
-        [ViewVariables] public bool SlowedDown => _slowdownTimer > 0f;
+        [ViewVariables] public override bool Stunned => _stunnedTimer > 0f;
+        [ViewVariables] public override bool KnockedDown => _knockdownTimer > 0f;
+        [ViewVariables] public override bool SlowedDown => _slowdownTimer > 0f;
         [ViewVariables] public float StunCap => _stunCap;
         [ViewVariables] public float KnockdownCap => _knockdownCap;
         [ViewVariables] public float SlowdownCap => _slowdownCap;
@@ -79,7 +67,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             serializer.DataField(ref _slowdownCap, "slowdownCap", 20f);
             serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
-            serializer.DataField(ref _stunTexture, "stunTexture", "/Textures/Objects/Melee/stunbaton.rsi/stunbaton_off.png");
+            serializer.DataField(ref _stunTexture, "stunTexture",
+                "/Textures/Objects/Melee/stunbaton.rsi/stunbaton_off.png");
         }
 
         /// <summary>
@@ -99,6 +88,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             _lastStun = _gameTiming.CurTime;
 
             SetStatusEffect();
+            Dirty();
         }
 
         /// <summary>
@@ -118,6 +108,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             _lastStun = _gameTiming.CurTime;
 
             SetStatusEffect();
+            Dirty();
         }
 
         /// <summary>
@@ -143,16 +134,17 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (seconds <= 0f)
                 return;
 
-            _walkModifierOverride = walkModifierOverride;
-            _runModifierOverride = runModifierOverride;
+            WalkModifierOverride = walkModifierOverride;
+            RunModifierOverride = runModifierOverride;
 
             _slowdownTimer = seconds;
             _lastStun = _gameTiming.CurTime;
 
-            if(Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
                 movement.RefreshMovementSpeedModifiers();
 
             SetStatusEffect();
+            Dirty();
         }
 
         /// <summary>
@@ -162,6 +154,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             _knockdownTimer = 0f;
             _stunnedTimer = 0f;
+            Dirty();
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -170,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
 
             _canHelp = false;
-            Timer.Spawn(((int)_helpInterval*1000), () => _canHelp = true);
+            Timer.Spawn(((int) _helpInterval * 1000), () => _canHelp = true);
 
             EntitySystem.Get<AudioSystem>()
                 .PlayFromEntity("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
@@ -179,6 +172,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             SetStatusEffect();
 
+            Dirty();
             return true;
         }
 
@@ -187,7 +181,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (!Owner.TryGetComponent(out ServerStatusEffectsComponent status))
                 return;
 
-            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture, (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
+            status.ChangeStatusEffect(StatusEffect.Stun, _stunTexture,
+                (StunStart == null || StunEnd == null) ? default : (StunStart.Value, StunEnd.Value));
             _statusRemoveCancellation.Cancel();
             _statusRemoveCancellation = new CancellationTokenSource();
         }
@@ -201,6 +196,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 if (_stunnedTimer <= 0)
                 {
                     _stunnedTimer = 0f;
+                    Dirty();
                 }
             }
 
@@ -213,6 +209,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                     StandingStateHelper.Standing(Owner);
 
                     _knockdownTimer = 0f;
+                    Dirty();
                 }
             }
 
@@ -224,12 +221,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                 {
                     _slowdownTimer = 0f;
 
-                    if(Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+                    if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
                         movement.RefreshMovementSpeedModifiers();
+                    Dirty();
                 }
             }
 
-            if (!StunStart.HasValue || !StunEnd.HasValue || !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            if (!StunStart.HasValue || !StunEnd.HasValue ||
+                !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
                 return;
 
             var start = StunStart.Value;
@@ -244,31 +243,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                 _lastStun = null;
             }
         }
-
-        #region ActionBlockers
-        public bool CanMove() => (!Stunned);
-
-        public bool CanInteract() => (!Stunned);
-
-        public bool CanUse() => (!Stunned);
-
-        public bool CanThrow() => (!Stunned);
-
-        public bool CanSpeak() => true;
-
-        public bool CanDrop() => (!Stunned);
-
-        public bool CanPickup() => (!Stunned);
-
-        public bool CanEmote() => true;
-
-        public bool CanAttack() => (!Stunned);
-
-        public bool CanEquip() => (!Stunned);
-
-        public bool CanUnequip() => (!Stunned);
-        public bool CanChangeDirection() => true;
-        #endregion
 
         public float StunTimeModifier
         {
@@ -318,8 +292,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        public float WalkSpeedModifier => (SlowedDown ? (_walkModifierOverride <= 0f ? 0.5f : _walkModifierOverride) : 1f);
-        public float SprintSpeedModifier => (SlowedDown ? (_runModifierOverride <= 0f ? 0.5f : _runModifierOverride) : 1f);
+        public override ComponentState GetComponentState()
+        {
+            return new StunnableComponentState(Stunned, KnockedDown, SlowedDown, WalkModifierOverride,
+                RunModifierOverride);
+        }
     }
 
     /// <summary>

@@ -1,6 +1,4 @@
-﻿using Content.Server.AI.Utility;
-using Content.Server.AI.Utility.AiLogic;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.AI;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -111,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Is the entity Sprinting (running)?
         /// </summary>
         [ViewVariables]
-        public bool Sprinting { get; set; } = true;
+        public bool Sprinting { get; } = true;
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
@@ -119,11 +117,14 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         public Vector2 VelocityDir { get; set; }
 
+        (Vector2 walking, Vector2 sprinting) IMoverComponent.VelocityDir =>
+            Sprinting ? (Vector2.Zero, VelocityDir) : (VelocityDir, Vector2.Zero);
+
         public GridCoordinates LastPosition { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float StepSoundDistance { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
 
-        public void SetVelocityDirection(Direction direction, bool enabled) { }
+        public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
+        public void SetSprinting(ushort subTick, bool enabled) { }
     }
 }
