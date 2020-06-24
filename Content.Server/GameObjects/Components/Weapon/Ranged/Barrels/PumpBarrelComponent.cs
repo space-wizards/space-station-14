@@ -108,6 +108,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
             
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+            Dirty();
             UpdateAppearance();
         }
 

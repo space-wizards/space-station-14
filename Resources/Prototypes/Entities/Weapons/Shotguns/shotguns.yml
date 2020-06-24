@@ -16,6 +16,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: ShellShotgun
     caliber: Shotgun
     capacity: 7
     fireRate: 2.0
@@ -57,6 +58,7 @@
     caliber: Shotgun
     magazineTypes: 
     - Rifle
+    magFillPrototype: MagazineShotgun
     soundGunshot: /Audio/Guns/Gunshots/shotgun.ogg
     soundEmpty: /Audio/Guns/Empty/empty.ogg
     soundRack: /Audio/Guns/Cock/smg_cock.ogg
@@ -98,6 +100,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: ShellShotgun
     capacity: 2
     fireRate: 8.0
     minAngle: 10
@@ -221,6 +224,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: ShellShotgun
     capacity: 2
     fireRate: 8.0
     minAngle: 10

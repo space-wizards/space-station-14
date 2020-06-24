@@ -37,6 +37,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: GrenadeFrag
     fireRate: 1
     capacity: 3
     soundEmpty: /Audio/Guns/Empty/empty.ogg
@@ -70,6 +71,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: RocketAmmo
     fireRate: 0.5
     capacity: 1
     soundEmpty: /Audio/Guns/Empty/empty.ogg
