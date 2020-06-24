@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.Interfaces.Maps;
@@ -37,19 +38,34 @@ namespace Content.IntegrationTests.Tests
             string one;
             string two;
 
-            using (var stream = userData.Open(new ResourcePath("save load save 1.yml"), FileMode.Open))
+            var rp1 = new ResourcePath("save load save 1.yml");
+            using (var stream = userData.Open(rp1, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 one = reader.ReadToEnd();
             }
 
-            using (var stream = userData.Open(new ResourcePath("save load save 2.yml"), FileMode.Open))
+            var rp2 = new ResourcePath("save load save 2.yml");
+            using (var stream = userData.Open(rp2, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 two = reader.ReadToEnd();
             }
 
-            Assert.That(one, Is.EqualTo(two));
+            Assert.Multiple(() => {
+                Assert.That(one, Is.EqualTo(two));
+                var failed = TestContext.CurrentContext.Result.Assertions.FirstOrDefault();
+                if (failed != null)
+                {
+                    var path1 = Path.Combine(userData.RootDir!,rp1.ToRelativeSystemPath());
+                    var path2 = Path.Combine(userData.RootDir!,rp2.ToRelativeSystemPath());
+                    TestContext.AddTestAttachment(path1);
+                    TestContext.AddTestAttachment(path2);
+                    TestContext.Error.WriteLine("Complete output:");
+                    TestContext.Error.WriteLine(path1);
+                    TestContext.Error.WriteLine(path2);
+                }
+            });
         }
 
         /// <summary>
