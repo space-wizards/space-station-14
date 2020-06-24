@@ -13,6 +13,7 @@
   - toggleready
   - ghost
   - suicide
+  - hostlogin
 
 - Index: 50
   Name: Moderator
@@ -33,6 +34,7 @@
   - kick
   - listplayers
   - loc
+  - hostlogin
 
 - Index: 100
   Name: Administrator
@@ -76,6 +78,7 @@
   - group
   - addai
   - warp
+  - hostlogin
   CanViewVar: true
   CanAdminPlace: true
 
