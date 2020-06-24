@@ -9,7 +9,6 @@
   components:
   - type: Mind
     show_examine_info: true
-  - type: Constructor
   - type: Input
     context: "human"
   - type: StatusEffectsUI

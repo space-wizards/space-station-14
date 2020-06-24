@@ -132,7 +132,6 @@
   - type: CharacterInfo
   - type: FootstepSound
   - type: HumanoidAppearance
-  - type: Stunnable
   - type: AnimationPlayer
   - type: UnarmedCombat
     range: 0.8
