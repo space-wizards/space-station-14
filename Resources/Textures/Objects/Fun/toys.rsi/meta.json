@@ -71,6 +71,15 @@
       ]
     },
     {
+      "name": "doll",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "carpplush-inhand-left",
       "directions": 4,
       "delays": [
@@ -152,7 +161,25 @@
       ]
     },
     {
-      "name": "capgun",
+      "name": "base",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bolt-closed",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "bolt-open",
       "directions": 1,
       "delays": [
         [
@@ -224,6 +251,15 @@
       ]
     },
     {
+      "name": "foambox",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "gygaxtoy",
       "directions": 1,
       "delays": [
@@ -275,16 +311,6 @@
         [
           0.1,
           0.1
-        ]
-      ]
-    },
-    {
-      "name": "nuketoycool",
-      "directions": 1,
-      "delays": [
-        [
-          0.5,
-          0.5
         ]
       ]
     },
@@ -379,6 +405,15 @@
       ]
     },
     {
+      "name": "capbullet",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "foamcrossbow-inhand-right",
       "directions": 4,
       "delays": [
@@ -397,7 +432,7 @@
       ]
     },
     {
-      "name": "foamcrossbow-inhand-right",
+      "name": "foamcrossbow-inhand-left",
       "directions": 4,
       "delays": [
         [
