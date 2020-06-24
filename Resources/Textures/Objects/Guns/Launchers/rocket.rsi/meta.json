@@ -20,6 +20,14 @@
             "directions": 1
         },
         {
+            "name": "rocket0-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "rocket0-inhand-right",
+            "directions": 4
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },

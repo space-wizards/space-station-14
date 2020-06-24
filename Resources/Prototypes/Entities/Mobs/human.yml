@@ -134,12 +134,15 @@
   - type: HumanoidAppearance
   - type: Stunnable
   - type: AnimationPlayer
+  - type: UnarmedCombat
+    range: 0.8
+    arcwidth: 30
+    arc: fist
 
 - type: entity
   save: false
   name: Urist McHands
   parent: BaseHumanMob_Content
-  abstract: true
   id: HumanMob_Content
   description: A miserable pile of secrets
   drawdepth: Mobs
@@ -161,6 +164,7 @@
   save: false
   name: Urist McHands
   id: HumanMob_Dummy
+  abstract: true
   description: A dummy human meant to be used in character setup
   components:
     - type: Hands

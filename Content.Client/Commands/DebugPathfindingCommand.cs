@@ -55,8 +55,9 @@ namespace Content.Client.Commands
             }
 
             return !anyAction;
-#endif
+#else
             return true;
+#endif
         }
     }
 }
