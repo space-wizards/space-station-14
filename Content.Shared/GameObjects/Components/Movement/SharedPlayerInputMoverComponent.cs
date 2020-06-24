@@ -1,5 +1,7 @@
 using System;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -15,7 +17,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public abstract class SharedPlayerInputMoverComponent : Component, IMoverComponent
+    public abstract class SharedPlayerInputMoverComponent : Component, IMoverComponent, ICollideSpecial
     {
         // This class has to be able to handle server TPS being lower than client FPS.
         // While still having perfectly responsive movement client side.
@@ -259,6 +261,12 @@ namespace Content.Shared.GameObjects.Components.Movement
             }
 
             return vec;
+        }
+
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
+        {
+            // Don't collide with other mobs
+            return collidedWith.Owner.HasComponent<SharedSpeciesComponent>();
         }
 
         [Serializable, NetSerializable]

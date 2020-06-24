@@ -14,25 +14,10 @@ namespace Content.Server.GameObjects.Components.Movement
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMoverComponent))]
-    public class PlayerInputMoverComponent : SharedPlayerInputMoverComponent, IMoverComponent, ICollideSpecial
+    public class PlayerInputMoverComponent : SharedPlayerInputMoverComponent
     {
         public override GridCoordinates LastPosition { get; set; }
 
         public override float StepSoundDistance { get; set; }
-
-        /// <summary>
-        /// Special collision override, can be used to give custom behaviors deciding when to collide
-        /// </summary>
-        /// <param name="collidedwith"></param>
-        /// <returns></returns>
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
-        {
-            // Don't collide with other mobs
-            if (collidedwith.Owner.TryGetComponent<SpeciesComponent>(out var collidedSpeciesComponent))
-            {
-                return true;
-            }
-            return false;
-        }
     }
 }

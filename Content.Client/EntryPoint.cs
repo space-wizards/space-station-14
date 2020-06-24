@@ -119,7 +119,6 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
-                "Species",
                 "Drink",
                 "Food",
                 "FoodContainer",
