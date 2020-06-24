@@ -36,6 +36,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var physics = playerEnt.GetComponent<PhysicsComponent>();
             playerEnt.TryGetComponent(out CollidableComponent? collidable);
+            physics.Predict = true;
 
             UpdateKinematics(playerEnt.Transform, mover, physics, collidable);
         }
