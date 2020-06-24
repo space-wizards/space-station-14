@@ -7,7 +7,8 @@
   colorDelta: 0,0,0,-5100
 
 - type: MeleeWeaponAnimation
-  id: Bite
+  id: bite
+  prototype: WeaponTGArc
   state: bite
   arcType: Poke
   length: 0.4
@@ -15,7 +16,8 @@
   colorDelta: 0,0,0,-5100
 
 - type: MeleeWeaponAnimation
-  id: Claw
+  id: claw
+  prototype: WeaponTGArc
   state: claw
   arcType: Slash
   length: 0.4
@@ -23,7 +25,8 @@
   colorDelta: 0,0,0,-5100
 
 - type: MeleeWeaponAnimation
-  id: Disarm
+  id: disarm
+  prototype: WeaponTGArc
   state: disarm
   arcType: Poke
   length: 0.3
@@ -31,7 +34,15 @@
   colorDelta: 0,0,0,-5100
 
 - type: MeleeWeaponAnimation
-  id: Kick
+  id: fist
+  state: fist
+  arcType: Poke
+  length: 0.15
+  speed: 1
+
+- type: MeleeWeaponAnimation
+  id: kick
+  prototype: WeaponTGArc
   state: kick
   arcType: Poke
   length: 0.3
@@ -39,7 +50,8 @@
   colorDelta: 0,0,0,-5100
 
 - type: MeleeWeaponAnimation
-  id: Punch
+  id: punch
+  prototype: WeaponTGArc
   state: punch
   arcType: Poke
   length: 0.5
@@ -47,7 +59,8 @@
   colorDelta: 0,0,0,-5100
 
 - type: MeleeWeaponAnimation
-  id: Smash
+  id: smash
+  prototype: WeaponTGArc
   state: smash
   arcType: Poke
   length: 0.3

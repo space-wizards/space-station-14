@@ -4,8 +4,6 @@
         "x": 32,
         "y": 32
     },
-    "license": "CC-BY-SA-3.0 for bite->smash",
-    "copyright": "https://github.com/tgstation/tgstation/raw/c545428822f1ee0d402b812221518632dbe198cb/icons/effects/effects.dmi",
     "states": [
         {
             "name": "spear",
@@ -16,74 +14,8 @@
             "directions": 1
         },
         {
-            "name": "bite",
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "claw",
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "disarm",
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "kick",
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "punch",
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "smash",
-            "directions": 1,
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "fist",
+            "directions": 1
         }
     ]
 }
