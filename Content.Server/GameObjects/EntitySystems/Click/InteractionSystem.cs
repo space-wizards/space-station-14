@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
@@ -955,22 +955,34 @@ namespace Content.Server.GameObjects.EntitySystems
                 return;
             }
 
-            // Verify player has a hand, and find what object he is currently holding in his active hand
-            if (!player.TryGetComponent<IHandsComponent>(out var hands))
-            {
-                return;
-            }
-
-            var item = hands.GetActiveHand?.Owner;
-
-            // TODO: If item is null we need some kinda unarmed combat.
-            if (!ActionBlockerSystem.CanAttack(player) || item == null)
+            if (!ActionBlockerSystem.CanAttack(player))
             {
                 return;
             }
 
             var eventArgs = new AttackEventArgs(player, coordinates);
-            foreach (var attackComponent in item.GetAllComponents<IAttack>())
+
+            // Verify player has a hand, and find what object he is currently holding in his active hand
+            if (player.TryGetComponent<IHandsComponent>(out var hands))
+            {
+                var item = hands.GetActiveHand?.Owner;
+
+                if (item != null)
+                {
+                    var attacked = false;
+                    foreach (var attackComponent in item.GetAllComponents<IAttack>())
+                    {
+                        attackComponent.Attack(eventArgs);
+                        attacked = true;
+                    }
+                    if (attacked)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            foreach (var attackComponent in player.GetAllComponents<IAttack>())
             {
                 attackComponent.Attack(eventArgs);
             }

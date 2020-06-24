@@ -238,11 +238,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         public void ResettingCleanup()
         {
             _graph.Clear();
-            _pathfindingQueue.Clear();
             _collidableUpdateQueue.Clear();
             _moveUpdateQueue.Clear();
             _accessReaderUpdateQueue.Clear();
             _tileUpdateQueue.Clear();
+            _lastKnownPositions.Clear();
         }
 
         private void HandleGridRemoval(GridId gridId)

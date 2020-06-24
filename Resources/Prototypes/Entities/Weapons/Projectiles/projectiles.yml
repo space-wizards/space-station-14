@@ -18,7 +18,7 @@
     hard: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+      bounds: "-0.1,-0.1,0.1,0.1"
       layer: [Clickable]
       mask:
       - Impassable
@@ -130,10 +130,14 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 3
-    heavyImpactRange: 5
-    lightImpactRange: 7
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 4
     flashRange: 10
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
 
 - type: entity
   id: BulletGrenadeBaton
