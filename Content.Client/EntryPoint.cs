@@ -247,7 +247,10 @@ namespace Content.Client
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            if (!eventArgs.OldEntity.Deleted)
+            {
+                eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            }
         }
 
         public override void PostInit()
