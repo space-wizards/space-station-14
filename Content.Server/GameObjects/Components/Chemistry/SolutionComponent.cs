@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Chemistry

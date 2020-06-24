@@ -148,9 +148,10 @@ namespace Content.Server.Throw
 
             var velocityNecessary = distance / throwDuration;
             var impulseNecessary = velocityNecessary * mass;
+            var forceNecessary = impulseNecessary * (1f / timing.TickRate);
 
             // Then clamp it to the max force allowed and call Throw().
-            Throw(thrownEnt, MathF.Min(impulseNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
+            Throw(thrownEnt, MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
         }
     }
 }
