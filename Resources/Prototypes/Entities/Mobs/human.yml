@@ -132,7 +132,6 @@
   - type: CharacterInfo
   - type: FootstepSound
   - type: HumanoidAppearance
-  - type: Stunnable
   - type: AnimationPlayer
   - type: UnarmedCombat
     range: 0.8
@@ -149,7 +148,6 @@
   components:
   - type: Mind
     show_examine_info: true
-  - type: Constructor
   - type: Input
     context: "human"
   - type: StatusEffectsUI
