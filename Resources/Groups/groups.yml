@@ -147,6 +147,7 @@
   - gc_mode
   - warp
   - deleteewc
+  - sudo
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
