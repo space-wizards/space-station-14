@@ -161,13 +161,101 @@
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: helpme
+  - type: EmitSoundOnThrow
+    sound: /Audio/items/toys/helpme.ogg
   - type: ItemCooldown
   - type: LoopingSound
-  - type: EmitSoundOnThrow
+  - type: EmitSoundOnUse
     sound: /Audio/items/toys/helpme.ogg
   - type: UseDelay
     delay: 1.0
 
+# All using the same sprite until Bright gives me sprites the rest.
+
+- type: entity
+  name: hello carving
+  parent: BaseItem
+  id: CarvingHello
+  description: Hello!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: Icon
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: EmitSoundOnThrow
+    sound: /Audio/items/toys/hellothere.ogg
+  - type: ItemCooldown
+  - type: LoopingSound
+  - type: EmitSoundOnUse
+    sound: /Audio/items/toys/hellothere.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  name: thank you carving
+  parent: BaseItem
+  id: CarvingThankYou
+  description: Thank you!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: Icon
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: EmitSoundOnThrow
+    sound: /Audio/items/toys/thankyou.ogg
+  - type: ItemCooldown
+  - type: LoopingSound
+  - type: EmitSoundOnUse
+    sound: /Audio/items/toys/thankyou.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  name: very good carving
+  parent: BaseItem
+  id: CarvingVeryGood
+  description: Very Good!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: Icon
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: EmitSoundOnThrow
+    sound: /Audio/items/toys/verygood.ogg
+  - type: ItemCooldown
+  - type: LoopingSound
+  - type: EmitSoundOnUse
+    sound: /Audio/items/toys/verygood.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  name: sorry carving
+  parent: BaseItem
+  id: CarvingImSorry
+  description: I'm sorry...
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: Icon
+    sprite: Objects/Misc/carvings.rsi
+    state: helpme
+  - type: EmitSoundOnThrow
+    sound: /Audio/items/toys/imsorry.ogg
+  - type: ItemCooldown
+  - type: LoopingSound
+  - type: EmitSoundOnUse
+    sound: /Audio/items/toys/imsorry.ogg
+  - type: UseDelay
+    delay: 1.0
+    
 ## Figurines
 
 - type: entity
