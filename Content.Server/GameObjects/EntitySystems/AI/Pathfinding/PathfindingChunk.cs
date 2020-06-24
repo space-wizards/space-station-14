@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -19,7 +21,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         public static int ChunkSize => 16;
         public PathfindingNode[,] Nodes => _nodes;
         private PathfindingNode[,] _nodes = new PathfindingNode[ChunkSize,ChunkSize];
-        public Dictionary<Direction, PathfindingChunk> Neighbors { get; } = new Dictionary<Direction, PathfindingChunk>(8);
 
         public PathfindingChunk(GridId gridId, MapIndices indices)
         {
@@ -40,6 +41,25 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             RefreshNodeNeighbors();
+        }
+
+        public IEnumerable<PathfindingChunk> GetNeighbors()
+        {
+            var pathfindingSystem = EntitySystem.Get<PathfindingSystem>();
+            var chunkGrid = pathfindingSystem.Graph[GridId];
+            
+            for (var x = -1; x <= 1; x++)
+            {
+                for (var y = -1; y <= 1; y++)
+                {
+                    if (x == 0 && y == 0) continue;
+                    var (neighborX, neighborY) = (_indices.X + ChunkSize * x, _indices.Y + ChunkSize * y);
+                    if (chunkGrid.TryGetValue(new MapIndices(neighborX, neighborY), out var neighbor))
+                    {
+                        yield return neighbor;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -93,190 +113,18 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 }
             }
         }
-
-        /// <summary>
-        /// This will work both ways
-        /// </summary>
-        /// <param name="chunk"></param>
-        /// <exception cref="InvalidOperationException"></exception>
-        public void AddNeighbor(PathfindingChunk chunk)
+        
+        public bool InBounds(MapIndices mapIndices)
         {
-            if (chunk == this) return;
-            if (Neighbors.ContainsValue(chunk))
-            {
-                return;
-            }
-
-            Direction direction;
-            if (chunk.Indices.X < _indices.X)
-            {
-                if (chunk.Indices.Y > _indices.Y)
-                {
-                    direction = Direction.NorthWest;
-                } else if (chunk.Indices.Y < _indices.Y)
-                {
-                    direction = Direction.SouthWest;
-                }
-                else
-                {
-                    direction = Direction.West;
-                }
-            }
-            else if (chunk.Indices.X > _indices.X)
-            {
-                if (chunk.Indices.Y > _indices.Y)
-                {
-                    direction = Direction.NorthEast;
-                } else if (chunk.Indices.Y < _indices.Y)
-                {
-                    direction = Direction.SouthEast;
-                }
-                else
-                {
-                    direction = Direction.East;
-                }
-            }
-            else
-            {
-                if (chunk.Indices.Y > _indices.Y)
-                {
-                    direction = Direction.North;
-                } else if (chunk.Indices.Y < _indices.Y)
-                {
-                    direction = Direction.South;
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
-            }
-
-            Neighbors.TryAdd(direction, chunk);
-
-            foreach (var node in GetBorderNodes(direction))
-            {
-                foreach (var counter in chunk.GetCounterpartNodes(direction))
-                {
-                    var xDiff = node.TileRef.X - counter.TileRef.X;
-                    var yDiff = node.TileRef.Y - counter.TileRef.Y;
-
-                    if (Math.Abs(xDiff) <= 1 && Math.Abs(yDiff) <= 1)
-                    {
-                        node.AddNeighbor(counter);
-                        counter.AddNeighbor(node);
-                    }
-                }
-            }
-
-            chunk.Neighbors.TryAdd(OppositeDirection(direction), this);
-
-            if (Neighbors.Count > 8)
-            {
-                throw new InvalidOperationException();
-            }
-        }
-
-        private Direction OppositeDirection(Direction direction)
-        {
-            return (Direction) (((int) direction + 4) % 8);
-        }
-
-        // TODO I was too tired to think of an easier system. Could probably just google an array wraparound
-        private IEnumerable<PathfindingNode> GetCounterpartNodes(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.West:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[ChunkSize - 1, i];
-                    }
-                    break;
-                case Direction.SouthWest:
-                    yield return _nodes[ChunkSize - 1, ChunkSize - 1];
-                    break;
-                case Direction.South:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[i, ChunkSize - 1];
-                    }
-                    break;
-                case Direction.SouthEast:
-                    yield return _nodes[0, ChunkSize - 1];
-                    break;
-                case Direction.East:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[0, i];
-                    }
-                    break;
-                case Direction.NorthEast:
-                    yield return _nodes[0, 0];
-                    break;
-                case Direction.North:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[i, 0];
-                    }
-                    break;
-                case Direction.NorthWest:
-                    yield return _nodes[ChunkSize - 1, 0];
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-            }
-        }
-
-        public IEnumerable<PathfindingNode> GetBorderNodes(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.East:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[ChunkSize - 1, i];
-                    }
-                    break;
-                case Direction.NorthEast:
-                    yield return _nodes[ChunkSize - 1, ChunkSize - 1];
-                    break;
-                case Direction.North:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[i, ChunkSize - 1];
-                    }
-                    break;
-                case Direction.NorthWest:
-                    yield return _nodes[0, ChunkSize - 1];
-                    break;
-                case Direction.West:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[0, i];
-                    }
-                    break;
-                case Direction.SouthWest:
-                    yield return _nodes[0, 0];
-                    break;
-                case Direction.South:
-                    for (var i = 0; i < ChunkSize; i++)
-                    {
-                        yield return _nodes[i, 0];
-                    }
-                    break;
-                case Direction.SouthEast:
-                    yield return _nodes[ChunkSize - 1, 0];
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-            }
-        }
-
-        public bool InBounds(TileRef tile)
-        {
-            if (tile.X < _indices.X || tile.Y < _indices.Y) return false;
-            if (tile.X >= _indices.X + ChunkSize || tile.Y >= _indices.Y + ChunkSize) return false;
+            if (mapIndices.X < _indices.X || mapIndices.Y < _indices.Y) return false;
+            if (mapIndices.X >= _indices.X + ChunkSize || mapIndices.Y >= _indices.Y + ChunkSize) return false;
             return true;
+        }
+
+        public MapIndices RelativeIndices(MapIndices mapIndices)
+        {
+            // TODO: Get the relative (x, y) to our origin
+            return;
         }
 
         /// <summary>
