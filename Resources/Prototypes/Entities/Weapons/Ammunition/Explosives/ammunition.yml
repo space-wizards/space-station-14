@@ -12,7 +12,6 @@
     netsync: false
     sprite: Objects/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
-    drawdepth: FloorObjects
   - type: Icon
     sprite: Objects/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
@@ -31,7 +30,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Icon
     sprite: Objects/Guns/Ammunition/Explosives/grenade_baton.rsi
     state: base
@@ -53,7 +51,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Icon
     sprite: Objects/Guns/Ammunition/Explosives/grenade_blast.rsi
     state: base
@@ -75,7 +72,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Icon
     sprite: Objects/Guns/Ammunition/Explosives/grenade_flash.rsi
     state: base
@@ -97,7 +93,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Icon
     sprite: Objects/Guns/Ammunition/Explosives/grenade_frag.rsi
     state: base

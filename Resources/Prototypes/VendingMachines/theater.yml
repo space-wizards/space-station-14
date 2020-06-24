@@ -3,3 +3,16 @@
   name: AutoDrobe
   description: A vending machine containing costumes.
   spriteName: theater
+  startingInventory:
+    ViolinInstrument: 10
+    BanjoInstrument: 10
+    ElectricGuitarInstrument: 10
+    AcousticGuitarInstrument: 10
+    AccordionInstrument: 10
+    SynthesizerInstrument: 10
+    TrumpetInstrument: 10
+    TromboneInstrument: 10
+    SaxophoneInstrument: 10
+    HarmonicaInstrument: 10
+    RecorderInstrument: 10
+    BikeHornInstrument: 10

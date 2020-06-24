@@ -4,53 +4,53 @@
   description: A generic ammunition vending machine.
   spriteName: ammo
   startingInventory:
-    box_32: 3
-    box_32f: 3
-    box_32hv: 3
-    box_32p: 3
-    box_32r: 3
+# Snipers
+    SniperBoltGunWood: 3  #LRifle
+    SniperHeavy: 3 #AntiMaterial
+# Barrery_guns
+    LaserCannon: 3
+    XrayCannon: 3
+# Shotgun caliber: shotgun
+    ShotgunBojevic: 3
+    ShotgunDB: 3
+    ShotgunBull: 3
+    ShotgunGladstone: 3
+    ShotgunRegulator: 3
+    ShotgunPump: 3
+    ShotgunSawn: 3
+# LMG caliber : LRifle
+    LMGL6: 3
+    LMGPK: 3
+# Rifles
+    RifleAk: 3
+    RifleCarbine: 3
+    RifleDallas: 3
+    RifleSTS: 3
+    RifleVintorez: 3
+    RifleWintermute: 3
+# Pistols calib. pistol
+    PistolClarissa: 3
+    PistolColt: 3
+    PistolGiskard: 3
+    PistolHMPistol: 3
+    PistolLamia: 3 # Magnum
+    PistolMandella: 3 # ClRifle
+    PistolMk58: 3
+    PistolMk58Wood: 3
+    PistolMolly: 3
+    PistolOlivaw: 3
+    PistolPaco: 3
+# Revolvers calib. magnum
+    RevolverDeckard: 3
+    RevolverInspector: 3
+    RevolverMateba: 3
+# SMGs pistol
+    SmgAtreides: 3
+    SmgC20r: 3
+    SmgDrozd: 3 # Magnum
+    SmgStraylight: 3
+    SmgWt550: 3
+    SmgZoric: 3 # Magnum
 
-    box_357: 3
-    box_357f: 3
-    box_357hv: 3
-    box_357p: 3
-    box_357r: 3
-
-    box_44: 3
-    box_44f: 3
-    box_44hv: 3
-    box_44p: 3
-    box_44r: 3
-
-    box_45: 3
-    box_45f: 3
-    box_45p: 3
-    box_45r: 3
-
-    box_50: 3
-    box_50f: 3
-    box_50p: 3
-    box_50r: 3
-
-    box_10mm: 3
-    box_10mmf: 3
-    box_10mmhv: 3
-    box_10mmp: 3
-    box_10mmr: 3
-
-    box_24mm: 3
-
-    box_556mm: 3
-    box_556mmp: 3
-
-    box_65mm: 3
-    box_65mmr: 3
-
-    box_762mm: 3
-
-    box_9mm: 3
-    box_9mmf: 3
-    box_9mmhv: 3
-    box_9mmp: 3
-    box_9mmr: 3
+# youtool, nanomed Plus, hatlord, suitlord, shoelord, robust softdrinks, discount dans
 

@@ -13,10 +13,8 @@
   - type: Sprite
     netsync: false
     drawdepth: Walls
-
   - type: Icon
     state: full
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -27,16 +25,11 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-  - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
   - type: Occluder
     sizeX: 32
     sizeY: 32
-
   - type: SnapGrid
     offset: Center
-
   - type: IconSmooth
     key: walls
     base: solid
@@ -122,18 +115,17 @@
     key: walls
     base: debug
 
+# Reminder to return this back to the diamond wall after the test
 - type: entity
-  id: diamond_wall
-  name: diamond wall
+  id: indestructible_wall
   parent: base_wall
+  name: indestructible wall
+  description: Dont even try buddy.
   components:
   - type: Sprite
     sprite: Buildings/Walls/diamond.rsi
   - type: Icon
     sprite: Buildings/Walls/diamond.rsi
-  - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
   - type: IconSmooth
     key: walls
     base: diamond

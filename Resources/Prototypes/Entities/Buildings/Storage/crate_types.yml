@@ -109,11 +109,16 @@
 
 - type: entity
   id: CrateFlashlights
-  name: flashlight crate (x5)
+  name: flashlight crate (x10)
   parent: CrateGeneric
   components:
   - type: StorageFill
     contents:
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
       - FlashlightLantern
       - FlashlightLantern
       - FlashlightLantern
@@ -213,12 +218,39 @@
 
 - type: entity
   id: CrateGlass
-  name: glass sheet crate (x50)
+  name: glass sheet stack crate (x10)
   parent: CrateGeneric
   components:
   - type: StorageFill
     contents:
       - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+      - GlassStack
+
+- type: entity
+  id: CrateSteel
+  name: steel sheet stack crate (x10)
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
+      - MetalStack
 
 - type: entity
   id: CrateCable
@@ -228,3 +260,230 @@
   - type: StorageFill
     contents:
       - CableStack
+
+- type: entity
+  id: CrateAntiMaterialBox
+  name: antimaterial ammunition box crate (x10)
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+      - BoxAntiMaterial
+
+- type: entity
+  id: CrateSRifleBox
+  name: .20 rifle ammunition box crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - BoxSRifleBigBox
+      - BoxSRifleBigBoxRubber
+      - BoxSRifleBox
+      - BoxSRifleBoxFlash
+      - BoxSRifleBoxHV
+      - BoxSRifleBoxPractice
+      - BoxSRifleBoxRubber
+
+- type: entity
+  id: CrateSRifleMag
+  name: .20 rifle magazine crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - MagazineSRifle
+      - MagazineSRifleFlash
+      - MagazineSRifleHV
+      - MagazineSRiflePractice
+      - MagazineSRifleRubber
+
+- type: entity
+  id: CrateClRifleBox
+  name: .25 rifle ammunition box crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - BoxClRifle10x24
+      - BoxClRifleBigBox
+      - BoxClRifleBigBoxRubber
+      - BoxClRifleBox
+      - BoxClRifleBoxFlash
+      - BoxClRifleBoxHV
+      - BoxClRifleBoxPractice
+      - BoxClRifleBoxRubber
+
+- type: entity
+  id: CrateLRifleBox
+  name: .30 rifle ammunition box crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - BoxLRifleBigBox
+      - BoxLRifleBoxHV
+      - BoxLRifleBoxPractice
+      - BoxLRifleBoxRubber
+
+- type: entity
+  id: CrateLRifleMag
+  name: .30 rifle magazine crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - MagazineLRifleBox
+      - MagazineLRifle
+      - MagazineLRifleFlash
+      - MagazineLRifleHV
+      - MagazineLRiflePractice
+      - MagazineLRifleRubber
+      - MagazineLRifleMaxim
+      - MagazineLRiflePkBox
+
+- type: entity
+  id: CrateRifleSLL
+  name: .30 rifle speed loader crate (x10)
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+      - SLLRifle
+
+- type: entity
+  id: CratePistolBox
+  name: .35 pistol ammunition box crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - BoxPistolBox
+      - BoxPistolBoxFlash
+      - BoxPistolBoxHV
+      - BoxPistolBoxPractice
+      - BoxPistolBoxRubber
+
+- type: entity
+  id: CratePistolMag
+  name: .35 pistol magazine crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - MagazinePistolSmgTopMounted
+      - MagazinePistol
+      - MagazinePistolFlash
+      - MagazinePistolHV
+      - MagazinePistolPractice
+      - MagazinePistolRubber
+      - MagazineHCPistol
+      - MagazineHCPistolHV
+      - MagazineHCPistolPractice
+      - MagazineHCPistolRubber
+      - MagazinePistolSmg
+      - MagazinePistolSmgFlash
+      - MagazinePistolSmgHV
+      - MagazinePistolSmgPractice
+      - MagazinePistolSmgRubber
+
+- type: entity
+  id: CratePistolSLL
+  name: .35 pistol speed loader crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - SLPistol
+      - SLPistolFlash
+      - SLPistolHV
+      - SLPistolPractice
+      - SLPistolRubber
+
+- type: entity
+  id: CrateMagnumBox
+  name: .40 magnum ammunition box crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - BoxMagnum
+      - BoxMagnumFlash
+      - BoxMagnumHV
+      - BoxMagnumPractice
+      - BoxMagnumRubber
+
+- type: entity
+  id: CrateMagnumMag
+  name: .40 magnum magazine crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - MagazineMagnum
+      - MagazineMagnumFlash
+      - MagazineMagnumHV
+      - MagazineMagnumPractice
+      - MagazineMagnumRubber
+      - MagazineMagnumSmg
+      - MagazineMagnumSmgHV
+      - MagazineMagnumSmgPractice
+      - MagazineMagnumSmgRubber
+
+- type: entity
+  id: CrateMagnumSLL
+  name: .40 magnum speed loader crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - SLMagnumBase
+      - SLMagnum
+      - SLMagnumFlash
+      - SLMagnumHV
+      - SLMagnumPractice
+      - SLMagnumRubber
+
+- type: entity
+  id: CrateShotgunMag
+  name: .50 shotgun drum crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - MagazineShotgun
+      - MagazineShotgunBeanbag
+      - MagazineShotgunSlug
+
+- type: entity
+  id: CrateShotgunShell
+  name: .50 shotgun shell crate
+  parent: CrateGeneric
+  components:
+  - type: StorageFill
+    contents:
+      - ShellShotgunBeanbag
+      - ShellShotgunSlug
+      - ShellShotgun
+      - ShellShotgunFlash
+      - ShellShotgunIncendiary
+      - ShellShotgunPractice
+
