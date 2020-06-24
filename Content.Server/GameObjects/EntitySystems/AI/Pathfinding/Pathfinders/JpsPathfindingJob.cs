@@ -41,7 +41,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             }
 
             // If we couldn't get a nearby node that's good enough
-            if (!Utils.TryEndNode(ref _endNode, _pathfindingArgs))
+            if (!PathfindingHelpers.TryEndNode(ref _endNode, _pathfindingArgs))
             {
                 return null;
             }
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                         jumpNodes.Add(jumpNode);
 #endif
                         // GetJumpPoint should already check if we can traverse to the node
-                        var tileCost = Utils.GetTileCost(_pathfindingArgs, currentNode, jumpNode);
+                        var tileCost = PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, jumpNode);
 
                         if (tileCost == null)
                         {
@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                         // pFactor is tie-breaker where the fscore is otherwise equal.
                         // See http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#breaking-ties
                         // There's other ways to do it but future consideration
-                        var fScore = gScores[jumpNode] + Utils.OctileDistance(_endNode, jumpNode) * (1.0f + 1.0f / 1000.0f);
+                        var fScore = gScores[jumpNode] + PathfindingHelpers.OctileDistance(_endNode, jumpNode) * (1.0f + 1.0f / 1000.0f);
                         openTiles.Add((fScore, jumpNode));
                     }
                 }
@@ -119,7 +119,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 return null;
             }
 
-            var route = Utils.ReconstructJumpPath(cameFrom, currentNode);
+            var route = PathfindingHelpers.ReconstructJumpPath(cameFrom, currentNode);
             if (route.Count == 1)
             {
                 return null;
@@ -161,7 +161,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                 // We'll do opposite DirectionTraversable just because of how the method's setup
                 // Nodes should be 2-way anyway.
                 if (nextNode == null ||
-                    Utils.GetTileCost(_pathfindingArgs, currentNode, nextNode) == null)
+                    PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, nextNode) == null)
                 {
                     return null;
                 }
@@ -312,14 +312,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     throw new ArgumentOutOfRangeException();
             }
 
-            if ((closedNeighborOne == null || Utils.GetTileCost(_pathfindingArgs, currentNode, closedNeighborOne) == null)
-                && openNeighborOne != null && Utils.GetTileCost(_pathfindingArgs, currentNode, openNeighborOne) != null)
+            if ((closedNeighborOne == null || PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, closedNeighborOne) == null)
+                && openNeighborOne != null && PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, openNeighborOne) != null)
             {
                 return true;
             }
 
-            if ((closedNeighborTwo == null || Utils.GetTileCost(_pathfindingArgs, currentNode, closedNeighborTwo) == null)
-                && openNeighborTwo != null && Utils.GetTileCost(_pathfindingArgs, currentNode, openNeighborTwo) != null)
+            if ((closedNeighborTwo == null || PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, closedNeighborTwo) == null)
+                && openNeighborTwo != null && PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, openNeighborTwo) != null)
             {
                 return true;
             }
@@ -371,14 +371,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     throw new ArgumentOutOfRangeException();
             }
 
-            if ((closedNeighborOne == null || !Utils.Traversable(_pathfindingArgs.CollisionMask, closedNeighborOne.CollisionMask)) &&
-                (openNeighborOne != null && Utils.Traversable(_pathfindingArgs.CollisionMask, openNeighborOne.CollisionMask)))
+            if ((closedNeighborOne == null || !PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, closedNeighborOne)) &&
+                (openNeighborOne != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborOne)))
             {
                 return true;
             }
 
-            if ((closedNeighborTwo == null || !Utils.Traversable(_pathfindingArgs.CollisionMask, closedNeighborTwo.CollisionMask)) &&
-                (openNeighborTwo != null && Utils.Traversable(_pathfindingArgs.CollisionMask, openNeighborTwo.CollisionMask)))
+            if ((closedNeighborTwo == null || !PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, closedNeighborTwo)) &&
+                (openNeighborTwo != null && PathfindingHelpers.Traversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, openNeighborTwo)))
             {
                 return true;
             }

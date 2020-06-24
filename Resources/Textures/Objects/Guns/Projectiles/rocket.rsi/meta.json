@@ -10,6 +10,10 @@
         {
             "name": "frag",
             "directions": 1
+        },
+        {
+            "name": "smallfrag",
+            "directions": 1
         }
     ]
 }

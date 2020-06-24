@@ -1,0 +1,42 @@
+﻿- type: entity
+  name: base timed spawner
+  id: BaseTimedSpawner
+  abstract: true
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Objects/markers.rsi
+      state: cross_blue
+    - type: Icon
+      sprite: Objects/markers.rsi
+      state: cross_blue
+    - type: Marker
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Collidable
+    - type: TimedSpawner
+  placement:
+    mode: AlignTileAny
+
+- type: entity
+  name: AI Timed Spawner
+  id: AITimedSpawner
+  parent: BaseTimedSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Objects/markers.rsi
+      state: spawner_rifle
+    - type: Icon
+      sprite: Objects/markers.rsi
+      state: spawner_rifle
+    - type: TimedSpawner
+      prototypes:
+        - HumanMob_Spirate
+        - HumanMob_Civilian
+      chance: 0.75
+      intervalSeconds: 60
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 5
