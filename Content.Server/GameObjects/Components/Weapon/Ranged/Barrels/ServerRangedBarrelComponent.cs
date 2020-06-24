@@ -140,10 +140,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void OnRemove()
         {
             base.OnRemove();
-            var rangedWeapon = Owner.GetComponent<ServerRangedWeaponComponent>();
-            rangedWeapon.Barrel = null;
-            rangedWeapon.FireHandler -= Fire;
-            rangedWeapon.WeaponCanFireHandler -= WeaponCanFire;
+            if (Owner.TryGetComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
+            {
+                rangedWeaponComponent.Barrel = null;
+                rangedWeaponComponent.FireHandler -= Fire;
+                rangedWeaponComponent.WeaponCanFireHandler -= WeaponCanFire;
+            }
         }
 
         private Angle GetRecoilAngle(Angle direction)
