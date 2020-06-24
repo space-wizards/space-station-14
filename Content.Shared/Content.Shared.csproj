@@ -26,8 +26,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameObjects\Components\Construction\" />
     <Folder Include="GameObjects\Components\Trigger\" />
     <EmbeddedResource Include="Text\Names\*.txt" />
+    <Folder Include="GameObjects\Components\Visualizers" />
   </ItemGroup>
 </Project>

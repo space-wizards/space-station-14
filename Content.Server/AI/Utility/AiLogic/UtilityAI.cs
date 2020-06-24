@@ -126,6 +126,9 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 damageableComponent.DamageThresholdPassed -= DeathHandle;
             }
+
+            var currentOp = CurrentAction?.ActionOperators.Peek();
+            currentOp?.Shutdown(Outcome.Failed);
         }
 
         private void DeathHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
@@ -151,6 +154,12 @@ namespace Content.Server.AI.Utility.AiLogic
             if (action == null || !action.CanOverride && CurrentAction?.GetType() == action.GetType())
             {
                 return;
+            }
+            
+            var currentOp = CurrentAction?.ActionOperators.Peek();
+            if (currentOp != null && currentOp.HasStartup)
+            {
+                currentOp.Shutdown(Outcome.Failed);
             }
 
             CurrentAction = action;

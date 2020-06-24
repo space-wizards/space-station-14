@@ -1,0 +1,134 @@
+- type: entity
+  parent: Clothing
+  id: NeckClothing
+  abstract: true
+  name: neck
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/neck.rsi
+  - type: Icon
+    sprite: Clothing/neck.rsi
+  - type: Clothing
+    Size: 10
+    QuickEquip: true
+    Slots:
+    - neck
+    sprite: Clothing/neck.rsi
+
+- type: entity
+  parent: NeckClothing
+  id: HeadPhonesOn
+  name: headphones
+  description:
+  components:
+  - type: Sprite
+    state: headphones_on
+  - type: Icon
+    state: headphones_on
+  - type: Clothing
+    HeldPrefix: headphones_on
+
+- type: entity
+  parent: NeckClothing
+  id: RedTie
+  name: red-tie
+  description:
+  components:
+  - type: Sprite
+    state: redtie
+  - type: Icon
+    state: redtie
+  - type: Clothing
+    HeldPrefix: redtie
+
+- type: entity
+  parent: NeckClothing
+  id: DetTie
+  name: detective's tie
+  description:
+  components:
+  - type: Sprite
+    state: dettie
+  - type: Icon
+    state: dettie
+  - type: Clothing
+    HeldPrefix: dettie
+
+- type: entity
+  parent: NeckClothing
+  id: Stethoscope
+  name: stethoscope
+  description:
+  components:
+  - type: Sprite
+    state: stethoscope
+  - type: Icon
+    state: stethoscope
+  - type: Clothing
+    HeldPrefix: stethoscope
+
+- type: entity
+  parent: NeckClothing
+  id: StripedRedScarf
+  name: striped red scarf
+  description:
+  components:
+  - type: Sprite
+    state: stripedredscarf
+  - type: Icon
+    state: stripedredscarf
+  - type: Clothing
+    HeldPrefix: stripedredscarf
+
+- type: entity
+  parent: NeckClothing
+  id: StripedBlueScarf
+  name: striped blue scarf
+  description:
+  components:
+  - type: Sprite
+    state: stripedbluescarf
+  - type: Icon
+    state: stripedbluescarf
+  - type: Clothing
+    HeldPrefix: stripedbluescarf
+
+- type: entity
+  parent: NeckClothing
+  id: StripedGreenScarf
+  name: striped green scarf
+  description:
+  components:
+  - type: Sprite
+    state: stripedgreenscarf
+  - type: Icon
+    state: stripedgreenscarf
+  - type: Clothing
+    HeldPrefix: stripedgreenscarf
+
+- type: entity
+  parent: NeckClothing
+  id: ZebraScarf
+  name: zebra scarf
+  description:
+  components:
+  - type: Sprite
+    state: zebrascarf
+  - type: Icon
+    state: zebrascarf
+  - type: Clothing
+    HeldPrefix: zebrascarf
+
+- type: entity
+  parent: NeckClothing
+  id: Bling
+  name: bling
+  description:
+  components:
+  - type: Sprite
+    state: bling
+  - type: Icon
+    state: bling
+  - type: Clothing
+    HeldPrefix: bling
