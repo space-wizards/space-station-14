@@ -50,7 +50,8 @@ namespace Content.Client.GameObjects
             _effectsDictionary = new Dictionary<ScreenEffects, Overlay>()
             {
                 { ScreenEffects.CircleMask, new CircleMaskOverlay() },
-                { ScreenEffects.GradientCircleMask, new GradientCircleMask() }
+                { ScreenEffects.GradientCircleMask, new GradientCircleMask() },
+                { ScreenEffects.Flash, new FlashOverlay() }
             };
         }
 

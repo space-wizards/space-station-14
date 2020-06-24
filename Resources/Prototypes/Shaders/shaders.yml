@@ -7,3 +7,8 @@
   id: GradientCircleMask
   kind: source
   path: "/Shaders/gradient_circle_mask.swsl"
+
+- type: shader
+  id: FlashedEffect
+  kind: source
+  path: "/Shaders/flashed_effect.swsl"

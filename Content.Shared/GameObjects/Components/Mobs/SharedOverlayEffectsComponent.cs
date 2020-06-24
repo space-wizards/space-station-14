@@ -18,6 +18,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         None,
         CircleMask,
         GradientCircleMask,
+        Flash
     }
 
     [Serializable, NetSerializable]
