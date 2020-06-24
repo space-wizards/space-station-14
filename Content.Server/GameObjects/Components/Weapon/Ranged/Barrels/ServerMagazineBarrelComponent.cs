@@ -14,7 +14,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -72,6 +71,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
 
+        private string _magFillPrototype;
+
         public bool BoltOpen { get; private set; } = true;
         private bool _autoEjectMag;
         // If the bolt needs to be open before we can insert / remove the mag (i.e. for LMGs)
@@ -100,6 +101,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
             }
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
+            serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
             serializer.DataField(ref _magNeedsOpenBolt, "magNeedsOpenBolt", false);
             serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", null);
@@ -136,7 +138,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             _chamberContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber", Owner);
-            _magazineContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-magazine", Owner);
+            _magazineContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-magazine", Owner, out var existing);
+
+            if (!existing && _magFillPrototype != null)
+            {
+                var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.GridPosition);
+                _magazineContainer.Insert(magEntity);
+            }
+            
+            Dirty();
+            UpdateAppearance();
         }
 
         public void ToggleBolt()

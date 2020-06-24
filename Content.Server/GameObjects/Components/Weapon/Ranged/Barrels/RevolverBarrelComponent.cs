@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         private AppearanceComponent _appearanceComponent;
+        private string _fillPrototype;
+        private int _unspawnedCount;
 
         // Sounds
         private string _soundEject;
@@ -50,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // TODO: Writing?
-
+            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
 
             // Sounds
             serializer.DataField(ref _soundEject, "soundEject", "/Audio/Guns/MagOut/revolver_magout.ogg");
@@ -61,13 +63,32 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammoContainer", Owner);
+            _unspawnedCount = Capacity;
+            int idx = 0;
+            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammoContainer", Owner, out var existing);
+            if (existing)
+            {
+                foreach (var entity in _ammoContainer.ContainedEntities)
+                {
+                    _unspawnedCount--;
+                    _ammoSlots[idx] = entity;
+                    idx++;
+                }
+            }
+
+            for (var i = 0; i < _unspawnedCount; i++)
+            {
+                var entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                _ammoSlots[idx] = entity;
+                _ammoContainer.Insert(entity);
+                idx++;
+            }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
                 _appearanceComponent = appearanceComponent;
             }
-
+            
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
