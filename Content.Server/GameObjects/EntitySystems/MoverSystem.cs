@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components;
+﻿using System;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
@@ -131,16 +132,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 var physics = entity.GetComponent<PhysicsComponent>();
                 if (entity.TryGetComponent<CollidableComponent>(out var collider))
                 {
-                    UpdateKinematics(entity.Transform, mover, physics, collider);
+                    UpdateKinematics(entity.Transform, mover, physics, frameTime, collider);
                 }
                 else
                 {
-                    UpdateKinematics(entity.Transform, mover, physics);
+                    UpdateKinematics(entity.Transform, mover, physics, frameTime);
                 }
             }
         }
 
-        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, CollidableComponent collider = null)
+        private void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics, float frameTime, CollidableComponent collider = null)
         {
             if (physics.Controller == null)
             {

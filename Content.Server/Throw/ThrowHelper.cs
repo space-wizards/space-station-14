@@ -83,7 +83,9 @@ namespace Content.Server.Throw
                 physComp = thrownEnt.AddComponent<PhysicsComponent>();
 
             var timing = IoCManager.Resolve<IGameTiming>();
-            var spd = throwForce / (1f / timing.TickRate); // acceleration is applied in 1 tick instead of 1 second, scale appropriately
+
+            // scaling is handled elsewhere, this is just multiplying by 60 independent of timing as a fix until elsewhere values are updated
+            var spd = throwForce * 60;
 
             physComp.SetController<ThrowController>();
             (physComp.Controller as ThrowController)?.StartThrow(angle.ToVec() * spd);
@@ -146,10 +148,9 @@ namespace Content.Server.Throw
 
             var velocityNecessary = distance / throwDuration;
             var impulseNecessary = velocityNecessary * mass;
-            var forceNecessary = impulseNecessary * (1f / timing.TickRate);
 
             // Then clamp it to the max force allowed and call Throw().
-            Throw(thrownEnt, MathF.Min(forceNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
+            Throw(thrownEnt, MathF.Min(impulseNecessary, throwForceMax), targetLoc, sourceLoc, spread, throwSourceEnt);
         }
     }
 }

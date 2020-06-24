@@ -12,6 +12,8 @@
 
 - type: entity
   id: WeaponTGArc
+  save: false
+  abstract: true
   parent: WeaponArc
   components:
   - type: Sprite

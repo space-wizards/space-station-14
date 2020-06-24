@@ -110,7 +110,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             if (_fillPrototype != null)
             {
-                _unspawnedCount += Capacity - 1;
+                _unspawnedCount += Capacity;
+                if (_unspawnedCount > 0)
+                {
+                    _unspawnedCount--;
+                    var chamberEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                    _chamberContainer.Insert(chamberEntity);
+                }
             }
             UpdateAppearance();
         }
@@ -139,6 +145,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+            Dirty();
             UpdateAppearance();
         }
 

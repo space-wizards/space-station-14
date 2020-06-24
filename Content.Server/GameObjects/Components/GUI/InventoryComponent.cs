@@ -408,7 +408,7 @@ namespace Content.Server.GameObjects
             {
                 foreach (var entity in slot.ContainedEntities)
                 {
-                    var exActs = entity.GetAllComponents<IExAct>();
+                    var exActs = entity.GetAllComponents<IExAct>().ToList();
                     foreach (var exAct in exActs)
                     {
                         exAct.OnExplosion(eventArgs);
