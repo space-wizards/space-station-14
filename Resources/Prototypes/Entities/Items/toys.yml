@@ -161,6 +161,8 @@
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: helpme
+  - type: Item
+    sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
     sound: /Audio/items/toys/helpme.ogg
   - type: ItemCooldown
@@ -184,6 +186,8 @@
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: helpme
+  - type: Item
+    sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
     sound: /Audio/items/toys/hellothere.ogg
   - type: ItemCooldown
@@ -205,6 +209,8 @@
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: helpme
+  - type: Item
+    sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
     sound: /Audio/items/toys/thankyou.ogg
   - type: ItemCooldown
@@ -226,6 +232,8 @@
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: helpme
+  - type: Item
+    sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
     sound: /Audio/items/toys/verygood.ogg
   - type: ItemCooldown
@@ -247,6 +255,8 @@
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
     state: helpme
+  - type: Item
+    sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
     sound: /Audio/items/toys/imsorry.ogg
   - type: ItemCooldown
@@ -255,7 +265,7 @@
     sound: /Audio/items/toys/imsorry.ogg
   - type: UseDelay
     delay: 1.0
-    
+
 ## Figurines
 
 - type: entity
@@ -628,3 +638,56 @@
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: foamblade
   - type: ItemCooldown
+
+# MISC
+
+- type: entity
+  name: basketball
+  parent: BaseItem
+  id: Basketball
+  description: Where dah courts at?
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: basketball
+  - type: Icon
+    sprite: Objects/Fun/toys.rsi
+    state: basketball
+  - type: Item
+    Size: 24
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: bask
+
+- type: entity
+  name: syndie balloon
+  parent: BaseItem
+  id: BalloonSyn
+  description: Loud and proud
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: synb
+  - type: Icon
+    sprite: Objects/Fun/toys.rsi
+    state: synb
+  - type: Item
+    Size: 24
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: synb
+
+- type: entity
+  name: corgi balloon
+  parent: BaseItem
+  id: BalloonCorgi
+  description: Cute
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: corgib
+  - type: Icon
+    sprite: Objects/Fun/toys.rsi
+    state: corgib
+  - type: Item
+    Size: 24
+    sprite: Objects/Fun/toys.rsi
+    HeldPrefix: corgib
