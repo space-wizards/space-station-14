@@ -79,6 +79,7 @@
   - addai
   - warp
   - hostlogin
+  - deleteewc
   CanViewVar: true
   CanAdminPlace: true
 
@@ -145,6 +146,7 @@
   - gc
   - gc_mode
   - warp
+  - deleteewc
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
