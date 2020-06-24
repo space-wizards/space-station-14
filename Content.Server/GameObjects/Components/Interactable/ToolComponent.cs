@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private InteractionSystem _interactionSystem;
         private SpriteComponent _spriteComponent;
 
-        protected ToolQuality _qualities = ToolQuality.Anchoring;
+        protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]
         public override ToolQuality Qualities
