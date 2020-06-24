@@ -134,6 +134,7 @@
   - type: HumanoidAppearance
   - type: AnimationPlayer
   - type: UnarmedCombat
+    damage: 20
     range: 0.8
     arcwidth: 30
     arc: fist
@@ -142,19 +143,16 @@
   save: false
   name: Urist McHands
   id: HumanMob_Dummy
-  abstract: true
   description: A dummy human meant to be used in character setup
   components:
     - type: Hands
       hands:
         - left
         - right
-
     - type: Inventory
     - type: Sprite
       netsync: false
       drawdepth: Mobs
-
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
         color: "#e8b59b"
@@ -183,17 +181,14 @@
         color: "#e8b59b"
         sprite: Mob/human.rsi
         state: human_l_leg
-
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mob/masking_helpers.rsi
         state: female_full
         visible: false
-
       - map: ["enum.Slots.INNERCLOTHING"]
         shader: StencilDraw
-
       - map: ["enum.HumanoidVisualLayers.LHand"]
         color: "#e8b59b"
         sprite: Mob/human.rsi
@@ -202,7 +197,6 @@
         color: "#e8b59b"
         sprite: Mob/human.rsi
         state: human_r_hand
-
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]
       - map: ["enum.Slots.SHOES"]
@@ -222,14 +216,11 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-
     - type: Icon
       sprite: Mob/human.rsi
       state: human_basic
-
     - type: Physics
       mass: 85
-
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
@@ -241,14 +232,11 @@
           - SmallImpassable
           layer:
           - MobImpassable
-
     - type: Species
       Template: Human
       HeatResistance: 323
     - type: Damageable
-
     - type: Appearance
       visuals:
         - type: SpeciesVisualizer2D
-
     - type: HumanoidAppearance

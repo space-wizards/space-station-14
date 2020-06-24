@@ -9,9 +9,7 @@
   - type: Icon
     texture: Buildings/weldtank.png
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 2
-    lightImpactRange: 4
+    lightImpactRange: 5
     flashRange: 5
   - type: Solution
     contents:

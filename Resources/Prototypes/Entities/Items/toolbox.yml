@@ -9,6 +9,7 @@
     Size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 35
     hitSound: "/Audio/weapons/smash.ogg"
 
 - type: entity

@@ -49,6 +49,9 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Occluder
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 250
   - type: SnapGrid
     offset: Center
   placement:

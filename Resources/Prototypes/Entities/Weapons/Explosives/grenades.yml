@@ -18,8 +18,7 @@
     delay: 3.5
   - type: Explosive
     devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
+    lightImpactRange: 3
     flashRange: 7
   - type: Damageable
   - type: Destructible

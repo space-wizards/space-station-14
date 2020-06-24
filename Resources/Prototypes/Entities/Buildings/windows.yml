@@ -28,7 +28,7 @@
       - SmallImpassable
   - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    thresholdvalue: 200
   - type: SnapGrid
     offset: Center
   - type: Window

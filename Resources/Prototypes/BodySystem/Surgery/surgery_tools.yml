@@ -7,18 +7,15 @@
   - type: SurgeryTool
     surgeryToolClass: Incision
     baseOperateTime: 3
-
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: scalpel
   - type: Icon
     sprite: Objects/Surgery/surgery_tools.rsi
     state: scalpel
-
   - type: ItemCooldown
   - type: MeleeWeapon
-
-
+    damage: 25
 
 - type: entity
   name: retractor
@@ -29,18 +26,15 @@
   - type: SurgeryTool
     surgeryToolClass: Retraction
     baseOperateTime: 3
-
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: retractor
   - type: Icon
     sprite: Objects/Surgery/surgery_tools.rsi
     state: retractor
-
   - type: ItemCooldown
   - type: MeleeWeapon
-
-
+    damage: 5
 
 - type: entity
   name: cautery
@@ -51,18 +45,15 @@
   - type: SurgeryTool
     surgeryToolClass: Cauterization
     baseOperateTime: 3
-
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: cautery
   - type: Icon
     sprite: Objects/Surgery/surgery_tools.rsi
     state: cautery
-
   - type: ItemCooldown
   - type: MeleeWeapon
-
-
+    damage: 22
 
 - type: entity
   name: drill
@@ -73,18 +64,15 @@
   - type: SurgeryTool
     surgeryToolClass: Drilling
     baseOperateTime: 3
-
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: drill
   - type: Icon
     sprite: Objects/Surgery/surgery_tools.rsi
     state: drill
-
   - type: ItemCooldown
   - type: MeleeWeapon
-
-
+    damage: 25
 
 - type: entity
   name: bone saw
@@ -95,16 +83,15 @@
   - type: SurgeryTool
     surgeryToolClass: BoneSawing
     baseOperateTime: 3
-
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: bone_saw
   - type: Icon
     sprite: Objects/Surgery/surgery_tools.rsi
     state: bone_saw
-
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 30
 
 - type: entity
   name: hemostat
@@ -115,14 +102,13 @@
   - type: SurgeryTool
     surgeryToolClass: VesselCompression
     baseOperateTime: 3
-
   - type: Sprite
     sprite: Objects/Surgery/surgery_tools.rsi
     state: hemostat
   - type: Icon
     sprite: Objects/Surgery/surgery_tools.rsi
     state: hemostat
-
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 22
 

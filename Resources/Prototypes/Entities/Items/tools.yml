@@ -14,6 +14,7 @@
     state: cutters-map
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 25
   - type: Tool
     qualities:
       - Cutting
@@ -42,15 +43,14 @@
     layers:
       - state: screwdriver-map
       - state: screwdriver-screwybits
-
   - type: Icon
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver-map
-
   - type: Item
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 30
   - type: Tool
     qualities:
       - Screwing
@@ -88,6 +88,7 @@
     HeldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 25
   - type: ItemStatus
   - type: Solution
     maxVol: 100
@@ -96,7 +97,6 @@
       reagents:
         - ReagentId: chem.WeldingFuel
           Quantity: 100
-
   - type: Welder
     useSoundCollection: Welder
 
@@ -116,6 +116,7 @@
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 30
   - type: Tool
     qualities:
       - Anchoring
@@ -137,6 +138,7 @@
     sprite: Objects/Tools/crowbar.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 30
   - type: Tool
     qualities:
       - Prying
@@ -159,6 +161,7 @@
     sprite: Objects/Tools/crowbar_red.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage: 30
   - type: Tool
     qualities:
       - Prying

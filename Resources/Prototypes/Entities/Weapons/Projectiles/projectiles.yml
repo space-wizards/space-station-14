@@ -130,9 +130,9 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 1
+    devastationRange: 2
     heavyImpactRange: 2
-    lightImpactRange: 4
+    lightImpactRange: 3
     flashRange: 10
   - type: PointLight
     radius: 3.5
@@ -170,8 +170,8 @@
     deleteOnCollide: false
   - type: Explosive
     devastationRange: 3
-    heavyImpactRange: 5
-    lightImpactRange: 7
+    heavyImpactRange: 2
+    lightImpactRange: 4
     flashRange: 10
 
 - type: entity
@@ -205,7 +205,7 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 3
-    heavyImpactRange: 5
-    lightImpactRange: 7
+    devastationRange: 2
+    heavyImpactRange: 2
+    lightImpactRange: 5
     flashRange: 10

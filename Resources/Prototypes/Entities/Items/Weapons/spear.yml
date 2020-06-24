@@ -6,23 +6,19 @@
   - type: Sprite
     sprite: Objects/Melee/spear.rsi
     state: spear
-
   - type: Icon
     sprite: Objects/Melee/spear.rsi
     state: spear
-
   - type: MeleeWeapon
+    damage: 35
     range: 1.5
     arcwidth: 0
     arc: spear
-
   - type: Item
     Size: 24
     sprite: Objects/Melee/spear.rsi
     prefix: inhand
-
   - type: ItemCooldown
-
 - type: MeleeWeaponAnimation
   id: spear
   state: spear

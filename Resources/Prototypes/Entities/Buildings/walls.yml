@@ -223,7 +223,7 @@
     sprite: Buildings/Walls/solid.rsi
     state: rgeneric
   - type: Destructible
-    thresholdvalue: 300
+    thresholdvalue: 400
     spawnondestroy: Girder
   - type: ReinforcedWall
     key: walls
@@ -290,7 +290,7 @@
   - type: Icon
     sprite: Buildings/Walls/solid.rsi
   - type: Destructible
-    thresholdvalue: 100
+    thresholdvalue: 200
     spawnondestroy: Girder
     destroysound: /Audio/effects/metalbreak.ogg
   - type: IconSmooth

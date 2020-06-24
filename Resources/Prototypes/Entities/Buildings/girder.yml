@@ -15,7 +15,7 @@
       layer: [MobMask, Opaque]
   - type: Damageable
   - type: Destructible
-    thresholdvalue: 50
+    thresholdvalue: 80
     spawnondestroy: SteelSheet1
   - type: SnapGrid
     offset: Edge

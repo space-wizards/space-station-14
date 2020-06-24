@@ -13,7 +13,7 @@
   - type: Pickaxe
   - type: ItemCooldown
   - type: MeleeWeapon
-    damage: 25
+    damage: 40
   - type: Item
     Size: 24
     sprite: Objects/Melee/pickaxe.rsi
