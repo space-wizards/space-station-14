@@ -26,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override string Name => "MagazineBarrel";
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
+        [ViewVariables]
         private ContainerSlot _chamberContainer;
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
         private ContainerSlot _magazineContainer;
@@ -145,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.GridPosition);
                 _magazineContainer.Insert(magEntity);
             }
-            
+
             Dirty();
             UpdateAppearance();
         }
