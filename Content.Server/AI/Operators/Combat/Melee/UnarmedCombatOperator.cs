@@ -7,15 +7,16 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Operators.Combat.Melee
 {
-    public class SwingMeleeWeaponOperator : AiOperator
+    public sealed class UnarmedCombatOperator : AiOperator
     {
         private float _burstTime;
         private float _elapsedTime;
 
         private readonly IEntity _owner;
         private readonly IEntity _target;
+        private UnarmedCombatComponent _unarmedCombat;
 
-        public SwingMeleeWeaponOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
+        public UnarmedCombatOperator(IEntity owner, IEntity target, float burstTime = 1.0f)
         {
             _owner = owner;
             _target = target;
@@ -38,10 +39,19 @@ namespace Content.Server.AI.Operators.Combat.Melee
             {
                 combatModeComponent.IsInCombatMode = true;
             }
+            
+            if (_owner.TryGetComponent(out UnarmedCombatComponent unarmedCombatComponent))
+            {
+                _unarmedCombat = unarmedCombatComponent;
+            }
+            else
+            {
+                return false;
+            }
 
             return true;
         }
-        
+
         public override void Shutdown(Outcome outcome)
         {
             base.Shutdown(outcome);
@@ -58,22 +68,18 @@ namespace Content.Server.AI.Operators.Combat.Melee
                 return Outcome.Success;
             }
 
-            if (!_owner.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand == null)
+            if (_unarmedCombat.Deleted)
             {
                 return Outcome.Failed;
             }
 
-            var meleeWeapon = hands.GetActiveHand.Owner;
-            meleeWeapon.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent);
-
             if ((_target.Transform.GridPosition.Position - _owner.Transform.GridPosition.Position).Length >
-                meleeWeaponComponent.Range)
+                _unarmedCombat.Range)
             {
                 return Outcome.Failed;
             }
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-
             interactionSystem.UseItemInHand(_owner, _target.Transform.GridPosition, _target.Uid);
             _elapsedTime += frameTime;
             return Outcome.Continuing;

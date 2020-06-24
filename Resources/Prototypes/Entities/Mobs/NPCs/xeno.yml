@@ -52,24 +52,7 @@
   - type: HumanoidAppearance
   - type: Stunnable
   - type: AnimationPlayer
-
-- type: entity
-  name: Claw
-  parent: BaseItem
-  id: MeleeClaw
-  components:
-  - type: Sprite
-    sprite: Objects/Melee/xeno_claw.rsi
-    state: icon
-  - type: Icon
-    sprite: Objects/Melee/xeno_claw.rsi
-    state: icon
-  - type: MeleeWeapon
+  - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
-    arc: spear
-  - type: Item
-    Size: 24
-    sprite: Objects/Melee/xeno_claw.rsi
-    prefix: inhand
-  - type: ItemCooldown
+    arc: claw

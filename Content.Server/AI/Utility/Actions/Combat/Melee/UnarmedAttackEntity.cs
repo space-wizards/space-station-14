@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Operators.Combat;
 using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
@@ -11,18 +10,17 @@ using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
-using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
-    public sealed class MeleeAttackEntity : UtilityAction
+    public sealed class UnarmedAttackEntity : UtilityAction
     {
         private IEntity _entity;
 
-        public MeleeAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
+        public UnarmedAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -30,11 +28,10 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
         public override void SetupOperators(Blackboard context)
         {
-            var equipped = context.GetState<EquippedEntityState>().GetValue();
             MoveToEntityOperator moveOperator;
-            if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent))
+            if (Owner.TryGetComponent(out UnarmedCombatComponent unarmedCombatComponent))
             {
-                moveOperator = new MoveToEntityOperator(Owner, _entity, meleeWeaponComponent.Range - 0.01f);
+                moveOperator = new MoveToEntityOperator(Owner, _entity, unarmedCombatComponent.Range - 0.01f);
             }
             // I think it's possible for this to happen given planning is time-sliced?
             // TODO: At this point we should abort
@@ -46,7 +43,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 moveOperator,
-                new SwingMeleeWeaponOperator(Owner, _entity),
+                new UnarmedCombatOperator(Owner, _entity), 
             });
         }
 
@@ -55,13 +52,12 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             base.UpdateBlackboard(context);
             context.GetState<TargetEntityState>().SetValue(_entity);
             context.GetState<MoveTargetState>().SetValue(_entity);
-            var equipped = context.GetState<EquippedEntityState>().GetValue();
-            context.GetState<WeaponEntityState>().SetValue(equipped);
+            // Can just set ourselves as entity given unarmed just inherits from meleeweapon
+            context.GetState<WeaponEntityState>().SetValue(Owner);
         }
 
         protected override Consideration[] Considerations { get; } = {
-            // Check if we have a weapon; easy-out
-            new MeleeWeaponEquippedCon(
+            new CanUnarmedCombatCon(
                 new BoolCurve()),
             // Don't attack a dead target
             new TargetIsDeadCon(
@@ -75,10 +71,8 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             // Prefer weaker targets
             new TargetHealthCon(
                 new QuadraticCurve(1.0f, 0.4f, 0.0f, -0.02f)),
-            new MeleeWeaponSpeedCon(
-                new QuadraticCurve(1.0f, 0.5f, 0.0f, 0.0f)),
-            new MeleeWeaponDamageCon(
-                new QuadraticCurve(1.0f, 0.25f, 0.0f, 0.0f)),
+            // TODO: Consider our Speed and Damage to compare this to using a weapon
+            // Also need to unequip our weapon if we have one (xenos can't hold one so no issue for now)
         };
     }
 }

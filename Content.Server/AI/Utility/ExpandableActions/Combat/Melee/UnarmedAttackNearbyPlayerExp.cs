@@ -11,7 +11,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
 {
-    public sealed class XenoMeleeAttackNearbyPlayerExp : ExpandableUtilityAction
+    public sealed class UnarmedAttackNearbyPlayerExp : ExpandableUtilityAction
     {
         public override float Bonus => UtilityAction.CombatBonus;
 
@@ -28,7 +28,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
             {
                 if (entity.HasComponent<BasicActorComponent>() && entity != owner)
                 {
-                    yield return new XenoMeleeAttackEntity(owner, entity, Bonus);
+                    yield return new UnarmedAttackEntity(owner, entity, Bonus);
                 }
             }
         }

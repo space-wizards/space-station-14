@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
+using Content.Server.AI.Operators.Combat;
 using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.ActionBlocker;
 using Content.Server.AI.Utility.Considerations.Combat;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.Utility.Considerations.Movement;
@@ -18,11 +18,11 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
-    public sealed class XenoMeleeAttackEntity : UtilityAction
+    public sealed class MeleeWeaponAttackEntity : UtilityAction
     {
         private IEntity _entity;
 
-        public XenoMeleeAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
+        public MeleeWeaponAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;
@@ -36,6 +36,8 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             {
                 moveOperator = new MoveToEntityOperator(Owner, _entity, meleeWeaponComponent.Range - 0.01f);
             }
+            // I think it's possible for this to happen given planning is time-sliced?
+            // TODO: At this point we should abort
             else
             {
                 moveOperator = new MoveToEntityOperator(Owner, _entity);
@@ -44,7 +46,7 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             ActionOperators = new Queue<AiOperator>(new AiOperator[]
             {
                 moveOperator,
-                new XenoSwingMeleeWeaponOperator(Owner, _entity),
+                new SwingMeleeWeaponOperator(Owner, _entity),
             });
         }
 
@@ -58,9 +60,6 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
         }
 
         protected override Consideration[] Considerations { get; } = {
-            // TODO: Add a "CanGetInRange" that checks if they're already in range OR if we can move
-            new CanMoveCon(
-                new BoolCurve()),
             // Check if we have a weapon; easy-out
             new MeleeWeaponEquippedCon(
                 new BoolCurve()),
