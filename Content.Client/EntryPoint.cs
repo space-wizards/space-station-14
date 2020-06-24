@@ -176,7 +176,7 @@ namespace Content.Client
                 "FlashExplosive",
                 "FlashProjectile",
                 "Utensil",
-                "ToysSqueak",
+                "ToysComponent",
             };
 
             foreach (var ignoreName in registerIgnore)

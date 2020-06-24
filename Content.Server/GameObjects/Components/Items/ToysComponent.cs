@@ -27,15 +27,15 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
-        public override string Name => "ToysSqueak";
+        public override string Name => "ToysComponent";
 
         [ViewVariables]
-        public string _soundCollectionName = "toyssqueak";
+        public string _soundCollectionName = "ToySqueak";
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _soundCollectionName, "toysSqueak", "toyssqueak");
+            serializer.DataField(ref _soundCollectionName, "toySqueak", "ToySqueak");
         }
 
         public void Squeak()
