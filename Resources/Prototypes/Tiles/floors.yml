@@ -143,7 +143,7 @@
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
-  #friction: 0.35
+  friction: 0.35
   item_drop: FloorTileItemSteel
 
 - type: tile
