@@ -178,6 +178,8 @@ namespace Content.Client
                 "FlashExplosive",
                 "FlashProjectile",
                 "Utensil",
+                "UnarmedCombat",
+                "TimedSpawner",
             };
 
             foreach (var ignoreName in registerIgnore)

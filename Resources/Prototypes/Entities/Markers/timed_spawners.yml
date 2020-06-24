@@ -28,10 +28,10 @@
       netsync: false
       visible: false
       sprite: Objects/markers.rsi
-      state: spawner_rifle
+      state: spawner_ai
     - type: Icon
       sprite: Objects/markers.rsi
-      state: spawner_rifle
+      state: spawner_ai
     - type: TimedSpawner
       prototypes:
         - HumanMob_Spirate
@@ -40,3 +40,24 @@
       intervalSeconds: 60
       minimumEntitiesSpawned: 1
       maximumEntitiesSpawned: 5
+
+- type: entity
+  name: Xeno AI Timed Spawner
+  id: XenoAITimedSpawner
+  parent: BaseTimedSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Objects/markers.rsi
+      state: spawner_xenoai
+    - type: Icon
+      sprite: Objects/markers.rsi
+      state: spawner_xenoai
+    - type: TimedSpawner
+      prototypes:
+        - XenoMob_Content
+      chance: 0.85
+      intervalSeconds: 30
+      minimumEntitiesSpawned: 2
+      maximumEntitiesSpawned: 4
