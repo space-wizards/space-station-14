@@ -4,9 +4,9 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.BehaviorSets
 {
-    public sealed class XenoBehaviorSet : BehaviorSet
+    public sealed class UnarmedAttackPlayersBehaviorSet : BehaviorSet
     {
-        public XenoBehaviorSet(IEntity owner) : base(owner)
+        public UnarmedAttackPlayersBehaviorSet(IEntity owner) : base(owner)
         {
             Actions = new IAiUtility[]
             {

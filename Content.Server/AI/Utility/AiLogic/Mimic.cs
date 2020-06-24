@@ -4,14 +4,13 @@ using Robust.Server.AI;
 
 namespace Content.Server.AI.Utility.AiLogic
 {
-    [AiLogicProcessor("Xeno")]
+    [AiLogicProcessor("Mimic")]
     [UsedImplicitly]
-    public sealed class Xeno : UtilityAi
+    public sealed class Mimic : UtilityAi
     {
         public override void Setup()
         {
             base.Setup();
-            AddBehaviorSet(new IdleBehaviorSet(SelfEntity), false);
             AddBehaviorSet(new UnarmedAttackPlayersBehaviorSet(SelfEntity), false);
             SortActions();
         }

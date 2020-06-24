@@ -52,3 +52,8 @@
   - type: HumanoidAppearance
   - type: Stunnable
   - type: AnimationPlayer
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: fist
+    damage: 90
