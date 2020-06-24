@@ -5,24 +5,38 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Interfaces;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
     [RegisterComponent]
-    public class FlashComponent : MeleeWeaponComponent, IUse
+    public class FlashComponent : MeleeWeaponComponent, IUse, IExamine
     {
+#pragma warning disable 649
+        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager;
+#pragma warning restore 649
+
         public override string Name => "Flash";
-        private int _lastsForMs = 5000;
-        private float _fadeFalloffExp = 8f;
-        private float _colorStrength = 0f;
-        private float _flickerStrength = 0.3f;
-        private int _flickerRate = 30;
+
+        [ViewVariables(VVAccess.ReadWrite)] private int _lastsForMs = 5000;
+        [ViewVariables(VVAccess.ReadWrite)] private float _fadeFalloffExp = 8f;
+        [ViewVariables(VVAccess.ReadWrite)] private int _usesRemaining = 5;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -30,9 +44,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             serializer.DataField(ref _lastsForMs, "lasts_for", 5000);
             serializer.DataField(ref _fadeFalloffExp, "fade_falloff_exp", 8f);
-            serializer.DataField(ref _colorStrength, "color_strength", 0f);
-            serializer.DataField(ref _flickerStrength, "flicker_strength", 0.3f);
-            serializer.DataField(ref _flickerRate, "flicker_rate", 30);
+            serializer.DataField(ref _usesRemaining, "uses", 5);
         }
 
         public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
@@ -54,6 +66,20 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         private void Flash(IEntity entity)
         {
+            if (_usesRemaining <= 0)
+            {
+                return;
+            }
+
+            var sprite = Owner.GetComponent<SpriteComponent>();
+            if (--_usesRemaining <= 0)
+            {
+                sprite.LayerSetState(0, "burnt");
+            }
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/flash.ogg", Owner.Transform.GridPosition,
+                AudioParams.Default);
+
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
             {
                 overlayEffectsComponent.ChangeOverlay(ScreenEffects.Flash);
@@ -62,6 +88,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     overlayEffectsComponent.ChangeOverlay(ScreenEffects.None);
                 });
             }
+
+            Dirty();
+        }
+
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if (!inDetailsRange)
+            {
+                return;
+            }
+
+            message.AddMarkup(_localizationManager.GetString(
+                $"The flash has [color={(_usesRemaining != 0 ? "green" : "red")}]{_usesRemaining}[/color] uses remaining."));
         }
     }
 }

@@ -20,13 +20,12 @@ namespace Content.Client.Graphics.Overlays
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
         [Dependency] private readonly IClyde _displayManager;
         [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
-        private double startTime;
+        private double _startTime;
         private uint lastsFor = 5000;
         private Texture _screenshotTexture;
 
@@ -38,18 +37,17 @@ namespace Content.Client.Graphics.Overlays
 
         public override void BeforeDraw()
         {
-            startTime = _gameTiming.CurTime.TotalMilliseconds;
+            _startTime = _gameTiming.CurTime.TotalMilliseconds;
             _displayManager.Screenshot(ScreenshotType.BeforeUI, image =>
             {
                 var rgba32Image = image.CloneAs<Rgba32>(Configuration.Default);
                 _screenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
-
             });
         }
 
         protected override void Draw(DrawingHandleBase handle)
         {
-            var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - startTime) / lastsFor);
+            var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - _startTime) / lastsFor);
             Shader?.SetParameter("percentComplete", percentComplete);
 
             var screenSpaceHandle = handle as DrawingHandleScreen;
@@ -59,11 +57,6 @@ namespace Content.Client.Graphics.Overlays
             {
                 screenSpaceHandle?.DrawTextureRect(_screenshotTexture, screenSize);
             }
-            else
-            {
-                screenSpaceHandle?.DrawRect(screenSize, Color.White);
-            }
-
         }
 
         protected override void Dispose(bool disposing)

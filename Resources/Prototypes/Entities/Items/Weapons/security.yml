@@ -30,20 +30,19 @@
   id: Flash
   components:
     - type: Sprite
-      sprite: Objects/Melee/stunbaton.rsi
-      state: stunbaton_off
+      sprite: Objects/Melee/flash.rsi
+      state: flash
 
     - type: Icon
-      sprite: Objects/Melee/stunbaton.rsi
-      state: stunbaton_off
+      sprite: Objects/Melee/flash.rsi
+      state: flash
 
     - type: Flash
       damage: 0
 
     - type: Item
       Size: 10
-      sprite: Objects/Melee/stunbaton.rsi
-      HeldPrefix: off
+      sprite: Objects/Melee/flash.rsi
 
     - type: ItemCooldown
 
