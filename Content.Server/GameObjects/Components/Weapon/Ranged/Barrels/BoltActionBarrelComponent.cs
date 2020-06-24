@@ -16,6 +16,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
@@ -161,14 +162,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile()
+        public override IEntity TakeProjectile(GridCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (_autoCycle)
             {
                 Cycle();
             }
-            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet();
+            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
         }
 
         protected override bool WeaponCanFire()

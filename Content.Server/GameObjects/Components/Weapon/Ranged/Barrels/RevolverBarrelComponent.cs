@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
@@ -88,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
-            
+
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
@@ -169,16 +170,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// Takes a projectile out if possible
         /// IEnumerable just to make supporting shotguns saner
         /// </summary>
+        /// <param name="spawnAt"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile()
+        public override IEntity TakeProjectile(GridCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
-                bullet = ammoComponent.TakeBullet();
+                bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = null;
