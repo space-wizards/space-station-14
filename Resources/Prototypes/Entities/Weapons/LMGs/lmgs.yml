@@ -17,7 +17,7 @@
     allSelectors:
     - Automatic
     caliber: LRifle
-    magazineTypes: 
+    magazineTypes:
     - Box
     fireRate: 8
     minAngle: 10
@@ -41,7 +41,7 @@
   description: A rather traditionally made L6 SAW with a pleasantly lacquered wooden pistol grip. This one is unmarked.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Lmgs/l6.rsi
+    sprite: Objects/Guns/LMGs/l6.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -76,7 +76,7 @@
   description: Kalashnikov's Machinegun, a well preserved and maintained antique weapon of war.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Lmgs/pk.rsi
+    sprite: Objects/Guns/LMGs/pk.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
