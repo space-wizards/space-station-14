@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -6,6 +7,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
     public struct PathfindingArgs
     {
         public EntityUid Uid { get; }
+        public ICollection<string> Access { get; }
         public int CollisionMask { get; }
         public TileRef Start { get; }
         public TileRef End { get; }
@@ -20,6 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
         public PathfindingArgs(
             EntityUid entityUid,
+            ICollection<string> access,
             int collisionMask,
             TileRef start,
             TileRef end,
@@ -29,6 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             bool allowSpace = false)
         {
             Uid = entityUid;
+            Access = access;
             CollisionMask = collisionMask;
             Start = start;
             End = end;

@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     {
         // Originally I had this logic shared with PumpBarrel and used a couple of variables to control things
         // but it felt a lot messier to play around with, especially when adding verbs
-        
+
         public override string Name => "BoltActionBarrel";
 
         public override int ShotsLeft
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
 
                 var soundSystem = EntitySystem.Get<AudioSystem>();
-                
+
                 if (value)
                 {
                     if (_soundBoltOpen != null)
@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                         soundSystem.PlayAtCoords(_soundBoltClosed, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                     }
                 }
-                
+
                 _boltOpen = value;
                 UpdateAppearance();
             }
@@ -105,12 +105,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", "/Audio/Guns/Bolt/rifle_bolt_closed.ogg");
             serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Guns/MagIn/bullet_insert.ogg");
         }
-        
+
         void IMapInit.MapInit()
         {
             if (_fillPrototype != null)
             {
-                _unspawnedCount += Capacity - 1;
+                _unspawnedCount += Capacity;
+                if (_unspawnedCount > 0)
+                {
+                    _unspawnedCount--;
+                    var chamberEntity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                    _chamberContainer.Insert(chamberEntity);
+                }
             }
             UpdateAppearance();
         }
@@ -137,8 +143,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
-            
+
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
+            Dirty();
             UpdateAppearance();
         }
 
@@ -183,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
                 if (!ammoComponent.Caseless)
                 {
-                    EjectCasing(chamberedEntity);   
+                    EjectCasing(chamberedEntity);
                 }
             }
 
@@ -216,7 +223,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
             }
-            
+
             Dirty();
             UpdateAppearance();
         }
@@ -264,9 +271,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 UpdateAppearance();
                 return true;
             }
-            
+
             Owner.PopupMessage(user, Loc.GetString("No room"));
-            
+
             return false;
         }
 
@@ -279,7 +286,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 // Dirty();
                 return true;
             }
-            
+
             Cycle(true);
             return true;
         }
@@ -288,12 +295,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }
-        
+
         [Verb]
         private sealed class OpenBoltVerb : Verb<BoltActionBarrelComponent>
         {
             protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = Loc.GetString("Open bolt");
                 data.Visibility = component.BoltOpen ? VerbVisibility.Disabled : VerbVisibility.Visible;
             }
@@ -303,12 +316,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 component.BoltOpen = true;
             }
         }
-        
+
         [Verb]
         private sealed class CloseBoltVerb : Verb<BoltActionBarrelComponent>
         {
             protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = Loc.GetString("Close bolt");
                 data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Disabled;
             }

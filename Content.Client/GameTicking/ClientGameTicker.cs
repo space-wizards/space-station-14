@@ -55,6 +55,7 @@ namespace Content.Client.GameTicking
             StartTime = message.StartTime;
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
+            Paused = message.Paused;
 
             LobbyStatusUpdated?.Invoke();
         }

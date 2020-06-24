@@ -5,7 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.AI.Operators.Combat
+namespace Content.Server.AI.Operators.Combat.Melee
 {
     public class SwingMeleeWeaponOperator : AiOperator
     {
@@ -41,6 +41,15 @@ namespace Content.Server.AI.Operators.Combat
 
             return true;
         }
+        
+        public override void Shutdown(Outcome outcome)
+        {
+            base.Shutdown(outcome);
+            if (_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
+            {
+                combatModeComponent.IsInCombatMode = false;
+            }
+        }
 
         public override Outcome Execute(float frameTime)
         {
@@ -70,5 +79,4 @@ namespace Content.Server.AI.Operators.Combat
             return Outcome.Continuing;
         }
     }
-
 }

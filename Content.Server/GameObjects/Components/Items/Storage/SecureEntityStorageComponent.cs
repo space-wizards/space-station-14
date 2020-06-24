@@ -139,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             protected override void GetData(IEntity user, SecureEntityStorageComponent component, VerbData data)
             {
-                if (component.Open)
+                if (!ActionBlockerSystem.CanInteract(user) || component.Open)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
