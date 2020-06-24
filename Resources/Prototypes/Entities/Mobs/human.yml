@@ -1,5 +1,5 @@
 # Both humans and NPCs inherit from this.
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+# Anything player specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
   name: Urist McHands
@@ -137,26 +137,6 @@
     range: 0.8
     arcwidth: 30
     arc: fist
-
-- type: entity
-  save: false
-  name: Urist McHands
-  parent: BaseHumanMob_Content
-  id: HumanMob_Content
-  description: A miserable pile of secrets
-  drawdepth: Mobs
-  components:
-  - type: Mind
-    show_examine_info: true
-  - type: Input
-    context: "human"
-  - type: StatusEffectsUI
-  - type: OverlayEffectsUI
-  - type: Eye
-    zoom: 0.5, 0.5
-  - type: CameraRecoil
-  - type: Examiner
-  - type: HumanInventoryController
 
 - type: entity
   save: false
