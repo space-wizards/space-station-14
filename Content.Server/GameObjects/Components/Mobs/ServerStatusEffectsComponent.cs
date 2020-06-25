@@ -83,16 +83,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                         break;
                     }
 
+                    // TODO: Implement clicking other status effects in the HUD
                     switch (msg.Effect)
                     {
-                        case StatusEffect.Health:
-                            break;
-                        case StatusEffect.Hunger:
-                            break;
-                        case StatusEffect.Thirst:
-                            break;
-                        case StatusEffect.Stun:
-                            break;
                         case StatusEffect.Buckled:
                             if (!player.TryGetComponent(out BuckleComponent buckle))
                             {
