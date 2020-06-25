@@ -17,6 +17,7 @@ namespace Content.Client.GameObjects.Components.Power
         private Animation _insertingMetalAnimation;
         private Animation _insertingGlassAnimation;
         private Animation _insertingGoldAnimation;
+        private Animation _insertingPhoronAnimation;
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -26,6 +27,7 @@ namespace Content.Client.GameObjects.Components.Power
             _insertingMetalAnimation = PopulateAnimation("protolathe_metal", 0.9f);
             _insertingGlassAnimation = PopulateAnimation("protolathe_glass", 0.9f);
             _insertingGoldAnimation = PopulateAnimation("protolathe_gold", 0.9f);
+            _insertingPhoronAnimation = PopulateAnimation("protolathe_phoron", 0.9f);
         }
 
         private Animation PopulateAnimation(string sprite, float length)
@@ -93,6 +95,12 @@ namespace Content.Client.GameObjects.Components.Power
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(_insertingGoldAnimation, AnimationKey);
+                    }
+                    break;
+                case LatheVisualState.InsertingPhoron:
+                    if (!animPlayer.HasRunningAnimation(AnimationKey))
+                    {
+                        animPlayer.Play(_insertingPhoronAnimation, AnimationKey);
                     }
                     break;
                 default:

@@ -5,6 +5,7 @@ using System.Threading.Tasks.Dataflow;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -408,7 +409,7 @@ namespace Content.Server.GameObjects
             {
                 foreach (var entity in slot.ContainedEntities)
                 {
-                    var exActs = entity.GetAllComponents<IExAct>();
+                    var exActs = entity.GetAllComponents<IExAct>().ToList();
                     foreach (var exAct in exActs)
                     {
                         exAct.OnExplosion(eventArgs);
