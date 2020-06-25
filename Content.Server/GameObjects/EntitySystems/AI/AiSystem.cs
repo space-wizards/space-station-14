@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
 using Robust.Server.AI;
 using Robust.Server.Interfaces.Console;

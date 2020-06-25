@@ -1,9 +1,8 @@
-
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Movement
+namespace Content.Shared.GameObjects.Components.Movement
 {
     [RegisterComponent]
     public class MovementSpeedModifierComponent : Component
@@ -85,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Movement
         }
     }
 
-    interface IMoveSpeedModifier
+    public interface IMoveSpeedModifier
     {
         float WalkSpeedModifier { get; }
         float SprintSpeedModifier { get; }

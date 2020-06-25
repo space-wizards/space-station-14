@@ -100,7 +100,6 @@ namespace Content.Client
                 "PowerCellCharger",
                 "WeaponCapacitorCharger",
                 "AiController",
-                "PlayerInputMover",
                 "Computer",
                 "AsteroidRock",
                 "ResearchServer",
@@ -113,13 +112,10 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
-                "Species",
                 "Drink",
                 "Food",
                 "FoodContainer",
                 "Stomach",
-                "Hunger",
-                "Thirst",
                 "Rotatable",
                 "MagicMirror",
                 "MedkitFill",
@@ -135,7 +131,6 @@ namespace Content.Client
                 "Bloodstream",
                 "TransformableContainer",
                 "Mind",
-                "MovementSpeedModifier",
                 "StorageFill",
                 "Mop",
                 "Bucket",
@@ -154,7 +149,6 @@ namespace Content.Client
                 "DroppedBodyPart",
                 "DroppedMechanism",
                 "BodyManager",
-                "Stunnable",
                 "SolarPanel",
                 "BodyScanner",
                 "Stunbaton",
@@ -171,6 +165,8 @@ namespace Content.Client
                 "FlashExplosive",
                 "FlashProjectile",
                 "Utensil",
+                "UnarmedCombat",
+                "TimedSpawner",
                 "NodeContainer",
                 "PowerSupplier",
                 "PowerConsumer",
@@ -256,7 +252,10 @@ namespace Content.Client
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            if (!eventArgs.OldEntity.Deleted)
+            {
+                eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            }
         }
 
         public override void PostInit()

@@ -5,6 +5,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
