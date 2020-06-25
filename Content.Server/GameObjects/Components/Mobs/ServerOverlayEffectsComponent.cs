@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
@@ -11,52 +12,37 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedOverlayEffectsComponent))]
     public sealed class ServerOverlayEffectsComponent : SharedOverlayEffectsComponent
     {
-        private readonly List<string> _currentOverlays = new List<string>();
+        private readonly List<OverlayContainer> _currentOverlays = new List<OverlayContainer>();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<string> ActiveOverlays => _currentOverlays;
+        private List<OverlayContainer> ActiveOverlays => _currentOverlays;
 
         public override ComponentState GetComponentState()
         {
             return new OverlayEffectComponentState(_currentOverlays);
         }
 
-        /// <summary>
-        /// Adds overlays based on their ID
-        /// </summary>
-        /// <param name="overlayIds"></param>
-        public void AddOverlays(params string[] overlayIds)
+        public void AddOverlay(OverlayContainer container)
         {
-            foreach (var overlayId in overlayIds)
+            if (!ActiveOverlays.Contains(container))
             {
-                if (!ActiveOverlays.Contains(overlayId))
-                {
-                    ActiveOverlays.Add(overlayId);
-                }
+                ActiveOverlays.Add(container);
+                Dirty();
             }
-
-            Dirty();
         }
 
-        /// <summary>
-        /// Removes overlays
-        /// </summary>
-        /// <param name="overlayIds"></param>
-        public void RemoveOverlays(params string[] overlayIds)
+        public void AddOverlay(string id) => AddOverlay(OverlayContainer.FromID(id));
+
+        public void RemoveOverlay(OverlayContainer container)
         {
-            ActiveOverlays.RemoveAll(overlayIds.Contains);
-            Dirty();
+            if (ActiveOverlays.Contains(container))
+            {
+                ActiveOverlays.Remove(container);
+                Dirty();
+            }
         }
 
-        /// <summary>
-        /// Sets this to be the only active overlay
-        /// </summary>
-        /// <param name="overlayId"></param>
-        public void SetOverlay(string overlayId)
-        {
-            ClearOverlays();
-            ActiveOverlays.Add(overlayId);
-        }
+        public void RemoveOverlay(string id) => RemoveOverlay(OverlayContainer.FromID(id));
 
         public void ClearOverlays()
         {

@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics.Drawing;
+﻿using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;

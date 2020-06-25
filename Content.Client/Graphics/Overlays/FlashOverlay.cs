@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
@@ -16,7 +17,7 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class FlashOverlay : Overlay
+    public class FlashOverlay : Overlay, IConfigurable<TimedOverlayContainer>
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -26,7 +27,7 @@ namespace Content.Client.Graphics.Overlays
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private double _startTime;
-        private uint lastsFor = 5000;
+        private int lastsFor = 5000;
         private Texture _screenshotTexture;
 
         public FlashOverlay() : base(nameof(FlashOverlay))
@@ -61,6 +62,11 @@ namespace Content.Client.Graphics.Overlays
             base.Dispose(disposing);
 
             _screenshotTexture = null;
+        }
+
+        public void Configure(TimedOverlayContainer parameters)
+        {
+            lastsFor = parameters.Length;
         }
     }
 }

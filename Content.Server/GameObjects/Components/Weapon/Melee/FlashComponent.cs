@@ -82,11 +82,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
             {
-                overlayEffectsComponent.AddOverlays("FlashOverlay");
-                Timer.Spawn(_lastsForMs, () =>
-                {
-                    overlayEffectsComponent.RemoveOverlays("FlashOverlay");
-                });
+                var container = new TimedOverlayContainer("FlashOverlay", _lastsForMs);
+                overlayEffectsComponent.AddOverlay(container);
+                container.StartTimer(() => overlayEffectsComponent.RemoveOverlay(container));
             }
 
             Dirty();

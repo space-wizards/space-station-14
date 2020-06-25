@@ -1,7 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
+using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
@@ -15,13 +22,69 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     [Serializable, NetSerializable]
+    public class OverlayContainer
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        public string ID { get; }
+
+        protected OverlayContainer([NotNull] string id)
+        {
+            ID = id;
+        }
+
+        public static OverlayContainer FromID([NotNull] string id)
+        {
+            return new OverlayContainer(id);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is OverlayContainer container)
+            {
+                return container.ID == ID;
+            }
+
+            if (obj is string idString)
+            {
+                return idString == ID;
+            }
+
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (ID != null ? ID.GetHashCode() : 0);
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class OverlayEffectComponentState : ComponentState
     {
-        public List<string> Overlays;
+        public List<OverlayContainer> Overlays;
 
-        public OverlayEffectComponentState(List<string> overlays) : base(ContentNetIDs.OVERLAYEFFECTS)
+        public OverlayEffectComponentState(List<OverlayContainer> overlays) : base(ContentNetIDs.OVERLAYEFFECTS)
         {
             Overlays = overlays;
         }
+    }
+
+    public interface IConfigurable<in T>
+    {
+        public void Configure(T parameters);
+    }
+
+    [Serializable, NetSerializable]
+    public class TimedOverlayContainer : OverlayContainer
+    {
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int Length { get; }
+
+        public TimedOverlayContainer(string id, int length) : base(id)
+        {
+            Length = length;
+        }
+
+        public void StartTimer(Action finished) => Timer.Spawn(Length, finished);
     }
 }
