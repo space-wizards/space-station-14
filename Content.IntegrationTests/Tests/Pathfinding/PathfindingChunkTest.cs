@@ -6,6 +6,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Pathfinding
 {
@@ -35,9 +36,13 @@ namespace Content.IntegrationTests.Tests.Pathfinding
                 var chunkNeighbors = chunk.GetNeighbors().ToList();
                 Assert.That(chunkNeighbors.Count == 0);
                 var neighborChunkTile = mapMan.GetGrid(gridId).GetTileRef(new MapIndices(PathfindingChunk.ChunkSize, PathfindingChunk.ChunkSize));
-                pathfindingSystem.GetChunk(neighborChunkTile);
+                var neighborChunk = pathfindingSystem.GetChunk(neighborChunkTile);
                 chunkNeighbors = chunk.GetNeighbors().ToList();
                 Assert.That(chunkNeighbors.Count == 1);
+                
+                // Directions
+                Assert.That(PathfindingHelpers.RelativeDirection(neighborChunk, chunk) == Direction.NorthEast);
+                Assert.That(PathfindingHelpers.RelativeDirection(chunk.Nodes[0, 1], chunk.Nodes[0, 0]) == Direction.North);
                 
                 // Nodes
                 var node = chunk.Nodes[1, 1];
