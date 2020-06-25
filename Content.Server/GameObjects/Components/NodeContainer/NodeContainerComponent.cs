@@ -38,9 +38,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             serializer.DataField(ref _nodeTypes, "nodeTypes", new Dictionary<NodeGroupID, List<string>> { });
         }
 
-        public override void Initialize()
+        protected override void Startup()
         {
-            base.Initialize();
+            base.Startup();
             foreach (var nodeType in _nodeTypes)
             {
                 var nodeGroupID = nodeType.Key;
