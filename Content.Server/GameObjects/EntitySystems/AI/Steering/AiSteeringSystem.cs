@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
@@ -258,6 +259,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // If we still have an existing path then keep following that until the new path arrives
             if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Item2.Status == JobStatus.Finished)
             {
+                switch (pathRequest.Item2.Exception)
+                {
+                    case null:
+                        break;
+                    // Currently nothing should be cancelling these except external factors
+                    case TaskCanceledException _:
+                        controller.VelocityDir = Vector2.Zero;
+                        return SteeringStatus.NoPath;
+                    default:
+                        throw pathRequest.Item2.Exception;
+                }
                 // No actual path
                 var path = _pathfindingRequests[entity].Item2.Result;
                 if (path == null || path.Count == 0)
