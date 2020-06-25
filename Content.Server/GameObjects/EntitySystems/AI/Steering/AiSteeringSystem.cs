@@ -6,8 +6,9 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Server.Interfaces.GameTicking;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -18,7 +19,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 {
@@ -29,6 +29,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 #pragma warning disable 649
         [Dependency] private IMapManager _mapManager;
         [Dependency] private IEntityManager _entityManager;
+        [Dependency] private IPauseManager _pauseManager;
 #pragma warning restore 649
         private PathfindingSystem _pathfindingSystem;
 
@@ -39,66 +40,47 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         public bool CollisionAvoidanceEnabled { get; set; } = true;
 
         /// <summary>
-        /// Stops all AI movement. All AI currently moving will also have their input vector set to 0
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Paused
-        {
-            get => _paused;
-            set
-            {
-                _paused = value;
-                if (!_paused)
-                {
-                    return;
-                }
-                
-                foreach (var agentList in _agentLists)
-                {
-                    foreach (var (entity, _) in agentList)
-                    {
-                        entity.GetComponent<AiControllerComponent>().VelocityDir = Vector2.Zero;
-                    }
-                }
-            }
-        }
-
-        private bool _paused;
-        
-        /// <summary>
         /// How close we need to get to the center of each tile
         /// </summary>
         private const float TileTolerance = 0.8f;
-
-        /// <summary>
-        /// How many agents we run in a single tick before stopping
-        /// </summary>
-        private const int MaxAgentsPerTick = 32;
+        
         private Dictionary<IEntity, IAiSteeringRequest> RunningAgents => _agentLists[_listIndex];
         
         // We'll cycle the running list every tick as all we're doing is getting a vector2 for the
         // agent's steering. Should help a lot given this is the most expensive operator by far.
         // The AI will keep moving, it's just it'll keep moving in its existing direction.
         // If we change to 20/30 TPS you might want to change this but for now it's fine
-        private List<Dictionary<IEntity, IAiSteeringRequest>> _agentLists = new List<Dictionary<IEntity, IAiSteeringRequest>>(AgentListCount);
+        private readonly List<Dictionary<IEntity, IAiSteeringRequest>> _agentLists = new List<Dictionary<IEntity, IAiSteeringRequest>>(AgentListCount);
         private const int AgentListCount = 2;
         private int _listIndex;
         
         // Cache nextGrid
-        private Dictionary<IEntity, GridCoordinates> _nextGrid = new Dictionary<IEntity, GridCoordinates>();
-        private Dictionary<IEntity, Queue<TileRef>> _paths = new Dictionary<IEntity, Queue<TileRef>>();
-        private Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)> _pathfindingRequests = 
+        private readonly Dictionary<IEntity, GridCoordinates> _nextGrid = new Dictionary<IEntity, GridCoordinates>();
+        
+        /// <summary>
+        /// Current live paths for AI
+        /// </summary>
+        private readonly Dictionary<IEntity, Queue<TileRef>> _paths = new Dictionary<IEntity, Queue<TileRef>>();
+        
+        /// <summary>
+        /// Pathfinding request jobs we're waiting on
+        /// </summary>
+        private readonly Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)> _pathfindingRequests = 
             new Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)>();
-        private Dictionary<IEntity, int> _stuckCounter = new Dictionary<IEntity, int>();
+        
+        /// <summary>
+        /// Keep track of how long we've been in 1 position and re-path if it's been too long
+        /// </summary>
+        private readonly Dictionary<IEntity, int> _stuckCounter = new Dictionary<IEntity, int>();
         
         /// <summary>
         /// Get a fixed position for the target entity; if they move then re-path
         /// </summary>
-        private Dictionary<IEntity, GridCoordinates> _entityTargetPosition = new Dictionary<IEntity, GridCoordinates>();
+        private readonly Dictionary<IEntity, GridCoordinates> _entityTargetPosition = new Dictionary<IEntity, GridCoordinates>();
         
         // Anti-Stuck
         // Given the collision avoidance can lead to twitching need to store a reference position and check if we've been near this too long
-        private Dictionary<IEntity, GridCoordinates> _stuckPositions = new Dictionary<IEntity, GridCoordinates>();
+        private readonly Dictionary<IEntity, GridCoordinates> _stuckPositions = new Dictionary<IEntity, GridCoordinates>();
 
         public override void Initialize()
         {
@@ -114,11 +96,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <summary>
         /// Adds the AI to the steering system to move towards a specific target
         /// </summary>
+        /// We'll add it to the movement list that has the least number of agents
         /// <param name="entity"></param>
         /// <param name="steeringRequest"></param>
         public void Register(IEntity entity, IAiSteeringRequest steeringRequest)
         {
-            var lowestListCount = MaxAgentsPerTick;
+            var lowestListCount = 1000;
             var lowestListIndex = 0;
 
             for (var i = 0; i < _agentLists.Count; i++)
@@ -206,16 +189,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            var gameTiming = IoCManager.Resolve<IGameTiming>().Paused;
-            if (gameTiming != Paused)
-            {
-                Paused = gameTiming;
-            }
-            
-            if (Paused)
-            {
-                return;
-            }
 
             foreach (var (agent, steering) in RunningAgents)
             {
@@ -255,6 +228,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             if (!entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
             {
                 return SteeringStatus.NoPath;
+            }
+
+            if (_pauseManager.IsGridPaused(entity.Transform.GridID))
+            {
+                controller.VelocityDir = Vector2.Zero;
+                return SteeringStatus.Pending;
             }
             
             // Validation
