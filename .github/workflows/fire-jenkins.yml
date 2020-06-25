@@ -19,7 +19,7 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Fire Jenkins
-      run: curl -v -X POST -d "" -u "$JENKINS_AUTH" "https://builds.spacestation14.io/jenkins/job/SS14%20Content/build?token=$JENKINS_SS14_CONTENT_BUILD_TOKEN&cause=GitHub+actions+push"
+      run: curl -X POST -d "" -u "$JENKINS_AUTH" "https://builds.spacestation14.io/jenkins/job/SS14%20Content/build?token=$JENKINS_SS14_CONTENT_BUILD_TOKEN&cause=GitHub+actions+push"
       env:
         JENKINS_AUTH: ${{ secrets.JENKINS_AUTH }}
         JENKINS_SS14_CONTENT_BUILD_TOKEN: ${{ secrets.JENKINS_SS14_CONTENT_BUILD_TOKEN }}
