@@ -72,6 +72,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemGCircuit
 
 - type: tile
   name: floor_lino
@@ -84,6 +85,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemLino
 
 - type: tile
   name: floor_mono
@@ -96,6 +98,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemMono
 
 - type: tile
   name: floor_reinforced
@@ -108,10 +111,11 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemReinforced
 
 - type: tile
   name: floor_rock_vault
-  display_name: Rock vault floor
+  display_name: rock floor
   texture: "rock_vault"
   base_turfs:
   - space
@@ -120,6 +124,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemRock
 
 - type: tile
   name: floor_showroom
@@ -132,6 +137,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemShowroom
 
 - type: tile
   name: floor_steel
@@ -157,6 +163,7 @@
   can_crowbar: true
   footstep_sounds: footstep_floor
   friction: 0.35
+  item_drop: FloorTileItemDirty
 
 - type: tile
   name: floor_techmaint
@@ -201,10 +208,12 @@
   texture: asteroid_tile
   base_turfs:
   - space
+  - underplating
   is_subfloor: false
-  can_crowbar: false
+  can_crowbar: true
   footstep_sounds: footstep_asteroid
   friction: 0.35
+  item_drop: FloorTileItemAsteroid
 
 - type: tile
   name: floor_asteroid_coarse_sand0
@@ -249,3 +258,27 @@
   can_crowbar: false
   footstep_sounds: footstep_asteroid
   friction: 0.35
+
+- type: tile
+  name: floor_snow
+  display_name: Snow
+  texture: snow
+  base_turfs:
+  - space
+  is_subfloor: false
+  can_crowbar: false
+  footstep_sounds: snowstep
+  friction: 0.35
+
+- type: tile
+  name: floor_gold
+  display_name: Gold Tile
+  texture: gold
+  base_turfs:
+  - space
+  - underplating
+  is_subfloor: false
+  can_crowbar: true
+  footstep_sounds: footstep_floor
+  friction: 0.35
+  item_drop: FloorTileItemGold

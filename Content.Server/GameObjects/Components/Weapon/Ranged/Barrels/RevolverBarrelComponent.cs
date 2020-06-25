@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -15,6 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
@@ -32,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override int ShotsLeft => _ammoContainer.ContainedEntities.Count;
 
         private AppearanceComponent _appearanceComponent;
+        private string _fillPrototype;
+        private int _unspawnedCount;
 
         // Sounds
         private string _soundEject;
@@ -50,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // TODO: Writing?
-
+            serializer.DataField(ref _fillPrototype, "fillPrototype", null);
 
             // Sounds
             serializer.DataField(ref _soundEject, "soundEject", "/Audio/Guns/MagOut/revolver_magout.ogg");
@@ -61,7 +65,26 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammoContainer", Owner);
+            _unspawnedCount = Capacity;
+            int idx = 0;
+            _ammoContainer = ContainerManagerComponent.Ensure<Container>($"{Name}-ammoContainer", Owner, out var existing);
+            if (existing)
+            {
+                foreach (var entity in _ammoContainer.ContainedEntities)
+                {
+                    _unspawnedCount--;
+                    _ammoSlots[idx] = entity;
+                    idx++;
+                }
+            }
+
+            for (var i = 0; i < _unspawnedCount; i++)
+            {
+                var entity = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
+                _ammoSlots[idx] = entity;
+                _ammoContainer.Insert(entity);
+                idx++;
+            }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearanceComponent))
             {
@@ -148,16 +171,17 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// Takes a projectile out if possible
         /// IEnumerable just to make supporting shotguns saner
         /// </summary>
+        /// <param name="spawnAt"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile()
+        public override IEntity TakeProjectile(GridCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
-                bullet = ammoComponent.TakeBullet();
+                bullet = ammoComponent.TakeBullet(spawnAt);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = null;

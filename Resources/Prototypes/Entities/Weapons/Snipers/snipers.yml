@@ -20,6 +20,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: CartridgeLRifle
     caliber: LRifle
     capacity: 10
     fireRate: 1.0
@@ -79,6 +80,7 @@
   - type: BoltActionBarrel
     caliber: AntiMaterial
     capacity: 1
+    fillPrototype: CartridgeAntiMaterial
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
