@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
                     statusEffectsComponent?.ChangeStatus(StatusEffect.Health,
-                            "/Textures/StatusEffects/Human/human" + modifier + ".png");
+                            "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
 
                     overlayComponent?.ChangeOverlay(ScreenEffects.None);
 
@@ -58,14 +58,14 @@ namespace Content.Server.GameObjects
                 case ThresholdType.Critical:
                     statusEffectsComponent?.ChangeStatus(
                         StatusEffect.Health,
-                        "/Textures/StatusEffects/Human/humancrit-0.png");
+                        "/Textures/Interface/StatusEffects/Human/humancrit-0.png");
                     overlayComponent?.ChangeOverlay(ScreenEffects.GradientCircleMask);
 
                     return;
                 case ThresholdType.Death:
                     statusEffectsComponent?.ChangeStatus(
                         StatusEffect.Health,
-                        "/Textures/StatusEffects/Human/humandead.png");
+                        "/Textures/Interface/StatusEffects/Human/humandead.png");
                     overlayComponent?.ChangeOverlay(ScreenEffects.CircleMask);
 
                     return;

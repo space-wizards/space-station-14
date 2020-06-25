@@ -6,7 +6,7 @@
   - type: AccessReader
   - type: SecureEntityStorage
   - type: Sprite
-    sprite: Constructible/Storage/Closet/generic.rsi
+    sprite: Constructible/Structures/Closet/generic.rsi
     layers:
     - state: generic_door
       map: ["enum.StorageVisualLayers.Door"]

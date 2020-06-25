@@ -5,13 +5,13 @@
   name: "head of security's locker"
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/hos.rsi
+    sprite: Constructible/Structures/Closet/hos.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: hos
   - type: Icon
-    sprite: Constructible/Storage/Closet/hos.rsi
+    sprite: Constructible/Structures/Closet/hos.rsi
     state: hos_door
 
 # Warden
@@ -21,13 +21,13 @@
   name: "warden's locker"
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/warden.rsi
+    sprite: Constructible/Structures/Closet/warden.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: warden
   - type: Icon
-    sprite: Constructible/Storage/Closet/warden.rsi
+    sprite: Constructible/Structures/Closet/warden.rsi
     state: warden_door
 
 # Security Officer
@@ -37,13 +37,13 @@
   name: "security officer's locker"
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/sec.rsi
+    sprite: Constructible/Structures/Closet/sec.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: sec
   - type: Icon
-    sprite: Constructible/Storage/Closet/sec.rsi
+    sprite: Constructible/Structures/Closet/sec.rsi
     state: sec_door
 
 # LockerHeadOfSecurity Filled

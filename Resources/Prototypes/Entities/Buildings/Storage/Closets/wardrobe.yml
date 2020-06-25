@@ -5,9 +5,9 @@
   description: "It's a storage unit for standard-issue Nanotrasen attire."
   components:
   - type: Sprite
-    state: Constructible/Storage/Closet/colors.rsi
+    sprite: Constructible/Structures/Closet/colors.rsi
   - type: Icon
-    state: Constructible/Storage/Closet/colors.rsi
+    sprite: Constructible/Structures/Closet/colors.rsi
 
 # Blue wardrobe
 - type: entity

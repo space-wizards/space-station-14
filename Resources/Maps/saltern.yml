@@ -5055,7 +5055,7 @@ entities:
     pos: 31.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/youtool.rsi
+  - sprite: Constructible/Power/VendingMachines/youtool.rsi
     type: Sprite
 - uid: 701
   type: Wire
@@ -11391,7 +11391,7 @@ entities:
     pos: -29.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/youtool.rsi
+  - sprite: Constructible/Power/VendingMachines/youtool.rsi
     type: Sprite
 - uid: 1599
   type: VendingMachineSovietSoda
@@ -11400,7 +11400,7 @@ entities:
     pos: -11.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/sovietsoda.rsi
+  - sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
     type: Sprite
 - uid: 1600
   type: ChairOfficeDark
@@ -11470,7 +11470,7 @@ entities:
     pos: 29.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cola.rsi
+  - sprite: Constructible/Power/VendingMachines/cola.rsi
     type: Sprite
 - uid: 1609
   type: Table
@@ -11537,7 +11537,7 @@ entities:
     pos: 9.5,28.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/snack.rsi
+  - sprite: Constructible/Power/VendingMachines/snack.rsi
     type: Sprite
 - uid: 1618
   type: Table
@@ -16353,7 +16353,7 @@ entities:
     pos: 31.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/engivend.rsi
+  - sprite: Constructible/Power/VendingMachines/engivend.rsi
     type: Sprite
 - uid: 2203
   type: Wire
@@ -16758,7 +16758,7 @@ entities:
     pos: -22.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/snack.rsi
+  - sprite: Constructible/Power/VendingMachines/snack.rsi
     type: Sprite
 - uid: 2247
   type: VendingMachineCola
@@ -16767,7 +16767,7 @@ entities:
     pos: -34.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cola.rsi
+  - sprite: Constructible/Power/VendingMachines/cola.rsi
     type: Sprite
 - uid: 2248
   type: PoweredSmallLight
@@ -17699,7 +17699,7 @@ entities:
     pos: 19.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 2341
   type: VendingMachineMedical
@@ -17708,7 +17708,7 @@ entities:
     pos: 6.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 2342
   type: Table
@@ -18985,7 +18985,7 @@ entities:
   - parent: 0
     pos: 0.5,-4.5
     type: Transform
-  - sprite: Buildings/VendingMachines/cigs.rsi
+  - sprite: Constructible/Power/VendingMachines/cigs.rsi
     type: Sprite
 - uid: 2498
   type: VendingMachineSnack
@@ -18993,7 +18993,7 @@ entities:
   - parent: 0
     pos: -0.5,-4.5
     type: Transform
-  - sprite: Buildings/VendingMachines/snack.rsi
+  - sprite: Constructible/Power/VendingMachines/snack.rsi
     type: Sprite
 - uid: 2499
   type: Chair
@@ -19073,7 +19073,7 @@ entities:
     pos: 1.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cola.rsi
+  - sprite: Constructible/Power/VendingMachines/cola.rsi
     type: Sprite
 - uid: 2509
   type: VendingMachineCoffee
@@ -19089,7 +19089,7 @@ entities:
     pos: 6.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cigs.rsi
+  - sprite: Constructible/Power/VendingMachines/cigs.rsi
     type: Sprite
 - uid: 2511
   type: TableWood
@@ -20060,7 +20060,7 @@ entities:
     pos: -17.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/theater.rsi
+  - sprite: Constructible/Power/VendingMachines/theater.rsi
     type: Sprite
 - uid: 2646
   type: PianoInstrument
@@ -21608,7 +21608,7 @@ entities:
     pos: -4.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/boozeomat.rsi
+  - sprite: Constructible/Power/VendingMachines/boozeomat.rsi
     type: Sprite
 - uid: 2795
   type: LockerEmergencyFilledRandom

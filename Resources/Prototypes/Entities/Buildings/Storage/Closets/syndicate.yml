@@ -6,13 +6,13 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/syndicate.rsi
+    sprite: Constructible/Structures/Closet/syndicate.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: syndicate
   - type: Icon
-    sprite: Constructible/Storage/Closet/syndicate.rsi
+    sprite: Constructible/Structures/Closet/syndicate.rsi
     state: syndicate_door
 
 # Personal syndicate closet

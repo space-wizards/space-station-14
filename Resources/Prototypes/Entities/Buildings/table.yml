@@ -33,6 +33,8 @@
   parent: Table
   name: "wood table"
   components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/wood.rsi
   - type: IconSmooth
     key: wood
     base: wood_

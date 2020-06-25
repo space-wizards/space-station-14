@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatus(StatusEffect.Thirst, "/Textures/StatusEffects/Thirst/" +
+                statusEffectsComponent?.ChangeStatus(StatusEffect.Thirst, "/Textures/Interface/StatusEffects/Thirst/" +
                                                                           _currentThirstThreshold + ".png");
 
                 switch (_currentThirstThreshold)

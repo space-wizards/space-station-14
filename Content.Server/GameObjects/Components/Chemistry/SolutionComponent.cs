@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private SolutionCaps _capabilities;
         private string _fillInitState = "";
         private int _fillInitSteps;
-        private string _fillPathString = "Objects/Chemistry/fillings.rsi";
+        private string _fillPathString = "Objects/Departamental/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
         private SpriteSpecifier _fillSprite;
 

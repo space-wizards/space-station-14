@@ -6,7 +6,7 @@
   description: "It's a storage unit for level 3 biohazard gear."
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/bio.rsi
+    sprite: Constructible/Structures/Closet/bio.rsi
     layers:
     - state: bio
     - state: bio_door
@@ -15,7 +15,7 @@
     - type: StorageVisualizer2D
       state: bio
   - type: Icon
-    sprite: Constructible/Storage/Closet/bio.rsi
+    sprite: Constructible/Structures/Closet/bio.rsi
     state: bio_door
 
 # Virology variant
@@ -24,13 +24,13 @@
   parent: LockerL3
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/bio_viro.rsi
+    sprite: Constructible/Structures/Closet/bio_viro.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio_viro
   - type: Icon
-    sprite: Constructible/Storage/Closet/bio_viro.rsi
+    sprite: Constructible/Structures/Closet/bio_viro.rsi
     state: bio_viro_door
 
 # Security variant
@@ -39,13 +39,13 @@
   parent: LockerL3
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/bio_sec.rsi
+    sprite: Constructible/Structures/Closet/bio_sec.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio_sec
   - type: Icon
-    sprite: Constructible/Storage/Closet/bio_sec.rsi
+    sprite: Constructible/Structures/Closet/bio_sec.rsi
     state: bio_sec_door
 
 # Janitor variant
@@ -54,13 +54,13 @@
   parent: LockerL3
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/bio_jan.rsi
+    sprite: Constructible/Structures/Closet/bio_jan.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio_jan
   - type: Icon
-    sprite: Constructible/Storage/Closet/bio_jan.rsi
+    sprite: Constructible/Structures/Closet/bio_jan.rsi
     state: bio_jan_door
 
 

@@ -6,6 +6,15 @@
     },
     "states": [
         {
+            "name": "generic",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "black_door",
             "directions": 1,
             "delays": [

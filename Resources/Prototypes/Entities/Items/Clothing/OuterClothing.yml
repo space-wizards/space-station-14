@@ -96,11 +96,11 @@
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/bedsheet.rsi
+    sprite: Clothing/OuterClothing/ghost_costume.rsi
   - type: Icon
-    sprite: Clothing/OuterClothing/bedsheet.rsi
+    sprite: Clothing/OuterClothing/ghost_costume.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/bedsheet.rsi
+    sprite: Clothing/OuterClothing/ghost_costume.rsi
 
 - type: entity
   parent: OuterclothingBase

@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Constructible/Storage/Closet/generic.rsi
+    sprite: Constructible/Structures/Closet/generic.rsi
     layers:
     - state: generic
     - state: generic_door
@@ -15,7 +15,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Constructible/Storage/Closet/generic.rsi
+    sprite: Constructible/Structures/Closet/generic.rsi
     state: generic_door
   - type: Appearance
     visuals:
@@ -27,6 +27,7 @@
   id: LockerGeneric
   parent: LockerParent
   name: closet
+  abstract: true
   components:
   - type: Clickable
   - type: InteractionOutline

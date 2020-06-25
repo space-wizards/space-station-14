@@ -22,7 +22,7 @@
   name: "autolathe"
   components:
   - type: Sprite
-    sprite: Constructible/Structures/autolathe.rsi
+    sprite: Constructible/Power/autolathe.rsi
     layers:
     - state: autolathe
       map: ["enum.AutolatheVisualLayers.Base"]
@@ -30,7 +30,7 @@
       shader: unshaded
       map: ["enum.AutolatheVisualLayers.BaseUnlit"]
   - type: Icon
-    sprite: Constructible/Structures/autolathe.rsi
+    sprite: Constructible/Power/autolathe.rsi
     state: autolathe
   - type: Collidable
     shapes:

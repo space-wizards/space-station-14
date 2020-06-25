@@ -4,7 +4,7 @@
   name: plastic crate
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Crates/plastic.rsi
+    sprite: Constructible/Structures/Crates/plastic.rsi
     layers:
     - state: plasticcrate
     - state: plasticcrate_door
@@ -15,7 +15,7 @@
       state_open: plasticcrate_open
       state_closed: plasticcrate_door
   - type: Icon
-    sprite: Constructible/Storage/Crates/plastic.rsi
+    sprite: Constructible/Structures/Crates/plastic.rsi
     state: plasticcrate
 
 - type: entity
@@ -24,7 +24,7 @@
   name: freezer
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Crates/freezer.rsi
+    sprite: Constructible/Structures/Crates/freezer.rsi
     layers:
     - state: freezer
     - state: freezer_door
@@ -35,7 +35,7 @@
       state_open: freezer_open
       state_closed: freezer_door
   - type: Icon
-    sprite: Constructible/Storage/Crates/freezer.rsi
+    sprite: Constructible/Structures/Crates/freezer.rsi
     state: freezer
 
 - type: entity
@@ -44,7 +44,7 @@
   name: hydroponics crate
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Crates/hydro.rsi
+    sprite: Constructible/Structures/Crates/hydro.rsi
     layers:
     - state: hydrocrate
     - state: hydrocrate_door
@@ -55,7 +55,7 @@
       state_open: hydrocrate_open
       state_closed: hydrocrate_door
   - type: Icon
-    sprite: Constructible/Storage/Crates/hydro.rsi
+    sprite: Constructible/Structures/Crates/hydro.rsi
     state: hydrocrate
 
 - type: entity
@@ -64,7 +64,7 @@
   name: medical crate
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Crates/medical.rsi
+    sprite: Constructible/Structures/Crates/medical.rsi
     layers:
     - state: medicalcrate
     - state: medicalcrate_door
@@ -75,7 +75,7 @@
       state_open: medicalcrate_open
       state_closed: medicalcrate_door
   - type: Icon
-    sprite: Constructible/Storage/Crates/medical.rsi
+    sprite: Constructible/Structures/Crates/medical.rsi
     state: medicalcrate
 
 - type: entity
@@ -85,7 +85,7 @@
   description: Is not actually lead lined. Do not store your plutonium in this.
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Crates/radiation.rsi
+    sprite: Constructible/Structures/Crates/radiation.rsi
     layers:
     - state: radiationcrate
     - state: radiationcrate_door
@@ -96,7 +96,7 @@
       state_open: radiationcrate_open
       state_closed: radiationcrate_door
   - type: Icon
-    sprite: Constructible/Storage/Crates/radiation.rsi
+    sprite: Constructible/Structures/Crates/radiation.rsi
     state: radiationcrate
 
 - type: entity
@@ -105,7 +105,7 @@
   name: internals crate
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Crates/o2.rsi
+    sprite: Constructible/Structures/Crates/o2.rsi
     layers:
     - state: o2crate
     - state: o2crate_door
@@ -116,7 +116,7 @@
       state_open: o2crate_open
       state_closed: o2crate_door
   - type: Icon
-    sprite: Constructible/Storage/Crates/o2.rsi
+    sprite: Constructible/Structures/Crates/o2.rsi
     state: o2crate
 
 - type: entity

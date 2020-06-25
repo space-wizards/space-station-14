@@ -5,13 +5,13 @@
   name: "captain's locker"
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/captain.rsi
+    sprite: Constructible/Structures/Closet/captain.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: cap
   - type: Icon
-    sprite: Constructible/Storage/Closet/captain.rsi
+    sprite: Constructible/Structures/Closet/captain.rsi
     state: cap_door
 
 # HoP
@@ -21,13 +21,13 @@
   name: "head of personnel's locker"
   components:
   - type: Sprite
-    sprite: Constructible/Storage/Closet/hop.rsi
+    sprite: Constructible/Structures/Closet/hop.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: hop
   - type: Icon
-    sprite: Constructible/Storage/Closet/hop.rsi
+    sprite: Constructible/Structures/Closet/hop.rsi
     state: hop_door
 
 

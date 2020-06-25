@@ -61,7 +61,7 @@
   name: "electromagnetic theory"
   id: ElectromagneticTheory
   description: Try not to fry yourself.
-  icon: Buildings/apc.rsi/apcewires.png
+  icon: Constructible/Power/apc.rsi/apcewires.png
   requiredpoints: 1000
   requiredtechnologies:
     - BasicResearch
