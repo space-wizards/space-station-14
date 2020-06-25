@@ -289,3 +289,24 @@
     visuals:
     - type: DrinkFoodVisualizer2D
       steps: 2
+
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkLean
+  name: Lean
+  description: Bro Drake has such a cool fade bro Drake is the best bro c'mon bro he's
+  components:
+  - type: Solution
+    maxVol: 20
+    contents:
+      reagents:
+      - ReagentId: chem.Lean
+        Quantity: 20
+  - type: Sprite
+    sprite: Objects/Drinks/lean.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Drinks/lean.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Drinks/lean.rsi
