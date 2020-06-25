@@ -67,8 +67,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_currentHungerThreshold != _lastHungerThreshold || force)
             {
-                Logger.InfoS("hunger", $"Updating hunger state for {Owner.Name}");
-
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
@@ -169,10 +167,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 // TODO: Remove from dead people
                 if (Owner.TryGetComponent(out DamageableComponent damage))
                 {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
+                    if (!damage.IsDead())
+                    {
+                        damage.TakeDamage(DamageType.Brute, 2);
+                    }
                 }
-                return;
             }
         }
 

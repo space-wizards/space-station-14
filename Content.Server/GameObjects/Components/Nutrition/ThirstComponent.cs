@@ -66,8 +66,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_currentThirstThreshold != _lastThirstThreshold || force)
             {
-                Logger.InfoS("thirst", $"Updating Thirst state for {Owner.Name}");
-
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
@@ -166,13 +164,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (_currentThirstThreshold == ThirstThreshold.Dead)
             {
-                // TODO: Remove from dead people
                 if (Owner.TryGetComponent(out DamageableComponent damage))
                 {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
+                    if (!damage.IsDead())
+                    {
+                        damage.TakeDamage(DamageType.Brute, 2);
+                    }
                 }
-                return;
             }
         }
 
