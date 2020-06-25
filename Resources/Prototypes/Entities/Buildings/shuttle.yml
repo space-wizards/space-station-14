@@ -10,19 +10,16 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: chair
-
   - type: Collidable
-
   - type: Clickable
   - type: InteractionOutline
-
   - type: EntityStorage
     showContents: true
     noDoor: true
-
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
-
   - type: Physics
   - type: ShuttleController
+  - type: Strap
+    position: Stand

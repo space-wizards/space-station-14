@@ -100,7 +100,9 @@ namespace Content.Server.GameObjects.Components.Mobs
             seconds = MathF.Min(_knockdownTimer + (seconds * KnockdownTimeModifier), _knockdownCap);
 
             if (seconds <= 0f)
+            {
                 return;
+            }
 
             StandingStateHelper.Down(Owner);
 

@@ -3,6 +3,10 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
+    /// <summary>
+    /// This interface gives components the ability to block certain actions from
+    /// being done by the owning entity. For effects see <see cref="IEffectBlocker"/>
+    /// </summary>
     public interface IActionBlocker
     {
         bool CanMove() => true;
@@ -27,6 +31,10 @@ namespace Content.Shared.GameObjects.EntitySystems
         bool CanChangeDirection() => true;
     }
 
+    /// <summary>
+    /// Utility methods to check if a specific entity is allowed to perform an action.
+    /// For effects see <see cref="EffectBlockerSystem"/>
+    /// </summary>
     public class ActionBlockerSystem : EntitySystem
     {
         public static bool CanMove(IEntity entity)
@@ -34,7 +42,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             bool canmove = true;
             foreach(var actionblockercomponents in entity.GetAllComponents<IActionBlocker>())
             {
-                canmove &= actionblockercomponents.CanMove(); //sets var to false if false
+                canmove &= actionblockercomponents.CanMove(); // Sets var to false if false
             }
             return canmove;
         }
