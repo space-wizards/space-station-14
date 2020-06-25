@@ -161,3 +161,12 @@
   metabolism:
     - !type:DefaultDrink
       rate: 1
+
+- type: reagent
+  id: chem.Lean
+  name: lean
+  desc: Turn up for days
+  color: "#9400D3"
+  metabolism:
+    - !type:DefaultDrink
+      rate: 1
