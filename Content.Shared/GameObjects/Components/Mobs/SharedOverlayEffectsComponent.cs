@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -16,9 +17,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class OverlayEffectComponentState : ComponentState
     {
-        public string[] ScreenEffects;
+        public List<string> ScreenEffects;
 
-        public OverlayEffectComponentState(string[] screenEffects) : base(ContentNetIDs.OVERLAYEFFECTS)
+        public OverlayEffectComponentState(List<string> screenEffects) : base(ContentNetIDs.OVERLAYEFFECTS)
         {
             ScreenEffects = screenEffects;
         }

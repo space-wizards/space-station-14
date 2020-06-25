@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -10,21 +11,14 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedOverlayEffectsComponent))]
     public sealed class ServerOverlayEffectsComponent : SharedOverlayEffectsComponent
     {
-        private List<string> _currentOverlays = new List<string>();
+        private readonly List<string> _currentOverlays = new List<string>();
 
-        public List<string> ActiveOverlays
-        {
-            get => _currentOverlays;
-            private set
-            {
-                _currentOverlays = value;
-                Dirty();
-            }
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        private List<string> ActiveOverlays => _currentOverlays;
 
         public override ComponentState GetComponentState()
         {
-            return new OverlayEffectComponentState(_currentOverlays.ToArray());
+            return new OverlayEffectComponentState(_currentOverlays);
         }
 
         /// <summary>
@@ -40,6 +34,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                     ActiveOverlays.Add(effect);
                 }
             }
+
+            Dirty();
         }
 
         /// <summary>
@@ -49,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void RemoveOverlays(params string[] effects)
         {
             ActiveOverlays.RemoveAll(effects.Contains);
+            Dirty();
         }
 
         /// <summary>
@@ -64,6 +61,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void ClearOverlays()
         {
             ActiveOverlays.Clear();
+            Dirty();
         }
     }
 }

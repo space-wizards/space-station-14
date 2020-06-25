@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.Overlays;
-using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Players;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.Mobs
 {
     /// <summary>
     /// A character UI component which shows the current damage state of the mob (living/dead)
@@ -26,39 +23,29 @@ namespace Content.Client.GameObjects
         /// <summary>
         /// An enum representing the current state being applied to the user
         /// </summary>
-        private string[] _currentEffects = new string[0];
+        private readonly List<string> _currentEffects = new List<string>();
 
-        private string[] Effects
+        [ViewVariables(VVAccess.ReadOnly)]
+        public List<string> Effects
         {
             get => _currentEffects;
-            set
-            {
-                _currentEffects = value;
-                UpdateEffects();
-            }
+            set => SetEffects(value);
         }
-
 
 #pragma warning disable 649
         // Required dependencies
         [Dependency] private readonly IOverlayManager _overlayManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
-
-        /// <summary>
-        /// Allows calculating if we need to act due to this component being controlled by the current mob
-        /// </summary>
-        private bool CurrentlyControlled => _playerManager.LocalPlayer.ControlledEntity == Owner;
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    UpdateEffects();
+                    SetEffects(Effects);
                     break;
                 case PlayerDetachedMsg _:
-                    Effects = new string[0];
+                    Effects = new List<string>();
                     break;
             }
         }
@@ -74,35 +61,47 @@ namespace Content.Client.GameObjects
             Effects = state.ScreenEffects;
         }
 
-        private void UpdateEffects()
+        private void SetEffects(List<string> newEffects)
         {
-            foreach (var overlay in _overlayManager.AllOverlays)
+            foreach (var overlayId in Effects.Clone())
             {
-                if (!Effects.Contains(overlay.ID))
+                if (!newEffects.Contains(overlayId))
                 {
-                    _overlayManager.RemoveOverlay(overlay.ID);
+                    RemoveOverlay(overlayId);
                 }
             }
 
-            foreach (var overlayId in Effects)
+            foreach (var overlayId in newEffects)
             {
-                if (!_overlayManager.HasOverlay(overlayId))
+                if (!Effects.Contains(overlayId))
                 {
-                    if (TryCreateOverlay(overlayId, out var overlay))
-                    {
-                        _overlayManager.AddOverlay(overlay);
-                    }
-                    else
-                    {
-                        Logger.ErrorS("overlay", $"Could not add overlay {overlayId}");
-                    }
+                    AddOverlay(overlayId);
                 }
+            }
+        }
+
+        private void RemoveOverlay(string overlayId)
+        {
+            Effects.Remove(overlayId);
+            _overlayManager.RemoveOverlay(overlayId);
+        }
+
+        private void AddOverlay(string overlayId)
+        {
+            Effects.Add(overlayId);
+            if (TryCreateOverlay(overlayId, out var overlay))
+            {
+                _overlayManager.AddOverlay(overlay);
+            }
+            else
+            {
+                Logger.ErrorS("overlay", $"Could not add overlay {overlayId}");
             }
         }
 
         private bool TryCreateOverlay(string id, out Overlay overlay)
         {
-            var overlayType = Type.GetType(id, false);
+            var overlayType = Type.GetType($"Content.Client.Graphics.Overlays.{id}", false, true);
             if (overlayType != null)
             {
                 overlay = Activator.CreateInstance(overlayType) as Overlay;
