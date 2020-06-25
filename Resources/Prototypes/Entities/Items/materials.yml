@@ -137,9 +137,14 @@
   - type: Stack
     stacktype: enum.StackType.Phoron
   - type: Sprite
-    texture: Objects/Materials/phoron_sheet.png
+    sprite: Objects/Materials/sheets.rsi
+    state: phoron
   - type: Icon
-    texture: Objects/Materials/phoron_sheet.png
+    sprite: Objects/Materials/sheets.rsi
+    state: phoron
+  - type: Item
+    sprite: Objects/Materials/sheets.rsi
+    HeldPrefix: phoron
 
 - type: entity
   id: PhoronStack1

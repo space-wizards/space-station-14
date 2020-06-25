@@ -82,6 +82,46 @@
             "directions": 1
         },
         {
+            "name": "phoron-inhand-left",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "phoron-inhand-right",
+            "directions": 4,
+            "delays": [
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ],
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "phoron",
+            "directions": 1
+        },
+        {
             "name": "metal",
             "directions": 1
         }
