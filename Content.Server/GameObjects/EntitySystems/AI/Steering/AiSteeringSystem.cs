@@ -576,7 +576,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="direction">entity's travel direction</param>
         /// <param name="ignoredTargets"></param>
         /// <returns></returns>
-        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, List<IEntity> ignoredTargets)
+        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
         {
             if (direction == Vector2.Zero || !entity.HasComponent<CollidableComponent>())
             {
@@ -652,7 +652,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 }
             }
 
-            return avoidanceVector == Vector2.Zero ? Vector2.Zero : avoidanceVector.Normalized;
+            return avoidanceVector == Vector2.Zero ? avoidanceVector : avoidanceVector.Normalized;
         }
         #endregion
     }
