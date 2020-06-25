@@ -83,6 +83,7 @@ namespace Content.Server.GameObjects
             {
                 SlotContainers[slot] = null;
                 containedEntity = null;
+                Dirty();
             }
             return containedEntity?.GetComponent<T>();
         }
