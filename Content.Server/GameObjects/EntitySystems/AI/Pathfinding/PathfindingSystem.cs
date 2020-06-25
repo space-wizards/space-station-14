@@ -167,6 +167,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var newChunk = new PathfindingChunk(gridId, indices);
             newChunk.Initialize();
+            if (!_graph.ContainsKey(gridId))
+            {
+                _graph.Add(gridId, new Dictionary<MapIndices, PathfindingChunk>());
+            }
             _graph[gridId].Add(indices, newChunk);
             return newChunk;
         }

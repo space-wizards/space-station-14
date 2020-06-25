@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
@@ -9,6 +10,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.Pathfinding
 {
@@ -42,9 +44,18 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             GenerateMask();
         }
 
+        /// <summary>
+        /// Return our neighboring nodes (even across chunks)
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<PathfindingNode> GetNeighbors()
         {
-            // TODO: Need to check if we need to get neighboring chunks
+            List<PathfindingChunk> neighborChunks = null;
+            if (ParentChunk.OnEdge(this))
+            {
+                neighborChunks = ParentChunk.RelevantChunks(this).ToList();
+            }
+            
             for (var x = -1; x <= 1; x++)
             {
                 for (var y = -1; y <= 1; y++)
@@ -53,11 +64,26 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     var indices = new MapIndices(TileRef.X + x, TileRef.Y + y);
                     if (ParentChunk.InBounds(indices))
                     {
-                        yield return ParentChunk.Nodes[indi]
+                        var (relativeX, relativeY) = (indices.X - ParentChunk.Indices.X,
+                            indices.Y - ParentChunk.Indices.Y);
+                        yield return ParentChunk.Nodes[relativeX, relativeY];
                     }
                     else
                     {
+                        DebugTools.AssertNotNull(neighborChunks);
+                        DebugTools.Assert(neighborChunks.Count > 0 || neighborChunks[0].InBounds(indices));
                         // Get the relevant chunk and then get the node on it
+                        foreach (var neighbor in neighborChunks)
+                        {
+                            // A lot of edge transitions are going to have a single neighboring chunk
+                            // (given > 1 only affects corners)
+                            // So we can just check the count to see if it's inbound
+                            if (neighborChunks.Count > 0 && !neighbor.InBounds(indices)) continue;
+                            var (relativeX, relativeY) = (indices.X - neighbor.Indices.X,
+                                indices.Y - neighbor.Indices.Y);
+                            yield return neighbor.Nodes[relativeX, relativeY];
+                            break;
+                        }
                     }
                 }
             }
