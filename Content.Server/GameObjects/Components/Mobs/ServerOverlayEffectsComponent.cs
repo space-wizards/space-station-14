@@ -22,16 +22,16 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Adds overlays. Checks for duplicates.
+        /// Adds overlays based on their ID
         /// </summary>
-        /// <param name="effects"></param>
-        public void AddOverlays(params string[] effects)
+        /// <param name="overlayIds"></param>
+        public void AddOverlays(params string[] overlayIds)
         {
-            foreach (var effect in effects)
+            foreach (var overlayId in overlayIds)
             {
-                if (!ActiveOverlays.Contains(effect))
+                if (!ActiveOverlays.Contains(overlayId))
                 {
-                    ActiveOverlays.Add(effect);
+                    ActiveOverlays.Add(overlayId);
                 }
             }
 
@@ -39,23 +39,23 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
 
         /// <summary>
-        /// Removes overlays if found
+        /// Removes overlays
         /// </summary>
-        /// <param name="effects"></param>
-        public void RemoveOverlays(params string[] effects)
+        /// <param name="overlayIds"></param>
+        public void RemoveOverlays(params string[] overlayIds)
         {
-            ActiveOverlays.RemoveAll(effects.Contains);
+            ActiveOverlays.RemoveAll(overlayIds.Contains);
             Dirty();
         }
 
         /// <summary>
         /// Sets this to be the only active overlay
         /// </summary>
-        /// <param name="effect"></param>
-        public void SetOverlay(string effect)
+        /// <param name="overlayId"></param>
+        public void SetOverlay(string overlayId)
         {
             ClearOverlays();
-            ActiveOverlays.Add(effect);
+            ActiveOverlays.Add(overlayId);
         }
 
         public void ClearOverlays()

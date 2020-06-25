@@ -17,11 +17,11 @@ namespace Content.Shared.GameObjects.Components.Mobs
     [Serializable, NetSerializable]
     public class OverlayEffectComponentState : ComponentState
     {
-        public List<string> ScreenEffects;
+        public List<string> Overlays;
 
-        public OverlayEffectComponentState(List<string> screenEffects) : base(ContentNetIDs.OVERLAYEFFECTS)
+        public OverlayEffectComponentState(List<string> overlays) : base(ContentNetIDs.OVERLAYEFFECTS)
         {
-            ScreenEffects = screenEffects;
+            Overlays = overlays;
         }
     }
 }

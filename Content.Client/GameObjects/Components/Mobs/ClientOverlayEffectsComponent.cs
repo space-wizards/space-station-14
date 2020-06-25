@@ -53,12 +53,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is OverlayEffectComponentState state) || Effects.Equals(state.ScreenEffects))
+            if (!(curState is OverlayEffectComponentState state) || Effects.Equals(state.Overlays))
             {
                 return;
             }
 
-            Effects = state.ScreenEffects;
+            Effects = state.Overlays;
         }
 
         private void SetEffects(List<string> newEffects)
