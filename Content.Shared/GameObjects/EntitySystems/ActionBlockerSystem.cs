@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Shared.GameObjects.EntitySystems
 {
     public interface IActionBlocker
     {

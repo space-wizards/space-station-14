@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat;
+using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
@@ -17,11 +18,11 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
-    public sealed class MeleeAttackEntity : UtilityAction
+    public sealed class MeleeWeaponAttackEntity : UtilityAction
     {
         private IEntity _entity;
 
-        public MeleeAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
+        public MeleeWeaponAttackEntity(IEntity owner, IEntity entity, float weight) : base(owner)
         {
             _entity = entity;
             Bonus = weight;

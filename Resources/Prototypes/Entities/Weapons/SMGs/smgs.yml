@@ -25,6 +25,7 @@
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
+    magFillPrototype: MagazinePistolSmg
     soundGunshot: /Audio/Guns/Gunshots/smg.ogg
     soundEmpty: /Audio/Guns/Empty/empty.ogg
     soundRack: /Audio/Guns/Cock/smg_cock.ogg
@@ -146,6 +147,7 @@
     caliber: Magnum
     magazineTypes:
     - Smg
+    magFillPrototype: MagazineMagnumSmg
     minAngle: 5
     maxAngle: 60
     angleIncrease: 12
@@ -229,6 +231,7 @@
     caliber: Pistol
     magazineTypes: 
     - SmgTopMounted
+    magFillPrototype: MagazinePistolSmgTopMounted
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -265,6 +268,7 @@
     caliber: Magnum
     magazineTypes: 
     - Smg
+    magFillPrototype: MagazineMagnumSmg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D

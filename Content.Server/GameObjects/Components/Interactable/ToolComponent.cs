@@ -12,6 +12,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         private InteractionSystem _interactionSystem;
         private SpriteComponent _spriteComponent;
 
-        protected ToolQuality _qualities = ToolQuality.Anchoring;
+        protected ToolQuality _qualities = ToolQuality.None;
 
         [ViewVariables]
         public override ToolQuality Qualities

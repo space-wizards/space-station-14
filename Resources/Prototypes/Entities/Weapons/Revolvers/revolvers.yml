@@ -37,6 +37,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 5
     autoCycle: true
@@ -69,6 +70,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
     soundEmpty: /Audio/Guns/Empty/empty.ogg
@@ -94,6 +96,7 @@
     currentSelector: Single
     allSelectors:
     - Single
+    fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
     soundEmpty: /Audio/Guns/Empty/empty.ogg
