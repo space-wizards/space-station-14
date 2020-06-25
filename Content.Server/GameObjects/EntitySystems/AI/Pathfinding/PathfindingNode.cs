@@ -71,7 +71,6 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     else
                     {
                         DebugTools.AssertNotNull(neighborChunks);
-                        DebugTools.Assert(neighborChunks.Count > 0 || neighborChunks[0].InBounds(indices));
                         // Get the relevant chunk and then get the node on it
                         foreach (var neighbor in neighborChunks)
                         {
