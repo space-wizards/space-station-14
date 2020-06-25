@@ -249,6 +249,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 // TODO: If we need LOS and are moving to an entity then we may not be in range yet
                 // Chuck out a ray every half second or so and keep moving until we are?
+                // Alternatively could use tile-based LOS checks via the pathfindingsystem I guess
                 controller.VelocityDir = Vector2.Zero;
                 return SteeringStatus.Arrived;
             }
