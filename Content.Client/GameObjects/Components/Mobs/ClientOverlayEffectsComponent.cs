@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Graphics.Overlays;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
@@ -21,11 +23,21 @@ namespace Content.Client.GameObjects
     [ComponentReference(typeof(SharedOverlayEffectsComponent))]
     public sealed class ClientOverlayEffectsComponent : SharedOverlayEffectsComponent//, ICharacterUI
     {
-
         /// <summary>
         /// An enum representing the current state being applied to the user
         /// </summary>
-        private ScreenEffects _currentEffect = ScreenEffects.None;
+        private string[] _currentEffects = new string[0];
+
+        private string[] Effects
+        {
+            get => _currentEffects;
+            set
+            {
+                _currentEffects = value;
+                UpdateEffects();
+            }
+        }
+
 
 #pragma warning disable 649
         // Required dependencies
@@ -34,35 +46,19 @@ namespace Content.Client.GameObjects
 #pragma warning restore 649
 
         /// <summary>
-        /// Holds the screen effects that can be applied mapped ot their relevant overlay
-        /// </summary>
-        private Dictionary<ScreenEffects, Overlay> _effectsDictionary;
-
-        /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
         /// </summary>
         private bool CurrentlyControlled => _playerManager.LocalPlayer.ControlledEntity == Owner;
-
-        public override void OnAdd()
-        {
-            base.OnAdd();
-
-            _effectsDictionary = new Dictionary<ScreenEffects, Overlay>()
-            {
-                { ScreenEffects.CircleMask, new CircleMaskOverlay() },
-                { ScreenEffects.GradientCircleMask, new GradientCircleMask() }
-            };
-        }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    SetOverlay(_currentEffect);
+                    UpdateEffects();
                     break;
                 case PlayerDetachedMsg _:
-                    RemoveOverlay();
+                    Effects = new string[0];
                     break;
             }
         }
@@ -70,42 +66,51 @@ namespace Content.Client.GameObjects
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is OverlayEffectComponentState state) || _currentEffect == state.ScreenEffect) return;
-            SetOverlay(state.ScreenEffect);
-        }
-
-        private void SetOverlay(ScreenEffects effect)
-        {
-            RemoveOverlay();
-
-            _currentEffect = effect;
-
-            ApplyOverlay();
-        }
-
-        private void RemoveOverlay()
-        {
-            if (CurrentlyControlled && _currentEffect != ScreenEffects.None)
+            if (!(curState is OverlayEffectComponentState state) || Effects.Equals(state.ScreenEffects))
             {
-                var appliedEffect = _effectsDictionary[_currentEffect];
-                _overlayManager.RemoveOverlay(appliedEffect.ID);
+                return;
             }
 
-            _currentEffect = ScreenEffects.None;
+            Effects = state.ScreenEffects;
         }
 
-        private void ApplyOverlay()
+        private void UpdateEffects()
         {
-            if (CurrentlyControlled && _currentEffect != ScreenEffects.None)
+            foreach (var overlay in _overlayManager.AllOverlays)
             {
-                var overlay = _effectsDictionary[_currentEffect];
-                if (_overlayManager.HasOverlay(overlay.ID))
+                if (!Effects.Contains(overlay.ID))
                 {
-                    return;
+                    _overlayManager.RemoveOverlay(overlay.ID);
                 }
-                _overlayManager.AddOverlay(overlay);
-                Logger.InfoS("overlay", $"Changed overlay to {overlay}");
             }
+
+            foreach (var overlayId in Effects)
+            {
+                if (!_overlayManager.HasOverlay(overlayId))
+                {
+                    if (TryCreateOverlay(overlayId, out var overlay))
+                    {
+                        _overlayManager.AddOverlay(overlay);
+                    }
+                    else
+                    {
+                        Logger.ErrorS("overlay", $"Could not add overlay {overlayId}");
+                    }
+                }
+            }
+        }
+
+        private bool TryCreateOverlay(string id, out Overlay overlay)
+        {
+            var overlayType = Type.GetType(id, false);
+            if (overlayType != null)
+            {
+                overlay = Activator.CreateInstance(overlayType) as Overlay;
+                return true;
+            }
+
+            overlay = default;
+            return false;
         }
     }
 }

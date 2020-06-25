@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects
             statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Health);
 
             Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
-            overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
+            overlayEffectsComponent?.ClearOverlays();
         }
 
         bool IActionBlocker.CanMove()

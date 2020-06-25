@@ -13,21 +13,14 @@ namespace Content.Shared.GameObjects.Components.Mobs
         public sealed override uint? NetID => ContentNetIDs.OVERLAYEFFECTS;
     }
 
-    public enum ScreenEffects
-    {
-        None,
-        CircleMask,
-        GradientCircleMask,
-    }
-
     [Serializable, NetSerializable]
     public class OverlayEffectComponentState : ComponentState
     {
-        public ScreenEffects ScreenEffect;
+        public string[] ScreenEffects;
 
-        public OverlayEffectComponentState(ScreenEffects screenEffect) : base(ContentNetIDs.OVERLAYEFFECTS)
+        public OverlayEffectComponentState(string[] screenEffects) : base(ContentNetIDs.OVERLAYEFFECTS)
         {
-            ScreenEffect = screenEffect;
+            ScreenEffects = screenEffects;
         }
     }
 }
