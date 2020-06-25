@@ -3,33 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Maps;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
