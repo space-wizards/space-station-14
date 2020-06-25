@@ -29,11 +29,6 @@ namespace Content.Server.GameObjects.EntitySystems.JobQueues.Queues
             _pendingQueue.Enqueue(job);
         }
 
-        public void Clear()
-        {
-            _pendingQueue.Clear();
-        }
-
         public void Process()
         {
             // Move all finished waiting jobs back into the regular queue.

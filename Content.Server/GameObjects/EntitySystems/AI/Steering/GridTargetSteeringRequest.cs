@@ -9,7 +9,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         public SteeringStatus Status { get; set; } = SteeringStatus.Pending;
         public MapCoordinates TargetMap { get; }
         public GridCoordinates TargetGrid { get; }
+        /// <inheritdoc />
         public float ArrivalDistance { get; }
+        /// <inheritdoc />
         public float PathfindingProximity { get; }
 
         public GridTargetSteeringRequest(GridCoordinates targetGrid, float arrivalDistance, float pathfindingProximity = 0.5f)

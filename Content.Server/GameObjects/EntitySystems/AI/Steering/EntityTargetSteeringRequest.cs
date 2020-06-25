@@ -10,7 +10,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         public GridCoordinates TargetGrid => _target.Transform.GridPosition;
         public IEntity Target => _target;
         private IEntity _target;
+        /// <inheritdoc />
         public float ArrivalDistance { get; }
+        /// <inheritdoc />
         public float PathfindingProximity { get; }
         /// <summary>
         /// How far the target can move before we re-path
