@@ -6,11 +6,13 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Server.Interfaces.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -35,6 +37,33 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CollisionAvoidanceEnabled { get; set; } = true;
+
+        /// <summary>
+        /// Stops all AI movement. All AI currently moving will also have their input vector set to 0
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Paused
+        {
+            get => _paused;
+            set
+            {
+                _paused = value;
+                if (!_paused)
+                {
+                    return;
+                }
+                
+                foreach (var agentList in _agentLists)
+                {
+                    foreach (var (entity, _) in agentList)
+                    {
+                        entity.GetComponent<AiControllerComponent>().VelocityDir = Vector2.Zero;
+                    }
+                }
+            }
+        }
+
+        private bool _paused;
         
         /// <summary>
         /// How close we need to get to the center of each tile
@@ -177,6 +206,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+            var gameTiming = IoCManager.Resolve<IGameTiming>().Paused;
+            if (gameTiming != Paused)
+            {
+                Paused = gameTiming;
+            }
+            
+            if (Paused)
+            {
+                return;
+            }
 
             foreach (var (agent, steering) in RunningAgents)
             {
