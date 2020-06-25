@@ -4,6 +4,9 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Nutrition;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -14,13 +17,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class HungerComponent : Component, IMoveSpeedModifier
+    public sealed class HungerComponent : SharedHungerComponent
     {
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
-
-        public override string Name => "Hunger";
 
         // Base stuff
         public float BaseDecayRate => _baseDecayRate;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables] private float _actualDecayRate;
 
         // Hunger
-        public HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
+        public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
         private HungerThreshold _currentHungerThreshold;
         private HungerThreshold _lastHungerThreshold;
         public float CurrentHunger => _currentHunger;
@@ -51,6 +52,17 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _baseDecayRate, "base_decay_rate", 0.1f);
         }
 
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _hungerThresholdImages =
+        {
+            "/Textures/Mob/UI/Hunger/Overfed.png",
+            "/Textures/Mob/UI/Hunger/Okay.png",
+            "/Textures/Mob/UI/Hunger/Peckish.png",
+            "/Textures/Mob/UI/Hunger/Starving.png",
+            "/Textures/Mob/UI/Hunger/Dead.png",
+        };
+
         public void HungerThresholdEffect(bool force = false)
         {
             if (_currentHungerThreshold != _lastHungerThreshold || force)
@@ -66,9 +78,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
                 // Update UI
                 Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-                statusEffectsComponent?.ChangeStatus(StatusEffect.Hunger, "/Textures/Interface/StatusEffects/Hunger/" +
-                                                                          _currentHungerThreshold + ".png");
-
+                statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Hunger, _hungerThresholdImages[ (int)_currentHungerThreshold ]);
                 switch (_currentHungerThreshold)
                 {
                     case HungerThreshold.Overfed:
@@ -117,6 +127,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _currentHungerThreshold = GetHungerThreshold(_currentHunger);
             _lastHungerThreshold = HungerThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             HungerThresholdEffect(true);
+            Dirty();
         }
 
         public HungerThreshold GetHungerThreshold(float food)
@@ -151,6 +162,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 _currentHungerThreshold = calculatedHungerThreshold;
                 HungerThresholdEffect();
+                Dirty();
             }
             if (_currentHungerThreshold == HungerThreshold.Dead)
             {
@@ -169,36 +181,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _currentHunger = HungerThresholds[HungerThreshold.Okay];
         }
 
-        float IMoveSpeedModifier.WalkSpeedModifier
+        public override ComponentState GetComponentState()
         {
-            get
-            {
-                if (_currentHungerThreshold == HungerThreshold.Starving)
-                {
-                    return 0.5f;
-                }
-                return 1.0f;
-            }
-        }
-        float IMoveSpeedModifier.SprintSpeedModifier
-        {
-            get
-            {
-                if (_currentHungerThreshold == HungerThreshold.Starving)
-                {
-                    return 0.5f;
-                }
-                return 1.0f;
-            }
+            return new HungerComponentState(_currentHungerThreshold);
         }
     }
 
-    public enum HungerThreshold
-    {
-        Overfed,
-        Okay,
-        Peckish,
-        Starving,
-        Dead,
-    }
+
 }

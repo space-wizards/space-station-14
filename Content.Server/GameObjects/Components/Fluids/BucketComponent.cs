@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystem.Get<AudioSystem>().Play(_sound, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
         }
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return true;
             }
 
-            EntitySystem.Get<AudioSystem>().Play(_sound, Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_sound, Owner);
 
             return true;
 

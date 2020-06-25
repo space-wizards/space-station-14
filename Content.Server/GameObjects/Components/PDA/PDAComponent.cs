@@ -8,6 +8,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -93,7 +94,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
                 case PDAEjectIDMessage msg:
                 {
-                    HandleIDEjection(message.Session.AttachedEntity);
+                    HandleIDEjection(message.Session.AttachedEntity!);
                     break;
                 }
 
@@ -198,7 +199,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            EntitySystem.Get<AudioSystem>().Play("/Audio/Guns/MagIn/batrifle_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Guns/MagIn/batrifle_magin.ogg", Owner);
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _lightOn = !_lightOn;
             _pdaLight.Enabled = _lightOn;
-            EntitySystem.Get<AudioSystem>().Play("/Audio/Items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -241,7 +242,7 @@ namespace Content.Server.GameObjects.Components.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            EntitySystem.Get<AudioSystem>().Play("/Audio/Machines/machine_switch.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/id_swipe.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -250,6 +251,12 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 data.Text = Loc.GetString("Eject ID");
                 data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }

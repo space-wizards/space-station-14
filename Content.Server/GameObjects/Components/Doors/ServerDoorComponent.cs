@@ -154,6 +154,8 @@ namespace Content.Server.GameObjects
                 State = DoorState.Open;
                 SetAppearance(DoorVisualState.Open);
             }, _cancellationTokenSource.Token);
+            
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, false));
         }
 
         public virtual bool CanClose()
@@ -203,6 +205,7 @@ namespace Content.Server.GameObjects
                     occluder.Enabled = true;
                 }
             }, _cancellationTokenSource.Token);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, true));
             return true;
         }
 

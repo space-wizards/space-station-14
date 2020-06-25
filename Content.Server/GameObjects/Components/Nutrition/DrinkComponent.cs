@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
                 var file = _random.Pick(soundCollection.PickFiles);
 
-                EntitySystem.Get<AudioSystem>().Play(file, args.User, AudioParams.Default);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, args.User, AudioParams.Default);
                 _opened = true;
                 return false;
             }
@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (stomachComponent.TryTransferSolution(split))
             {
                 if (_useSound == null) return false;
-                EntitySystem.Get<AudioSystem>().Play(_useSound, target, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_useSound, target, AudioParams.Default.WithVolume(-2f));
                 target.PopupMessage(target, Loc.GetString("Slurp"));
                 UpdateAppearance();
                 return true;

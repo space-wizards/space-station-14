@@ -110,6 +110,12 @@ namespace Content.Client.GameObjects.Components.Instruments
         }
 
         /// <summary>
+        ///     Whether this instrument is handheld or not.
+        /// </summary>
+        [ViewVariables]
+        public bool Handheld { get; set; } // TODO: Replace this by simply checking if the entity has an ItemComponent.
+
+        /// <summary>
         ///     Whether there's a midi song being played or not.
         /// </summary>
         [ViewVariables]
@@ -198,6 +204,7 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(this, x => Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
         }

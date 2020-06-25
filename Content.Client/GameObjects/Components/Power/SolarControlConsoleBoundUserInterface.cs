@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Power
     public class SolarControlConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency]
-        private IGameTiming _gameTiming;
+        private IGameTiming _gameTiming = default;
 
         private SolarControlWindow _window;
         private SolarControlConsoleBoundInterfaceState _lastState = new SolarControlConsoleBoundInterfaceState(0, 0, 0, 0);
@@ -77,7 +77,7 @@ namespace Content.Client.GameObjects.Components.Power
             SolarControlConsoleBoundInterfaceState scc = (SolarControlConsoleBoundInterfaceState) state;
             _lastState = scc;
             _window.NotARadar.UpdateState(scc);
-            _window.OutputPower.Text = ((int) Math.Floor(scc.OutputPower)).ToString();
+            _window.OutputPower.Text = ((int) MathF.Floor(scc.OutputPower)).ToString();
             _window.SunAngle.Text = FormatAngle(scc.TowardsSun);
             UpdateField(_window.PanelRotation, FormatAngle(scc.Rotation));
             UpdateField(_window.PanelVelocity, FormatAngle(scc.AngularVelocity * 60));

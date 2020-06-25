@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange
+    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
@@ -301,8 +301,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            &&
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
-            _audioSystem.Play(_startCookingSound, Owner, AudioParams.Default);
-            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), () =>
+            _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
+            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (System.Action)(() =>
             {
                 if (_lostPower)
                 {
@@ -332,13 +332,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
                         _entityManager.SpawnEntity(entityToSpawn, Owner.Transform.GridPosition);
                     }
                 }
+                _audioSystem.PlayFromEntity(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
 
-                _audioSystem.Play(_cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
 
                 _uiDirty = true;
-            });
+            }));
             _lostPower = false;
             _uiDirty = true;
         }
@@ -440,7 +440,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.Play("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)

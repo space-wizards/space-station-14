@@ -109,8 +109,6 @@ entities:
     pos: -1.47174,4.550247
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
 - uid: 2
   type: LaserGun
   components:
@@ -118,8 +116,6 @@ entities:
     pos: -0.6748645,4.487747
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
 - uid: 3
   type: Brutepack
   components:
@@ -2076,41 +2072,26 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 263
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.605512,7.638151
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities: []
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 264
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.339887,7.669401
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities: []
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 265
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.027387,7.622526
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities: []
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 266
   type: BackpackClothing
   components:
@@ -2149,14 +2130,6 @@ entities:
     pos: -2.524035,7.579326
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      ballistics_chamber_0:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-      ballistic_gun_magazine:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 270
   type: SmgC20r
   components:
@@ -2164,14 +2137,6 @@ entities:
     pos: -1.94591,7.485576
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      ballistics_chamber_0:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-      ballistic_gun_magazine:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 271
   type: solid_wall
   components:

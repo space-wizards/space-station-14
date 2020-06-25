@@ -7,6 +7,7 @@ using Content.Server.Throw;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
@@ -116,7 +117,9 @@ namespace Content.Server.GameObjects
         {
             protected override void GetData(IEntity user, ItemComponent component, VerbData data)
             {
-                if (ContainerHelpers.IsInContainer(component.Owner) || !component.CanPickup(user))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    ContainerHelpers.IsInContainer(component.Owner) ||
+                    !component.CanPickup(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

@@ -35,6 +35,23 @@ namespace Content.Server.GameObjects
             }
         }
 
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _humanStatusImages =
+        {
+            "/Textures/Mob/UI/Human/human0.png",
+            "/Textures/Mob/UI/Human/human1.png",
+            "/Textures/Mob/UI/Human/human2.png",
+            "/Textures/Mob/UI/Human/human3.png",
+            "/Textures/Mob/UI/Human/human4.png",
+            "/Textures/Mob/UI/Human/human5.png",
+            "/Textures/Mob/UI/Human/human6-0.png",
+            "/Textures/Mob/UI/Human/human6-1.png",
+            "/Textures/Mob/UI/Human/humancrit-0.png",
+            "/Textures/Mob/UI/Human/humancrit-1.png",
+            "/Textures/Mob/UI/Human/humandead.png",
+        };
+
         public override void ChangeHudState(DamageableComponent damage)
         {
             ThresholdType healthstate = CalculateDamageState(damage);
@@ -49,21 +66,21 @@ namespace Content.Server.GameObjects
                         throw new InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
-                    statusEffectsComponent?.ChangeStatus(StatusEffect.Health,
+                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Health,
                             "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
 
                     overlayComponent?.ChangeOverlay(ScreenEffects.None);
 
                     return;
                 case ThresholdType.Critical:
-                    statusEffectsComponent?.ChangeStatus(
+                    statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/humancrit-0.png");
                     overlayComponent?.ChangeOverlay(ScreenEffects.GradientCircleMask);
 
                     return;
                 case ThresholdType.Death:
-                    statusEffectsComponent?.ChangeStatus(
+                    statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/humandead.png");
                     overlayComponent?.ChangeOverlay(ScreenEffects.CircleMask);

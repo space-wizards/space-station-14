@@ -637,19 +637,6 @@
 
 - type: entity
   parent: OuterclothingBase
-  id: OuterclothingGolem
-  name: golem
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/golem.rsi
-  - type: Icon
-    sprite: Clothing/OuterClothing/golem.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/golem.rsi
-
-- type: entity
-  parent: OuterclothingBase
   id: OuterclothingGreyhoodie
   name: grey hoodie
   description: ''

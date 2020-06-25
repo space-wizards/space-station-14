@@ -1,9 +1,8 @@
-﻿using Content.Server.Cargo;
-using Content.Server.Interfaces;
+﻿using Content.Server.Interfaces;
+﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
-using Content.Server.Preferences;
 using Content.Server.Sandbox;
 using Content.Shared.Kitchen;
 using Robust.Server.Interfaces.Player;
@@ -44,6 +43,8 @@ namespace Content.Server
                 "AnimationsTest",
                 "ItemStatus",
                 "Marker",
+                "EmergencyLight",
+                "Clickable",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -85,6 +86,7 @@ namespace Content.Server
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
         }
 
@@ -92,12 +94,11 @@ namespace Content.Server
         {
             base.Update(level, frameEventArgs);
 
-            _gameTicker.Update(frameEventArgs);
             switch (level)
             {
                 case ModUpdateLevel.PreEngine:
                 {
-                    IoCManager.Resolve<IGalacticBankManager>().Update(frameEventArgs);
+                    _gameTicker.Update(frameEventArgs);
                     break;
                 }
             }

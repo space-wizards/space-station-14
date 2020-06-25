@@ -15,6 +15,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -30,6 +31,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEyeManager _eyeManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 0649
 
         public bool SetItemSlot(ItemSlotButton button, IEntity entity)
@@ -71,9 +73,12 @@ namespace Content.Client.UserInterface
                 var func = args.Function;
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, BoundKeyState.Down, mousePosWorld,
-                    args.PointerLocation, item.Uid);
+                var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
+                if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
+                    grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+
+                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
+                    grid.MapToGrid(mousePosWorld), args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer.Session;
@@ -100,12 +105,12 @@ namespace Content.Client.UserInterface
                 var end = cooldown.CooldownEnd.Value;
 
                 var length = (end - start).TotalSeconds;
-                var progress = (_gameTiming.CurTime - start).TotalSeconds;
-                var ratio = 1 - (float)(progress / length).Clamp(0, 1);
+                var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
+                var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownDisplay.Fraction = ratio;
+                cooldownDisplay.Progress = (float)ratio.Clamp(-1, 1);
 
-                if (ratio > 0)
+                if (ratio > -1f)
                 {
                     cooldownDisplay.Visible = true;
                 }

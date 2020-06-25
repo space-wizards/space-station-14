@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: chem_dispenser
   name: chemical dispenser
   parent: ReagentDispenserBase

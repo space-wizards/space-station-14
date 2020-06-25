@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Destructible
                 _actSystem.HandleDestruction(Owner, true);
                 if(destroySound != string.Empty)
                 {
-                    EntitySystem.Get<AudioSystem>().Play(destroySound, pos);
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(destroySound, pos);
                 }
 
 

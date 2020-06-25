@@ -9,3 +9,12 @@
     offset: 0.85, 0
     drawdepth: Overlays
   - type: MeleeWeaponArcAnimation
+
+- type: entity
+  id: WeaponTGArc
+  save: false
+  abstract: true
+  parent: WeaponArc
+  components:
+  - type: Sprite
+    sprite: Effects/weapons/tg_arcs.rsi

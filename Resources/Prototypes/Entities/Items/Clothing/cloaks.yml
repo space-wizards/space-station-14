@@ -9,7 +9,7 @@
     Size: 10
     QuickEquip: true
     Slots:
-    - back
+    - neck
 
 - type: entity
   parent: CloakClothing
@@ -115,5 +115,16 @@
     sprite: Clothing/Back/Cloaks/hop_cloak.rsi
     state: hopcloak
   - type: Clothing
-    sprite: Clothing/Back/Cloaks/hop_cloak.rsi
     HeldPrefix: hopcloak
+
+- type: entity
+  parent: CloakClothing
+  id: HeraldCloak
+  name: Herald's cloak
+  components:
+  - type: Sprite
+    state: heraldcloak
+  - type: Icon
+    state: heraldcloak
+  - type: Clothing
+    HeldPrefix: heraldcloak
