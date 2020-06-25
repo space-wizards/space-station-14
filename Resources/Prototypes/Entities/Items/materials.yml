@@ -114,3 +114,37 @@
   components:
   - type: Stack
     count: 1
+
+- type: entity
+  name: phoron ore
+  id: OrePhoron
+  parent: BaseItem
+  components:
+  - type: Sprite
+    texture: Objects/Materials/phoron_ore.png
+  - type: Icon
+    texture: Objects/Materials/phoron_ore.png
+
+- type: entity
+  name: phoron sheet
+  id: PhoronStack
+  parent: MaterialStack
+  components:
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: phoron
+  - type: Stack
+    stacktype: enum.StackType.Phoron
+  - type: Sprite
+    texture: Objects/Materials/phoron_sheet.png
+  - type: Icon
+    texture: Objects/Materials/phoron_sheet.png
+
+- type: entity
+  id: PhoronStack1
+  name: phoron sheet 1
+  parent: PhoronStack
+  components:
+  - type: Stack
+    count: 1
