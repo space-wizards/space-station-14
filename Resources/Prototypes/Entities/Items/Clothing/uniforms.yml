@@ -100,7 +100,6 @@
   - type: Icon
     state: sec_skirt
   - type: Clothing
-    sprite: Clothing/Uniforms/uniform_sec.rsi
     ClothingPrefix: sec_skirt
     femaleMask: UniformTop
 
