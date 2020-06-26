@@ -26,6 +26,24 @@
       ]
     },
     {
+      "name": "hos_skirt-equipped-INNERCLOTHING",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "hosalt_skirt-equipped-INNERCLOTHING",
       "directions": 4,
       "delays": [
@@ -81,6 +99,15 @@
     },
     {
       "name": "hosalt_skirt",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "hos_skirt",
       "directions": 1,
       "delays": [
         [
@@ -159,6 +186,24 @@
           1
         ]
       ]
-    }
+    },
+    {
+      "name": "hosalt-inhand-right",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
   ]
 }

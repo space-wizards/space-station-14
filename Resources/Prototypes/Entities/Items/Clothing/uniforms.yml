@@ -6,7 +6,6 @@
   - type: Clothing
     Slots: [innerclothing]
 
-
 - type: entity
   parent: UniformBase
   id: JanitorUniform
@@ -16,11 +15,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_janitor.rsi
     state: janitor
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_janitor.rsi
     state: janitor
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_janitor.rsi
 
@@ -32,11 +29,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_engineering.rsi
     state: engine
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_engineering.rsi
     state: engine
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_engineering.rsi
 
@@ -49,11 +44,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_assistant.rsi
     state: assistant
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_assistant.rsi
     state: assistant
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_assistant.rsi
 
@@ -66,11 +59,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_clown.rsi
     state: icon
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_clown.rsi
     state: icon
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_clown.rsi
     femaleMask: UniformTop
@@ -94,6 +85,7 @@
   parent: UniformSec
   id: UniformSecSkirt
   name: security jumpskirt
+  description: A jumpskirt made of strong material, providing robust protection.
   components:
   - type: Sprite
     state: sec_skirt
@@ -112,11 +104,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
     state: cargotech
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
     state: cargotech
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
 
@@ -129,11 +119,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_chef.rsi
     state: chef
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_chef.rsi
     state: chef
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_chef.rsi
 
@@ -146,11 +134,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_captain.rsi
     state: captain
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_captain.rsi
     state: captain
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_captain.rsi
 
@@ -163,11 +149,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hop.rsi
     state: hop
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_hop.rsi
     state: hop
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hop.rsi
 
@@ -180,11 +164,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_ce.rsi
     state: ce
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_ce.rsi
     state: ce
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_ce.rsi
 
@@ -197,11 +179,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cmo.rsi
     state: cmo
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_cmo.rsi
     state: cmo
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cmo.rsi
 
@@ -214,11 +194,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_md.rsi
     state: md
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_md.rsi
     state: md
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_md.rsi
 
@@ -231,11 +209,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_scientist.rsi
     state: scientist
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_scientist.rsi
     state: scientist
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_scientist.rsi
 
@@ -248,11 +224,9 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_rd.rsi
     state: rd
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_rd.rsi
     state: rd
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_rd.rsi
 
@@ -265,18 +239,16 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_mime.rsi
     state: icon
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_mime.rsi
     state: icon
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_mime.rsi
 
 - type: entity
   parent: UniformBase
-  id: UniformHoS
-  name: head of security jumpsuit
+  id: UniformHoSAlt
+  name: head of security turtleneck
   description:
   components:
   - type: Sprite
@@ -291,8 +263,8 @@
 
 - type: entity
   parent: UniformHoS
-  id: UniformHoSSkirt
-  name: head of security jumpskirt
+  id: UniformHoSAltSkirt
+  name: head of security turtleskirt
   components:
   - type: Sprite
     state: hosalt_skirt
@@ -303,3 +275,32 @@
     ClothingPrefix: hosalt_skirt
     femaleMask: UniformTop
     HeldPrefix: hosalt
+
+- type: entity
+  parent: UniformBase
+  id: UniformHoS
+  name: head of security jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    state: hos
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    state: hos
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSSkirt
+  name: head of security jumpskirt
+  components:
+  - type: Sprite
+    state: hos_skirt
+  - type: Icon
+    state: hos_skirt
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    ClothingPrefix: hos_skirt
+    femaleMask: UniformTop
