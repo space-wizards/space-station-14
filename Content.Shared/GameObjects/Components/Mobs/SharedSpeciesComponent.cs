@@ -27,6 +27,5 @@ namespace Content.Shared.GameObjects.Components.Mobs
             /// </summary>
             Down,
         }
-
     }
 }

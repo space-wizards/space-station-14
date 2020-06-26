@@ -114,8 +114,9 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
         {
-            if (e.NewStatus == SessionStatus.Disconnected)
-                InstrumentPlayer = null;
+            if (e.Session != _instrumentPlayer || e.NewStatus != SessionStatus.Disconnected) return;
+            InstrumentPlayer = null;
+            Clean();
         }
 
         public override void Initialize()
@@ -204,9 +205,13 @@ namespace Content.Server.GameObjects.Components.Instruments
                     _lastSequencerTick = Math.Max(maxTick, minTick + 1);
                     break;
                 case InstrumentStartMidiMessage startMidi:
+                    if (session != _instrumentPlayer)
+                        break;
                     Playing = true;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
+                    if (session != _instrumentPlayer)
+                        break;
                     Playing = false;
                     Clean();
                     break;
@@ -296,6 +301,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
             {
                 InstrumentPlayer = null;
+                Clean();
             }
 
             if ((_batchesDropped >= MaxMidiBatchDropped

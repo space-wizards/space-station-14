@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Research
 
             eventArgs.Using.Delete();
 
-            return false;
+            return true;
         }
 
         private void SetAppearance(LatheVisualState state)

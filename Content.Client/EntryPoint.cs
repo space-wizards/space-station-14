@@ -174,6 +174,8 @@ namespace Content.Client
                 "Utensil",
                 "UnarmedCombat",
                 "TimedSpawner",
+                "Buckle",
+                "Strap"
             };
 
             foreach (var ignoreName in registerIgnore)

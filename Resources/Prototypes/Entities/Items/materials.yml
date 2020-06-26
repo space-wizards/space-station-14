@@ -20,9 +20,14 @@
   - type: Stack
     stacktype: enum.StackType.Metal
   - type: Sprite
-    texture: Objects/Materials/sheet_metal.png
+    sprite: Objects/Materials/sheets.rsi
+    state: metal
   - type: Icon
-    texture: Objects/Materials/sheet_metal.png
+    sprite: Objects/Materials/sheets.rsi
+    state: metal
+  - type: Item
+    sprite: Objects/Materials/sheets.rsi
+    HeldPrefix: metal
 
 - type: entity
   id: SteelSheet1
@@ -44,9 +49,14 @@
   - type: Stack
     stacktype: enum.StackType.Glass
   - type: Sprite
-    texture: Objects/Materials/sheet_glass.png
+    sprite: Objects/Materials/sheets.rsi
+    state: glass
   - type: Icon
-    texture: Objects/Materials/sheet_glass.png
+    sprite: Objects/Materials/sheets.rsi
+    state: glass
+  - type: Item
+    sprite: Objects/Materials/sheets.rsi
+    HeldPrefix: glass
 
 - type: entity
   id: GlassSheet1
@@ -101,6 +111,45 @@
   id: GoldStack1
   name: gold bar 1
   parent: GoldStack
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  name: phoron ore
+  id: OrePhoron
+  parent: BaseItem
+  components:
+  - type: Sprite
+    texture: Objects/Materials/phoron_ore.png
+  - type: Icon
+    texture: Objects/Materials/phoron_ore.png
+
+- type: entity
+  name: phoron sheet
+  id: PhoronStack
+  parent: MaterialStack
+  components:
+  - type: Material
+    materials:
+    - key: enum.MaterialKeys.Stack
+      mat: phoron
+  - type: Stack
+    stacktype: enum.StackType.Phoron
+  - type: Sprite
+    sprite: Objects/Materials/sheets.rsi
+    state: phoron
+  - type: Icon
+    sprite: Objects/Materials/sheets.rsi
+    state: phoron
+  - type: Item
+    sprite: Objects/Materials/sheets.rsi
+    HeldPrefix: phoron
+
+- type: entity
+  id: PhoronStack1
+  name: phoron sheet 1
+  parent: PhoronStack
   components:
   - type: Stack
     count: 1
