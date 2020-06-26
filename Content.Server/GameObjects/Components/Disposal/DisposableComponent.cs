@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             DisposalTube = null;
             StartingTime = 0;
             TimeLeft = 0;
+            Owner.Transform.DetachParent();
         }
 
         public void Update(float frameTime)
