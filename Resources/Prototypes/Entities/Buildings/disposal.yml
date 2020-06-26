@@ -1,0 +1,55 @@
+﻿- type: entity
+  id: DisposalPipe
+  name: disposal pipe segment
+  description: A huge pipe segment used for constructing disposal systems
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    netsync: false
+    drawdepth: BelowFloor
+    sprite: Buildings/disposal.rsi
+    state: pipe-s
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: pipe-s
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+  - type: SubFloorHide
+  - type: Destructible
+    thresholdvalue: 100
+  - type: DisposalTube
+  snap:
+  - Pipe
+
+- type: entity
+  id: DisposalTrunk
+  name: disposal trunk
+  description: A pipe trunk used as an entry point for disposal systems
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Collidable
+    - type: Sprite
+      netsync: false
+      drawdepth: BelowFloor
+      sprite: Buildings/disposal.rsi
+      state: pipe-t
+    - type: Icon
+      sprite: Buildings/disposal.rsi
+      state: pipe-t
+    - type: SnapGrid
+      offset: Center
+    - type: Anchorable
+    - type: SubFloorHide
+    - type: Destructible
+      thresholdvalue: 100
+    - type: DisposalEntry
+  snap:
+    - Pipe
