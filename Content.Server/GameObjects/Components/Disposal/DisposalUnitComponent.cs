@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -55,9 +57,53 @@ namespace Content.Server.GameObjects.Components.Disposal
             return TryFlush();
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsert(eventArgs.Using);
+        }
+
+        [Verb]
+        private sealed class SelfInsertVerb : Verb<DisposalUnitComponent>
+        {
+            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("Jump inside");
+            }
+
+            protected override void Activate(IEntity user, DisposalUnitComponent component)
+            {
+                component.TryInsert(user);
+            }
+        }
+
+        [Verb]
+        private sealed class FlushVerb : Verb<DisposalUnitComponent>
+        {
+            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    return;
+                }
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("Flush");
+            }
+
+            protected override void Activate(IEntity user, DisposalUnitComponent component)
+            {
+                component.TryFlush();
+            }
         }
     }
 }
