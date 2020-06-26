@@ -100,6 +100,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _clothingComponent);
             _cellContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out _);
+            Dirty();
         }
 
         /// <summary>
