@@ -266,15 +266,29 @@
   parent: UniformBase
   id: UniformHoS
   name: head of security jumpsuit
-  description: A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security.
+  description: 
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: hos
-
+    state: hosalt
   - type: Icon
     sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: hos
-
+    state: hosalt
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
+    HeldPrefix: hosalt
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSSkirt
+  name: head of security jumpskirt
+  components:
+  - type: Sprite
+    state: hosalt_skirt
+  - type: Icon
+    state: hosalt_skirt
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    ClothingPrefix: hosalt_skirt
+    femaleMask: UniformTop
+    HeldPrefix: hosalt
