@@ -12,8 +12,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public DisposalSystem()
         {
-            EntityQuery = new TypeEntityQuery(typeof(DisposalTubeComponent));
-            var disposalNetsValues = _disposalNets.Values;
+            EntityQuery = new TypeEntityQuery(typeof(IDisposalTubeComponent));
         }
 
         public uint NewUid()

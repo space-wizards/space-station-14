@@ -5,36 +5,24 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalEntryComponent : DisposalTubeComponent, IInteractHand
     {
         public override string Name => "DisposalEntry";
 
         private bool TryInsert(IEntity entity)
         {
-            if (!entity.TryGetComponent(out DisposableComponent disposable) ||
-                disposable.InDisposals ||
-                !TryInsert(disposable))
+            if (Parent == null ||
+                !entity.TryGetComponent(out DisposableComponent disposable) ||
+                disposable.InDisposals)
             {
                 return false;
             }
 
+            Contents.Insert(disposable.Owner);
+            Parent.Insert(disposable);
+            disposable.EnterDisposals(this);
             entity.Transform.GridPosition = Owner.Transform.GridPosition;
-            disposable.EnterDisposals(Parent);
-
-            return true;
-        }
-
-        private bool TryRemove(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out DisposableComponent disposable) ||
-                !disposable.InDisposals ||
-                !TryRemove(disposable))
-            {
-                return false;
-            }
-
-            entity.Transform.GridPosition = Owner.Transform.GridPosition;
-            disposable.ExitDisposals();
 
             return true;
         }

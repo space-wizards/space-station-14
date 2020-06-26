@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    public abstract class DisposalTubeComponent : Component
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         /// <summary>
         /// The DisposalNet that this tube is connected to
         /// </summary>
-        [ViewVariables]
+        [ViewVariables, CanBeNull]
         public DisposalNet Parent { get; private set; }
 
         /// <summary>
@@ -29,40 +28,45 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// Container of entities that are currently inside this tube
         /// </summary>
         [ViewVariables]
-        private Container Contents { get; set; }
+        public Container Contents { get; set; }
 
         /// <summary>
         /// Collection of entities that are currently inside this tube
         /// </summary>
         public IReadOnlyCollection<IEntity> ContainedEntities => Contents.ContainedEntities;
 
-        protected bool TryInsert(DisposableComponent disposable)
+        private void Remove(IEntity entity)
         {
-            if (Parent == null)
+            Contents.Remove(entity);
+
+            if (!entity.TryGetComponent(out DisposableComponent disposable))
             {
-                return false;
+                return;
             }
 
-            Contents.Insert(disposable.Owner);
-            Parent.Insert(disposable);
-            return true;
+            if (!disposable.InDisposals)
+            {
+                return;
+            }
+
+            Parent?.Remove(disposable);
+            disposable.ExitDisposals();
         }
 
-        protected bool TryRemove(DisposableComponent disposable)
+        private void TransferTo(DisposableComponent disposable, IDisposalTubeComponent to)
         {
             Contents.Remove(disposable.Owner);
-            Parent?.Remove(disposable);
-            return true;
+            to.Contents.Insert(disposable.Owner);
+            disposable.EnterDisposals(to);
         }
 
         public void SpreadDisposalNet()
         {
-            var entityManager = IoCManager.Resolve<IServerEntityManager>();
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var tubes = snapGrid.GetCardinalNeighborCells()
                 .SelectMany(x => x.GetLocal())
                 .Distinct()
-                .Select(x => x.TryGetComponent<DisposalTubeComponent>(out var c) ? c : null)
+                .Select(x => x.TryGetComponent<IDisposalTubeComponent>(out var c) ? c : null)
                 .Where(x => x != null)
                 .Distinct()
                 .ToArray();
@@ -93,15 +97,15 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
                 else if (tube.Parent != Parent && !tube.Parent.Dirty)
                 {
-                    Parent.MergeNets(tube.Parent);
+                    Parent!.MergeNets(tube.Parent);
                 }
             }
         }
 
-        private bool CanConnectTo([NotNullWhen(true)] out DisposalNet parent)
+        public bool CanConnectTo([NotNullWhen(true)] out DisposalNet parent)
         {
             parent = Parent;
-            return parent != null && !Parent.Dirty && !Reconnecting;
+            return parent != null && !parent.Dirty && !Reconnecting;
         }
 
         public void ConnectToNet(DisposalNet net)
@@ -117,10 +121,59 @@ namespace Content.Server.GameObjects.Components.Disposal
             Parent = null;
         }
 
+        public void Update(float frameTime, IEntity entity)
+        {
+            if (Reconnecting)
+            {
+                return;
+            }
+
+            if (Parent == null ||
+                !entity.TryGetComponent(out DisposableComponent disposable))
+            {
+                Remove(entity);
+                return;
+            }
+
+            while (frameTime > 0)
+            {
+                var time = frameTime;
+                if (time > disposable.TimeLeft)
+                {
+                    time = disposable.TimeLeft;
+                }
+
+                disposable.TimeLeft -= time;
+                frameTime -= time;
+
+                if (disposable.TimeLeft > 0)
+                {
+                    return;
+                }
+
+                var snapGrid = Owner.GetComponent<SnapGridComponent>();
+                var direction = Owner.Transform.WorldRotation.GetDir();
+                var next = snapGrid
+                    .GetInDir(direction)
+                    .FirstOrDefault(adjacent =>
+                        adjacent.TryGetComponent(out IDisposalTubeComponent tube) &&
+                        tube.Parent == Parent); // TODO
+
+                if (next == null)
+                {
+                    Remove(entity);
+                    return;
+                }
+
+                var to = next.GetComponent<IDisposalTubeComponent>();
+                TransferTo(disposable, to);
+            }
+        }
+
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerManagerComponent.Ensure<Container>(nameof(Parent), Owner);
+            Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
         }
 
         protected override void Startup()

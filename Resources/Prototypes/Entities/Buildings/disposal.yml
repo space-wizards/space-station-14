@@ -22,7 +22,7 @@
   - type: SubFloorHide
   - type: Destructible
     thresholdvalue: 100
-  - type: DisposalTube
+  - type: DisposalTransit
   snap:
   - Pipe
 
@@ -33,23 +33,23 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Collidable
-    - type: Sprite
-      netsync: false
-      drawdepth: BelowFloor
-      sprite: Buildings/disposal.rsi
-      state: pipe-t
-    - type: Icon
-      sprite: Buildings/disposal.rsi
-      state: pipe-t
-    - type: SnapGrid
-      offset: Center
-    - type: Anchorable
-    - type: SubFloorHide
-    - type: Destructible
-      thresholdvalue: 100
-    - type: DisposalEntry
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    netsync: false
+    drawdepth: BelowFloor
+    sprite: Buildings/disposal.rsi
+    state: pipe-t
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: pipe-t
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+  - type: SubFloorHide
+  - type: Destructible
+    thresholdvalue: 100
+  - type: DisposalEntry
   snap:
-    - Pipe
+  - Pipe

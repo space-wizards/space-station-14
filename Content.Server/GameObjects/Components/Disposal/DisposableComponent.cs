@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -9,22 +10,37 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         public override string Name => "Disposable";
 
+        [ViewVariables]
         public bool InDisposals { get; private set; }
 
-        [CanBeNull]
-        private DisposalNet DisposalNet { get; set; }
+        [ViewVariables, CanBeNull]
+        private IDisposalTubeComponent DisposalTube { get; set; }
 
-        public void EnterDisposals(DisposalNet net)
+        /// <summary>
+        /// Time left until the entity is pushed to the next tube
+        /// </summary>
+        [ViewVariables]
+        public float TimeLeft { get; set; }
+
+        public void EnterDisposals(IDisposalTubeComponent tube)
         {
             InDisposals = true;
-            DisposalNet = net;
+            DisposalTube = tube;
+            TimeLeft = tube.Parent.Speed;
+            Owner.Transform.WorldPosition = tube.Owner.Transform.WorldPosition;
         }
 
         public void ExitDisposals()
         {
             InDisposals = false;
-            DisposalNet?.Remove(this);
-            DisposalNet = null;
+            DisposalTube?.Parent?.Remove(this);
+            DisposalTube = null;
+            TimeLeft = 0;
+        }
+
+        public void Update(float frameTime)
+        {
+            DisposalTube?.Update(frameTime, Owner);
         }
 
         public override void OnRemove()

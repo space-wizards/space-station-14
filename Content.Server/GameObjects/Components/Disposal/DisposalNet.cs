@@ -8,27 +8,31 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     public class DisposalNet
     {
+        /// <summary>
+        ///     Set of disposables currently inside this DisposalNet
+        /// </summary>
+        private readonly HashSet<DisposableComponent> _contents;
+
+        /// <summary>
+        ///     Set of tubes that make up the DisposalNet
+        /// </summary>
+        private readonly HashSet<IDisposalTubeComponent> _tubeList;
+
         public DisposalNet()
         {
             var disposalSystem = EntitySystem.Get<DisposalSystem>();
             disposalSystem.Add(this);
             Uid = disposalSystem.NewUid();
+            _tubeList = new HashSet<IDisposalTubeComponent>();
+            _contents = new HashSet<DisposableComponent>();
+            Speed = 1;
         }
 
         /// <summary>
         /// Unique identifier per DisposalNet
         /// </summary>
-        [ViewVariables] public uint Uid { get; }
-
-        /// <summary>
-        /// Set of tubes that make up the DisposalNet
-        /// </summary>
-        private readonly HashSet<DisposalTubeComponent> _tubeList = new HashSet<DisposalTubeComponent>();
-
-        /// <summary>
-        /// Set of disposables currently inside this DisposalNet
-        /// </summary>
-        private readonly HashSet<DisposableComponent> _contents = new HashSet<DisposableComponent>();
+        [ViewVariables]
+        public uint Uid { get; }
 
         /// <summary>
         /// If true, this DisposalNet will be regenerated from its tubes
@@ -37,7 +41,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public bool Dirty { get; private set; }
 
-        public void Add(DisposalTubeComponent tube)
+        /// <summary>
+        /// The speed multiplier for moving entities in this DisposalNet
+        /// </summary>
+        [ViewVariables]
+        public float Speed { get; set; }
+
+        public void Add(IDisposalTubeComponent tube)
         {
             _tubeList.Add(tube);
 
@@ -52,7 +62,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        public void Remove(DisposalTubeComponent tube)
+        public void Remove(IDisposalTubeComponent tube)
         {
             _tubeList.Remove(tube);
 
@@ -128,6 +138,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void Update(float frameTime)
         {
+            foreach (var disposable in _contents.ToHashSet())
+            {
+                disposable.Update(frameTime);
+            }
         }
     }
 }

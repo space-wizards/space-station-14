@@ -179,7 +179,7 @@ namespace Content.Client
                 "FlashProjectile",
                 "Utensil",
                 "Disposable",
-                "DisposalTube",
+                "DisposalTransit",
                 "DisposalEntry",
             };
 
