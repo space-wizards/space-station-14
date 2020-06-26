@@ -304,3 +304,31 @@
     sprite: Clothing/Uniforms/uniform_hos.rsi
     ClothingPrefix: hos_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformPrisoner
+  name: prisoner jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_prisoner.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_prisoner.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_prisoner.rsi
+
+- type: entity
+  parent: UniformPrisoner
+  id: UniformPrisonerSkirt
+  name: prisoner jumpskirt
+  components:
+  - type: Sprite
+    state: prisoner_skirt
+  - type: Icon
+    state: prisoner_skirt
+  - type: Clothing
+    ClothingPrefix: prisoner_skirt
+    femaleMask: UniformTop
