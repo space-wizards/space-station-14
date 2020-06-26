@@ -708,6 +708,42 @@
       ]
     },
     {
+      "name": "red-equipped-INNERCLOTHING",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "s-equipped-INNERCLOTHING",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "red_d-equipped-INNERCLOTHING",
       "directions": 4,
       "delays": [
@@ -1168,6 +1204,15 @@
     },
     {
       "name": "grey_skirt",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "s",
       "directions": 1,
       "delays": [
         [

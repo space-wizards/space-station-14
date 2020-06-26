@@ -180,6 +180,18 @@
     femaleMask: UniformTop
     HeldPrefix: pink
 
+- type: entity
+  parent: UniformColorBase
+  id: S
+  name: s
+  components:
+  - type: Sprite
+    state: s
+  - type: Icon
+    state: s
+  - type: Clothing
+    HeldPrefix: s
+
 # Red
 - type: entity
   parent: UniformColorBase
