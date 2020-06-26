@@ -37,7 +37,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
             return new OverlayContainer(id);
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             if (obj is OverlayContainer container)
             {

@@ -125,7 +125,7 @@ namespace Content.Server.Mobs
         public string Description => "Adds an overlay by its ID";
         public string Help => "addoverlay <id>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
             if (args.Length != 1)
             {
@@ -149,7 +149,7 @@ namespace Content.Server.Mobs
         public string Description => "Removes an overlay by its ID";
         public string Help => "rmoverlay <id>";
 
-        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
             if (args.Length != 1)
             {
