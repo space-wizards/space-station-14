@@ -44,11 +44,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!disposable.InDisposals)
-            {
-                return;
-            }
-
             Parent?.Remove(disposable);
             disposable.ExitDisposals();
         }
@@ -129,8 +124,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (Parent == null ||
-                !entity.TryGetComponent(out DisposableComponent disposable))
+            if (Parent == null || !entity.TryGetComponent(out DisposableComponent disposable))
             {
                 Remove(entity);
                 return;

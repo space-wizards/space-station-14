@@ -138,7 +138,6 @@
     range: 0.8
     arcwidth: 30
     arc: fist
-  - type: Disposable
 
 - type: entity
   save: false

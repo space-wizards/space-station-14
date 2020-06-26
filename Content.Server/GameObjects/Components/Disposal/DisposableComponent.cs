@@ -5,7 +5,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    [RegisterComponent]
     public class DisposableComponent : Component, IActionBlocker
     {
         public override string Name => "Disposable";

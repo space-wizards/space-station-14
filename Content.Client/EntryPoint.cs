@@ -178,7 +178,6 @@ namespace Content.Client
                 "FlashExplosive",
                 "FlashProjectile",
                 "Utensil",
-                "Disposable",
                 "DisposalTransit",
                 "DisposalEntry",
                 "DisposalUnit",
