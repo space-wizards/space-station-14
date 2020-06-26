@@ -126,7 +126,7 @@ namespace Content.Server.BodySystem
             string target = targetObject as string;
             if (!_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You can't attach it!");
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You can't attach it!"));
             }
             else
             {
