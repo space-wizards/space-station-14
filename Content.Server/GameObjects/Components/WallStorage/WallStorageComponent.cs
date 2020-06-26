@@ -2,17 +2,16 @@
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.Components.WallStorage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
-namespace Content.Server.GameObjects.Storage
+namespace Content.Server.GameObjects.Components.WallStorage
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -52,37 +51,6 @@ namespace Content.Server.GameObjects.Storage
             {
                 handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
-
-            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent batteryBarrelComponent))
-            {
-                batteryBarrelComponent.UpdateAppearance();
-            }
-
-            UpdateStatus();
-        }
-
-        protected abstract WallStorageStatus GetStatus();
-        public void UpdateStatus()
-        {
-            if (_status == status)
-            {
-                return;
-            }
-
-            _status = status;
-
-            switch (_status)
-            {
-                // Update load just in case
-                case WallStorageStatus.Full:
-                    _appearanceComponent?.SetData(WallStorageStatus.Full, WallStorageStatus.Full); 
-                    break;
-                case WallStorageStatus.Empty:
-                    _appearanceComponent?.SetData(WallStorageStatus.Empty, WallStorageStatus.Empty); 
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -110,7 +78,7 @@ namespace Content.Server.GameObjects.Storage
                 if (handsComponent.GetActiveHand == null)
                 {
                     data.Visibility = VerbVisibility.Disabled;
-                    data.Text = "Insert";
+                    data.Text = Loc.GetString("Insert");
                     return;
                 }
 
@@ -153,7 +121,7 @@ namespace Content.Server.GameObjects.Storage
                 if (component._container.ContainedEntity == null)
                 {
                     data.Visibility = VerbVisibility.Disabled;
-                    data.Text = "Eject";
+                    data.Text = Loc.GetString("Eject");
                     return;
                 }
 
@@ -178,7 +146,6 @@ namespace Content.Server.GameObjects.Storage
             {
                 return false;
             }
-            UpdateStatus();
             return true;
         }
     }

@@ -4,10 +4,10 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Client.GameObjects.Storage
+namespace Content.Client.GameObjects.WallStorage
 {
     [UsedImplicitly]
-    public class PowerChargerVisualizer2D : AppearanceVisualizer
+    public class WallStorageVisualizer2D : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
         {
