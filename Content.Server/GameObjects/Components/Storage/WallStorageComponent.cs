@@ -61,6 +61,7 @@ namespace Content.Server.GameObjects.Storage
             UpdateStatus();
         }
 
+        protected abstract WallStorageStatus GetStatus();
         public void UpdateStatus()
         {
             if (_status == status)
