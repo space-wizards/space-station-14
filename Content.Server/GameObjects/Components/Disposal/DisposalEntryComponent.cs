@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             Contents.Insert(disposable.Owner);
             Parent.Insert(disposable);
-            disposable.EnterDisposals(this);
+            disposable.EnterTube(this);
             entity.Transform.GridPosition = Owner.Transform.GridPosition;
 
             return true;

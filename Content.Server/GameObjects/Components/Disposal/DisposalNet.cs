@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             Uid = disposalSystem.NewUid();
             _tubeList = new HashSet<IDisposalTubeComponent>();
             _contents = new HashSet<DisposableComponent>();
-            Speed = 1;
+            TravelTime = 1;
         }
 
         /// <summary>
@@ -42,10 +42,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         public bool Dirty { get; private set; }
 
         /// <summary>
-        /// The speed multiplier for moving entities in this DisposalNet
+        /// The time that it takes for an entity within this DisposalNet to
+        /// travel between two of its tubes
         /// </summary>
         [ViewVariables]
-        public float Speed { get; set; }
+        public float TravelTime { get; set; }
 
         public void Add(IDisposalTubeComponent tube)
         {

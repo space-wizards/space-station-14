@@ -5,15 +5,23 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
+    [RegisterComponent]
     public class DisposableComponent : Component, IActionBlocker
     {
         public override string Name => "Disposable";
 
         [ViewVariables]
-        public bool InDisposals { get; private set; }
+        private bool InDisposals { get; set; }
 
         [ViewVariables, CanBeNull]
         private IDisposalTubeComponent DisposalTube { get; set; }
+
+        /// <summary>
+        /// The total amount of time that it will take for this entity to
+        /// be pushed to the next tube
+        /// </summary>
+        [ViewVariables]
+        public float StartingTime { get; set; }
 
         /// <summary>
         /// Time left until the entity is pushed to the next tube
@@ -21,12 +29,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public float TimeLeft { get; set; }
 
-        public void EnterDisposals(IDisposalTubeComponent tube)
+        public void EnterTube(IDisposalTubeComponent tube)
         {
             InDisposals = true;
             DisposalTube = tube;
-            TimeLeft = tube.Parent.Speed;
-            Owner.Transform.WorldPosition = tube.Owner.Transform.WorldPosition;
+            StartingTime = tube.Parent.TravelTime;
+            TimeLeft = tube.Parent.TravelTime;
         }
 
         public void ExitDisposals()
@@ -34,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             InDisposals = false;
             DisposalTube?.Parent?.Remove(this);
             DisposalTube = null;
+            StartingTime = 0;
             TimeLeft = 0;
         }
 

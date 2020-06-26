@@ -9,8 +9,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         DisposalNet Parent { get; }
         bool Reconnecting { get; set; }
-        Container Contents { get; set; }
-        IReadOnlyCollection<IEntity> ContainedEntities { get; }
+        Container Contents { get; }
+        IEnumerable<IEntity> ContainedEntities { get; }
         void SpreadDisposalNet();
         bool CanConnectTo([NotNullWhen(true)] out DisposalNet parent);
         void ConnectToNet([JetBrains.Annotations.NotNull] DisposalNet net);

@@ -6,6 +6,7 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         /// Collection of entities that are currently inside this tube
         /// </summary>
-        public IReadOnlyCollection<IEntity> ContainedEntities => Contents.ContainedEntities;
+        public IEnumerable<IEntity> ContainedEntities => Contents.ContainedEntities;
 
         private void Remove(IEntity entity)
         {
@@ -50,9 +51,16 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void TransferTo(DisposableComponent disposable, IDisposalTubeComponent to)
         {
+            var position = disposable.Owner.Transform.LocalPosition;
+            if (!to.Contents.Insert(disposable.Owner))
+            {
+                return;
+            }
+
+            disposable.Owner.Transform.LocalPosition = position;
+
             Contents.Remove(disposable.Owner);
-            to.Contents.Insert(disposable.Owner);
-            disposable.EnterDisposals(to);
+            disposable.EnterTube(to);
         }
 
         public void SpreadDisposalNet()
@@ -71,11 +79,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 foreach (var tube in tubes)
                 {
-                    if (tube.CanConnectTo(out var parent))
+                    if (!tube.CanConnectTo(out var parent))
                     {
-                        ConnectToNet(parent);
-                        break;
+                        continue;
                     }
+
+                    ConnectToNet(parent);
+                    break;
                 }
 
                 if (Parent == null || Reconnecting)
@@ -141,15 +151,22 @@ namespace Content.Server.GameObjects.Components.Disposal
                 disposable.TimeLeft -= time;
                 frameTime -= time;
 
+                var snapGrid = Owner.GetComponent<SnapGridComponent>();
+                var tubeRotation = Owner.Transform.LocalRotation;
+
                 if (disposable.TimeLeft > 0)
                 {
+                    var progress = 1 - disposable.TimeLeft / disposable.StartingTime;
+                    var newPosition = tubeRotation.ToVec() * progress;
+                    newPosition = (newPosition.Y, newPosition.X);
+
+                    entity.Transform.LocalPosition = newPosition;
+
                     return;
                 }
 
-                var snapGrid = Owner.GetComponent<SnapGridComponent>();
-                var direction = Owner.Transform.WorldRotation.GetDir();
                 var next = snapGrid
-                    .GetInDir(direction)
+                    .GetInDir(tubeRotation.GetDir())
                     .FirstOrDefault(adjacent =>
                         adjacent.TryGetComponent(out IDisposalTubeComponent tube) &&
                         tube.Parent == Parent); // TODO
