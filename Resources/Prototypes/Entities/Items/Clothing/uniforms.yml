@@ -84,13 +84,25 @@
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_sec.rsi
     state: icon
-
   - type: Icon
     sprite: Clothing/Uniforms/uniform_sec.rsi
     state: icon
-
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_sec.rsi
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecSkirt
+  name: security jumpskirt
+  components:
+  - type: Sprite
+    state: sec_skirt
+  - type: Icon
+    state: sec_skirt
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_sec.rsi
+    ClothingPrefix: sec_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -266,7 +278,7 @@
   parent: UniformBase
   id: UniformHoS
   name: head of security jumpsuit
-  description: 
+  description:
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
