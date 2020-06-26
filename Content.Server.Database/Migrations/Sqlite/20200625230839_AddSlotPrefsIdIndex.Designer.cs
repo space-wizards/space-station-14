@@ -2,14 +2,16 @@
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Content.Server.Database.Migrations
+namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqlitePreferencesDbContext))]
-    partial class SqlitePreferencesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200625230839_AddSlotPrefsIdIndex")]
+    partial class AddSlotPrefsIdIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

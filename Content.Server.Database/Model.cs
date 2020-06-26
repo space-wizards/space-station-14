@@ -53,11 +53,16 @@ namespace Content.Server.Database
         }
 
         public DbSet<Prefs> Preferences { get; set; } = null!;
+        public DbSet<HumanoidProfile> HumanoidProfile { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Prefs>()
                 .HasIndex(p => p.Username)
+                .IsUnique();
+
+            modelBuilder.Entity<HumanoidProfile>()
+                .HasIndex(p => new {p.Slot, p.PrefsId})
                 .IsUnique();
         }
     }
