@@ -181,6 +181,7 @@ namespace Content.Client
                 "Disposable",
                 "DisposalTransit",
                 "DisposalEntry",
+                "DisposalUnit",
             };
 
             foreach (var ignoreName in registerIgnore)

@@ -4,12 +4,13 @@
   description: A huge pipe segment used for constructing disposal systems
   placement:
     mode: SnapgridCenter
+    snap:
+    - Disposal
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    netsync: false
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
     state: pipe-s
@@ -23,8 +24,6 @@
   - type: Destructible
     thresholdvalue: 100
   - type: DisposalTransit
-  snap:
-  - Pipe
 
 - type: entity
   id: DisposalTrunk
@@ -32,12 +31,13 @@
   description: A pipe trunk used as an entry point for disposal systems
   placement:
     mode: SnapgridCenter
+    snap:
+    - Disposal
   components:
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    netsync: false
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
     state: pipe-t
@@ -51,5 +51,28 @@
   - type: Destructible
     thresholdvalue: 100
   - type: DisposalEntry
-  snap:
-  - Pipe
+
+- type: entity
+  id: DisposalUnit
+  name: disposal unit
+  description: A pneumatic waste disposal unit
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Buildings/disposal.rsi
+    state: disposal
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: disposal
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+  - type: Destructible
+    thresholdvalue: 100
+  - type: DisposalUnit

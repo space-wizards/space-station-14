@@ -62,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void SpreadDisposalNet()
         {
+            // TODO: Make disposal pipes extend the grid
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var tubes = snapGrid.GetCardinalNeighborCells()
                 .SelectMany(x => x.GetLocal())
