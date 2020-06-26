@@ -83,7 +83,7 @@ namespace Content.Server.BodySystem {
         }
         private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName) {
             TryGetBodyPart(slotName, out BodyPart part);
-            if (part == GetCenterBodyPart())
+            if (part != null && part == GetCenterBodyPart())
                 return true;
             searchedSlots.Add(slotName);
             if (TryGetBodyPartConnections(slotName, out List<string> connections)) {
@@ -272,6 +272,7 @@ namespace Content.Server.BodySystem {
             if (part != null)
             {
                 string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
+                _partDictionary.Remove(slotName);
                 if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
                 {
                     foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
@@ -282,7 +283,6 @@ namespace Content.Server.BodySystem {
                         }
                     }
                 }
-                _partDictionary.Remove(slotName);
                 var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                 partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
                 return partEntity;
@@ -298,6 +298,7 @@ namespace Content.Server.BodySystem {
                 return;
             if (part != null) {
                 string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
+                _partDictionary.Remove(slotName);
                 if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
                 {
                     foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
@@ -307,7 +308,6 @@ namespace Content.Server.BodySystem {
                         }
                     }
                 }
-                _partDictionary.Remove(slotName);
                 if (dropEntity) {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
@@ -322,6 +322,7 @@ namespace Content.Server.BodySystem {
             if (!TryGetBodyPart(name, out BodyPart part))
                 return;
             if (part != null) {
+                _partDictionary.Remove(name);
                 if (TryGetBodyPartConnections(name, out List<string> connections)) {
                     foreach (string connectionName in connections) {
                         if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result)) {
@@ -329,7 +330,6 @@ namespace Content.Server.BodySystem {
                         }
                     }
                 }
-                _partDictionary.Remove(name);
                 if (dropEntity) {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
