@@ -1,5 +1,5 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -11,14 +11,26 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool InDisposals { get; private set; }
 
-        public void EnterDisposals()
+        [CanBeNull]
+        private DisposalNet DisposalNet { get; set; }
+
+        public void EnterDisposals(DisposalNet net)
         {
             InDisposals = true;
+            DisposalNet = net;
         }
 
         public void ExitDisposals()
         {
             InDisposals = false;
+            DisposalNet?.Remove(this);
+            DisposalNet = null;
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            ExitDisposals();
         }
 
         bool IActionBlocker.CanMove()
