@@ -218,17 +218,30 @@
 - type: entity
   parent: UniformBase
   id: UniformResearchDirector
-  name: research director vest suit
-  description: It's a suit worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
+  name: RD turtleneck
+  description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/uniform_rd.rsi
-    state: rd
+    sprite: Clothing/Uniforms/uniform_rnd.rsi
+    state: icon
   - type: Icon
-    sprite: Clothing/Uniforms/uniform_rd.rsi
-    state: rd
+    sprite: Clothing/Uniforms/uniform_rnd.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Uniforms/uniform_rd.rsi
+    sprite: Clothing/Uniforms/uniform_rnd.rsi
+
+- type: entity
+  parent: UniformResearchDirector
+  id: UniformResearchDirectorSkirt
+  name: RD turtleskirt
+  components:
+  - type: Sprite
+    state: rnd_skirt
+  - type: Icon
+    state: rnd_skirt
+  - type: Clothing
+    ClothingPrefix: rnd_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
