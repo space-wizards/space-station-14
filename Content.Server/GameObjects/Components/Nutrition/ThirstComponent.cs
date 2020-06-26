@@ -50,11 +50,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [UsedImplicitly]
         public static readonly string[] _thirstThresholdImages =
         {
-            "/Textures/Mob/UI/Thirst/OverHydrated.png",
-            "/Textures/Mob/UI/Thirst/Okay.png",
-            "/Textures/Mob/UI/Thirst/Thirsty.png",
-            "/Textures/Mob/UI/Thirst/Parched.png",
-            "/Textures/Mob/UI/Thirst/Dead.png",
+            "/Textures/Interface/StatusEffects/Thirst/OverHydrated.png",
+            "/Textures/Interface/StatusEffects/Thirst/Okay.png",
+            "/Textures/Interface/StatusEffects/Thirst/Thirsty.png",
+            "/Textures/Interface/StatusEffects/Thirst/Parched.png",
+            "/Textures/Interface/StatusEffects/Thirst/Dead.png",
         };
         public override void ExposeData(ObjectSerializer serializer)
         {

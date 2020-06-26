@@ -72,7 +72,7 @@ namespace Content.Client.GameObjects.Components
     {
         public override void Populate()
         {
-            var humanFacialHairRSIPath = SharedSpriteComponent.TextureRoot / "Mobs/Customization/human_facial_hair.rsi";
+            var humanFacialHairRSIPath = SharedSpriteComponent.TextureRoot / "Mob/human_facial_hair.rsi";
             var humanFacialHairRSI = ResC.GetResource<RSIResource>(humanFacialHairRSIPath).RSI;
 
             var styles = HairStyles.FacialHairStylesMap.ToList();

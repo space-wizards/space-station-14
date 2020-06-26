@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -14,11 +14,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     minAngle: 10
@@ -47,7 +47,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -55,11 +55,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
@@ -88,7 +88,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/xray.rsi
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -96,11 +96,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/xray.rsi
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/xray.rsi
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
@@ -130,7 +130,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -138,11 +138,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     prefix: icon
   - type: RangedWeapon
   - type: BatteryBarrel

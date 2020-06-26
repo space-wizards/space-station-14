@@ -9,7 +9,7 @@
   - type: Icon
     texture: Objects/Departmental/Chemistry/beakers.rsi/beaker.png
   - type: Item
-    sprite: Objects/Chemistry/chemicals.rsi
+    sprite: Objects/Departmental/Chemistry/beakers.rsi
     HeldPrefix: beaker
   - type: Solution
     fillingState: beaker
@@ -29,7 +29,7 @@
   - type: Icon
     texture: Objects/Departmental/Chemistry/beakers.rsi/beakerlarge.png
   - type: Item
-    sprite: Objects/Chemistry/chemicals.rsi
+    sprite: Objects/Departmental/Chemistry/beakers.rsi
     HeldPrefix: beaker
   - type: Solution
     fillingState: beakerlarge

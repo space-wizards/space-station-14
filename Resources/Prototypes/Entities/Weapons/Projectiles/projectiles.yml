@@ -9,10 +9,10 @@
   - type: Sprite
     netsync: false
     directional: false
-    sprite: Objects/Guns/Projectiles/bullet.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Icon
-    sprite: Objects/Guns/Projectiles/bullet.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Collidable
     hard: false
@@ -96,13 +96,13 @@
     knockdownAmount: 5
   - type: Sprite
     directional: false
-    sprite: Objects/Guns/Projectiles/spark.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
     - state: spark
       shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Projectiles/spark.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     state: spark
     color: "#ffff33"
   - type: Collidable
@@ -124,7 +124,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/rocket.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
   - type: ExplosiveProjectile
   - type: Projectile
@@ -147,7 +147,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
     deleteOnCollide: false
@@ -163,7 +163,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
@@ -182,7 +182,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
     deleteOnCollide: false
@@ -199,7 +199,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile

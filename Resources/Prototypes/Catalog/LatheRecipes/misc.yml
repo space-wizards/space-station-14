@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: LightTube
-  icon: Objects/Lighting/light_tube.rsi/normal.png
+  icon: Objects/Power/light_tube.rsi/normal.png
   result: LightTube
   completetime: 500
   materials:
@@ -9,7 +9,7 @@
 
 - type: latheRecipe
   id: LightBulb
-  icon: Objects/Lighting/light_bulb.rsi/normal.png
+  icon: Objects/Power/light_bulb.rsi/normal.png
   result: LightBulb
   completetime: 500
   materials:

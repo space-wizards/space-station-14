@@ -9,11 +9,11 @@
   - type: Sprite
     netsync: false
     directional: false
-    sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: s-casing
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Casings/ammo_casing.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     state: s-casing
 
 - type: entity

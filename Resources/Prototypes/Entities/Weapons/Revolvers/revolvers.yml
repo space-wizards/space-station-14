@@ -18,7 +18,7 @@
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Revolvers/deckard.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -28,10 +28,10 @@
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Revolvers/deckard.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Revolvers/deckard.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
     currentSelector: Single
@@ -59,12 +59,12 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Revolvers/inspector.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Icon
-    sprite: Objects/Guns/Revolvers/inspector.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Revolvers/inspector.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
@@ -85,12 +85,12 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Revolvers/mateba.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Icon
-    sprite: Objects/Guns/Revolvers/mateba.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Revolvers/mateba.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single

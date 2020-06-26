@@ -17,4 +17,4 @@
   parent: WeaponArc
   components:
   - type: Sprite
-    sprite: Effects/weapons/tg_arcs.rsi
+    sprite: Effects/arcs.rsi

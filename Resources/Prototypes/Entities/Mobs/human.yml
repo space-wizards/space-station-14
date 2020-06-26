@@ -37,33 +37,33 @@
     layers:
     - map: ["enum.HumanoidVisualLayers.Chest"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_chest_m
     - map: ["enum.HumanoidVisualLayers.Head"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_head_m
     - sprite: Mobs/Customization/eyes.rsi
       state: eyes
       color: "#008800"
     - map: ["enum.HumanoidVisualLayers.RArm"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_r_arm
     - map: ["enum.HumanoidVisualLayers.LArm"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_l_arm
     - map: ["enum.HumanoidVisualLayers.RLeg"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_r_leg
     - map: ["enum.HumanoidVisualLayers.LLeg"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_l_leg
     - shader: StencilClear
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_l_leg
     - shader: StencilMask
       map: ["enum.HumanoidVisualLayers.StencilMask"]
@@ -74,11 +74,11 @@
       shader: StencilDraw
     - map: ["enum.HumanoidVisualLayers.LHand"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_l_hand
     - map: ["enum.HumanoidVisualLayers.RHand"]
       color: "#e8b59b"
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_r_hand
     - map: ["enum.Slots.IDCARD"]
     - map: ["enum.Slots.GLOVES"]
@@ -100,7 +100,7 @@
     - map: ["hand-left"]
     - map: ["hand-right"]
   - type: Icon
-    sprite: Mobs/Customization/human.rsi
+    sprite: Mobs/Species/human.rsi
     state: human_basic
   - type: Physics
     mass: 85
@@ -160,30 +160,30 @@
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_chest_m
       - map: ["enum.HumanoidVisualLayers.Head"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_head_m
       - sprite: Mobs/Customization/eyes.rsi
         state: eyes
         color: "#008800"
       - map: ["enum.HumanoidVisualLayers.RArm"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_r_arm
       - map: ["enum.HumanoidVisualLayers.LArm"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_l_arm
       - map: ["enum.HumanoidVisualLayers.RLeg"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_r_leg
       - map: ["enum.HumanoidVisualLayers.LLeg"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_l_leg
 
       - shader: StencilClear
@@ -198,11 +198,11 @@
 
       - map: ["enum.HumanoidVisualLayers.LHand"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_l_hand
       - map: ["enum.HumanoidVisualLayers.RHand"]
         color: "#e8b59b"
-        sprite: Mobs/Customization/human.rsi
+        sprite: Mobs/Species/human.rsi
         state: human_r_hand
 
       - map: ["enum.Slots.IDCARD"]
@@ -226,7 +226,7 @@
       - map: ["hand-right"]
 
     - type: Icon
-      sprite: Mobs/Customization/human.rsi
+      sprite: Mobs/Species/human.rsi
       state: human_basic
 
     - type: Physics

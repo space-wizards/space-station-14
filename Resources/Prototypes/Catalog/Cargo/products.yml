@@ -14,7 +14,7 @@
   name: "medkit"
   id: cargo.Medkit
   description: "Everything you need to patch someone up."
-  icon: Objects/Medical/medkit_r.png
+  icon: Objects/Departmental/Medical/medkit_r.png
   product: Medkit
   cost: 200
   category: Medical
@@ -37,7 +37,7 @@
   id: cargo.lightbulb
   description: "Light up a room, anywhere, anytime. Electricity not included."
   icon:
-    sprite: Constructible/Misc/Power/light_tube.rsi
+    sprite: Objects/Power/light_tube.rsi
     state: normal
   product: CrateLightBulb
   cost: 200
@@ -94,7 +94,7 @@
   name: "fuel tank"
   id: cargo.fueltank
   description: "Movable fuel tank for welders. No boom boom."
-  icon: Buildings/weldtank.png
+  icon: Constructible/Misc/weldtank.png
   product: CrateFuelTank
   cost: 200
   category: Engineering

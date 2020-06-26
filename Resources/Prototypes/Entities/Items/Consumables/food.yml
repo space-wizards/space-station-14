@@ -35,9 +35,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/4no_raisins.rsi
   - type: Icon
-    sprite: Objects/Food/4no_raisins.rsi
+    sprite: Objects/Consumable/Food/4no_raisins.rsi
   - type: Item
-    sprite: Objects/Food/4no_raisins.rsi
+    sprite: Objects/Consumable/Food/4no_raisins.rsi
 
 - type: entity
   name: aesir salad
@@ -359,9 +359,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/candy.rsi
   - type: Icon
-    sprite: Objects/Food/candy.rsi
+    sprite: Objects/Consumable/Food/candy.rsi
   - type: Item
-    sprite: Objects/Food/candy.rsi
+    sprite: Objects/Consumable/Food/candy.rsi
 
 - type: entity
   name: candy corn
@@ -447,9 +447,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/cheeseburger.rsi
   - type: Icon
-    sprite: Objects/Food/cheeseburger.rsi
+    sprite: Objects/Consumable/Food/cheeseburger.rsi
   - type: Item
-    sprite: Objects/Food/cheeseburger.rsi
+    sprite: Objects/Consumable/Food/cheeseburger.rsi
 
 - type: entity
   name: cheesecake (slice)
@@ -553,9 +553,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/chips.rsi
   - type: Icon
-    sprite: Objects/Food/chips.rsi
+    sprite: Objects/Consumable/Food/chips.rsi
   - type: Item
-    sprite: Objects/Food/chips.rsi
+    sprite: Objects/Consumable/Food/chips.rsi
 
 - type: entity
   name: chocolate bar
@@ -621,9 +621,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/clownburger.rsi
   - type: Icon
-    sprite: Objects/Food/clownburger.rsi
+    sprite: Objects/Consumable/Food/clownburger.rsi
   - type: Item
-    sprite: Objects/Food/clownburger.rsi
+    sprite: Objects/Consumable/Food/clownburger.rsi
 
 - type: entity
   name: clown's tears
@@ -802,9 +802,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/donut1.rsi
   - type: Icon
-    sprite: Objects/Food/donut1.rsi
+    sprite: Objects/Consumable/Food/donut1.rsi
   - type: Item
-    sprite: Objects/Food/donut1.rsi
+    sprite: Objects/Consumable/Food/donut1.rsi
 
 - type: entity
   parent: FoodBase
@@ -820,9 +820,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/donut2.rsi
   - type: Icon
-    sprite: Objects/Food/donut2.rsi
+    sprite: Objects/Consumable/Food/donut2.rsi
   - type: Item
-    sprite: Objects/Food/donut2.rsi
+    sprite: Objects/Consumable/Food/donut2.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -838,9 +838,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-blue.rsi
   - type: Icon
-    sprite: Objects/Food/egg-blue.rsi
+    sprite: Objects/Consumable/Food/egg-blue.rsi
   - type: Item
-    sprite: Objects/Food/egg-blue.rsi
+    sprite: Objects/Consumable/Food/egg-blue.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -856,9 +856,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-green.rsi
   - type: Icon
-    sprite: Objects/Food/egg-green.rsi
+    sprite: Objects/Consumable/Food/egg-green.rsi
   - type: Item
-    sprite: Objects/Food/egg-green.rsi
+    sprite: Objects/Consumable/Food/egg-green.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -874,9 +874,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-mime.rsi
   - type: Icon
-    sprite: Objects/Food/egg-mime.rsi
+    sprite: Objects/Consumable/Food/egg-mime.rsi
   - type: Item
-    sprite: Objects/Food/egg-mime.rsi
+    sprite: Objects/Consumable/Food/egg-mime.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -892,9 +892,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-orange.rsi
   - type: Icon
-    sprite: Objects/Food/egg-orange.rsi
+    sprite: Objects/Consumable/Food/egg-orange.rsi
   - type: Item
-    sprite: Objects/Food/egg-orange.rsi
+    sprite: Objects/Consumable/Food/egg-orange.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -910,9 +910,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-purple.rsi
   - type: Icon
-    sprite: Objects/Food/egg-purple.rsi
+    sprite: Objects/Consumable/Food/egg-purple.rsi
   - type: Item
-    sprite: Objects/Food/egg-purple.rsi
+    sprite: Objects/Consumable/Food/egg-purple.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -928,9 +928,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-rainbow.rsi
   - type: Icon
-    sprite: Objects/Food/egg-rainbow.rsi
+    sprite: Objects/Consumable/Food/egg-rainbow.rsi
   - type: Item
-    sprite: Objects/Food/egg-rainbow.rsi
+    sprite: Objects/Consumable/Food/egg-rainbow.rsi.rsi
 
 - type: entity
   parent: FoodBase
@@ -946,9 +946,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-red.rsi
   - type: Icon
-    sprite: Objects/Food/egg-red.rsi
+    sprite: Objects/Consumable/Food/egg-red.rsi
   - type: Item
-    sprite: Objects/Food/egg-red.rsi
+    sprite: Objects/Consumable/Food/egg-red.rsi.rsi
 
 
 - type: entity
@@ -965,9 +965,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg-yellow.rsi
   - type: Icon
-    sprite: Objects/Food/egg-yellow.rsi
+    sprite: Objects/Consumable/Food/egg-yellow.rsi
   - type: Item
-    sprite: Objects/Food/egg-yellow.rsi
+    sprite: Objects/Consumable/Food/egg-yellow.rsi
 
 - type: entity
   parent: FoodBase
@@ -983,9 +983,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
   - type: Icon
-    sprite: Objects/Food/egg.rsi
+    sprite: Objects/Consumable/Food/egg.rsi
   - type: Item
-    sprite: Objects/Food/egg.rsi
+    sprite: Objects/Consumable/Food/egg.rsi
 
 - type: entity
   parent: FoodBase
@@ -1098,9 +1098,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/fishburger.rsi
   - type: Icon
-    sprite: Objects/Food/fishburger.rsi
+    sprite: Objects/Consumable/Food/fishburger.rsi
   - type: Item
-    sprite: Objects/Food/fishburger.rsi
+    sprite: Objects/Consumable/Food/fishburger.rsi
 
 #- type: entity
 #  parent: FoodBase
@@ -1248,9 +1248,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
   - type: Icon
-    sprite: Objects/Food/hburger.rsi
+    sprite: Objects/Consumable/Food/hburger.rsi
   - type: Item
-    sprite: Objects/Food/hburger.rsi
+    sprite: Objects/Consumable/Food/hburger.rsi
 
 - type: entity
   parent: FoodBase
@@ -1414,9 +1414,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/jellyburger.rsi
   - type: Icon
-    sprite: Objects/Food/jellyburger.rsi
+    sprite: Objects/Consumable/Food/jellyburger.rsi
   - type: Item
-    sprite: Objects/Food/jellyburger.rsi
+    sprite: Objects/Consumable/Food/jellyburger.rsi
 
 - type: entity
   parent: FoodBase
@@ -1601,9 +1601,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meatball.rsi
   - type: Icon
-    sprite: Objects/Food/meatball.rsi
+    sprite: Objects/Consumable/Food/meatball.rsi
   - type: Item
-    sprite: Objects/Food/meatball.rsi
+    sprite: Objects/Consumable/Food/meatball.rsi
 
 - type: entity
   parent: FoodBase
@@ -1790,9 +1790,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/hburger.rsi
   - type: Icon
-    sprite: Objects/Food/hburger.rsi
+    sprite: Objects/Consumable/Food/hburger.rsi
   - type: Item
-    sprite: Objects/Food/hburger.rsi
+    sprite: Objects/Consumable/Food/hburger.rsi
 
 - type: entity
   parent: FoodBase
@@ -2339,9 +2339,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/sosjerky.rsi
   - type: Icon
-    sprite: Objects/Food/sosjerky.rsi
+    sprite: Objects/Consumable/Food/sosjerky.rsi
   - type: Item
-    sprite: Objects/Food/sosjerky.rsi
+    sprite: Objects/Consumable/Food/sosjerky.rsi
 
 - type: entity
   parent: FoodBase
@@ -2477,9 +2477,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/spellburger.rsi
   - type: Icon
-    sprite: Objects/Food/spellburger.rsi
+    sprite: Objects/Consumable/Food/spellburger.rsi
   - type: Item
-    sprite: Objects/Food/spellburger.rsi
+    sprite: Objects/Consumable/Food/spellburger.rsi
 
 - type: entity
   parent: FoodBase
@@ -2711,9 +2711,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/tofuburger.rsi
   - type: Icon
-    sprite: Objects/Food/tofuburger.rsi
+    sprite: Objects/Consumable/Food/tofuburger.rsi
   - type: Item
-    sprite: Objects/Food/tofuburger.rsi
+    sprite: Objects/Consumable/Food/tofuburger.rsi
 
 - type: entity
   parent: FoodBase
@@ -2935,9 +2935,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/xburger.rsi
   - type: Icon
-    sprite: Objects/Food/xburger.rsi
+    sprite: Objects/Consumable/Food/xburger.rsi
   - type: Item
-    sprite: Objects/Food/xburger.rsi
+    sprite: Objects/Consumable/Food/xburger.rsi
 
 - type: entity
   parent: FoodBase
@@ -3007,7 +3007,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/stew.rsi
   - type: Icon
-    sprite: Objects/Food/stew.rsi
+    sprite: Objects/Consumable/Food/stew.rsi
 
 - type: entity
   parent: FoodBase
@@ -3024,6 +3024,6 @@
       - ReagentId: chem.Nutriment
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Food/milkape.rsi
+    sprite: Objects/Consumable/Food/milkape.rsi
   - type: Icon
-    sprite: Objects/Food/milkape.rsi
+    sprite: Objects/Consumable/Food/milkape.rsi

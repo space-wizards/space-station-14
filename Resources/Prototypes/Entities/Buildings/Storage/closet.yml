@@ -1,8 +1,7 @@
-- type: entity
-  id: LockerParent
+﻿- type: entity
+  id: LockerGeneric
   name: closet
   description: A standard-issue Nanotrasen storage unit.
-  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -17,18 +16,6 @@
   - type: Icon
     sprite: Constructible/Structures/Closet/generic.rsi
     state: generic_door
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer2D
-      state_open: generic_open
-      state_closed: generic_door
-
-- type: entity
-  id: LockerGeneric
-  parent: LockerParent
-  name: closet
-  abstract: true
-  components:
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -55,8 +42,76 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: generic_open
+      state_closed: generic_door
   - type: LoopingSound
   - type: Anchorable
   placement:
     snap:
     - Wall
+
+# - type: entity
+#   id: LockerParent
+#   name: closet
+#   description: A standard-issue Nanotrasen storage unit.
+#   abstract: true
+#   components:
+#   - type: Sprite
+#     netsync: false
+#     sprite: Constructible/Structures/Closet/generic.rsi
+#     layers:
+#     - state: generic
+#     - state: generic_door
+#       map: ["enum.StorageVisualLayers.Door"]
+#     - state: welded
+#       visible: false
+#       map: ["enum.StorageVisualLayers.Welded"]
+#   - type: Icon
+#     sprite: Constructible/Structures/Closet/generic.rsi
+#     state: generic_door
+#   - type: Appearance
+#     visuals:
+#     - type: StorageVisualizer2D
+#       state_open: generic_open
+#       state_closed: generic_door
+
+# - type: entity
+#   id: LockerGeneric
+#   parent: LockerParent
+#   name: closet
+#   abstract: true
+#   components:
+#   - type: Clickable
+#   - type: InteractionOutline
+#   - type: Collidable
+#     shapes:
+#     - !type:PhysShapeAabb
+#       bounds: "-0.5,-0.25,0.5,0.25"
+#       mask:
+#       - Impassable
+#       - MobImpassable
+#       - VaultImpassable
+#       - SmallImpassable
+#       layer:
+#       - Opaque
+#       - Impassable
+#       - MobImpassable
+#       - VaultImpassable
+#       - SmallImpassable
+#     IsScrapingFloor: true
+#   - type: Physics
+#     mass: 25
+#     Anchored: false
+#   - type: EntityStorage
+#   - type: PlaceableSurface
+#   - type: Damageable
+#   - type: Destructible
+#     thresholdvalue: 100
+#   - type: LoopingSound
+#   - type: Anchorable
+#   placement:
+#     snap:
+#     - Wall

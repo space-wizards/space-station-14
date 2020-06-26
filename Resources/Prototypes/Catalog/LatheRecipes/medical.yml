@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: Brutepack
-  icon: Objects/Medical/brutepack.png
+  icon: Objects/Departmental/Medical/brutepack.png
   result: Brutepack
   completetime: 500
   materials:
@@ -9,7 +9,7 @@
 
 - type: latheRecipe
   id: Ointment
-  icon: Objects/Medical/ointment.png
+  icon: Objects/Departmental/Medical/ointment.png
   result: Ointment
   completetime: 500
   materials:

@@ -61,6 +61,8 @@
     pack: AmmoVend
   - type: Icon
     sprite: Constructible/Power/VendingMachines/ammo.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
 
 - type: entity
   parent: VendingMachine
@@ -70,6 +72,8 @@
   - type: VendingMachine
     pack: Booze-O-Mat
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/boozeomat.rsi
 
 - type: entity
@@ -81,6 +85,8 @@
     pack: PTech
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cart.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/cart.rsi
 
 - type: entity
   parent: VendingMachine
@@ -91,6 +97,8 @@
     pack: PietyVend
   - type: Icon
     sprite: Constructible/Power/VendingMachines/chapel.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/chapel.rsi
 
 - type: entity
   parent: VendingMachine
@@ -100,6 +108,8 @@
   - type: VendingMachine
     pack: Cigarette machine
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/cigs.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/cigs.rsi
 
 - type: entity
@@ -131,6 +141,8 @@
     pack: Robust Softdrinks
   - type: Icon
     sprite: Constructible/Power/VendingMachines/cola.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/cola.rsi
 
 - type: entity
   parent: VendingMachine
@@ -140,6 +152,8 @@
   - type: VendingMachine
     pack: Dinnerware
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/dinnerware.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/dinnerware.rsi
 
 - type: entity
@@ -151,6 +165,8 @@
     pack: Discount Dan's
   - type: Icon
     sprite: Constructible/Power/VendingMachines/discount.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/discount.rsi
 
 - type: entity
   parent: VendingMachine
@@ -160,6 +176,8 @@
   - type: VendingMachine
     pack: Engi-Vend
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/engivend.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/engivend.rsi
 
 - type: entity
@@ -171,6 +189,8 @@
     pack: Hatlord 9000
   - type: Icon
     sprite: Constructible/Power/VendingMachines/hats.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/hats.rsi
 
 - type: entity
   parent: VendingMachine
@@ -180,6 +200,8 @@
   - type: VendingMachine
     pack: MagiVend
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/magivend.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/magivend.rsi
 
 - type: entity
@@ -191,6 +213,8 @@
     pack: NanoMed Plus
   - type: Icon
     sprite: Constructible/Power/VendingMachines/medical.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/medical.rsi
 
 - type: entity
   parent: VendingMachine
@@ -200,6 +224,8 @@
   - type: VendingMachine
     pack: Dwarven Mining Equipment
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/mining.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/mining.rsi
 
 - type: entity
@@ -211,6 +237,8 @@
     pack: NutriMax
   - type: Icon
     sprite: Constructible/Power/VendingMachines/nutri.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/nutri.rsi
 
 - type: entity
   parent: VendingMachine
@@ -220,6 +248,8 @@
   - type: VendingMachine
     pack: Robotech Deluxe
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/robotics.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/robotics.rsi
 
 - type: entity
@@ -231,6 +261,8 @@
     pack: Sales
   - type: Icon
     sprite: Constructible/Power/VendingMachines/sale.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/sale.rsi
 
 - type: entity
   parent: VendingMachine
@@ -240,6 +272,8 @@
   - type: VendingMachine
     pack: SecTech
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/sec.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/sec.rsi
 
 - type: entity
@@ -251,6 +285,8 @@
     pack: MegaSeed Servitor
   - type: Icon
     sprite: Constructible/Power/VendingMachines/seeds.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/seeds.rsi
 
 - type: entity
   parent: VendingMachine
@@ -260,6 +296,8 @@
   - type: VendingMachine
     pack: Shoelord 9000
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/shoes.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/shoes.rsi
 
 - type: entity
@@ -271,6 +309,8 @@
     pack: SmartFridge
   - type: Icon
     sprite: Constructible/Power/VendingMachines/smartfridge.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/smartfridge.rsi
 
 - type: entity
   parent: VendingMachine
@@ -280,6 +320,8 @@
   - type: VendingMachine
     pack: Getmore Chocolate Corp
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/snack.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
 
 - type: entity
@@ -291,6 +333,8 @@
     pack: soviet
   - type: Icon
     sprite: Constructible/Power/VendingMachines/soviet.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
 
 - type: entity
   parent: VendingMachine
@@ -300,6 +344,8 @@
   - type: VendingMachine
     pack: BODA
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
 
 - type: entity
@@ -311,6 +357,8 @@
     pack: Suitlord 9000
   - type: Icon
     sprite: Constructible/Power/VendingMachines/suits.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/suits.rsi
 
 - type: entity
   parent: VendingMachine
@@ -320,6 +368,8 @@
   - type: VendingMachine
     pack: AutoDrobe
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/theater.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/theater.rsi
 
 - type: entity
@@ -331,6 +381,8 @@
     pack: Vendomat
   - type: Icon
     sprite: Constructible/Power/VendingMachines/vendomat.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/vendomat.rsi
 
 - type: entity
   parent: VendingMachine
@@ -340,6 +392,8 @@
   - type: VendingMachine
     pack: Trader Supply
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/vox.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/vox.rsi
 
 - type: entity
@@ -351,6 +405,8 @@
     pack: NanoMed
   - type: Icon
     sprite: Constructible/Power/VendingMachines/wallmed.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/wallmed.rsi
 
 - type: entity
   parent: VendingMachine
@@ -360,4 +416,6 @@
   - type: VendingMachine
     pack: YouTool
   - type: Icon
+    sprite: Constructible/Power/VendingMachines/youtool.rsi
+  - type: Sprite
     sprite: Constructible/Power/VendingMachines/youtool.rsi

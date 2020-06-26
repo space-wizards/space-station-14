@@ -12,7 +12,7 @@
   steps:
   - material: Metal
     amount: 2
-    icon: Buildings/wall_girder.png
+    icon: Constructible/Walls/wall_girder.png
     reverse:
       tool: Anchoring
 
@@ -63,7 +63,7 @@
   steps:
   - material: Metal
     amount: 2
-    icon: Buildings/wall_girder.png
+    icon: Constructible/Walls/wall_girder.png
     reverse:
       tool: Anchoring
 

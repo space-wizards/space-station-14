@@ -39,17 +39,17 @@ namespace Content.Server.GameObjects
         [UsedImplicitly]
         public static readonly string[] _humanStatusImages =
         {
-            "/Textures/Mob/UI/Human/human0.png",
-            "/Textures/Mob/UI/Human/human1.png",
-            "/Textures/Mob/UI/Human/human2.png",
-            "/Textures/Mob/UI/Human/human3.png",
-            "/Textures/Mob/UI/Human/human4.png",
-            "/Textures/Mob/UI/Human/human5.png",
-            "/Textures/Mob/UI/Human/human6-0.png",
-            "/Textures/Mob/UI/Human/human6-1.png",
-            "/Textures/Mob/UI/Human/humancrit-0.png",
-            "/Textures/Mob/UI/Human/humancrit-1.png",
-            "/Textures/Mob/UI/Human/humandead.png",
+            "/Textures/Interface/StatusEffects/Human/human0.png",
+            "/Textures/Interface/StatusEffects/Human/human1.png",
+            "/Textures/Interface/StatusEffects/Human/human2.png",
+            "/Textures/Interface/StatusEffects/Human/human3.png",
+            "/Textures/Interface/StatusEffects/Human/human4.png",
+            "/Textures/Interface/StatusEffects/Human/human5.png",
+            "/Textures/Interface/StatusEffects/Human/human6-0.png",
+            "/Textures/Interface/StatusEffects/Human/human6-1.png",
+            "/Textures/Interface/StatusEffects/Human/humancrit-0.png",
+            "/Textures/Interface/StatusEffects/Human/humancrit-1.png",
+            "/Textures/Interface/StatusEffects/Human/humandead.png",
         };
 
         public override void ChangeHudState(DamageableComponent damage)

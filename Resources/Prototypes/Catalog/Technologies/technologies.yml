@@ -7,7 +7,7 @@
   name: "basic research technology"
   id: BasicResearch
   description: Nanotransen basic research technologies.
-  icon: Buildings/research.rsi/server-on.png
+  icon: Constructible/Power/server.rsi/server-on.png
   requiredpoints: 250
 
 # Biological Technology Tree
@@ -16,7 +16,7 @@
   name: "biological technology"
   id: BiologicalTechnology
   description: Investigations into the natural world.
-  icon: Buildings/plants.rsi/plant_1.png
+  icon: Constructible/Misc/potted_plants.rsi/plant-1.png
   requiredpoints: 1000
   requiredtechnologies:
     - BasicResearch
@@ -27,7 +27,7 @@
   name: "data theory"
   id: DataTheory
   description: Just like regular data, but in space!
-  icon: Buildings/computer.rsi/computer-datatheory.png
+  icon: Constructible/Power/computers.rsi/computer-datatheory.png
   requiredpoints: 1000
   requiredtechnologies:
     - BasicResearch
@@ -38,7 +38,7 @@
   name: "industrial engineering"
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
-  icon: Buildings/research.rsi/protolathe.png
+  icon: Constructible/Power/protolathe.rsi/protolathe.png
   requiredpoints: 1000
   requiredtechnologies:
     - BasicResearch

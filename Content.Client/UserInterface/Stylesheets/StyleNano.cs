@@ -185,7 +185,7 @@ namespace Content.Client.UserInterface.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             // NanoHeading
-            var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/Textures/Interface/nanoheading.svg.96dpi.png");
+            var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
             var nanoHeadingBox = new StyleBoxTexture
             {
                 Texture = nanoHeadingTex,

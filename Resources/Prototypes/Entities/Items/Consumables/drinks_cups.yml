@@ -303,10 +303,10 @@
       - ReagentId: chem.Lean
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/lean.rsi
+    sprite: Objects/Consumable/Drinks/lean.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Drinks/lean.rsi
+    sprite: Objects/Consumable/Drinks/lean.rsi
     state: icon
   - type: Item
-    sprite: Objects/Drinks/lean.rsi
+    sprite: Objects/Consumable/Drinks/lean.rsi
