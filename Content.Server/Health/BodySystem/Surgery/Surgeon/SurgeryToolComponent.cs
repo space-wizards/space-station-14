@@ -29,7 +29,6 @@ namespace Content.Server.BodySystem
 
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-        [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
@@ -38,10 +37,11 @@ namespace Content.Server.BodySystem
         private HashSet<IPlayerSession> _subscribedSessions = new HashSet<IPlayerSession>();
         private BoundUserInterface _userInterface;
 
-        private Dictionary<object, object> _optionsCache = new Dictionary<object, object>();
+        private Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
         private IEntity _performerCache;
         private BodyManagerComponent _bodyManagerComponentCache;
         private ISurgeon.MechanismRequestCallback _callbackCache;
+        private int _idHash = 0;
 
         public override void Initialize()
         {
@@ -63,19 +63,18 @@ namespace Content.Server.BodySystem
 
             if (eventArgs.Target.TryGetComponent<BodyManagerComponent>(out BodyManagerComponent bodyManager)) //Attempt surgery on a BodyManagerComponent by sending a list of operatable BodyParts to the client to choose from
             {
-                var toSend = new Dictionary<string, object>(); //Create dictionary to send to client (text to be shown : data sent back if selected)
+                var toSend = new Dictionary<string, int>(); //Create dictionary to send to client (text to be shown : data sent back if selected)
                 foreach (var(key, value) in bodyManager.PartDictionary) { //For each limb in the target, add it to our cache if it is a valid option.
                     if (value.SurgeryCheck(_surgeryType)) 
                     {
-                        int randomKey = _random.Next(Int32.MinValue, Int32.MaxValue);
-                        _optionsCache.Add(randomKey, value);
-                        toSend.Add(key + ": " + value.Name, randomKey);
+                        _optionsCache.Add(_idHash, value);
+                        toSend.Add(key + ": " + value.Name, _idHash++);
                     }
                 }
                 if (_optionsCache.Count > 0)
                 {
-                    OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession); 
-                    UpdateSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession, SurgeryUIMessageType.SelectBodyPart, toSend);
+                    OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
+                    UpdateSurgeryUIBodyPartRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession, toSend);
                     _performerCache = eventArgs.User; //Also, cache the data.
                     _bodyManagerComponentCache = bodyManager;
                 }
@@ -86,6 +85,7 @@ namespace Content.Server.BodySystem
             }
             else if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart)) //Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
             {
+                _performerCache = eventArgs.User;
                 if (droppedBodyPart.ContainedBodyPart == null) //Throw error if the DroppedBodyPart has no data in it.
                 {
                     Logger.Debug("Surgery was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
@@ -108,17 +108,16 @@ namespace Content.Server.BodySystem
 
         public void RequestMechanism(List<Mechanism> options, ISurgeon.MechanismRequestCallback callback)
         {
-            Dictionary<string, object> toSend = new Dictionary<string, object>();
+            var toSend = new Dictionary<string, int> ();
             foreach (Mechanism mechanism in options)
             {
-                int randomKey = _random.Next(Int32.MinValue, Int32.MaxValue);
-                _optionsCache.Add(randomKey, mechanism);
-                toSend.Add(mechanism.Name, randomKey);
+                _optionsCache.Add(_idHash, mechanism);
+                toSend.Add(mechanism.Name, _idHash++);
             }
             if (_optionsCache.Count > 0)
             {
                 OpenSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
-                UpdateSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession, SurgeryUIMessageType.SelectMechanism, toSend);
+                UpdateSurgeryUIMechanismRequest(_performerCache.GetComponent<BasicActorComponent>().playerSession, toSend);
                 _callbackCache = callback;
             }
             else
@@ -138,9 +137,13 @@ namespace Content.Server.BodySystem
         {
             _userInterface.Open(session);
         }
-        public void UpdateSurgeryUI(IPlayerSession session, SurgeryUIMessageType messageType, Dictionary<string, object> options)
+        public void UpdateSurgeryUIBodyPartRequest(IPlayerSession session, Dictionary<string, int> options)
         {
-            _userInterface.SendMessage(new UpdateSurgeryUIMessage(messageType, options), session);
+            _userInterface.SendMessage(new RequestBodyPartSurgeryUIMessage(options), session);
+        }
+        public void UpdateSurgeryUIMechanismRequest(IPlayerSession session, Dictionary<string, int> options)
+        {
+            _userInterface.SendMessage(new RequestMechanismSurgeryUIMessage(options), session);
         }
         public void CloseSurgeryUI(IPlayerSession session)
         {
@@ -158,22 +161,17 @@ namespace Content.Server.BodySystem
         {
             switch (message.Message)
             {
-                case ReceiveSurgeryUIMessage msg:
-                    HandleReceiveSurgeryUIMessage(msg);
+                case ReceiveBodyPartSurgeryUIMessage msg:
+                    HandleReceiveBodyPart(msg.SelectedOptionID);
+                    break;
+                case ReceiveMechanismSurgeryUIMessage msg:
+                    HandleReceiveMechanism(msg.SelectedOptionID);
                     break;
             }
         }
-        private void HandleReceiveSurgeryUIMessage(ReceiveSurgeryUIMessage msg)
-        {
-            if (msg.MessageType == SurgeryUIMessageType.SelectBodyPart)
-                HandleReceiveBodyPart((int) msg.SelectedOptionData);
-            else if (msg.MessageType == SurgeryUIMessageType.SelectMechanism)
-                HandleReceiveMechanism((int) msg.SelectedOptionData);
-        }
-
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible BodyParts that can be operated on. 
+        ///     Called after the client chooses from a list of possible <see cref="BodyPart">BodyParts</see> that can be operated on. 
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
@@ -191,7 +189,7 @@ namespace Content.Server.BodySystem
 
         }
         /// <summary>
-        ///     Called after the client chooses from a list of possible Mechanisms to choose from.
+        ///     Called after the client chooses from a list of possible <see cref="Mechanism">Mechanisms</see> to choose from.
         /// </summary>
         private void HandleReceiveMechanism(int key)
         {

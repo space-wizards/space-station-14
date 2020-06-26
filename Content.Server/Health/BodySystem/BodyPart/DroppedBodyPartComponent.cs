@@ -15,12 +15,13 @@ using Robust.Server.Interfaces.Player;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Random;
 using System.Linq;
+using Robust.Shared.Localization;
 
 namespace Content.Server.BodySystem
 {
 
     /// <summary>
-    ///    Component containing the data for a dropped BodyPart entity.
+    ///    Component representing a dropped, tangible <see cref="BodyPart"/> entity.
     /// </summary>	
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
@@ -28,7 +29,6 @@ namespace Content.Server.BodySystem
 
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
-        [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         public sealed override string Name => "DroppedBodyPart";
@@ -37,9 +37,10 @@ namespace Content.Server.BodySystem
         public BodyPart ContainedBodyPart { get; set; }
 
         private BoundUserInterface _userInterface;
-        private Dictionary<object, object> _optionsCache = new Dictionary<object, object>();
+        private Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
         private IEntity _performerCache;
         private BodyManagerComponent _bodyManagerComponentCache;
+        private int _idHash = 0;
 
         public override void Initialize()
         {
@@ -77,7 +78,7 @@ namespace Content.Server.BodySystem
 
         private void SendBodySlotListToUser(AfterInteractEventArgs eventArgs, BodyManagerComponent bodyManager)
         {
-            var toSend = new Dictionary<string, object>(); //Create dictionary to send to client (text to be shown : data sent back if selected)
+            var toSend = new Dictionary<string, int>(); //Create dictionary to send to client (text to be shown : data sent back if selected)
 
             //Here we are trying to grab a list of all empty BodySlots adjancent to an existing BodyPart that can be attached to. i.e. an empty left hand slot, connected to an occupied left arm slot would be valid.
             List<string> unoccupiedSlots = bodyManager.AllSlots.ToList().Except(bodyManager.OccupiedSlots.ToList()).ToList();
@@ -91,9 +92,8 @@ namespace Content.Server.BodySystem
                         {
                             if (connectedPart.CanAttachBodyPart(ContainedBodyPart))
                             {
-                                int randomKey = _random.Next(Int32.MinValue, Int32.MaxValue);
-                                _optionsCache.Add(randomKey, slot);
-                                toSend.Add(slot, randomKey);
+                                _optionsCache.Add(_idHash, slot);
+                                toSend.Add(slot, _idHash++);
                             }
                         }
                     }
@@ -102,13 +102,13 @@ namespace Content.Server.BodySystem
             if (_optionsCache.Count > 0)
             {
                 OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
-                UpdateSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession, SurgeryUIMessageType.SelectBodyPartSlot, toSend);
+                UpdateSurgeryUIBodyPartSlotRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession, toSend);
                 _performerCache = eventArgs.User;
                 _bodyManagerComponentCache = bodyManager;
             }
             else //If surgery cannot be performed, show message saying so.
             {
-                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, "You see no way to install the " + Owner.Name + ".");
+                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, Loc.GetString("You see no way to install the {0}.", Owner.Name));
             }
         }
 
@@ -121,16 +121,16 @@ namespace Content.Server.BodySystem
             //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to attach the " + Owner.Name + " anymore.");
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to attach the {0} anymore.", Owner.Name));
             }
             string target = targetObject as string;
             if (!_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You can't attach it!");
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You can't attach it!");
             }
             else
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You attach the " + ContainedBodyPart.Name + ".");
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You attach the {0}.", ContainedBodyPart.Name));
             }
         }
 
@@ -139,9 +139,9 @@ namespace Content.Server.BodySystem
         {
             _userInterface.Open(session);
         }
-        public void UpdateSurgeryUI(IPlayerSession session, SurgeryUIMessageType messageType, Dictionary<string, object> options)
+        public void UpdateSurgeryUIBodyPartSlotRequest(IPlayerSession session, Dictionary<string, int> options)
         {
-            _userInterface.SendMessage(new UpdateSurgeryUIMessage(messageType, options), session);
+            _userInterface.SendMessage(new RequestBodyPartSlotSurgeryUIMessage(options), session);
         }
         public void CloseSurgeryUI(IPlayerSession session)
         {
@@ -157,15 +157,10 @@ namespace Content.Server.BodySystem
         {
             switch (message.Message)
             {
-                case ReceiveSurgeryUIMessage msg:
-                    HandleReceiveSurgeryUIMessage(msg);
+                case ReceiveBodyPartSlotSurgeryUIMessage msg:
+                    HandleReceiveBodyPartSlot(msg.SelectedOptionID);
                     break;
             }
-        }
-        private void HandleReceiveSurgeryUIMessage(ReceiveSurgeryUIMessage msg)
-        {
-            if (msg.MessageType == SurgeryUIMessageType.SelectBodyPartSlot)
-                HandleReceiveBodyPartSlot((int) msg.SelectedOptionData);
         }
     }
 }

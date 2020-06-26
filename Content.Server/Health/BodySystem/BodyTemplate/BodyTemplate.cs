@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.BodySystem {
+namespace Content.Server.BodySystem {
 
     /// <summary>
-    ///     This class is a data capsule representing the standard format of a body. For instance, the "humanoid" BodyTemplate
-    ///     defines two arms, each connected to a torso and so on. Capable of loading data from a BodyTemplatePrototype.
+    ///     This class is a data capsule representing the standard format of a <see cref="BodyManagerComponent"/>. For instance, the "humanoid" BodyTemplate
+    ///     defines two arms, each connected to a torso and so on. Capable of loading data from a <see cref="BodyTemplatePrototype"/>.
     /// </summary>	
     public class BodyTemplate {
 

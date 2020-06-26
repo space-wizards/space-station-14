@@ -1,6 +1,7 @@
 ﻿using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Content.Client.BodySystem
     public class GenericSurgeryWindow : SS14Window
     {
         public delegate void CloseCallback();
-        public delegate void OptionSelectedCallback(object selectedOptionData);
+        public delegate void OptionSelectedCallback(int selectedOptionData);
 
         private Control _vSplitContainer;
         private VBoxContainer _optionsBox;
@@ -21,9 +22,9 @@ namespace Content.Client.BodySystem
 
         protected override Vector2? CustomSize => (300, 400);
 
-        public GenericSurgeryWindow(OptionSelectedCallback optionSelectedCallback)
+        public GenericSurgeryWindow()
         {
-            Title = "Select surgery target...";
+            Title = Loc.GetString("Select surgery target...");
             RectClipContent = true;
             _vSplitContainer = new VBoxContainer();
             var listScrollContainer = new ScrollContainer
@@ -41,12 +42,12 @@ namespace Content.Client.BodySystem
             _vSplitContainer.AddChild(listScrollContainer);
             Contents.AddChild(_vSplitContainer);
 
-            _optionSelectedCallback = optionSelectedCallback;
         }
 
-        public void BuildDisplay(Dictionary<string, object> data)
+        public void BuildDisplay(Dictionary<string, int> data, OptionSelectedCallback callback)
         {
             _optionsBox.DisposeAllChildren();
+            _optionSelectedCallback = callback;
             foreach (var (displayText, callbackData) in data)
             {
                 var button = new SurgeryButton(callbackData);
@@ -71,9 +72,9 @@ namespace Content.Client.BodySystem
         private SpriteView SpriteView { get; }
         private Control EntityControl { get; }
         private Label DisplayText { get; }
-        public object CallbackData { get; }
+        public int CallbackData { get; }
 
-        public SurgeryButton(object callbackData)
+        public SurgeryButton(int callbackData)
         {
             CallbackData = callbackData;
 

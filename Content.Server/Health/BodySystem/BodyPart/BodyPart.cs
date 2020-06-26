@@ -15,8 +15,8 @@ namespace Content.Server.BodySystem
 
 
     /// <summary>
-    ///     Data class representing a singular limb such as an arm or a leg. Typically held within either a <see cref="BodyManagerComponent">BodyManagerComponent</see>,
-    ///     which coordinates functions between BodyParts, or a <see cref="DroppedBodyPartComponent">DroppedBodyPartComponent</see>.
+    ///     Data class representing a singular limb such as an arm or a leg. Typically held within either a <see cref="BodyManagerComponent"/>,
+    ///     which coordinates functions between BodyParts, or a <see cref="DroppedBodyPartComponent"/>.
     /// </summary>
     public class BodyPart
     {
@@ -31,13 +31,13 @@ namespace Content.Server.BodySystem
         private int _sizeUsed = 0;
 
         /// <summary>
-        ///     Body part name.
+        ///     The name of this BodyPart, often displayed to the user. For example, it could be named "advanced robotic arm".
         /// </summary>
         [ViewVariables]
         public string Name { get; set; }
 
         /// <summary>
-        ///     Plural version of this body part's name.
+        ///     Plural version of this BodyPart name.
         /// </summary>
         [ViewVariables]
         public string Plural { get; set; }
@@ -55,19 +55,19 @@ namespace Content.Server.BodySystem
         public string RSIState { get; set; }
 
         /// <summary>
-        ///     BodyPartType that this body part is considered. 
+        ///     <see cref="BodyPartType"/> that this BodyPart is considered to be. For example, BodyPartType.Arm. 
         /// </summary>
         [ViewVariables]
         public BodyPartType PartType { get; set; }
 
         /// <summary>
-        ///     Max HP of this body part.
+        ///     Max HP of this BodyPart.
         /// </summary>		
         [ViewVariables]
         public int MaxDurability { get; set; }
 
         /// <summary>
-        ///     Current HP of this body part based on sum of all damage types.
+        ///     Current HP of this BodyPart based on sum of all damage types.
         /// </summary>		
         [ViewVariables]
         public int CurrentDurability => MaxDurability - CurrentDamages.Damage;
@@ -79,37 +79,37 @@ namespace Content.Server.BodySystem
         public AbstractDamageContainer CurrentDamages { get; set; }
 
         /// <summary>
-        ///     At what HP this body part is completely destroyed.
+        ///     At what HP this BodyPartis completely destroyed.
         /// </summary>		
         [ViewVariables]
         public int DestroyThreshold { get; set; }
 
         /// <summary>
-        ///     Armor of the body part against attacks.
+        ///     Armor of this BodyPart against attacks.
         /// </summary>		
         [ViewVariables]
         public float Resistance { get; set; }
 
         /// <summary>
-        ///     Determines many things: how many mechanisms can be fit inside a body part, fitting through tiny crevices, etc.
+        ///     Determines many things: how many mechanisms can be fit inside this BodyPart, whether a body can fit through tiny crevices, etc.
         /// </summary>		
         [ViewVariables]
         public int Size { get; set; }
 
         /// <summary>
-        ///     What types of body parts this body part can attach to. For the most part, most limbs aren't universal and require extra work to attach between types.
+        ///     What types of BodyParts this BodyPart can easily attach to. For the most part, most limbs aren't universal and require extra work to attach between types.
         /// </summary>
         [ViewVariables]
         public BodyPartCompatibility Compatibility { get; set; }
 
         /// <summary>
-        ///     List of IExposeData properties, allowing for additional data classes to be attached to a limb, such as a "length" class to an arm.
+        ///     List of <see cref="IExposeData"/> properties, allowing for additional data classes to be attached to a limb, such as a "length" class to an arm.
         /// </summary>
         [ViewVariables]
         public List<IExposeData> Properties { get; set; }
 
         /// <summary>
-        ///     List of all Mechanisms currently inside this BodyPart.
+        ///     List of all <see cref="Mechanism">Mechanisms</see> currently inside this BodyPart.
         /// </summary>
         [ViewVariables]
         public List<Mechanism> Mechanisms => _mechanisms;
@@ -121,25 +121,33 @@ namespace Content.Server.BodySystem
             LoadFromPrototype(data);
         }
 
+
+
+
+
+
         public bool CanAttachBodyPart(BodyPart toBeConnected)
         {
             return _surgeryData.CanAttachBodyPart(toBeConnected);
         }
 
+
+
+
+
+
         /// <summary>
-        ///     Returns whether the given <see cref="Mechanism">Mechanism</see> can be installed on this BodyPart.
+        ///     Returns whether the given <see cref="Mechanism"/> can be installed on this BodyPart.
         /// </summary>
         public bool CanInstallMechanism(Mechanism mechanism)
         {
             if (_sizeUsed + mechanism.Size > Size)
                 return false; //No space
-            if (!_surgeryData.CanInstallMechanism(mechanism))
-                return false; //ISurgeryData states that this mechanism cannot be installed
-            return true;
+            return _surgeryData.CanInstallMechanism(mechanism);
         }
 
         /// <summary>
-        ///     Attempts to add a Mechanism. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Use InstallDroppedMechanism if you want to easily install an IEntity with a DroppedMechanismComponent.
+        ///     Attempts to add a <see cref="Mechanism"/>. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Call InstallDroppedMechanism instead if you want to easily install an IEntity with a DroppedMechanismComponent.
         /// </summary>
         public bool TryInstallMechanism(Mechanism mechanism)
         {
@@ -153,7 +161,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Attempts to install a DroppedMechanismComponent into the given limb, potentially deleting the dropped IEntity. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart).
+        ///     Attempts to install a <see cref="DroppedMechanismComponent"/> into the given limb, potentially deleting the dropped <see cref="IEntity"/>. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart).
         /// </summary>
         public bool TryInstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
         {
@@ -164,7 +172,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Tries to remove the given Mechanism reference from the given BodyPart reference. Returns null if there was an error in spawning the entity or removing the mechanism, otherwise returns a reference to the DroppedMechanismComponent on the newly spawned entity.
+        ///     Tries to remove the given <see cref="Mechanism"/> reference from this BodyPart. Returns null if there was an error in spawning the entity or removing the mechanism, otherwise returns a reference to the <see cref="DroppedMechanismComponent"/> on the newly spawned entity.
         /// </summary>	
         public DroppedMechanismComponent DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
         {
@@ -180,7 +188,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Tries to destroy the given Mechanism in the given BodyPart. Returns false if there was an error, true otherwise. Does NOT spawn a dropped entity.
+        ///     Tries to destroy the given <see cref="Mechanism"/> in the given BodyPart. Returns false if there was an error, true otherwise. Does NOT spawn a dropped entity.
         /// </summary>	
         public bool DestroyMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget)
         {
@@ -191,8 +199,12 @@ namespace Content.Server.BodySystem
             return true;
         }
 
+
+
+
+
         /// <summary>
-        ///     Returns whether the given <see cref="SurgeryToolType">SurgeryToolType</see> can be used on the current state of this BodyPart.
+        ///     Returns whether the given <see cref="SurgeryType"/> can be used on the current state of this BodyPart.
         /// </summary>
         public bool SurgeryCheck(SurgeryType toolType)
         {
@@ -211,12 +223,8 @@ namespace Content.Server.BodySystem
 
 
 
-
-
-
-
         /// <summary>
-        ///    Loads the given BodyPartPrototype - current data on this BodyPart will be overwritten!
+        ///    Loads the given <see cref="BodyPartPrototype"/> - current data on this <see cref="BodyPart"/> will be overwritten!
         /// </summary>	
         public virtual void LoadFromPrototype(BodyPartPrototype data)
         {

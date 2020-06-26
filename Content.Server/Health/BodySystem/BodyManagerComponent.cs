@@ -14,7 +14,7 @@ using Content.Server.GameObjects.EntitySystems;
 namespace Content.Server.BodySystem {
 
     /// <summary>
-    ///     Component representing the many BodyParts attached to each other.
+    ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
     /// </summary>
     [RegisterComponent]
     public class BodyManagerComponent : Component, IBodyPartContainer {
@@ -31,12 +31,12 @@ namespace Content.Server.BodySystem {
         private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
 
         /// <summary>
-        ///     The BodyTemplate that this BodyManagerComponent is adhering to.
+        ///     The <see cref="BodyTemplate"/> that this BodyManagerComponent is adhering to.
         /// </summary>
         public BodyTemplate Template => _template;
 
         /// <summary>
-        ///     Maps BodyTemplate slot name to the BodyPart object filling it (if there is one).
+        ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="BodyPart"/> object filling it (if there is one).
         /// </summary>
         public Dictionary<string, BodyPart> PartDictionary => _partDictionary;
 
@@ -63,7 +63,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     List of all BodyParts in this body, taken from the keys of _parts.
+        ///     List of all <see cref="BodyPart">BodyParts</see> in this body, taken from the keys of _parts.
         /// </summary>
         public IEnumerable<BodyPart> Parts {
             get {
@@ -72,7 +72,8 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Recursive search that returns whether a given BodyPart is connected to the center BodyPart. Not efficient (O(n^2)), but most bodies don't have a ton of BodyParts.
+        ///     Recursive search that returns whether a given <see cref="BodyPart"/> is connected to the center <see cref="BodyPart"/>.
+        ///     Not efficient (O(n^2)), but most bodies don't have a ton of <see cref="BodyPart">BodyParts</see>.
         /// </summary>
         public bool ConnectedToCenterPart(BodyPart target) {
             List<string> searchedSlots = new List<string> { };
@@ -96,7 +97,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Returns the central BodyPart of this body based on the BodyTemplate. For humans, this is the torso. Returns null if not found.
+        ///     Returns the central <see cref="BodyPart"/> of this body based on the <see cref="BodyTemplate"/>. For humans, this is the torso. Returns null if not found.
         /// </summary>
         public BodyPart GetCenterBodyPart() {
             _partDictionary.TryGetValue(_template.CenterSlot, out BodyPart center);
@@ -104,7 +105,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Returns whether the given slot name exists within the current BodyTemplate. 
+        ///     Returns whether the given slot name exists within the current <see cref="BodyTemplate"/>. 
         /// </summary>
         public bool SlotExists(string slotName)
         {
@@ -113,14 +114,16 @@ namespace Content.Server.BodySystem {
 
 
         /// <summary>
-        ///     Grabs the BodyPart in the given slotName if there is one. Returns true if a BodyPart is found, false otherwise. If false, result will be null.
+        ///     Grabs the <see cref="BodyPart"/> in the given slotName if there is one. Returns true if a <see cref="BodyPart"/> is found,
+        ///     false otherwise. If false, result will be null.
         /// </summary>
         public bool TryGetBodyPart(string slotName, out BodyPart result) {
             return _partDictionary.TryGetValue(slotName, out result);
         }
 
         /// <summary>
-        ///     Grabs the slotName that the given BodyPart resides in. Returns true if the BodyPart is part of this body and a slot is found, false otherwise. If false, result will be null.
+        ///     Grabs the slotName that the given <see cref="BodyPart"/> resides in. Returns true if the <see cref="BodyPart"/> is
+        ///     part of this body and a slot is found, false otherwise. If false, result will be null.
         /// </summary>
         public bool TryGetSlotName(BodyPart part, out string result) {
             result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
@@ -128,7 +131,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Grabs the BodyPartType of the given slotName if there is one. Returns true if the slot is found, false otherwise. If false, result will be null.
+        ///     Grabs the <see cref="BodyPartType"/> of the given slotName if there is one. Returns true if the slot is found, false otherwise. If false, result will be null.
         /// </summary>
         public bool TryGetSlotType(string slotName, out BodyPartType result)
         {
@@ -194,7 +197,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Loads the given preset - forcefully changes all limbs found in both the preset and this template!
+        ///     Loads the given <see cref="BodyPreset"/> - forcefully changes all limbs found in both the preset and this template!
         /// </summary>
         public void LoadBodyPreset(BodyPreset preset) {
             foreach (var (slotName, type) in _template.Slots) {
@@ -210,7 +213,8 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Changes the current BodyTemplate to the new BodyTemplate. Attempts to keep previous BodyParts if there is a slot for them in both BodyTemplates.
+        ///     Changes the current <see cref="BodyTemplate"/> to the given <see cref="BodyTemplate"/>. Attempts to keep previous <see cref="BodyPart">BodyParts</see>
+        ///     if there is a slot for them in both <see cref="BodyTemplate"/>.
         /// </summary>
         public void ChangeBodyTemplate(BodyTemplatePrototype newTemplate) {
             foreach (KeyValuePair<string, BodyPart> part in _partDictionary) {
@@ -219,7 +223,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Grabs all limbs of the given type in this body.
+        ///     Grabs all <see cref="BodyPart">BodyParts</see> of the given type in this body.
         /// </summary>
         public List<BodyPart> GetBodyPartsOfType(BodyPartType type) {
             List<BodyPart> toReturn = new List<BodyPart>();
@@ -233,7 +237,7 @@ namespace Content.Server.BodySystem {
 
 
         /// <summary>
-        ///     Installs the given BodyPart into the given slot. Returns true if successful, false otherwise.
+        ///     Installs the given <see cref="BodyPart"/> into the given slot. Returns true if successful, false otherwise.
         /// </summary>
         public bool InstallBodyPart(BodyPart part, string slotName)
         {
@@ -245,7 +249,7 @@ namespace Content.Server.BodySystem {
             return true;
         }
         /// <summary>
-        ///     Installs the given DroppedBodyPart into the given slot, deleting it afterwards. Returns true if successful, false otherwise.
+        ///     Installs the given <see cref="DroppedBodyPartComponent"/> into the given slot, deleting the <see cref="IEntity"/> afterwards. Returns true if successful, false otherwise.
         /// </summary>
         public bool InstallDroppedBodyPart(DroppedBodyPartComponent part, string slotName)
         {
@@ -258,9 +262,9 @@ namespace Content.Server.BodySystem {
 
 
         /// <summary>
-        ///     Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it.
+        ///     Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see>
+        ///     if they were hanging off it. Returns the IEntity representing the dropped BodyPart.
         /// </summary>
-        /// <returns>The IEntity representing the dropped BodyPart.</returns>
         public IEntity DropBodyPart(BodyPart part)
         {
             if (!_partDictionary.ContainsValue(part))
@@ -287,7 +291,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        /// Disconnects the given BodyPart reference, potentially dropping other BodyParts if they were hanging off it. 
+        /// Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see> if they were hanging off it. 
         /// </summary>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity) {
             if (!_partDictionary.ContainsValue(part))

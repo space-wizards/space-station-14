@@ -21,7 +21,6 @@ namespace Content.Client.BodySystem
     {
 
         private GenericSurgeryWindow _window;
-        private SurgeryUIMessageType _currentDisplayType;
 
         public GenericSurgeryBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -30,7 +29,7 @@ namespace Content.Client.BodySystem
 
         protected override void Open()
         {
-            _window = new GenericSurgeryWindow(OptionSelectedCallback);
+            _window = new GenericSurgeryWindow();
             _window.OpenCentered();
         }
 
@@ -38,22 +37,47 @@ namespace Content.Client.BodySystem
         {
             switch (message)
             {
-                case UpdateSurgeryUIMessage msg:
-                    HandleUpdateSurgeryUIMessage(msg);
+                case RequestBodyPartSurgeryUIMessage msg:
+                    HandleBodyPartRequest(msg);
+                    break;
+                case RequestMechanismSurgeryUIMessage msg:
+                    HandleMechanismRequest(msg);
+                    break;
+                case RequestBodyPartSlotSurgeryUIMessage msg:
+                    HandleBodyPartSlotRequest(msg);
                     break;
             }
         }
 
-        private void HandleUpdateSurgeryUIMessage(UpdateSurgeryUIMessage updateSurgeryUIMessage)
+        private void HandleBodyPartRequest(RequestBodyPartSurgeryUIMessage msg)
         {
-            _currentDisplayType = updateSurgeryUIMessage.MessageType;
-            _window.BuildDisplay(updateSurgeryUIMessage.Targets);
+            _window.BuildDisplay(msg.Targets, BodyPartSelectedCallback);
+        }
+        private void HandleMechanismRequest(RequestMechanismSurgeryUIMessage msg)
+        {
+            _window.BuildDisplay(msg.Targets, MechanismSelectedCallback);
+        }
+        private void HandleBodyPartSlotRequest(RequestBodyPartSlotSurgeryUIMessage msg)
+        {
+            _window.BuildDisplay(msg.Targets, BodyPartSlotSelectedCallback);
         }
 
-        private void OptionSelectedCallback(object selectedOptionData)
+
+
+        private void BodyPartSelectedCallback(int selectedOptionData)
         {
-            SendMessage(new ReceiveSurgeryUIMessage(selectedOptionData, _currentDisplayType));
+            SendMessage(new ReceiveBodyPartSurgeryUIMessage(selectedOptionData));
         }
+        private void MechanismSelectedCallback(int selectedOptionData)
+        {
+            SendMessage(new ReceiveMechanismSurgeryUIMessage(selectedOptionData));
+        }
+        private void BodyPartSlotSelectedCallback(int selectedOptionData)
+        {
+            SendMessage(new ReceiveBodyPartSlotSurgeryUIMessage(selectedOptionData));
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

@@ -39,21 +39,21 @@ namespace Content.Server.BodySystem
                 if (toolType == SurgeryType.Incision)
                     return OpenSkinSurgery;
             }
-            else if (_skinOpened && !_vesselsClamped) //Case: skin is opened, but not clamped.
+            else if (!_vesselsClamped) //Case: skin is opened, but not clamped.
             {
                 if (toolType == SurgeryType.VesselCompression)
                     return ClampVesselsSurgery;
                 else if (toolType == SurgeryType.Cauterization)
                     return CautizerizeIncisionSurgery;
             }
-            else if (_skinOpened && _vesselsClamped && !_skinRetracted) //Case: skin is opened and clamped, but not retracted.
+            else if (!_skinRetracted) //Case: skin is opened and clamped, but not retracted.
             {
                 if (toolType == SurgeryType.Retraction)
                     return RetractSkinSurgery;
                 else if (toolType == SurgeryType.Cauterization)
                     return CautizerizeIncisionSurgery;
             }
-            else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
+            else  //Case: skin is fully open.
             {
                 if (_parent.Mechanisms.Count > 0 && toolType == SurgeryType.VesselCompression && (_disconnectedOrgans.Except(_parent.Mechanisms).Count() != 0 || _parent.Mechanisms.Except(_disconnectedOrgans).Count() != 0))
                     return LoosenOrganSurgery;
@@ -65,23 +65,23 @@ namespace Content.Server.BodySystem
             return null;
         }
 
-        public override string GetDescription()
+        public override string GetDescription(IEntity target)
         {
             string toReturn = "";
             if (_skinOpened && !_vesselsClamped) //Case: skin is opened, but not clamped.
             {
-                toReturn += "The skin on his " + _parent.Name + " has an incision, but it is prone to bleeding.\n";
+                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n", target, _parent.Name);
             }
             else if (_skinOpened && _vesselsClamped && !_skinRetracted) //Case: skin is opened and clamped, but not retracted.
             {
-                toReturn += "The skin on his " + _parent.Name + " has an incision, but it is not retracted.\n";
+                toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n", target, _parent.Name);
             }
             else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
             {
-                toReturn += "There is an incision on his " + _parent.Name + ".\n";
+                toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", target, _parent.Name);
                 foreach (Mechanism mechanism in _disconnectedOrgans)
                 {
-                    toReturn += "His " + mechanism.Name + " is loose.\n";
+                    toReturn += Loc.GetString("{0:their} {1} is loose.\n", target, mechanism.Name);
                 }
             }
             return toReturn;
@@ -105,8 +105,7 @@ namespace Content.Server.BodySystem
 
         protected void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            performer.PopupMessage(performer, localizationManager.GetString("Cut open the skin..."));
+            performer.PopupMessage(performer, Loc.GetString("Cut open the skin..."));
             //Delay?
             _skinOpened = true;
         }
@@ -114,8 +113,7 @@ namespace Content.Server.BodySystem
 
         protected void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            performer.PopupMessage(performer, localizationManager.GetString("Clamp the vessels..."));
+            performer.PopupMessage(performer, Loc.GetString("Clamp the vessels..."));
             //Delay?
             _vesselsClamped = true;
         }
@@ -123,8 +121,7 @@ namespace Content.Server.BodySystem
 
         protected void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            performer.PopupMessage(performer, localizationManager.GetString("Retract the skin..."));
+            performer.PopupMessage(performer, Loc.GetString("Retract the skin..."));
             //Delay?
             _skinRetracted = true;
         }
@@ -132,8 +129,7 @@ namespace Content.Server.BodySystem
 
         protected void CautizerizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            performer.PopupMessage(performer, localizationManager.GetString("Cauterize the incision..."));
+            performer.PopupMessage(performer, Loc.GetString("Cauterize the incision..."));
             //Delay?
             _skinOpened = false;
             _vesselsClamped = false;
@@ -158,8 +154,7 @@ namespace Content.Server.BodySystem
         {
             if (target != null && _parent.Mechanisms.Contains(target))
             {
-                ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                performer.PopupMessage(performer, localizationManager.GetString("Loosen the organ..."));
+                performer.PopupMessage(performer, Loc.GetString("Loosen the organ..."));
                 //Delay?
                 _disconnectedOrgans.Add(target);
             }
@@ -181,8 +176,7 @@ namespace Content.Server.BodySystem
         {
             if (target != null && _parent.Mechanisms.Contains(target))
             {
-                ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                performer.PopupMessage(performer, localizationManager.GetString("Remove the organ..."));
+                performer.PopupMessage(performer, Loc.GetString("Remove the organ..."));
                 //Delay?
                 _parent.DropMechanism(performer, target);
                 _disconnectedOrgans.Remove(target);
@@ -195,8 +189,7 @@ namespace Content.Server.BodySystem
             if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.
                 return;
             BodyManagerComponent bmTarget = (BodyManagerComponent) container;
-            ILocalizationManager localizationManager = IoCManager.Resolve<ILocalizationManager>();
-            performer.PopupMessage(performer, localizationManager.GetString("Saw off the limb!"));
+            performer.PopupMessage(performer, Loc.GetString("Saw off the limb!"));
             //Delay?
             bmTarget.DisconnectBodyPart(_parent, true);
         }

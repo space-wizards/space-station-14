@@ -8,34 +8,68 @@ using System.Text;
 namespace Content.Shared.BodySystem
 {
 
-    /// <summary>
-    ///     Used to determine which callback is used by the server after an option is selected.
-    /// </summary>	   
-    public enum SurgeryUIMessageType { SelectBodyPart, SelectMechanism, SelectBodyPartSlot }
-
     [Serializable, NetSerializable]
-    public class UpdateSurgeryUIMessage : BoundUserInterfaceMessage
+    public class RequestBodyPartSurgeryUIMessage : BoundUserInterfaceMessage
     {
-        public SurgeryUIMessageType MessageType;
-        public Dictionary<string, object> Targets;
-        public UpdateSurgeryUIMessage(SurgeryUIMessageType messageType, Dictionary<string, object> targets)
+        public Dictionary<string, int> Targets;
+        public RequestBodyPartSurgeryUIMessage(Dictionary<string, int> targets)
         {
-            MessageType = messageType;
+            Targets = targets;
+        }
+    }
+    [Serializable, NetSerializable]
+    public class RequestMechanismSurgeryUIMessage : BoundUserInterfaceMessage
+    {
+        public Dictionary<string, int> Targets;
+        public RequestMechanismSurgeryUIMessage(Dictionary<string, int> targets)
+        {
+            Targets = targets;
+        }
+    }
+    [Serializable, NetSerializable]
+    public class RequestBodyPartSlotSurgeryUIMessage : BoundUserInterfaceMessage
+    {
+        public Dictionary<string, int> Targets;
+        public RequestBodyPartSlotSurgeryUIMessage(Dictionary<string, int> targets)
+        {
             Targets = targets;
         }
     }
 
+
+
+
+
     [Serializable, NetSerializable]
-    public class ReceiveSurgeryUIMessage : BoundUserInterfaceMessage
+    public class ReceiveBodyPartSurgeryUIMessage : BoundUserInterfaceMessage
     {
-        public object SelectedOptionData;
-        public SurgeryUIMessageType MessageType;
-        public ReceiveSurgeryUIMessage(object selectedOptionData, SurgeryUIMessageType messageType)
+        public int SelectedOptionID;
+        public ReceiveBodyPartSurgeryUIMessage(int selectedOptionID)
         {
-            SelectedOptionData = selectedOptionData;
-            MessageType = messageType;
+            SelectedOptionID = selectedOptionID;
         }
     }
+    [Serializable, NetSerializable]
+    public class ReceiveMechanismSurgeryUIMessage : BoundUserInterfaceMessage
+    {
+        public int SelectedOptionID;
+        public ReceiveMechanismSurgeryUIMessage(int selectedOptionID)
+        {
+            SelectedOptionID = selectedOptionID;
+        }
+    }
+    [Serializable, NetSerializable]
+    public class ReceiveBodyPartSlotSurgeryUIMessage : BoundUserInterfaceMessage
+    {
+        public int SelectedOptionID;
+        public ReceiveBodyPartSlotSurgeryUIMessage(int selectedOptionID)
+        {
+            SelectedOptionID = selectedOptionID;
+        }
+    }
+
+
+
 
     [NetSerializable, Serializable]
     public enum GenericSurgeryUiKey
