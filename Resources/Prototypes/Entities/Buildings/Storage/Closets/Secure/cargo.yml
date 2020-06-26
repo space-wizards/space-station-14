@@ -4,14 +4,12 @@
   parent: LockerSecureBase
   name: "quatermaster's locker"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/qm.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: qm
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/qm.rsi
     state: qm_door
 
 # LockerQuarterMaster Filled

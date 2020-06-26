@@ -5,17 +5,12 @@
   name: "level 3 biohazard gear closet"
   description: "It's a storage unit for level 3 biohazard gear."
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/bio.rsi
-    layers:
-    - state: bio
-    - state: bio_door
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/bio.rsi
     state: bio_door
 
 # Virology variant
@@ -23,14 +18,12 @@
   id: LockerL3Virology
   parent: LockerL3
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/bio_viro.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio_viro
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/bio_viro.rsi
     state: bio_viro_door
 
 # Security variant
@@ -38,14 +31,12 @@
   id: LockerL3Security
   parent: LockerL3
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/bio_sec.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio_sec
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/bio_sec.rsi
     state: bio_sec_door
 
 # Janitor variant
@@ -53,14 +44,12 @@
   id: LockerL3Janitor
   parent: LockerL3
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/bio_jan.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: bio_jan
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/bio_jan.rsi
     state: bio_jan_door
 
 

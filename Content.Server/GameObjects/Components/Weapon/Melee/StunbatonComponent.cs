@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell == null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell.Charge < EnergyPerUse)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/weapons/pistol_magin.ogg", Owner);
 
             Dirty();
 
@@ -234,7 +234,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

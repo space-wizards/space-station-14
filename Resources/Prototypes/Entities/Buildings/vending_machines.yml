@@ -11,7 +11,7 @@
     layers:
     - state: normal
       map: ["enum.VendingMachineVisualLayers.Base"]
-    - texture: Constructible/Structure/Doors/maintenance_panel.png
+    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
     sprite: Constructible/Power/VendingMachines/empty.rsi

@@ -5,14 +5,12 @@
   name: "medicine locker"
   description: "Filled to the brim with medical junk."
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/medical.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: med
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/medical.rsi
     state: med_door
 
 # Medical doctor
@@ -21,14 +19,12 @@
   parent: LockerSecureBase
   name: "medical doctor's locker"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/medical_secure.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: med_secure
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/medical_secure.rsi
     state: med_secure_door
 
 # Chemical
@@ -37,15 +33,13 @@
   parent: LockerSecureBase
   name: "chemical closet"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/medical.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: med
       state_closed: chemical_door
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/medical.rsi
     state: chemical_door
 
 # CMO
@@ -54,14 +48,12 @@
   parent: LockerSecureBase
   name: "chief medical officer's locker"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/cmo.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: cmo
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/cmo.rsi
     state: cmo_door
 
 

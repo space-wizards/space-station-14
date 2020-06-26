@@ -3,14 +3,12 @@
   parent: LockerSecureBase
   name: "research director's locker"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/rd.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: rd
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/rd.rsi
     state: rd_door
 
 

@@ -27,7 +27,7 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: flashbang
@@ -54,7 +54,7 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: Syndicate minibomb
@@ -85,4 +85,4 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg

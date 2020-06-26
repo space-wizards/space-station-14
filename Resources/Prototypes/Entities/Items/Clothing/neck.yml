@@ -6,7 +6,7 @@
   description:
   components:
   - type: Sprite
-    sprite: Clothing/neck.rsi
+    sprite: Clothing/Neck/.rsi
   - type: Icon
     sprite: Clothing/neck.rsi
   - type: Clothing
@@ -23,8 +23,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/headphones.rsi
     state: headphones_on
   - type: Icon
+    sprite: Clothing/Neck/headphones.rsi
     state: headphones_on
   - type: Clothing
     HeldPrefix: headphones_on
@@ -36,8 +38,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/redtie.rsi
     state: redtie
   - type: Icon
+    sprite: Clothing/Neck/redtie.rsi
     state: redtie
   - type: Clothing
     HeldPrefix: redtie
@@ -49,8 +53,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/dettie.rsi
     state: dettie
   - type: Icon
+    sprite: Clothing/Neck/dettie.rsi
     state: dettie
   - type: Clothing
     HeldPrefix: dettie
@@ -62,8 +68,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/stethoscope.rsi
     state: stethoscope
   - type: Icon
+    sprite: Clothing/Neck/stethoscope.rsi
     state: stethoscope
   - type: Clothing
     HeldPrefix: stethoscope
@@ -75,8 +83,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Scarfs/red_scarf.rsi
     state: stripedredscarf
   - type: Icon
+    sprite: Clothing/Neck/Scarfs/red_scarf.rsi
     state: stripedredscarf
   - type: Clothing
     HeldPrefix: stripedredscarf
@@ -88,8 +98,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Scarfs/blue_scarf.rsi
     state: stripedbluescarf
   - type: Icon
+    sprite: Clothing/Neck/Scarfs/blue_scarf.rsi
     state: stripedbluescarf
   - type: Clothing
     HeldPrefix: stripedbluescarf
@@ -101,8 +113,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Scarfs/green_scarf.rsi
     state: stripedgreenscarf
   - type: Icon
+    sprite: Clothing/Neck/Scarfs/green_scarf.rsi
     state: stripedgreenscarf
   - type: Clothing
     HeldPrefix: stripedgreenscarf
@@ -114,8 +128,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Scarfs/zebra_scarf.rsi
     state: zebrascarf
   - type: Icon
+    sprite: Clothing/Neck/Scarfs/zebra_scarf.rsi
     state: zebrascarf
   - type: Clothing
     HeldPrefix: zebrascarf
@@ -127,8 +143,10 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/bling.rsi
     state: bling
   - type: Icon
+    sprite: Clothing/Neck/bling.rsi
     state: bling
   - type: Clothing
     HeldPrefix: bling

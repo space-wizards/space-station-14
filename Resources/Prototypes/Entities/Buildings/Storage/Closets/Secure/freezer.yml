@@ -3,12 +3,10 @@
   parent: LockerSecureBase
   name: "freezer"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/freezer.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: freezer
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/freezer.rsi
     state: freezer_door

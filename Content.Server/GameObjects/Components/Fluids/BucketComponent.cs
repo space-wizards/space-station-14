@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _sound, "sound", "/Audio/effects/Fluids/watersplash.ogg");
+            serializer.DataFieldCached(ref _sound, "sound", "/Audio/Effects/Fluids/watersplash.ogg");
         }
 
         /// <inheritdoc />

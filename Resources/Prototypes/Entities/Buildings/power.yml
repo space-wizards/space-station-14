@@ -15,7 +15,7 @@
     sprite: Constructible/Power/power_cable.rsi
     state: cable_0
   - type: Icon
-    texture: Constructible/Power/eightdirwire.png
+    texture: Objects/Power/eightdirwire.png
   - type: PowerTransfer
   - type: SnapGrid
     offset: Center

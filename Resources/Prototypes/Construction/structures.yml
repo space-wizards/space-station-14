@@ -55,7 +55,7 @@
   category: Structures
   description: A low wall used for mounting windows.
   icon:
-    sprite: Constructible/Structures/Walls/Walls/low_wall.rsi
+    sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
   objecttype: Structure
   result: LowWall

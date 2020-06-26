@@ -3,14 +3,12 @@
   parent: LockerSecureBase
   name: "booze storage"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/cabinet.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: cabinet
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/cabinet.rsi
     state: cabinet_door
 
 

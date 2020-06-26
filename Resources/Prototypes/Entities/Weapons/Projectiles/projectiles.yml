@@ -151,7 +151,7 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/effects/gen_hit.ogg
+    soundHit: /Audio/Effects/gen_hit.ogg
   - type: StunnableProjectile
     paralyzeAmount: 8
 
@@ -186,7 +186,7 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/effects/flash_bang.ogg
+    soundHit: /Audio/Effects/flash_bang.ogg
   - type: FlashProjectile
     range: 7
 

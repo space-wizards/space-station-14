@@ -60,15 +60,13 @@
   parent: WardrobeBase
   name: "atmospherics wardrobe"
   components:
-  - type: Sprite
-    sprite: Constructible/Structures/Closet/atmos.rsi
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state: generic
       state_closed: atmos_wardrobe_door
+
   - type: Icon
-    sprite: Constructible/Structures/Closet/atmos.rsi
     state: atmos_door
 
 # Engineering wardrobe
