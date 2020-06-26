@@ -1,0 +1,25 @@
+- type: entity
+  name: fireaxe locker
+  id: WallFireaxeStorage
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/wallstorage.rsi
+    drawdepth: Items
+  - type: Icon
+    sprite: Objects/wallstorage.rsi
+    state: empty
+  - type: Appearance
+    visuals:
+    - type: WallStorageVisualizer2D
+  - type: Physics
+    mass: 5
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask: [Impassable]
+      layer: [Clickable]
+    IsScrapingFloor: true
