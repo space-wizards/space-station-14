@@ -185,11 +185,11 @@ namespace Content.Client.Construction
                             switch (tool.ToolQuality)
                             {
                                 case ToolQuality.Anchoring:
-                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.rsi/icon.png");
                                     text = "Wrench";
                                     break;
                                 case ToolQuality.Prying:
-                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.rsi/icon.png");
                                     text = "Crowbar";
                                     break;
                                 case ToolQuality.Screwing:
@@ -204,7 +204,7 @@ namespace Content.Client.Construction
                                     break;
                                 case ToolQuality.Cutting:
                                     icon = _resourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/wirecutter.png");
+                                        "/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
                                     text = "Wirecutters";
                                     break;
                                 default:

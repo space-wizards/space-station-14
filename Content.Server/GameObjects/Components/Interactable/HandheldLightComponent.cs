@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magin.ogg", Owner);
 
 
             Dirty();
@@ -218,7 +218,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/weapons/pistol_magout.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
 
         }
 

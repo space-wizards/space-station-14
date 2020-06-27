@@ -8,7 +8,7 @@
   "copyright": "https://github.com/tgstation/tgstation",
   "states": [
     {
-      "name": "sheethop-equipped-BACKPACK",
+      "name": "sheethop-equipped-NECK",
       "directions": 4,
       "delays": [
         [

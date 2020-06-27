@@ -121,13 +121,13 @@
   name: satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel.rsi
+    sprite: Clothing/Back/Satchels/satchel.rsi
     state: satchel
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel.rsi
+    sprite: Clothing/Back/Satchels/satchel.rsi
     state: satchel
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel.rsi
+    sprite: Clothing/Back/Satchels/satchel.rsi
     ClothingPrefix: satchel
   - type: Storage
     Capacity: 300
@@ -138,13 +138,13 @@
   name: engineering satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_engineering.rsi
+    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     state: satchel-engineering
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_engineering.rsi
+    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     state: satchel-engineering
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_engineering.rsi
+    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     HeldPrefix: engineering
     ClothingPrefix: satchel-engineering
 
@@ -154,13 +154,13 @@
   name: medical satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_medical.rsi
+    sprite: Clothing/Back/Satchels/satchel_medical.rsi
     state: satchel-medical
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_medical.rsi
+    sprite: Clothing/Back/Satchels/satchel_medical.rsi
     state: satchel-medical
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_medical.rsi
+    sprite: Clothing/Back/Satchels/satchel_medical.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-medical
 
@@ -170,13 +170,13 @@
   name: chemistry satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_chemistry.rsi
+    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     state: satchel-chemistry
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_chemistry.rsi
+    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     state: satchel-chemistry
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_chemistry.rsi
+    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-chemistry
 
@@ -186,13 +186,13 @@
   name: genetics satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_genetics.rsi
+    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
     state: satchel-genetics
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_genetics.rsi
+    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
     state: satchel-genetics
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_genetics.rsi
+    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-genetics
 
@@ -202,13 +202,13 @@
   name: virology satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_virology.rsi
+    sprite: Clothing/Back/Satchels/satchel_virology.rsi
     state: satchel-virology
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_virology.rsi
+    sprite: Clothing/Back/Satchels/satchel_virology.rsi
     state: satchel-virology
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_virology.rsi
+    sprite: Clothing/Back/Satchels/satchel_virology.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-virology
 
@@ -218,13 +218,13 @@
   name: science satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_science.rsi
+    sprite: Clothing/Back/Satchels/satchel_science.rsi
     state: satchel-science
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_science.rsi
+    sprite: Clothing/Back/Satchels/satchel_science.rsi
     state: satchel-science
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_science.rsi
+    sprite: Clothing/Back/Satchels/satchel_science.rsi
     ClothingPrefix: satchel-science
 
 - type: entity
@@ -233,13 +233,13 @@
   name: security satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_security.rsi
+    sprite: Clothing/Back/Satchels/satchel_security.rsi
     state: satchel-security
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_security.rsi
+    sprite: Clothing/Back/Satchels/satchel_security.rsi
     state: satchel-security
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_security.rsi
+    sprite: Clothing/Back/Satchels/satchel_security.rsi
     HeldPrefix: security
     ClothingPrefix: satchel-security
 
@@ -249,13 +249,13 @@
   name: captain's satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_captain.rsi
+    sprite: Clothing/Back/Satchels/satchel_captain.rsi
     state: satchel-captain
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_captain.rsi
+    sprite: Clothing/Back/Satchels/satchel_captain.rsi
     state: satchel-captain
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_captain.rsi
+    sprite: Clothing/Back/Satchels/satchel_captain.rsi
     HeldPrefix: captain
     ClothingPrefix: satchel-captain
 
@@ -265,13 +265,13 @@
   name: hydroponics satchel
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchel/satchel_hydroponics.rsi
+    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     state: satchel-hydroponics
   - type: Icon
-    sprite: Clothing/Back/Satchel/satchel_hydroponics.rsi
+    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     state: satchel-hydroponics
   - type: Clothing
-    sprite: Clothing/Back/Satchel/satchel_hydroponics.rsi
+    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     ClothingPrefix: satchel-hydroponics
 
 - type: entity

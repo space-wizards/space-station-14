@@ -5,16 +5,11 @@
   name: neck
   description:
   components:
-  - type: Sprite
-    sprite: Clothing/Neck/.rsi
-  - type: Icon
-    sprite: Clothing/neck.rsi
   - type: Clothing
     Size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/neck.rsi
 
 - type: entity
   parent: NeckClothing
@@ -29,6 +24,7 @@
     sprite: Clothing/Neck/headphones.rsi
     state: headphones_on
   - type: Clothing
+    sprite: Clothing/Neck/headphones.rsi
     HeldPrefix: headphones_on
 
 - type: entity
@@ -44,6 +40,7 @@
     sprite: Clothing/Neck/redtie.rsi
     state: redtie
   - type: Clothing
+    sprite: Clothing/Neck/redtie.rsi
     HeldPrefix: redtie
 
 - type: entity
@@ -59,6 +56,7 @@
     sprite: Clothing/Neck/dettie.rsi
     state: dettie
   - type: Clothing
+    sprite: Clothing/Neck/dettie.rsi
     HeldPrefix: dettie
 
 - type: entity
@@ -74,6 +72,7 @@
     sprite: Clothing/Neck/stethoscope.rsi
     state: stethoscope
   - type: Clothing
+    sprite: Clothing/Neck/stethoscope.rsi
     HeldPrefix: stethoscope
 
 - type: entity
@@ -89,6 +88,7 @@
     sprite: Clothing/Neck/Scarfs/red_scarf.rsi
     state: stripedredscarf
   - type: Clothing
+    sprite: Clothing/Neck/Scarfs/red_scarf.rsi
     HeldPrefix: stripedredscarf
 
 - type: entity
@@ -104,6 +104,7 @@
     sprite: Clothing/Neck/Scarfs/blue_scarf.rsi
     state: stripedbluescarf
   - type: Clothing
+    sprite: Clothing/Neck/Scarfs/blue_scarf.rsi
     HeldPrefix: stripedbluescarf
 
 - type: entity
@@ -119,6 +120,7 @@
     sprite: Clothing/Neck/Scarfs/green_scarf.rsi
     state: stripedgreenscarf
   - type: Clothing
+    sprite: Clothing/Neck/Scarfs/green_scarf.rsi
     HeldPrefix: stripedgreenscarf
 
 - type: entity
@@ -134,6 +136,7 @@
     sprite: Clothing/Neck/Scarfs/zebra_scarf.rsi
     state: zebrascarf
   - type: Clothing
+    sprite: Clothing/Neck/Scarfs/zebra_scarf.rsi
     HeldPrefix: zebrascarf
 
 - type: entity
@@ -149,4 +152,5 @@
     sprite: Clothing/Neck/bling.rsi
     state: bling
   - type: Clothing
+    sprite: Clothing/Neck/bling.rsi
     HeldPrefix: bling

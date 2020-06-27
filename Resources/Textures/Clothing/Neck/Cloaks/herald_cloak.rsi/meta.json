@@ -6,32 +6,31 @@
   },
   "states": [
     {
-      "name": "heraldcloak-equipped-BACKPACK",
+      "name": "heraldcloak-equipped-NECK",
       "directions": 4,
       "delays": [
-	[
-	  1
-	],
-	[
-	  1
-	],
-	[
-	  1
-	],
-	[
-	  1
-	]
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
       ]
     },
     {
       "name": "heraldcloak",
       "directions": 1,
       "delays": [
-	[
-	  1
-	]
-     ]
-   }
- ]
+        [
+          1
+        ]
+      ]
+    }
+  ]
 }
-

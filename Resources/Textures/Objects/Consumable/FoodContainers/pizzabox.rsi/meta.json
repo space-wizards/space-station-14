@@ -4,11 +4,15 @@
     "x": 32,
     "y": 32
   },
-  "license": "CCBYNA3",
-  "copyright": "https://github.com/tgstation/tgstation",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
   "states": [
     {
-      "name": "sheetblack-equipped-NECK",
+      "name": "icon",
+      "directions": 1
+    },
+    {
+      "name": "inhand-right",
       "directions": 4,
       "delays": [
         [
@@ -26,25 +30,7 @@
       ]
     },
     {
-      "name": "sheetblack-inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "sheetblack-inhand-right",
+      "name": "inhand-left",
       "directions": 4,
       "delays": [
         [

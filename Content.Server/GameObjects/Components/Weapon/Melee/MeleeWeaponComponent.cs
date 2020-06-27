@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _range, "range", 1);
             serializer.DataField(ref _arcWidth, "arcwidth", 90);
             serializer.DataField(ref _arc, "arc", "default");
-            serializer.DataField(ref _hitSound, "hitSound", "/Audio/weapons/genhit1.ogg");
+            serializer.DataField(ref _hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
-            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
+            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/Weapons/punchmiss.ogg", emitter);
 
             if (Arc != null)
             {

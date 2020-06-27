@@ -115,6 +115,7 @@
     sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
     state: hopcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
     HeldPrefix: hopcloak
 
 - type: entity
@@ -129,4 +130,5 @@
     sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
     state: heraldcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
     HeldPrefix: heraldcloak

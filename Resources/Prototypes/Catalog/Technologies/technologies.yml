@@ -16,7 +16,7 @@
   name: "biological technology"
   id: BiologicalTechnology
   description: Investigations into the natural world.
-  icon: Constructible/Misc/potted_plants.rsi/plant-1.png
+  icon: Constructible/Misc/potted_plants.rsi/applebush.png
   requiredpoints: 1000
   requiredtechnologies:
     - BasicResearch
