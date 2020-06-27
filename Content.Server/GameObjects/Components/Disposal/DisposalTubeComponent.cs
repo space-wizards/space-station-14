@@ -6,7 +6,6 @@ using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -162,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                     entity.Transform.LocalPosition = newPosition;
 
-                    return;
+                    continue;
                 }
 
                 var next = snapGrid
@@ -174,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 if (next == null)
                 {
                     Remove(entity);
-                    return;
+                    break;
                 }
 
                 var to = next.GetComponent<IDisposalTubeComponent>();

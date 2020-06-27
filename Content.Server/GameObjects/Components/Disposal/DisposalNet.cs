@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             Uid = disposalSystem.NewUid();
             _tubeList = new HashSet<IDisposalTubeComponent>();
             _contents = new HashSet<DisposableComponent>();
-            TravelTime = 1;
+            TravelTime = 0.1f;
         }
 
         /// <summary>
