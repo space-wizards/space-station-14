@@ -109,7 +109,6 @@
     drawdepth: WallMountedItems
     texture: Objects/Power/provider.png
   - type: Icon
-    texture: Objects/Power/provider.png
   - type: PowerProvider
     range: 8
     priority: Provider
@@ -135,6 +134,9 @@
   name: APC
   components:
   - type: Apc
+  - type: Icon
+    sprite: Buildings/apc.rsi
+    state: icon
   - type: Sprite
     netsync: false
     texture: ""
