@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         ///     Set of disposables currently inside this DisposalNet
         /// </summary>
-        private readonly HashSet<DisposableComponent> _contents;
+        private readonly HashSet<InDisposalsComponent> _contents;
 
         /// <summary>
         ///     Set of tubes that make up the DisposalNet
@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             disposalSystem.Add(this);
             Uid = disposalSystem.NewUid();
             _tubeList = new HashSet<IDisposalTubeComponent>();
-            _contents = new HashSet<DisposableComponent>();
+            _contents = new HashSet<InDisposalsComponent>();
             TravelTime = 0.1f;
         }
 
@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in tube.ContainedEntities)
             {
-                if (!entity.TryGetComponent(out DisposableComponent disposable))
+                if (!entity.TryGetComponent(out InDisposalsComponent disposable))
                 {
                     continue;
                 }
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in tube.ContainedEntities)
             {
-                if (!entity.TryGetComponent(out DisposableComponent disposable))
+                if (!entity.TryGetComponent(out InDisposalsComponent disposable))
                 {
                     continue;
                 }
@@ -80,14 +80,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             Dirty = true;
         }
 
-        public void Insert(DisposableComponent disposable)
+        public void Insert(InDisposalsComponent inDisposals)
         {
-            _contents.Add(disposable);
+            _contents.Add(inDisposals);
         }
 
-        public void Remove(DisposableComponent disposable)
+        public void Remove(InDisposalsComponent inDisposals)
         {
-            _contents.Remove(disposable);
+            _contents.Remove(inDisposals);
         }
 
         private void Dispose()

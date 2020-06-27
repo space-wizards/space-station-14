@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            var disposable = entity.EnsureComponent<DisposableComponent>();
+            var disposable = entity.EnsureComponent<InDisposalsComponent>();
 
             Contents.Insert(disposable.Owner);
             Parent.Insert(disposable);

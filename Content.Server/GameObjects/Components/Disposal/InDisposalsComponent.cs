@@ -6,9 +6,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    public class DisposableComponent : Component, IActionBlocker
+    public class InDisposalsComponent : Component, IActionBlocker
     {
-        public override string Name => "Disposable";
+        public override string Name => "InDisposals";
 
         [ViewVariables]
         private bool InDisposals { get; set; }

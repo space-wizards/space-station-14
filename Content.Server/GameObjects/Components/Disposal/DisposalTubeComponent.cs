@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             Contents.Remove(entity);
 
-            if (!entity.TryGetComponent(out DisposableComponent disposable))
+            if (!entity.TryGetComponent(out InDisposalsComponent disposable))
             {
                 return;
             }
@@ -48,18 +48,18 @@ namespace Content.Server.GameObjects.Components.Disposal
             disposable.ExitDisposals();
         }
 
-        private void TransferTo(DisposableComponent disposable, IDisposalTubeComponent to)
+        private void TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to)
         {
-            var position = disposable.Owner.Transform.LocalPosition;
-            if (!to.Contents.Insert(disposable.Owner))
+            var position = inDisposals.Owner.Transform.LocalPosition;
+            if (!to.Contents.Insert(inDisposals.Owner))
             {
                 return;
             }
 
-            disposable.Owner.Transform.LocalPosition = position;
+            inDisposals.Owner.Transform.LocalPosition = position;
 
-            Contents.Remove(disposable.Owner);
-            disposable.EnterTube(to);
+            Contents.Remove(inDisposals.Owner);
+            inDisposals.EnterTube(to);
         }
 
         public void SpreadDisposalNet()
@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (Parent == null || !entity.TryGetComponent(out DisposableComponent disposable))
+            if (Parent == null || !entity.TryGetComponent(out InDisposalsComponent disposable))
             {
                 Remove(entity);
                 return;
