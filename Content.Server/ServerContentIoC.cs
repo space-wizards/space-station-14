@@ -33,8 +33,8 @@ namespace Content.Server
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
-            IoCManager.Register<NodeGroupFactory, NodeGroupFactory>();
-            IoCManager.Register<NodeFactory, NodeFactory>();
+            IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
+            IoCManager.Register<INodeFactory, NodeFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
         }
     }

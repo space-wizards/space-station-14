@@ -16,7 +16,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
-        ///     implementation is used as a group, detailed in <see cref="NodeGroupFactory"/>.
+        ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
         /// </summary>
         [ViewVariables]
         public NodeGroupID NodeGroupID { get; private set; }
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
 
 #pragma warning disable 649
-        [Dependency] private readonly NodeGroupFactory _nodeGroupFactory;
+        [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
 
         public void Initialize(NodeGroupID nodeGroupID, IEntity owner)

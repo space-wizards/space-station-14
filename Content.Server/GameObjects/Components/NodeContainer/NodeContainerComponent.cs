@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         private List<Node> _nodes = new List<Node>();
 
 #pragma warning disable 649
-        [Dependency] private readonly NodeFactory _nodeFactory;
+        [Dependency] private readonly INodeFactory _nodeFactory;
 #pragma warning restore 649
 
         /// <summary>

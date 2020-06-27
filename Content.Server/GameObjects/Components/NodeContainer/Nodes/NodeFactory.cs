@@ -8,7 +8,14 @@ using System.Reflection;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
-    public class NodeFactory
+    public interface INodeFactory
+    {
+        void Initialize();
+
+        Node MakeNode(string nodeName, NodeGroupID groupID, IEntity owner);
+    }
+
+    public class NodeFactory : INodeFactory
     {
         private readonly Dictionary<string, Type> _groupTypes = new Dictionary<string, Type>();
 

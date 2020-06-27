@@ -77,8 +77,8 @@ namespace Content.Server
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
-            IoCManager.Resolve<NodeGroupFactory>().Initialize();
-            IoCManager.Resolve<NodeFactory>().Initialize();
+            IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<INodeFactory>().Initialize();
         }
 
         public override void PostInit()
