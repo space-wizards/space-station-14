@@ -1,5 +1,4 @@
 using System;
-using Content.Server.GameObjects.Components.Weapon.Ranged.Hitscan;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;

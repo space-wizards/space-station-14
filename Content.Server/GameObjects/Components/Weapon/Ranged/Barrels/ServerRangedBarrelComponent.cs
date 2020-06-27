@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Physics;
