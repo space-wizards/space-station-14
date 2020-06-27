@@ -25,14 +25,14 @@
     angleIncrease: 10
     angleDecay: 60
     magNeedsOpenBolt: true
-    soundGunshot: /Audio/Guns/Gunshots/lmg.ogg
-    soundEmpty: /Audio/Guns/Empty/lmg_empty.ogg
-    soundRack: /Audio/Guns/Cock/lmg_cock.ogg
-    soundBoltOpen: /Audio/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Guns/Bolt/rifle_bolt_closed.ogg
-    soundAutoEject: /Audio/Guns/EmptyAlarm/lmg_empty_alarm.ogg
-    soundMagInsert: /Audio/Guns/MagIn/lmg_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/lmg_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundAutoEject: /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/lmg_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/lmg_magout.ogg
 
 - type: entity
   name: L6 SAW

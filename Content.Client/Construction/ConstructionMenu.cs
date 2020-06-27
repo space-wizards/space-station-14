@@ -194,7 +194,7 @@ namespace Content.Client.Construction
                                     break;
                                 case ToolQuality.Screwing:
                                     icon = _resourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/screwdriver.png");
+                                        "/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
                                     text = "Screwdriver";
                                     break;
                                 case ToolQuality.Welding:

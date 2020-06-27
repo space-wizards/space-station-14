@@ -135,7 +135,7 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds: 
   friction: 0.35
   item_drop: FloorTileItemShowroom
 

@@ -14,7 +14,7 @@
   name: "medkit"
   id: cargo.Medkit
   description: "Everything you need to patch someone up."
-  icon: Objects/Departmental/Medical/medkit_r.png
+  icon: Objects/Specific/Medical/medkit_r.png
   product: Medkit
   cost: 200
   category: Medical

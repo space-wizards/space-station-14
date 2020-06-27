@@ -31,7 +31,7 @@
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Guns/Gunshots/laser.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -72,7 +72,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
     ammoPrototype: RedHeavyLaser
-    soundGunshot: /Audio/Guns/Gunshots/laser_cannon.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -114,7 +114,7 @@
     powerCellPrototype: PowerCellSmallSuper
     base_fire_cost: 600
     ammoPrototype: XrayLaser
-    soundGunshot: /Audio/Guns/Gunshots/laser3.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -156,7 +156,7 @@
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
     ammoPrototype: BulletTaser
-    soundGunshot: /Audio/Guns/Gunshots/taser.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D

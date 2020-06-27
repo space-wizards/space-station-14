@@ -24,9 +24,9 @@
     maxAngle: 60
     angleIncrease: 30
     angleDecay: 30
-    soundGunshot: /Audio/Guns/Gunshots/shotgun.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/shotgun_insert.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
 
 - type: entity
   name: Bojevic
@@ -59,13 +59,13 @@
     magazineTypes: 
     - Rifle
     magFillPrototype: MagazineShotgun
-    soundGunshot: /Audio/Guns/Gunshots/shotgun.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundRack: /Audio/Guns/Cock/smg_cock.ogg
-    soundBoltOpen: /Audio/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Guns/MagIn/smg_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/smg_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
@@ -108,11 +108,11 @@
     angleIncrease: 30
     angleDecay: 30
     ammoSpreadRatio: 0.7
-    soundGunshot: /Audio/Guns/Gunshots/shotgun.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/shotgun_insert.ogg
-    sound_bolt_open: /Audio/Guns/Cock/shotgun_open.ogg
-    sound_bolt_closed: /Audio/Guns/Cock/shotgun_close.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    sound_bolt_open: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
+    sound_bolt_closed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
@@ -231,11 +231,11 @@
     maxAngle: 90
     angleIncrease: 45
     angleDecay: 30
-    soundGunshot: /Audio/Guns/Gunshots/shotgun.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/shotgun_insert.ogg
-    soundBoltOpen: /Audio/Guns/Cock/shotgun_open.ogg
-    soundBoltClosed: /Audio/Guns/Cock/shotgun_close.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D

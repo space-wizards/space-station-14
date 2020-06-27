@@ -28,7 +28,7 @@
   - type: Physics
     edgeslide: false
   - type: Projectile
-    soundHit: /Audio/Guns/Hits/bullet_hit.ogg
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Brute: 20
 
@@ -39,7 +39,7 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Guns/Hits/snap.ogg
+    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Brute: 10
   - type: FlashProjectile
@@ -72,7 +72,7 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Guns/Hits/snap.ogg
+    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Brute: 3
   - type: StunnableProjectile
@@ -88,7 +88,7 @@
     ammoVelocity: 20
     caliber: Energy
   - type: Projectile
-    soundHitSpecies: "/Audio/Guns/Hits/taser_hit.ogg"
+    soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
   - type: StunnableProjectile

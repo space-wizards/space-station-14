@@ -199,7 +199,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Guns/MagIn/batrifle_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg", Owner);
         }
 
         /// <summary>
