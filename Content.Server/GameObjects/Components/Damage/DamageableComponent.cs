@@ -9,6 +9,24 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
+namespace Content.Shared.GameObjects
+{
+    /// <summary>
+    /// Damage types used in-game.
+    /// Total should never be used directly - it's a derived value.
+    /// </summary>
+    public enum DamageType
+    {
+        Total,
+        Brute,
+        Heat,
+        Cold,
+        Acid,
+        Toxic,
+        Electric
+    }
+}
+
 namespace Content.Server.GameObjects
 {
     //TODO: add support for component add/remove
@@ -18,7 +36,7 @@ namespace Content.Server.GameObjects
     /// as well as informing other components of it.
     /// </summary>
     [RegisterComponent]
-    public class DamageableComponent : SharedDamageableComponent, IDamageableComponent
+    public class DamageableComponent : Component, IDamageableComponent
     {
         /// <inheritdoc />
         public override string Name => "Damageable";
@@ -38,11 +56,6 @@ namespace Content.Server.GameObjects
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
         public event EventHandler<DamageEventArgs> Damaged;
-
-        public override ComponentState GetComponentState()
-        {
-            return new DamageComponentState(_currentDamage);
-        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {

@@ -1,5 +1,4 @@
-using System;
-using Content.Server.GameObjects.Components.Damage;
+﻿using System;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;

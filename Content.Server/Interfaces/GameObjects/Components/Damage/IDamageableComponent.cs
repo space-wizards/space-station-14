@@ -5,7 +5,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects
 {
-    public interface IDamageableComponent : IComponent
+    public interface IDamageableComponent 
     {
         event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
         ResistanceSet Resistances { get; }

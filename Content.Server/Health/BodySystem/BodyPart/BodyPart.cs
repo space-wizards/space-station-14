@@ -1,4 +1,5 @@
-﻿using Content.Shared.BodySystem;
+﻿using Content.Server.DamageSystem;
+using Content.Shared.BodySystem;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
@@ -234,7 +235,7 @@ namespace Content.Server.BodySystem
             RSIPath = data.RSIPath;
             RSIState = data.RSIState;
             MaxDurability = data.Durability;
-            CurrentDamages = new BiologicalDamageContainer();
+            CurrentDamages = new BiologicalDamageContainer(); //TODO: same thing as the surgerydata below
             Resistance = data.Resistance;
             Size = data.Size;
             Compatibility = data.Compatibility;

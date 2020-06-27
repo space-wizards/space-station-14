@@ -1,4 +1,5 @@
-using Content.Server.GameObjects.Components.Damage;
+﻿using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Destructible;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
@@ -23,7 +24,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
+    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
         private BoundUserInterface _userInterface;
 
@@ -135,13 +136,16 @@ namespace Content.Server.GameObjects.Components.Gravity
             if (!Intact)
             {
                 MakeBroken();
-            } else if (!Powered)
+            }
+            else if (!Powered)
             {
                 MakeUnpowered();
-            } else if (!SwitchedOn)
+            }
+            else if (!SwitchedOn)
             {
                 MakeOff();
-            } else
+            }
+            else
             {
                 MakeOn();
             }

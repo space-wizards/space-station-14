@@ -15,9 +15,9 @@ namespace Content.Server.GameObjects.Components.Damage
     public class BreakableComponent : Component, IOnDamageBehavior, IExAct
     {
 
-        #pragma warning disable 649
+#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        #pragma warning restore 649
+#pragma warning restore 649
         /// <inheritdoc />
         public override string Name => "Breakable";
         public DamageThreshold Threshold { get; private set; }
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public List<DamageThreshold> GetAllDamageThresholds()
         {
             Threshold = new DamageThreshold(damageType, damageValue, ThresholdType.Breakage);
-            return new List<DamageThreshold>() {Threshold};
+            return new List<DamageThreshold>() { Threshold };
         }
 
         public void OnDamageThresholdPassed(object obj, DamageThresholdPassedEventArgs e)
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Damage
                     _actSystem.HandleBreakage(Owner);
                     break;
                 case ExplosionSeverity.Light:
-                    if(prob.Prob(0.4f))
+                    if (prob.Prob(0.4f))
                         _actSystem.HandleBreakage(Owner);
                     break;
             }
