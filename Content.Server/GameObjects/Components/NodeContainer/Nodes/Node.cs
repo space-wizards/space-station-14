@@ -28,7 +28,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public IEntity Owner { get; private set; }
 
-        public bool NeedsGroup { get; private set; } = true;
+        private bool _needsGroup = true;
+
+        private bool _deleting = false;
+
 
 #pragma warning disable 649
         [Dependency] private readonly NodeGroupFactory _nodeGroupFactory;
@@ -48,12 +51,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void OnContainerRemove()
         {
+            _deleting = true;
             NodeGroup.RemoveNode(this);
         }
 
         public bool TryAssignGroupIfNeeded()
         {
-            if (!NeedsGroup)
+            if (!_needsGroup)
             {
                 return false;
             }
@@ -70,8 +74,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void SpreadGroup()
         {
-            Debug.Assert(!NeedsGroup);
-            foreach (var node in GetReachableCompatibleNodes().Where(node => node.NeedsGroup == true))
+            Debug.Assert(!_needsGroup);
+            foreach (var node in GetReachableCompatibleNodes().Where(node => node._needsGroup == true))
             {
                 node.NodeGroup = NodeGroup;
                 node.SpreadGroup();
@@ -81,7 +85,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void ClearNodeGroup()
         {
             _nodeGroup = BaseNodeGroup.NullGroup;
-            NeedsGroup = true;
+            _needsGroup = true;
         }
 
         /// <summary>
@@ -92,19 +96,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private IEnumerable<Node> GetReachableCompatibleNodes()
         {
-            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID);
+            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
+                .Where(node => node._deleting == false);
         }
 
         private IEnumerable<INodeGroup> GetReachableCompatibleGroups()
         {
-            return GetReachableCompatibleNodes().Where(node => node.NeedsGroup == false)
+            return GetReachableCompatibleNodes().Where(node => node._needsGroup == false)
                 .Select(node => node.NodeGroup)
                 .Where(group => group != NodeGroup);
         }
 
         private void CombineGroupWithReachable()
         {
-            Debug.Assert(!NeedsGroup);
+            Debug.Assert(!_needsGroup);
             foreach (var group in GetReachableCompatibleGroups())
             {
                 NodeGroup.CombineGroup(group);
@@ -115,7 +120,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             _nodeGroup = newGroup;
             NodeGroup.AddNode(this);
-            NeedsGroup = false;
+            _needsGroup = false;
         }
 
         private INodeGroup MakeNewGroup()
