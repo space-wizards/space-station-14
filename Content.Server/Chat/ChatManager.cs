@@ -6,6 +6,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;

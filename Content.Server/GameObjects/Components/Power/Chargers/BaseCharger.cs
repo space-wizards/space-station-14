@@ -1,4 +1,5 @@
 using System;
+using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -13,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     public abstract class BaseCharger : Component
     {
 
-        public IEntity HeldItem { get; protected set; }
+        protected IEntity _heldItem;
         protected ContainerSlot _container;
         protected PowerDeviceComponent _powerDevice;
         public CellChargerStatus Status => _status;
@@ -58,37 +59,28 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         }
 
         /// <summary>
-        /// This will remove the item directly into the user's hand rather than the floor
+        /// This will remove the item directly into the user's hand / floor
         /// </summary>
         /// <param name="user"></param>
-        public void RemoveItemToHand(IEntity user)
+        public void RemoveItem(IEntity user)
         {
             var heldItem = _container.ContainedEntity;
             if (heldItem == null)
             {
                 return;
             }
-            RemoveItem();
 
-            if (user.TryGetComponent(out HandsComponent handsComponent) &&
-                heldItem.TryGetComponent(out ItemComponent itemComponent))
+            _container.Remove(heldItem);
+            if (user.TryGetComponent(out HandsComponent handsComponent))
             {
-                handsComponent.PutInHand(itemComponent);
-            }
-        }
-
-        /// <summary>
-        ///  Will put the charger's item on the floor if available
-        /// </summary>
-        public void RemoveItem()
-        {
-            if (_container.ContainedEntity == null)
-            {
-                return;
+                handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
 
-            _container.Remove(HeldItem);
-            HeldItem = null;
+            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent batteryBarrelComponent))
+            {
+                batteryBarrelComponent.UpdateAppearance();
+            }
+            
             UpdateStatus();
         }
 
@@ -135,8 +127,6 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             }
 
             _appearanceComponent?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
-
-            _status = status;
         }
 
         public void OnUpdate(float frameTime)

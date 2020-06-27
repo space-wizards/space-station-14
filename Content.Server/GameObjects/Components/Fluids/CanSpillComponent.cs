@@ -1,7 +1,9 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -21,7 +23,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             protected override void GetData(IEntity user, CanSpillComponent component, VerbData data)
             {
-                if (!component.Owner.TryGetComponent(out SolutionComponent solutionComponent))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    !component.Owner.TryGetComponent(out SolutionComponent solutionComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

@@ -6,6 +6,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -109,14 +110,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         private bool ToggleStatus(IEntity user)
         {
+            var item = Owner.GetComponent<ItemComponent>();
             // Update sprite and light states to match the activation.
             if (Activated)
             {
                 TurnOff();
+                item.EquippedPrefix = "off";
             }
             else
             {
                 TurnOn(user);
+                item.EquippedPrefix = "on";
             }
 
             // Toggle always succeeds.
@@ -241,6 +245,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component.Cell == null)
                 {
                     data.Text = "Eject cell (cell missing)";

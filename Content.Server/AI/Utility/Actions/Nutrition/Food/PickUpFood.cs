@@ -35,7 +35,7 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
             new HungerCon(
                 new LogisticCurve(1000f, 1.3f, -1.0f, 0.5f)),
             new DistanceCon(
-                new QuadraticCurve(1.0f, 1.0f, 0.02f, 0.0f)),
+                new QuadraticCurve(-1.0f, 1.0f, 1.02f, 0.0f)),
             new FoodValueCon(
                 new QuadraticCurve(1.0f, 0.4f, 0.0f, 0.0f)),
         };

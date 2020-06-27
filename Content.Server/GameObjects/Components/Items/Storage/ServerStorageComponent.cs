@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct,
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
         IDragDrop
     {
 #pragma warning disable 649
@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 10000);
-            serializer.DataField(ref StorageUsed, "used", 0);
+            //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Content.Server.GameObjects
 
             foreach (var entity in storage.ContainedEntities)
             {
-                var item = entity.GetComponent<ItemComponent>();
+                var item = entity.GetComponent<StoreableComponent>();
                 StorageUsed += item.ObjectSize;
             }
 
@@ -364,6 +364,24 @@ namespace Content.Server.GameObjects
             foreach (var entity in storedEntities)
             {
                 Remove(entity);
+            }
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            var storedEntities = storage.ContainedEntities.ToList();
+            foreach (var entity in storedEntities)
+            {
+                var exActs = entity.GetAllComponents<IExAct>();
+                foreach (var exAct in exActs)
+                {
+                    exAct.OnExplosion(eventArgs);
+                }
             }
         }
 

@@ -4,6 +4,8 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Nutrition;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
@@ -15,13 +17,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class ThirstComponent : Component, IMoveSpeedModifier
+    public sealed class ThirstComponent : SharedThirstComponent, IMoveSpeedModifier
     {
 #pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
-
-        public override string Name => "Thirst";
 
         // Base stuff
         public float BaseDecayRate => _baseDecayRate;
@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables] private float _actualDecayRate;
 
         // Thirst
-        public ThirstThreshold CurrentThirstThreshold => _currentThirstThreshold;
+        public override ThirstThreshold CurrentThirstThreshold => _currentThirstThreshold;
         private ThirstThreshold _currentThirstThreshold;
         private ThirstThreshold _lastThirstThreshold;
         public float CurrentThirst => _currentThirst;
@@ -126,6 +126,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _lastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             // TODO: Check all thresholds make sense and throw if they don't.
             ThirstThresholdEffect(true);
+            Dirty();
         }
 
         public ThirstThreshold GetThirstThreshold(float drink)
@@ -160,6 +161,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             {
                 _currentThirstThreshold = calculatedThirstThreshold;
                 ThirstThresholdEffect();
+                Dirty();
             }
 
             if (_currentThirstThreshold == ThirstThreshold.Dead)
@@ -174,42 +176,16 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
         }
 
-        float IMoveSpeedModifier.SprintSpeedModifier
-        {
-            get
-            {
-                if (_currentThirstThreshold == ThirstThreshold.Parched)
-                {
-                    return 0.25f;
-                }
-                return 1.0f;
-            }
-        }
-        float IMoveSpeedModifier.WalkSpeedModifier
-        {
-            get
-            {
-                if (_currentThirstThreshold == ThirstThreshold.Parched)
-                {
-                    return 0.5f;
-                }
-                return 1.0f;
-            }
-        }
 
         public void ResetThirst()
         {
             _currentThirst = ThirstThresholds[ThirstThreshold.Okay];
         }
+
+        public override ComponentState GetComponentState()
+        {
+            return new ThirstComponentState(_currentThirstThreshold);
+        }
     }
 
-    public enum ThirstThreshold
-    {
-        // Hydrohomies
-        OverHydrated,
-        Okay,
-        Thirsty,
-        Parched,
-        Dead,
-    }
 }

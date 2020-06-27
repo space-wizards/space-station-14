@@ -259,6 +259,23 @@
             ]
         },
         {
+            "name": "protolathe_phoron",
+            "directions": 1,
+            "delays": [
+                [
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088,
+                    0.088
+                ]
+            ]
+        },
+        {
             "name": "protolathe_building",
             "directions": 1,
             "delays": [

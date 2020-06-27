@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.EntitySystems.Click;
 
@@ -220,23 +221,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             protected override void GetData(IEntity user, SolutionComponent component, VerbData data)
             {
-                if (user.TryGetComponent<HandsComponent>(out var hands))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    !user.TryGetComponent<HandsComponent>(out var hands) ||
+                    hands.GetActiveHand == null ||
+                    !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
-                    if (hands.GetActiveHand != null)
-                    {
-                        if (hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
-                        {
-                            if ((solution.Capabilities & SolutionCaps.PourOut) != 0 &&
-                                (component.Capabilities & SolutionCaps.PourIn) != 0)
-                            {
-                                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
-                                var myName = component.Owner.Prototype?.Name ?? "<Item>";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
-                                data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
-                                return;
-                            }
-                        }
-                    }
+                if ((solution.Capabilities & SolutionCaps.PourOut) != 0 &&
+                    (component.Capabilities & SolutionCaps.PourIn) != 0)
+                {
+                    var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
+                    var myName = component.Owner.Prototype?.Name ?? "<Item>";
+
+                    data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
+                    return;
                 }
 
                 data.Visibility = VerbVisibility.Invisible;
@@ -319,23 +320,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             protected override void GetData(IEntity user, SolutionComponent component, VerbData data)
             {
-                if (user.TryGetComponent<HandsComponent>(out var hands))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    !user.TryGetComponent<HandsComponent>(out var hands) ||
+                    hands.GetActiveHand == null ||
+                    !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
-                    if (hands.GetActiveHand != null)
-                    {
-                        if (hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
-                        {
-                            if ((solution.Capabilities & SolutionCaps.PourIn) != 0 &&
-                                (component.Capabilities & SolutionCaps.PourOut) != 0)
-                            {
-                                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
-                                var myName = component.Owner.Prototype?.Name ?? "<Item>";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
-                                data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
-                                return;
-                            }
-                        }
-                    }
+                if ((solution.Capabilities & SolutionCaps.PourIn) != 0 &&
+                    (component.Capabilities & SolutionCaps.PourOut) != 0)
+                {
+                    var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
+                    var myName = component.Owner.Prototype?.Name ?? "<Item>";
+
+                    data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
+                    return;
                 }
 
                 data.Visibility = VerbVisibility.Invisible;

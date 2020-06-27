@@ -102,8 +102,8 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
     }
     public enum ExplosionSeverity
     {
-        Destruction,
-        Heavy,
         Light,
+        Heavy,
+        Destruction,
     }
 }

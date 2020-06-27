@@ -1,5 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -44,11 +44,11 @@ namespace Content.Server.GameObjects.Components.Movement
         public float GrabRange => 0.0f;
 
         public bool Sprinting { get; set; }
-        public Vector2 VelocityDir { get; } = Vector2.Zero;
+        public (Vector2 walking, Vector2 sprinting) VelocityDir { get; } = (Vector2.Zero, Vector2.Zero);
         public GridCoordinates LastPosition { get; set; }
         public float StepSoundDistance { get; set; }
 
-        public void SetVelocityDirection(Direction direction, bool enabled)
+        public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)
         {
             var gridId = Owner.Transform.GridID;
 
@@ -72,6 +72,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * CurrentWalkSpeed;
             }
+        }
+
+        public void SetSprinting(ushort subTick, bool walking)
+        {
+            // Shuttles can't sprint.
         }
 
         private Vector2 CalcNewVelocity(Direction direction, bool enabled)

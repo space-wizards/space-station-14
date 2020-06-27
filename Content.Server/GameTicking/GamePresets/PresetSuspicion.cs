@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -28,16 +27,17 @@ namespace Content.Server.GameTicking.GamePresets
         public int MinTraitors { get; set; } = 2;
         public int PlayersPerTraitor { get; set; } = 5;
 
-        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
-            if (readyPlayers.Count < MinPlayers)
+            if (!force && readyPlayers.Count < MinPlayers)
             {
                 _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {readyPlayers.Count} players readied up out of {MinPlayers} needed.");
                 return false;
             }
 
             var list = new List<IPlayerSession>(readyPlayers);
-            var numTraitors = Math.Max(readyPlayers.Count() % PlayersPerTraitor, MinTraitors);
+            var numTraitors = Math.Clamp(readyPlayers.Count % PlayersPerTraitor,
+                MinTraitors, readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)
             {

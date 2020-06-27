@@ -6,6 +6,7 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
@@ -23,7 +24,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent
+    public class InventoryComponent : SharedInventoryComponent, IExAct
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -396,6 +397,26 @@ namespace Content.Server.GameObjects
                 }
             }
             return new InventoryComponentState(list);
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            foreach (var slot in SlotContainers.Values.ToList())
+            {
+                foreach (var entity in slot.ContainedEntities)
+                {
+                    var exActs = entity.GetAllComponents<IExAct>().ToList();
+                    foreach (var exAct in exActs)
+                    {
+                        exAct.OnExplosion(eventArgs);
+                    }
+                }
+            }
         }
     }
 }
