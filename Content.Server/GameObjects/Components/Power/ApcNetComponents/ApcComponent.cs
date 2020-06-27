@@ -11,6 +11,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
 using System;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.Timing;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {
@@ -31,11 +33,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private ApcChargeState _lastChargeState;
 
-        private DateTime _lastChargeStateChange;
+        private TimeSpan _lastChargeStateChange;
 
         private ApcExternalPowerState _lastExternalPowerState;
 
-        private DateTime _lastExternalPowerStateChange;
+        private TimeSpan _lastExternalPowerStateChange;
 
         private float _lastCharge = 0f;
 
@@ -44,6 +46,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private const float HighPowerThreshold = 0.9f;
 
         private const int VisualsChangeDelay = 1;
+
+#pragma warning disable 649
+        [Dependency] private readonly IGameTiming _gameTiming;
+#pragma warning restore 649
 
         public override void Initialize()
         {
@@ -78,10 +84,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         public void Update()
         {
             var newState = CalcChargeState();
-            if (newState != _lastChargeState && _lastChargeStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < DateTime.Now)
+            if (newState != _lastChargeState && _lastChargeStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
             {
                 _lastChargeState = newState;
-                _lastChargeStateChange = DateTime.Now;
+                _lastChargeStateChange = _gameTiming.CurTime;
                 _appearance.SetData(ApcVisuals.ChargeState, newState);
             }
             var newCharge = Battery.CurrentCharge;
@@ -91,10 +97,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 _uiDirty = true;
             }
             var extPowerState = CalcExtPowerState();
-            if (extPowerState != _lastExternalPowerState && _lastExternalPowerStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < DateTime.Now)
+            if (extPowerState != _lastExternalPowerState && _lastExternalPowerStateChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
             {
                 _lastExternalPowerState = extPowerState;
-                _lastExternalPowerStateChange = DateTime.Now;
+                _lastExternalPowerStateChange = _gameTiming.CurTime;
                 _uiDirty = true;
             }
             if (_uiDirty)
