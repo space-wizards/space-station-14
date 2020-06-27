@@ -417,7 +417,7 @@ namespace Content.Server.GameObjects
         {
             if (eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface))
             {
-                if (placeableSurface.IsPlaceable == false) return false;
+                if (!placeableSurface.IsPlaceable) return false;
 
                 // empty everything out
                 foreach (var storedEntity in StoredEntities.ToList())
