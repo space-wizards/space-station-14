@@ -82,9 +82,9 @@ namespace Content.Server
         {
             base.PostInit();
 
+            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();

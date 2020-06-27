@@ -51,8 +51,7 @@ namespace Content.Client.UserInterface
         public HumanoidProfileEditor(IClientPreferencesManager preferencesManager, IPrototypeManager prototypeManager)
         {
             _random = IoCManager.Resolve<IRobustRandom>();
-            Profile = (HumanoidCharacterProfile) preferencesManager.Preferences.SelectedCharacter;
-            CharacterSlot = preferencesManager.Preferences.SelectedCharacterIndex;
+
             _preferencesManager = preferencesManager;
 
             var margin = new MarginContainer
@@ -365,9 +364,21 @@ namespace Content.Client.UserInterface
 
             #endregion Save
 
-            UpdateControls();
+            if (preferencesManager.ServerDataLoaded)
+            {
+                LoadServerData();
+            }
+
+            preferencesManager.OnServerDataLoaded += LoadServerData;
 
             IsDirty = false;
+        }
+
+        private void LoadServerData()
+        {
+            Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences.SelectedCharacter;
+            CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
+            UpdateControls();
         }
 
         private void SetAge(int newAge)
