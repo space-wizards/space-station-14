@@ -1,15 +1,10 @@
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Power
 {
-    public abstract class SharedApcComponent : Component
-    {
-        public sealed override string Name => "Apc";
-    }
-
     [Serializable, NetSerializable]
     public enum ApcVisuals
     {
@@ -52,7 +47,7 @@ namespace Content.Shared.GameObjects.Components.Power
 
     [Serializable, NetSerializable]
     public sealed class ApcToggleMainBreakerMessage : BoundUserInterfaceMessage
-    {
+    { 
     }
 
     public enum ApcExternalPowerState
