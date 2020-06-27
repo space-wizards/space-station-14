@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -15,6 +16,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -26,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override string Name => "MagazineBarrel";
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
 
+        [ViewVariables]
         private ContainerSlot _chamberContainer;
         [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
         private ContainerSlot _magazineContainer;
@@ -145,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.GridPosition);
                 _magazineContainer.Insert(magEntity);
             }
-            
+
             Dirty();
             UpdateAppearance();
         }
@@ -179,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile()
+        public override IEntity TakeProjectile(GridCoordinates spawnAt)
         {
             if (BoltOpen)
             {
@@ -188,7 +191,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity?.GetComponent<AmmoComponent>().TakeBullet();
+            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)

@@ -107,7 +107,6 @@ namespace Content.Client
                 "WeaponCapacitorCharger",
                 "PowerCellCharger",
                 "AiController",
-                "PlayerInputMover",
                 "Computer",
                 "AsteroidRock",
                 "ResearchServer",
@@ -120,13 +119,10 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
-                "Species",
                 "Drink",
                 "Food",
                 "FoodContainer",
                 "Stomach",
-                "Hunger",
-                "Thirst",
                 "Rotatable",
                 "MagicMirror",
                 "MedkitFill",
@@ -142,7 +138,6 @@ namespace Content.Client
                 "Bloodstream",
                 "TransformableContainer",
                 "Mind",
-                "MovementSpeedModifier",
                 "StorageFill",
                 "Mop",
                 "Bucket",
@@ -161,7 +156,6 @@ namespace Content.Client
                 "DroppedBodyPart",
                 "DroppedMechanism",
                 "BodyManager",
-                "Stunnable",
                 "SolarPanel",
                 "BodyScanner",
                 "Stunbaton",
@@ -181,6 +175,8 @@ namespace Content.Client
                 "SurgeryTool",
                 "UnarmedCombat",
                 "TimedSpawner",
+                "Buckle",
+                "Strap"
             };
 
             foreach (var ignoreName in registerIgnore)

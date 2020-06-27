@@ -195,7 +195,7 @@ namespace Content.Client.State
             if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
                 grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
 
-            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State,
+            var message = new FullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId, args.State,
                 grid.MapToGrid(mousePosWorld), args.PointerLocation,
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
