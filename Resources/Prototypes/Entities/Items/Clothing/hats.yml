@@ -3224,3 +3224,29 @@
   - sprite: Clothing/Head/zhan_scarf.rsi
     type: Clothing
   parent: HatBase
+
+- type: entity
+  id: HatCommissarCap
+  name: commissar cap
+  description: ''
+  components:
+  - sprite: Clothing/Head/commissar_cap.rsi
+    type: Sprite
+  - sprite: Clothing/Head/commissar_cap.rsi
+    type: Icon
+  - sprite: Clothing/Head/commissar_cap.rsi
+    type: Clothing
+  parent: HatBase
+
+- type: entity
+  id: HatCommissarHelmet
+  name: commissar helmet
+  description: ''
+  components:
+  - sprite: Clothing/Head/commissar_helmet.rsi
+    type: Sprite
+  - sprite: Clothing/Head/commissar_helmet.rsi
+    type: Icon
+  - sprite: Clothing/Head/commissar_helmet.rsi
+    type: Clothing
+  parent: HatBase

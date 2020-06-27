@@ -631,3 +631,18 @@
   - type: Clothing
     ClothingPrefix: hydro_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformCommissarJumpsuit
+  name: commissar jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/other.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/other.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/other.rsi
