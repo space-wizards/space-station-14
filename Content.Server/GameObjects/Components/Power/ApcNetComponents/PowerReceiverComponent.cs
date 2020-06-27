@@ -50,13 +50,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private int _load;
 
         /// <summary>
-        ///     The fraction of APC charge below which this shuts off and stops using power.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float PowerShutoffFraction { get => _powerShutoffFraction; set => SetPowerShutoffFraction(value); }
-        private float _powerShutoffFraction;
-
-        /// <summary>
         ///     When true, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -74,7 +67,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             base.ExposeData(serializer);
             serializer.DataField(ref _powerReceptionRange, "powerReceptionRange", 3);
             serializer.DataField(ref _load, "powerLoad", 5);
-            serializer.DataField(ref _powerShutoffFraction, "powerShutoffFraction", 0.3f);
             serializer.DataField(ref _needsPower, "needsPower", true);
             serializer.DataField(ref _powerDisabled, "powerDisabled", false);
         }
@@ -162,11 +154,6 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         private void SetLoad(int newLoad)
         {
             _load = newLoad;
-        }
-
-        private void SetPowerShutoffFraction(float newPowerShutOffPercent)
-        {
-            _powerShutoffFraction = newPowerShutOffPercent;
         }
 
         private void SetNeedsPower(bool newNeedsPower)

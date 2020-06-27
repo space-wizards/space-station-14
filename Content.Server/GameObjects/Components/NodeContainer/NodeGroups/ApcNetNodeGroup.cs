@@ -91,14 +91,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             var availablePowerFraction = totalCharge / totalMaxCharge;
             foreach (var receiver in _providerReceivers.SelectMany(kvp => kvp.Value))
             {
-                if (availablePowerFraction < receiver.PowerShutoffFraction)
-                {
-                    receiver.HasApcPower = false;
-                }
-                else
-                {
-                    receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
-                }
+                receiver.HasApcPower = TryUsePower(receiver.Load * frameTime);
             }
         }
 
