@@ -80,7 +80,7 @@
       ]
     },
     {
-      "name": "hos",
+      "name": "icon",
       "directions": 1,
       "delays": [
         [
@@ -186,24 +186,6 @@
           1
         ]
       ]
-    },
-    {
-      "name": "hosalt-inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
+    }
   ]
 }
