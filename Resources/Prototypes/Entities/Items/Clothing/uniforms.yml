@@ -603,3 +603,31 @@
   - type: Clothing
     ClothingPrefix: hop_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformHydroponics
+  name: hydroponics jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_hydro.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_hydro.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hydro.rsi
+
+- type: entity
+  parent: UniformHydroponics
+  id: UniformHydroponicsSkirt
+  name: hydroponics jumpskirt
+  components:
+  - type: Sprite
+    state: hydro_skirt
+  - type: Icon
+    state: hydro_skirt
+  - type: Clothing
+    ClothingPrefix: hydro_skirt
+    femaleMask: UniformTop
