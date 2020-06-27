@@ -10,8 +10,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
     public interface INodeFactory
     {
+        /// <summary>
+        ///     Performs reflection to associate <see cref="Node"/> implementations with the
+        ///     string specified in their <see cref="NodeAttribute"/>.
+        /// </summary>
         void Initialize();
 
+        /// <summary>
+        ///     Returns a new <see cref="Node"/> instance.
+        /// </summary>
         Node MakeNode(string nodeName, NodeGroupID groupID, IEntity owner);
     }
 

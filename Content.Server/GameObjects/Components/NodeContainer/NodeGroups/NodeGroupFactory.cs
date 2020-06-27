@@ -8,8 +8,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface INodeGroupFactory
     {
+        /// <summary>
+        ///     Performs reflection to associate <see cref="INodeGroup"/> implementations with the
+        ///     string specified in their <see cref="NodeGroupAttribute"/>.
+        /// </summary>
         void Initialize();
 
+        /// <summary>
+        ///     Returns a new <see cref="INodeGroup"/> instance.
+        /// </summary>
         INodeGroup MakeNodeGroup(NodeGroupID nodeGroupType);
     }
 
