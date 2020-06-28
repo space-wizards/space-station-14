@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -13,7 +14,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IAnchored, IUnAnchored
     {
         /// <summary>
         /// Container of entities that are currently inside this tube
@@ -90,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private void DisconnectFromNet()
+        private void Disconnect()
         {
             foreach (var adjacentTube in Connectors.Values)
             foreach (var outdatedPair in adjacentTube.Connectors.Where(pair => pair.Value == this).ToList())
@@ -155,25 +156,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private void OnAnchor(object sender, IEntity anchored)
-        {
-            Connect();
-        }
-
-        private void OnUnAnchor(object sender, IEntity unAnchored)
-        {
-            DisconnectFromNet();
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
             Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-
-            var anchorable = Owner.EnsureComponent<AnchorableComponent>();
-            anchorable.OnAnchor += OnAnchor;
-            anchorable.OnUnAnchor += OnUnAnchor;
+            Owner.EnsureComponent<AnchorableComponent>();
         }
 
         protected override void Startup()
@@ -189,7 +177,17 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void OnRemove()
         {
             base.OnRemove();
-            DisconnectFromNet();
+            Disconnect();
+        }
+
+        void IAnchored.Anchored(AnchoredEventArgs eventArgs)
+        {
+            Connect();
+        }
+
+        void IUnAnchored.UnAnchored(UnAnchoredEventArgs eventArgs)
+        {
+            Disconnect();
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -12,9 +11,6 @@ namespace Content.Server.GameObjects.Components
     public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
-
-        public event EventHandler<IEntity> OnAnchor;
-        public event EventHandler<IEntity> OnUnAnchor;
 
         private bool Anchor(IEntity user, IEntity utilizing)
         {
@@ -33,11 +29,21 @@ namespace Content.Server.GameObjects.Components
 
             if (physics.Anchored)
             {
-                OnAnchor?.Invoke(this, Owner);
+                var args = new AnchoredEventArgs(Owner);
+
+                foreach (var component in Owner.GetAllComponents<IAnchored>())
+                {
+                    component.Anchored(args);
+                }
             }
             else
             {
-                OnUnAnchor?.Invoke(this, Owner);
+                var args = new UnAnchoredEventArgs(Owner);
+
+                foreach (var unAnchored in Owner.GetAllComponents<IUnAnchored>())
+                {
+                    unAnchored.UnAnchored(args);
+                }
             }
 
             return true;

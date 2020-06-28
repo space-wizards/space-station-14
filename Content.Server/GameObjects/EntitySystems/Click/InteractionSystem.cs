@@ -307,6 +307,39 @@ namespace Content.Server.GameObjects.EntitySystems
     }
 
     /// <summary>
+    ///     This interface gives components behavior when they're anchored.
+    /// </summary>
+    public interface IAnchored
+    {
+        void Anchored(AnchoredEventArgs eventArgs);
+    }
+
+    public class AnchoredEventArgs : EventArgs
+    {
+        public AnchoredEventArgs(IEntity entity)
+        {
+            Entity = entity;
+        }
+
+        public IEntity Entity { get; }
+    }
+
+    public interface IUnAnchored
+    {
+        void UnAnchored(UnAnchoredEventArgs eventArgs);
+    }
+
+    public class UnAnchoredEventArgs : EventArgs
+    {
+        public UnAnchoredEventArgs(IEntity entity)
+        {
+            Entity = entity;
+        }
+
+        public IEntity Entity { get; }
+    }
+
+    /// <summary>
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
