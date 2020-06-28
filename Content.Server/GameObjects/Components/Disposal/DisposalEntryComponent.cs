@@ -1,6 +1,8 @@
-﻿using Robust.Server.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -13,12 +15,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool CanInsert(IEntity entity)
         {
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SpriteComponent>();
+                   entity.HasComponent<SpeciesComponent>();
         }
 
         public bool TryInsert(IEntity entity)
         {
-            if (!CanInsert(entity) || Parent == null)
+            if (!CanInsert(entity))
             {
                 return false;
             }
@@ -26,11 +28,19 @@ namespace Content.Server.GameObjects.Components.Disposal
             var disposable = entity.EnsureComponent<InDisposalsComponent>();
 
             Contents.Insert(disposable.Owner);
-            Parent.Insert(disposable);
             disposable.EnterTube(this);
-            entity.Transform.GridPosition = Owner.Transform.GridPosition;
 
             return true;
+        }
+
+        protected override Direction[] ConnectableDirections()
+        {
+            return new[] {Owner.Transform.LocalRotation.GetDir()};
+        }
+
+        public override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        {
+            return Connectors.GetValueOrDefault(ConnectableDirections()[0]);
         }
     }
 }

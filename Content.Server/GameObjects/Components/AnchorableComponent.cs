@@ -1,13 +1,10 @@
+using System;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components
 {
@@ -15,6 +12,36 @@ namespace Content.Server.GameObjects.Components
     public class AnchorableComponent : Component, IInteractUsing
     {
         public override string Name => "Anchorable";
+
+        public event EventHandler<IEntity> OnAnchor;
+        public event EventHandler<IEntity> OnUnAnchor;
+
+        private bool Anchor(IEntity user, IEntity utilizing)
+        {
+            if (!Owner.TryGetComponent(out PhysicsComponent physics) ||
+                !utilizing.TryGetComponent(out ToolComponent tool))
+            {
+                return false;
+            }
+
+            if (!tool.UseTool(user, Owner, ToolQuality.Anchoring))
+            {
+                return false;
+            }
+
+            physics.Anchored = !physics.Anchored;
+
+            if (physics.Anchored)
+            {
+                OnAnchor?.Invoke(this, Owner);
+            }
+            else
+            {
+                OnUnAnchor?.Invoke(this, Owner);
+            }
+
+            return true;
+        }
 
         public override void Initialize()
         {
@@ -24,16 +51,7 @@ namespace Content.Server.GameObjects.Components
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent physics)
-                || !eventArgs.Using.TryGetComponent(out ToolComponent tool))
-                return false;
-
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Anchoring))
-                return false;
-
-            physics.Anchored = !physics.Anchored;
-
-            return true;
+            return Anchor(eventArgs.User, eventArgs.Using);
         }
     }
 }

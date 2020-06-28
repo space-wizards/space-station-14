@@ -2,10 +2,13 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -13,27 +16,31 @@ namespace Content.Server.GameObjects.Components.Disposal
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         /// <summary>
-        /// The DisposalNet that this tube is connected to
-        /// </summary>
-        [ViewVariables, CanBeNull]
-        public DisposalNet Parent { get; private set; }
-
-        /// <summary>
-        /// Whether or not this tube is in the process of reconnecting to a net
-        /// </summary>
-        [ViewVariables]
-        public bool Reconnecting { get; set; }
-
-        /// <summary>
         /// Container of entities that are currently inside this tube
         /// </summary>
         [ViewVariables]
-        public Container Contents { get; set; }
+        public Container Contents { get; private set; }
 
         /// <summary>
         /// Collection of entities that are currently inside this tube
         /// </summary>
+        [ViewVariables]
         public IEnumerable<IEntity> ContainedEntities => Contents.ContainedEntities;
+
+        /// <summary>
+        /// Dictionary of tubes connecting to this one mapped by their direction
+        /// </summary>
+        [ViewVariables]
+        public Dictionary<Direction, IDisposalTubeComponent> Connectors { get; } = new Dictionary<Direction, IDisposalTubeComponent>();
+
+        // TODO: Change this to be an immutable property
+        /// <summary>
+        /// The directions that this tube can connect to others from
+        /// </summary>
+        /// <returns>a new array of the directions</returns>
+        protected abstract Direction[] ConnectableDirections();
+
+        public abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
 
         private void Remove(IEntity entity)
         {
@@ -44,7 +51,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            Parent?.Remove(disposable);
             disposable.ExitDisposals();
         }
 
@@ -62,78 +68,48 @@ namespace Content.Server.GameObjects.Components.Disposal
             inDisposals.EnterTube(to);
         }
 
-        public void SpreadDisposalNet()
+        private void Connect()
         {
             // TODO: Make disposal pipes extend the grid
+            Connectors.Clear();
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
-            var tubes = snapGrid.GetCardinalNeighborCells()
-                .SelectMany(x => x.GetLocal())
-                .Distinct()
-                .Select(x => x.TryGetComponent<IDisposalTubeComponent>(out var c) ? c : null)
-                .Where(x => x != null)
-                .Distinct()
-                .ToArray();
 
-            if (Parent == null || Reconnecting)
+            foreach (var direction in ConnectableDirections())
             {
-                foreach (var tube in tubes)
-                {
-                    if (!tube.CanConnectTo(out var parent))
-                    {
-                        continue;
-                    }
+                var tube = snapGrid
+                    .GetInDir(direction)
+                    .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
+                    .FirstOrDefault(x => x != null);
 
-                    ConnectToNet(parent);
-                    break;
+                if (tube == null)
+                {
+                    continue;
                 }
 
-                if (Parent == null || Reconnecting)
-                {
-                    ConnectToNet(new DisposalNet());
-                }
-            }
-
-            foreach (var tube in tubes)
-            {
-                if (tube.Parent == null || Reconnecting)
-                {
-                    tube.ConnectToNet(Parent!);
-                    tube.SpreadDisposalNet();
-                }
-                else if (tube.Parent != Parent && !tube.Parent.Dirty)
-                {
-                    Parent!.MergeNets(tube.Parent);
-                }
+                Connectors.Add(direction, tube);
             }
         }
 
-        public bool CanConnectTo([NotNullWhen(true)] out DisposalNet parent)
+        private void DisconnectFromNet()
         {
-            parent = Parent;
-            return parent != null && !parent.Dirty && !Reconnecting;
-        }
+            foreach (var adjacentTube in Connectors.Values)
+            foreach (var outdatedPair in adjacentTube.Connectors.Where(pair => pair.Value == this).ToList())
+            {
+                adjacentTube.Connectors.Remove(outdatedPair.Key);
+            }
 
-        public void ConnectToNet(DisposalNet net)
-        {
-            Parent = net;
-            Parent.Add(this);
-            Reconnecting = false;
-        }
-
-        public void DisconnectFromNet()
-        {
-            Parent?.Remove(this);
-            Parent = null;
+            Connectors.Clear();
         }
 
         public void Update(float frameTime, IEntity entity)
         {
-            if (Reconnecting)
+            if (!Contents.Contains(entity))
             {
+                Logger.Warning($"{nameof(DisposalTubeComponent)} {nameof(Update)} called on a non contained entity {entity.Name} at grid position {entity.Transform.GridPosition.ToString()}");
                 return;
             }
 
-            if (Parent == null || !entity.TryGetComponent(out InDisposalsComponent disposable))
+            if (!entity.TryGetComponent(out InDisposalsComponent inDisposals))
             {
                 Remove(entity);
                 return;
@@ -142,22 +118,22 @@ namespace Content.Server.GameObjects.Components.Disposal
             while (frameTime > 0)
             {
                 var time = frameTime;
-                if (time > disposable.TimeLeft)
+                if (time > inDisposals.TimeLeft)
                 {
-                    time = disposable.TimeLeft;
+                    time = inDisposals.TimeLeft;
                 }
 
-                disposable.TimeLeft -= time;
+                inDisposals.TimeLeft -= time;
                 frameTime -= time;
 
                 var snapGrid = Owner.GetComponent<SnapGridComponent>();
                 var tubeRotation = Owner.Transform.LocalRotation;
 
-                if (disposable.TimeLeft > 0)
+                if (inDisposals.TimeLeft > 0)
                 {
-                    var progress = 1 - disposable.TimeLeft / disposable.StartingTime;
+                    var progress = 1 - inDisposals.TimeLeft / inDisposals.StartingTime;
                     var newPosition = tubeRotation.ToVec() * progress;
-                    newPosition = (newPosition.Y, newPosition.X);
+                    newPosition = (-newPosition.X, newPosition.Y);
 
                     entity.Transform.LocalPosition = newPosition;
 
@@ -166,9 +142,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
                 var next = snapGrid
                     .GetInDir(tubeRotation.GetDir())
-                    .FirstOrDefault(adjacent =>
-                        adjacent.TryGetComponent(out IDisposalTubeComponent tube) &&
-                        tube.Parent == Parent); // TODO
+                    .FirstOrDefault(adjacent => adjacent.HasComponent<IDisposalTubeComponent>()); // TODO
 
                 if (next == null)
                 {
@@ -177,23 +151,38 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 var to = next.GetComponent<IDisposalTubeComponent>();
-                TransferTo(disposable, to);
+                TransferTo(inDisposals, to);
             }
+        }
+
+        private void OnAnchor(object sender, IEntity anchored)
+        {
+            Connect();
+        }
+
+        private void OnUnAnchor(object sender, IEntity unAnchored)
+        {
+            DisconnectFromNet();
         }
 
         public override void Initialize()
         {
             base.Initialize();
+
             Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+
+            var anchorable = Owner.EnsureComponent<AnchorableComponent>();
+            anchorable.OnAnchor += OnAnchor;
+            anchorable.OnUnAnchor += OnUnAnchor;
         }
 
         protected override void Startup()
         {
             base.Startup();
 
-            if (Parent == null)
+            if (Owner.GetComponent<PhysicsComponent>().Anchored)
             {
-                SpreadDisposalNet();
+                Connect();
             }
         }
 

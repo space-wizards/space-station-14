@@ -1,6 +1,9 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -10,11 +13,15 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         public override string Name => "InDisposals";
 
-        [ViewVariables]
-        private bool InDisposals { get; set; }
+#pragma warning disable 649
+        [Dependency] private readonly IComponentManager _componentManager;
+#pragma warning restore 649
 
-        [ViewVariables, CanBeNull]
+        [CanBeNull, ViewVariables]
         private IDisposalTubeComponent DisposalTube { get; set; }
+
+        [CanBeNull, ViewVariables]
+        public IDisposalTubeComponent PreviousTube { get; private set; }
 
         /// <summary>
         /// The total amount of time that it will take for this entity to
@@ -31,20 +38,26 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void EnterTube(IDisposalTubeComponent tube)
         {
-            InDisposals = true;
+            if (DisposalTube != null)
+            {
+                PreviousTube = DisposalTube;
+            }
+
+            Owner.Transform.GridPosition = tube.Owner.Transform.GridPosition;
             DisposalTube = tube;
-            StartingTime = tube.Parent.TravelTime;
-            TimeLeft = tube.Parent.TravelTime;
+            StartingTime = 0.1f;
+            TimeLeft = 0.1f;
         }
 
         public void ExitDisposals()
         {
-            InDisposals = false;
-            DisposalTube?.Parent?.Remove(this);
             DisposalTube = null;
+            PreviousTube = null;
             StartingTime = 0;
             TimeLeft = 0;
             Owner.Transform.DetachParent();
+
+            _componentManager.RemoveComponent(Owner.Uid, this);
         }
 
         public void Update(float frameTime)
@@ -60,37 +73,37 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IActionBlocker.CanMove()
         {
-            return !InDisposals;
+            return false;
         }
 
         bool IActionBlocker.CanInteract()
         {
-            return !InDisposals;
+            return false;
         }
 
         bool IActionBlocker.CanUse()
         {
-            return !InDisposals;
+            return false;
         }
 
         bool IActionBlocker.CanThrow()
         {
-            return !InDisposals;
+            return false;
         }
 
         bool IActionBlocker.CanDrop()
         {
-            return !InDisposals;
+            return false;
         }
 
         bool IActionBlocker.CanPickup()
         {
-            return !InDisposals;
+            return false;
         }
 
         bool IActionBlocker.CanChangeDirection()
         {
-            return !InDisposals;
+            return false;
         }
     }
 }
