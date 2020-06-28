@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
                 closedTiles.Add(currentNode);
 
-                foreach (var (direction, nextNode) in currentNode.Neighbors)
+                foreach (var nextNode in currentNode.GetNeighbors())
                 {
                     if (closedTiles.Contains(nextNode))
                     {
@@ -89,6 +89,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 
                     // If tile is untraversable it'll be null
                     var tileCost = PathfindingHelpers.GetTileCost(_pathfindingArgs, currentNode, nextNode);
+                    var direction = PathfindingHelpers.RelativeDirection(nextNode, currentNode);
 
                     if (tileCost == null || !PathfindingHelpers.DirectionTraversable(_pathfindingArgs.CollisionMask, _pathfindingArgs.Access, currentNode, direction))
                     {

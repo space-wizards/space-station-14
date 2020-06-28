@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [ViewVariables] private string _ammoPrototype;
 
         [ViewVariables] public IEntity PowerCellEntity => _powerCellContainer.ContainedEntity;
-        public PowerCellComponent PowerCell => _powerCellContainer.ContainedEntity.GetComponent<PowerCellComponent>();
+        public BatteryComponent PowerCell => _powerCellContainer.ContainedEntity.GetComponent<BatteryComponent>();
         private ContainerSlot _powerCellContainer;
         private ContainerSlot _ammoContainer;
         private string _powerCellPrototype;
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return 0;
                 }
 
-                return (int) Math.Ceiling(powerCell.GetComponent<PowerCellComponent>().Charge / _baseFireCost);
+                return (int) Math.Ceiling(powerCell.GetComponent<BatteryComponent>().CurrentCharge / _baseFireCost);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     return 0;
                 }
 
-                return (int) Math.Ceiling(powerCell.GetComponent<PowerCellComponent>().Capacity / _baseFireCost);
+                return (int) Math.Ceiling((float) (powerCell.GetComponent<BatteryComponent>().MaxCharge / _baseFireCost));
             }
         }
 
@@ -145,8 +145,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return null;
             }
 
-            var capacitor = powerCellEntity.GetComponent<PowerCellComponent>();
-            if (capacitor.Charge < _lowerChargeLimit)
+            var capacitor = powerCellEntity.GetComponent<BatteryComponent>();
+            if (capacitor.CurrentCharge < _lowerChargeLimit)
             {
                 return null;
             }
@@ -154,8 +154,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             // Can fire confirmed
             // Multiply the entity's damage / whatever by the percentage of charge the shot has.
             IEntity entity;
-            var chargeChange = Math.Min(capacitor.Charge, _baseFireCost);
-            capacitor.DeductCharge(chargeChange);
+            var chargeChange = Math.Min(capacitor.CurrentCharge, _baseFireCost);
+            capacitor.UseCharge(chargeChange);
             var energyRatio = chargeChange / _baseFireCost;
 
             if (_ammoContainer.ContainedEntity != null)
@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return false;
             }
 
-            if (!entity.HasComponent<PowerCellComponent>())
+            if (!entity.HasComponent<BatteryComponent>())
             {
                 return false;
             }
@@ -265,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public override bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerStorageComponent>())
+            if (!eventArgs.Using.HasComponent<BatteryComponent>())
             {
                 return false;
             }

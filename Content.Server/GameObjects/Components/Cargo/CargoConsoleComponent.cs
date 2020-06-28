@@ -1,5 +1,6 @@
 ﻿using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -66,8 +67,8 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem;
 
         public override void Initialize()
@@ -77,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             Orders = Owner.GetComponent<CargoOrderDatabaseComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
         }

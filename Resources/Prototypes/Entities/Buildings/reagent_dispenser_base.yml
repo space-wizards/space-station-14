@@ -21,7 +21,7 @@
   - type: SnapGrid
     offset: Center
   - type: ReagentDispenser
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key
