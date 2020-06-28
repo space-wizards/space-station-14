@@ -244,6 +244,11 @@ namespace Content.Server.GameObjects.Components.Fluids
                         break;
                     }
 
+                    if (adjacentPuddles.Length == 0)
+                    {
+                        continue;
+                    }
+
                     var numberOfAdjacent = ReagentUnit.New(adjacentPuddles.Length);
                     var overflowSplit = OverflowLeft / numberOfAdjacent;
                     foreach (var adjacent in adjacentPuddles)
