@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Power
         private string _wireDroppedOnCutPrototype;
 
         /// <summary>
-        ///     Checked by <see cref="WirePlacerComponent"/> to determin if there is
+        ///     Checked by <see cref="WirePlacerComponent"/> to determine if there is
         ///     already a wire of a type on a tile.
         /// </summary>
         [ViewVariables]
