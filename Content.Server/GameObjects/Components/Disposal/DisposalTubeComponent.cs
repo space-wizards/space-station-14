@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -24,48 +25,49 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Dictionary of tubes connecting to this one mapped by their direction
         /// </summary>
         [ViewVariables]
-        public Dictionary<Direction, IDisposalTubeComponent> Connectors { get; } =
+        public Dictionary<Direction, IDisposalTubeComponent> Connected { get; } =
             new Dictionary<Direction, IDisposalTubeComponent>();
 
-        // TODO: Change this to be an immutable property
         /// <summary>
         ///     The directions that this tube can connect to others from
         /// </summary>
         /// <returns>a new array of the directions</returns>
         protected abstract Direction[] ConnectableDirections();
 
-        public abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
+        protected abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
 
         private void Remove(IEntity entity)
         {
             Contents.Remove(entity);
 
-            if (!entity.TryGetComponent(out InDisposalsComponent disposable))
+            if (!entity.TryGetComponent(out InDisposalsComponent inDisposals))
             {
                 return;
             }
 
-            disposable.ExitDisposals();
+            inDisposals.ExitDisposals();
         }
 
-        private void TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to)
+        private bool TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to)
         {
             var position = inDisposals.Owner.Transform.LocalPosition;
             if (!to.Contents.Insert(inDisposals.Owner))
             {
-                return;
+                return false;
             }
 
             inDisposals.Owner.Transform.LocalPosition = position;
 
             Contents.Remove(inDisposals.Owner);
             inDisposals.EnterTube(to);
+
+            return true;
         }
 
         private void Connect()
         {
             // TODO: Make disposal pipes extend the grid
-            Connectors.Clear();
+            Connected.Clear();
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
 
             foreach (var direction in ConnectableDirections())
@@ -73,26 +75,46 @@ namespace Content.Server.GameObjects.Components.Disposal
                 var tube = snapGrid
                     .GetInDir(direction)
                     .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
-                    .FirstOrDefault(x => x != null);
+                    .FirstOrDefault(x => x != null && x != this);
 
                 if (tube == null)
                 {
                     continue;
                 }
 
-                Connectors.Add(direction, tube);
+                Connected.Add(direction, tube);
+
+                var oppositeDirection = new Angle(direction.ToAngle().Theta + Math.PI).GetDir();
+                tube.AdjacentConnected(oppositeDirection, this);
+            }
+        }
+
+        public void AdjacentConnected(Direction direction, IDisposalTubeComponent tube)
+        {
+            if (Connected.ContainsKey(direction))
+            {
+                return;
+            }
+
+            if (ConnectableDirections().Any(connectable => connectable == direction))
+            {
+                Connected.Add(direction, tube);
             }
         }
 
         private void Disconnect()
         {
-            foreach (var adjacentTube in Connectors.Values)
-            foreach (var outdatedPair in adjacentTube.Connectors.Where(pair => pair.Value == this).ToList())
+            foreach (var connectedTube in Connected.Values)
             {
-                adjacentTube.Connectors.Remove(outdatedPair.Key);
+                var outdated = connectedTube.Connected.Where(pair => pair.Value == this).ToArray();
+
+                foreach (var outdatedPair in outdated)
+                {
+                    connectedTube.Connected.Remove(outdatedPair.Key);
+                }
             }
 
-            Connectors.Clear();
+            Connected.Clear();
         }
 
         public void Update(float frameTime, IEntity entity)
@@ -121,7 +143,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 inDisposals.TimeLeft -= time;
                 frameTime -= time;
 
-                var snapGrid = Owner.GetComponent<SnapGridComponent>();
                 var tubeRotation = Owner.Transform.LocalRotation;
 
                 if (inDisposals.TimeLeft > 0)
@@ -135,18 +156,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                     continue;
                 }
 
-                var next = snapGrid
-                    .GetInDir(tubeRotation.GetDir())
-                    .FirstOrDefault(adjacent => adjacent.HasComponent<IDisposalTubeComponent>()); // TODO
-
-                if (next == null)
+                var next = NextTube(inDisposals);
+                if (next == null || !TransferTo(inDisposals, next))
                 {
                     Remove(entity);
                     break;
                 }
-
-                var to = next.GetComponent<IDisposalTubeComponent>();
-                TransferTo(inDisposals, to);
             }
         }
 

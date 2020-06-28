@@ -19,15 +19,13 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool TryInsert(IEntity entity)
         {
-            if (!CanInsert(entity))
+            if (!CanInsert(entity) || !Contents.Insert(entity))
             {
                 return false;
             }
 
-            var disposable = entity.EnsureComponent<InDisposalsComponent>();
-
-            Contents.Insert(disposable.Owner);
-            disposable.EnterTube(this);
+            var inDisposals = entity.EnsureComponent<InDisposalsComponent>();
+            inDisposals.EnterTube(this);
 
             return true;
         }
@@ -37,9 +35,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }
 
-        public override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        protected override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
         {
-            return Connectors.GetValueOrDefault(ConnectableDirections()[0]);
+            return Connected.GetValueOrDefault(ConnectableDirections()[0]);
         }
     }
 }

@@ -8,7 +8,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     public interface IDisposalTubeComponent : IComponent
     {
         Container Contents { get; }
-        Dictionary<Direction, IDisposalTubeComponent> Connectors { get; }
+        Dictionary<Direction, IDisposalTubeComponent> Connected { get; }
+        void AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
         void Update(float frameTime, IEntity entity);
     }
 }
