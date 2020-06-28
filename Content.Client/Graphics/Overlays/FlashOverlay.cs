@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Interfaces;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
@@ -30,7 +31,7 @@ namespace Content.Client.Graphics.Overlays
         private int lastsFor = 5000;
         private Texture _screenshotTexture;
 
-        public FlashOverlay() : base(nameof(FlashOverlay))
+        public FlashOverlay() : base(nameof(OverlayType.FlashOverlay))
         {
             IoCManager.InjectDependencies(this);
             Shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();

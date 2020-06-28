@@ -39,6 +39,10 @@
 
     - type: Flash
       damage: 0
+      cooldownTime: 1
+      arc: null
+      hitSound: /Audio/weapons/flash.ogg
+      slowTo: 0.7
 
     - type: Item
       Size: 10

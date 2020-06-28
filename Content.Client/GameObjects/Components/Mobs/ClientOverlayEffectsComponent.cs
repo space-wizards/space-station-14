@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Interfaces;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.Overlays;

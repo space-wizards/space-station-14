@@ -27,14 +27,14 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [ViewVariables(VVAccess.ReadOnly)]
         public string ID { get; }
 
-        protected OverlayContainer([NotNull] string id)
+        public OverlayContainer([NotNull] string id)
         {
             ID = id;
         }
 
-        public static OverlayContainer FromID([NotNull] string id)
+        public OverlayContainer(OverlayType type) : this(type.ToString())
         {
-            return new OverlayContainer(id);
+
         }
 
         public override bool Equals(object obj)
@@ -69,11 +69,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
     }
 
-    public interface IConfigurable<in T>
-    {
-        public void Configure(T parameters);
-    }
-
     [Serializable, NetSerializable]
     public class TimedOverlayContainer : OverlayContainer
     {
@@ -86,5 +81,12 @@ namespace Content.Shared.GameObjects.Components.Mobs
         }
 
         public void StartTimer(Action finished) => Timer.Spawn(Length, finished);
+    }
+
+    public enum OverlayType
+    {
+        GradientCircleMaskOverlay,
+        CircleMaskOverlay,
+        FlashOverlay
     }
 }

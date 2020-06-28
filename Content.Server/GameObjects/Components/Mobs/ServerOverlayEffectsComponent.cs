@@ -31,18 +31,26 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        public void AddOverlay(string id) => AddOverlay(OverlayContainer.FromID(id));
+        public void AddOverlay(string id) => AddOverlay(new OverlayContainer(id));
+        public void AddOverlay(OverlayType type) => AddOverlay(new OverlayContainer(type));
 
         public void RemoveOverlay(OverlayContainer container)
         {
-            if (ActiveOverlays.Contains(container))
+            if (ActiveOverlays.RemoveAll(c => c.Equals(container)) > 0)
             {
-                ActiveOverlays.Remove(container);
                 Dirty();
             }
         }
 
-        public void RemoveOverlay(string id) => RemoveOverlay(OverlayContainer.FromID(id));
+        public void RemoveOverlay(string id)
+        {
+            if (ActiveOverlays.RemoveAll(container => container.ID == id) > 0)
+            {
+                Dirty();
+            }
+        }
+
+        public void RemoveOverlay(OverlayType type) => RemoveOverlay(type.ToString());
 
         public void ClearOverlays()
         {

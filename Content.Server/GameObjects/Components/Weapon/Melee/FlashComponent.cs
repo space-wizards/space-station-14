@@ -6,14 +6,18 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -29,29 +33,60 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
+        [Dependency] private readonly INetManager _netManager;
 #pragma warning restore 649
 
         public override string Name => "Flash";
 
-        [ViewVariables(VVAccess.ReadWrite)] private int _lastsForMs = 5000;
-        [ViewVariables(VVAccess.ReadWrite)] private float _fadeFalloffExp = 8f;
-        [ViewVariables(VVAccess.ReadWrite)] private int _usesRemaining = 5;
+        [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
+        [ViewVariables(VVAccess.ReadWrite)] private float _flashFalloffExp = 8f;
+        [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
+        [ViewVariables(VVAccess.ReadWrite)] private float _range = 3f;
+        [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration = 5000 / 3;
+        [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
+        private bool _flashing;
+
+        private int Uses
+        {
+            get => _uses;
+            set
+            {
+                _uses = value;
+                Dirty();
+            }
+        }
+
+        private bool HasUses => _uses > 0;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _lastsForMs, "lasts_for", 5000);
-            serializer.DataField(ref _fadeFalloffExp, "fade_falloff_exp", 8f);
-            serializer.DataField(ref _usesRemaining, "uses", 5);
+            serializer.DataField(ref _flashDuration, "duration", 5000);
+            serializer.DataField(ref _flashFalloffExp, "flashFalloffExp", 8f);
+            serializer.DataField(ref _uses, "uses", 5);
+            serializer.DataField(ref _range, "range", 3f);
+            serializer.DataField(ref _aoeFlashDuration, "aoeFlashDuration", _flashDuration / 3);
+            serializer.DataField(ref _slowTo, "slowTo", 0.75f);
         }
 
-        public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
+            if (entities.Count == 0)
+            {
+                return false;
+            }
+
+            if (!Use(eventArgs.User))
+            {
+                return false;
+            }
+
             foreach (var entity in entities)
             {
-                Flash(entity);
+                Flash(entity, eventArgs.User);
             }
 
             return true;
@@ -59,40 +94,89 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            Flash(eventArgs.User);
+            if (!Use(eventArgs.User))
+            {
+                return false;
+            }
+
+            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
+            {
+                Flash(entity, eventArgs.User, _aoeFlashDuration);
+            }
 
             return true;
         }
 
-        private void Flash(IEntity entity)
+        private bool Use(IEntity user)
         {
-            if (_usesRemaining <= 0)
+            if (HasUses)
             {
-                return;
+                var sprite = Owner.GetComponent<SpriteComponent>();
+                if (--Uses == 0)
+                {
+                    sprite.LayerSetState(0, "burnt");
+
+                    _notifyManager.PopupMessage(Owner, user, "The flash burns out!");
+
+                    if (user.TryGetComponent(out IActorComponent actor))
+                    {
+                        var message = _netManager.CreateNetMessage<MsgChatMessage>();
+                        message.Message = $"burns out!";
+                        message.MessageWrap = $"The {Owner.Name} {{0}}";
+                        message.Channel = ChatChannel.Visual;
+
+                        _netManager.ServerSendMessage(message, actor.playerSession.ConnectedClient);
+                    }
+                }
+                else if (!_flashing)
+                {
+                    int animLayer = sprite.AddLayerWithState("flashing");
+                    _flashing = true;
+
+                    Timer.Spawn(400, () =>
+                    {
+                        sprite.RemoveLayer(animLayer);
+                        _flashing = false;
+                    });
+                }
+
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/flash.ogg", Owner.Transform.GridPosition,
+                    AudioParams.Default);
+
+                return true;
             }
 
-            var sprite = Owner.GetComponent<SpriteComponent>();
-            if (--_usesRemaining <= 0)
-            {
-                sprite.LayerSetState(0, "burnt");
-            }
+            return false;
+        }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/flash.ogg", Owner.Transform.GridPosition,
-                AudioParams.Default);
+        private void Flash(IEntity entity, IEntity user)
+        {
+            Flash(entity, user, _flashDuration);
+        }
 
+        private void Flash(IEntity entity, IEntity user, int flashDuration)
+        {
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
             {
-                var container = new TimedOverlayContainer("FlashOverlay", _lastsForMs);
+                var container = new TimedOverlayContainer(nameof(OverlayType.FlashOverlay), flashDuration);
                 overlayEffectsComponent.AddOverlay(container);
                 container.StartTimer(() => overlayEffectsComponent.RemoveOverlay(container));
             }
 
-            Dirty();
+            if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
+            {
+                stunnableComponent.Slowdown(flashDuration / 1000f, _slowTo, _slowTo);
+            }
+
+            if (entity != user)
+            {
+                _notifyManager.PopupMessage(user, entity, $"{user.Name} blinds you with the {Owner.Name}");
+            }
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (_usesRemaining <= 0)
+            if (!HasUses)
             {
                 message.AddText("It's burnt out.");
                 return;
@@ -101,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (inDetailsRange)
             {
                 message.AddMarkup(_localizationManager.GetString(
-                    $"The flash has [color=green]{_usesRemaining}[/color] uses remaining."));
+                    $"The flash has [color=green]{Uses}[/color] uses remaining."));
             }
         }
     }
