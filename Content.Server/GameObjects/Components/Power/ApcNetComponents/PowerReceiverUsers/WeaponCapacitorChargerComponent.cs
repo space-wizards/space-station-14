@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
