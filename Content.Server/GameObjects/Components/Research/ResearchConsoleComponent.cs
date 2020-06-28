@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -31,10 +32,10 @@ namespace Content.Server.GameObjects.Components.Research
 
         private BoundUserInterface _userInterface;
         private ResearchClientComponent _client;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
         private const string _soundCollectionName = "keyboard";
 
-        private bool Powered => _powerDevice.Powered;
+        private bool Powered => _powerReceiver.Powered;
 
         public override void Initialize()
         {
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Research
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(ResearchConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             _client = Owner.GetComponent<ResearchClientComponent>();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
