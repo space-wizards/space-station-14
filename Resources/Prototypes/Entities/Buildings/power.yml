@@ -225,9 +225,9 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects\Power\storage.png
+    texture: Constructible/Power/storage.png
   - type: Icon
-    texture: Objects\Power\storage.png
+    texture: Constructible/Power/storage.png
     state: smes
   - type: Battery
     maxCharge: 1000
@@ -297,9 +297,9 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects/Furniture/wirelessmachine.png
+    texture: Constructible/Power/wirelessmachine.png
   - type: Icon
-    texture: Objects/Furniture/wirelessmachine.png
+    texture: Constructible/Power/wirelessmachine.png
   - type: PowerReceiver
 
 - type: entity
