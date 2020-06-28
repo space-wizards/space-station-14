@@ -34,6 +34,7 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
+    wireType: HighVoltage
   - type: Destructible
     spawnondestroy: HVWireStack1
   
@@ -53,6 +54,7 @@
     nodeTypes: { MVPower : ["AdjacentNode"] }
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
+    wireType: MediumVoltage
   - type: Destructible
     spawnondestroy: MVWireStack1
     
@@ -74,6 +76,7 @@
     voltage: Apc
   - type: Wire
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
+    wireType: Apc
   - type: Destructible
     spawnondestroy: ApcExtensionCableStack1
     

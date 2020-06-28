@@ -91,7 +91,7 @@
     color: Orange
   - type: WirePlacer
     wirePrototypeID: HVWire
-    blockingNodeGroupIDs: [ HVPower ]
+    blockingWireType: HighVoltage
 
 - type: entity
   id: MVWireStack
@@ -102,7 +102,7 @@
     color: Yellow
   - type: WirePlacer
     wirePrototypeID: MVWire
-    blockingNodeGroupIDs: [ MVPower ]
+    blockingWireType: MediumVoltage
 
 - type: entity
   id: ApcExtensionCableStack
@@ -113,7 +113,7 @@
     color: Green
   - type: WirePlacer
     wirePrototypeID: ApcExtensionCable
-    blockingNodeGroupIDs: [ Apc ]
+    blockingWireType: Apc
     
 - type: entity
   id: HVWireStack1

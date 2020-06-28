@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,21 +27,17 @@ namespace Content.Server.GameObjects.Components.Power
         /// <inheritdoc />
         public override string Name => "WirePlacer";
 
+        [ViewVariables]
         private string _wirePrototypeID;
 
-        /// <summary>
-        ///     When placing a wire, if there is a <see cref="NodeContainerComponent"/> whose
-        ///     <see cref="Node"/>s have the same set of <see cref="Node.NodeGroupID"/>s
-        ///     as this, a wire will not be placed. Should generally be the same set of
-        ///     <see cref="NodeGroupID"/>s as the type of wire to be placed.
-        /// </summary>
-        private List<NodeGroupID> _blockingNodeGroupIDs;
+        [ViewVariables]
+        private WireType _blockingWireType;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _wirePrototypeID, "wirePrototypeID", "HVWire");
-            serializer.DataField(ref _blockingNodeGroupIDs, "blockingNodeGroupIDs", new List<NodeGroupID> { NodeGroupID.HVPower });
+            serializer.DataField(ref _blockingWireType, "blockingWireType", WireType.HighVoltage);
         }
 
         /// <inheritdoc />
@@ -55,13 +52,9 @@ namespace Content.Server.GameObjects.Components.Power
                 return;
             foreach (var snapComp in snapCell)
             {
-                if (snapComp.Owner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
+                if (snapComp.Owner.TryGetComponent<WireComponent>(out var wire) && wire.WireType == _blockingWireType)
                 {
-                    var nodeGroupIDs = nodeContainer.Nodes.Select(node => node.NodeGroupID).ToList();
-                    if (_blockingNodeGroupIDs.All(nodeGroupIDs.Contains))
-                    {
-                        return;
-                    }
+                    return;
                 }
             }
             if (Owner.TryGetComponent(out StackComponent stack) && !stack.Use(1))
