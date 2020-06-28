@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;

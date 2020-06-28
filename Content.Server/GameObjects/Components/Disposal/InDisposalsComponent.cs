@@ -1,7 +1,6 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -24,14 +23,14 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent PreviousTube { get; private set; }
 
         /// <summary>
-        /// The total amount of time that it will take for this entity to
-        /// be pushed to the next tube
+        ///     The total amount of time that it will take for this entity to
+        ///     be pushed to the next tube
         /// </summary>
         [ViewVariables]
         public float StartingTime { get; set; }
 
         /// <summary>
-        /// Time left until the entity is pushed to the next tube
+        ///     Time left until the entity is pushed to the next tube
         /// </summary>
         [ViewVariables]
         public float TimeLeft { get; set; }

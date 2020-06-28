@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;

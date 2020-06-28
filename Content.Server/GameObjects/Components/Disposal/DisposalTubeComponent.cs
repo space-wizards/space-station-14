@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -17,26 +15,21 @@ namespace Content.Server.GameObjects.Components.Disposal
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IAnchored, IUnAnchored
     {
         /// <summary>
-        /// Container of entities that are currently inside this tube
+        ///     Container of entities that are currently inside this tube
         /// </summary>
         [ViewVariables]
         public Container Contents { get; private set; }
 
         /// <summary>
-        /// Collection of entities that are currently inside this tube
+        ///     Dictionary of tubes connecting to this one mapped by their direction
         /// </summary>
         [ViewVariables]
-        public IEnumerable<IEntity> ContainedEntities => Contents.ContainedEntities;
-
-        /// <summary>
-        /// Dictionary of tubes connecting to this one mapped by their direction
-        /// </summary>
-        [ViewVariables]
-        public Dictionary<Direction, IDisposalTubeComponent> Connectors { get; } = new Dictionary<Direction, IDisposalTubeComponent>();
+        public Dictionary<Direction, IDisposalTubeComponent> Connectors { get; } =
+            new Dictionary<Direction, IDisposalTubeComponent>();
 
         // TODO: Change this to be an immutable property
         /// <summary>
-        /// The directions that this tube can connect to others from
+        ///     The directions that this tube can connect to others from
         /// </summary>
         /// <returns>a new array of the directions</returns>
         protected abstract Direction[] ConnectableDirections();
@@ -106,7 +99,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (!Contents.Contains(entity))
             {
-                Logger.Warning($"{nameof(DisposalTubeComponent)} {nameof(Update)} called on a non contained entity {entity.Name} at grid position {entity.Transform.GridPosition.ToString()}");
+                Logger.Warning(
+                    $"{nameof(DisposalTubeComponent)} {nameof(Update)} called on a non contained entity {entity.Name} at grid position {entity.Transform.GridPosition.ToString()}");
                 return;
             }
 

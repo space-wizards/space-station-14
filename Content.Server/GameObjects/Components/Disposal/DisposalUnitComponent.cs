@@ -13,10 +13,19 @@ namespace Content.Server.GameObjects.Components.Disposal
     [RegisterComponent]
     public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing
     {
+        [ViewVariables] private Container _container;
+
         public override string Name => "DisposalUnit";
 
-        [ViewVariables]
-        private Container _container;
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            return TryFlush();
+        }
+
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            return TryInsert(eventArgs.Using);
+        }
 
         public override void Initialize()
         {
@@ -50,16 +59,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             return true;
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            return TryFlush();
-        }
-
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            return TryInsert(eventArgs.Using);
         }
 
         [Verb]
