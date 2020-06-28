@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: GravityGenerator
   name: gravity generator
   description: It's what keeps you to the floor.
@@ -15,8 +15,8 @@
       state: on
     - type: SnapGrid
       offset: Center
-    - type: PowerDevice
-      load: 500
+    - type: PowerReceiver
+      powerLoad: 500
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
