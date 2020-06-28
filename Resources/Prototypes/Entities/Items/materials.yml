@@ -87,8 +87,11 @@
   name: HV Wire Coil
   parent: CableStack
   components:
+  - type: Sprite
+    color: Orange
   - type: WirePlacer
     wirePrototypeID: HVWire
+    blockingNodeGroupIDs: [ HVPower ]
 
 - type: entity
   id: MVWireStack
@@ -99,6 +102,7 @@
     color: Yellow
   - type: WirePlacer
     wirePrototypeID: MVWire
+    blockingNodeGroupIDs: [ MVPower ]
 
 - type: entity
   id: ApcExtensionCableStack
@@ -109,14 +113,7 @@
     color: Green
   - type: WirePlacer
     wirePrototypeID: ApcExtensionCable
-
-- type: entity
-  id: CableStack1
-  abstract: true
-  parent: CableStack
-  components:
-  - type: Stack
-    count: 1
+    blockingNodeGroupIDs: [ Apc ]
     
 - type: entity
   id: HVWireStack1
