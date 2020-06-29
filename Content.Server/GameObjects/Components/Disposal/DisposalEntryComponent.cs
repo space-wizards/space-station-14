@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
@@ -35,9 +34,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }
 
-        public override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        public override Direction NextDirection(InDisposalsComponent inDisposals)
         {
-            return Connected.GetValueOrDefault(ConnectableDirections()[0]);
+            return ConnectableDirections()[0];
         }
     }
 }

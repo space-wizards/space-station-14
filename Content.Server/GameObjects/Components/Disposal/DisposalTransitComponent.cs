@@ -19,18 +19,19 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {rotation.GetDir(), opposite.GetDir()};
         }
 
-        public override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        public override Direction NextDirection(InDisposalsComponent inDisposals)
         {
             var directions = ConnectableDirections();
-            var previous = inDisposals.PreviousTube;
-            var forward = Connected.GetValueOrDefault(directions[0]);
-            if (previous == null || !Connected.ContainsValue(previous))
+            var previousTube = inDisposals.PreviousTube;
+            var forward = directions[0];
+            if (previousTube == null || !Connected.ContainsValue(previousTube))
             {
                 return forward;
             }
 
-            var backward = Connected.GetValueOrDefault(directions[1]);
-            return previous == forward ? backward : forward;
+            var forwardTube = Connected.GetValueOrDefault(forward);
+            var backward = directions[1];
+            return previousTube == forwardTube ? backward : forward;
         }
     }
 }

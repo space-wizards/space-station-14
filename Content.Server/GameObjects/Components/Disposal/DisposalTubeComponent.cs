@@ -34,7 +34,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <returns>a new array of the directions</returns>
         protected abstract Direction[] ConnectableDirections();
 
-        public abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
+        public abstract Direction NextDirection(InDisposalsComponent inDisposals);
+
+        public IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        {
+            var nextDirection = NextDirection(inDisposals);
+            return Connected.GetValueOrDefault(nextDirection);
+        }
 
         public bool Remove(InDisposalsComponent inDisposals)
         {
