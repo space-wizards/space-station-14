@@ -15,10 +15,17 @@
       - MobImpassable
       - VaultImpassable
   - type: Sprite
-    netsync: false
+    netsync: true
     sprite: Buildings/recycling.rsi
-    state: grinder-o1
+    layers:
+    - state: grinder-o1
+      map: ["enum.RecyclerVisualLayers.Bloody"]
   - type: Icon
     sprite: Buildings/recycling.rsi
     state: grinder-o0
+  - type: Appearance
+    visuals:
+    - type: RecyclerVisualizer2D
+      state_clean: grinder-o1
+      state_bloody: grinder-o1bld
   - type: Recycler
