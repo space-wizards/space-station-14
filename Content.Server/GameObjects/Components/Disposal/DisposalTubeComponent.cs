@@ -62,7 +62,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void Connect()
         {
             // TODO: Make disposal pipes extend the grid
-            Connected.Clear();
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
 
             foreach (var direction in ConnectableDirections())
@@ -77,39 +76,46 @@ namespace Content.Server.GameObjects.Components.Disposal
                     continue;
                 }
 
-                Connected.Add(direction, tube);
-
                 var oppositeDirection = new Angle(direction.ToAngle().Theta + Math.PI).GetDir();
-                tube.AdjacentConnected(oppositeDirection, this);
+                if (!tube.AdjacentConnected(oppositeDirection, this))
+                {
+                    continue;
+                }
+
+                Connected.Add(direction, tube);
             }
         }
 
-        public void AdjacentConnected(Direction direction, IDisposalTubeComponent tube)
+        public bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube)
         {
-            if (Connected.ContainsKey(direction))
+            if (Connected.ContainsKey(direction) ||
+                !ConnectableDirections().Contains(direction))
             {
-                return;
+                return false;
             }
 
-            if (ConnectableDirections().Any(connectable => connectable == direction))
-            {
-                Connected.Add(direction, tube);
-            }
+            Connected.Add(direction, tube);
+            return true;
         }
 
         private void Disconnect()
         {
-            foreach (var connectedTube in Connected.Values)
+            foreach (var connected in Connected.Values)
             {
-                var outdated = connectedTube.Connected.Where(pair => pair.Value == this).ToArray();
-
-                foreach (var outdatedPair in outdated)
-                {
-                    connectedTube.Connected.Remove(outdatedPair.Key);
-                }
+                connected.AdjacentDisconnected(this);
             }
 
             Connected.Clear();
+        }
+
+        public void AdjacentDisconnected(IDisposalTubeComponent adjacent)
+        {
+            var outdated = Connected.Where(pair => pair.Value == adjacent).ToArray();
+
+            foreach (var pair in outdated)
+            {
+                Connected.Remove(pair.Key);
+            }
         }
 
         public override void Initialize()

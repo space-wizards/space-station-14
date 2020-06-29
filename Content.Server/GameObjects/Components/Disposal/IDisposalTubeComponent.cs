@@ -13,6 +13,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
         bool Remove(InDisposalsComponent inDisposals);
         bool TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to);
-        void AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
+        bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
+        void AdjacentDisconnected(IDisposalTubeComponent adjacent);
     }
 }
