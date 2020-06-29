@@ -1,5 +1,5 @@
-using System.Linq;
-using Content.Server.GameObjects.Components.Power;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.BarSign
 
         private string _currentSign;
 
-        private PowerDeviceComponent _power;
+        private PowerReceiverComponent _power;
         private SpriteComponent _sprite;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -80,12 +80,18 @@ namespace Content.Server.GameObjects.Components.BarSign
         {
             base.Initialize();
 
-            _power = Owner.GetComponent<PowerDeviceComponent>();
+            _power = Owner.GetComponent<PowerReceiverComponent>();
             _sprite = Owner.GetComponent<SpriteComponent>();
 
             _power.OnPowerStateChanged += PowerOnOnPowerStateChanged;
 
             UpdateSignInfo();
+        }
+
+        public override void OnRemove()
+        {
+            _power.OnPowerStateChanged -= PowerOnOnPowerStateChanged;
+            base.OnRemove();
         }
 
         private void PowerOnOnPowerStateChanged(object sender, PowerStateEventArgs e)

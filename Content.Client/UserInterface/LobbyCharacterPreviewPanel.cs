@@ -22,6 +22,8 @@ namespace Content.Client.UserInterface
         private readonly IClientPreferencesManager _preferencesManager;
         private IEntity _previewDummy;
         private readonly Label _summaryLabel;
+        private VBoxContainer _loaded;
+        private Label _unloaded;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)
@@ -50,9 +52,13 @@ namespace Content.Client.UserInterface
             var vBox = new VBoxContainer();
 
             vBox.AddChild(header);
-            vBox.AddChild(CharacterSetupButton);
 
-            vBox.AddChild(_summaryLabel);
+            _unloaded = new Label {Text = "Your character preferences have not yet loaded, please stand by."};
+
+            _loaded = new VBoxContainer {Visible = false};
+
+            _loaded.AddChild(CharacterSetupButton);
+            _loaded.AddChild(_summaryLabel);
 
             var hBox = new HBoxContainer();
             hBox.AddChild(viewSouth);
@@ -60,11 +66,15 @@ namespace Content.Client.UserInterface
             hBox.AddChild(viewWest);
             hBox.AddChild(viewEast);
 
-            vBox.AddChild(hBox);
+            _loaded.AddChild(hBox);
 
+            vBox.AddChild(_loaded);
+            vBox.AddChild(_unloaded);
             AddChild(vBox);
 
             UpdateUI();
+
+            _preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
         public Button CharacterSetupButton { get; }
@@ -89,17 +99,27 @@ namespace Content.Client.UserInterface
 
         public void UpdateUI()
         {
-            if (!(_preferencesManager.Preferences.SelectedCharacter is HumanoidCharacterProfile selectedCharacter))
+            if (!_preferencesManager.ServerDataLoaded)
             {
-                _summaryLabel.Text = string.Empty;
+                _loaded.Visible = false;
+                _unloaded.Visible = true;
             }
             else
             {
-                _summaryLabel.Text = selectedCharacter.Summary;
-                var component = _previewDummy.GetComponent<HumanoidAppearanceComponent>();
-                component.UpdateFromProfile(selectedCharacter);
+                _loaded.Visible = true;
+                _unloaded.Visible = false;
+                if (!(_preferencesManager.Preferences.SelectedCharacter is HumanoidCharacterProfile selectedCharacter))
+                {
+                    _summaryLabel.Text = string.Empty;
+                }
+                else
+                {
+                    _summaryLabel.Text = selectedCharacter.Summary;
+                    var component = _previewDummy.GetComponent<HumanoidAppearanceComponent>();
+                    component.UpdateFromProfile(selectedCharacter);
 
-                GiveDummyJobClothes(_previewDummy, selectedCharacter);
+                    GiveDummyJobClothes(_previewDummy, selectedCharacter);
+                }
             }
         }
 

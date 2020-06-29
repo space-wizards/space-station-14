@@ -10,7 +10,7 @@
     texture: Buildings/chemicals.rsi/industrial_dispenser.png
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
-  - type: PowerDevice
+  - type: PowerReceiver
 
 - type: reagentDispenserInventory
   id: ChemDispenserStandardInventory

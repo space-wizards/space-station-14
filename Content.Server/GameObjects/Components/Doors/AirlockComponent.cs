@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -31,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Doors
         /// </summary>
         private static readonly TimeSpan PowerWiresTimeout = TimeSpan.FromSeconds(5.0);
 
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
         private WiresComponent _wires;
 
         private CancellationTokenSource _powerWiresPulsedTimerCancel;
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdatePowerCutStatus()
         {
-            _powerDevice.IsPowerCut = PowerWiresPulsed ||
+            _powerReceiver.PowerDisabled = PowerWiresPulsed ||
                                       _wires.IsWireCut(Wires.MainPower) ||
                                       _wires.IsWireCut(Wires.BackupPower);
         }
@@ -100,10 +101,20 @@ namespace Content.Server.GameObjects.Components.Doors
         public override void Initialize()
         {
             base.Initialize();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _wires = Owner.GetComponent<WiresComponent>();
 
-            _powerDevice.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+            _powerReceiver.OnPowerStateChanged += PowerDeviceOnOnPowerStateChanged;
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DoorVisuals.Powered, _powerReceiver.Powered);
+            }
+        }
+
+        public override void OnRemove()
+        {
+            _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
+            base.OnRemove();
         }
 
         private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
@@ -217,7 +228,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private bool IsPowered()
         {
-            return _powerDevice.Powered;
+            return _powerReceiver.Powered;
         }
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)

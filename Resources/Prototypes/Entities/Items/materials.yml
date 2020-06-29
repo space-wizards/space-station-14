@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: material stack
   id: MaterialStack
   abstract: true
@@ -67,15 +67,14 @@
     count: 1
 
 - type: entity
-  name: cable coil
   id: CableStack
+  abstract: true
   parent: BaseItem
   components:
   - type: Stack
     stacktype: enum.StackType.Cable
   - type: Sprite
     texture: Objects/Tools/cable_coil.png
-    color: red
   - type: Icon
     texture: Objects/Tools/cable_coil.png
   - type: WirePlacer
@@ -84,13 +83,62 @@
       all: -0.15,-0.15,0.15,0.15
 
 - type: entity
-  id: CableStack1
-  name: cable stack 1
+  id: HVWireStack
+  name: HV Wire Coil
   parent: CableStack
+  components:
+  - type: Sprite
+    color: Orange
+  - type: WirePlacer
+    wirePrototypeID: HVWire
+    blockingWireType: HighVoltage
+
+- type: entity
+  id: MVWireStack
+  name: MV Wire Coil
+  parent: CableStack
+  components:
+  - type: Sprite
+    color: Yellow
+  - type: WirePlacer
+    wirePrototypeID: MVWire
+    blockingWireType: MediumVoltage
+
+- type: entity
+  id: ApcExtensionCableStack
+  name: Apc Extension Cable Coil
+  parent: CableStack
+  components:
+  - type: Sprite
+    color: Green
+  - type: WirePlacer
+    wirePrototypeID: ApcExtensionCable
+    blockingWireType: Apc
+    
+- type: entity
+  id: HVWireStack1
+  name: HV Wire stack 1
+  parent: HVWireStack
   components:
   - type: Stack
     count: 1
-
+    
+- type: entity
+  id: MVWireStack1
+  name: MV Wire stack 1
+  parent: MVWireStack
+  components:
+  - type: Stack
+    count: 1
+    
+- type: entity
+  id: ApcExtensionCableStack1
+  name: Apc Extension Cable stack 1
+  parent: ApcExtensionCableStack
+  components:
+  - type: Stack
+    count: 1
+  
 - type: entity
   name: gold bar
   id: GoldStack

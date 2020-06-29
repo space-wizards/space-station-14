@@ -1,4 +1,6 @@
-﻿using Content.Server.Interfaces;
+﻿﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces;
 ﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -75,16 +77,17 @@ namespace Content.Server
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
-
+            IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<INodeFactory>().Initialize();
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
+            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             _gameTicker.Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
-            IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
