@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
 
@@ -13,6 +16,9 @@ namespace Content.Server.GameObjects.Components.Disposal
     [RegisterComponent]
     public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing
     {
+        private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+        private TimeSpan _lastExitAttempt;
+
         [ViewVariables] private Container _container;
 
         public override string Name => "DisposalUnit";
@@ -39,6 +45,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _container.Insert(entity);
         }
 
+        private bool Remove(IEntity entity)
+        {
+            return _container.Remove(entity);
+        }
+
         private bool TryFlush()
         {
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
@@ -59,6 +70,26 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             return true;
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case RelayMovementEntityMessage msg:
+                    var timing = IoCManager.Resolve<IGameTiming>();
+                    if (!msg.Entity.HasComponent<HandsComponent>() ||
+                        timing.CurTime < _lastExitAttempt + ExitAttemptDelay)
+                    {
+                        break;
+                    }
+
+                    _lastExitAttempt = timing.CurTime;
+                    Remove(msg.Entity);
+                    break;
+            }
         }
 
         [Verb]
