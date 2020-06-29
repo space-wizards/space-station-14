@@ -8,7 +8,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+      bounds: "-0.4,-0.4,0.4,0.4"
       layer:
       - Opaque
       - Impassable
@@ -17,7 +17,7 @@
   - type: Sprite
     netsync: false
     sprite: Buildings/recycling.rsi
-    state: grinder-o0
+    state: grinder-o1
   - type: Icon
     sprite: Buildings/recycling.rsi
     state: grinder-o0
