@@ -20,23 +20,23 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent PreviousTube { get; private set; }
 
         [CanBeNull, ViewVariables]
-        public IDisposalTubeComponent CurrentTube { get; set; }
+        private IDisposalTubeComponent CurrentTube { get; set; }
 
         [CanBeNull, ViewVariables]
-        public IDisposalTubeComponent NextTube { get; private set; }
+        private IDisposalTubeComponent NextTube { get; set; }
 
         /// <summary>
         ///     The total amount of time that it will take for this entity to
         ///     be pushed to the next tube
         /// </summary>
         [ViewVariables]
-        public float StartingTime { get; set; }
+        private float StartingTime { get; set; }
 
         /// <summary>
         ///     Time left until the entity is pushed to the next tube
         /// </summary>
         [ViewVariables]
-        public float TimeLeft { get; set; }
+        private float TimeLeft { get; set; }
 
         public void EnterTube(IDisposalTubeComponent tube)
         {
@@ -48,8 +48,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             Owner.Transform.GridPosition = tube.Owner.Transform.GridPosition;
             CurrentTube = tube;
             NextTube = tube.NextTube(this);
-            StartingTime = 1;
-            TimeLeft = 1;
+            StartingTime = 0.1f;
+            TimeLeft = 0.1f;
         }
 
         public void ExitDisposals()
@@ -66,7 +66,47 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void Update(float frameTime)
         {
-            CurrentTube?.Update(frameTime, Owner);
+            while (frameTime > 0)
+            {
+                var time = frameTime;
+                if (time > TimeLeft)
+                {
+                    time = TimeLeft;
+                }
+
+                TimeLeft -= time;
+                frameTime -= time;
+
+                if (CurrentTube == null)
+                {
+                    ExitDisposals();
+                    break;
+                }
+
+                if (NextTube == null)
+                {
+                    CurrentTube.Remove(this);
+                    break;
+                }
+
+                if (TimeLeft > 0)
+                {
+                    var progress = 1 - TimeLeft / StartingTime;
+                    var origin = CurrentTube.Owner.Transform.WorldPosition;
+                    var destination = NextTube.Owner.Transform.WorldPosition;
+                    var newPosition = (destination - origin) * progress;
+
+                    Owner.Transform.WorldPosition = origin + newPosition;
+
+                    continue;
+                }
+
+                if (!CurrentTube.TransferTo(this, NextTube))
+                {
+                    CurrentTube.Remove(this);
+                    break;
+                }
+            }
         }
 
         public override void OnRemove()

@@ -36,19 +36,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
 
-        private void Remove(IEntity entity)
+        public bool Remove(InDisposalsComponent inDisposals)
         {
-            Contents.Remove(entity);
-
-            if (!entity.TryGetComponent(out InDisposalsComponent inDisposals))
-            {
-                return;
-            }
-
+            var removed = Contents.Remove(inDisposals.Owner);
             inDisposals.ExitDisposals();
+            return removed;
         }
 
-        private bool TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to)
+        public bool TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to)
         {
             var position = inDisposals.Owner.Transform.LocalPosition;
             if (!to.Contents.Insert(inDisposals.Owner))
@@ -115,60 +110,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             Connected.Clear();
-        }
-
-        public void Update(float frameTime, IEntity entity)
-        {
-            if (!Contents.Contains(entity))
-            {
-                Logger.Warning(
-                    $"{nameof(DisposalTubeComponent)} {nameof(Update)} called on a non contained entity {entity.Name} at grid position {entity.Transform.GridPosition.ToString()}");
-                return;
-            }
-
-            if (!entity.TryGetComponent(out InDisposalsComponent inDisposals))
-            {
-                Remove(entity);
-                return;
-            }
-
-            while (frameTime > 0)
-            {
-                var time = frameTime;
-                if (time > inDisposals.TimeLeft)
-                {
-                    time = inDisposals.TimeLeft;
-                }
-
-                inDisposals.TimeLeft -= time;
-                frameTime -= time;
-
-                var current = inDisposals.CurrentTube;
-                var next = inDisposals.NextTube;
-                if (current == null || next == null)
-                {
-                    Remove(entity);
-                    break;
-                }
-
-                if (inDisposals.TimeLeft > 0)
-                {
-                    var progress = 1 - inDisposals.TimeLeft / inDisposals.StartingTime;
-                    var origin = current.Owner.Transform.WorldPosition;
-                    var destination = next.Owner.Transform.WorldPosition;
-                    var newPosition = (destination - origin) * progress;
-
-                    entity.Transform.WorldPosition = origin + newPosition;
-
-                    continue;
-                }
-
-                if (!TransferTo(inDisposals, next))
-                {
-                    Remove(entity);
-                    break;
-                }
-            }
         }
 
         public override void Initialize()
