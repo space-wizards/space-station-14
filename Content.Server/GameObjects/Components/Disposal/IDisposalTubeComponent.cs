@@ -9,6 +9,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         Container Contents { get; }
         Dictionary<Direction, IDisposalTubeComponent> Connected { get; }
+
+        IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
         void AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
         void Update(float frameTime, IEntity entity);
     }

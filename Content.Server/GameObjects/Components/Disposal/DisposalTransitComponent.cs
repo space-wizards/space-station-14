@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {rotation.GetDir(), opposite.GetDir()};
         }
 
-        protected override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        public override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
         {
             var directions = ConnectableDirections();
             var previous = inDisposals.PreviousTube;

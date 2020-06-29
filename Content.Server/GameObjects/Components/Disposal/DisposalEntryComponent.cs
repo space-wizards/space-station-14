@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }
 
-        protected override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        public override IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
         {
             return Connected.GetValueOrDefault(ConnectableDirections()[0]);
         }

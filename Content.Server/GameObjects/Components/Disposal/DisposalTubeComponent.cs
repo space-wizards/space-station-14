@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <returns>a new array of the directions</returns>
         protected abstract Direction[] ConnectableDirections();
 
-        protected abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
+        public abstract IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals);
 
         private void Remove(IEntity entity)
         {
@@ -143,21 +143,29 @@ namespace Content.Server.GameObjects.Components.Disposal
                 inDisposals.TimeLeft -= time;
                 frameTime -= time;
 
-                var tubeRotation = Owner.Transform.LocalRotation;
+                var current = inDisposals.CurrentTube;
+                var next = inDisposals.NextTube;
+                if (current == null || next == null)
+                {
+                    Remove(entity);
+                    break;
+                }
 
                 if (inDisposals.TimeLeft > 0)
                 {
                     var progress = 1 - inDisposals.TimeLeft / inDisposals.StartingTime;
-                    var newPosition = tubeRotation.ToVec() * progress;
-                    newPosition = (-newPosition.X, newPosition.Y);
+                    var origin = current.Owner.Transform.WorldPosition;
+                    var destination = next.Owner.Transform.WorldPosition;
+                    var newPosition = (destination - origin) * progress;
 
-                    entity.Transform.LocalPosition = newPosition;
+                    Logger.Debug($"{entity.Transform.WorldPosition} > {origin + newPosition}");
+
+                    entity.Transform.WorldPosition = origin + newPosition;
 
                     continue;
                 }
 
-                var next = NextTube(inDisposals);
-                if (next == null || !TransferTo(inDisposals, next))
+                if (!TransferTo(inDisposals, next))
                 {
                     Remove(entity);
                     break;

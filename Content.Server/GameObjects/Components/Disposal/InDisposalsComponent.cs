@@ -17,10 +17,13 @@ namespace Content.Server.GameObjects.Components.Disposal
 #pragma warning restore 649
 
         [CanBeNull, ViewVariables]
-        private IDisposalTubeComponent DisposalTube { get; set; }
+        public IDisposalTubeComponent PreviousTube { get; private set; }
 
         [CanBeNull, ViewVariables]
-        public IDisposalTubeComponent PreviousTube { get; private set; }
+        public IDisposalTubeComponent CurrentTube { get; set; }
+
+        [CanBeNull, ViewVariables]
+        public IDisposalTubeComponent NextTube { get; private set; }
 
         /// <summary>
         ///     The total amount of time that it will take for this entity to
@@ -37,21 +40,23 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void EnterTube(IDisposalTubeComponent tube)
         {
-            if (DisposalTube != null)
+            if (CurrentTube != null)
             {
-                PreviousTube = DisposalTube;
+                PreviousTube = CurrentTube;
             }
 
             Owner.Transform.GridPosition = tube.Owner.Transform.GridPosition;
-            DisposalTube = tube;
-            StartingTime = 0.1f;
-            TimeLeft = 0.1f;
+            CurrentTube = tube;
+            NextTube = tube.NextTube(this);
+            StartingTime = 1;
+            TimeLeft = 1;
         }
 
         public void ExitDisposals()
         {
-            DisposalTube = null;
             PreviousTube = null;
+            CurrentTube = null;
+            NextTube = null;
             StartingTime = 0;
             TimeLeft = 0;
             Owner.Transform.DetachParent();
@@ -61,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void Update(float frameTime)
         {
-            DisposalTube?.Update(frameTime, Owner);
+            CurrentTube?.Update(frameTime, Owner);
         }
 
         public override void OnRemove()
