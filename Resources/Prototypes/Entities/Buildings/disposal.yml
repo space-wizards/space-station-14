@@ -1,7 +1,6 @@
 ﻿- type: entity
-  id: DisposalPipe
-  name: disposal pipe segment
-  description: A huge pipe segment used for constructing disposal systems
+  id: DisposalPipeBase
+  abstract: true
   placement:
     mode: SnapgridCenter
     snap:
@@ -10,69 +9,75 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
-  - type: Sprite
-    drawdepth: BelowFloor
-    sprite: Buildings/disposal.rsi
-    state: pipe-s
-  - type: Icon
-    sprite: Buildings/disposal.rsi
-    state: pipe-s
   - type: SnapGrid
     offset: Center
   - type: Anchorable
   - type: SubFloorHide
   - type: Destructible
     thresholdvalue: 100
+
+- type: entity
+  id: DisposalPipe
+  parent: DisposalPipeBase
+  name: disposal pipe segment
+  description: A huge pipe segment used for constructing disposal systems
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Buildings/disposal.rsi
+    layers:
+    - state: conpipe-s
+      map: ["enum.DisposalVisualLayers.Anchored"]
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: conpipe-s
   - type: DisposalTransit
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer2D
+      state_anchored: pipe-s
+      state_unanchored: conpipe-s
 
 - type: entity
   id: DisposalTrunk
+  parent: DisposalPipeBase
   name: disposal trunk
   description: A pipe trunk used as an entry point for disposal systems
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Disposal
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
-    state: pipe-t
+    layers:
+    - state: conpipe-t
+      map: ["enum.DisposalVisualLayers.Anchored"]
   - type: Icon
     sprite: Buildings/disposal.rsi
-    state: pipe-t
-  - type: SnapGrid
-    offset: Center
-  - type: Anchorable
-  - type: SubFloorHide
-  - type: Destructible
-    thresholdvalue: 100
+    state: conpipe-t
   - type: DisposalEntry
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer2D
+      state_anchored: pipe-t
+      state_unanchored: conpipe-t
 
 - type: entity
   id: DisposalUnit
+  parent: DisposalPipeBase
   name: disposal unit
   description: A pneumatic waste disposal unit
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Disposal
   components:
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
   - type: Sprite
+    netsync: false
     sprite: Buildings/disposal.rsi
-    state: disposal
+    layers:
+    - state: condisposal
+      map: ["enum.DisposalVisualLayers.Anchored"]
   - type: Icon
     sprite: Buildings/disposal.rsi
-    state: disposal
-  - type: SnapGrid
-    offset: Center
-  - type: Anchorable
-  - type: Destructible
-    thresholdvalue: 100
+    state: condisposal
   - type: DisposalUnit
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer2D
+      state_anchored: disposal
+      state_unanchored: condisposal

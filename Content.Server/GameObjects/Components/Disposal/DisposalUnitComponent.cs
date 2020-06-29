@@ -2,6 +2,8 @@
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Disposal;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -14,7 +16,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing
+    public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing, IAnchored, IUnAnchored
     {
         private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastExitAttempt;
@@ -36,7 +38,24 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void Initialize()
         {
             base.Initialize();
+
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            Owner.EnsureComponent<AnchorableComponent>();
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (!Owner.GetComponent<PhysicsComponent>().Anchored) // TODO
+            {
+                return;
+            }
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
+            }
         }
 
         private bool TryInsert(IEntity entity)
@@ -89,6 +108,22 @@ namespace Content.Server.GameObjects.Components.Disposal
                     _lastExitAttempt = timing.CurTime;
                     Remove(msg.Entity);
                     break;
+            }
+        }
+
+        void IAnchored.Anchored(AnchoredEventArgs eventArgs)
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
+            }
+        }
+
+        void IUnAnchored.UnAnchored(UnAnchoredEventArgs eventArgs)
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, false);
             }
         }
 

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -136,9 +135,16 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (Owner.GetComponent<PhysicsComponent>().Anchored)
+            if (!Owner.GetComponent<PhysicsComponent>().Anchored) // TODO
             {
-                Connect();
+                return;
+            }
+
+            Connect();
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
             }
         }
 
@@ -151,11 +157,21 @@ namespace Content.Server.GameObjects.Components.Disposal
         void IAnchored.Anchored(AnchoredEventArgs eventArgs)
         {
             Connect();
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
+            }
         }
 
         void IUnAnchored.UnAnchored(UnAnchoredEventArgs eventArgs)
         {
             Disconnect();
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, false);
+            }
         }
     }
 }
