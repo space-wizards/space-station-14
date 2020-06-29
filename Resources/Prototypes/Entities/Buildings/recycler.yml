@@ -1,0 +1,24 @@
+﻿- type: entity
+  id: Recycler
+  name: recycler
+  description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: Sprite
+    netsync: false
+    sprite: Buildings/recycling.rsi
+    state: grinder-o0
+  - type: Icon
+    sprite: Buildings/recycling.rsi
+    state: grinder-o0
+  - type: Recycler

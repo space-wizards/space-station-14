@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (entry == null)
             {
-                return false; // TODO
+                return false; // TODO connections
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
