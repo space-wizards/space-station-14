@@ -158,8 +158,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     var destination = next.Owner.Transform.WorldPosition;
                     var newPosition = (destination - origin) * progress;
 
-                    Logger.Debug($"{entity.Transform.WorldPosition} > {origin + newPosition}");
-
                     entity.Transform.WorldPosition = origin + newPosition;
 
                     continue;
