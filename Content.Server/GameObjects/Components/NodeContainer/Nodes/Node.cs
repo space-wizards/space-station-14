@@ -66,26 +66,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        private void AnchorUpdate()
-        {
-            if (Owner.GetComponent<PhysicsComponent>().Anchored)
-            {
-                if (_needsGroup)
-                {
-                    TryAssignGroupIfNeeded();
-                    CombineGroupWithReachable();
-                }
-            }
-            else
-            {
-                NodeGroup.RemoveNode(this);
-                ClearNodeGroup();
-            }
-        }
-
         public void OnContainerRemove()
         {
             _deleting = true;
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
+            {
+                AnchorUpdate();
+                physics.AnchoredChanged -= AnchorUpdate;
+            }
             NodeGroup.RemoveNode(this);
         }
 
@@ -160,6 +148,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup MakeNewGroup()
         {
             return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
+        }
+
+        private void AnchorUpdate()
+        {
+            if (Owner.GetComponent<PhysicsComponent>().Anchored)
+            {
+                if (_needsGroup)
+                {
+                    TryAssignGroupIfNeeded();
+                    CombineGroupWithReachable();
+                }
+            }
+            else
+            {
+                NodeGroup.RemoveNode(this);
+                ClearNodeGroup();
+            }
         }
     }
 }
