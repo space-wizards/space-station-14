@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -79,7 +79,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         public float CurrentPushSpeed => 5;
         public float GrabRange => 0.2f;
-        public bool Sprinting => !_heldMoveButtons.HasFlag(MoveButtons.Walk);
+        public bool Sprinting => !HasFlag(_heldMoveButtons, MoveButtons.Walk);
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
@@ -241,14 +241,14 @@ namespace Content.Shared.GameObjects.Components.Movement
             // if the camera is moved, this needs to be changed
 
             var x = 0;
-            x -= buttons.HasFlag(MoveButtons.Left) ? 1 : 0;
-            x += buttons.HasFlag(MoveButtons.Right) ? 1 : 0;
+            x -= HasFlag(buttons, MoveButtons.Left) ? 1 : 0;
+            x += HasFlag(buttons, MoveButtons.Right) ? 1 : 0;
 
             var y = 0;
             if (DiagonalMovementEnabled || x == 0)
             {
-                y -= buttons.HasFlag(MoveButtons.Down) ? 1 : 0;
-                y += buttons.HasFlag(MoveButtons.Up) ? 1 : 0;
+                y -= HasFlag(buttons, MoveButtons.Down) ? 1 : 0;
+                y += HasFlag(buttons, MoveButtons.Up) ? 1 : 0;
             }
 
             var vec = new Vector2(x, y);
@@ -290,6 +290,11 @@ namespace Content.Shared.GameObjects.Components.Movement
             Left = 4,
             Right = 8,
             Walk = 16,
+        }
+
+        private static bool HasFlag(MoveButtons buttons, MoveButtons flag)
+        {
+            return (buttons & flag) == flag;
         }
     }
 }
