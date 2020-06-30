@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             base.HandleMessage(message, component);
 
