@@ -3,7 +3,7 @@
   name: vending machine
   components:
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

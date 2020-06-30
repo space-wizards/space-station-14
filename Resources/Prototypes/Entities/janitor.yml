@@ -52,7 +52,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 5
-    anchored: false
+    Anchored: false
 
 - type: entity
   parent: BaseItem
@@ -83,7 +83,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 5
-    anchored: false
+    Anchored: false
 
 - type: entity
   name: wet floor sign

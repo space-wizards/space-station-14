@@ -104,7 +104,7 @@
   - type: PowerSupplier
     supplyRate: 3000
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -134,7 +134,7 @@
   - type: Breakable
     thresholdvalue: 100
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -162,7 +162,7 @@
   - type: PowerConsumer
   - type: BatteryStorage
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
   
 - type: entity
@@ -190,7 +190,7 @@
   - type: PowerSupplier
   - type: BatteryDischarger
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
     
 - type: entity
@@ -234,7 +234,7 @@
   - type: BatteryDischarger
     activeSupplyRate: 1000
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -270,7 +270,7 @@
   - type: BatteryDischarger
     activeSupplyRate: 1000
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -337,7 +337,7 @@
     texture: Objects/Furniture/wirelessmachine.png
   - type: PowerReceiver
   - type: Physics
-    anchored: true
+    Anchored: true
   - type: Anchorable
 
 - type: entity
