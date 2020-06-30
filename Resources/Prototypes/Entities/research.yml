@@ -61,4 +61,4 @@
   - type: Anchorable
   - type: Physics
     mass: 25
-    Anchored: true
+    anchored: true

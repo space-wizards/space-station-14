@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   name: mop
   id: MopItem
@@ -52,7 +52,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 5
-    Anchored: false
+    anchored: false
 
 - type: entity
   parent: BaseItem
@@ -83,7 +83,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 5
-    Anchored: false
+    anchored: false
 
 - type: entity
   name: wet floor sign
