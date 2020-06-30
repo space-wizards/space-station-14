@@ -48,6 +48,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         protected override void RemoveSelfFromNet(IPowerNet powerNet)
         {
             powerNet.RemoveConsumer(this);
+            ReceivedPower = 0;
         }
 
         private void SetDrawRate(int newDrawRate)
