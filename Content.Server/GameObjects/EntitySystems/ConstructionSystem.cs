@@ -480,7 +480,7 @@ namespace Content.Server.GameObjects.EntitySystems
             return StackTypeMap.TryGetValue((StackType)stack.StackType, out var should) && should == step.Material;
         }
 
-        private static void SetupComponent(ConstructionComponent constructionComponent, ConstructionPrototype prototype)
+        private void SetupComponent(ConstructionComponent constructionComponent, ConstructionPrototype prototype)
         {
             constructionComponent.Prototype = prototype;
             constructionComponent.Stage = 1;
@@ -494,7 +494,10 @@ namespace Content.Server.GameObjects.EntitySystems
                 spriteComp.AddLayerWithSprite(prototype.Icon);
             }
 
+            var frame = constructionComponent.Owner;
+            var finalPrototype = _prototypeManager.Index<EntityPrototype>(prototype.Result);
 
+            frame.Name = $"Unfinished {finalPrototype.Name}";
         }
     }
 
