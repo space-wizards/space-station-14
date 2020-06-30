@@ -21,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -156,7 +157,20 @@ namespace Content.Server.GameObjects.EntitySystems
                     var frame = EntityManager.SpawnEntity("structureconstructionframe", targetEntPos);
                     var construction = frame.GetComponent<ConstructionComponent>();
                     SetupComponent(construction, prototype);
+                    construction.Stage = prototype.Stages.Count - 2;
+                    SetupDeconIntermediateSprite(construction, prototype);
                     frame.Transform.LocalRotation = targetEnt.Transform.LocalRotation;
+
+                    if (targetEnt.Prototype.Components.TryGetValue("Item", out var itemProtoComp))
+                    {
+                        if (!frame.TryGetComponent<ItemComponent>(out var itemComp))
+                            itemComp = frame.AddComponent<ItemComponent>();
+
+                        var serializer = YamlObjectSerializer.NewReader(itemProtoComp);
+                        itemComp.ExposeData(serializer);
+                    }
+
+                    ReplaceInContainerOrGround(targetEnt, frame);
 
                     // remove target
                     targetEnt.Delete();
@@ -165,6 +179,23 @@ namespace Content.Server.GameObjects.EntitySystems
                     SpawnIngredient(targetEntPos, prototype.Stages[(prototype.Stages.Count-2)].Forward as ConstructionStepMaterial);
                 }
             }
+        }
+
+        private static void SetupDeconIntermediateSprite(ConstructionComponent constructionComponent, ConstructionPrototype prototype)
+        {
+            if(!constructionComponent.Owner.TryGetComponent<SpriteComponent>(out var spriteComp))
+                return;
+
+            for (var i = prototype.Stages.Count - 1; i < 0; i--)
+            {
+                if (prototype.Stages[i].Icon != null)
+                {
+                    spriteComp.AddLayerWithSprite(prototype.Stages[1].Icon);
+                    return;
+                }
+            }
+
+            spriteComp.AddLayerWithSprite(prototype.Icon);
         }
 
         private void SpawnIngredient(MapCoordinates position, ConstructionStepMaterial lastStep)
@@ -301,12 +332,22 @@ namespace Content.Server.GameObjects.EntitySystems
             }
             else
             {
-                //TODO: Make these viable as an item and try putting them in the players hands
                 var frame = EntityManager.SpawnEntity("structureconstructionframe", placingEnt.Transform.GridPosition);
                 var construction = frame.GetComponent<ConstructionComponent>();
                 SetupComponent(construction, prototype);
-            }
 
+                var finalPrototype = _prototypeManager.Index<EntityPrototype>(prototype.Result);
+                if (finalPrototype.Components.TryGetValue("Item", out var itemProtoComp))
+                {
+                    if (!frame.TryGetComponent<ItemComponent>(out var itemComp))
+                        itemComp = frame.AddComponent<ItemComponent>();
+
+                    var serializer = YamlObjectSerializer.NewReader(itemProtoComp);
+                    itemComp.ExposeData(serializer);
+
+                    hands.PutInHandOrDrop(itemComp);
+                }
+            }
         }
 
         private bool TryConstructEntity(ConstructionComponent constructionComponent, IEntity handTool, IEntity user)
@@ -334,6 +375,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     // Oh boy we get to finish construction!
                     var ent = EntityManager.SpawnEntity(constructPrototype.Result, transformComponent.GridPosition);
                     ent.Transform.LocalRotation = transformComponent.LocalRotation;
+
+                    ReplaceInContainerOrGround(constructEntity, ent);
+
                     constructEntity.Delete();
                     return true;
                 }
@@ -367,6 +411,19 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             return true;
+        }
+
+        private static void ReplaceInContainerOrGround(IEntity oldEntity, IEntity newEntity)
+        {
+            var parentEntity = oldEntity.Transform.Parent?.Owner;
+            if (!(parentEntity is null) && parentEntity.TryGetComponent<IContainerManager>(out var containerMan))
+            {
+                if (containerMan.TryGetContainer(oldEntity, out var container))
+                {
+                    container.ForceRemove(oldEntity);
+                    container.Insert(newEntity);
+                }
+            }
         }
 
         private bool TryProcessStep(IEntity constructEntity, ConstructionStep step, IEntity slapped, IEntity user, GridCoordinates gridCoords)
