@@ -17,27 +17,43 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public sealed class ThirstComponent : SharedThirstComponent, IMoveSpeedModifier
+    public sealed class ThirstComponent : SharedThirstComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
-
         // Base stuff
-        public float BaseDecayRate => _baseDecayRate;
-        [ViewVariables] private float _baseDecayRate;
-        public float ActualDecayRate => _actualDecayRate;
-        [ViewVariables] private float _actualDecayRate;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseDecayRate
+        {
+            get => _baseDecayRate;
+            set => _baseDecayRate = value;
+        }
+        private float _baseDecayRate;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ActualDecayRate
+        {
+            get => _actualDecayRate;
+            set => _actualDecayRate = value;
+        }
+        private float _actualDecayRate;
 
         // Thirst
+        [ViewVariables(VVAccess.ReadOnly)]
         public override ThirstThreshold CurrentThirstThreshold => _currentThirstThreshold;
         private ThirstThreshold _currentThirstThreshold;
+        
         private ThirstThreshold _lastThirstThreshold;
-        public float CurrentThirst => _currentThirst;
-        [ViewVariables] private float _currentThirst;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CurrentThirst
+        {
+            get => _currentThirst;
+            set => _currentThirst = value;
+        }
+        private float _currentThirst;
+
+        [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<ThirstThreshold, float> ThirstThresholds => _thirstThresholds;
-        private Dictionary<ThirstThreshold, float> _thirstThresholds = new Dictionary<ThirstThreshold, float>
+        private readonly Dictionary<ThirstThreshold, float> _thirstThresholds = new Dictionary<ThirstThreshold, float>
         {
             {ThirstThreshold.OverHydrated, 600.0f},
             {ThirstThreshold.Okay, 450.0f},
@@ -56,6 +72,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             "/Textures/Mob/UI/Thirst/Parched.png",
             "/Textures/Mob/UI/Thirst/Dead.png",
         };
+        
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -66,8 +83,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_currentThirstThreshold != _lastThirstThreshold || force)
             {
-                Logger.InfoS("thirst", $"Updating Thirst state for {Owner.Name}");
-
                 // Revert slow speed if required
                 if (_lastThirstThreshold == ThirstThreshold.Parched && _currentThirstThreshold != ThirstThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
@@ -119,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         protected override void Startup()
         {
             base.Startup();
-            _currentThirst = _random.Next(
+            _currentThirst = IoCManager.Resolve<IRobustRandom>().Next(
                 (int)_thirstThresholds[ThirstThreshold.Thirsty] + 10,
                 (int)_thirstThresholds[ThirstThreshold.Okay] - 1);
             _currentThirstThreshold = GetThirstThreshold(_currentThirst);
@@ -166,20 +181,22 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (_currentThirstThreshold == ThirstThreshold.Dead)
             {
-                // TODO: Remove from dead people
                 if (Owner.TryGetComponent(out DamageableComponent damage))
                 {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
+                    if (!damage.IsDead())
+                    {
+                        damage.TakeDamage(DamageType.Brute, 2);
+                    }
                 }
-                return;
             }
         }
 
 
         public void ResetThirst()
         {
-            _currentThirst = ThirstThresholds[ThirstThreshold.Okay];
+            _currentThirstThreshold = ThirstThreshold.Okay;
+            _currentThirst = ThirstThresholds[_currentThirstThreshold];
+            ThirstThresholdEffect();
         }
 
         public override ComponentState GetComponentState()

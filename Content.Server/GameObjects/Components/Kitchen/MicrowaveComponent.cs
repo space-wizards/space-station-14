@@ -26,6 +26,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private uint _currentCookTimerTime = 1;
 #endregion
 
-        private bool _powered => _powerDevice.Powered;
+        private bool _powered => _powerReceiver.Powered;
         private bool _hasContents => _solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0;
         private bool _uiDirty = true;
         private bool _lostPower = false;
@@ -72,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => _uiDirty = true;
         private AudioSystem _audioSystem;
         private AppearanceComponent _appearance;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
         private BoundUserInterface _userInterface;
         private Container _storage;
 
@@ -95,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
             _appearance = Owner.GetComponent<AppearanceComponent>();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _audioSystem = EntitySystem.Get<AudioSystem>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MicrowaveUiKey.Key);

@@ -19,23 +19,39 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [RegisterComponent]
     public sealed class HungerComponent : SharedHungerComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
-
         // Base stuff
-        public float BaseDecayRate => _baseDecayRate;
-        [ViewVariables] private float _baseDecayRate;
-        public float ActualDecayRate => _actualDecayRate;
-        [ViewVariables] private float _actualDecayRate;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float BaseDecayRate
+        {
+            get => _baseDecayRate;
+            set => _baseDecayRate = value;
+        }
+        private float _baseDecayRate;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ActualDecayRate
+        {
+            get => _actualDecayRate;
+            set => _actualDecayRate = value;
+        }
+        private float _actualDecayRate;
 
         // Hunger
+        [ViewVariables(VVAccess.ReadOnly)]
         public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
         private HungerThreshold _currentHungerThreshold;
+        
         private HungerThreshold _lastHungerThreshold;
-        public float CurrentHunger => _currentHunger;
-        [ViewVariables(VVAccess.ReadWrite)] private float _currentHunger;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float CurrentHunger
+        {
+            get => _currentHunger;
+            set => _currentHunger = value;
+        }
+        private float _currentHunger;
+
+        [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private Dictionary<HungerThreshold, float> _hungerThresholds = new Dictionary<HungerThreshold, float>
         {
@@ -67,8 +83,6 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             if (_currentHungerThreshold != _lastHungerThreshold || force)
             {
-                Logger.InfoS("hunger", $"Updating hunger state for {Owner.Name}");
-
                 // Revert slow speed if required
                 if (_lastHungerThreshold == HungerThreshold.Starving && _currentHungerThreshold != HungerThreshold.Dead &&
                     Owner.TryGetComponent(out MovementSpeedModifierComponent movementSlowdownComponent))
@@ -121,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             base.Startup();
             // Similar functionality to SS13. Should also stagger people going to the chef.
-            _currentHunger = _random.Next(
+            _currentHunger = IoCManager.Resolve<IRobustRandom>().Next(
                 (int)_hungerThresholds[HungerThreshold.Peckish] + 10,
                 (int)_hungerThresholds[HungerThreshold.Okay] - 1);
             _currentHungerThreshold = GetHungerThreshold(_currentHunger);
@@ -166,19 +180,21 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
             if (_currentHungerThreshold == HungerThreshold.Dead)
             {
-                // TODO: Remove from dead people
                 if (Owner.TryGetComponent(out DamageableComponent damage))
                 {
-                    damage.TakeDamage(DamageType.Brute, 2);
-                    return;
+                    if (!damage.IsDead())
+                    {
+                        damage.TakeDamage(DamageType.Brute, 2);
+                    }
                 }
-                return;
             }
         }
 
         public void ResetFood()
         {
-            _currentHunger = HungerThresholds[HungerThreshold.Okay];
+            _currentHungerThreshold = HungerThreshold.Okay;
+            _currentHunger = HungerThresholds[_currentHungerThreshold];
+            HungerThresholdEffect();
         }
 
         public override ComponentState GetComponentState()
