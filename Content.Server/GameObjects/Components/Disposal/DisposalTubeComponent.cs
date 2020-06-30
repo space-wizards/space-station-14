@@ -13,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -21,6 +22,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastClang;
+
+        private string _clangSound;
 
         /// <summary>
         ///     Container of entities that are currently inside this tube
@@ -131,6 +134,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _clangSound, "clangSound", "/Audio/effects/clang.ogg");
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -176,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
 
                     _lastClang = timing.CurTime;
-                    EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/effects/clang.ogg", Owner.Transform.GridPosition);
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
                     break;
             }
         }

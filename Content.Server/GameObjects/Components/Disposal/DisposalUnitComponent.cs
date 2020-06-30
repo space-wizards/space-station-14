@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -23,6 +24,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastExitAttempt;
+
+        private string _flushSound;
 
         [ViewVariables] private Container _container;
 
@@ -64,9 +67,15 @@ namespace Content.Server.GameObjects.Components.Disposal
                 entryComponent.TryInsert(entity);
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/disposalflush.ogg", Owner.Transform.GridPosition);
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(_flushSound, Owner.Transform.GridPosition);
 
             return true;
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _flushSound, "flushSound", "/Audio/machines/disposalflush.ogg");
         }
 
         public override void Initialize()
