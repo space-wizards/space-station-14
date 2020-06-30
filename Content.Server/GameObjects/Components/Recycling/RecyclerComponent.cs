@@ -15,6 +15,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
+            // TODO: Prevent collision with recycled items
             var species = collidedWith.HasComponent<SpeciesComponent>();
             if (species && !Safe)
             {

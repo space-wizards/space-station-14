@@ -67,7 +67,6 @@
   description: A pneumatic waste disposal unit
   components:
   - type: Sprite
-    netsync: false
     sprite: Buildings/disposal.rsi
     layers:
     - state: condisposal
@@ -85,3 +84,25 @@
     - type: DisposalVisualizer2D
       state_anchored: disposal
       state_unanchored: condisposal
+
+- type: entity
+  id: DisposalJunction
+  parent: DisposalPipeBase
+  name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Buildings/disposal.rsi
+    layers:
+      - state: conpipe-j1
+        map: ["enum.DisposalVisualLayers.Anchored"]
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: conpipe-j1
+  - type: DisposalJunction
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer2D
+      state_anchored: pipe-j1
+      state_unanchored: conpipe-j1
