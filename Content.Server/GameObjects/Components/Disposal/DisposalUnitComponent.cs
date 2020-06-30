@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
@@ -71,6 +72,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool TryFlush()
         {
+            if (Owner.TryGetComponent(out PowerDeviceComponent powerDevice) &&
+                !powerDevice.Powered)
+            {
+                return false;
+            }
+
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var entry = snapGrid
                 .GetLocal()

@@ -75,6 +75,10 @@
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: condisposal
+  - type: PowerDevice
+    drawtype: Both
+    load: 100
+    priority: Low
   - type: DisposalUnit
   - type: Appearance
     visuals:
