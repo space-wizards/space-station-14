@@ -83,7 +83,9 @@ namespace Content.Server.BodySystem {
         }
         private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName) {
             TryGetBodyPart(slotName, out BodyPart part);
-            if (part != null && part == GetCenterBodyPart())
+            if (part == null)
+                return false;
+            if (part == GetCenterBodyPart())
                 return true;
             searchedSlots.Add(slotName);
             if (TryGetBodyPartConnections(slotName, out List<string> connections)) {

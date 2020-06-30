@@ -8,14 +8,14 @@
     Cellular: 1.0
     DNA: 1.0
     Asphyxiation: 1.0
-  flatreductions:
-    Blunt: 0.0
-    Piercing: 0.0
-    Heat: 0.0
-    Disintegration: 0.0
-    Cellular: 0.0
-    DNA: 0.0
-    Asphyxiation: 0.0    
+  flatReductions:
+    Blunt: 0
+    Piercing: 0
+    Heat: 0
+    Disintegration: 0
+    Cellular: 0
+    DNA: 0
+    Asphyxiation: 0 
    
 - type: resistanceSet
   id: dionaResistances
@@ -27,14 +27,14 @@
     Cellular: 1.0
     DNA: 1.0
     Asphyxiation: 1.0
-  flatreductions:
-    Blunt: 0.0
-    Piercing: 0.0
-    Heat: 0.0
-    Disintegration: 0.0
-    Cellular: 0.0
-    DNA: 0.0
-    Asphyxiation: 0.0 
+  flatReductions:
+    Blunt: 0
+    Piercing: 0
+    Heat: 0
+    Disintegration: 0
+    Cellular: 0
+    DNA: 0
+    Asphyxiation: 0
     
 - type: resistanceSet
   id: roboticResistances
@@ -46,11 +46,11 @@
     Cellular: 0.0
     DNA: 0.0
     Asphyxiation: 0.0
-  flatreductions:
-    Blunt: 0.0
-    Piercing: 0.0
-    Heat: 0.0
-    Disintegration: 0.0
-    Cellular: 0.0
-    DNA: 0.0
-    Asphyxiation: 0.0 
+  flatReductions:
+    Blunt: 0
+    Piercing: 0
+    Heat: 0
+    Disintegration: 0
+    Cellular: 0
+    DNA: 0
+    Asphyxiation: 0

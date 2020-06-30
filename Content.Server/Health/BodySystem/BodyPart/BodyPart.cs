@@ -1,5 +1,6 @@
 ﻿using Content.Server.DamageSystem;
 using Content.Shared.BodySystem;
+using Content.Shared.DamageSystem;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;

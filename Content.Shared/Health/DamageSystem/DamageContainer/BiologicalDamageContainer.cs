@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Content.Server.DamageSystem
+namespace Content.Shared.DamageSystem
 {
     [NetSerializable, Serializable]
     public class BiologicalDamageContainer : AbstractDamageContainer

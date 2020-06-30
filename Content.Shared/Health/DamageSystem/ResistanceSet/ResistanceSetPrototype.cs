@@ -38,7 +38,7 @@ namespace Content.Shared.DamageSystem
 
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _coefficients, "coefficients", null);
-            serializer.DataField(ref _flatReductions, "_flatReductions", null);
+            serializer.DataField(ref _flatReductions, "flatReductions", null);
 
             _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
             foreach (DamageType damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))

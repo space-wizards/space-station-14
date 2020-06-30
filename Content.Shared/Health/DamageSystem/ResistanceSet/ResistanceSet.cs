@@ -1,4 +1,5 @@
 ﻿using Content.Shared.DamageSystem;
+using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Content.Shared.DamageSystem
     /// <summary>
     ///     Set of resistances used by damageable objects. Each DamageType has a multiplier and flat damage reduction value.
     /// </summary>
+    [NetSerializable, Serializable]
     public class ResistanceSet
     {
         private Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
@@ -50,6 +52,7 @@ namespace Content.Shared.DamageSystem
     /// <summary>
     ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
     /// </summary>
+    [NetSerializable, Serializable]
     public struct ResistanceSetSettings
     {
         public float Coefficient { get; private set; }

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Content.Server.DamageSystem
+namespace Content.Shared.DamageSystem
 {
     /// <summary>
     ///     Holds the information regarding the various forms of damage an object has taken (i.e. brute, burn, or toxic damage). 

@@ -10,7 +10,7 @@
   resistance: 4.0
   size: 14
   compatibility: Biological
-  surgeryDataType: BiologicalsurgeryDataType
+  surgeryDataType: BiologicalSurgeryData
   mechanisms:
     - mechanism.Heart.BasicHuman
     - mechanism.Lungs.BasicHuman
@@ -30,7 +30,7 @@
   resistance: 7.0
   size: 7
   compatibility: Biological
-  surgeryDataType: BiologicalsurgeryDataType
+  surgeryDataType: BiologicalSurgeryData
   mechanisms:
     - mechanism.Brain.BasicHuman
     - mechanism.Eyes.BasicHuman
@@ -49,10 +49,10 @@
   resistance: 3.0
   size: 5
   compatibility: Biological
-  surgeryDataType: BiologicalsurgeryDataType
+  surgeryDataType: BiologicalSurgeryData
   properties:
-    - !type:ArmLength
-      length: 2.4
+    - !type:ArmProperty
+      reachDistance: 2.4
 
 
 
@@ -68,7 +68,7 @@
   resistance: 2.0
   size: 3
   compatibility: Biological
-  surgeryDataType: BiologicalsurgeryDataType
+  surgeryDataType: BiologicalSurgeryData
 
 
 - type: bodyPart
@@ -83,7 +83,7 @@
   resistance: 2.0
   size: 6
   compatibility: Biological
-  surgeryDataType: BiologicalsurgeryDataType
+  surgeryDataType: BiologicalSurgeryData
 
 
 - type: bodyPart
@@ -98,5 +98,5 @@
   resistance: 3.0
   size: 2
   compatibility: Biological
-  surgeryDataType: BiologicalsurgeryDataType
+  surgeryDataType: BiologicalSurgeryData
 
