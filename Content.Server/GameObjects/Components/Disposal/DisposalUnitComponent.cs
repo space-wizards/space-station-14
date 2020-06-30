@@ -26,39 +26,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalUnit";
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            return TryFlush();
-        }
-
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            return TryInsert(eventArgs.Using);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-            Owner.EnsureComponent<AnchorableComponent>();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if (!Owner.GetComponent<PhysicsComponent>().Anchored) // TODO
-            {
-                return;
-            }
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, true);
-            }
-        }
-
         private bool TryInsert(IEntity entity)
         {
             // TODO: Click drag
@@ -98,6 +65,29 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            Owner.EnsureComponent<AnchorableComponent>();
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (!Owner.GetComponent<PhysicsComponent>().Anchored) // TODO
+            {
+                return;
+            }
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
+            }
+        }
+
         public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             base.HandleMessage(message, component);
@@ -116,6 +106,16 @@ namespace Content.Server.GameObjects.Components.Disposal
                     Remove(msg.Entity);
                     break;
             }
+        }
+
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            return TryFlush();
+        }
+
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            return TryInsert(eventArgs.Using);
         }
 
         void IAnchored.Anchored(AnchoredEventArgs eventArgs)

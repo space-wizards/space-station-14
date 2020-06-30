@@ -2,6 +2,8 @@
   id: Recycler
   name: recycler
   description: A large crushing machine used to recycle small items inefficiently. There are lights on the side.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -14,6 +16,8 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
+  - type: SnapGrid
+    offset: Center
   - type: Sprite
     netsync: true
     sprite: Buildings/recycling.rsi
