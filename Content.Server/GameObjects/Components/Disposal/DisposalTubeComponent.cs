@@ -5,8 +5,13 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -14,6 +19,9 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IAnchored, IUnAnchored
     {
+        private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
+        private TimeSpan _lastClang;
+
         /// <summary>
         ///     Container of entities that are currently inside this tube
         /// </summary>
@@ -152,6 +160,25 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.OnRemove();
             Disconnect();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case RelayMovementEntityMessage _:
+                    var timing = IoCManager.Resolve<IGameTiming>();
+                    if (timing.CurTime < _lastClang + ClangDelay)
+                    {
+                        break;
+                    }
+
+                    _lastClang = timing.CurTime;
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/effects/clang.ogg", Owner.Transform.GridPosition);
+                    break;
+            }
         }
 
         void IAnchored.Anchored(AnchoredEventArgs eventArgs)

@@ -1,6 +1,8 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -110,17 +112,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             ExitDisposals();
         }
 
-        bool IActionBlocker.CanMove()
-        {
-            return false;
-        }
-
         bool IActionBlocker.CanInteract()
-        {
-            return false;
-        }
-
-        bool IActionBlocker.CanUse()
         {
             return false;
         }
@@ -136,11 +128,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         }
 
         bool IActionBlocker.CanPickup()
-        {
-            return false;
-        }
-
-        bool IActionBlocker.CanChangeDirection()
         {
             return false;
         }

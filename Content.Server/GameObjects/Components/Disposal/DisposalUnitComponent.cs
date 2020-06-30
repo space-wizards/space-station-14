@@ -6,8 +6,10 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -61,6 +63,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _container.Remove(entity);
                 entryComponent.TryInsert(entity);
             }
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/disposalflush.ogg", Owner.Transform.GridPosition);
 
             return true;
         }
