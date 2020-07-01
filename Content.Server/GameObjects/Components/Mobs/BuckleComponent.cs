@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         public StrapComponent BuckledTo
         {
             get => _buckledTo;
-            set
+            private set
             {
                 _buckledTo = value;
                 Dirty();
