@@ -167,7 +167,6 @@ namespace Content.Client
                 "Utensil",
                 "UnarmedCombat",
                 "TimedSpawner",
-                "Buckle",
                 "Strap",
                 "NodeContainer",
                 "PowerSupplier",
