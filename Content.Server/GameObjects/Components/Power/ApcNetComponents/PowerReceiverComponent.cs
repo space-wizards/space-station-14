@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private void AnchorUpdate()
         {
-            if (Owner.GetComponent<PhysicsComponent>().Anchored)
+            if (Anchored)
             {
                 if (NeedsProvider)
                 {

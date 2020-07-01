@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void AnchorUpdate()
         {
-            if (Owner.GetComponent<PhysicsComponent>().Anchored)
+            if (Anchored)
             {
                 if (_needsGroup)
                 {
