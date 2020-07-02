@@ -1,7 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.AI;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;

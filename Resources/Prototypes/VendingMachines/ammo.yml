@@ -4,53 +4,31 @@
   description: A generic ammunition vending machine.
   spriteName: ammo
   startingInventory:
-    box_32: 3
-    box_32f: 3
-    box_32hv: 3
-    box_32p: 3
-    box_32r: 3
+    BoxClRifleBox: 3
+    BoxClRifleBoxFlash: 3
+    BoxClRifleBoxHV: 3
+    BoxClRifleBoxPractice: 3
+    BoxClRifleBoxRubber: 3
 
-    box_357: 3
-    box_357f: 3
-    box_357hv: 3
-    box_357p: 3
-    box_357r: 3
+    BoxLRifleBigBox: 3
+    BoxLRifleBoxHV: 3
+    BoxLRifleBoxPractice: 3
+    BoxLRifleBoxRubber: 3
 
-    box_44: 3
-    box_44f: 3
-    box_44hv: 3
-    box_44p: 3
-    box_44r: 3
+    BoxMagnum: 3
+    BoxMagnumFlash: 3
+    BoxMagnumHV: 3
+    BoxMagnumPractice: 3
+    BoxMagnumRubber: 3
 
-    box_45: 3
-    box_45f: 3
-    box_45p: 3
-    box_45r: 3
+    BoxPistolBox: 3
+    BoxPistolBoxFlash: 3
+    BoxPistolBoxHV: 3
+    BoxPistolBoxPractice: 3
+    BoxPistolBoxRubber: 3
 
-    box_50: 3
-    box_50f: 3
-    box_50p: 3
-    box_50r: 3
-
-    box_10mm: 3
-    box_10mmf: 3
-    box_10mmhv: 3
-    box_10mmp: 3
-    box_10mmr: 3
-
-    box_24mm: 3
-
-    box_556mm: 3
-    box_556mmp: 3
-
-    box_65mm: 3
-    box_65mmr: 3
-
-    box_762mm: 3
-
-    box_9mm: 3
-    box_9mmf: 3
-    box_9mmhv: 3
-    box_9mmp: 3
-    box_9mmr: 3
-
+    BoxSRifleBox: 3
+    BoxSRifleBoxFlash: 3
+    BoxSRifleBoxHV: 3
+    BoxSRifleBoxPractice: 3
+    BoxSRifleBoxRubber: 3
