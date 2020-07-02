@@ -8,9 +8,15 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    hard: false
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.4,0.4,0.4"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: SnapGrid
     offset: Center
   - type: Sprite

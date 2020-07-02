@@ -1,12 +1,12 @@
-﻿﻿using Content.Shared.GameObjects.Components.Recycling;
- using JetBrains.Annotations;
- using Robust.Client.GameObjects;
- using Robust.Client.Interfaces.GameObjects.Components;
- using Robust.Shared.Interfaces.GameObjects;
- using Robust.Shared.Utility;
- using YamlDotNet.RepresentationModel;
+﻿using Content.Shared.GameObjects.Components.Recycling;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
- namespace Content.Client.GameObjects.Components.Recycling
+namespace Content.Client.GameObjects.Components.Recycling
 {
     [UsedImplicitly]
     public class RecyclerVisualizer2D : AppearanceVisualizer

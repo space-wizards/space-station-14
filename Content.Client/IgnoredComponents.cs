@@ -133,7 +133,9 @@
             "Toys",
             "DisposalTransit",
             "DisposalEntry",
-            "DisposalUnit"
+            "DisposalUnit",
+            "Recycler",
+            "Conveyor"
         };
     }
 }

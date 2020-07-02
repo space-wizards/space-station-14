@@ -1,8 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components
