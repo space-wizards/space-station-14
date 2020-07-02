@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,41 +14,32 @@ namespace Content.Shared.GameObjects.Components.Items
     }
 
     [Serializable, NetSerializable]
-    public sealed class Hand
+    public class SharedHand
     {
         public readonly string Name;
-        public readonly EntityUid? EntityUid;
         public readonly HandLocation Location;
 
-        public Hand(string name, EntityUid? entityUid, HandLocation location)
+        public SharedHand(string name, EntityUid? entityUid, HandLocation location)
         {
             Name = name;
             EntityUid = entityUid;
             Location = location;
+            Entity = null;
         }
 
-        [CanBeNull] public IEntity Entity { get; private set; }
+        public virtual EntityUid? EntityUid { get; }
 
-        public void Initialize(IEntityManager manager)
-        {
-            if (Entity == null || !EntityUid.HasValue)
-            {
-                return;
-            }
-
-            manager.TryGetEntity(EntityUid.Value, out var entity);
-            Entity = entity;
-        }
+        [CanBeNull] public virtual IEntity Entity { get; }
     }
 
     // The IDs of the items get synced over the network.
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly List<Hand> Hands;
+        public readonly List<SharedHand> Hands;
         public readonly string ActiveIndex;
 
-        public HandsComponentState(List<Hand> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(List<SharedHand> hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;

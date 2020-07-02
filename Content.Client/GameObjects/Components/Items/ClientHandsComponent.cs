@@ -76,10 +76,10 @@ namespace Content.Client.GameObjects.Components.Items
             }
 
             var cast = (HandsComponentState) curState;
-            foreach (var hand in cast.Hands)
+            foreach (var sharedHand in cast.Hands)
             {
-                hand.Initialize(Owner.EntityManager);
-                _hands[hand.Name] = hand;
+                var hand = new Hand(sharedHand, Owner.EntityManager);
+                _hands[sharedHand.Name] = hand;
                 SetInHands(hand);
             }
 
@@ -202,5 +202,21 @@ namespace Content.Client.GameObjects.Components.Items
 
             SendNetworkMessage(new ActivateInHandMsg(handIndex));
         }
+    }
+
+    public class Hand : SharedHand
+    {
+        public Hand(SharedHand hand, IEntityManager manager) : base(hand.Name, hand.EntityUid, hand.Location)
+        {
+            if (!hand.EntityUid.HasValue)
+            {
+                return;
+            }
+
+            manager.TryGetEntity(hand.EntityUid.Value, out var entity);
+            Entity = entity;
+        }
+
+        public override IEntity Entity { get; }
     }
 }

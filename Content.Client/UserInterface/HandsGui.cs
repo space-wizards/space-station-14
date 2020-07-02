@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using static Content.Client.StaticIoC;
@@ -27,7 +24,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
 
-        private readonly Dictionary<string, ItemSlotButton> _buttons = new Dictionary<string, ItemSlotButton>();
+        private readonly Dictionary<string, HandButton> _buttons = new Dictionary<string, HandButton>();
         private readonly Dictionary<string, ItemStatusPanel> _panels = new Dictionary<string, ItemStatusPanel>();
 
         private readonly TextureRect _activeHandRect;
@@ -60,16 +57,40 @@ namespace Content.Client.UserInterface
             _middleHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_middle.png");
             _rightHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
         }
+
         private HBoxContainer GetHandsContainer()
         {
             return (HBoxContainer) GetChild(0);
         }
 
-        private void AddButton(Hand hand)
+        private Texture LocationTexture(HandLocation location)
         {
-            // TODO
+            switch (location)
+            {
+                case HandLocation.Left:
+                    return _leftHandTexture;
+                case HandLocation.Middle:
+                    return _middleHandTexture;
+                case HandLocation.Right:
+                    return _rightHandTexture;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(location), location, null);
+            }
+        }
+
+        /// <summary>
+        ///     Adds a new hand button to this control
+        /// </summary>
+        /// <param name="hand">The hand to add a control for</param>
+        /// <param name="buttonLocation">
+        ///     The actual location of the button. The right hand is drawn
+        ///     on the LEFT of the screen.
+        /// </param>
+        private void AddButton(SharedHand hand, HandLocation buttonLocation)
+        {
+            var buttonTexture = LocationTexture(buttonLocation);
             var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
-            var button = new ItemSlotButton(_leftHandTexture, storageTexture);
+            var button = new HandButton(buttonTexture, storageTexture, buttonLocation);
             var slot = hand.Name;
 
             button.OnPressed += args => HandKeyBindDown(args, slot);
@@ -77,14 +98,15 @@ namespace Content.Client.UserInterface
 
             var hBox = GetHandsContainer();
 
-            var texture = ResC.GetTexture("/Nano/item_status_right.svg.96dpi.png");
-            var panel = new ItemStatusPanel(texture, StyleBox.Margin.None);
+            var panelTexture = ResC.GetTexture("/Nano/item_status_right.svg.96dpi.png");
+            // var panel = new ItemStatusPanel(texture, StyleBox.Margin.None);
 
             hBox.AddChild(button);
-            hBox.AddChild(panel);
+
+            // hBox.AddChild(panel);
 
             _buttons[slot] = button;
-            _panels[slot] = panel;
+            // _panels[slot] = panel; // TODO
 
             if (_buttons.Count == 1)
             {
@@ -155,11 +177,30 @@ namespace Content.Client.UserInterface
                 }
             }
 
+            var locationsOccupied = new HashSet<HandLocation>();
             foreach (var (slot, hand) in component.Hands)
             {
+                var location = locationsOccupied.Contains(hand.Location)
+                    ? HandLocation.Middle
+                    : hand.Location;
+
+                locationsOccupied.Add(location);
+
                 if (!_buttons.ContainsKey(slot))
                 {
-                    AddButton(hand);
+                    AddButton(hand, location);
+                }
+            }
+
+            foreach (var button in _buttons.Values)
+            {
+                if (button.Location == HandLocation.Left)
+                {
+                    button.SetPositionLast();
+                }
+                else if (button.Location == HandLocation.Right)
+                {
+                    button.SetPositionFirst();
                 }
             }
 

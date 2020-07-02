@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;

@@ -1,15 +1,14 @@
 ﻿using System;
-using Content.Client.UserInterface;
-using Content.Shared.Input;
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.UserInterface
 {
-    public sealed class ItemSlotButton : MarginContainer
+    public class ItemSlotButton : MarginContainer
     {
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
