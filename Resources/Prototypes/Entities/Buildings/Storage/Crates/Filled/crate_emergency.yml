@@ -29,8 +29,8 @@
 #      - RedOxygenTank
       - FireExtinguisher
       - FireExtinguisher
-#      - FireFighterHelmet
-#      - FireFighterHelmet
+      - HatHardhatRed
+      - HatHardhatRed
 
 - type: entity
   id: CrateInternalsEmergency
