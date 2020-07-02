@@ -1,5 +1,6 @@
 using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
@@ -17,8 +18,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IAttackBy))]
-    public sealed class PowerCellChargerComponent : BaseCharger, IActivate, IAttackBy
+    [ComponentReference(typeof(IInteractUsing))]
+    public sealed class PowerCellChargerComponent : BaseCharger, IActivate, IInteractUsing
     {
         public override string Name => "PowerCellCharger";
         public override double CellChargePercent => _container.ContainedEntity != null ?
@@ -36,9 +37,9 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             _powerDevice.OnPowerStateChanged += PowerUpdate;
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var result = TryInsertItem(eventArgs.AttackWith);
+            var result = TryInsertItem(eventArgs.Using);
             if (result)
             {
                 return true;
@@ -52,34 +53,34 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            RemoveItemToHand(eventArgs.User);
+            RemoveItem(eventArgs.User);
         }
 
         [Verb]
         private sealed class InsertVerb : Verb<PowerCellChargerComponent>
         {
-            protected override string GetText(IEntity user, PowerCellChargerComponent component)
+            protected override void GetData(IEntity user, PowerCellChargerComponent component, VerbData data)
             {
-                if (!user.TryGetComponent(out HandsComponent handsComponent) || handsComponent.GetActiveHand == null)
+                if (!ActionBlockerSystem.CanInteract(user))
                 {
-                    return "Insert";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
-                return $"Insert {handsComponent.GetActiveHand.Owner.Name}";
-            }
 
-            protected override VerbVisibility GetVisibility(IEntity user, PowerCellChargerComponent component)
-            {
                 if (!user.TryGetComponent(out HandsComponent handsComponent))
                 {
-                    return VerbVisibility.Invisible;
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
 
                 if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
                 {
-                    return VerbVisibility.Disabled;
+                    data.Visibility = VerbVisibility.Disabled;
+                    data.Text = "Insert";
+                    return;
                 }
 
-                return VerbVisibility.Visible;
+                data.Text = $"Insert {handsComponent.GetActiveHand.Owner.Name}";
             }
 
             protected override void Activate(IEntity user, PowerCellChargerComponent component)
@@ -102,27 +103,27 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         [Verb]
         private sealed class EjectVerb : Verb<PowerCellChargerComponent>
         {
-            protected override string GetText(IEntity user, PowerCellChargerComponent component)
+            protected override void GetData(IEntity user, PowerCellChargerComponent component, VerbData data)
             {
-                if (component._container.ContainedEntity == null)
+                if (!ActionBlockerSystem.CanInteract(user))
                 {
-                    return "Eject";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
                 }
-                return $"Eject {component._container.ContainedEntity.Name}";
-            }
 
-            protected override VerbVisibility GetVisibility(IEntity user, PowerCellChargerComponent component)
-            {
                 if (component._container.ContainedEntity == null)
                 {
-                    return VerbVisibility.Disabled;
+                    data.Text = "Eject";
+                    data.Visibility = VerbVisibility.Disabled;
+                    return;
                 }
-                return VerbVisibility.Visible;
+
+                data.Text = $"Eject {component._container.ContainedEntity.Name}";
             }
 
             protected override void Activate(IEntity user, PowerCellChargerComponent component)
             {
-                component.RemoveItem();
+                component.RemoveItem(user);
             }
         }
 
@@ -133,9 +134,8 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             {
                 return false;
             }
-
-            _heldItem = entity;
-            if (!_container.Insert(_heldItem))
+            
+            if (!_container.Insert(entity))
             {
                 return false;
             }
@@ -168,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
         {
             // Two numbers: One for how much power actually goes into the device (chargeAmount) and
             // chargeLoss which is how much is drawn from the powernet
-            _container.ContainedEntity.TryGetComponent(out PowerCellComponent cellComponent);
+            var cellComponent = _container.ContainedEntity.GetComponent<PowerCellComponent>();
             var chargeLoss = cellComponent.RequestCharge(frameTime) * _transferRatio;
             _powerDevice.Load = chargeLoss;
 

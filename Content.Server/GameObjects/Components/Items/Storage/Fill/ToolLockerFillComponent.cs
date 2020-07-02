@@ -12,10 +12,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
     {
         public override string Name => "ToolLockerFill";
 
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-#pragma warning restore 649
-
         void IMapInit.MapInit()
         {
             var storage = Owner.GetComponent<IStorageComponent>();
@@ -23,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
 
             void Spawn(string prototype)
             {
-                storage.Insert(_entityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
+                storage.Insert(Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition));
             }
 
             if (random.Prob(0.4f))

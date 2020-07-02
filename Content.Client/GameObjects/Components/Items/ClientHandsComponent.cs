@@ -59,7 +59,7 @@ namespace Content.Client.GameObjects
 
         public IEntity GetEntity(string index)
         {
-            if (_hands.TryGetValue(index, out var entity))
+            if (!string.IsNullOrEmpty(index) && _hands.TryGetValue(index, out var entity))
             {
                 return entity;
             }
@@ -101,6 +101,7 @@ namespace Content.Client.GameObjects
             ActiveIndex = cast.ActiveIndex;
 
             _gui?.UpdateHandIcons();
+            RefreshInHands();
         }
 
         private void _setHand(string hand, IEntity entity)
@@ -116,7 +117,19 @@ namespace Content.Client.GameObjects
                 return;
             }
 
-            var item = entity.GetComponent<ItemComponent>();
+            SetInHands(hand, entity);
+        }
+
+        private void SetInHands(string hand, IEntity entity)
+        {
+            if (entity == null)
+            {
+                _sprite.LayerSetVisible($"hand-{hand}", false);
+
+                return;
+            }
+
+            if (!entity.TryGetComponent(out ItemComponent item)) return;
             var maybeInhands = item.GetInHandStateInfo(hand);
             if (!maybeInhands.HasValue)
             {
@@ -127,6 +140,16 @@ namespace Content.Client.GameObjects
                 var (rsi, state) = maybeInhands.Value;
                 _sprite.LayerSetVisible($"hand-{hand}", true);
                 _sprite.LayerSetState($"hand-{hand}", state, rsi);
+            }
+        }
+
+        public void RefreshInHands()
+        {
+            if (!Initialized) return;
+
+            foreach (var (hand, entity) in _hands)
+            {
+                SetInHands(hand, entity);
             }
         }
 
@@ -143,6 +166,8 @@ namespace Content.Client.GameObjects
             {
                 _hands.Add(slot, null);
             }
+
+            serializer.DataField(this, x => ActiveIndex, "defaultHand", _hands.Keys.LastOrDefault());
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

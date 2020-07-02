@@ -14,7 +14,9 @@ namespace Content.Client.GameObjects.Components.Command
         [ViewVariables]
         private CommunicationsConsoleMenu _menu;
 
+#pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
+#pragma warning restore 649
 
         public bool CountdownStarted { get; private set; }
 
@@ -53,13 +55,6 @@ namespace Content.Client.GameObjects.Components.Command
         public void RecallShuttle()
         {
             SendMessage(new CommunicationsConsoleRecallEmergencyShuttleMessage());
-        }
-
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            switch (message)
-            {
-            }
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

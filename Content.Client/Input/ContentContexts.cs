@@ -39,7 +39,7 @@ namespace Content.Client.Input
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
-            ghost.AddFunction(EngineKeyFunctions.Run);
+            ghost.AddFunction(EngineKeyFunctions.Walk);
             ghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
             common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);

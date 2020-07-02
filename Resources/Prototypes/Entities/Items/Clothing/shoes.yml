@@ -14,7 +14,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesAssetProtectionRig
-  name: Asset Protection Rig shoes
+  name: asset protection rig shoes
   description: ''
   components:
   - type: Sprite
@@ -27,7 +27,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesAssetProtectionRigSealed
-  name: Asset Protection Rig Sealed shoes
+  name: asset protection rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -40,7 +40,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesAtmosMagboots0
-  name: Atmos magboots (off)
+  name: atmos magboots (off)
   description: ''
   components:
   - type: Sprite
@@ -53,7 +53,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesAtmosMagboots1
-  name: Atmos magboots (on)
+  name: atmos magboots (on)
   description: ''
   components:
   - type: Sprite
@@ -66,7 +66,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesBlack
-  name: Black shoes
+  name: black shoes
   description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
@@ -79,7 +79,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesBlue
-  name: Blue shoes
+  name: blue shoes
   description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
@@ -92,7 +92,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesBoots
-  name: Boots
+  name: boots
   description: ''
   components:
   - type: Sprite
@@ -105,7 +105,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesBrown
-  name: Brown shoes
+  name: brown shoes
   description: A pair of brown shoes.
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesCeRig
-  name: CE Rig shoes
+  name: ce rig shoes
   description: ''
   components:
   - type: Sprite
@@ -131,7 +131,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesCeRigSealed
-  name: CE Rig Sealed shoes
+  name: ce rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -144,7 +144,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesChef
-  name: Chef shoes
+  name: chef shoes
   description: ''
   components:
   - type: Sprite
@@ -157,7 +157,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesCowboy
-  name: Cowboy shoes
+  name: cowboy shoes
   description: ''
   components:
   - type: Sprite
@@ -170,7 +170,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesCult
-  name: Cult shoes
+  name: cult shoes
   description: ''
   components:
   - type: Sprite
@@ -183,7 +183,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesDetective
-  name: Detective shoes
+  name: detective shoes
   description: ''
   components:
   - type: Sprite
@@ -196,7 +196,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesDigiboots
-  name: Digiboots
+  name: digiboots
   description: ''
   components:
   - type: Sprite
@@ -209,7 +209,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesEngineeringRig
-  name: Engineering Rig shoes
+  name: engineering rig shoes
   description: ''
   components:
   - type: Sprite
@@ -222,7 +222,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesEngineeringRigSealed
-  name: Engineering Rig Sealed shoes
+  name: engineering rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -235,7 +235,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtCommanderRig
-  name: ERT Commander Rig shoes
+  name: ert commander rig shoes
   description: ''
   components:
   - type: Sprite
@@ -248,7 +248,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtCommanderRigSealed
-  name: ERT Commander Rig Sealed shoes
+  name: ert commander rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -261,7 +261,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtEngineerRig
-  name: ERT Engineer Rig shoes
+  name: ert engineer rig shoes
   description: ''
   components:
   - type: Sprite
@@ -274,7 +274,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtEngineerRigSealed
-  name: ERT Engineer Rig Sealed shoes
+  name: ert engineer rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -287,7 +287,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtMedicalRig
-  name: ERT Medical Rig shoes
+  name: ert medical rig shoes
   description: ''
   components:
   - type: Sprite
@@ -300,7 +300,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtMedicalRigSealed
-  name: ERT Medical Rig Sealed shoes
+  name: ert medical rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -313,7 +313,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtSecurityRig
-  name: ERT Security Rig shoes
+  name: ert security rig shoes
   description: ''
   components:
   - type: Sprite
@@ -326,7 +326,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesErtSecurityRigSealed
-  name: ERT Security Rig Sealed shoes
+  name: ert security rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -339,7 +339,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesEvaRig
-  name: EVA Rig shoes
+  name: EVA rig shoes
   description: ''
   components:
   - type: Sprite
@@ -352,7 +352,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesEvaRigSealed
-  name: EVA Rig Sealed shoes
+  name: EVA rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -365,7 +365,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesFlippers
-  name: Flippers
+  name: flippers
   description: ''
   components:
   - type: Sprite
@@ -378,7 +378,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesGaloshes
-  name: Galoshes shoes
+  name: galoshes shoes
   description: ''
   components:
   - type: Sprite
@@ -391,7 +391,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesGreen
-  name: Green shoes
+  name: green shoes
   description: ''
   components:
   - type: Sprite
@@ -404,7 +404,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesHackerRig
-  name: Hacker Rig shoes
+  name: hacker rig shoes
   description: ''
   components:
   - type: Sprite
@@ -417,7 +417,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesHackerRigSealed
-  name: Hacker Rig Sealed shoes
+  name: hacker rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -430,7 +430,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesHazardRig
-  name: Hazard Rig shoes
+  name: hazard rig shoes
   description: ''
   components:
   - type: Sprite
@@ -443,7 +443,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesHazardRigSealed
-  name: Hazard Rig Sealed shoes
+  name: hazard rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -456,7 +456,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRig
-  name: IHS Rig shoes
+  name: IHS rig shoes
   description: ''
   components:
   - type: Sprite
@@ -469,7 +469,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRigOld
-  name: IHS Rig Old shoes
+  name: IHS rig old shoes
   description: ''
   components:
   - type: Sprite
@@ -482,7 +482,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRigSealed
-  name: IHS Rig Sealed shoes
+  name: IHS rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -495,7 +495,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesIhsRigSealedOld
-  name: IHS Rig Sealed Old shoes
+  name: IHS rig sealed old shoes
   description: ''
   components:
   - type: Sprite
@@ -508,7 +508,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesLeather
-  name: Leather shoes
+  name: leather shoes
   description: ''
   components:
   - type: Sprite
@@ -521,7 +521,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMagboots0
-  name: Magboots (off)
+  name: magboots (off)
   description: ''
   components:
   - type: Sprite
@@ -534,7 +534,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMagboots1
-  name: Magboots (on)
+  name: magboots (on)
   description: ''
   components:
   - type: Sprite
@@ -547,7 +547,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMedicalRig
-  name: Medical Rig shoes
+  name: medical rig shoes
   description: ''
   components:
   - type: Sprite
@@ -560,7 +560,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMedicalRigSealed
-  name: Medical Rig Sealed shoes
+  name: medical rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -573,7 +573,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMercboots0
-  name: Merc boots
+  name: merc boots
   description: ''
   components:
   - type: Sprite
@@ -586,7 +586,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMercboots1
-  name: Merc boots
+  name: merc boots
   description: ''
   components:
   - type: Sprite
@@ -599,7 +599,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMercRig
-  name: Merc Rig shoes
+  name: merc rig shoes
   description: ''
   components:
   - type: Sprite
@@ -612,7 +612,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMercRigSealed
-  name: Merc Rig Sealed shoes
+  name: merc rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -625,7 +625,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesMime
-  name: Mime shoes
+  name: mime shoes
   description: ''
   components:
   - type: Sprite
@@ -638,7 +638,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesNinjaRig
-  name: Ninja Rig shoes
+  name: ninja rig shoes
   description: ''
   components:
   - type: Sprite
@@ -651,7 +651,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesNinjaRigSealed
-  name: Ninja Rig Sealed shoes
+  name: ninja rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -664,7 +664,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesOrange
-  name: Orange shoes
+  name: orange shoes
   description: ''
   components:
   - type: Sprite
@@ -677,7 +677,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesOrange1
-  name: Orange shoes
+  name: orange shoes
   description: ''
   components:
   - type: Sprite
@@ -690,7 +690,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesPurple
-  name: Purple shoes
+  name: purple shoes
   description: ''
   components:
   - type: Sprite
@@ -703,7 +703,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesRainbow
-  name: Rainbow shoes
+  name: rainbow shoes
   description: ''
   components:
   - type: Sprite
@@ -716,7 +716,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesRed
-  name: Red shoes
+  name: red shoes
   description: ''
   components:
   - type: Sprite
@@ -729,7 +729,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesReinforced
-  name: Reinforced shoes
+  name: reinforced shoes
   description: ''
   components:
   - type: Sprite
@@ -742,7 +742,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesScienceRig
-  name: Science Rig shoes
+  name: science rig shoes
   description: ''
   components:
   - type: Sprite
@@ -755,7 +755,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesScienceRigSealed
-  name: Science Rig Sealed shoes
+  name: science rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -768,7 +768,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSecurityRig
-  name: Security Rig shoes
+  name: security rig shoes
   description: ''
   components:
   - type: Sprite
@@ -781,7 +781,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSecurityRigSealed
-  name: Security Rig Sealed shoes
+  name: security rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -794,7 +794,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSlippers
-  name: Slippers
+  name: slippers
   description: ''
   components:
   - type: Sprite
@@ -807,7 +807,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSlippersWorn
-  name: Slippers (Worn)
+  name: slippers (worn)
   description: ''
   components:
   - type: Sprite
@@ -820,7 +820,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSpringjacks
-  name: Springjacks
+  name: springjacks
   description: ''
   components:
   - type: Sprite
@@ -833,7 +833,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesStealthRig
-  name: Stealth Rig shoes
+  name: stealth rig shoes
   description: ''
   components:
   - type: Sprite
@@ -846,7 +846,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesStealthRigSealed
-  name: Stealth Rig Sealed shoes
+  name: stealth rig sealed shoes
   description: ''
   components:
   - type: Sprite
@@ -859,7 +859,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSwat
-  name: Swat shoes
+  name: swat shoes
   description: ''
   components:
   - type: Sprite
@@ -872,7 +872,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesSNinja
-  name: S Ninja shoes
+  name: S ninja shoes
   description: ''
   components:
   - type: Sprite
@@ -885,7 +885,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesTourist
-  name: Tourist shoes
+  name: tourist shoes
   description: ''
   components:
   - type: Sprite
@@ -898,7 +898,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesWhite
-  name: White shoes
+  name: white shoes
   description: Don't take them off at your office Christmas party
   components:
   - type: Sprite
@@ -911,7 +911,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesWizard
-  name: Wizard shoes
+  name: wizard shoes
   description: ''
   components:
   - type: Sprite
@@ -924,7 +924,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesWorkboots
-  name: Workboots shoes
+  name: workboots shoes
   description: ''
   components:
   - type: Sprite
@@ -937,7 +937,7 @@
 - type: entity
   parent: ShoesBase
   id: ShoesYellow
-  name: Yellow shoes
+  name: yellow shoes
   description: ''
   components:
   - type: Sprite

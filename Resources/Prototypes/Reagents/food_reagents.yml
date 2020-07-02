@@ -1,6 +1,6 @@
 - type: reagent
   id: chem.Flour
-  name: Flour
+  name: flour
   desc: Used for baking.
   color: "#FFFFFF"
   metabolism:

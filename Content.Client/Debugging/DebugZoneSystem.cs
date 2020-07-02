@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Atmos;
 using NJsonSchema.Validation;
-using OpenTK.Graphics.OpenGL;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;

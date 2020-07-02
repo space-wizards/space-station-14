@@ -69,6 +69,7 @@ namespace Content.Shared.GameObjects.Components.Cargo
             {
                 var products = serializer.ReadDataField("products", new List<string>());
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                _products.Clear();
                 foreach (var id in products)
                 {
                     if (!prototypeManager.TryIndex(id, out CargoProductPrototype product))

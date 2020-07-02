@@ -1,6 +1,6 @@
 - type: entity
   id: CrateGeneric
-  name: Crate
+  name: crate
   description: A large container for items.
   components:
   - type: Sprite
@@ -19,14 +19,24 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4, -0.4, 0.4, 0.4"
-      layer: 31
-      mask: 30
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
     IsScrapingFloor: true
   - type: Physics
     mass: 25
     Anchored: false
   - type: EntityStorage
     Capacity: 60
+    CanWeldShut: false
   - type: PlaceableSurface
   - type: Damageable
   - type: Destructible
@@ -36,4 +46,4 @@
     - type: StorageVisualizer2D
       state_open: crate_open
       state_closed: crate_door
-  - type: Sound
+  - type: LoopingSound

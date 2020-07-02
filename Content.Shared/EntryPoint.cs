@@ -6,7 +6,8 @@
  using Robust.Shared.Interfaces.Map;
  using Robust.Shared.IoC;
  using Robust.Shared.Localization;
- using Robust.Shared.Prototypes;
+using Robust.Shared.Localization.Macros;
+using Robust.Shared.Prototypes;
 
  namespace Content.Shared
 {
@@ -24,6 +25,9 @@
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
+
+            var textMacroFactory = IoCManager.Resolve<ITextMacroFactory>();
+            textMacroFactory.DoAutoRegistrations();
 
             // Default to en-US.
             _localizationManager.LoadCulture(new CultureInfo(Culture));

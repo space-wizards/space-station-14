@@ -75,12 +75,13 @@ WINDOWS_NATIVES = {
 
 LINUX_NATIVES = {
     "libglfw.so.3",
-    "libswnfd.so"
+    "libswnfd.so",
 }
 
 MAC_NATIVES = {
     "libglfw.3.dylib",
-    "libswnfd.dylib"
+    "libswnfd.dylib",
+    "libfreetype.6.dylib"
 }
 
 SERVER_EXTRA_CONTENT_ASSEMBLIES = [
@@ -303,7 +304,7 @@ def publish_client_server(runtime: str, target_os: str, actually_only_server: bo
         "--no-self-contained",
         "-c", "Release",
         f"/p:TargetOS={target_os}",
-        "/p:FullRelease=True",
+        "/p:FullRelease=True"
     ]
 
     if not actually_only_server:

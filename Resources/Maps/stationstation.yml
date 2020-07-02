@@ -109,8 +109,6 @@ entities:
     pos: -1.47174,4.550247
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
 - uid: 2
   type: LaserGun
   components:
@@ -118,8 +116,6 @@ entities:
     pos: -0.6748645,4.487747
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
 - uid: 3
   type: Brutepack
   components:
@@ -356,7 +352,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 34
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: -12.5,1.5
@@ -671,35 +667,35 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 79
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 7.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 80
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: 5.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 81
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: -7.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 82
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: 3.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 83
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: 2.5,-4.5
@@ -1100,14 +1096,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 138
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -1.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 139
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: 0.5,-8.5
@@ -1149,7 +1145,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 145
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -3.5,-8.5
@@ -1234,14 +1230,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 152
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -0.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 153
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -5.5,-0.5
@@ -1382,35 +1378,35 @@ entities:
     rot: 1.5707963267949 rad
     type: Transform
 - uid: 172
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -9.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 173
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -0.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 174
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -5.5,5.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 175
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -0.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 176
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: -5.5,-2.5
@@ -1587,14 +1583,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 201
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 26.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 202
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 28.5,-0.5
@@ -1976,7 +1972,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 253
-  type: YellowToolboxItemFilled
+  type: ToolboxElectricalFilled
   components:
   - parent: 0
     pos: -0.8099712,-5.21454
@@ -1988,7 +1984,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 254
-  type: YellowToolboxItemFilled
+  type: ToolboxElectricalFilled
   components:
   - parent: 0
     pos: -0.5597038,-5.679647
@@ -2076,41 +2072,26 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 263
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.605512,7.638151
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities: []
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 264
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.339887,7.669401
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities: []
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 265
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.027387,7.622526
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      magazine_bullet_container:
-        entities: []
-        type: Robust.Server.GameObjects.Components.Container.Container
-    type: ContainerContainer
 - uid: 266
   type: BackpackClothing
   components:
@@ -2149,14 +2130,6 @@ entities:
     pos: -2.524035,7.579326
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      ballistics_chamber_0:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-      ballistic_gun_magazine:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 270
   type: SmgC20r
   components:
@@ -2164,14 +2137,6 @@ entities:
     pos: -1.94591,7.485576
     rot: -1.5707963267949 rad
     type: Transform
-  - containers:
-      ballistics_chamber_0:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-      ballistic_gun_magazine:
-        entities: []
-        type: Content.Server.GameObjects.ContainerSlot
-    type: ContainerContainer
 - uid: 271
   type: solid_wall
   components:
@@ -2285,7 +2250,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 287
-  type: LockerScience
+  type: WardrobeScience
   components:
   - parent: 0
     pos: 13.5,21.5
@@ -2770,21 +2735,21 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 352
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -13.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 353
-  type: airlock_external
+  type: AirlockExternal
   components:
   - parent: 0
     pos: -13.5,6.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 354
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: -13.5,1.5
@@ -2931,7 +2896,7 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 370
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: -10.5,-6.5
@@ -4516,28 +4481,28 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 587
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 15.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 588
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 16.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 589
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 20.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 590
-  type: airlock_medical_glass
+  type: AirlockMedicalGlass
   components:
   - parent: 0
     pos: 26.5,4.5
@@ -5583,14 +5548,14 @@ entities:
     rot: 1.5707963267948966 rad
     type: Transform
 - uid: 728
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: 17.5,8.5
     rot: 1.5707963267948966 rad
     type: Transform
 - uid: 729
-  type: spawn_point_latejoin
+  type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: 19.5,-3.5
@@ -6605,28 +6570,28 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 868
-  type: airlock_science_glass
+  type: AirlockScienceGlass
   components:
   - parent: 0
     pos: 14.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 869
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: 14.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 870
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: 16.5,18.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 871
-  type: airlock_science
+  type: AirlockScience
   components:
   - parent: 0
     pos: 16.5,15.5
@@ -7265,7 +7230,7 @@ entities:
     pos: 12.5,17.5
     type: Transform
 - uid: 952
-  type: LockerScience
+  type: WardrobeScience
   components:
   - parent: 0
     pos: 12.5,21.5
@@ -7392,7 +7357,7 @@ entities:
   - parent: 966
     type: Transform
 - uid: 968
-  type: airlock_engineering
+  type: AirlockEngineering
   components:
   - parent: 0
     pos: 4.5,-2.5

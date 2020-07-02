@@ -1,178 +1,205 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Sound;
+using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Nutrition;
+using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
-using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
-    public class FoodComponent : Component, IAfterAttack, IUse
+    [ComponentReference(typeof(IAfterInteract))]
+    public class FoodComponent : Component, IUse, IAfterInteract
     {
 #pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystem;
 #pragma warning restore 649
-        // Currently the design is similar to drinkcomponent but it's susceptible to change so left as is for now.
         public override string Name => "Food";
-
-        private AppearanceComponent _appearanceComponent;
 
         [ViewVariables]
         private string _useSound;
         [ViewVariables]
-        private string _finishPrototype;
+        private string _trashPrototype;
         [ViewVariables]
         private SolutionComponent _contents;
         [ViewVariables]
         private ReagentUnit _transferAmount;
+        private UtensilType _utensilsNeeded;
 
-        private Solution _initialContents; // This is just for loading from yaml
+        public int UsesRemaining => _contents.CurrentVolume == 0
+            ?
+            0 : Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            // Default is 1 use restoring 30
-            serializer.DataField(ref _initialContents, "contents", null);
-            serializer.DataField(ref _useSound, "use_sound", "/Audio/items/eatfood.ogg");
-            // Default is transfer 30 units
-            serializer.DataField(ref _transferAmount, "transfer_amount", ReagentUnit.New(5));
-            // E.g. empty chip packet when done
-            serializer.DataField(ref _finishPrototype, "spawn_on_finish", null);
+            serializer.DataField(ref _useSound, "useSound", "/Audio/items/eatfood.ogg");
+            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
+            serializer.DataField(ref _trashPrototype, "trash", null);
+
+            if (serializer.Reading)
+            {
+                var utensils = serializer.ReadDataField("utensils", new List<UtensilType>());
+                foreach (var utensil in utensils)
+                {
+                    _utensilsNeeded |= utensil;
+                    Dirty();
+                }
+            }
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            if (_contents == null)
-            {
-                if (Owner.TryGetComponent(out SolutionComponent solutionComponent))
-                {
-                    _contents = solutionComponent;
-                }
-                else
-                {
-                    _contents = Owner.AddComponent<SolutionComponent>();
-                }
-            }
+            _contents = Owner.GetComponent<SolutionComponent>();
 
-            _contents.MaxVolume = _initialContents.TotalVolume;
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-            if (_initialContents != null)
-            {
-                _contents.TryAddSolution(_initialContents, true, true);
-            }
-
-            _initialContents = null;
-            if (_contents.CurrentVolume == 0)
-            {
-                _contents.TryAddReagent("chem.Nutriment", ReagentUnit.New(5), out _);
-            }
-            Owner.TryGetComponent(out AppearanceComponent appearance);
-            _appearanceComponent = appearance;
-            // UsesLeft() at the start should match the max, at least currently.
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.MaxUses, UsesLeft());
-            _updateAppearance();
-        }
-
-        private void _updateAppearance()
-        {
-            _appearanceComponent?.SetData(SharedFoodComponent.FoodVisuals.Visual, UsesLeft());
-        }
-
-        public int UsesLeft()
-        {
-            // In case transfer amount exceeds volume left
-            if (_contents.CurrentVolume == 0)
-            {
-                return 0;
-            }
-            return Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            UseFood(eventArgs.User);
+            if (_utensilsNeeded != UtensilType.None)
+            {
+                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You need to use a {0} to eat that!", _utensilsNeeded));
+                return false;
+            }
 
-            return true;
+            return TryUseFood(eventArgs.User, null);
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        // Feeding someone else
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            UseFood(eventArgs.Attacked);
+            if (eventArgs.Target == null)
+            {
+                return;
+            }
+
+            TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        void UseFood(IEntity user)
+        public bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
         {
             if (user == null)
             {
-                return;
+                return false;
             }
 
-            if (UsesLeft() == 0)
+            if (UsesRemaining <= 0)
             {
-                user.PopupMessage(user, _localizationManager.GetString("Empty"));
+                user.PopupMessage(user, Loc.GetString($"The {Owner.Name} is empty!"));
+                return false;
+            }
+
+            var trueTarget = target ?? user;
+
+            if (!trueTarget.TryGetComponent(out StomachComponent stomach))
+            {
+                return false;
+            }
+
+            var utensils = utensilUsed != null
+                ? new List<UtensilComponent> {utensilUsed}
+                : null;
+
+            if (_utensilsNeeded != UtensilType.None)
+            {
+                utensils = new List<UtensilComponent>();
+                var types = UtensilType.None;
+
+                if (user.TryGetComponent(out HandsComponent hands))
+                {
+                    foreach (var item in hands.GetAllHeldItems())
+                    {
+                        if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
+                        {
+                            continue;
+                        }
+
+                        utensils.Add(utensil);
+                        types |= utensil.Types;
+                    }
+                }
+
+                if (!types.HasFlag(_utensilsNeeded))
+                {
+                    trueTarget.PopupMessage(user, Loc.GetString("You need to be holding a {0} to eat that!", _utensilsNeeded));
+                    return false;
+                }
+            }
+
+            if (!InteractionChecks.InRangeUnobstructed(user, trueTarget.Transform.MapPosition))
+            {
+                return false;
+            }
+
+            var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
+            var split = _contents.SplitSolution(transferAmount);
+            if (!stomach.TryTransferSolution(split))
+            {
+                _contents.TryAddSolution(split);
+                trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
+                return false;
+            }
+
+            _entitySystem.GetEntitySystem<AudioSystem>()
+                .PlayFromEntity(_useSound, trueTarget, AudioParams.Default.WithVolume(-1f));
+            trueTarget.PopupMessage(user, Loc.GetString("Nom"));
+
+            // If utensils were used
+            if (utensils != null)
+            {
+                foreach (var utensil in utensils)
+                {
+                    utensil.TryBreak(user);
+                }
+            }
+
+            if (UsesRemaining > 0)
+            {
+                return true;
+            }
+
+            if (string.IsNullOrEmpty(_trashPrototype))
+            {
+                Owner.Delete();
+                return true;
+            }
+
+            //We're empty. Become trash.
+            var position = Owner.Transform.GridPosition;
+            var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
+
+            // If the user is holding the item
+            if (user.TryGetComponent(out HandsComponent handsComponent) &&
+                handsComponent.IsHolding(Owner))
+            {
+                Owner.Delete();
+
+                // Put the trash in the user's hand
+                if (finisher.TryGetComponent(out ItemComponent item) &&
+                    handsComponent.CanPutInHand(item))
+                {
+                    handsComponent.PutInHand(item);
+                }
             }
             else
             {
-                // TODO: Add putting food back in boxes here?
-                if (user.TryGetComponent(out StomachComponent stomachComponent))
-                {
-                    var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
-                    var split = _contents.SplitSolution(transferAmount);
-                    if (stomachComponent.TryTransferSolution(split))
-                    {
-                        if (_useSound != null)
-                        {
-                            Owner.GetComponent<SoundComponent>()?.Play(_useSound);
-                            user.PopupMessage(user, _localizationManager.GetString("Nom"));
-                        }
-                    }
-                    else
-                    {
-                        // Add it back in
-                        _contents.TryAddSolution(split);
-                        user.PopupMessage(user, _localizationManager.GetString("Can't eat"));
-                    }
-                }
+                Owner.Delete();
             }
 
-            if (UsesLeft() > 0)
-            {
-                return;
-
-            }
-
-            var position = Owner.Transform.GridPosition;
-            Owner.Delete();
-
-            if (_finishPrototype != null)
-            {
-                var finisher = Owner.EntityManager.SpawnEntity(_finishPrototype, position);
-                if (user.TryGetComponent(out HandsComponent handsComponent) && finisher.TryGetComponent(out ItemComponent itemComponent))
-                {
-                    if (handsComponent.CanPutInHand(itemComponent))
-                    {
-                        handsComponent.PutInHand(itemComponent);
-                        return;
-                    }
-                }
-
-                finisher.Transform.GridPosition = user.Transform.GridPosition;
-                return;
-            }
+            return true;
         }
     }
 }

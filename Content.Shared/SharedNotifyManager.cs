@@ -17,6 +17,7 @@ namespace Content.Shared
         }
 
         public abstract void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message);
+        public abstract void PopupMessageCursor(IEntity viewer, string message);
 
         protected class MsgDoNotify : NetMessage
         {
@@ -29,18 +30,28 @@ namespace Content.Shared
             #endregion
 
             public string Message { get; set; }
-            public GridCoordinates Coordinates;
+            public bool AtCursor { get; set; }
+            public GridCoordinates Coordinates { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 Message = buffer.ReadString();
-                Coordinates = buffer.ReadGridLocalCoordinates();
+                AtCursor = buffer.ReadBoolean();
+                if (!AtCursor)
+                {
+                    Coordinates = buffer.ReadGridLocalCoordinates();
+                }
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(Message);
-                buffer.Write(Coordinates);
+                buffer.Write(AtCursor);
+
+                if (!AtCursor)
+                {
+                    buffer.Write(Coordinates);
+                }
             }
         }
     }

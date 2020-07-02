@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects
         {
             base.OnRemove();
             Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-            statusEffectsComponent?.RemoveStatus(StatusEffect.Health);
+            statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Health);
 
             Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
             overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
@@ -124,6 +124,21 @@ namespace Content.Server.GameObjects
         bool IActionBlocker.CanAttack()
         {
             return CurrentDamageState.CanAttack();
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return CurrentDamageState.CanEquip();
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return CurrentDamageState.CanUnequip();
+        }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return CurrentDamageState.CanChangeDirection();
         }
 
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()

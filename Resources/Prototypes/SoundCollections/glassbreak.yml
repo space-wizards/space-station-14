@@ -1,4 +1,4 @@
-- type: sound_collection
+- type: soundCollection
   id: glassbreak
   files:
   - /Audio/effects/glassbreak1.ogg

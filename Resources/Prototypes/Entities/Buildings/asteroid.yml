@@ -1,6 +1,6 @@
 - type: entity
   id: AsteroidRock
-  name: Asteroid Rock
+  name: asteroid rock
   components:
   - type: AsteroidRock
   - type: Clickable
@@ -14,7 +14,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: 31
+      layer: [MobMask]
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

@@ -8,94 +8,52 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/blob/237d8f7894617007d75c71d5d9feb4354c78debd/icons/obj/guns/lmg.dmi",
     "states": [
         {
-            "name": "pk-0",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "icon",
+            "directions": 1
         },
         {
-            "name": "pk-1",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "base",
+            "directions": 1
         },
         {
-            "name": "pk-2",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "bolt-closed",
+            "directions": 1
         },
         {
-            "name": "pk-3",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "bolt-open",
+            "directions": 1
         },
         {
-            "name": "pk-4",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "mag-0",
+            "directions": 1
         },
         {
-            "name": "pk",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "name": "mag-1",
+            "directions": 1
+        },
+        {
+            "name": "mag-2",
+            "directions": 1
+        },
+        {
+            "name": "mag-3",
+            "directions": 1
+        },
+        {
+            "name": "mag-4",
+            "directions": 1
+        },
+        {
+            "name": "mag-5",
+            "directions": 1
         },
         {
             "name": "inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         }
     ]
 }
