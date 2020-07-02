@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -11,10 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using System;
 using Robust.Shared.Interfaces.Physics;
-using CannyFastMath;
-using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Throw

@@ -144,10 +144,10 @@ namespace Content.Shared.GameObjects.Components.Movement
         public override void OnAdd()
         {
             // This component requires that the entity has a PhysicsComponent.
-            if (!Owner.HasComponent<SharedPhysicsComponent>())
+            if (!Owner.HasComponent<PhysicsComponent>())
                 Logger.Error(
                     $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
-                    $" {nameof(SharedPhysicsComponent)}. ");
+                    $" {nameof(PhysicsComponent)}. ");
 
             base.OnAdd();
         }
