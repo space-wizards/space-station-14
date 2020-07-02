@@ -8,6 +8,10 @@
   - type: Sprite
     texture: Objects\BodySystem\Organs\eyes_grey.png
   - type: Icon
+  - type: UserInterface
+    interfaces:
+    - key: enum.GenericSurgeryUiKey.Key
+      type: GenericSurgeryBoundUserInterface
 
 - type: entity
   name: "basedroppedmechanism"
@@ -19,3 +23,7 @@
   - type: Sprite
     texture: Objects\BodySystem\Organs\eyes_grey.png
   - type: Icon
+  - type: UserInterface
+    interfaces:
+    - key: enum.GenericSurgeryUiKey.Key
+      type: GenericSurgeryBoundUserInterface

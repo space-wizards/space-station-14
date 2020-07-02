@@ -169,8 +169,8 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 3
-    heavyImpactRange: 5
+    devastationRange: 1
+    heavyImpactRange: 2
     lightImpactRange: 7
     flashRange: 10
 
@@ -205,9 +205,9 @@
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
-    devastationRange: 3
-    heavyImpactRange: 5
-    lightImpactRange: 7
+    devastationRange: 0
+    heavyImpactRange: 1
+    lightImpactRange: 4
     flashRange: 10
 
 - type: entity
