@@ -122,6 +122,7 @@ namespace Content.Shared.GameObjects.Components
         Glass,
         Cable,
         Gold,
+        Phoron,
         Ointment,
         Brutepack,
         FloorTileSteel,

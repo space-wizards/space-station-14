@@ -176,6 +176,8 @@
     sprite: Objects/FoodContainers/eggbox_shut.rsi
   - type: Icon
     sprite: Objects/FoodContainers/eggbox_shut.rsi
+  - type: Item
+    sprite: Objects/FoodContainers/eggbox_shut.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -192,6 +194,8 @@
   - type: Icon
     sprite: Objects/FoodContainers/eggbox.rsi
     state: eggbox-12
+  - type: Item
+    sprite: Objects/FoodContainers/eggbox.rsi
   - type: Appearance
     visuals:
     - type: FoodContainerVisualizer2D
@@ -339,9 +343,11 @@
       FoodContainerMushroomPizza: 25
       FoodContainerVegetablePizza: 25
   - type: Sprite
-    sprite: Objects/FoodContainers/pizzabox_open.rsi
+    sprite: Objects/FoodContainers/pizzabox.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/pizzabox_open.rsi
+    sprite: Objects/FoodContainers/pizzabox.rsi
+  - type: Item
+    sprite: Objects/FoodContainers/pizzabox.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -382,6 +388,8 @@
   - type: Sprite
     sprite: Objects/FoodContainers/pumpkinpie.rsi
   - type: Icon
+    sprite: Objects/FoodContainers/pumpkinpie.rsi
+  - type: Item
     sprite: Objects/FoodContainers/pumpkinpie.rsi
 
 - type: entity

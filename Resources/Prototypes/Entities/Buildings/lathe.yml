@@ -27,7 +27,7 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: PowerDevice
+  - type: PowerReceiver
 
 - type: entity
   parent: BaseLathe

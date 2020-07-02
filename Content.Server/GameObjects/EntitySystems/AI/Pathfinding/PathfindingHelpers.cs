@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 {
                     // TODO: Should make this account for proximities,
                     // probably some kind of breadth-first search to find a valid one
-                    foreach (var (_, node) in endNode.Neighbors)
+                    foreach (var node in endNode.GetNeighbors())
                     {
                         if (Traversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, node))
                         {
@@ -42,11 +41,41 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // If it's a diagonal we need to check NSEW to see if we can get to it and stop corner cutting, NE needs N and E etc.
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
             // Also this will help with corner-cutting
-
-            currentNode.Neighbors.TryGetValue(Direction.North, out var northNeighbor);
-            currentNode.Neighbors.TryGetValue(Direction.South, out var southNeighbor);
-            currentNode.Neighbors.TryGetValue(Direction.East, out var eastNeighbor);
-            currentNode.Neighbors.TryGetValue(Direction.West, out var westNeighbor);
+            
+            PathfindingNode northNeighbor = null;
+            PathfindingNode southNeighbor = null;
+            PathfindingNode eastNeighbor = null;
+            PathfindingNode westNeighbor = null;
+            foreach (var neighbor in currentNode.GetNeighbors())
+            {
+                if (neighbor.TileRef.X == currentNode.TileRef.X && 
+                    neighbor.TileRef.Y == currentNode.TileRef.Y + 1)
+                {
+                    northNeighbor = neighbor;
+                    continue;
+                }   
+                
+                if (neighbor.TileRef.X == currentNode.TileRef.X + 1 && 
+                    neighbor.TileRef.Y == currentNode.TileRef.Y)
+                {
+                    eastNeighbor = neighbor;
+                    continue;
+                }
+                
+                if (neighbor.TileRef.X == currentNode.TileRef.X && 
+                    neighbor.TileRef.Y == currentNode.TileRef.Y - 1)
+                {
+                    southNeighbor = neighbor;
+                    continue;
+                }   
+                
+                if (neighbor.TileRef.X == currentNode.TileRef.X - 1 && 
+                    neighbor.TileRef.Y == currentNode.TileRef.Y)
+                {
+                    westNeighbor = neighbor;
+                    continue;
+                }   
+            }
 
             switch (direction)
             {
@@ -254,6 +283,67 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             }
 
             return cost;
+        }
+
+        public static Direction RelativeDirection(PathfindingChunk endChunk, PathfindingChunk startChunk)
+        {
+            var xDiff = (endChunk.Indices.X - startChunk.Indices.X) / PathfindingChunk.ChunkSize;
+            var yDiff = (endChunk.Indices.Y - startChunk.Indices.Y) / PathfindingChunk.ChunkSize;
+
+            return RelativeDirection(xDiff, yDiff);
+        }
+
+        public static Direction RelativeDirection(PathfindingNode endNode, PathfindingNode startNode)
+        {
+            var xDiff = endNode.TileRef.X - startNode.TileRef.X;
+            var yDiff = endNode.TileRef.Y - startNode.TileRef.Y;
+
+            return RelativeDirection(xDiff, yDiff);
+        }
+
+        public static Direction RelativeDirection(int x, int y)
+        {
+            switch (x)
+            {
+                case -1:
+                    switch (y)
+                    {
+                        case -1:
+                            return Direction.SouthWest;
+                        case 0:
+                            return Direction.West;
+                        case 1:
+                            return Direction.NorthWest;
+                        default:
+                            throw new InvalidOperationException();
+                    }
+                case 0:
+                    switch (y)
+                    {
+                        case -1:
+                            return Direction.South;
+                        case 0:
+                            throw new InvalidOperationException();
+                        case 1:
+                            return Direction.North;
+                        default:
+                            throw new InvalidOperationException();
+                    }
+                case 1:
+                    switch (y)
+                    {
+                        case -1:
+                            return Direction.SouthEast;
+                        case 0:
+                            return Direction.East;
+                        case 1:
+                            return Direction.NorthEast;
+                        default:
+                            throw new InvalidOperationException();
+                    }
+                default:
+                    throw new InvalidOperationException();
+            }
         }
     }
 }

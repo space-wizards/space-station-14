@@ -8,6 +8,9 @@
     texture: Objects/Chemistry/chemicals.rsi/beaker.png
   - type: Icon
     texture: Objects/Chemistry/chemicals.rsi/beaker.png
+  - type: Item
+    sprite: Objects/Chemistry/chemicals.rsi
+    HeldPrefix: beaker
   - type: Solution
     fillingState: beaker
     maxVol: 50
@@ -25,6 +28,9 @@
     texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
   - type: Icon
     texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
+  - type: Item
+    sprite: Objects/Chemistry/chemicals.rsi
+    HeldPrefix: beaker
   - type: Solution
     fillingState: beakerlarge
     maxVol: 100

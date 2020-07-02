@@ -1,5 +1,5 @@
 # Both humans and NPCs inherit from this.
-# Anything player specific (e.g. UI, input) goes under HumanMob_Content
+# Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
   name: Urist McHands
@@ -127,12 +127,14 @@
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
+    - type: BuckleVisualizer2D
   - type: CombatMode
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
   - type: HumanoidAppearance
   - type: AnimationPlayer
+  - type: Buckle
   - type: UnarmedCombat
     range: 0.8
     arcwidth: 30

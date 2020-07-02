@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
@@ -9,6 +10,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.Pathfinding
 {
@@ -16,10 +18,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
     {
         public PathfindingChunk ParentChunk => _parentChunk;
         private readonly PathfindingChunk _parentChunk;
-        
-        public Dictionary<Direction, PathfindingNode> Neighbors => _neighbors;
-        private Dictionary<Direction, PathfindingNode> _neighbors = new Dictionary<Direction, PathfindingNode>();
-        
+
         public TileRef TileRef { get; private set; }
         
         /// <summary>
@@ -45,72 +44,48 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             GenerateMask();
         }
 
-        public void AddNeighbor(Direction direction, PathfindingNode node)
+        /// <summary>
+        /// Return our neighboring nodes (even across chunks)
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PathfindingNode> GetNeighbors()
         {
-            _neighbors.Add(direction, node);
-        }
-
-        public void AddNeighbor(PathfindingNode node)
-        {
-            if (node.TileRef.GridIndex != TileRef.GridIndex)
+            List<PathfindingChunk> neighborChunks = null;
+            if (ParentChunk.OnEdge(this))
             {
-                throw new InvalidOperationException();
+                neighborChunks = ParentChunk.RelevantChunks(this).ToList();
             }
-
-            Direction direction;
-            if (node.TileRef.X < TileRef.X)
+            
+            for (var x = -1; x <= 1; x++)
             {
-                if (node.TileRef.Y > TileRef.Y)
+                for (var y = -1; y <= 1; y++)
                 {
-                    direction = Direction.NorthWest;
-                } else if (node.TileRef.Y < TileRef.Y)
-                {
-                    direction = Direction.SouthWest;
-                }
-                else
-                {
-                    direction = Direction.West;
-                }
-            }
-            else if (node.TileRef.X > TileRef.X)
-            {
-                if (node.TileRef.Y > TileRef.Y)
-                {
-                    direction = Direction.NorthEast;
-                } else if (node.TileRef.Y < TileRef.Y)
-                {
-                    direction = Direction.SouthEast;
-                }
-                else
-                {
-                    direction = Direction.East;
+                    if (x == 0 && y == 0) continue;
+                    var indices = new MapIndices(TileRef.X + x, TileRef.Y + y);
+                    if (ParentChunk.InBounds(indices))
+                    {
+                        var (relativeX, relativeY) = (indices.X - ParentChunk.Indices.X,
+                            indices.Y - ParentChunk.Indices.Y);
+                        yield return ParentChunk.Nodes[relativeX, relativeY];
+                    }
+                    else
+                    {
+                        DebugTools.AssertNotNull(neighborChunks);
+                        // Get the relevant chunk and then get the node on it
+                        foreach (var neighbor in neighborChunks)
+                        {
+                            // A lot of edge transitions are going to have a single neighboring chunk
+                            // (given > 1 only affects corners)
+                            // So we can just check the count to see if it's inbound
+                            if (neighborChunks.Count > 0 && !neighbor.InBounds(indices)) continue;
+                            var (relativeX, relativeY) = (indices.X - neighbor.Indices.X,
+                                indices.Y - neighbor.Indices.Y);
+                            yield return neighbor.Nodes[relativeX, relativeY];
+                            break;
+                        }
+                    }
                 }
             }
-            else
-            {
-                if (node.TileRef.Y > TileRef.Y)
-                {
-                    direction = Direction.North;
-                }
-                else
-                {
-                    direction = Direction.South;
-                }
-            }
-
-            if (_neighbors.ContainsKey(direction))
-            {
-                // Should we verify that they align?
-                return;
-            }
-
-            _neighbors.Add(direction, node);
-        }
-
-        public PathfindingNode GetNeighbor(Direction direction)
-        {
-            _neighbors.TryGetValue(direction, out var node);
-            return node;
         }
 
         public void UpdateTile(TileRef newTile)
