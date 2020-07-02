@@ -117,7 +117,6 @@
             "Utensil",
             "UnarmedCombat",
             "TimedSpawner",
-            "Buckle",
             "Strap",
             "NodeContainer",
             "PowerSupplier",
