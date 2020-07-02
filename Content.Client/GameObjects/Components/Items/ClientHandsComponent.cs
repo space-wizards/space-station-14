@@ -52,7 +52,7 @@ namespace Content.Client.GameObjects.Components.Items
                     _sprite.LayerMapReserveBlank($"hand-{slot}");
 
                     var hand = _hands[slot];
-                    SetInHands(hand);
+                    UpdateHandSprites(hand);
                 }
             }
         }
@@ -78,16 +78,20 @@ namespace Content.Client.GameObjects.Components.Items
             var cast = (HandsComponentState) curState;
             foreach (var sharedHand in cast.Hands)
             {
-                var hand = new Hand(sharedHand, Owner.EntityManager);
-                _hands[sharedHand.Name] = hand;
-                SetInHands(hand);
+                if (!_hands.TryGetValue(sharedHand.Name, out var hand))
+                {
+                    hand = new Hand(sharedHand, Owner.EntityManager);
+                    _hands[hand.Name] = hand;
+                }
+
+                UpdateHandSprites(hand);
             }
 
             foreach (var slot in _hands.Keys.ToList())
             {
                 if (cast.Hands.All(hand => hand.Name != slot))
                 {
-                    _hands[slot] = null;
+                    _hands.Remove(slot);
                     HideHand(slot);
                 }
             }
@@ -103,7 +107,7 @@ namespace Content.Client.GameObjects.Components.Items
             _sprite.LayerSetVisible($"hand-{name}", false);
         }
 
-        private void SetInHands(Hand hand)
+        private void UpdateHandSprites(Hand hand)
         {
             if (_sprite == null)
             {
@@ -116,12 +120,13 @@ namespace Content.Client.GameObjects.Components.Items
             if (entity == null)
             {
                 _sprite.LayerSetVisible($"hand-{name}", false);
-
                 return;
             }
 
             if (!entity.TryGetComponent(out ItemComponent item)) return;
+
             var maybeInHands = item.GetInHandStateInfo(name);
+
             if (!maybeInHands.HasValue)
             {
                 _sprite.LayerSetVisible($"hand-{name}", false);
@@ -140,7 +145,7 @@ namespace Content.Client.GameObjects.Components.Items
 
             foreach (var pair in _hands)
             {
-                SetInHands(pair.Value);
+                UpdateHandSprites(pair.Value);
             }
         }
 
@@ -209,10 +214,12 @@ namespace Content.Client.GameObjects.Components.Items
         public readonly string Name;
         public readonly HandLocation Location;
 
-        public Hand(SharedHand hand, IEntityManager manager)
+        public Hand(SharedHand hand, IEntityManager manager, HandButton button = null, ItemStatusPanel panel = null)
         {
             Name = hand.Name;
             Location = hand.Location;
+            Button = button;
+            Panel = panel;
 
             if (!hand.EntityUid.HasValue)
             {
@@ -224,5 +231,7 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         public IEntity Entity { get; }
+        [CanBeNull] public HandButton Button { get; set; }
+        [CanBeNull] public ItemStatusPanel Panel { get; set; }
     }
 }

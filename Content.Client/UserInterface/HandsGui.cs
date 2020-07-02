@@ -24,9 +24,6 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
 
-        private readonly Dictionary<string, HandButton> _buttons = new Dictionary<string, HandButton>();
-        private readonly Dictionary<string, ItemStatusPanel> _panels = new Dictionary<string, ItemStatusPanel>();
-
         private readonly TextureRect _activeHandRect;
 
         private readonly Texture _leftHandTexture;
@@ -79,14 +76,14 @@ namespace Content.Client.UserInterface
         }
 
         /// <summary>
-        ///     Adds a new hand button to this control
+        ///     Adds a new hand to this control
         /// </summary>
-        /// <param name="hand">The hand to add a control for</param>
+        /// <param name="hand">The hand to add to this control</param>
         /// <param name="buttonLocation">
         ///     The actual location of the button. The right hand is drawn
         ///     on the LEFT of the screen.
         /// </param>
-        private void AddButton(Hand hand, HandLocation buttonLocation)
+        private void AddHand(Hand hand, HandLocation buttonLocation)
         {
             var buttonTexture = LocationTexture(buttonLocation);
             var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
@@ -105,27 +102,29 @@ namespace Content.Client.UserInterface
 
             // hBox.AddChild(panel);
 
-            _buttons[slot] = button;
-            // _panels[slot] = panel; // TODO
-
-            if (_buttons.Count == 1)
+            if (_activeHandRect.Parent == null)
             {
                 button.AddChild(_activeHandRect);
                 _activeHandRect.SetPositionInParent(1);
             }
+
+            hand.Button = button;
+            // hand.Panel = panel; // TODO
         }
 
         // TODO: Call when hands are removed
-        private void RemoveButton(string slot)
+        private void RemoveHand(Hand hand)
         {
-            if (!_buttons.Remove(slot, out var button))
+            var button = hand.Button;
+            if (button == null)
             {
-                throw new InvalidOperationException($"Slot {slot} has no button");
+                throw new InvalidOperationException($"Hand {hand.Name} has no button");
             }
 
-            if (!_panels.Remove(slot, out var panel))
+            var panel = hand.Panel;
+            if (panel == null)
             {
-                throw new InvalidOperationException($"Slot {slot} has no panel");
+                throw new InvalidOperationException($"Hand {hand.Name} has no panel");
             }
 
             if (button.Children.Contains(_activeHandRect))
@@ -139,10 +138,10 @@ namespace Content.Client.UserInterface
         }
 
         /// <summary>
-        /// Gets the hands component controlling this gui, returns true if successful and false if failure
+        ///     Gets the hands component controlling this gui
         /// </summary>
         /// <param name="hands"></param>
-        /// <returns></returns>
+        /// <returns>true if successful and false if failure</returns>
         private bool TryGetHands(out HandsComponent hands)
         {
             hands = default;
@@ -165,18 +164,10 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            foreach (var pair in _buttons)
-            {
-                var name = pair.Key;
-
-                if (!component.Hands.ContainsKey(name))
-                {
-                    RemoveButton(name);
-                }
-            }
+            // TODO: Remove button on remove hand
 
             var locationsOccupied = new HashSet<HandLocation>();
-            foreach (var (slot, hand) in component.Hands)
+            foreach (var hand in component.Hands.Values)
             {
                 var location = locationsOccupied.Contains(hand.Location)
                     ? HandLocation.Middle
@@ -184,29 +175,29 @@ namespace Content.Client.UserInterface
 
                 locationsOccupied.Add(location);
 
-                if (!_buttons.ContainsKey(slot))
+                if (hand.Button == null)
                 {
-                    AddButton(hand, location);
+                    AddHand(hand, location);
                 }
             }
 
-            foreach (var (slot, button) in _buttons)
+            foreach (var hand in component.Hands.Values)
             {
-                if (button.Location == HandLocation.Left)
+                if (hand.Location == HandLocation.Left)
                 {
-                    button.SetPositionLast();
+                    hand.Button!.SetPositionLast();
                 }
-                else if (button.Location == HandLocation.Right)
+                else if (hand.Location == HandLocation.Right)
                 {
-                    button.SetPositionFirst();
+                    hand.Button!.SetPositionFirst();
                 }
 
-                _itemSlotManager.SetItemSlot(button, component.Hands[slot].Entity);
+                _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            var parent = _buttons[component.ActiveIndex];
-            parent.AddChild(_activeHandRect);
+            var parent = component.Hands[component.ActiveIndex].Button;
+            parent!.AddChild(_activeHandRect);
             _activeHandRect.SetPositionInParent(1);
         }
 
@@ -276,20 +267,15 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            foreach (var pair in _buttons)
+            foreach (var hand in component.Hands.Values)
             {
-                var hand = component.Hands[pair.Key];
-                var button = pair.Value;
+                if (hand.Button == null)
+                {
+                    continue;
+                }
 
-                _itemSlotManager.UpdateCooldown(button, hand.Entity);
-            }
-
-            foreach (var pair in _panels)
-            {
-                var hand = component.Hands[pair.Key];
-                var panel = pair.Value;
-
-                panel.Update(hand.Entity);
+                _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
+                hand.Panel?.Update(hand.Entity);
             }
         }
     }
