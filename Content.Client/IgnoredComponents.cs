@@ -31,7 +31,6 @@
             "Multitool",
             "Wrench",
             "Crowbar",
-            "Projectile",
             "MeleeWeapon",
             "Storeable",
             "Dice",
@@ -129,7 +128,8 @@
             "PowerReceiver",
             "Wire",
             "StressTestMovement",
-            "Toys"
+            "Toys",
+            "SurgeryTool"
         };
     }
 }

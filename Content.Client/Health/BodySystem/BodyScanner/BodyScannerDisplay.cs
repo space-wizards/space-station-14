@@ -102,7 +102,8 @@ namespace Content.Client.UserInterface
         {
             _template = template; 
             _parts = parts;
-            _slots = new List<string>(); 
+            _slots = new List<string>();
+            BodyPartList.Clear();
             foreach (var (key, value) in _parts)
             {
                 _slots.Add(key);    //We have to do this since ItemLists only return the index of what item is selected and dictionaries don't allow you to explicitly grab things by index.

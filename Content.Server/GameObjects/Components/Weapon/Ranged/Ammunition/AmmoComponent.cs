@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Timers;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Server.GameObjects;
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         Magnum,
         AntiMaterial,
         Shotgun,
-        Cap, // Placeholder
+        Cap, 
         Rocket,
         Dart, // Placeholder
         Grenade,

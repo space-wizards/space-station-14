@@ -175,6 +175,21 @@ namespace Content.Shared.Chemistry
             return a < b ? a : b;
         }
 
+        public static ReagentUnit Max(ReagentUnit a, ReagentUnit b)
+        {
+            return a > b ? a : b;
+        }
+
+        public static ReagentUnit Clamp(ReagentUnit reagent, ReagentUnit min, ReagentUnit max)
+        {
+            if (min > max)
+            {
+                throw new ArgumentException($"{nameof(min)} {min} cannot be larger than {nameof(max)} {max}");
+            }
+
+            return reagent < min ? min : reagent > max ? max : reagent;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is ReagentUnit unit &&
