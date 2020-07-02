@@ -100,6 +100,8 @@ namespace Content.Server.GameObjects
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
+                // TODO: temporary hack to fix the physics system raising collision events akwardly.
+                // E.g. when moving parallel to a door by going off the side of a wall.
                 var dotProduct = Vector2.Dot(mover.VelocityDir.Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
                 if (dotProduct <= -0.9f)
                     TryOpen(entity);
