@@ -32,7 +32,7 @@ namespace Content.Server.DamageSystem
             base.Initialize();
             foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageBehavior>())
             {
-                AddThresholdsFrom(damagebehavior);
+                //AddThresholdsFrom(damagebehavior);
                 Damaged += damagebehavior.OnDamaged;
             }
         }
