@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Content.Server.BodySystem;
+using Content.Server.Health.BodySystem.BodyParts;
+using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Shared.BodySystem;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.Surgery.Data
 {
-
-
-
     /// <summary>
     ///     This data class represents the state of a <see cref="BodyPart"/> in regards to everything surgery related - whether there's an incision on it, whether the bone is broken, etc.
     /// </summary>
-    public abstract class ISurgeryData
+    public abstract class SurgeryData
     {
-
         /// <summary>
         ///     The <see cref="BodyPart"/> this surgeryData is attached to. The ISurgeryData class should not exist without a <see cref="BodyPart"/> that it
         ///     represents, and will throw errors if it is null.
@@ -34,7 +26,7 @@ namespace Content.Server.BodySystem
 
 
 
-        public ISurgeryData(BodyPart parent)
+        public SurgeryData(BodyPart parent)
         {
             _parent = parent;
         }
@@ -60,7 +52,7 @@ namespace Content.Server.BodySystem
         public abstract SurgeryAction GetSurgeryStep(SurgeryType toolType);
 
         /// <summary>
-        ///     Returns whether the given <see cref="SurgeryType"/> can be used to perform a surgery on the BodyPart this <see cref="ISurgeryData"/> represents.
+        ///     Returns whether the given <see cref="SurgeryType"/> can be used to perform a surgery on the BodyPart this <see cref="SurgeryData"/> represents.
         /// </summary>
         public bool CheckSurgery(SurgeryType toolType)
         {

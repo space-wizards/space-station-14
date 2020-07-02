@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.BodySystem;
-using Content.Server.BodySystem.Content.Server.Health.BodySystem.Surgery.SurgeryData;
-using Content.Server.Health.BodySystem.BodyParts.Content.Server.BodySystem;
+using Content.Server.Health.BodySystem.Mechanisms;
+using Content.Server.Health.BodySystem.Surgery.Data;
 using Content.Shared.BodySystem;
 using Content.Shared.Health.BodySystem.BodyPart;
 using Robust.Shared.Interfaces.GameObjects;
@@ -130,7 +130,10 @@ namespace Content.Server.Health.BodySystem.BodyParts
         public bool CanInstallMechanism(Mechanism mechanism)
         {
             if (_sizeUsed + mechanism.Size > Size)
+            {
                 return false; //No space
+            }
+
             return _surgeryData.CanInstallMechanism(mechanism);
         }
 

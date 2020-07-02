@@ -7,12 +7,10 @@ using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
 using System.Linq;
 using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Health.BodySystem.BodyParts;
-using Content.Server.Health.BodySystem.BodyParts.Content.Server.BodySystem;
 using Content.Shared.Health.BodySystem.BodyPart;
 
 namespace Content.Server.Health.BodySystem {
@@ -20,21 +18,19 @@ namespace Content.Server.Health.BodySystem {
     ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component, IBodyPartContainer {
+    public class BodyManagerComponent : Component, IBodyPartContainer
+    {
 
         public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649
         [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore
 
-        [ViewVariables]
-        private string _presetName;
+        [ViewVariables] private string _presetName;
 
-        [ViewVariables]
-        private BodyTemplate _template;
+        [ViewVariables] private BodyTemplate _template;
 
-        [ViewVariables]
-        private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
+        [ViewVariables] private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
 
         /// <summary>
         ///     The <see cref="BodyTemplate"/> that this BodyManagerComponent is adhering to.
@@ -49,63 +45,54 @@ namespace Content.Server.Health.BodySystem {
         /// <summary>
         ///     List of all occupied slots in this body, taken from the values of _parts.
         /// </summary>
-        public IEnumerable<string> AllSlots
-        {
-            get
-            {
-                return _template.Slots.Keys;
-            }
-        }
+        public IEnumerable<string> AllSlots => _template.Slots.Keys;
 
         /// <summary>
         ///     List of all occupied slots in this body, taken from the values of _parts.
         /// </summary>
-        public IEnumerable<string> OccupiedSlots
-        {
-            get
-            {
-                return _partDictionary.Keys;
-            }
-        }
+        public IEnumerable<string> OccupiedSlots => _partDictionary.Keys;
 
         /// <summary>
         ///     List of all <see cref="BodyPart">BodyParts</see> in this body, taken from the keys of _parts.
         /// </summary>
-        public IEnumerable<BodyPart> Parts {
-            get {
-                return _partDictionary.Values;
-            }
-        }
+        public IEnumerable<BodyPart> Parts => _partDictionary.Values;
 
         /// <summary>
         ///     Recursive search that returns whether a given <see cref="BodyPart"/> is connected to the center <see cref="BodyPart"/>.
         ///     Not efficient (O(n^2)), but most bodies don't have a ton of <see cref="BodyPart">BodyParts</see>.
         /// </summary>
-        public bool ConnectedToCenterPart(BodyPart target) {
-            List<string> searchedSlots = new List<string> { };
+        public bool ConnectedToCenterPart(BodyPart target)
+        {
+            var searchedSlots = new List<string>();
             if (TryGetSlotName(target, out string result))
                 return false;
             return ConnectedToCenterPartRecursion(searchedSlots, result);
         }
-        private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName) {
-            TryGetBodyPart(slotName, out BodyPart part);
+
+        private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName)
+        {
+            TryGetBodyPart(slotName, out var part);
             if (part != null && part == GetCenterBodyPart())
                 return true;
             searchedSlots.Add(slotName);
-            if (TryGetBodyPartConnections(slotName, out List<string> connections)) {
-                foreach (string connection in connections) {
-                    if (!searchedSlots.Contains(connection) && ConnectedToCenterPartRecursion(searchedSlots, connection))
+            if (TryGetBodyPartConnections(slotName, out List<string> connections))
+            {
+                foreach (string connection in connections)
+                {
+                    if (!searchedSlots.Contains(connection) &&
+                        ConnectedToCenterPartRecursion(searchedSlots, connection))
                         return true;
                 }
             }
-            return false;
 
+            return false;
         }
 
         /// <summary>
         ///     Returns the central <see cref="BodyPart"/> of this body based on the <see cref="BodyTemplate"/>. For humans, this is the torso. Returns null if not found.
         /// </summary>
-        public BodyPart GetCenterBodyPart() {
+        public BodyPart GetCenterBodyPart()
+        {
             _partDictionary.TryGetValue(_template.CenterSlot, out BodyPart center);
             return center;
         }
@@ -118,12 +105,12 @@ namespace Content.Server.Health.BodySystem {
             return _template.SlotExists(slotName);
         }
 
-
         /// <summary>
         ///     Grabs the <see cref="BodyPart"/> in the given slotName if there is one. Returns true if a <see cref="BodyPart"/> is found,
         ///     false otherwise. If false, result will be null.
         /// </summary>
-        public bool TryGetBodyPart(string slotName, out BodyPart result) {
+        public bool TryGetBodyPart(string slotName, out BodyPart result)
+        {
             return _partDictionary.TryGetValue(slotName, out result);
         }
 
@@ -131,8 +118,10 @@ namespace Content.Server.Health.BodySystem {
         ///     Grabs the slotName that the given <see cref="BodyPart"/> resides in. Returns true if the <see cref="BodyPart"/> is
         ///     part of this body and a slot is found, false otherwise. If false, result will be null.
         /// </summary>
-        public bool TryGetSlotName(BodyPart part, out string result) {
-            result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
+        public bool TryGetSlotName(BodyPart part, out string result)
+        {
+            result = _partDictionary.FirstOrDefault(x => x.Value == part)
+                .Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
             return result == null;
         }
 
@@ -147,7 +136,8 @@ namespace Content.Server.Health.BodySystem {
         /// <summary>
         ///     Grabs the names of all connected slots to the given slotName from the template. Returns true if connections are found to the slotName, false otherwise. If false, connections will be null.
         /// </summary>
-        public bool TryGetBodyPartConnections(string slotName, out List<string> connections) {
+        public bool TryGetBodyPartConnections(string slotName, out List<string> connections)
+        {
             return _template.Connections.TryGetValue(slotName, out connections);
         }
 
@@ -167,6 +157,7 @@ namespace Content.Server.Health.BodySystem {
                     toReturn.Add(bodyPartResult);
                 }
             }
+
             if (toReturn.Count <= 0)
                 return false;
             result = toReturn;
@@ -183,7 +174,8 @@ namespace Content.Server.Health.BodySystem {
         /////////  Server-specific stuff
         /////////
 
-        public override void ExposeData(ObjectSerializer serializer) {
+        public override void ExposeData(ObjectSerializer serializer)
+        {
             base.ExposeData(serializer);
 
             string templateName = null;
@@ -191,11 +183,17 @@ namespace Content.Server.Health.BodySystem {
             if (serializer.Reading)
             {
                 if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
-                    throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
+                {
+                    throw new InvalidOperationException(
+                        $"No BodyTemplatePrototype was found with the name {templateName} while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
+                }
 
                 serializer.DataField(ref _presetName, "BasePreset", "bodyPreset.BasicHuman");
                 if (!_prototypeManager.TryIndex(_presetName, out BodyPresetPrototype _))
-                    throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + _presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
+                {
+                    throw new InvalidOperationException(
+                        $"No BodyPresetPrototype was found with the name {_presetName} while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
+                }
 
                 _template = new BodyTemplate(templateData);
             }
@@ -212,35 +210,34 @@ namespace Content.Server.Health.BodySystem {
         /// <summary>
         ///     Loads the given <see cref="BodyPreset"/> - forcefully changes all limbs found in both the preset and this template!
         /// </summary>
-        public void LoadBodyPreset(BodyPreset preset) {
-            foreach (var (slotName, type) in _template.Slots) {
-                if (!preset.PartIDs.TryGetValue(slotName, out string partID)) { //For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
+        public void LoadBodyPreset(BodyPreset preset)
+        {
+            foreach (var (slotName, type) in _template.Slots)
+            {
+                if (!preset.PartIDs.TryGetValue(slotName, out var partID))
+                {
+                    //For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
                     continue; //If the preset doesn't define anything for it, continue.
                 }
-                if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData)) { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
-                    throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
+
+                if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData))
+                {
+                    //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
+                    throw new InvalidOperationException("BodyPart prototype with ID " + partID +
+                                                        " could not be found!");
                 }
+
                 //Try and remove an existing limb if that exists.
                 if (_partDictionary.Remove(slotName, out var partRemoved))
                 {
-                    var argsRemoved = new BodyPartRemovedEventArgs(partRemoved, slotName);
-
-                    foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
-                    {
-                        component.BodyPartRemoved(argsRemoved);
-                    }
+                    BodyPartRemoved(partRemoved, slotName);
                 }
 
                 //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
                 var partAdded = new BodyPart(newPartData);
                 _partDictionary.Add(slotName, partAdded);
 
-                var argsAdded = new BodyPartAddedEventArgs(partAdded, slotName);
-
-                foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
-                {
-                    component.BodyPartAdded(argsAdded);
-                }
+                BodyPartAdded(partAdded, slotName);
             }
         }
 
@@ -261,16 +258,17 @@ namespace Content.Server.Health.BodySystem {
         /// </summary>
         public List<BodyPart> GetBodyPartsOfType(BodyPartType type)
         {
-            List<BodyPart> toReturn = new List<BodyPart>();
-            foreach (var (slotName, bodyPart) in _partDictionary)
+            var toReturn = new List<BodyPart>();
+            foreach (var bodyPart in _partDictionary.Values)
             {
                 if (bodyPart.PartType == type)
+                {
                     toReturn.Add(bodyPart);
+                }
             }
+
             return toReturn;
         }
-
-
 
         /// <summary>
         ///     Installs the given <see cref="BodyPart"/> into the given slot. Returns true if successful, false otherwise.
@@ -278,24 +276,34 @@ namespace Content.Server.Health.BodySystem {
         public bool InstallBodyPart(BodyPart part, string slotName)
         {
             if (!SlotExists(slotName)) //Make sure the given slot exists
+            {
                 return false;
-            if (TryGetBodyPart(slotName, out BodyPart result)) //And that nothing is in it
+            }
+
+            if (TryGetBodyPart(slotName, out _)) //And that nothing is in it
+            {
                 return false;
+            }
+
             _partDictionary.Add(slotName, part);
-            return true; // TODO Hands add event
+            BodyPartAdded(part, slotName);
+
+            return true;
         }
+
         /// <summary>
         ///     Installs the given <see cref="DroppedBodyPartComponent"/> into the given slot, deleting the <see cref="IEntity"/> afterwards. Returns true if successful, false otherwise.
         /// </summary>
         public bool InstallDroppedBodyPart(DroppedBodyPartComponent part, string slotName)
         {
             if (!InstallBodyPart(part.ContainedBodyPart, slotName))
+            {
                 return false;
+            }
+
             part.Owner.Delete();
             return true;
         }
-
-
 
         /// <summary>
         ///     Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see>
@@ -303,86 +311,124 @@ namespace Content.Server.Health.BodySystem {
         /// </summary>
         public IEntity DropBodyPart(BodyPart part)
         {
-            if (!_partDictionary.ContainsValue(part))
-                return null;
-            if (part != null)
+            if (!_partDictionary.ContainsValue(part) || part == null)
             {
-                string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
-                _partDictionary.Remove(slotName);
-                if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
+                return null;
+            }
+
+            var slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
+            _partDictionary.Remove(slotName);
+
+            if (TryGetBodyPartConnections(slotName, out List<string> connections)
+            ) //Call disconnect on all limbs that were hanging off this limb.
+            {
+                foreach (var connectionName in connections
+                ) //This loop is an unoptimized travesty. TODO: optimize to be less shit
                 {
-                    foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                     {
-                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result))
-                        {
-                            DisconnectBodyPartByName(connectionName, true);
-                        }
+                        DisconnectBodyPartByName(connectionName, true);
                     }
                 }
-                var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                return partEntity;
             }
-            return null;
+
+            var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+            partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+            return partEntity;
         }
 
         /// <summary>
         /// Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see> if they were hanging off it.
         /// </summary>
-        public void DisconnectBodyPart(BodyPart part, bool dropEntity) {
-            if (!_partDictionary.ContainsValue(part))
+        public void DisconnectBodyPart(BodyPart part, bool dropEntity)
+        {
+            if (!_partDictionary.ContainsValue(part) || part == null)
+            {
                 return;
-            if (part != null) {
-                string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
-                _partDictionary.Remove(slotName);
-                if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
+            }
+
+            var slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
+
+            if (_partDictionary.Remove(slotName, out var partRemoved))
+            {
+                BodyPartRemoved(partRemoved, slotName);
+            }
+
+            if (TryGetBodyPartConnections(slotName, out List<string> connections)
+            ) //Call disconnect on all limbs that were hanging off this limb.
+            {
+                foreach (string connectionName in connections
+                ) //This loop is an unoptimized travesty. TODO: optimize to be less shit
                 {
-                    foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result))
                     {
-                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result)) {
-                            DisconnectBodyPartByName(connectionName, dropEntity);
-                        }
+                        DisconnectBodyPartByName(connectionName, dropEntity);
                     }
                 }
-                if (dropEntity) {
-                    var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                    partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                }
+            }
+
+            if (dropEntity)
+            {
+                var partEntity =
+                    Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
             }
         }
 
         /// <summary>
         ///     Internal string version of DisconnectBodyPart for performance purposes. Yes, it is actually more performant.
         /// </summary>
-        private void DisconnectBodyPartByName(string name, bool dropEntity) {
-            if (!TryGetBodyPart(name, out BodyPart part))
+        private void DisconnectBodyPartByName(string name, bool dropEntity)
+        {
+            if (!TryGetBodyPart(name, out var part))
+            {
                 return;
-            if (part != null) {
-                _partDictionary.Remove(name);
-                if (TryGetBodyPartConnections(name, out List<string> connections)) {
-                    foreach (string connectionName in connections) {
-                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result)) {
+            }
+
+            if (part != null)
+            {
+                if (_partDictionary.Remove(name, out var partRemoved))
+                {
+                    BodyPartRemoved(partRemoved, name);
+                }
+
+                if (TryGetBodyPartConnections(name, out List<string> connections))
+                {
+                    foreach (var connectionName in connections)
+                    {
+                        if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
+                        {
                             DisconnectBodyPartByName(connectionName, dropEntity);
                         }
-                    }
-                }
-                if (dropEntity) {
-
-                if (_partDictionary.Remove(slotName, out var partRemoved))
-                {
-                    var args = new BodyPartRemovedEventArgs(partRemoved, slotName);
-
-                    foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
-                    {
-                        component.BodyPartRemoved(args);
                     }
                 }
 
                 if (dropEntity)
                 {
-                    var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                    var partEntity =
+                        Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
                 }
+            }
+        }
+
+        private void BodyPartAdded(BodyPart part, string slotName)
+        {
+            var argsAdded = new BodyPartAddedEventArgs(part, slotName);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
+            {
+                component.BodyPartAdded(argsAdded);
+            }
+        }
+
+        private void BodyPartRemoved(BodyPart part, string slotName)
+        {
+            var args = new BodyPartRemovedEventArgs(part, slotName);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+            {
+                component.BodyPartRemoved(args);
             }
         }
     }

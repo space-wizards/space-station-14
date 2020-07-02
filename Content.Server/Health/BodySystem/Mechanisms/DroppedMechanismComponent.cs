@@ -1,33 +1,30 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Content.Shared.BodySystem;
-using Robust.Shared.ViewVariables;
 using System.Globalization;
-using Robust.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Log;
+using Content.Server.Health.BodySystem.BodyParts;
+using Content.Shared.BodySystem;
 using Content.Shared.Interfaces;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Random;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using System.Diagnostics;
-using Content.Server.Health.BodySystem.BodyParts;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BodySystem {
-
+namespace Content.Server.Health.BodySystem.Mechanisms
+{
     /// <summary>
     ///    Component representing a dropped, tangible <see cref="Mechanism"/> entity.
-    /// </summary>	
+    /// </summary>
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
-
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
         [Dependency] private IPrototypeManager _prototypeManager;
@@ -131,7 +128,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible BodyParts that can be operated on. 
+        ///     Called after the client chooses from a list of possible BodyParts that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {

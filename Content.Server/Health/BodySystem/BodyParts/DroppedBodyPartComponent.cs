@@ -1,28 +1,24 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using Content.Shared.BodySystem;
-using Robust.Shared.ViewVariables;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using Robust.Server.GameObjects;
+using System.Linq;
+using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.BodySystem;
+using Content.Shared.Interfaces;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
-using Content.Shared.Interfaces;
-using Robust.Shared.Interfaces.Random;
-using System.Linq;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.BodyParts
 {
-
     /// <summary>
     ///    Component representing a dropped, tangible <see cref="BodyPart"/> entity.
-    /// </summary>	
+    /// </summary>
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {
