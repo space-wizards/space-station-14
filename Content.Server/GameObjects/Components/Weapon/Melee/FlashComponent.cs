@@ -117,16 +117,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     sprite.LayerSetState(0, "burnt");
 
                     _notifyManager.PopupMessage(Owner, user, "The flash burns out!");
-
-                    if (user.TryGetComponent(out IActorComponent actor))
-                    {
-                        var message = _netManager.CreateNetMessage<MsgChatMessage>();
-                        message.Message = $"burns out!";
-                        message.MessageWrap = $"The {Owner.Name} {{0}}";
-                        message.Channel = ChatChannel.Visual;
-
-                        _netManager.ServerSendMessage(message, actor.playerSession.ConnectedClient);
-                    }
                 }
                 else if (!_flashing)
                 {
@@ -154,6 +144,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             Flash(entity, user, _flashDuration);
         }
 
+        // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
         private void Flash(IEntity entity, IEntity user, int flashDuration)
         {
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))

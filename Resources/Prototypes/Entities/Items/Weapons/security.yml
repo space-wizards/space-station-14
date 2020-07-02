@@ -40,12 +40,12 @@
     - type: Flash
       damage: 0
       cooldownTime: 1
-      arc: null
+      arc: smash
       hitSound: /Audio/weapons/flash.ogg
       slowTo: 0.7
 
     - type: Item
-      Size: 10
+      Size: 2
       sprite: Objects/Melee/flash.rsi
 
     - type: ItemCooldown
