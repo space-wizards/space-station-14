@@ -86,7 +86,7 @@ namespace Content.Client.UserInterface
         ///     The actual location of the button. The right hand is drawn
         ///     on the LEFT of the screen.
         /// </param>
-        private void AddButton(SharedHand hand, HandLocation buttonLocation)
+        private void AddButton(Hand hand, HandLocation buttonLocation)
         {
             var buttonTexture = LocationTexture(buttonLocation);
             var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
@@ -113,8 +113,6 @@ namespace Content.Client.UserInterface
                 button.AddChild(_activeHandRect);
                 _activeHandRect.SetPositionInParent(1);
             }
-
-            _itemSlotManager.SetItemSlot(button, hand.Entity);
         }
 
         // TODO: Call when hands are removed
@@ -192,7 +190,7 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            foreach (var button in _buttons.Values)
+            foreach (var (slot, button) in _buttons)
             {
                 if (button.Location == HandLocation.Left)
                 {
@@ -202,6 +200,8 @@ namespace Content.Client.UserInterface
                 {
                     button.SetPositionFirst();
                 }
+
+                _itemSlotManager.SetItemSlot(button, component.Hands[slot].Entity);
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
