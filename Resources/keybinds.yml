@@ -34,7 +34,7 @@ binds:
 - function: MoveDown
   type: State
   key: S
-- function: Run
+- function: Walk
   type: State
   key: Shift
 - function: ShowEscapeMenu
@@ -242,4 +242,11 @@ binds:
 - function: TakeScreenshotNoUI
   type: state
   key: F2
+  mod1: Shift
+- function: GuiTabNavigateNext
+  type: state
+  key: Tab
+- function: GuiTabNavigatePrev
+  type: state
+  key: Tab
   mod1: Shift

@@ -1,5 +1,5 @@
 - type: entity
-  name: Spear
+  name: spear
   parent: BaseItem
   id: Spear
   components:

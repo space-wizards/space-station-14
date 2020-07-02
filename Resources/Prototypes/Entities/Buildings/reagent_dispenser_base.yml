@@ -1,9 +1,10 @@
-- type: entity
+﻿- type: entity
   abstract: true
   id: ReagentDispenserBase
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Anchorable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -20,10 +21,10 @@
   - type: SnapGrid
     offset: Center
   - type: ReagentDispenser
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key
       type: ReagentDispenserBoundUserInterface
-  - type: Sound
+  - type: LoopingSound
 

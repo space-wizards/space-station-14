@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -191,7 +192,7 @@ namespace Content.Server.GameObjects
             if(entity.TryGetComponent(out StunnableComponent stun))
                 stun.CancelAll();
 
-            StandingStateHelper.Down(entity, playSound:false);
+            StandingStateHelper.Down(entity);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {

@@ -1,29 +1,54 @@
 - type: entity
-  name: Carpet Floor Tile
   parent: BaseItem
-  id: FloorTileItemCarpet
-  description: Those could work as a pretty decent throwing weapon.
+  id: FloorTileItemBase
+  description: These could work as a pretty decent throwing weapon.
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
+    state: tile_steel
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
-    state: tile_carpet
-  - type: Item
-    Size: 25
+    state: tile_steel
   - type: FloorTile
-    output: floor_carpet
+    output: floor_steel
   - type: Stack
-    stacktype: FloorTileCarpet
+    stacktype: FloorTileSteel
     count: 1
     max: 8
 
 - type: entity
-  name: Wood Floor Tile
-  parent: BaseItem
+  name: steel floor tile
+  parent: FloorTileItemBase
+  id: FloorTileItemSteel
+  components:
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_steel
+
+- type: entity
+  name: carpet floor tile
+  parent: FloorTileItemBase
+  id: FloorTileItemCarpet
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_carpet
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_carpet
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_carpet
+  - type: FloorTile
+    output: floor_carpet
+  - type: Stack
+    stacktype: FloorTileCarpet
+
+- type: entity
+  name: wood floor tile
+  parent: FloorTileItemBase
   id: FloorTileItemWood
-  description: Those could work as a pretty decent throwing weapon.
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
@@ -32,7 +57,8 @@
     sprite: Objects/Tiles/tile.rsi
     state: tile_wood
   - type: Item
-    Size: 25
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_wood
   - type: FloorTile
     output: floor_wood
   - type: Stack
@@ -41,10 +67,9 @@
     max: 8
 
 - type: entity
-  name: White Floor Tile
-  parent: BaseItem
+  name: white floor tile
+  parent: FloorTileItemBase
   id: FloorTileItemWhite
-  description: Those could work as a pretty decent throwing weapon.
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
@@ -53,7 +78,8 @@
     sprite: Objects/Tiles/tile.rsi
     state: tile_white
   - type: Item
-    Size: 25
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_white
   - type: FloorTile
     output: floor_white
   - type: Stack
@@ -62,10 +88,9 @@
     max: 8
 
 - type: entity
-  name: Dark Floor Tile
-  parent: BaseItem
+  name: dark floor tile
+  parent: FloorTileItemBase
   id: FloorTileItemDark
-  description: Those could work as a pretty decent throwing weapon.
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
@@ -74,7 +99,8 @@
     sprite: Objects/Tiles/tile.rsi
     state: tile_dark
   - type: Item
-    Size: 25
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_dark
   - type: FloorTile
     output: floor_dark
   - type: Stack
@@ -83,22 +109,222 @@
     max: 8
 
 - type: entity
-  name: Steel Floor Tile
-  parent: BaseItem
-  id: FloorTileItemSteel
-  description: Those could work as a pretty decent throwing weapon.
+  name: floor tile techmaint
+  parent: FloorTileItemBase
+  id: FloorTileItemTechmaint
   components:
   - type: Sprite
     sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
+    state: tile_dark_techfloor_grid
   - type: Icon
     sprite: Objects/Tiles/tile.rsi
-    state: tile_steel
+    state: tile_dark_techfloor_grid
   - type: Item
-    Size: 25
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_dark
   - type: FloorTile
-    output: floor_steel
-  - type: Stack
-    stacktype: FloorTileSteel
-    count: 1
-    max: 8
+    output: floor_techmaint
+
+- type: entity
+  name: floor tile freezer
+  parent: FloorTileItemBase
+  id: FloorTileItemFreezer
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_showroom
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_showroom
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_showroom
+  - type: FloorTile
+    output: floor_freezer
+
+- type: entity
+  name: floor tile showroom
+  parent: FloorTileItemBase
+  id: FloorTileItemShowroom
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_showroom
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_showroom
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_showroom
+  - type: FloorTile
+    output: floor_showroom
+
+- type: entity
+  name: floor tile snow
+  parent: FloorTileItemBase
+  id: FloorTileItemSnow
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_snow
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_snow
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_silver
+  - type: FloorTile
+    output: floor_snow
+
+- type: entity
+  name: floor tile green circuit
+  parent: FloorTileItemBase
+  id: FloorTileItemGCircuit
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_gcircuit
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_gcircuit
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_silver
+  - type: FloorTile
+    output: floor_green_circuit
+
+- type: entity
+  name: floor tile gold
+  parent: FloorTileItemBase
+  id: FloorTileItemGold
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_gold
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_gold
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_gold
+  - type: FloorTile
+    output: floor_gold
+
+- type: entity
+  name: floor tile reinforced
+  parent: FloorTileItemBase
+  id: FloorTileItemReinforced
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_reinforced
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_reinforced
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_reinforced
+  - type: FloorTile
+    output: floor_reinforced
+
+- type: entity
+  name: floor tile rock
+  parent: FloorTileItemBase
+  id: FloorTileItemRock
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_rockvault
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_rockvault
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_steel
+  - type: FloorTile
+    output: floor_rockvault
+
+- type: entity
+  name: floor tile mono
+  parent: FloorTileItemBase
+  id: FloorTileItemMono
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white_monofloor
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white_monofloor
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_steel
+  - type: FloorTile
+    output: floor_mono
+
+- type: entity
+  name: floor tile linoleum
+  parent: FloorTileItemBase
+  id: FloorTileItemLino
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white_monofloor
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white_monofloor
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_steel
+  - type: FloorTile
+    output: floor_lino
+
+- type: entity
+  name: floor tile asteroid
+  parent: FloorTileItemBase
+  id: FloorTileItemAsteroid
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_white
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_brown
+  - type: FloorTile
+    output: floor_asteroid_tile
+
+- type: entity
+  name: floor tile hydro
+  parent: FloorTileItemBase
+  id: FloorTileItemHydro
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_hydro
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_hydro
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_hydro
+  - type: FloorTile
+    output: floor_hydro
+
+- type: entity
+  name: floor tile dirty
+  parent: FloorTileItemBase
+  id: FloorTileItemDirty
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dirty
+  - type: Icon
+    sprite: Objects/Tiles/tile.rsi
+    state: tile_dirty
+  - type: Item
+    sprite: Objects/Tiles/tile.rsi
+    HeldPrefix: tile_brown
+  - type: FloorTile
+    output: floor_steel_dirty

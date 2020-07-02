@@ -17,6 +17,8 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -41,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private Solution _containedSolution = new Solution();
         private ReagentUnit _maxVolume;
         private SolutionCaps _capabilities;
-        private string _fillInitState = "";
+        private string _fillInitState;
         private int _fillInitSteps;
         private string _fillPathString = "Objects/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
@@ -128,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
+            _audioSystem = EntitySystem.Get<AudioSystem>();
             _chemistrySystem = _entitySystemManager.GetEntitySystem<ChemistrySystem>();
             _reactions = _prototypeManager.EnumeratePrototypes<ReactionPrototype>();
         }
@@ -218,23 +220,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             protected override void GetData(IEntity user, SolutionComponent component, VerbData data)
             {
-                if (user.TryGetComponent<HandsComponent>(out var hands))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    !user.TryGetComponent<HandsComponent>(out var hands) ||
+                    hands.GetActiveHand == null ||
+                    !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
-                    if (hands.GetActiveHand != null)
-                    {
-                        if (hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
-                        {
-                            if ((solution.Capabilities & SolutionCaps.PourOut) != 0 &&
-                                (component.Capabilities & SolutionCaps.PourIn) != 0)
-                            {
-                                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
-                                var myName = component.Owner.Prototype?.Name ?? "<Item>";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
-                                data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
-                                return;
-                            }
-                        }
-                    }
+                if ((solution.Capabilities & SolutionCaps.PourOut) != 0 &&
+                    (component.Capabilities & SolutionCaps.PourIn) != 0)
+                {
+                    var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
+                    var myName = component.Owner.Prototype?.Name ?? "<Item>";
+
+                    data.Text= $"Transfer liquid from [{heldEntityName}] to [{myName}].";
+                    return;
                 }
 
                 data.Visibility = VerbVisibility.Invisible;
@@ -265,7 +267,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        void IExamine.Examine(FormattedMessage message)
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (NoExamine)
             {
@@ -281,7 +283,26 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 if (_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
                 {
-                    message.AddText($"{proto.Name}: {reagent.Quantity}u\n");
+                    if (inDetailsRange)
+                    {
+                        message.AddText($"{proto.Name}: {reagent.Quantity}u\n");
+                    }
+                    else
+                    {
+                        //This is trash but it shows the general idea
+                        var color = proto.SubstanceColor;
+                        var colorIsh = "Red";
+                        if (color.G > color.R)
+                        {
+                            colorIsh = "Green";
+                        }
+                        if (color.B > color.G && color.B > color.R)
+                        {
+                            colorIsh = "Blue";
+                        }
+
+                        message.AddText(_loc.GetString("A {0} liquid\n", colorIsh));
+                    }
                 }
                 else
                 {
@@ -298,23 +319,23 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             protected override void GetData(IEntity user, SolutionComponent component, VerbData data)
             {
-                if (user.TryGetComponent<HandsComponent>(out var hands))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    !user.TryGetComponent<HandsComponent>(out var hands) ||
+                    hands.GetActiveHand == null ||
+                    !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
-                    if (hands.GetActiveHand != null)
-                    {
-                        if (hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
-                        {
-                            if ((solution.Capabilities & SolutionCaps.PourIn) != 0 &&
-                                (component.Capabilities & SolutionCaps.PourOut) != 0)
-                            {
-                                var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
-                                var myName = component.Owner.Prototype?.Name ?? "<Item>";
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
 
-                                data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
-                                return;
-                            }
-                        }
-                    }
+                if ((solution.Capabilities & SolutionCaps.PourIn) != 0 &&
+                    (component.Capabilities & SolutionCaps.PourOut) != 0)
+                {
+                    var heldEntityName = hands.GetActiveHand.Owner?.Prototype?.Name ?? "<Item>";
+                    var myName = component.Owner.Prototype?.Name ?? "<Item>";
+
+                    data.Text = $"Transfer liquid from [{myName}] to [{heldEntityName}].";
+                    return;
                 }
 
                 data.Visibility = VerbVisibility.Invisible;
@@ -468,11 +489,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             //Trigger reaction effects
             foreach (var effect in reaction.Effects)
             {
-                effect.React(Owner, unitReactions.Decimal());
+                effect.React(Owner, unitReactions.Double());
             }
 
             //Play reaction sound client-side
-            _audioSystem.Play("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+            _audioSystem.PlayAtCoords("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
 
         /// <summary>

@@ -80,6 +80,24 @@
       ]
     },
     {
+      "name": "church_organ",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "piano",
       "directions": 4,
       "delays": [

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Shared.Preferences;
 using Robust.Server.Interfaces.Player;
 
@@ -7,7 +9,8 @@ namespace Content.Server.Interfaces
     {
         void FinishInit();
         void OnClientConnected(IPlayerSession session);
-        PlayerPreferences GetPreferences(string username);
+        Task<PlayerPreferences> GetPreferencesAsync(string username);
+        Task<IEnumerable<KeyValuePair<string, ICharacterProfile>>> GetSelectedProfilesForPlayersAsync(List<string> usernames);
         void StartInit();
     }
 }

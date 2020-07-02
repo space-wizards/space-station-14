@@ -114,9 +114,9 @@ namespace Content.Server.GameObjects.Components.Mobs
             serializer.DataField(ref _showExamineInfo, "show_examine_info", false);
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!ShowExamineInfo)
+            if (!ShowExamineInfo || !inDetailsRange)
                 return;
 
             var dead = false;

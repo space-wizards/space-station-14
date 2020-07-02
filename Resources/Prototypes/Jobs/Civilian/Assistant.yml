@@ -1,6 +1,6 @@
 - type: job
   id: Assistant
-  name: "Assistant"
+  name: "assistant"
   positions: -1 # Treated as infinite.
   startingGear: AssistantGear
   department:
@@ -8,7 +8,6 @@
   icon: "Assistant"
   access:
   - Maintenance
-  - Service
 
 - type: startingGear
   id: AssistantGear

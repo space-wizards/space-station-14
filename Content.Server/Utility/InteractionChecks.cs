@@ -1,5 +1,6 @@
 using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Systems;

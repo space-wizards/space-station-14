@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseLightbulb
-  name: Light Bulb
+  name: light bulb
   id: LightBulb
   components:
   - type: LightBulb
@@ -16,7 +16,7 @@
 
 - type: entity
   parent: BaseItem
-  name: BaseLightbulb
+  name: baselightbulb
   id: BaseLightbulb
   abstract: true
   components:
@@ -24,7 +24,7 @@
 
 - type: entity
   parent: BaseLightbulb
-  name: Light Tube
+  name: light tube
   id: LightTube
   components:
   - type: LightBulb
@@ -40,7 +40,7 @@
 
 - type: entity
   parent: BaseLightbulb
-  name: LED Light Tube
+  name: led light tube
   id: LedLightTube
   components:
   - type: LightBulb

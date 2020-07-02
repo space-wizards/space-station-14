@@ -1,5 +1,5 @@
 - type: entity
-  name: Stool
+  name: stool
   id: Stool
   components:
   - type: Clickable
@@ -12,6 +12,8 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: stool_base
+  - type: Strap
+    position: Stand
 
 - type: entity
   name: bar stool
@@ -25,7 +27,7 @@
     state: bar_stool
 
 - type: entity
-  name: White Office Chair
+  name: white office chair
   id: ChairOfficeLight
   components:
   - type: Rotatable
@@ -38,9 +40,11 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: officechair_white
+  - type: Strap
+    position: Stand
 
 - type: entity
-  name: Dark Office Chair
+  name: dark office chair
   id: ChairOfficeDark
   components:
   - type: Rotatable
@@ -53,9 +57,11 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: officechair_dark
+  - type: Strap
+    position: Stand
 
 - type: entity
-  name: Chair
+  name: chair
   id: Chair
   components:
   - type: Clickable
@@ -68,10 +74,11 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: chair
-
+  - type: Strap
+    position: Stand
 
 - type: entity
-  name: Wooden Chair
+  name: wooden chair
   id: ChairWood
   parent: Chair
   components:
@@ -80,3 +87,22 @@
     color: "white"
   - type: Icon
     state: wooden_chair
+
+- type: entity
+  name: bed
+  id: Bed
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Buildings/furniture.rsi
+    state: bed
+  - type: Icon
+    sprite: Buildings/furniture.rsi
+    state: bed
+  - type: Strap
+    position: Down
+    rotation: -90
+  placement:
+    mode: SnapgridCenter

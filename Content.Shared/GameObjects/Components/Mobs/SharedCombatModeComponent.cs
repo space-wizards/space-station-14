@@ -1,7 +1,5 @@
 using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,8 +19,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             get => _isInCombatMode;
             set
             {
-                var gt = IoCManager.Resolve<IGameTiming>();
-
                 _isInCombatMode = value;
                 Dirty();
             }

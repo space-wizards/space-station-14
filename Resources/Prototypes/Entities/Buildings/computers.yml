@@ -1,6 +1,6 @@
-- type: entity
+﻿- type: entity
   id: ComputerBase
-  name: Computer
+  name: computer
   abstract: true
   components:
   - type: Physics
@@ -18,12 +18,15 @@
       - MobImpassable
       - VaultImpassable
       - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: Icon
     sprite: Buildings/computer.rsi
     state: computer
   - type: Computer
-  - type: PowerDevice
-    priority: High
+  - type: PowerReceiver
   - type: Anchorable
 
   - type: Sprite
@@ -50,7 +53,7 @@
 - type: entity
   id: ComputerAlert
   parent: ComputerBase
-  name: Alerts Computer
+  name: alerts computer
   components:
   - type: Appearance
     visuals:
@@ -62,7 +65,7 @@
 - type: entity
   id: ComputerPowerMonitoring
   parent: ComputerBase
-  name: Power Monitoring Computer
+  name: power monitoring computer
   components:
   - type: Appearance
     visuals:
@@ -74,7 +77,7 @@
 - type: entity
   id: ComputerSupplyOrdering
   parent: ComputerBase
-  name: Cargo Ordering Computer
+  name: cargo ordering computer
   components:
   - type: Appearance
     visuals:
@@ -106,7 +109,7 @@
 - type: entity
   id: ComputerSupplyRequest
   parent: ComputerSupplyOrdering
-  name: Cargo Request Computer
+  name: cargo request computer
   components:
   - type: Appearance
     visuals:
@@ -119,7 +122,7 @@
 - type: entity
   id: ComputerMedicalRecords
   parent: ComputerBase
-  name: Medical Records Computer
+  name: medical records computer
   components:
   - type: Appearance
     visuals:
@@ -131,7 +134,7 @@
 - type: entity
   id: ComputerResearchAndDevelopment
   parent: ComputerBase
-  name: R&D Computer
+  name: R&D computer
   components:
   - type: Appearance
     visuals:
@@ -147,18 +150,17 @@
       type: ResearchConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-  - type: PowerDevice
-    drawtype: Both
+  - type: PowerReceiver
     load: 200
     priority: Low
 
 - type: entity
   id: ComputerId
   parent: ComputerBase
-  name: ID Card Computer
+  name: ID card computer
   components:
   - type: AccessReader
-    necessary: ["IdCard"]
+    access: [["HeadOfPersonnel"]]
   - type: IdCardConsole
   - type: UserInterface
     interfaces:
@@ -173,7 +175,7 @@
 - type: entity
   id: computerBodyScanner
   parent: ComputerBase
-  name: Body Scanner Computer
+  name: body scanner computer
   components:
   - type: BodyScanner
   - type: UserInterface
@@ -189,7 +191,7 @@
 - type: entity
   id: ComputerComms
   parent: ComputerBase
-  name: Communications Computer
+  name: communications computer
   components:
   - type: Appearance
     visuals:
@@ -201,3 +203,19 @@
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
       type: CommunicationsConsoleBoundUserInterface
+
+- type: entity
+  id: ComputerSolarControl
+  parent: ComputerBase
+  name: Solar Control Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer2D
+      key: generic_key
+      screen: solar_screen
+  - type: SolarControlConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.SolarControlConsoleUiKey.Key
+      type: SolarControlConsoleBoundUserInterface

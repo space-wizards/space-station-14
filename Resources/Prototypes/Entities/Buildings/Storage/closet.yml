@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: LockerGeneric
   name: closet
   description: A standard-issue Nanotrasen storage unit.
@@ -47,7 +47,8 @@
     - type: StorageVisualizer2D
       state_open: generic_open
       state_closed: generic_door
-  - type: Sound
+  - type: LoopingSound
+  - type: Anchorable
   placement:
     snap:
     - Wall

@@ -1,6 +1,6 @@
-- type: entity
+﻿- type: entity
   id: KitchenMicrowave
-  name: Microwave
+  name: microwave
   description: It's magic.
   placement:
     mode: SnapgridCenter
@@ -16,7 +16,7 @@
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer
-  - type: Sound
+  - type: LoopingSound
   - type: UserInterface
     interfaces:
     - key: enum.MicrowaveUiKey.Key
@@ -24,7 +24,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.25,-0.4,0.25,0.4"
+      bounds: "-0.16,-0.3,0.16,0.3"
       layer:
       - Opaque
       - Impassable
@@ -34,13 +34,14 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Kitchen/microwave.rsi
+    drawdepth: Items
     layers:
     - state: mw0
       map: ["enum.MicrowaveVisualizerLayers.Base"]
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: Icon
     sprite: Objects/Kitchen/microwave.rsi
     state: mw0

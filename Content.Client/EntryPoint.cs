@@ -24,6 +24,7 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -41,6 +42,7 @@ namespace Content.Client
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
         [Dependency] private readonly IGameController _gameController;
         [Dependency] private readonly IStateManager _stateManager;
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         public override void Init()
@@ -59,12 +61,6 @@ namespace Content.Client
                 "Interactable",
                 "Destructible",
                 "Temperature",
-                "PowerTransfer",
-                "PowerNode",
-                "PowerProvider",
-                "PowerDevice",
-                "PowerStorage",
-                "PowerGenerator",
                 "Explosive",
                 "OnUseTimerTrigger",
                 "ToolboxElectricalFill",
@@ -85,14 +81,11 @@ namespace Content.Client
                 "Multitool",
                 "Wrench",
                 "Crowbar",
-                "HitscanWeapon",
-                "ProjectileWeapon",
                 "Projectile",
                 "MeleeWeapon",
                 "Storeable",
                 "Dice",
                 "Construction",
-                "Apc",
                 "Door",
                 "PoweredLight",
                 "Smes",
@@ -100,14 +93,13 @@ namespace Content.Client
                 "LightBulb",
                 "Healing",
                 "Catwalk",
-                "BallisticMagazine",
-                "BallisticBullet",
+                "RangedMagazine",
+                "Ammo",
                 "HitscanWeaponCapacitor",
                 "PowerCell",
-                "WeaponCapacitorCharger",
                 "PowerCellCharger",
+                "WeaponCapacitorCharger",
                 "AiController",
-                "PlayerInputMover",
                 "Computer",
                 "AsteroidRock",
                 "ResearchServer",
@@ -120,13 +112,10 @@ namespace Content.Client
                 "Airlock",
                 "MedicalScanner",
                 "WirePlacer",
-                "Species",
                 "Drink",
                 "Food",
-                "DrinkFoodContainer",
+                "FoodContainer",
                 "Stomach",
-                "Hunger",
-                "Thirst",
                 "Rotatable",
                 "MagicMirror",
                 "MedkitFill",
@@ -142,19 +131,24 @@ namespace Content.Client
                 "Bloodstream",
                 "TransformableContainer",
                 "Mind",
-                "MovementSpeedModifier",
                 "StorageFill",
                 "Mop",
                 "Bucket",
                 "Puddle",
                 "CanSpill",
+                "SpeedLoader",
+                "Hitscan",
+                "BoltActionBarrel",
+                "PumpBarrel",
+                "RevolverBarrel",
+                "ExplosiveProjectile",
+                "StunnableProjectile",
                 "RandomPottedPlant",
                 "CommunicationsConsole",
                 "BarSign",
                 "DroppedBodyPart",
                 "DroppedMechanism",
                 "BodyManager",
-                "Stunnable",
                 "SolarPanel",
                 "BodyScanner",
                 "Stunbaton",
@@ -162,6 +156,29 @@ namespace Content.Client
                 "Tool",
                 "TilePrying",
                 "RandomToolColor",
+                "ConditionalSpawner",
+                "PottedPlantHide",
+                "SecureEntityStorage",
+                "PresetIdCard",
+                "SolarControlConsole",
+                "BatteryBarrel",
+                "FlashExplosive",
+                "FlashProjectile",
+                "Utensil",
+                "UnarmedCombat",
+                "TimedSpawner",
+                "Buckle",
+                "Strap",
+                "NodeContainer",
+                "PowerSupplier",
+                "PowerConsumer",
+                "Battery",
+                "BatteryStorage",
+                "BatteryDischarger",
+                "Apc",
+                "PowerProvider",
+                "PowerReceiver",
+                "Wire",
             };
 
             foreach (var ignoreName in registerIgnore)
@@ -209,6 +226,8 @@ namespace Content.Client
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
+
+             _configurationManager.RegisterCVar("outline.enabled", true);
         }
 
         /// <summary>
@@ -235,7 +254,10 @@ namespace Content.Client
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            if (!eventArgs.OldEntity.Deleted)
+            {
+                eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            }
         }
 
         public override void PostInit()

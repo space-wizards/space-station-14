@@ -3,14 +3,15 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -68,6 +69,8 @@ namespace Content.Server.GameObjects
                     AddHand(handsname);
                 }
             }
+
+            serializer.DataField(ref activeIndex, "defaultHand", orderedHands.LastOrDefault());
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
@@ -104,7 +107,7 @@ namespace Content.Server.GameObjects
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
         /// </summary>
-        private IEnumerable<string> ActivePriorityEnumerable()
+        public IEnumerable<string> ActivePriorityEnumerable()
         {
             yield return ActiveIndex;
             foreach (var hand in hands.Keys)
@@ -189,7 +192,7 @@ namespace Content.Server.GameObjects
             return null;
         }
 
-        public bool Drop(string slot, GridCoordinates coords)
+        public bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true)
         {
             if (!CanDrop(slot))
             {
@@ -204,7 +207,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
                 return false;
 
             item.RemovedFromSlot();
@@ -216,7 +219,7 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        public bool Drop(IEntity entity, GridCoordinates coords)
+        public bool Drop(IEntity entity, GridCoordinates coords, bool doMobChecks = true)
         {
             if (entity == null)
             {
@@ -229,10 +232,10 @@ namespace Content.Server.GameObjects
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, coords);
+            return Drop(slot, coords, doMobChecks);
         }
 
-        public bool Drop(string slot)
+        public bool Drop(string slot, bool doMobChecks = true)
         {
             if (!CanDrop(slot))
             {
@@ -242,7 +245,7 @@ namespace Content.Server.GameObjects
             var inventorySlot = hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
 
-            if (!_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
                 return false;
 
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
@@ -263,7 +266,7 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        public bool Drop(IEntity entity)
+        public bool Drop(IEntity entity, bool doMobChecks = true)
         {
             if (entity == null)
             {
@@ -276,10 +279,10 @@ namespace Content.Server.GameObjects
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot);
+            return Drop(slot, doMobChecks);
         }
 
-        public bool Drop(string slot, BaseContainer targetContainer)
+        public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
         {
             if (slot == null)
             {
@@ -296,8 +299,15 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
+
             var inventorySlot = hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+
+            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            {
+                return false;
+            }
+
             if (!inventorySlot.CanRemove(inventorySlot.ContainedEntity))
             {
                 return false;
@@ -324,7 +334,7 @@ namespace Content.Server.GameObjects
             return true;
         }
 
-        public bool Drop(IEntity entity, BaseContainer targetContainer)
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool doMobChecks = true)
         {
             if (entity == null)
             {
@@ -337,7 +347,7 @@ namespace Content.Server.GameObjects
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, targetContainer);
+            return Drop(slot, targetContainer, doMobChecks);
         }
 
         /// <summary>
@@ -550,6 +560,7 @@ namespace Content.Server.GameObjects
                 }
 
                 Dirty();
+
                 if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
                 {
                     return;

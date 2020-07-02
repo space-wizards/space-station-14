@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
 using Content.Shared.Audio;
@@ -10,6 +11,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -24,17 +26,16 @@ namespace Content.Server.GameObjects.Components.Research
     {
 
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface;
         private ResearchClientComponent _client;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
         private const string _soundCollectionName = "keyboard";
 
-        private bool Powered => _powerDevice.Powered;
+        private bool Powered => _powerReceiver.Powered;
 
         public override void Initialize()
         {
@@ -42,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Research
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(ResearchConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             _client = Owner.GetComponent<ResearchClientComponent>();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -121,8 +122,8 @@ namespace Content.Server.GameObjects.Components.Research
         {
             var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollectionName);
             var file = _random.Pick(soundCollection.PickFiles);
-            var audioSystem = _entitySystemManager.GetEntitySystem<AudioSystem>();
-            audioSystem.Play(file,Owner,AudioParams.Default);
+            var audioSystem = EntitySystem.Get<AudioSystem>();
+            audioSystem.PlayFromEntity(file,Owner,AudioParams.Default);
         }
 
 

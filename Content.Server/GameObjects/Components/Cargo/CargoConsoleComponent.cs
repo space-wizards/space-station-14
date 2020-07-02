@@ -1,21 +1,16 @@
 ﻿using Content.Server.Cargo;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Cargo;
-using Content.Server.GameObjects.Components.Power;
 using Content.Shared.Prototypes.Cargo;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.Utility;
-using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.Components.Cargo
 {
@@ -24,7 +19,6 @@ namespace Content.Server.GameObjects.Components.Cargo
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
 #pragma warning disable 649
-        [Dependency] private readonly IGalacticBankManager _galacticBankManager;
         [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager;
 #pragma warning restore 649
 
@@ -37,13 +31,38 @@ namespace Content.Server.GameObjects.Components.Cargo
         public GalacticMarketComponent Market { get; private set; }
         [ViewVariables]
         public CargoOrderDatabaseComponent Orders { get; private set; }
+
+        private CargoBankAccount _bankAccount;
+
         [ViewVariables]
-        public int BankId { get; private set; }
+        [CanBeNull]
+        public CargoBankAccount BankAccount
+        {
+            get => _bankAccount;
+            private set
+            {
+                if (_bankAccount == value)
+                    return;
+                if (_bankAccount != null)
+                {
+                    _bankAccount.OnBalanceChange -= UpdateUIState;
+                }
+
+                _bankAccount = value;
+                if (value != null)
+                {
+                    _bankAccount.OnBalanceChange += UpdateUIState;
+                }
+
+                UpdateUIState();
+            }
+        }
 
         private bool _requestOnly = false;
 
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
+        private CargoConsoleSystem _cargoConsoleSystem;
 
         public override void Initialize()
         {
@@ -52,9 +71,9 @@ namespace Content.Server.GameObjects.Components.Cargo
             Orders = Owner.GetComponent<CargoOrderDatabaseComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            _galacticBankManager.AddComponent(this);
-            BankId = 0;
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
+            BankAccount = _cargoConsoleSystem.StationAccount;
         }
 
         /// <summary>
@@ -80,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                 {
                     if (msg.Amount <= 0)
                         break;
-                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, BankId);
+                    _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                     break;
                 }
                 case CargoConsoleRemoveOrderMessage msg:
@@ -96,14 +115,19 @@ namespace Content.Server.GameObjects.Components.Cargo
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null)
                         break;
-                    if (!_galacticBankManager.ChangeBalance(BankId, (-product.PointCost) * order.Amount))
+                    var capacity = _cargoOrderDataManager.GetCapacity(Orders.Database.Id);
+                    if (capacity.CurrentCapacity == capacity.MaxCapacity)
+                        break;
+                    if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
                     _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);
+                    UpdateUIState();
                     break;
                 }
                 case CargoConsoleShuttleMessage _:
                 {
                     var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(Orders.Database);
+                    Orders.Database.ClearOrderCapacity();
                     // TODO replace with shuttle code
 
                     // TEMPORARY loop for spawning stuff on top of console
@@ -133,12 +157,18 @@ namespace Content.Server.GameObjects.Components.Cargo
             _userInterface.Open(actor.playerSession);
         }
 
-        /// <summary>
-        ///    Sync bank account information
-        /// </summary>
-        public void SetState(int id, string name, int balance)
+        private void UpdateUIState()
         {
-            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance));
+            if (_bankAccount == null)
+            {
+                return;
+            }
+
+            var id = _bankAccount.Id;
+            var name = _bankAccount.Name;
+            var balance = _bankAccount.Balance;
+            var capacity = _cargoOrderDataManager.GetCapacity(id);
+            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
 }
