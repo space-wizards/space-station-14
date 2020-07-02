@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: CrateGeneric
   name: crate
   description: A large container for items.

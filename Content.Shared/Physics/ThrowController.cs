@@ -1,3 +1,4 @@
+﻿using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -9,7 +10,7 @@ namespace Content.Shared.Physics
     public class ThrowController: VirtualController
     {
         private float _throwTime;
-        private SharedPhysicsComponent _component;
+        private PhysicsComponent _component;
 
         public const float DefaultThrowTime = 0.25f;
 
@@ -19,7 +20,7 @@ namespace Content.Shared.Physics
             set => _throwTime = value;
         }
 
-        public override SharedPhysicsComponent ControlledComponent
+        public override PhysicsComponent ControlledComponent
         {
             set => _component = value;
         }
