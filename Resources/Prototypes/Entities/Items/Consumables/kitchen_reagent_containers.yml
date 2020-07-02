@@ -19,3 +19,4 @@
   - type: Icon
     sprite: Objects/Food/flour.rsi
     state: icon
+  - type: CanSpill
