@@ -294,7 +294,6 @@ namespace Content.Server.GameObjects
                             {
                                 if (hands.CanPutInHand(item) && hands.PutInHand(item))
                                     {
-                                    entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                                     return;
                                     }
                             }
