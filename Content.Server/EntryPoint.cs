@@ -31,25 +31,7 @@ namespace Content.Server
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "ConstructionGhost",
-                "IconSmooth",
-                "SubFloorHide",
-                "LowWall",
-                "ReinforcedWall",
-                "Window",
-                "CharacterInfo",
-                "InteractionOutline",
-                "MeleeWeaponArcAnimation",
-                "AnimationsTest",
-                "ItemStatus",
-                "Marker",
-                "EmergencyLight",
-                "Clickable",
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }

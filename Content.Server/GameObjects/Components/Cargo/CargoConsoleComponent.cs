@@ -1,5 +1,4 @@
 ﻿using Content.Server.Cargo;
-using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Cargo;
@@ -46,22 +45,17 @@ namespace Content.Server.GameObjects.Components.Cargo
                     return;
                 if (_bankAccount != null)
                 {
-                    _bankAccount.OnBalanceChange -= OnBankAccountChange;
+                    _bankAccount.OnBalanceChange -= UpdateUIState;
                 }
 
                 _bankAccount = value;
                 if (value != null)
                 {
-                    _bankAccount.OnBalanceChange += OnBankAccountChange;
+                    _bankAccount.OnBalanceChange += UpdateUIState;
                 }
 
-                OnBankAccountChange();
+                UpdateUIState();
             }
-        }
-
-        private void OnBankAccountChange()
-        {
-            SetState(_bankAccount.Id, _bankAccount.Name, _bankAccount.Balance);
         }
 
         private bool _requestOnly = false;
@@ -121,14 +115,19 @@ namespace Content.Server.GameObjects.Components.Cargo
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null)
                         break;
+                    var capacity = _cargoOrderDataManager.GetCapacity(Orders.Database.Id);
+                    if (capacity.CurrentCapacity == capacity.MaxCapacity)
+                        break;
                     if (!_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         break;
                     _cargoOrderDataManager.ApproveOrder(Orders.Database.Id, msg.OrderNumber);
+                    UpdateUIState();
                     break;
                 }
                 case CargoConsoleShuttleMessage _:
                 {
                     var approvedOrders = _cargoOrderDataManager.RemoveAndGetApprovedFrom(Orders.Database);
+                    Orders.Database.ClearOrderCapacity();
                     // TODO replace with shuttle code
 
                     // TEMPORARY loop for spawning stuff on top of console
@@ -158,12 +157,18 @@ namespace Content.Server.GameObjects.Components.Cargo
             _userInterface.Open(actor.playerSession);
         }
 
-        /// <summary>
-        ///    Sync bank account information
-        /// </summary>
-        public void SetState(int id, string name, int balance)
+        private void UpdateUIState()
         {
-            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance));
+            if (_bankAccount == null)
+            {
+                return;
+            }
+
+            var id = _bankAccount.Id;
+            var name = _bankAccount.Name;
+            var balance = _bankAccount.Balance;
+            var capacity = _cargoOrderDataManager.GetCapacity(id);
+            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
 }
