@@ -101,6 +101,7 @@
     sprite: Buildings/disposal.rsi
     state: conpipe-j1
   - type: DisposalJunction
+    sideDegrees: -90
   - type: Appearance
     visuals:
     - type: DisposalVisualizer2D

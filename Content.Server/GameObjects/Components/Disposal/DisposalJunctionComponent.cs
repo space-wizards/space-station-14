@@ -4,6 +4,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -14,13 +15,15 @@ namespace Content.Server.GameObjects.Components.Disposal
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
+        private int _sideDegrees;
+
         public override string Name => "DisposalJunction";
 
         protected override Direction[] ConnectableDirections()
         {
             var direction = Owner.Transform.LocalRotation;
             var opposite = new Angle(direction.Theta + Math.PI);
-            var side = new Angle(direction.Theta - Math.PI / 2);
+            var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
 
             return new[] {direction.GetDir(), opposite.GetDir(), side.GetDir()};
         }
@@ -33,10 +36,16 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 next = _random.Prob(0.5f)
                     ? new Angle(next.Theta + Math.PI)
-                    : new Angle(next.Theta - Math.PI / 2);
+                    : new Angle(MathHelper.DegreesToRadians(next.Degrees + _sideDegrees));
             }
 
             return next.GetDir();
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _sideDegrees, "sideDegrees", -90);
         }
     }
 }
