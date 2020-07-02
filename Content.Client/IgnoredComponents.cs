@@ -31,7 +31,6 @@
             "Multitool",
             "Wrench",
             "Crowbar",
-            "Projectile",
             "MeleeWeapon",
             "Storeable",
             "Dice",
