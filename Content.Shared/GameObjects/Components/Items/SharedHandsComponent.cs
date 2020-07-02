@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Items
@@ -11,14 +14,42 @@ namespace Content.Shared.GameObjects.Components.Items
         public sealed override uint? NetID => ContentNetIDs.HANDS;
     }
 
+    [Serializable, NetSerializable]
+    public sealed class Hand
+    {
+        public readonly string Name;
+        public readonly EntityUid? EntityUid;
+        public readonly HandLocation Location;
+
+        public Hand(string name, EntityUid? entityUid, HandLocation location)
+        {
+            Name = name;
+            EntityUid = entityUid;
+            Location = location;
+        }
+
+        [CanBeNull] public IEntity Entity { get; private set; }
+
+        public void Initialize(IEntityManager manager)
+        {
+            if (Entity == null || !EntityUid.HasValue)
+            {
+                return;
+            }
+
+            manager.TryGetEntity(EntityUid.Value, out var entity);
+            Entity = entity;
+        }
+    }
+
     // The IDs of the items get synced over the network.
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly Dictionary<string, EntityUid?> Hands;
+        public readonly List<Hand> Hands;
         public readonly string ActiveIndex;
 
-        public HandsComponentState(Dictionary<string, EntityUid?> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(List<Hand> hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
@@ -74,5 +105,12 @@ namespace Content.Shared.GameObjects.Components.Items
             Directed = true;
             Index = index;
         }
+    }
+
+    public enum HandLocation : byte
+    {
+        Left,
+        Middle,
+        Right
     }
 }

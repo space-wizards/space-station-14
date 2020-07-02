@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Content.Client.GameObjects;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
@@ -30,6 +32,10 @@ namespace Content.Client.UserInterface
 
         private readonly TextureRect _activeHandRect;
 
+        private readonly Texture _leftHandTexture;
+        private readonly Texture _middleHandTexture;
+        private readonly Texture _rightHandTexture;
+
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
@@ -49,23 +55,25 @@ namespace Content.Client.UserInterface
                 Texture = textureHandActive,
                 TextureScale = (2, 2)
             };
+
+            _leftHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
+            _middleHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_middle.png");
+            _rightHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
         }
         private HBoxContainer GetHandsContainer()
         {
             return (HBoxContainer) GetChild(0);
         }
 
-        private void AddButton(string key, IEntity hand)
+        private void AddButton(Hand hand)
         {
             // TODO
-            var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
-            var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
-
             var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
-            var button = new ItemSlotButton(textureHandLeft, storageTexture);
+            var button = new ItemSlotButton(_leftHandTexture, storageTexture);
+            var slot = hand.Name;
 
-            button.OnPressed += args => HandKeyBindDown(args, key);
-            button.OnStoragePressed += args => _OnStoragePressed(args, key);
+            button.OnPressed += args => HandKeyBindDown(args, slot);
+            button.OnStoragePressed += args => _OnStoragePressed(args, slot);
 
             var hBox = GetHandsContainer();
 
@@ -75,8 +83,8 @@ namespace Content.Client.UserInterface
             hBox.AddChild(button);
             hBox.AddChild(panel);
 
-            _buttons[key] = button;
-            _panels[key] = panel;
+            _buttons[slot] = button;
+            _panels[slot] = panel;
 
             if (_buttons.Count == 1)
             {
@@ -84,7 +92,7 @@ namespace Content.Client.UserInterface
                 _activeHandRect.SetPositionInParent(1);
             }
 
-            _itemSlotManager.SetItemSlot(button, hand);
+            _itemSlotManager.SetItemSlot(button, hand.Entity);
         }
 
         // TODO: Call when hands are removed
@@ -147,13 +155,11 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            foreach (var pair in component.Hands)
+            foreach (var (slot, hand) in component.Hands)
             {
-                var name = pair.Key;
-
-                if (!_buttons.ContainsKey(name))
+                if (!_buttons.ContainsKey(slot))
                 {
-                    AddButton(name, pair.Value);
+                    AddButton(hand);
                 }
             }
 
@@ -234,7 +240,7 @@ namespace Content.Client.UserInterface
                 var hand = component.Hands[pair.Key];
                 var button = pair.Value;
 
-                _itemSlotManager.UpdateCooldown(button, hand);
+                _itemSlotManager.UpdateCooldown(button, hand.Entity);
             }
 
             foreach (var pair in _panels)
@@ -242,7 +248,7 @@ namespace Content.Client.UserInterface
                 var hand = component.Hands[pair.Key];
                 var panel = pair.Value;
 
-                panel.Update(hand);
+                panel.Update(hand.Entity);
             }
         }
     }

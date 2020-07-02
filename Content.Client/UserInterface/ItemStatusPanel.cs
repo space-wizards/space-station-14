@@ -63,8 +63,16 @@ namespace Content.Client.UserInterface
             SizeFlagsVertical = SizeFlags.ShrinkEnd;
         }
 
-        // isRightHand means on the LEFT of the screen.
-        // Keep that in mind.
+        /// <summary>
+        ///     Creates a new instance of <see cref="ItemStatusPanel"/>
+        ///     based on whether or not it is being created for the right
+        ///     or left hand.
+        /// </summary>
+        /// <param name="isRightHand">
+        ///     true if this is the right hand, which is drawn on the
+        ///     LEFT side of the screen
+        /// </param>
+        /// <returns>the new <see cref="ItemStatusPanel"/> instance</returns>
         public static ItemStatusPanel FromSide(bool isRightHand)
         {
             var texture = ResC.GetTexture(isRightHand

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -23,9 +24,9 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud;
 #pragma warning restore 649
 
-        private readonly Dictionary<string, IEntity> _hands = new Dictionary<string, IEntity>();
+        private readonly Dictionary<string, Hand> _hands = new Dictionary<string, Hand>();
 
-        [ViewVariables] public IReadOnlyDictionary<string, IEntity> Hands => _hands;
+        [ViewVariables] public IReadOnlyDictionary<string, Hand> Hands => _hands;
 
         [ViewVariables] public string ActiveIndex { get; private set; }
 
@@ -49,16 +50,19 @@ namespace Content.Client.GameObjects.Components.Items
                 foreach (var slot in _hands.Keys)
                 {
                     _sprite.LayerMapReserveBlank($"hand-{slot}");
-                    _setHand(slot, _hands[slot]);
+
+                    var hand = _hands[slot];
+                    SetInHands(hand);
                 }
             }
         }
 
+        [CanBeNull]
         public IEntity GetEntity(string index)
         {
-            if (!string.IsNullOrEmpty(index) && _hands.TryGetValue(index, out var entity))
+            if (!string.IsNullOrEmpty(index) && _hands.TryGetValue(index, out var hand))
             {
-                return entity;
+                return hand.Entity;
             }
 
             return null;
@@ -67,35 +71,24 @@ namespace Content.Client.GameObjects.Components.Items
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             if (curState == null)
+            {
                 return;
+            }
 
             var cast = (HandsComponentState) curState;
-            foreach (var (slot, uid) in cast.Hands)
+            foreach (var hand in cast.Hands)
             {
-                IEntity entity = null;
-
-                if (uid.HasValue)
-                {
-                    try
-                    {
-                        entity = Owner.EntityManager.GetEntity(uid.Value);
-                    }
-                    catch
-                    {
-                        // Nothing.
-                    }
-                }
-
-                _hands[slot] = entity;
-                _setHand(slot, entity);
+                hand.Initialize(Owner.EntityManager);
+                _hands[hand.Name] = hand;
+                SetInHands(hand);
             }
 
             foreach (var slot in _hands.Keys.ToList())
             {
-                if (!cast.Hands.ContainsKey(slot))
+                if (cast.Hands.All(hand => hand.Name != slot))
                 {
                     _hands[slot] = null;
-                    _setHand(slot, null);
+                    HideHand(slot);
                 }
             }
 
@@ -105,42 +98,39 @@ namespace Content.Client.GameObjects.Components.Items
             RefreshInHands();
         }
 
-        private void _setHand(string hand, IEntity entity)
+        private void HideHand(string name)
+        {
+            _sprite.LayerSetVisible($"hand-{name}", false);
+        }
+
+        private void SetInHands(Hand hand)
         {
             if (_sprite == null)
             {
                 return;
             }
 
+            var entity = hand.Entity;
+            var name = hand.Name;
+
             if (entity == null)
             {
-                _sprite.LayerSetVisible($"hand-{hand}", false);
-                return;
-            }
-
-            SetInHands(hand, entity);
-        }
-
-        private void SetInHands(string hand, IEntity entity)
-        {
-            if (entity == null)
-            {
-                _sprite.LayerSetVisible($"hand-{hand}", false);
+                _sprite.LayerSetVisible($"hand-{name}", false);
 
                 return;
             }
 
             if (!entity.TryGetComponent(out ItemComponent item)) return;
-            var maybeInHands = item.GetInHandStateInfo(hand);
+            var maybeInHands = item.GetInHandStateInfo(name);
             if (!maybeInHands.HasValue)
             {
-                _sprite.LayerSetVisible($"hand-{hand}", false);
+                _sprite.LayerSetVisible($"hand-{name}", false);
             }
             else
             {
                 var (rsi, state) = maybeInHands.Value;
-                _sprite.LayerSetVisible($"hand-{hand}", true);
-                _sprite.LayerSetState($"hand-{hand}", state, rsi);
+                _sprite.LayerSetVisible($"hand-{name}", true);
+                _sprite.LayerSetState($"hand-{name}", state, rsi);
             }
         }
 
@@ -148,9 +138,9 @@ namespace Content.Client.GameObjects.Components.Items
         {
             if (!Initialized) return;
 
-            foreach (var (hand, entity) in _hands)
+            foreach (var pair in _hands)
             {
-                SetInHands(hand, entity);
+                SetInHands(pair.Value);
             }
         }
 
@@ -206,7 +196,10 @@ namespace Content.Client.GameObjects.Components.Items
         public void ActivateItemInHand(string handIndex)
         {
             if (GetEntity(handIndex) == null)
+            {
                 return;
+            }
+
             SendNetworkMessage(new ActivateInHandMsg(handIndex));
         }
     }

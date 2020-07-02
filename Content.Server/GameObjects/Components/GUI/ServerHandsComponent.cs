@@ -50,7 +50,7 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         private readonly Dictionary<string, ContainerSlot> _hands = new Dictionary<string, ContainerSlot>();
-        [ViewVariables] private List<string> _orderedHands = new List<string>();
+        [ViewVariables] private readonly List<string> _orderedHands = new List<string>();
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
@@ -411,10 +411,19 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override ComponentState GetComponentState()
         {
-            var hands = new Dictionary<string, EntityUid?>(_hands.Count);
-            foreach (var hand in _hands)
+            var hands = new List<Hand>(_hands.Count);
+            foreach (var pair in _hands)
             {
-                hands[hand.Key] = hand.Value.ContainedEntity?.Uid;
+                var name = pair.Key;
+                var entity = pair.Value.ContainedEntity?.Uid;
+                var location = name.Contains("left")
+                    ? HandLocation.Left
+                    : name.Contains("right")
+                    ? HandLocation.Right
+                    : HandLocation.Middle;
+
+                var hand = new Hand(name, entity, location);
+                hands.Add(hand);
             }
 
             return new HandsComponentState(hands, ActiveIndex);
