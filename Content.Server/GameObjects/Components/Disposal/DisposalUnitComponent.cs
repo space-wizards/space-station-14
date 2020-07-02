@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -51,8 +53,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool TryFlush()
         {
-            if (Owner.TryGetComponent(out PowerDeviceComponent powerDevice) &&
-                !powerDevice.Powered)
+            if (Owner.TryGetComponent(out PowerConsumerComponent consumer) &&
+                consumer.ReceivedPower == 0)
             {
                 return false;
             }

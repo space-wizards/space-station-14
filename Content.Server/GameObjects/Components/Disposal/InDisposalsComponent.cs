@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
