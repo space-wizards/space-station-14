@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 

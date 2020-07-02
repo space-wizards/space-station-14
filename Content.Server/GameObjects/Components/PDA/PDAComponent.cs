@@ -8,6 +8,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;

@@ -209,3 +209,32 @@
     heavyImpactRange: 5
     lightImpactRange: 7
     flashRange: 10
+
+- type: entity
+  id: BulletFoam
+  name: foam dart
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/toys.rsi
+    state: foamdart
+  - type: Projectile
+    deleteOnCollide: true
+    soundHit: /Audio/Guns/Hits/snap.ogg
+    damages:
+      Brute: 2
+
+- type: entity
+  id: BulletCap
+  name: cap bullet
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/toys.rsi
+    state: capbullet
+  - type: Projectile
+    deleteOnCollide: true
