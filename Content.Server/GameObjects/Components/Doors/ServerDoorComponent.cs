@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
@@ -102,7 +98,10 @@ namespace Content.Server.GameObjects
 
                 // TODO: temporary hack to fix the physics system raising collision events akwardly.
                 // E.g. when moving parallel to a door by going off the side of a wall.
-                var dotProduct = Vector2.Dot(mover.VelocityDir.Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
+                var (walking, sprinting) = mover.VelocityDir;
+                // Also TODO: walking and sprint dir are added together here
+                // instead of calculating their contribution correctly.
+                var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
                 if (dotProduct <= -0.9f)
                     TryOpen(entity);
             }
@@ -162,7 +161,7 @@ namespace Content.Server.GameObjects
                 State = DoorState.Open;
                 SetAppearance(DoorVisualState.Open);
             }, _cancellationTokenSource.Token);
-            
+
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, false));
         }
 

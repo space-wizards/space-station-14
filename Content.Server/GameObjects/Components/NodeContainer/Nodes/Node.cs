@@ -6,6 +6,7 @@ using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Robust.Shared.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool Connectable => !_deleting && Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<PhysicsComponent>(out var physics) || physics.Anchored; 
+        private bool Anchored => !Owner.TryGetComponent<PhysicsComponent>(out var physics) || physics.Anchored;
 
         /// <summary>
         ///    Prevents a node from being used by other nodes while midway through removal.
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void StartSpreadingGroup()
         {
-            NodeGroup.BeforeRemakeSpread(); 
+            NodeGroup.BeforeRemakeSpread();
             SpreadGroup();
             NodeGroup.AfterRemakeSpread();
         }
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         /// <summary>
         ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
-        ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>. 
+        ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.
         /// </summary>
         protected abstract IEnumerable<Node> GetReachableNodes();
 

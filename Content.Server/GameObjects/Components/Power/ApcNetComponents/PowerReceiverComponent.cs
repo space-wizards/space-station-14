@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
+using Robust.Shared.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {
