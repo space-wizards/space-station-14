@@ -2,7 +2,6 @@
 using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -56,21 +55,20 @@ namespace Content.Server.GameObjects.Components.Doors
         }
 
         private bool _boltsDown;
+
         private bool BoltsDown
         {
             get => _boltsDown;
             set
             {
                 _boltsDown = value;
-                EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(value ? "/Audio/machines/boltsdown.ogg" : "/Audio/machines/boltsup.ogg",
-                    Owner);
                 UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
         }
 
         private bool _boltLightsWirePulsed = true;
+
         private bool BoltLightsVisible
         {
             get => _boltLightsWirePulsed && BoltsDown && IsPowered() && State == DoorState.Closed;
@@ -95,8 +93,10 @@ namespace Content.Server.GameObjects.Components.Doors
                 powerLight = new StatusLightData(Color.Red, StatusLightState.On, "POWR");
             }
 
-            var boltStatus = new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
-            var boltLightsStatus = new StatusLightData(Color.Lime, _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
+            var boltStatus =
+                new StatusLightData(Color.Red, BoltsDown ? StatusLightState.On : StatusLightState.Off, "BOLT");
+            var boltLightsStatus = new StatusLightData(Color.Lime,
+                _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
@@ -116,8 +116,8 @@ namespace Content.Server.GameObjects.Components.Doors
         private void UpdatePowerCutStatus()
         {
             _powerReceiver.PowerDisabled = PowerWiresPulsed ||
-                                      _wires.IsWireCut(Wires.MainPower) ||
-                                      _wires.IsWireCut(Wires.BackupPower);
+                                           _wires.IsWireCut(Wires.MainPower) ||
+                                           _wires.IsWireCut(Wires.BackupPower);
         }
 
         private void UpdateBoltLightStatus()
@@ -165,6 +165,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 appearance.SetData(DoorVisuals.Powered, e.Powered);
             }
+
             // BoltLights also got out
             UpdateBoltLightStatus();
         }
@@ -247,15 +248,16 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.Bolts:
                         if (!BoltsDown)
                         {
-                            BoltsDown = true;
+                            SetBoltsWithAudio(true);
                         }
                         else
                         {
                             if (IsPowered()) // only raise again if powered
                             {
-                                BoltsDown = false;
+                                SetBoltsWithAudio(false);
                             }
                         }
+
                         break;
                     case Wires.BoltLight:
                         // we need to change the property here to set the appearance again
@@ -285,7 +287,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 switch (args.Identifier)
                 {
                     case Wires.Bolts:
-                        BoltsDown = true;
+                        SetBoltsWithAudio(true);
                         break;
                     case Wires.BoltLight:
                         BoltLightsVisible = false;
@@ -350,14 +352,15 @@ namespace Content.Server.GameObjects.Components.Doors
             if (IsBolted())
             {
                 var notify = IoCManager.Resolve<IServerNotifyManager>();
-                notify.PopupMessage(Owner, eventArgs.User, "The airlock's bolts prevent it from being forced!");
+                notify.PopupMessage(Owner, eventArgs.User,
+                    Loc.GetString("The airlock's bolts prevent it from being forced!"));
                 return true;
             }
 
             if (IsPowered())
             {
                 var notify = IoCManager.Resolve<IServerNotifyManager>();
-                notify.PopupMessage(Owner, eventArgs.User, "The powered motors block your efforts!");
+                notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
                 return true;
             }
 
@@ -367,6 +370,19 @@ namespace Content.Server.GameObjects.Components.Doors
                 Close();
 
             return true;
+        }
+
+        public void SetBoltsWithAudio(bool newBolts)
+        {
+            if (newBolts == BoltsDown)
+            {
+                return;
+            }
+
+            BoltsDown = newBolts;
+
+            EntitySystem.Get<AudioSystem>()
+                .PlayFromEntity(newBolts ? "/Audio/machines/boltsdown.ogg" : "/Audio/machines/boltsup.ogg", Owner);
         }
     }
 }
