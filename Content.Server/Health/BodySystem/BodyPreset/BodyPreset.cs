@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+﻿using System.Collections.Generic;
+using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.BodySystem {
+namespace Content.Server.BodySystem {
 
     /// <summary>
-    ///     Stores data on what BodyPart(Prototypes) should fill a BodyTemplate. Used for loading complete body presets, like a "basic human" with all human limbs.
+    ///     Stores data on what <see cref="BodyPartPrototype">BodyPartPrototypes</see> should fill a BodyTemplate. Used for loading complete body presets, like a "basic human" with all human limbs.
     /// </summary>
     public class BodyPreset {
         private string _name;
@@ -19,7 +15,7 @@ namespace Content.Shared.BodySystem {
         public string Name => _name;
 
         /// <summary>
-        ///     Maps a template slot to the ID of the BodyPart that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
+        ///     Maps a template slot to the ID of the <see cref="BodyPart"> that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>		
         [ViewVariables]
 		public Dictionary<string, string> PartIDs => _partIDs;
