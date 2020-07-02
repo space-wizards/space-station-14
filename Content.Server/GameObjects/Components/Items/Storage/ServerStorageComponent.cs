@@ -288,16 +288,16 @@ namespace Content.Server.GameObjects
                         var entity = _entityManager.GetEntity(remove.EntityUid);
                         if (entity != null && storage.Contains(entity))
                         {
-                            Remove(entity);
 
                             var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))
                             {
-                                if (hands.PutInHand(item))
+                                if (hands.CanPutInHand(item) && hands.PutInHand(item))
+                                    {
                                     return;
+                                    }
                             }
 
-                            entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
                     break;

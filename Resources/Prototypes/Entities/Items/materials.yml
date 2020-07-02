@@ -83,6 +83,14 @@
       all: -0.15,-0.15,0.15,0.15
 
 - type: entity
+  id: CableStack1
+  name: cable stack 1
+  parent: CableStack
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
   id: HVWireStack
   name: HV Wire Coil
   parent: CableStack
