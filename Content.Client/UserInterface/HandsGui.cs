@@ -173,6 +173,8 @@ namespace Content.Client.UserInterface
                     ? HandLocation.Middle
                     : hand.Location;
 
+                hand.Location = location;
+
                 locationsOccupied.Add(location);
 
                 if (hand.Button == null)
