@@ -13,6 +13,8 @@ using Content.Server.Utility;
 using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
 using Robust.Shared.IoC;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 
 namespace Content.Server
 {
@@ -31,6 +33,8 @@ namespace Content.Server
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
+            IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
+            IoCManager.Register<INodeFactory, NodeFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
         }
     }

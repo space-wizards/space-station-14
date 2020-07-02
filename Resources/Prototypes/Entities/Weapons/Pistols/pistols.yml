@@ -31,6 +31,7 @@
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
+    magFillPrototype: MagazinePistol
     soundGunshot: /Audio/Guns/Gunshots/pistol.ogg
     soundEmpty: /Audio/Guns/Empty/empty.ogg
     soundRack: /Audio/Guns/Cock/pistol_cock.ogg
@@ -193,6 +194,7 @@
     caliber: Magnum
     magazineTypes: 
     - Pistol
+    magFillPrototype: MagazineMagnum
     autoEjectMag: true
     fireRate: 5
     minAngle: 0
@@ -236,6 +238,7 @@
     caliber: ClRifle
     magazineTypes: 
     - Pistol
+    magFillPrototype: MagazineClRiflePistol
     autoEjectMag: true
     canMuzzleFlash: false # Dat in-built suppressor
     minAngle: 0
@@ -330,6 +333,7 @@
     magazineTypes: 
     - HCPistol
     - Smg
+    magFillPrototype: MagazinePistolSmg
     autoEjectMag: true
     fireRate: 6
     minAngle: 0

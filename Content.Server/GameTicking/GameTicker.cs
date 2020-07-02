@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Markers;
@@ -205,7 +206,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public void StartRound(bool force = false)
+        public async void StartRound(bool force = false)
         {
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             Logger.InfoS("ticker", "Starting round!");
@@ -227,7 +228,18 @@ namespace Content.Server.GameTicking
             RoundLengthMetric.Set(0);
 
             // Get the profiles for each player for easier lookup.
-            var profiles = readyPlayers.ToDictionary(p => p, GetPlayerProfile);
+            var profiles = (await _prefsManager.GetSelectedProfilesForPlayersAsync(
+                readyPlayers
+                    .Select(p => p.Name).ToList()))
+                    .ToDictionary(p => p.Key, p => (HumanoidCharacterProfile) p.Value);
+
+            foreach (var readyPlayer in readyPlayers)
+            {
+                if (!profiles.ContainsKey(readyPlayer.Name))
+                {
+                    profiles.Add(readyPlayer.Name, HumanoidCharacterProfile.Default());
+                }
+            }
 
             var assignedJobs = AssignJobs(readyPlayers, profiles);
 
@@ -239,7 +251,7 @@ namespace Content.Server.GameTicking
                     continue;
                 }
 
-                var profile = profiles[player];
+                var profile = profiles[player.Name];
                 if (profile.PreferenceUnavailable == PreferenceUnavailableMode.SpawnAsOverflow)
                 {
                     assignedJobs.Add(player, OverflowJob);
@@ -259,7 +271,8 @@ namespace Content.Server.GameTicking
             {
                 SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
                 var newPreset = MakeGamePreset();
-                _chatManager.DispatchServerAnnouncement($"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
+                _chatManager.DispatchServerAnnouncement(
+                    $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
                 if (!newPreset.Start(readyPlayers, force))
                 {
                     throw new ApplicationException("Fallback preset failed to start!");
@@ -278,8 +291,9 @@ namespace Content.Server.GameTicking
             IoCManager.Resolve<IServerNetManager>().ServerSendToAll(msg);
         }
 
-        private HumanoidCharacterProfile GetPlayerProfile(IPlayerSession p) =>
-            (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.SessionId.Username).SelectedCharacter;
+        private async Task<HumanoidCharacterProfile> GetPlayerProfileAsync(IPlayerSession p) =>
+            (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.SessionId.Username))
+            .SelectedCharacter;
 
         public void EndRound()
         {
@@ -297,17 +311,19 @@ namespace Content.Server.GameTicking
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndPlayerInfo>();
-            foreach(var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
+            foreach (var ply in _playerManager.GetAllPlayers().OrderBy(p => p.Name))
             {
                 var mind = ply.ContentData().Mind;
-                if(mind != null)
+                if (mind != null)
                 {
                     var antag = mind.AllRoles.Any(role => role.Antag);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity.Name,
-                        Role = antag ? mind.AllRoles.First(role => role.Antag).Name : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
+                        Role = antag
+                            ? mind.AllRoles.First(role => role.Antag).Name
+                            : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
                         Antag = antag
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
@@ -725,13 +741,13 @@ namespace Content.Server.GameTicking
             }, _updateShutdownCts.Token);
         }
 
-        private void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
+        private async void SpawnPlayer(IPlayerSession session, string jobId = null, bool lateJoin = true)
         {
-            var character = (HumanoidCharacterProfile) _prefsManager
-                .GetPreferences(session.SessionId.Username)
-                .SelectedCharacter;
-
             _playerJoinGame(session);
+
+            var character = (HumanoidCharacterProfile) (await _prefsManager
+                    .GetPreferencesAsync(session.SessionId.Username))
+                .SelectedCharacter;
 
             var data = session.ContentData();
             data.WipeMind();
@@ -785,15 +801,16 @@ namespace Content.Server.GameTicking
             accessTags.UnionWith(jobPrototype.Access);
             pdaComponent.SetPDAOwner(mob);
             var mindComponent = mob.GetComponent<MindComponent>();
-            if (mindComponent.HasMind)//Redundancy checks.
+            if (mindComponent.HasMind) //Redundancy checks.
             {
                 if (mindComponent.Mind.AllRoles.Any(role => role.Antag)) //Give antags a new uplinkaccount.
                 {
-                    var uplinkAccount = new UplinkAccount(mob.Uid, 20); //TODO: make me into a variable based on server pop or something.
+                    var uplinkAccount =
+                        new UplinkAccount(mob.Uid,
+                            20); //TODO: make me into a variable based on server pop or something.
                     pdaComponent.InitUplinkAccount(uplinkAccount);
                 }
             }
-
         }
 
         private void AddManifestEntry(string characterName, string jobId)
@@ -801,13 +818,14 @@ namespace Content.Server.GameTicking
             _manifest.Add(new ManifestEntry(characterName, jobId));
         }
 
-        private void _spawnObserver(IPlayerSession session)
+        private async void _spawnObserver(IPlayerSession session)
         {
-            var name = _prefsManager
-                .GetPreferences(session.SessionId.Username)
+            _playerJoinGame(session);
+
+            var name = (await _prefsManager
+                    .GetPreferencesAsync(session.SessionId.Username))
                 .SelectedCharacter.Name;
 
-            _playerJoinGame(session);
             var data = session.ContentData();
             data.WipeMind();
             data.Mind = new Mind(session.SessionId);
@@ -868,7 +886,7 @@ namespace Content.Server.GameTicking
             return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
-[color=yellow]{1}[/color]", gmTitle, desc );
+[color=yellow]{1}[/color]", gmTitle, desc);
         }
 
         private void UpdateInfoText()

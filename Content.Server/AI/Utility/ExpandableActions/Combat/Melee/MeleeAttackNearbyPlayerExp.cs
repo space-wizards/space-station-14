@@ -28,7 +28,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
             {
                 if (entity.HasComponent<BasicActorComponent>() && entity != owner)
                 {
-                    yield return new MeleeAttackEntity(owner, entity, Bonus);
+                    yield return new MeleeWeaponAttackEntity(owner, entity, Bonus);
                 }
             }
         }

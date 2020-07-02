@@ -5,6 +5,7 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -13,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
@@ -26,9 +28,8 @@ namespace Content.Server.GameObjects.Components.Medical
         private readonly Vector2 _ejectOffset = new Vector2(-0.5f, 0f);
         public bool IsOccupied => _bodyContainer.ContainedEntity != null;
 
-        ///implementing PowerDeviceComponent
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
 
         public override void Initialize()
         {
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Medical
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MedicalScannerUiKey.Key);
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             UpdateUserInterface();
         }
 

@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         public override int Capacity => _capacity;
         private int _capacity;
-        
+
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer;
         private Stack<IEntity> _spawnedAmmo;
@@ -47,11 +48,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
         private string _fillPrototype;
         private int _unspawnedCount;
-        
+
         private bool _manualCycle;
 
         private AppearanceComponent _appearanceComponent;
-        
+
         // Sounds
         private string _soundCycle;
         private string _soundInsert;
@@ -66,10 +67,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
             serializer.DataField(ref _soundCycle, "soundCycle", "/Audio/Guns/Cock/sf_rifle_cock.ogg");
             serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Guns/MagIn/bullet_insert.ogg");
-            
+
             _spawnedAmmo = new Stack<IEntity>(_capacity - 1);
         }
-        
+
         void IMapInit.MapInit()
         {
             if (_fillPrototype != null)
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void Initialize()
         {
             base.Initialize();
-            
+
             _ammoContainer =
                 ContainerManagerComponent.Ensure<Container>($"{Name}-ammo-container", Owner, out var existing);
 
@@ -95,7 +96,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
             }
 
-            _chamberContainer = 
+            _chamberContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-chamber-container", Owner, out existing);
             if (existing)
             {
@@ -106,7 +107,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
-            
+
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
             UpdateAppearance();
         }
@@ -122,14 +123,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile()
+        public override IEntity TakeProjectile(GridCoordinates spawnAt)
         {
             var chamberEntity = _chamberContainer.ContainedEntity;
             if (!_manualCycle)
             {
                 Cycle();
             }
-            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet();
+            return chamberEntity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
         }
 
         private void Cycle(bool manual = false)
@@ -141,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var ammoComponent = chamberedEntity.GetComponent<AmmoComponent>();
                 if (!ammoComponent.Caseless)
                 {
-                    EjectCasing(chamberedEntity);   
+                    EjectCasing(chamberedEntity);
                 }
             }
 
@@ -165,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundCycle, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
                 }
             }
-            
+
             // Dirty();
             UpdateAppearance();
         }
@@ -195,9 +196,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 }
                 return true;
             }
-            
+
             Owner.PopupMessage(eventArgs.User, Loc.GetString("No room"));
-            
+
             return false;
         }
 

@@ -368,6 +368,15 @@
             ]
         },
         {
+            "name": "spawner_ai",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "spawner_grenade",
             "directions": 1,
             "delays": [
@@ -450,6 +459,15 @@
         },
         {
             "name": "spawner_sniper",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spawner_xenoai",
             "directions": 1,
             "delays": [
                 [

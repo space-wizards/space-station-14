@@ -16,7 +16,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
             var owner = context.GetState<SelfState>().GetValue();
             foreach (var entity in context.GetState<NearbySpeciesState>().GetValue())
             {
-                yield return new MeleeAttackEntity(owner, entity, Bonus);
+                yield return new MeleeWeaponAttackEntity(owner, entity, Bonus);
             }
         }
     }
