@@ -22,9 +22,16 @@ namespace Content.Server.GameObjects.Components.Disposal
     [RegisterComponent]
     public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing, IAnchored, IUnAnchored
     {
+        /// <summary>
+        ///     The delay for an entity trying to move out of this unit
+        /// </summary>
         private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+
         private TimeSpan _lastExitAttempt;
 
+        /// <summary>
+        ///     The sound file that is played when this unit flushes its contents
+        /// </summary>
         private string _flushSound;
 
         [ViewVariables] private Container _container;
