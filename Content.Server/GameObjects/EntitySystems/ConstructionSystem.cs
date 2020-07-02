@@ -163,8 +163,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
                     if (targetEnt.Prototype.Components.TryGetValue("Item", out var itemProtoComp))
                     {
-                        if (!frame.TryGetComponent<ItemComponent>(out var itemComp))
-                            itemComp = frame.AddComponent<ItemComponent>();
+                        if(frame.HasComponent<ItemComponent>())
+                            frame.RemoveComponent<ItemComponent>();
+
+                        var itemComp = frame.AddComponent<ItemComponent>();
 
                         var serializer = YamlObjectSerializer.NewReader(itemProtoComp);
                         itemComp.ExposeData(serializer);
@@ -339,8 +341,10 @@ namespace Content.Server.GameObjects.EntitySystems
                 var finalPrototype = _prototypeManager.Index<EntityPrototype>(prototype.Result);
                 if (finalPrototype.Components.TryGetValue("Item", out var itemProtoComp))
                 {
-                    if (!frame.TryGetComponent<ItemComponent>(out var itemComp))
-                        itemComp = frame.AddComponent<ItemComponent>();
+                    if(frame.HasComponent<ItemComponent>())
+                        frame.RemoveComponent<ItemComponent>();
+
+                    var itemComp = frame.AddComponent<ItemComponent>();
 
                     var serializer = YamlObjectSerializer.NewReader(itemProtoComp);
                     itemComp.ExposeData(serializer);
