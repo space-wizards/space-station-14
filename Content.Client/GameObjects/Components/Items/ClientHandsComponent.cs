@@ -3,7 +3,6 @@
 using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Interfaces.GameObjects.Components.Items;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.GameObjects;
@@ -11,14 +10,12 @@ using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IHandsComponent))]
-    public class HandsComponent : SharedHandsComponent, IHandsComponent
+    public class HandsComponent : SharedHandsComponent
     {
         private HandsGui _gui;
 

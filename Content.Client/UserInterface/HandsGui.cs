@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects;
-using Content.Client.Interfaces.GameObjects.Components.Items;
+using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.Input;
 using Robust.Client.Graphics.Drawing;
@@ -36,12 +36,12 @@ namespace Content.Client.UserInterface
 
             var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
 
-            var hBox = new HBoxContainer
+            var hands = new HBoxContainer
             {
                 SeparationOverride = 0,
             };
 
-            AddChild(hBox);
+            AddChild(hands);
 
             // Active hand
             _activeHandRect = new TextureRect
@@ -49,6 +49,10 @@ namespace Content.Client.UserInterface
                 Texture = textureHandActive,
                 TextureScale = (2, 2)
             };
+        }
+        private HBoxContainer GetHandsContainer()
+        {
+            return (HBoxContainer) GetChild(0);
         }
 
         private void AddButton(string key, IEntity hand)
@@ -63,7 +67,7 @@ namespace Content.Client.UserInterface
             button.OnPressed += args => HandKeyBindDown(args, key);
             button.OnStoragePressed += args => _OnStoragePressed(args, key);
 
-            var hBox = GetChild(0);
+            var hBox = GetHandsContainer();
 
             var texture = ResC.GetTexture("/Nano/item_status_right.svg.96dpi.png");
             var panel = new ItemStatusPanel(texture, StyleBox.Margin.None);
@@ -101,7 +105,7 @@ namespace Content.Client.UserInterface
                 button.RemoveChild(_activeHandRect);
             }
 
-            var hBox = GetChild(0);
+            var hBox = GetHandsContainer();
             hBox.RemoveChild(button);
             hBox.RemoveChild(panel);
         }
@@ -111,7 +115,7 @@ namespace Content.Client.UserInterface
         /// </summary>
         /// <param name="hands"></param>
         /// <returns></returns>
-        private bool TryGetHands(out IHandsComponent hands)
+        private bool TryGetHands(out HandsComponent hands)
         {
             hands = default;
 

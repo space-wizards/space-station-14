@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Shared.GameObjects.Components.Storage;
-using Content.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
+﻿using System.Collections.Generic;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Content.Shared.BodySystem;
@@ -21,7 +14,7 @@ namespace Content.Client.BodySystem
     [RegisterComponent]
     public class ClientSurgeryToolComponent : SharedSurgeryToolComponent
     {
-        private SurgeryToolWindow Window; 
+        private SurgeryToolWindow Window;
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -50,7 +43,7 @@ namespace Content.Client.BodySystem
             Window.Dispose();
             base.OnRemove();
         }
-        
+
         private void HandleOpenSurgeryUIMessage()
         {
             Window.Open();
