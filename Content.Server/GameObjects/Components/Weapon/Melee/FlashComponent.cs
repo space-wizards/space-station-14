@@ -35,7 +35,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [Dependency] private readonly ILocalizationManager _localizationManager;
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly INetManager _netManager;
 #pragma warning restore 649
 
         public override string Name => "Flash";
