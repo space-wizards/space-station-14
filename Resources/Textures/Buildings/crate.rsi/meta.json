@@ -141,19 +141,19 @@
             "directions": 1
         },
         {
-            "name": "plasmacrate",
+            "name": "phoroncrate",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
-            "name": "plasmacrate_door",
+            "name": "phoroncrate_door",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
-            "name": "plasmacrate_open",
+            "name": "phoroncrate_open",
             "select": [],
             "flags": {},
             "directions": 1
@@ -247,6 +247,114 @@
             "select": [],
             "flags": {},
             "directions": 1
+        },
+        {
+          "name": "crate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "freezer_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "hydrocrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "hydrosecurecrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "medicalcrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "o2crate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "phoroncrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "plasticcrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "radiationcrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "secgearcrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "securecrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "weaponcrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
         }
     ]
 }

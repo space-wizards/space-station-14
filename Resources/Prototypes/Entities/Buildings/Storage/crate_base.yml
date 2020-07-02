@@ -1,5 +1,6 @@
 - type: entity
   id: CrateGeneric
+  abstract: true
   name: crate
   description: A large container for items.
   components:
@@ -10,9 +11,12 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
-  - type: Icon
-    sprite: Buildings/crate.rsi
-    state: crate
+# Since this -https://github.com/space-wizards/space-station-14/issues/1232- has
+# still not been fixed we can't specify an icon here or else it'll override the
+# icon state on all the children. FIX THIS PJB!!! - Swept
+#  - type: Icon
+#    sprite: Buildings/crate.rsi
+#    state: crate
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable

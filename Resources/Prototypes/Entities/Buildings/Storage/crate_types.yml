@@ -1,4 +1,23 @@
 - type: entity
+  id: CrateGenericonimo
+  name: crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    layers:
+    - state: crate
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: crate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: crate_open
+      state_closed: crate_door
+
+- type: entity
   id: CratePlastic
   name: plastic crate
   parent: CrateGeneric
@@ -8,13 +27,14 @@
     - state: plasticcrate
     - state: plasticcrate_door
       map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: plasticcrate_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state_open: plasticcrate_open
       state_closed: plasticcrate_door
-  - type: Icon
-    state: plasticcrate
 
 - type: entity
   id: CrateFreezer
@@ -26,13 +46,14 @@
     - state: freezer
     - state: freezer_door
       map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: freezer_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state_open: freezer_open
       state_closed: freezer_door
-  - type: Icon
-    state: freezer
 
 - type: entity
   id: CrateHydroponics
@@ -44,13 +65,14 @@
     - state: hydrocrate
     - state: hydrocrate_door
       map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: hydrocrate_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state_open: hydrocrate_open
       state_closed: hydrocrate_door
-  - type: Icon
-    state: hydrocrate
 
 - type: entity
   id: CrateMedical
@@ -62,13 +84,14 @@
     - state: medicalcrate
     - state: medicalcrate_door
       map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: medicalcrate_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state_open: medicalcrate_open
       state_closed: medicalcrate_door
-  - type: Icon
-    state: medicalcrate
 
 - type: entity
   id: CrateRadiation
@@ -81,13 +104,14 @@
     - state: radiationcrate
     - state: radiationcrate_door
       map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: radiationcrate_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state_open: radiationcrate_open
       state_closed: radiationcrate_door
-  - type: Icon
-    state: radiationcrate
 
 - type: entity
   id: CrateInternals
@@ -99,13 +123,112 @@
     - state: o2crate
     - state: o2crate_door
       map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: o2crate_icon
   - type: Appearance
     visuals:
     - type: StorageVisualizer2D
       state_open: o2crate_open
       state_closed: o2crate_door
+
+- type: entity
+  id: CratePhoron
+  name: phoron crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    layers:
+    - state: phoroncrate
+    - state: phoroncrate_door
+      map: ["enum.StorageVisualLayers.Door"]
   - type: Icon
-    state: o2crate
+    sprite: Buildings/crate.rsi
+    state: phoroncrate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: phoroncrate_open
+      state_closed: phoroncrate_door
+
+# TODO: Make these V actually need access to lock/unlock. Might make secure crates
+# a separate entity in crate_base.yml
+
+- type: entity
+  id: CrateSecgear
+  name: secgear crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    layers:
+    - state: secgearcrate
+    - state: secgearcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: secgearcrate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: secgearcrate_open
+      state_closed: secgearcrate_door
+
+- type: entity
+  id: CrateSecure
+  name: secure crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    layers:
+    - state: securecrate
+    - state: securecrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: securecrate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: securecrate_open
+      state_closed: securecrate_door
+
+- type: entity
+  id: CrateHydroSecure
+  name: secure hydroponics crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    layers:
+    - state: hydrosecurecrate
+    - state: hydrosecurecrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: hydrosecurecrate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: hydrosecurecrate_open
+      state_closed: hydrosecurecrate_door
+
+- type: entity
+  id: CrateWeaponSecure
+  name: secure weapon crate
+  parent: CrateGeneric
+  components:
+  - type: Sprite
+    layers:
+    - state: weaponcrate
+    - state: weaponcrate_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Buildings/crate.rsi
+    state: weaponcrate_icon
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state_open: weaponcrate_open
+      state_closed: weaponcrate_door
 
 - type: entity
   id: CrateFlashlights
