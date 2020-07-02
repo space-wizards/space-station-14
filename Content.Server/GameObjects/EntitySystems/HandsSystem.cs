@@ -73,11 +73,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var ent = session.AttachedEntity;
 
-            if (ent == null || !ent.IsValid())
+            if (ent == null || !ent.IsValid() || !ent.TryGetComponent(out T comp))
+            {
                 return false;
-
-            if (!ent.TryGetComponent(out T comp))
-                return false;
+            }
 
             component = comp;
             return true;
@@ -86,9 +85,11 @@ namespace Content.Server.GameObjects.EntitySystems
         private static void HandleSwapHands(ICommonSession session)
         {
             if (!TryGetAttachedComponent(session as IPlayerSession, out HandsComponent handsComp))
+            {
                 return;
+            }
 
-            var interactionSystem = EntitySystem.Get<InteractionSystem>();
+            var interactionSystem = Get<InteractionSystem>();
 
             var oldItem = handsComp.GetActiveHand;
 
@@ -96,11 +97,15 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var newItem = handsComp.GetActiveHand;
 
-            if(oldItem != null)
+            if (oldItem != null)
+            {
                 interactionSystem.HandDeselectedInteraction(handsComp.Owner, oldItem.Owner);
+            }
 
-            if(newItem != null)
+            if (newItem != null)
+            {
                 interactionSystem.HandSelectedInteraction(handsComp.Owner, newItem.Owner);
+            }
         }
 
         private bool HandleDrop(ICommonSession session, GridCoordinates coords, EntityUid uid)
@@ -118,9 +123,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var entCoords = ent.Transform.GridPosition.Position;
             var entToDesiredDropCoords = coords.Position - entCoords;
-            var targetLength = Math.Min(entToDesiredDropCoords.Length, InteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
+            var targetLength = Math.Min(entToDesiredDropCoords.Length, SharedInteractionSystem.InteractionRange - 0.001f); // InteractionRange is reduced due to InRange not dealing with floating point error
             var newCoords = new GridCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords, coords.GridID);
-            var rayLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedRayLength(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
+            var rayLength = Get<SharedInteractionSystem>().UnobstructedRayLength(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
 
             handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
 

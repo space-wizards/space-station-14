@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
@@ -165,7 +166,6 @@ namespace Content.Client.UserInterface
             }
 
             // TODO: Remove button on remove hand
-
             var locationsOccupied = new HashSet<HandLocation>();
             foreach (var hand in component.Hands)
             {
@@ -174,26 +174,20 @@ namespace Content.Client.UserInterface
                     : hand.Location;
 
                 hand.Location = location;
-
                 locationsOccupied.Add(location);
+            }
+
+            var hands = component.Hands.OrderByDescending(x => x.Location).ToArray();
+            for (var i = 0; i < hands.Length; i++)
+            {
+                var hand = hands[i];
 
                 if (hand.Button == null)
                 {
-                    AddHand(hand, location);
-                }
-            }
-
-            foreach (var hand in component.Hands)
-            {
-                if (hand.Location == HandLocation.Left)
-                {
-                    hand.Button!.SetPositionLast();
-                }
-                else if (hand.Location == HandLocation.Right)
-                {
-                    hand.Button!.SetPositionFirst();
+                    AddHand(hand, hand.Location);
                 }
 
+                hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
             }
 

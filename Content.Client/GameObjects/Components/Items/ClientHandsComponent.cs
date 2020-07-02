@@ -40,11 +40,11 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void AddHand(Hand hand)
         {
-            if (_hands.Count == 0 || hand.Location == HandLocation.Right)
+            if (_hands.Count == 0 || hand.Location == HandLocation.Left)
             {
                 _hands.Add(hand);
             }
-            else if (hand.Location == HandLocation.Left)
+            else if (hand.Location == HandLocation.Right)
             {
                 _hands.Insert(0, hand);
             }

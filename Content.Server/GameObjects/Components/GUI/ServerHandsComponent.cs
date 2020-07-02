@@ -368,6 +368,21 @@ namespace Content.Server.GameObjects.Components.GUI
             return hand.Container.CanRemove(hand.Entity);
         }
 
+        // TODO: This but better
+        private HandLocation GetLocation(string index)
+        {
+            if (index.Contains("left") && _hands.All(x => x.Location != HandLocation.Left))
+            {
+                return HandLocation.Left;
+            }
+            else if (index.Contains("right") && _hands.All(x => x.Location != HandLocation.Right))
+            {
+                return HandLocation.Right;
+            }
+
+            return HandLocation.Middle;
+        }
+
         public void AddHand(string index)
         {
             if (HasHand(index))
@@ -376,18 +391,14 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var container = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + index, Owner);
-            var location = index.Contains("left")
-                ? HandLocation.Left
-                : index.Contains("right")
-                    ? HandLocation.Right
-                    : HandLocation.Middle; // TODO: This but better
+            var location = GetLocation(index);
             var hand = new Hand(index, location, container);
 
-            if (_hands.Count == 0 || hand.Location == HandLocation.Right)
+            if (_hands.Count == 0 || hand.Location == HandLocation.Left)
             {
                 _hands.Add(hand);
             }
-            else if (hand.Location == HandLocation.Left)
+            else if (hand.Location == HandLocation.Right)
             {
                 _hands.Insert(0, hand);
             }
@@ -445,10 +456,10 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var index = _hands.IndexOf(hand);
-            index++;
-            if (index >= _hands.Count)
+            index--;
+            if (index < 0)
             {
-                index = 0;
+                index = _hands.Count - 1;
             }
 
             ActiveIndex = _hands[index].Name;
