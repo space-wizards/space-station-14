@@ -39,6 +39,13 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         public IPowerProvider Provider { get => _provider; set => SetProvider(value); }
         private IPowerProvider _provider = PowerProviderComponent.NullProvider;
 
+        /// <summary>
+        ///     If this should be considered for connection by <see cref="PowerProviderComponent"/>s.
+        /// </summary>
+        public bool Connectable => Anchored;
+
+        private bool Anchored => !Owner.TryGetComponent<PhysicsComponent>(out var physics) || physics.Anchored;
+
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
 
@@ -78,10 +85,19 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 TryFindAndSetProvider();
             }
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
+            {
+                AnchorUpdate();
+                physics.AnchoredChanged += AnchorUpdate;
+            }
         }
 
         public override void OnRemove()
         {
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
+            {
+                physics.AnchoredChanged -= AnchorUpdate;
+            }
             _provider.RemoveReceiver(this);
             base.OnRemove();
         }
@@ -182,6 +198,21 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
+            }
+        }
+
+        private void AnchorUpdate()
+        {
+            if (Anchored)
+            {
+                if (NeedsProvider)
+                {
+                    TryFindAndSetProvider();
+                }
+            }
+            else
+            {
+                ClearProvider();
             }
         }
     }
