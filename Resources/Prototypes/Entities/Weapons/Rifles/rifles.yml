@@ -16,6 +16,7 @@
     currentSelector: Automatic
     allSelectors:
     - Automatic
+    magFillPrototype: MagazineLRifle
     fireRate: 5
     minAngle: 0
     maxAngle: 45
@@ -132,6 +133,7 @@
     caliber: SRifle
     magazineTypes: 
     - Rifle
+    magFillPrototype: MagazineSRifle
     fireRate: 5
     minAngle: 0
     maxAngle: 45
@@ -172,6 +174,7 @@
     caliber: ClRifle
     magazineTypes: 
     - Rifle
+    magFillPrototype: MagazineClRifle10x24
     fireRate: 8
     minAngle: 10
     maxAngle: 60
@@ -255,6 +258,7 @@
     caliber: SRifle
     magazineTypes: 
     - Rifle
+    magFillPrototype: MagazineSRifle
     fireRate: 5
     minAngle: 0
     maxAngle: 45
@@ -293,6 +297,7 @@
     caliber: SRifle
     magazineTypes: 
     - Rifle
+    magFillPrototype: MagazineSRifle
     autoEjectMag: true
     fireRate: 5
     minAngle: 0

@@ -59,7 +59,7 @@
             ]
         },
         {
-            "name": "locked",
+            "name": "bolted",
             "directions": 1,
             "delays": [
                 [

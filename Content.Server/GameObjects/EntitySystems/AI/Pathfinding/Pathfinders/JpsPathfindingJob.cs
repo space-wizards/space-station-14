@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
@@ -14,6 +15,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 {
     public class JpsPathfindingJob : Job<Queue<TileRef>>
     {
+        // Some of this is probably fugly due to other structural changes in pathfinding so it could do with optimisation
+        // Realistically it's probably not getting used given it doesn't support tile costs which can be very useful
         public static event Action<SharedAiDebug.JpsRouteDebug> DebugRoute;
 
         private PathfindingNode _startNode;
@@ -78,8 +81,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
                     break;
                 }
 
-                foreach (var (direction, _) in currentNode.Neighbors)
+                foreach (var node in currentNode.GetNeighbors())
                 {
+                    var direction = PathfindingHelpers.RelativeDirection(node, currentNode);
                     var jumpNode = GetJumpPoint(currentNode, direction, _endNode);
 
                     if (jumpNode != null && !closedTiles.Contains(jumpNode))
@@ -156,7 +160,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
             while (count < 1000)
             {
                 count++;
-                var nextNode = currentNode.GetNeighbor(direction);
+                PathfindingNode nextNode = null;
+                foreach (var node in currentNode.GetNeighbors())
+                {
+                    if (PathfindingHelpers.RelativeDirection(node, currentNode) == direction)
+                    {
+                        nextNode = node;
+                        break;
+                    }
+                }
 
                 // We'll do opposite DirectionTraversable just because of how the method's setup
                 // Nodes should be 2-way anyway.
@@ -270,43 +282,99 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         private bool IsDiagonalJumpPoint(Direction direction, PathfindingNode currentNode)
         {
             // If we're going diagonally need to check all cardinals.
-            // I just just using casts int casts and offset to make it smaller but brain no workyand it wasn't working.
+            // I tried just casting direction ints and offsets to make it smaller but brain no worky.
             // From NorthEast we check (Closed / Open) S - SE, W - NW
-
-            PathfindingNode openNeighborOne;
-            PathfindingNode closedNeighborOne;
-            PathfindingNode openNeighborTwo;
-            PathfindingNode closedNeighborTwo;
+            
+            PathfindingNode openNeighborOne = null;
+            PathfindingNode closedNeighborOne = null;
+            PathfindingNode openNeighborTwo = null;
+            PathfindingNode closedNeighborTwo = null;
 
             switch (direction)
             {
                 case Direction.NorthEast:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.SouthEast);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.South);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.NorthWest);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.SouthEast:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.South:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.NorthWest:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.West:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 case Direction.SouthEast:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthEast);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthWest);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.NorthEast:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.North:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.SouthWest:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.West:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 case Direction.SouthWest:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthWest);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthEast);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.East);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.NorthWest:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.North:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.SouthEast:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.East:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 case Direction.NorthWest:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.SouthWest);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.South);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.NorthEast);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.East);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.SouthWest:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.South:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.NorthEast:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.East:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -332,40 +400,96 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
         /// </summary>
         private bool IsCardinalJumpPoint(Direction direction, PathfindingNode currentNode)
         {
-            PathfindingNode openNeighborOne;
-            PathfindingNode closedNeighborOne;
-            PathfindingNode openNeighborTwo;
-            PathfindingNode closedNeighborTwo;
+            PathfindingNode openNeighborOne = null;
+            PathfindingNode closedNeighborOne = null;
+            PathfindingNode openNeighborTwo = null;
+            PathfindingNode closedNeighborTwo = null;
 
             switch (direction)
             {
                 case Direction.North:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthEast);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.East);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.NorthWest);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.NorthEast:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.East:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.NorthWest:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.West:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 case Direction.East:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthEast);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthEast);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.South);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.NorthEast:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.North:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.SouthEast:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.South:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 case Direction.South:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.SouthEast);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.East);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthWest);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.West);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.SouthEast:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.East:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.SouthWest:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.West:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 case Direction.West:
-                    openNeighborOne = currentNode.GetNeighbor(Direction.NorthWest);
-                    closedNeighborOne = currentNode.GetNeighbor(Direction.North);
-
-                    openNeighborTwo = currentNode.GetNeighbor(Direction.SouthWest);
-                    closedNeighborTwo = currentNode.GetNeighbor(Direction.South);
+                    foreach (var neighbor in currentNode.GetNeighbors())
+                    {
+                        var neighborDirection = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
+                        switch (neighborDirection)
+                        {
+                            case Direction.NorthWest:
+                                openNeighborOne = neighbor;
+                                break;
+                            case Direction.North:
+                                closedNeighborOne = neighbor;
+                                break;
+                            case Direction.SouthWest:
+                                openNeighborTwo = neighbor;
+                                break;
+                            case Direction.South:
+                                closedNeighborTwo = neighbor;
+                                break;
+                        }
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Client.Interfaces;
 using Content.Shared.Preferences;
@@ -17,6 +18,7 @@ namespace Content.Client
         [Dependency] private readonly IClientNetManager _netManager;
 #pragma warning restore 649
 
+        public event Action OnServerDataLoaded;
         public GameSettings Settings { get; private set; }
         public PlayerPreferences Preferences { get; private set; }
 
@@ -69,6 +71,8 @@ namespace Content.Client
         {
             Preferences = message.Preferences;
             Settings = message.Settings;
+
+            OnServerDataLoaded?.Invoke();
         }
     }
 }

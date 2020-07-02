@@ -444,7 +444,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     var func = args.Function;
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, funcId, BoundKeyState.Down,
+                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
                         _entity.Transform.GridPosition,
                         args.PointerLocation, _entity.Uid);
 

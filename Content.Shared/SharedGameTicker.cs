@@ -66,6 +66,7 @@ namespace Content.Shared
             public bool YouAreReady { get; set; }
             // UTC.
             public DateTime StartTime { get; set; }
+            public bool Paused { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -78,6 +79,7 @@ namespace Content.Shared
 
                 YouAreReady = buffer.ReadBoolean();
                 StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
+                Paused = buffer.ReadBoolean();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -91,6 +93,7 @@ namespace Content.Shared
 
                 buffer.Write(YouAreReady);
                 buffer.Write(StartTime.Ticks);
+                buffer.Write(Paused);
             }
         }
 

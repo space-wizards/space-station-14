@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -39,7 +40,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables] private ContainerSlot _cellContainer;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _paralyzeChance = 0.25f;
+        private float _paralyzeChanceNoSlowdown = 0.35f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _paralyzeChanceWithSlowdown = 0.85f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _paralyzeTime = 10f;
@@ -53,13 +57,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public bool Activated => _activated;
 
         [ViewVariables]
-        private PowerCellComponent Cell
+        private BatteryComponent Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
+                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
                 return cell;
             }
         }
@@ -75,7 +79,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _paralyzeChance, "paralyzeChance", 0.25f);
+            serializer.DataField(ref _paralyzeChanceNoSlowdown, "paralyzeChanceNoSlowdown", 0.35f);
+            serializer.DataField(ref _paralyzeChanceWithSlowdown, "paralyzeChanceWithSlowdown", 0.85f);
             serializer.DataField(ref _paralyzeTime, "paralyzeTime", 10f);
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
@@ -83,23 +88,30 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
         {
             var cell = Cell;
-            if (!Activated || entities.Count == 0 || cell == null || !cell.CanDeductCharge(EnergyPerUse))
+            if (!Activated || entities.Count == 0 || cell == null)
                 return false;
-
+            if (!cell.TryUseCharge(EnergyPerUse))
+            {
+                return false;
+            }
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
                 if (!entity.TryGetComponent(out StunnableComponent stunnable)) continue;
 
-                if(_robustRandom.Prob(_paralyzeChance))
-                    stunnable.Paralyze(_paralyzeTime);
+                if(!stunnable.SlowedDown)
+                    if(_robustRandom.Prob(_paralyzeChanceNoSlowdown))
+                        stunnable.Paralyze(_paralyzeTime);
+                    else
+                        stunnable.Slowdown(_slowdownTime);
                 else
-                    stunnable.Slowdown(_slowdownTime);
+                    if(_robustRandom.Prob(_paralyzeChanceWithSlowdown))
+                        stunnable.Paralyze(_paralyzeTime);
+                    else
+                        stunnable.Slowdown(_slowdownTime);
             }
-
-            cell.DeductCharge(EnergyPerUse);
-            if(cell.Charge < EnergyPerUse)
+            if(cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 TurnOff();
@@ -158,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return;
             }
 
-            if (cell.Charge < EnergyPerUse)
+            if (cell.CurrentCharge < EnergyPerUse)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
@@ -181,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
             if (Cell != null) return false;
 
