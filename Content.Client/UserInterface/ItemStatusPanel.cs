@@ -132,9 +132,10 @@ namespace Content.Client.UserInterface
             }
         }
 
+        // TODO: Depending on if its a two-hand panel or not
         protected override Vector2 CalculateMinimumSize()
         {
-            return Vector2.ComponentMax(base.CalculateMinimumSize(), (150, 00));
+            return Vector2.ComponentMax(base.CalculateMinimumSize(), (150, 15));
         }
     }
 }

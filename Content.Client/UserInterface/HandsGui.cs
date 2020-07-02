@@ -6,6 +6,7 @@ using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -37,10 +38,15 @@ namespace Content.Client.UserInterface
 
             var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
 
-            var hands = new HBoxContainer
+            var hands = new VBoxContainer();
+
+            var panelTexture = ResC.GetTexture("/Nano/item_status_left.svg.96dpi.png");
+            var panel = new ItemStatusPanel(panelTexture, StyleBox.Margin.None);
+            hands.AddChild(panel);
+            hands.AddChild(new HBoxContainer
             {
                 SeparationOverride = 0,
-            };
+            });
 
             AddChild(hands);
 
@@ -56,9 +62,14 @@ namespace Content.Client.UserInterface
             _rightHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
         }
 
-        private HBoxContainer GetHandsContainer()
+        private Control GetHandsContainer()
         {
-            return (HBoxContainer) GetChild(0);
+            return GetChild(0).GetChild(1);
+        }
+
+        private ItemStatusPanel GetItemTooltip(Hand hand)
+        {
+            return (ItemStatusPanel) GetChild(0).GetChild(0);
         }
 
         private Texture LocationTexture(HandLocation location)
@@ -151,6 +162,27 @@ namespace Content.Client.UserInterface
             return entity != null && entity.TryGetComponent(out hands);
         }
 
+        public void Remove(Hand hand)
+        {
+            GetHandsContainer().RemoveChild(hand.Button);
+            if (hand.Location != HandLocation.Middle)
+            {
+                if (TryGetHands(out var hands))
+                {
+                    foreach (var handsHand in hands.Hands)
+                    {
+                        if (handsHand.Location != HandLocation.Middle)
+                        {
+                            continue;
+                        }
+
+                        handsHand.Location = hand.Location;
+                        break;
+                    }
+                }
+            }
+        }
+
         public void UpdateHandIcons()
         {
             if (Parent == null)
@@ -187,6 +219,7 @@ namespace Content.Client.UserInterface
                     AddHand(hand, hand.Location);
                 }
 
+                hand.Button!.Button.Texture = LocationTexture(hand.Location);
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
             }
@@ -270,8 +303,11 @@ namespace Content.Client.UserInterface
                 }
 
                 _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
-                hand.Panel?.Update(hand.Entity);
+                // hand.Panel?.Update(hand.Entity); // TODO: For 2 hands
             }
+
+            var tooltip = GetItemTooltip(null); // TODO: Move inside loop, remove null
+            tooltip.Update(component.ActiveHand);
         }
     }
 }
