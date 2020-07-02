@@ -1,13 +1,11 @@
-using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 
 #nullable enable
 
@@ -46,7 +44,7 @@ namespace Content.Client.GameObjects.EntitySystems
             FrameUpdate(frameTime);
         }
 
-        protected override void SetController(SharedPhysicsComponent physics)
+        protected override void SetController(PhysicsComponent physics)
         {
             ((PhysicsComponent)physics).SetController<MoverController>();
         }

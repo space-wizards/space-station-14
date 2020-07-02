@@ -17,6 +17,7 @@
     state: icon
   - type: Icon
     state: icon
+  - type: CanSpill
 
 - type: entity
   parent: DrinkCanBaseFull

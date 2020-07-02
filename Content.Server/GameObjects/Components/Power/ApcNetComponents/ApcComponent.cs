@@ -41,6 +41,8 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private float _lastCharge = 0f;
 
+        private TimeSpan _lastChargeChange;
+
         private bool _uiDirty = true;
 
         private const float HighPowerThreshold = 0.9f;
@@ -91,9 +93,10 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 _appearance.SetData(ApcVisuals.ChargeState, newState);
             }
             var newCharge = Battery.CurrentCharge;
-            if (newCharge != _lastCharge)
+            if (newCharge != _lastCharge && _lastChargeChange + TimeSpan.FromSeconds(VisualsChangeDelay) < _gameTiming.CurTime)
             {
                 _lastCharge = newCharge;
+                _lastChargeChange = _gameTiming.CurTime;
                 _uiDirty = true;
             }
             var extPowerState = CalcExtPowerState();

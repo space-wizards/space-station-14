@@ -96,6 +96,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 .GetEntitiesInRange(Owner, PowerTransferRange);
             return nearbyEntities.Select(entity => entity.TryGetComponent<PowerReceiverComponent>(out var receiver) ? receiver : null)
                 .Where(receiver => receiver != null)
+                .Where(receiver => receiver.Connectable)
                 .Where(receiver => receiver.NeedsProvider)
                 .Where(receiver => receiver.Owner.Transform.GridPosition.Distance(mapManager, Owner.Transform.GridPosition) < Math.Min(PowerTransferRange, receiver.PowerReceptionRange))
                 .ToList();

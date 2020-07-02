@@ -19,7 +19,6 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -66,7 +65,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
 
                 var mover = entity.GetComponent<IMoverComponent>();
-                var physics = entity.GetComponent<SharedPhysicsComponent>();
+                var physics = entity.GetComponent<PhysicsComponent>();
                 if (entity.TryGetComponent<CollidableComponent>(out var collider))
                 {
                     UpdateKinematics(entity.Transform, mover, physics, collider);
@@ -78,7 +77,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        protected override void SetController(SharedPhysicsComponent physics)
+        protected override void SetController(PhysicsComponent physics)
         {
             ((PhysicsComponent) physics).SetController<MoverController>();
         }

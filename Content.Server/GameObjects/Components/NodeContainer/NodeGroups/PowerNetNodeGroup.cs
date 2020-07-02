@@ -123,7 +123,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void RemoveConsumer(PowerConsumerComponent consumer)
         {
             Debug.Assert(_consumersByPriority[consumer.Priority].Contains(consumer));
-            _consumersByPriority[consumer.Priority].Add(consumer);
+            consumer.ReceivedPower = 0;
+            _consumersByPriority[consumer.Priority].Remove(consumer);
             _drawByPriority[consumer.Priority] -= consumer.DrawRate;
             UpdateConsumerReceivedPower();
         }

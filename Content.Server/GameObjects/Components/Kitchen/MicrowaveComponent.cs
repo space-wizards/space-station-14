@@ -452,7 +452,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DisconnectBodyPart(head, true);
+                    var droppedHead = bodyManagerComponent.DropBodyPart(head);
                     _storage.Insert(droppedHead);
                     headCount++;
                 }

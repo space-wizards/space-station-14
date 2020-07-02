@@ -1,3 +1,20 @@
+- type: entity
+  parent: BaseDroppedMechanism
+  id: HeartMechanismDebug
+  name: "human heart (debug)"
+  components:
+  - type: Sprite
+    sprite: Objects/BodySystem/Organs/basic_human.rsi
+    state: heart_human
+  - type: Icon
+    sprite: Objects/BodySystem/Organs/basic_human.rsi
+    state: heart_human
+  - type: DroppedMechanism
+    debugLoadMechanismData: mechanism.Heart.BasicHuman
+    
+
+
+
 - type: mechanism
   id: mechanism.Brain.BasicHuman
   name: "human brain"

@@ -1,10 +1,12 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Robust.Shared.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -28,8 +30,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [ViewVariables]
         public IEntity Owner { get; private set; }
 
+        [ViewVariables]
         private bool _needsGroup = true;
 
+        /// <summary>
+        ///     If this node should be considered for connection by other nodes.
+        /// </summary>
+        private bool Connectable => !_deleting && Anchored;
+
+        private bool Anchored => !Owner.TryGetComponent<PhysicsComponent>(out var physics) || physics.Anchored;
+
+        /// <summary>
+        ///    Prevents a node from being used by other nodes while midway through removal.
+        /// </summary>
         private bool _deleting = false;
 
 
@@ -47,11 +60,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
+            {
+                AnchorUpdate();
+                physics.AnchoredChanged += AnchorUpdate;
+            }
         }
 
         public void OnContainerRemove()
         {
             _deleting = true;
+            if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
+            {
+                AnchorUpdate();
+                physics.AnchoredChanged -= AnchorUpdate;
+            }
             NodeGroup.RemoveNode(this);
         }
 
@@ -67,7 +90,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void StartSpreadingGroup()
         {
-            NodeGroup.BeforeRemakeSpread(); 
+            NodeGroup.BeforeRemakeSpread();
             SpreadGroup();
             NodeGroup.AfterRemakeSpread();
         }
@@ -75,7 +98,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public void SpreadGroup()
         {
             Debug.Assert(!_needsGroup);
-            foreach (var node in GetReachableCompatibleNodes().Where(node => node._needsGroup == true))
+            foreach (var node in GetReachableCompatibleNodes().Where(node => node._needsGroup))
             {
                 node.NodeGroup = NodeGroup;
                 node.SpreadGroup();
@@ -90,19 +113,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         /// <summary>
         ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
-        ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>. 
+        ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.
         /// </summary>
         protected abstract IEnumerable<Node> GetReachableNodes();
 
         private IEnumerable<Node> GetReachableCompatibleNodes()
         {
             return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
-                .Where(node => node._deleting == false);
+                .Where(node => node.Connectable);
         }
 
         private IEnumerable<INodeGroup> GetReachableCompatibleGroups()
         {
-            return GetReachableCompatibleNodes().Where(node => node._needsGroup == false)
+            return GetReachableCompatibleNodes().Where(node => !node._needsGroup)
                 .Select(node => node.NodeGroup)
                 .Where(group => group != NodeGroup);
         }
@@ -126,6 +149,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup MakeNewGroup()
         {
             return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
+        }
+
+        private void AnchorUpdate()
+        {
+            if (Anchored)
+            {
+                if (_needsGroup)
+                {
+                    TryAssignGroupIfNeeded();
+                    CombineGroupWithReachable();
+                }
+            }
+            else
+            {
+                NodeGroup.RemoveNode(this);
+                ClearNodeGroup();
+            }
         }
     }
 }

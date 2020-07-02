@@ -167,32 +167,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         {
             var newChunk = new PathfindingChunk(gridId, indices);
             newChunk.Initialize();
-            if (_graph.TryGetValue(gridId, out var chunks))
-            {
-                for (var x = -1; x < 2; x++)
-                {
-                    for (var y = -1; y < 2; y++)
-                    {
-                        if (x == 0 && y == 0) continue;
-
-                        var neighborIndices = new MapIndices(
-                            indices.X + x * PathfindingChunk.ChunkSize,
-                            indices.Y + y * PathfindingChunk.ChunkSize);
-
-                        if (chunks.TryGetValue(neighborIndices, out var neighborChunk))
-                        {
-                            neighborChunk.AddNeighbor(newChunk);
-                        }
-                    }
-                }
-            }
-            else
+            if (!_graph.ContainsKey(gridId))
             {
                 _graph.Add(gridId, new Dictionary<MapIndices, PathfindingChunk>());
             }
-
             _graph[gridId].Add(indices, newChunk);
-
             return newChunk;
         }
 
