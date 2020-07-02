@@ -167,7 +167,7 @@ namespace Content.Client.UserInterface
             // TODO: Remove button on remove hand
 
             var locationsOccupied = new HashSet<HandLocation>();
-            foreach (var hand in component.Hands.Values)
+            foreach (var hand in component.Hands)
             {
                 var location = locationsOccupied.Contains(hand.Location)
                     ? HandLocation.Middle
@@ -183,7 +183,7 @@ namespace Content.Client.UserInterface
                 }
             }
 
-            foreach (var hand in component.Hands.Values)
+            foreach (var hand in component.Hands)
             {
                 if (hand.Location == HandLocation.Left)
                 {
@@ -198,8 +198,7 @@ namespace Content.Client.UserInterface
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            var parent = component.Hands[component.ActiveIndex].Button;
-            parent!.AddChild(_activeHandRect);
+            component[component.ActiveIndex]?.Button?.AddChild(_activeHandRect);
             _activeHandRect.SetPositionInParent(1);
         }
 
@@ -269,7 +268,7 @@ namespace Content.Client.UserInterface
                 return;
             }
 
-            foreach (var hand in component.Hands.Values)
+            foreach (var hand in component.Hands)
             {
                 if (hand.Button == null)
                 {

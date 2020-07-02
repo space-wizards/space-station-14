@@ -2,6 +2,7 @@
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
@@ -24,15 +25,45 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud;
 #pragma warning restore 649
 
-        private readonly SortedList<string, Hand> _hands = new SortedList<string, Hand>();
+        private readonly List<Hand> _hands = new List<Hand>();
 
-        [ViewVariables] public IReadOnlyDictionary<string, Hand> Hands => _hands;
+        [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
 
         [ViewVariables] public string ActiveIndex { get; private set; }
 
         [ViewVariables] private ISpriteComponent _sprite;
 
         [ViewVariables] public IEntity ActiveHand => GetEntity(ActiveIndex);
+
+        [CanBeNull]
+        public Hand this[string slotName] => Hands.FirstOrDefault(hand => hand.Name == slotName);
+
+        private void AddHand(Hand hand)
+        {
+            if (_hands.Count == 0 || hand.Location == HandLocation.Right)
+            {
+                _hands.Add(hand);
+            }
+            else if (hand.Location == HandLocation.Left)
+            {
+                _hands.Insert(0, hand);
+            }
+            else
+            {
+                _hands.Insert(1, hand);
+            }
+        }
+
+        private bool TryHand(string slotName, [MaybeNullWhen(false)] out Hand hand)
+        {
+            return (hand = this[slotName]) != null;
+        }
+
+        [CanBeNull]
+        public IEntity GetEntity(string index)
+        {
+            return this[index]?.Entity;
+        }
 
         public override void OnRemove()
         {
@@ -47,25 +78,12 @@ namespace Content.Client.GameObjects.Components.Items
 
             if (Owner.TryGetComponent(out _sprite))
             {
-                foreach (var slot in _hands.Keys)
+                foreach (var hand in _hands)
                 {
-                    _sprite.LayerMapReserveBlank($"hand-{slot}");
-
-                    var hand = _hands[slot];
+                    _sprite.LayerMapReserveBlank($"hand-{hand.Name}");
                     UpdateHandSprites(hand);
                 }
             }
-        }
-
-        [CanBeNull]
-        public IEntity GetEntity(string index)
-        {
-            if (!string.IsNullOrEmpty(index) && _hands.TryGetValue(index, out var hand))
-            {
-                return hand.Entity;
-            }
-
-            return null;
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
@@ -78,10 +96,10 @@ namespace Content.Client.GameObjects.Components.Items
             var cast = (HandsComponentState) curState;
             foreach (var sharedHand in cast.Hands)
             {
-                if (!_hands.TryGetValue(sharedHand.Name, out var hand))
+                if (!TryHand(sharedHand.Name, out var hand))
                 {
                     hand = new Hand(sharedHand, Owner.EntityManager);
-                    _hands[hand.Name] = hand;
+                    AddHand(hand);
                 }
                 else if (sharedHand.EntityUid.HasValue)
                 {
@@ -95,12 +113,12 @@ namespace Content.Client.GameObjects.Components.Items
                 UpdateHandSprites(hand);
             }
 
-            foreach (var slot in _hands.Keys.ToList())
+            foreach (var currentHand in _hands.ToList())
             {
-                if (cast.Hands.All(hand => hand.Name != slot))
+                if (cast.Hands.All(newHand => newHand.Name != currentHand.Name))
                 {
-                    _hands.Remove(slot);
-                    HideHand(slot);
+                    _hands.Remove(currentHand);
+                    HideHand(currentHand);
                 }
             }
 
@@ -110,9 +128,9 @@ namespace Content.Client.GameObjects.Components.Items
             RefreshInHands();
         }
 
-        private void HideHand(string name)
+        private void HideHand(Hand hand)
         {
-            _sprite.LayerSetVisible($"hand-{name}", false);
+            _sprite.LayerSetVisible($"hand-{hand.Name}", false);
         }
 
         private void UpdateHandSprites(Hand hand)
@@ -151,15 +169,15 @@ namespace Content.Client.GameObjects.Components.Items
         {
             if (!Initialized) return;
 
-            foreach (var pair in _hands)
+            foreach (var hand in _hands)
             {
-                UpdateHandSprites(pair.Value);
+                UpdateHandSprites(hand);
             }
         }
 
         protected override void Startup()
         {
-            ActiveIndex = _hands.Keys.LastOrDefault();
+            ActiveIndex = _hands.LastOrDefault()?.Name;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -220,6 +238,7 @@ namespace Content.Client.GameObjects.Components.Items
     public class Hand
     {
         public readonly string Name;
+
         public Hand(SharedHand hand, IEntityManager manager, HandButton button = null, ItemStatusPanel panel = null)
         {
             Name = hand.Name;
