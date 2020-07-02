@@ -11,6 +11,9 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
 # Since this -https://github.com/space-wizards/space-station-14/issues/1232- has
 # still not been fixed we can't specify an icon here or else it'll override the
 # icon state on all the children. FIX THIS PJB!!! - Swept
@@ -40,7 +43,7 @@
     Anchored: false
   - type: EntityStorage
     Capacity: 60
-    CanWeldShut: false
+    CanWeldShut: true
   - type: PlaceableSurface
   - type: Damageable
   - type: Destructible
@@ -51,3 +54,4 @@
       state_open: crate_open
       state_closed: crate_door
   - type: LoopingSound
+  - type: Anchorable

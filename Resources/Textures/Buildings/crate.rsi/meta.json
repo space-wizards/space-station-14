@@ -8,7 +8,7 @@
     },
     "states": [
         {
-            "name": "lock_locked",
+            "name": "locked",
             "select": [],
             "flags": {},
             "directions": 1
@@ -20,7 +20,7 @@
             "directions": 1
         },
         {
-            "name": "lock_unlocked",
+            "name": "unlocked",
             "select": [],
             "flags": {},
             "directions": 1
@@ -349,6 +349,15 @@
         },
         {
           "name": "weaponcrate_icon",
+          "directions": 1,
+          "delays": [
+            [
+              1.0
+            ]
+          ]
+        },
+        {
+          "name": "welded",
           "directions": 1,
           "delays": [
             [
