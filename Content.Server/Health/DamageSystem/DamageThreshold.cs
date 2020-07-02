@@ -5,7 +5,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.DamageSystem
 {
     /// <summary>
-    ///     Triggers an event when damage values rise above or drop below a threshold.
+    ///     Triggers an event when damage values on a <see cref="IDamageableComponent"/> rise above or drop below a threshold.
     /// </summary>
     public struct DamageThreshold
     {

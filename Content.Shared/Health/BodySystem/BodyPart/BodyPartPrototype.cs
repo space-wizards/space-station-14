@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -27,6 +28,8 @@ namespace Content.Shared.BodySystem {
         private float _resistance;
 		private int _size;
 		private BodyPartCompatibility _compatibility;
+        private string _damageContainerPresetID;
+        private string _resistanceSetID;
         private string _surgeryDataName;
         private List<IExposeData> _properties;
         private List<string> _mechanisms;
@@ -65,6 +68,12 @@ namespace Content.Shared.BodySystem {
         public BodyPartCompatibility Compatibility => _compatibility;
 
         [ViewVariables]
+        public string DamageContainerPresetID => _damageContainerPresetID;
+
+        [ViewVariables]
+        public string ResistanceSetID => _resistanceSetID;
+
+        [ViewVariables]
         public string SurgeryDataName => _surgeryDataName;
 
         [ViewVariables]
@@ -88,8 +97,14 @@ namespace Content.Shared.BodySystem {
             serializer.DataField(ref _resistance, "resistance", 0f);
             serializer.DataField(ref _size, "size", 0);
             serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
-			serializer.DataField(ref _properties, "properties", new List<IExposeData>());
+            serializer.DataField(ref _damageContainerPresetID, "damageContainer", string.Empty);
+            serializer.DataField(ref _resistanceSetID, "resistances", string.Empty);
+            serializer.DataField(ref _properties, "properties", new List<IExposeData>());
             serializer.DataField(ref _mechanisms, "mechanisms", new List<string>());
+            foreach(BodyPartProperty property in _properties) {
+                if (_properties.Count(x => x.GetType() == property.GetType()) > 1)
+                    throw new InvalidOperationException("More than one BodyPartProperty of the same type was defined in the prototype " + ID + "!");
+            }
         }
     }
 }

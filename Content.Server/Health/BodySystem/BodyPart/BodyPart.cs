@@ -1,6 +1,7 @@
 ﻿using Content.Server.DamageSystem;
 using Content.Shared.BodySystem;
 using Content.Shared.DamageSystem;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
@@ -9,8 +10,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
-
-
+using System.Linq;
 
 namespace Content.Server.BodySystem
 {
@@ -22,51 +22,75 @@ namespace Content.Server.BodySystem
     /// </summary>
     public class BodyPart
     {
-
+        /// <summary>
+        ///     The <see cref="ISurgeryData"/> class currently representing this BodyPart's surgery status.
+        /// </summary>
         [ViewVariables]
         private ISurgeryData _surgeryData;
 
+        /// <summary>
+        ///     List of <see cref="Mechanism">Mechanisms</see> currently held within this BodyPart.
+        /// </summary>
         [ViewVariables]
         private List<Mechanism> _mechanisms = new List<Mechanism>();
 
+        /// <summary>
+        ///     How much space is currently taken up by Mechanisms in this BodyPart.
+        /// </summary>
         [ViewVariables]
         private int _sizeUsed = 0;
+
+        /// <summary>
+        ///     List of <see cref="IExposeData"/> properties, allowing for additional data classes to be attached to a limb, such as a "length" class to an arm.
+        /// </summary>
+        [ViewVariables]
+        private List<IExposeData> _properties { get; set; }
+
+
+
+
 
         /// <summary>
         ///     The name of this BodyPart, often displayed to the user. For example, it could be named "advanced robotic arm".
         /// </summary>
         [ViewVariables]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         ///     Plural version of this BodyPart name.
         /// </summary>
         [ViewVariables]
-        public string Plural { get; set; }
+        public string Plural { get; private set; }
 
         /// <summary>
         ///     Path to the RSI that represents this BodyPart.
         /// </summary>			  
         [ViewVariables]
-        public string RSIPath { get; set; }
+        public string RSIPath { get; private set; }
 
         /// <summary>
         ///     RSI state that represents this BodyPart.
         /// </summary>			  
         [ViewVariables]
-        public string RSIState { get; set; }
+        public string RSIState { get; private set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this BodyPart is considered to be. For example, BodyPartType.Arm. 
         /// </summary>
         [ViewVariables]
-        public BodyPartType PartType { get; set; }
+        public BodyPartType PartType { get; private set; }
+
+        /// <summary>
+        ///     Determines many things: how many mechanisms can be fit inside this BodyPart, whether a body can fit through tiny crevices, etc.
+        /// </summary>		
+        [ViewVariables]
+        public int Size { get; private set; }
 
         /// <summary>
         ///     Max HP of this BodyPart.
         /// </summary>		
         [ViewVariables]
-        public int MaxDurability { get; set; }
+        public int MaxDurability { get; private set; }
 
         /// <summary>
         ///     Current HP of this BodyPart based on sum of all damage types.
@@ -78,37 +102,25 @@ namespace Content.Server.BodySystem
         ///     Current damage dealt to this BodyPart.
         /// </summary>		
         [ViewVariables]
-        public AbstractDamageContainer CurrentDamages { get; set; }
+        public DamageContainer CurrentDamages { get; private set; }
 
         /// <summary>
-        ///     At what HP this BodyPartis completely destroyed.
+        ///     Armor of this BodyPart against damages.
         /// </summary>		
         [ViewVariables]
-        public int DestroyThreshold { get; set; }
+        public ResistanceSet Resistances { get; private set; }
 
         /// <summary>
-        ///     Armor of this BodyPart against attacks.
+        ///     At what HP this BodyPart destroyed.
         /// </summary>		
         [ViewVariables]
-        public float Resistance { get; set; }
-
-        /// <summary>
-        ///     Determines many things: how many mechanisms can be fit inside this BodyPart, whether a body can fit through tiny crevices, etc.
-        /// </summary>		
-        [ViewVariables]
-        public int Size { get; set; }
+        public int DestroyThreshold { get; private set; }
 
         /// <summary>
         ///     What types of BodyParts this BodyPart can easily attach to. For the most part, most limbs aren't universal and require extra work to attach between types.
         /// </summary>
         [ViewVariables]
-        public BodyPartCompatibility Compatibility { get; set; }
-
-        /// <summary>
-        ///     List of <see cref="IExposeData"/> properties, allowing for additional data classes to be attached to a limb, such as a "length" class to an arm.
-        /// </summary>
-        [ViewVariables]
-        public List<IExposeData> Properties { get; set; }
+        public BodyPartCompatibility Compatibility { get; private set; }
 
         /// <summary>
         ///     List of all <see cref="Mechanism">Mechanisms</see> currently inside this BodyPart.
@@ -116,12 +128,73 @@ namespace Content.Server.BodySystem
         [ViewVariables]
         public List<Mechanism> Mechanisms => _mechanisms;
 
+        /// <summary>
+        ///     List of <see cref="IExposeData"/> properties, allowing for additional data classes to be attached to a limb, such as a "length" class to an arm.
+        /// </summary>
+        [ViewVariables]
+        private List<IExposeData> Properties => _properties;
+
+
+
+
         public BodyPart() { }
 
         public BodyPart(BodyPartPrototype data)
         {
             LoadFromPrototype(data);
         }
+
+
+
+        /// <summary>
+        ///     Attempts to add the given <see cref="BodyPartProperty"/>. Returns true if successful, false if a BodyPartProperty of that type already exists.
+        /// </summary>
+        public bool TryAddProperty(BodyPartProperty property)
+        {
+            if (HasProperty(property.GetType()))
+                return false;
+            _properties.Add(property);
+            return true;
+        }
+
+        /// <summary>
+        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type. Returns true if successful, false otherwise. The resulting BodyPartProperty will be null if unsuccessful.
+        /// </summary>
+        public bool TryGetProperty<T>(out T property)
+        {
+            property = (T)_properties.First(x => x.GetType() == typeof(T));
+            return property != null;
+        }
+
+        /// <summary>
+        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type. Returns true if successful, false otherwise. The resulting BodyPartProperty will be null if unsuccessful.
+        /// </summary>
+        public bool TryGetProperty(Type propertyType, out BodyPartProperty property)
+        {
+            property = (BodyPartProperty) _properties.First(x => x.GetType() == propertyType);
+            return property != null;
+        }
+
+        /// <summary>
+        ///     Returns whether the given <see cref="BodyPartProperty"/> type is on this BodyPart.
+        /// </summary>
+        public bool HasProperty<T>()
+        {
+            return _properties.Count(x => x.GetType() == typeof(T)) > 0;
+        }
+
+        /// <summary>
+        ///     Returns whether the given <see cref="BodyPartProperty"/> type is on this BodyPart.
+        /// </summary>
+        public bool HasProperty(Type propertyType)
+        {
+            return _properties.Count(x => x.GetType() == propertyType) > 0;
+        }
+
+
+
+
+
 
 
 
@@ -230,21 +303,26 @@ namespace Content.Server.BodySystem
         /// </summary>	
         public virtual void LoadFromPrototype(BodyPartPrototype data)
         {
+            IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             Name = data.Name;
             Plural = data.Plural;
             PartType = data.PartType;
             RSIPath = data.RSIPath;
             RSIState = data.RSIState;
             MaxDurability = data.Durability;
-            CurrentDamages = new BiologicalDamageContainer(); //TODO: same thing as the surgerydata below
-            Resistance = data.Resistance;
+            if(!prototypeManager.TryIndex(data.DamageContainerPresetID, out DamageContainerPrototype damageContainerData))
+                throw new InvalidOperationException("No DamageContainerPrototype was found with the name " + data.DamageContainerPresetID + "!");
+            CurrentDamages = new DamageContainer(damageContainerData);
+            if (!prototypeManager.TryIndex(data.ResistanceSetID, out ResistanceSetPrototype resistancesData))
+                throw new InvalidOperationException("No ResistanceSetPrototype was found with the name " + data.ResistanceSetID + "!");
+            Resistances = new ResistanceSet(resistancesData);
             Size = data.Size;
             Compatibility = data.Compatibility;
-            Properties = data.Properties;
-            //_surgeryData = (ISurgeryData) Activator.CreateInstance(null, data.SurgeryDataName);
-            //TODO: figure out a way to convert a string name in the YAML to the proper class (reflection won't work for reasons)
-            _surgeryData = new BiologicalSurgeryData(this);
-            IPrototypeManager prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            _properties = data.Properties;
+            Type surgeryDataType = Type.GetType(data.SurgeryDataName);
+            if(surgeryDataType == null)
+                throw new InvalidOperationException("No ISurgeryData was found with the name " + data.SurgeryDataName + "!");
+            _surgeryData = (ISurgeryData)Activator.CreateInstance(surgeryDataType, this);
             foreach (string mechanismPrototypeID in data.Mechanisms)
             {
                 if (!prototypeManager.TryIndex(mechanismPrototypeID, out MechanismPrototype mechanismData))

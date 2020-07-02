@@ -37,7 +37,7 @@
     Asphyxiation: 0
     
 - type: resistanceSet
-  id: roboticResistances
+  id: metallicResistances
   coefficients:
     Blunt: 0.7
     Piercing: 0.7

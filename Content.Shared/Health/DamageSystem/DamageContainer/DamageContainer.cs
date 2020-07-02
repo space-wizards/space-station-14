@@ -11,7 +11,7 @@ namespace Content.Shared.DamageSystem
     ///     Holds the information regarding the various forms of damage an object has taken (i.e. brute, burn, or toxic damage). 
     /// </summary>
     [NetSerializable, Serializable]
-    public abstract class AbstractDamageContainer
+    public class DamageContainer
     {
         [ViewVariables]
         public Dictionary<DamageType, int> _damageList = new Dictionary<DamageType, int>();
@@ -34,12 +34,17 @@ namespace Content.Shared.DamageSystem
             }
         }
 
-        public AbstractDamageContainer(List<DamageClass> supportedClasses)
+        public DamageContainer(DamageContainerPrototype data)
+        {
+            SupportedDamageClasses = data.ActiveDamageClasses;
+            SetupDamageContainer();
+        }
+        public DamageContainer(List<DamageClass> supportedClasses)
         {
             SupportedDamageClasses = supportedClasses;
             SetupDamageContainer();
         }
-        public AbstractDamageContainer()
+        public DamageContainer()
         {
             SetupDamageContainer();
         }

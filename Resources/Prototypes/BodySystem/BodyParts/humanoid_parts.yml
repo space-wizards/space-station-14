@@ -7,10 +7,11 @@
   partType: Torso
   durability: 100
   destroyThreshold: -150
-  resistance: 4.0
   size: 14
   compatibility: Biological
-  surgeryDataType: BiologicalSurgeryData
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
   mechanisms:
     - mechanism.Heart.BasicHuman
     - mechanism.Lungs.BasicHuman
@@ -27,10 +28,11 @@
   partType: Head
   durability: 50
   destroyThreshold: -120
-  resistance: 7.0
   size: 7
   compatibility: Biological
-  surgeryDataType: BiologicalSurgeryData
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
   mechanisms:
     - mechanism.Brain.BasicHuman
     - mechanism.Eyes.BasicHuman
@@ -46,12 +48,14 @@
   partType: Arm
   durability: 40
   destroyThreshold: -80
-  resistance: 3.0
   size: 5
   compatibility: Biological
-  surgeryDataType: BiologicalSurgeryData
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
   properties:
-    - !type:ArmProperty
+    - !type:ExtensionProperty
+      active: true
       reachDistance: 2.4
 
 
@@ -65,10 +69,14 @@
   partType: Hand
   durability: 30
   destroyThreshold: -60
-  resistance: 2.0
   size: 3
   compatibility: Biological
-  surgeryDataType: BiologicalSurgeryData
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  properties:
+    - !type:GraspProperty
+      active: true
 
 
 - type: bodyPart
@@ -80,11 +88,18 @@
   partType: Leg
   durability: 45
   destroyThreshold: -90
-  resistance: 2.0
   size: 6
   compatibility: Biological
-  surgeryDataType: BiologicalSurgeryData
-
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  properties:
+    - !type:ExtensionProperty
+      active: true
+      reachDistance: 3.0
+    - !type:LegProperty
+      active: true
+      speed: 2.6
 
 - type: bodyPart
   id: bodyPart.Foot.BasicHuman
@@ -95,8 +110,11 @@
   partType: Foot
   durability: 30
   destroyThreshold: -60
-  resistance: 3.0
   size: 2
   compatibility: Biological
-  surgeryDataType: BiologicalSurgeryData
-
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  properties:
+    - !type:FootProperty
+      active: true

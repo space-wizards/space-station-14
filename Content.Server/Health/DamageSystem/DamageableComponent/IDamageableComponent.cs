@@ -13,9 +13,8 @@ namespace Content.Server.DamageSystem
     /// </summary>
     public abstract class IDamageableComponent : Component
     {
-        private Dictionary<DamageType, List<DamageThreshold>> _thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
-        private event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdEvent;
-        private AbstractDamageContainer _damageContainer;
+        protected Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
+        protected event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdEvent;
 
         /// <summary>
         ///     Takes the specified damage. Returns false if the given damageType is not supported; true otherwise.
@@ -37,40 +36,5 @@ namespace Content.Server.DamageSystem
 
         public abstract bool IsDead();
 
-
-
-
-
-
-        private void UpdateDamageThresholds()
-        {
-            foreach (IOnDamageBehavior onDamageBehaviorComponent in Owner.GetAllComponents<IOnDamageBehavior>())
-            {
-                AddThresholdsFrom(onDamageBehaviorComponent);
-            }
-        }
-
-        private void AddThresholdsFrom(IOnDamageBehavior onDamageBehavior)
-        {
-            if (onDamageBehavior == null)
-            {
-                throw new ArgumentNullException(nameof(onDamageBehavior));
-            }
-
-            List<DamageThreshold> thresholds = onDamageBehavior.GetAllDamageThresholds();
-
-            if (thresholds == null)
-                return;
-
-            foreach (DamageThreshold threshold in thresholds)
-            {
-                if (!_thresholds[threshold.DamageType].Contains(threshold))
-                {
-                    _thresholds[threshold.DamageType].Add(threshold);
-                }
-            }
-
-            DamageThresholdEvent += onDamageBehavior.OnDamageThresholdPassed;
-        }
     }
 }

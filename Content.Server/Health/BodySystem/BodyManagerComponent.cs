@@ -10,6 +10,9 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Interfaces.Serialization;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Server.GameObjects.Components.Mobs;
 
 namespace Content.Server.BodySystem {
 
@@ -29,6 +32,12 @@ namespace Content.Server.BodySystem {
 
         [ViewVariables]
         private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
+
+        /// <summary>
+        ///     All <see cref="BodyPart">BodyParts</see> with <see cref="LegProperty">LegProperties</see> that are currently affecting movespeed, mapped to how big that leg they're on is.
+        /// </summary>
+        [ViewVariables]
+        private Dictionary<BodyPart, float> _activeLegs = new Dictionary<BodyPart, float>();
 
         /// <summary>
         ///     The <see cref="BodyTemplate"/> that this BodyManagerComponent is adhering to.
@@ -77,7 +86,7 @@ namespace Content.Server.BodySystem {
         /// </summary>
         public bool ConnectedToCenterPart(BodyPart target) {
             List<string> searchedSlots = new List<string> { };
-            if (TryGetSlotName(target, out string result))
+            if (!TryGetSlotName(target, out string result))
                 return false;
             return ConnectedToCenterPartRecursion(searchedSlots, result);
         }
@@ -129,7 +138,7 @@ namespace Content.Server.BodySystem {
         /// </summary>
         public bool TryGetSlotName(BodyPart part, out string result) {
             result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
-            return result == null;
+            return result != null;
         }
 
         /// <summary>
@@ -148,7 +157,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Grabs all occupied slots connected to the given slot, regardless of whether the target slot is occupied. Returns true if successful, false if there was an error or no connected BodyParts were found.
+        ///     Grabs all occupied slots connected to the given slot, regardless of whether the given slotName is occupied. Returns true if successful, false if there was an error or no connected BodyParts were found.
         /// </summary>
         public bool TryGetBodyPartConnections(string slotName, out List<BodyPart> result)
         {
@@ -169,7 +178,16 @@ namespace Content.Server.BodySystem {
             return true;
         }
 
-
+        /// <summary>
+        ///     Grabs all occupied slots connected to the given slot, regardless of whether the given slotName is occupied. Returns true if successful, false if there was an error or no connected BodyParts were found.
+        /// </summary>
+        public bool TryGetBodyPartConnections(BodyPart part, out List<BodyPart> result)
+        {
+            result = null;
+            if (TryGetSlotName(part, out string slotName))
+                return TryGetBodyPartConnections(slotName, out result);
+            return false;
+        }
 
 
 
@@ -212,6 +230,7 @@ namespace Content.Server.BodySystem {
                 _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
                 _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
             }
+            OnBodyChanged();
         }
 
         /// <summary>
@@ -222,6 +241,7 @@ namespace Content.Server.BodySystem {
             foreach (KeyValuePair<string, BodyPart> part in _partDictionary) {
                 //TODO: Make this work.
             }
+            OnBodyChanged();
         }
 
         /// <summary>
@@ -248,6 +268,7 @@ namespace Content.Server.BodySystem {
             if (TryGetBodyPart(slotName, out BodyPart result)) //And that nothing is in it
                 return false;
             _partDictionary.Add(slotName, part);
+            OnBodyChanged();
             return true;
         }
         /// <summary>
@@ -287,6 +308,7 @@ namespace Content.Server.BodySystem {
                 }
                 var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                 partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+                OnBodyChanged();
                 return partEntity;
             }
             return null;
@@ -314,6 +336,7 @@ namespace Content.Server.BodySystem {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
                 }
+                OnBodyChanged();
             }
         }
 
@@ -336,6 +359,112 @@ namespace Content.Server.BodySystem {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
                     partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
                 }
+                OnBodyChanged();
+            }
+        }
+
+
+        private void CalculateSpeed() {
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent playerMover))
+            {
+                float speedSum = 0;
+                foreach (var (key, value) in _activeLegs)
+                {
+                    if (!key.HasProperty<LegProperty>())
+                        _activeLegs.Remove(key);
+                }
+                foreach (var(key, value) in _activeLegs){
+                    if (key.TryGetProperty<LegProperty>(out LegProperty legProperty))
+                    {
+                        speedSum += legProperty.Speed * (1 + (float) Math.Log(value, (double) 1024.0)); //Speed of a leg = base speed * (1+log1024(leg length))
+                    }
+                }
+                if (speedSum <= 0.001f || _activeLegs.Count <= 0) //Case: no way of moving. Fall down.
+                {
+                    if (Owner.TryGetComponent(out StunnableComponent stunnable))
+                    {
+                        stunnable.Stun(1f);
+                        stunnable.Knockdown(5f);
+                    }
+                    playerMover.BaseWalkSpeed = 0.8f;
+                    playerMover.BaseSprintSpeed = 2.0f;
+                }
+                else //Case: have at least one leg. Set movespeed.
+                {
+                    playerMover.BaseWalkSpeed = speedSum / (_activeLegs.Count - (float) (Math.Log((double) _activeLegs.Count, (double) 4.0))); //Extra legs stack diminishingly. Final speed = speed sum/(leg count-log4(leg count))
+                    playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Called when the layout of this body changes.
+        /// </summary>
+        private void OnBodyChanged()
+        {
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent playerMover)) //Calculate movespeed based on this body.
+            {
+                _activeLegs.Clear();
+                IEnumerable<BodyPart> legParts = Parts.Cast<BodyPart>().Where(x => x.HasProperty(typeof(LegProperty)));
+                foreach (BodyPart part in legParts)
+                {
+                    float footDistance = DistanceToNearestFoot(this, part);
+                    if (footDistance != float.MinValue)
+                        _activeLegs.Add(part, footDistance);
+                }
+                CalculateSpeed();
+            }
+        }
+
+        /// <summary>
+        ///     Returns the combined length of the distance to the nearest <see cref="BodyPart"/> with a <see cref="FootProperty"/>. Returns <see cref="float.MinValue"/>
+        ///     if there is no foot found. If you consider a <see cref="BodyManagerComponent"/> a node map, then it will look for a foot node from the given node. It can
+        ///     only search through BodyParts with <see cref="ExtensionProperty"/>.
+        /// </summary>
+        private static float DistanceToNearestFoot(BodyManagerComponent body, BodyPart source)
+        {
+            if (source.HasProperty<FootProperty>() && source.TryGetProperty<ExtensionProperty>(out ExtensionProperty property))
+                return property.ReachDistance;
+            return LookForFootRecursion(body, source, new List<BodyPart>());
+        }
+
+        private static float LookForFootRecursion(BodyManagerComponent body, BodyPart current, List<BodyPart> searchedParts)
+        {
+            //This function is quite messy but it works as intended.
+            if (current.TryGetProperty<ExtensionProperty>(out ExtensionProperty extProperty))
+            { //If the current BodyPart has an ExtensionProperty...
+                if (body.TryGetBodyPartConnections(current, out List<BodyPart> connections)) //Get all connected BodyParts...
+                {
+                    foreach (BodyPart connection in connections) //If a connected BodyPart is a foot, return this BodyPart's length.
+                    {
+                        if (!searchedParts.Contains(connection) && connection.HasProperty<FootProperty>())
+                            return extProperty.ReachDistance;
+                    }
+                    List<float> distances = new List<float>();
+                    foreach (BodyPart connection in connections) //Otherwise, get the recursion values of all connected BodyParts and store them in a list.
+                    {
+                        if (searchedParts.Contains(connection))
+                        {
+                            float result = LookForFootRecursion(body, connection, searchedParts);
+                            if (result != float.MinValue)
+                                distances.Add(result);
+                        }
+                    }
+                    if (distances.Count > 0) //If one or more of the searches found a foot, return the smallest one and add this one's length.
+                    {
+                        return distances.Min<float>() + extProperty.ReachDistance;
+                    }
+                    else //There are no foots connected to this one, return false.
+                    {
+                        return float.MinValue;
+                    }
+                }
+                else //No connections, return false.
+                    return float.MinValue;
+            }
+            else
+            { //No extensionproperty, no go.
+                return float.MinValue;
             }
         }
 

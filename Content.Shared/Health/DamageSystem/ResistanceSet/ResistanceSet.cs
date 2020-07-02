@@ -1,5 +1,6 @@
 ﻿using Content.Shared.DamageSystem;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Content.Shared.DamageSystem
     [NetSerializable, Serializable]
     public class ResistanceSet
     {
+        [ViewVariables]
         private Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
 
         public ResistanceSet()
@@ -55,7 +57,10 @@ namespace Content.Shared.DamageSystem
     [NetSerializable, Serializable]
     public struct ResistanceSetSettings
     {
+        [ViewVariables]
         public float Coefficient { get; private set; }
+
+        [ViewVariables]
         public int FlatReduction { get; private set; }
 
         public ResistanceSetSettings(float coefficient, int flatReduction)
