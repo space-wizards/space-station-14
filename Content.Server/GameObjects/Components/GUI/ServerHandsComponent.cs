@@ -547,9 +547,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void HandleSlotModifiedMaybe(ContainerModifiedMessage message)
         {
-            foreach (var container in _hands.Values)
+            foreach (var hand in _hands.Values)
             {
-                if (container != message.Container)
+                if (hand.Container != message.Container)
                 {
                     continue;
                 }
