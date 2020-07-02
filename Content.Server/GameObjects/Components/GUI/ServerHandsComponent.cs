@@ -376,7 +376,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 : index.Contains("right")
                     ? HandLocation.Right
                     : HandLocation.Middle; // TODO: This but better
-            var hand = new Hand(index, null, location, container);
+            var hand = new Hand(index, location, container);
 
             _hands[index] = hand;
             ActiveIndex ??= index;
@@ -587,17 +587,20 @@ namespace Content.Server.GameObjects.Components.GUI
         }
     }
 
-    public class Hand : SharedHand, IDisposable
+    public class Hand : IDisposable
     {
-        public Hand(string name, EntityUid? entityUid, HandLocation location, ContainerSlot container)
-            : base(name, entityUid, location)
+        private readonly string _name;
+        private readonly HandLocation _location;
+
+        public Hand(string name, HandLocation location, ContainerSlot container)
         {
+            _name = name;
+            _location = location;
             Container = container;
         }
 
+        public IEntity Entity => Container.ContainedEntity;
         public ContainerSlot Container { get; }
-        public override EntityUid? EntityUid => Entity?.Uid;
-        public override IEntity Entity => Container.ContainedEntity;
 
         public void Dispose()
         {
@@ -606,7 +609,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public SharedHand ToShared()
         {
-            return new SharedHand(Name, EntityUid, Location);
+            return new SharedHand(_name, Entity?.Uid, _location);
         }
     }
 }

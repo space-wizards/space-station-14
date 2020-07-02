@@ -204,10 +204,16 @@ namespace Content.Client.GameObjects.Components.Items
         }
     }
 
-    public class Hand : SharedHand
+    public class Hand
     {
-        public Hand(SharedHand hand, IEntityManager manager) : base(hand.Name, hand.EntityUid, hand.Location)
+        public readonly string Name;
+        public readonly HandLocation Location;
+
+        public Hand(SharedHand hand, IEntityManager manager)
         {
+            Name = hand.Name;
+            Location = hand.Location;
+
             if (!hand.EntityUid.HasValue)
             {
                 return;
@@ -217,6 +223,6 @@ namespace Content.Client.GameObjects.Components.Items
             Entity = entity;
         }
 
-        public override IEntity Entity { get; }
+        public IEntity Entity { get; }
     }
 }

@@ -14,9 +14,10 @@ namespace Content.Shared.GameObjects.Components.Items
     }
 
     [Serializable, NetSerializable]
-    public class SharedHand
+    public sealed class SharedHand
     {
         public readonly string Name;
+        public readonly EntityUid? EntityUid;
         public readonly HandLocation Location;
 
         public SharedHand(string name, EntityUid? entityUid, HandLocation location)
@@ -24,12 +25,7 @@ namespace Content.Shared.GameObjects.Components.Items
             Name = name;
             EntityUid = entityUid;
             Location = location;
-            Entity = null;
         }
-
-        public virtual EntityUid? EntityUid { get; }
-
-        [CanBeNull] public virtual IEntity Entity { get; }
     }
 
     // The IDs of the items get synced over the network.
