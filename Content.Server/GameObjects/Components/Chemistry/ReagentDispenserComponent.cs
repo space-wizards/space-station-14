@@ -8,6 +8,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -21,6 +22,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -50,9 +52,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables]
         private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
 
-        ///implementing PowerDeviceComponent
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
 
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
             InitializeFromPrototype();
             UpdateUserInterface();

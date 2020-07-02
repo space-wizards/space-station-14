@@ -13,6 +13,7 @@
   - toggleready
   - ghost
   - suicide
+  - hostlogin
 
 - Index: 50
   Name: Moderator
@@ -33,6 +34,7 @@
   - kick
   - listplayers
   - loc
+  - hostlogin
 
 - Index: 100
   Name: Administrator
@@ -55,6 +57,8 @@
   - tp
   - tpgrid
   - setgamepreset
+  - forcepreset
+  - delaystart
   - startround
   - endround
   - restartround
@@ -74,6 +78,8 @@
   - group
   - addai
   - warp
+  - hostlogin
+  - deleteewc
   CanViewVar: true
   CanAdminPlace: true
 
@@ -98,6 +104,8 @@
   - tp
   - tpgrid
   - setgamepreset
+  - forcepreset
+  - delaystart
   - startround
   - endround
   - restartround
@@ -138,6 +146,8 @@
   - gc
   - gc_mode
   - warp
+  - deleteewc
+  - sudo
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

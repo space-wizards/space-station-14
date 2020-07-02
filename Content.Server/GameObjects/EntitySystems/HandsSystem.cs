@@ -7,19 +7,18 @@ using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using System;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

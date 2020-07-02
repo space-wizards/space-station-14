@@ -1,12 +1,14 @@
+# Both humans and NPCs inherit from this.
+# Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
   name: Urist McHands
-  id: HumanMob_Content
+  id: BaseHumanMob_Content
   description: A miserable pile of secrets
   drawdepth: Mobs
+  abstract: true
   components:
-  - type: Mind
-    show_examine_info: true
+  - type: Flashable
   - type: Hands
     hands:
     - left
@@ -23,8 +25,10 @@
   - type: Stomach
     max_volume: 250
     digestionDelay: 20
+  # StatusEffects
+  - type: Stunnable
+  # EndStatusEffects
   - type: Inventory
-  - type: Constructor
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -83,6 +87,7 @@
     - map: ["enum.Slots.OUTERCLOTHING"]
     - map: ["enum.Slots.EYES"]
     - map: ["enum.Slots.BELT"]
+    - map: ["enum.Slots.NECK"]
     - map: ["enum.Slots.BACKPACK"]
     - map: ["enum.HumanoidVisualLayers.FacialHair"]
       state: shaved
@@ -111,39 +116,35 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Input
-    context: "human"
   - type: Species
     Template: Human
     HeatResistance: 323
   - type: BodyManager
     BaseTemplate: bodyTemplate.Humanoid
     BasePreset: bodyPreset.BasicHuman
-
-  - type: StatusEffectsUI
-  - type: OverlayEffectsUI
   - type: HeatResistance
   - type: Damageable
-  - type: Eye
-    zoom: 0.5, 0.5
-  - type: CameraRecoil
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
+    - type: BuckleVisualizer2D
   - type: CombatMode
   - type: Teleportable
-  - type: Examiner
   - type: CharacterInfo
   - type: FootstepSound
   - type: HumanoidAppearance
-  - type: HumanInventoryController
-  - type: Stunnable
   - type: AnimationPlayer
+  - type: Buckle
+  - type: UnarmedCombat
+    range: 0.8
+    arcwidth: 30
+    arc: fist
 
 - type: entity
   save: false
   name: Urist McHands
   id: HumanMob_Dummy
+  abstract: true
   description: A dummy human meant to be used in character setup
   components:
     - type: Hands
@@ -211,6 +212,7 @@
       - map: ["enum.Slots.OUTERCLOTHING"]
       - map: ["enum.Slots.EYES"]
       - map: ["enum.Slots.BELT"]
+      - map: ["enum.Slots.NECK"]
       - map: ["enum.Slots.BACKPACK"]
       - map: ["enum.HumanoidVisualLayers.FacialHair"]
         state: shaved

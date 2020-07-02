@@ -1,12 +1,11 @@
-- type: entity
+﻿- type: entity
   id: Arcade
   name: arcade
   parent: ComputerBase
   components:
   - type: Icon
     state: arcade
-  - type: PowerDevice
-    priority: Low
+  - type: PowerReceiver
   - type: Sprite
     layers:
     - state: arcade

@@ -1,8 +1,13 @@
-- type: entity
+﻿- type: entity
   id: WallLight
   name: "unpowered light"
   components:
   - type: Clickable
+    bounds:
+      south: 0.25,-0.5,0.75,0.5
+      north: -0.25,-0.5,0.25,0.5
+      east: -0.5,-0.5,0.5,0
+      west: -0.5,0,0.5,0.5
   - type: InteractionOutline
   - type: Collidable
   - type: LoopingSound
@@ -37,10 +42,9 @@
     state: off
   - type: PointLight
     enabled: false
-  - type: PowerDevice
-    priority: Low
   - type: PoweredLight
     bulb: Tube
+  - type: PowerReceiver
 
 - type: entity
   name: small light
@@ -59,8 +63,6 @@
     energy: 1.0
     enabled: false
     offset: "-0.5, 0"
-  - type: PowerDevice
-    priority: Low
   - type: PoweredLight
     bulb: Bulb
-
+  - type: PowerReceiver

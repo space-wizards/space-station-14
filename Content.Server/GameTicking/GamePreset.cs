@@ -8,7 +8,7 @@ namespace Content.Server.GameTicking
     /// </summary>
     public abstract class GamePreset
     {
-        public abstract bool Start(IReadOnlyList<IPlayerSession> players);
+        public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
     }

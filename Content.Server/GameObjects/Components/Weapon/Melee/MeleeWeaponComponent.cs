@@ -15,6 +15,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -35,7 +38,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private float _arcWidth;
         private string _arc;
         private string _hitSound;
-        private float _cooldownTime;
+        public float CooldownTime => _cooldownTime;
+        private float _cooldownTime = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Arc
