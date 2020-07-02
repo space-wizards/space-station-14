@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
-        public override string Name => "ToysComponent";
+        public override string Name => "Toys";
 
         [ViewVariables]
         public string _soundCollectionName = "ToySqueak";

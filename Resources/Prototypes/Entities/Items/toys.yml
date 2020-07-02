@@ -6,7 +6,7 @@
   id: PlushieBee
   description: A cute toy that resembles an even cuter coder.
   components:
-  - type: ToysComponent
+  - type: Toys
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -24,7 +24,7 @@
   id: PlushieNuke
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
   components:
-  - type: ToysComponent
+  - type: Toys
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -42,7 +42,7 @@
   id: PlushieLizard
   description: An adorable stuffed toy that resembles a lizardperson.
   components:
-  - type: ToysComponent
+  - type: Toys
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -60,7 +60,7 @@
   id: PlushieNar
   description: A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?
   components:
-  - type: ToysComponent
+  - type: Toys
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -78,7 +78,7 @@
   id: PlushieCarp
   description: An adorable stuffed toy that resembles a space carp.
   components:
-  - type: ToysComponent
+  - type: Toys
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
@@ -99,7 +99,7 @@
   id: PlushieSlime
   description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
   components:
-  - type: ToysComponent
+  - type: Toys
   - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
