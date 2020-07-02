@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Items
         [Dependency] private readonly IGameHud _gameHud;
 #pragma warning restore 649
 
-        private readonly Dictionary<string, Hand> _hands = new Dictionary<string, Hand>();
+        private readonly SortedList<string, Hand> _hands = new SortedList<string, Hand>();
 
         [ViewVariables] public IReadOnlyDictionary<string, Hand> Hands => _hands;
 
@@ -220,8 +220,6 @@ namespace Content.Client.GameObjects.Components.Items
     public class Hand
     {
         public readonly string Name;
-        public readonly HandLocation Location;
-
         public Hand(SharedHand hand, IEntityManager manager, HandButton button = null, ItemStatusPanel panel = null)
         {
             Name = hand.Name;
@@ -238,6 +236,7 @@ namespace Content.Client.GameObjects.Components.Items
             Entity = entity;
         }
 
+        public HandLocation Location { get; set; }
         public IEntity Entity { get; set; }
         [CanBeNull] public HandButton Button { get; set; }
         [CanBeNull] public ItemStatusPanel Panel { get; set; }
