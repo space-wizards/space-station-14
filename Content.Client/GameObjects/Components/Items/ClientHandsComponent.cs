@@ -83,6 +83,14 @@ namespace Content.Client.GameObjects.Components.Items
                     hand = new Hand(sharedHand, Owner.EntityManager);
                     _hands[hand.Name] = hand;
                 }
+                else if (sharedHand.EntityUid.HasValue)
+                {
+                    hand.Entity = Owner.EntityManager.GetEntity(sharedHand.EntityUid.Value);
+                }
+                else
+                {
+                    hand.Entity = null;
+                }
 
                 UpdateHandSprites(hand);
             }
@@ -230,7 +238,7 @@ namespace Content.Client.GameObjects.Components.Items
             Entity = entity;
         }
 
-        public IEntity Entity { get; }
+        public IEntity Entity { get; set; }
         [CanBeNull] public HandButton Button { get; set; }
         [CanBeNull] public ItemStatusPanel Panel { get; set; }
     }
