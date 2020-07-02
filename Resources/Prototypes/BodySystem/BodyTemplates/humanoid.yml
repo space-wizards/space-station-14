@@ -7,6 +7,9 @@
     torso: Torso
     left arm: Arm
     left hand: Hand
+    left hand2: Hand
+    left hand3: Hand
+    left hand4: Hand
     right arm: Arm
     right hand: Hand
     left leg: Leg
@@ -23,6 +26,9 @@
       - right leg
     left arm:
       - left hand
+      - left hand2
+      - left hand3
+      - left hand4
     right arm:
       - right hand
     left leg:

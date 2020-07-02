@@ -7,7 +7,7 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.Interfaces.GameObjects.Components.Items
 {
     public interface IHandsComponent : IComponent
     {

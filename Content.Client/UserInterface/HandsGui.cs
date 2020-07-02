@@ -1,8 +1,10 @@
-﻿using Content.Client.GameObjects;
-using Content.Client.Interfaces.GameObjects;
+﻿using System;
+using System.Collections.Generic;
+using Content.Client.GameObjects;
+using Content.Client.Interfaces.GameObjects.Components.Items;
 using Content.Client.Utility;
 using Content.Shared.Input;
-using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -11,68 +13,101 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
+using static Content.Client.StaticIoC;
 
 namespace Content.Client.UserInterface
 {
     public class HandsGui : Control
     {
-        private const string HandNameLeft = "left";
-        private const string HandNameRight = "right";
-
 #pragma warning disable 0649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
 #pragma warning restore 0649
 
-        private IEntity _leftHand;
-        private IEntity _rightHand;
+        private readonly Dictionary<string, ItemSlotButton> _buttons = new Dictionary<string, ItemSlotButton>();
+        private readonly Dictionary<string, ItemStatusPanel> _panels = new Dictionary<string, ItemStatusPanel>();
 
-        private readonly TextureRect ActiveHandRect;
-
-        private readonly ItemSlotButton _leftButton;
-        private readonly ItemSlotButton _rightButton;
-
-        private readonly ItemStatusPanel _rightStatusPanel;
-        private readonly ItemStatusPanel _leftStatusPanel;
+        private readonly TextureRect _activeHandRect;
 
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
 
-            var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
-            var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
             var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
-            var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
 
-            _rightStatusPanel = new ItemStatusPanel(true);
-            _leftStatusPanel = new ItemStatusPanel(false);
-
-            _leftButton = new ItemSlotButton(textureHandLeft, storageTexture);
-            _rightButton = new ItemSlotButton(textureHandRight, storageTexture);
             var hBox = new HBoxContainer
             {
                 SeparationOverride = 0,
-                Children = {_rightStatusPanel, _rightButton, _leftButton, _leftStatusPanel}
             };
 
             AddChild(hBox);
 
-            _leftButton.OnPressed += args => HandKeyBindDown(args, HandNameLeft);
-            _leftButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameLeft);
-            _rightButton.OnPressed += args => HandKeyBindDown(args, HandNameRight);
-            _rightButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameRight);
-
             // Active hand
-            _leftButton.AddChild(ActiveHandRect = new TextureRect
+            _activeHandRect = new TextureRect
             {
                 Texture = textureHandActive,
                 TextureScale = (2, 2)
-            });
+            };
+        }
+
+        private void AddButton(string key, IEntity hand)
+        {
+            // TODO
+            var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
+            var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
+
+            var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
+            var button = new ItemSlotButton(textureHandLeft, storageTexture);
+
+            button.OnPressed += args => HandKeyBindDown(args, key);
+            button.OnStoragePressed += args => _OnStoragePressed(args, key);
+
+            var hBox = GetChild(0);
+
+            var texture = ResC.GetTexture("/Nano/item_status_right.svg.96dpi.png");
+            var panel = new ItemStatusPanel(texture, StyleBox.Margin.None);
+
+            hBox.AddChild(button);
+            hBox.AddChild(panel);
+
+            _buttons[key] = button;
+            _panels[key] = panel;
+
+            if (_buttons.Count == 1)
+            {
+                button.AddChild(_activeHandRect);
+                _activeHandRect.SetPositionInParent(1);
+            }
+
+            _itemSlotManager.SetItemSlot(button, hand);
+        }
+
+        // TODO: Call when hands are removed
+        private void RemoveButton(string slot)
+        {
+            if (!_buttons.Remove(slot, out var button))
+            {
+                throw new InvalidOperationException($"Slot {slot} has no button");
+            }
+
+            if (!_panels.Remove(slot, out var panel))
+            {
+                throw new InvalidOperationException($"Slot {slot} has no panel");
+            }
+
+            if (button.Children.Contains(_activeHandRect))
+            {
+                button.RemoveChild(_activeHandRect);
+            }
+
+            var hBox = GetChild(0);
+            hBox.RemoveChild(button);
+            hBox.RemoveChild(panel);
         }
 
         /// <summary>
-        /// Gets the hands component controling this gui, returns true if successful and false if failure
+        /// Gets the hands component controlling this gui, returns true if successful and false if failure
         /// </summary>
         /// <param name="hands"></param>
         /// <returns></returns>
@@ -93,50 +128,60 @@ namespace Content.Client.UserInterface
 
             UpdateDraw();
 
-            if (!TryGetHands(out var hands))
+            if (!TryGetHands(out var component))
+            {
                 return;
-
-            var left = hands.GetEntity(HandNameLeft);
-            var right = hands.GetEntity(HandNameRight);
-
-            ActiveHandRect.Parent.RemoveChild(ActiveHandRect);
-            var parent = hands.ActiveIndex == HandNameLeft ? _leftButton : _rightButton;
-            parent.AddChild(ActiveHandRect);
-            ActiveHandRect.SetPositionInParent(1);
-
-            if (left != _leftHand)
-            {
-                _leftHand = left;
-                _itemSlotManager.SetItemSlot(_leftButton, _leftHand);
             }
 
-            if (right != _rightHand)
+            foreach (var pair in _buttons)
             {
-                _rightHand = right;
-                _itemSlotManager.SetItemSlot(_rightButton, _rightHand);
+                var name = pair.Key;
+
+                if (!component.Hands.ContainsKey(name))
+                {
+                    RemoveButton(name);
+                }
             }
+
+            foreach (var pair in component.Hands)
+            {
+                var name = pair.Key;
+
+                if (!_buttons.ContainsKey(name))
+                {
+                    AddButton(name, pair.Value);
+                }
+            }
+
+            _activeHandRect.Parent?.RemoveChild(_activeHandRect);
+            var parent = _buttons[component.ActiveIndex];
+            parent.AddChild(_activeHandRect);
+            _activeHandRect.SetPositionInParent(1);
         }
 
-        private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
+        private void HandKeyBindDown(GUIBoundKeyEventArgs args, string slotName)
         {
             if (!TryGetHands(out var hands))
+            {
                 return;
+            }
 
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
-                hands.SendChangeHand(handIndex);
+                hands.SendChangeHand(slotName);
                 args.Handle();
                 return;
             }
 
-            var entity = hands.GetEntity(handIndex);
+            var entity = hands.GetEntity(slotName);
             if (entity == null)
             {
-                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != handIndex)
+                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != slotName)
                 {
-                    hands.SendChangeHand(handIndex);
+                    hands.SendChangeHand(slotName);
                     args.Handle();
                 }
+
                 return;
             }
 
@@ -148,25 +193,26 @@ namespace Content.Client.UserInterface
 
             if (args.Function == EngineKeyFunctions.UIClick)
             {
-                if (hands.ActiveIndex == handIndex)
+                if (hands.ActiveIndex == slotName)
                 {
                     hands.UseActiveHand();
                 }
                 else
                 {
-                    hands.AttackByInHand(handIndex);
+                    hands.AttackByInHand(slotName);
                 }
+
                 args.Handle();
-                return;
             }
         }
 
         private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
         {
-            if (args.Function != EngineKeyFunctions.UIClick)
+            if (args.Function != EngineKeyFunctions.UIClick || !TryGetHands(out var hands))
+            {
                 return;
-            if (!TryGetHands(out var hands))
-                return;
+            }
+
             hands.ActivateItemInHand(handIndex);
         }
 
@@ -174,11 +220,26 @@ namespace Content.Client.UserInterface
         {
             base.FrameUpdate(args);
 
-            _itemSlotManager.UpdateCooldown(_leftButton, _leftHand);
-            _itemSlotManager.UpdateCooldown(_rightButton, _rightHand);
+            if (!TryGetHands(out var component))
+            {
+                return;
+            }
 
-            _rightStatusPanel.Update(_rightHand);
-            _leftStatusPanel.Update(_leftHand);
+            foreach (var pair in _buttons)
+            {
+                var hand = component.Hands[pair.Key];
+                var button = pair.Value;
+
+                _itemSlotManager.UpdateCooldown(button, hand);
+            }
+
+            foreach (var pair in _panels)
+            {
+                var hand = component.Hands[pair.Key];
+                var panel = pair.Value;
+
+                panel.Update(hand);
+            }
         }
     }
 }

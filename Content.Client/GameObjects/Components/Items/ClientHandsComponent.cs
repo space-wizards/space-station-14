@@ -3,20 +3,18 @@
 using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.GameObjects.Components.Items;
 using Content.Client.UserInterface;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
@@ -28,7 +26,9 @@ namespace Content.Client.GameObjects
         [Dependency] private readonly IGameHud _gameHud;
 #pragma warning restore 649
 
-        [ViewVariables] private readonly Dictionary<string, IEntity> _hands = new Dictionary<string, IEntity>();
+        private readonly Dictionary<string, IEntity> _hands = new Dictionary<string, IEntity>();
+
+        [ViewVariables] public IReadOnlyDictionary<string, IEntity> Hands => _hands;
 
         [ViewVariables] public string ActiveIndex { get; private set; }
 
@@ -76,13 +76,17 @@ namespace Content.Client.GameObjects
             foreach (var (slot, uid) in cast.Hands)
             {
                 IEntity entity = null;
-                try
+
+                if (uid.HasValue)
                 {
-                    entity = Owner.EntityManager.GetEntity(uid);
-                }
-                catch
-                {
-                    // Nothing.
+                    try
+                    {
+                        entity = Owner.EntityManager.GetEntity(uid.Value);
+                    }
+                    catch
+                    {
+                        // Nothing.
+                    }
                 }
 
                 _hands[slot] = entity;
@@ -130,14 +134,14 @@ namespace Content.Client.GameObjects
             }
 
             if (!entity.TryGetComponent(out ItemComponent item)) return;
-            var maybeInhands = item.GetInHandStateInfo(hand);
-            if (!maybeInhands.HasValue)
+            var maybeInHands = item.GetInHandStateInfo(hand);
+            if (!maybeInHands.HasValue)
             {
                 _sprite.LayerSetVisible($"hand-{hand}", false);
             }
             else
             {
-                var (rsi, state) = maybeInhands.Value;
+                var (rsi, state) = maybeInHands.Value;
                 _sprite.LayerSetVisible($"hand-{hand}", true);
                 _sprite.LayerSetState($"hand-{hand}", state, rsi);
             }
@@ -153,21 +157,9 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public override void ExposeData(ObjectSerializer serializer)
+        protected override void Startup()
         {
-            base.ExposeData(serializer);
-
-            if (!serializer.Reading)
-            {
-                return;
-            }
-
-            foreach (var slot in serializer.ReadDataFieldCached("hands", new List<string>()))
-            {
-                _hands.Add(slot, null);
-            }
-
-            serializer.DataField(this, x => ActiveIndex, "defaultHand", _hands.Keys.LastOrDefault());
+            ActiveIndex = _hands.Keys.LastOrDefault();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

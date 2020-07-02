@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
 using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics.ClientEye;

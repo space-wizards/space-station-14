@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Strap;
+﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;

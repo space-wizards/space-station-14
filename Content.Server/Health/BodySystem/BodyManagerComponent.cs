@@ -1,18 +1,18 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Health.BodySystem.BodyParts;
+using Content.Shared.BodySystem;
+using Content.Shared.Health.BodySystem.BodyPart;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
-using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
 
-namespace Content.Server.BodySystem {
-
+namespace Content.Server.Health.BodySystem {
     /// <summary>
     ///     Component representing the many BodyParts attached to each other.
     /// </summary>
@@ -26,8 +26,16 @@ namespace Content.Server.BodySystem {
 #pragma warning restore
 
         [ViewVariables]
+        private string _presetName;
+
+        [ViewVariables]
         private BodyTemplate _template;
 
+        /// <summary>
+        ///     A dictionary of body parts. Additions and removals emit
+        ///     <see cref="BodyPartAddedEventArgs"/> and
+        ///     <see cref="BodyPartRemovedEventArgs"/> events respectively.
+        /// </summary>
         [ViewVariables]
         private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
 
@@ -35,20 +43,16 @@ namespace Content.Server.BodySystem {
         ///     The BodyTemplate that this BodyManagerComponent is adhering to.
         /// </summary>
         public BodyTemplate Template => _template;
+
         /// <summary>
         ///     Maps BodyTemplate slot name to the BodyPart object filling it (if there is one).
         /// </summary>
-        public Dictionary<string, BodyPart> PartDictionary => _partDictionary;
+        public IReadOnlyDictionary<string, BodyPart> PartDictionary => _partDictionary;
+
         /// <summary>
         ///     List of all BodyParts in this body, taken from the keys of _parts.
         /// </summary>
-        public IEnumerable<BodyPart> Parts
-        {
-            get
-            {
-                return _partDictionary.Values;
-            }
-        }
+        public IEnumerable<BodyPart> Parts => _partDictionary.Values;
 
         /// <summary>
         ///     Recursive search that returns whether a given BodyPart is connected to the center BodyPart. Not efficient (O(n^2)), but most bodies don't have a ton of BodyParts.
@@ -133,14 +137,20 @@ namespace Content.Server.BodySystem {
                 if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
                     throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
 
-                string presetName = null;
-                serializer.DataField(ref presetName, "BasePreset", "bodyPreset.BasicHuman");
-                if (!_prototypeManager.TryIndex(presetName, out BodyPresetPrototype presetData))
-                    throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
+                serializer.DataField(ref _presetName, "BasePreset", "bodyPreset.BasicHuman");
+                if (!_prototypeManager.TryIndex(_presetName, out BodyPresetPrototype _))
+                    throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + _presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
 
                 _template = new BodyTemplate(templateData);
-                LoadBodyPreset(new BodyPreset(presetData));
             }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var prototype = _prototypeManager.Index<BodyPresetPrototype>(_presetName);
+            LoadBodyPreset(new BodyPreset(prototype));
         }
 
         /// <summary>
@@ -148,9 +158,9 @@ namespace Content.Server.BodySystem {
         /// </summary>
         public void LoadBodyPreset(BodyPreset preset)
         {
-            foreach (var (slotName, type) in _template.Slots)
+            foreach (var (slotName, _) in _template.Slots)
             {
-                if (!preset.PartIDs.TryGetValue(slotName, out string partID))
+                if (!preset.PartIDs.TryGetValue(slotName, out var partID))
                 { //For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
                     continue; //If the preset doesn't define anything for it, continue.
                 }
@@ -158,8 +168,27 @@ namespace Content.Server.BodySystem {
                 { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                     throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
                 }
-                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
-                _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+                //Try and remove an existing limb if that exists.
+                if (_partDictionary.Remove(slotName, out var partRemoved))
+                {
+                    var argsRemoved = new BodyPartRemovedEventArgs(partRemoved, slotName);
+
+                    foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+                    {
+                        component.BodyPartRemoved(argsRemoved);
+                    }
+                }
+
+                //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+                var partAdded = new BodyPart(newPartData);
+                _partDictionary.Add(slotName, partAdded);
+
+                var argsAdded = new BodyPartAddedEventArgs(partAdded, slotName);
+
+                foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
+                {
+                    component.BodyPartAdded(argsAdded);
+                }
             }
         }
 
@@ -209,7 +238,7 @@ namespace Content.Server.BodySystem {
                         }
                     }
                 }
-                _partDictionary.Remove(slotName);
+
                 if (dropEntity)
                 {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
@@ -223,13 +252,13 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Internal string version of DisconnectBodyPart for performance purposes.
         /// </summary>
-        private void DisconnectBodyPartByName(string name, bool dropEntity)
+        private void DisconnectBodyPartByName(string slotName, bool dropEntity)
         {
-            if (!TryGetBodyPart(name, out BodyPart part))
+            if (!TryGetBodyPart(slotName, out BodyPart part))
                 return;
             if (part != null)
             {
-                if (TryGetBodyPartConnections(name, out List<string> connections))
+                if (TryGetBodyPartConnections(slotName, out List<string> connections))
                 {
                     foreach (string connectionName in connections)
                     {
@@ -239,7 +268,17 @@ namespace Content.Server.BodySystem {
                         }
                     }
                 }
-                _partDictionary.Remove(name);
+
+                if (_partDictionary.Remove(slotName, out var partRemoved))
+                {
+                    var args = new BodyPartRemovedEventArgs(partRemoved, slotName);
+
+                    foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+                    {
+                        component.BodyPartRemoved(args);
+                    }
+                }
+
                 if (dropEntity)
                 {
                     var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);

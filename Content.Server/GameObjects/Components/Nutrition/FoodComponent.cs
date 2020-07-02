@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;

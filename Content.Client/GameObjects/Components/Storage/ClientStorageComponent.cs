@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.GameObjects.Components.Items;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;

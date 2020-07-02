@@ -1,47 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Health.BodySystem.BodyParts;
 using Content.Server.Utility;
 using Content.Shared.BodySystem;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Interfaces.Physics;
-using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Weapon.Melee
+namespace Content.Server.Health.BodySystem.Surgery
 {
-
     [RegisterComponent]
     public class ServerSurgeryToolComponent : SharedSurgeryToolComponent, IAfterInteract
     {
-        public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
-        private Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
+        public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
+        private readonly Dictionary<string, BodyPart> _surgeryOptionsCache = new Dictionary<string, BodyPart>();
         private BodyManagerComponent _targetCache;
         private IEntity _performerCache;
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-
-            if (eventArgs.Target == null)
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs) ||
+                eventArgs.Target == null)
+            {
                 return;
-            if (eventArgs.Target.TryGetComponent<BodySystem.BodyManagerComponent>(out BodySystem.BodyManagerComponent bodyManager))
+            }
+
+            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent bodyManager))
             {
                 _surgeryOptionsCache.Clear();
                 var toSend = new Dictionary<string, string>();

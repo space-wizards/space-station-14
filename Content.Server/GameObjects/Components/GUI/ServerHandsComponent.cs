@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.BodySystem;
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -19,63 +19,52 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
-    public class HandsComponent : SharedHandsComponent, IHandsComponent
+    public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
-        private string activeIndex;
+        private string _activeIndex;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string ActiveIndex
         {
-            get => activeIndex;
+            get => _activeIndex;
             set
             {
-                if (!hands.ContainsKey(value))
+                if (!_hands.ContainsKey(value))
                 {
                     throw new ArgumentException($"No hand '{value}'");
                 }
 
-                activeIndex = value;
+                _activeIndex = value;
                 Dirty();
             }
         }
 
-        [ViewVariables] private Dictionary<string, ContainerSlot> hands = new Dictionary<string, ContainerSlot>();
-        [ViewVariables] private List<string> orderedHands = new List<string>();
+        private readonly Dictionary<string, ContainerSlot> _hands = new Dictionary<string, ContainerSlot>();
+        [ViewVariables] private List<string> _orderedHands = new List<string>();
 
         // Mostly arbitrary.
         public const float PICKUP_RANGE = 2;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        // TODO: This does not serialize what objects are held.
+        protected override void Startup()
         {
-            base.ExposeData(serializer);
-
-            // TODO: This does not serialize what objects are held.
-            serializer.DataField(ref orderedHands, "hands", new List<string>(0));
-            if (serializer.Reading)
-            {
-                foreach (var handsname in orderedHands)
-                {
-                    AddHand(handsname);
-                }
-            }
-
-            serializer.DataField(ref activeIndex, "defaultHand", orderedHands.LastOrDefault());
+            base.Startup();
+            ActiveIndex = _orderedHands.LastOrDefault();
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
         {
-            foreach (var slot in hands.Values)
+            foreach (var slot in _hands.Values)
             {
                 if (slot.ContainedEntity != null)
                 {
@@ -86,7 +75,7 @@ namespace Content.Server.GameObjects
 
         public bool IsHolding(IEntity entity)
         {
-            foreach (var slot in hands.Values)
+            foreach (var slot in _hands.Values)
             {
                 if (slot.ContainedEntity == entity)
                 {
@@ -98,7 +87,7 @@ namespace Content.Server.GameObjects
 
         public ItemComponent GetHand(string index)
         {
-            var slot = hands[index];
+            var slot = _hands[index];
             return slot.ContainedEntity?.GetComponent<ItemComponent>();
         }
 
@@ -110,7 +99,7 @@ namespace Content.Server.GameObjects
         public IEnumerable<string> ActivePriorityEnumerable()
         {
             yield return ActiveIndex;
-            foreach (var hand in hands.Keys)
+            foreach (var hand in _hands.Keys)
             {
                 if (hand == ActiveIndex)
                 {
@@ -141,7 +130,7 @@ namespace Content.Server.GameObjects
                 return fallback && PutInHand(item);
             }
 
-            var slot = hands[index];
+            var slot = _hands[index];
             Dirty();
             var success = slot.Insert(item.Owner);
             if (success)
@@ -157,7 +146,9 @@ namespace Content.Server.GameObjects
         public void PutInHandOrDrop(ItemComponent item)
         {
             if (!PutInHand(item))
+            {
                 item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            }
         }
 
         public bool CanPutInHand(ItemComponent item)
@@ -175,13 +166,13 @@ namespace Content.Server.GameObjects
 
         public bool CanPutInHand(ItemComponent item, string index)
         {
-            var slot = hands[index];
+            var slot = _hands[index];
             return slot.CanInsert(item.Owner);
         }
 
         public string FindHand(IEntity entity)
         {
-            foreach (var (index, slot) in hands)
+            foreach (var (index, slot) in _hands)
             {
                 if (slot.ContainedEntity == entity)
                 {
@@ -199,7 +190,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var inventorySlot = hands[slot];
+            var inventorySlot = _hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
 
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
@@ -207,8 +198,11 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            if (doMobChecks &&
+                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            {
                 return false;
+            }
 
             item.RemovedFromSlot();
 
@@ -242,11 +236,14 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var inventorySlot = hands[slot];
+            var inventorySlot = _hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
 
-            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            if (doMobChecks &&
+                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            {
                 return false;
+            }
 
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
@@ -300,7 +297,7 @@ namespace Content.Server.GameObjects
             }
 
 
-            var inventorySlot = hands[slot];
+            var inventorySlot = _hands[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
 
             if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
@@ -359,7 +356,7 @@ namespace Content.Server.GameObjects
         /// </returns>
         public bool CanDrop(string slot)
         {
-            var inventorySlot = hands[slot];
+            var inventorySlot = _hands[slot];
             return inventorySlot.CanRemove(inventorySlot.ContainedEntity);
         }
 
@@ -371,16 +368,14 @@ namespace Content.Server.GameObjects
             }
 
             var slot = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + index, Owner);
-            hands[index] = slot;
-            if (!orderedHands.Contains(index))
+            _hands[index] = slot;
+
+            if (!_orderedHands.Contains(index))
             {
-                orderedHands.Add(index);
+                _orderedHands.Add(index);
             }
 
-            if (ActiveIndex == null)
-            {
-                ActiveIndex = index;
-            }
+            ActiveIndex ??= index;
 
             Dirty();
         }
@@ -392,20 +387,13 @@ namespace Content.Server.GameObjects
                 throw new InvalidOperationException($"Hand '{index}' does not exist.");
             }
 
-            hands[index].Shutdown(); //TODO verify this
-            hands.Remove(index);
-            orderedHands.Remove(index);
+            _hands[index].Shutdown(); //TODO verify this
+            _hands.Remove(index);
+            _orderedHands.Remove(index);
 
             if (index == ActiveIndex)
             {
-                if (orderedHands.Count == 0)
-                {
-                    activeIndex = null;
-                }
-                else
-                {
-                    activeIndex = orderedHands[0];
-                }
+                _activeIndex = _orderedHands.Count == 0 ? null : _orderedHands[0];
             }
 
             Dirty();
@@ -413,7 +401,7 @@ namespace Content.Server.GameObjects
 
         public bool HasHand(string index)
         {
-            return hands.ContainsKey(index);
+            return _hands.ContainsKey(index);
         }
 
         /// <summary>
@@ -423,28 +411,25 @@ namespace Content.Server.GameObjects
 
         public override ComponentState GetComponentState()
         {
-            var dict = new Dictionary<string, EntityUid>(hands.Count);
-            foreach (var hand in hands)
+            var hands = new Dictionary<string, EntityUid?>(_hands.Count);
+            foreach (var hand in _hands)
             {
-                if (hand.Value.ContainedEntity != null)
-                {
-                    dict[hand.Key] = hand.Value.ContainedEntity.Uid;
-                }
+                hands[hand.Key] = hand.Value.ContainedEntity?.Uid;
             }
 
-            return new HandsComponentState(dict, ActiveIndex);
+            return new HandsComponentState(hands, ActiveIndex);
         }
 
         public void SwapHands()
         {
-            var index = orderedHands.FindIndex(x => x == ActiveIndex);
+            var index = _orderedHands.FindIndex(x => x == ActiveIndex);
             index++;
-            if (index >= orderedHands.Count)
+            if (index >= _orderedHands.Count)
             {
                 index = 0;
             }
 
-            ActiveIndex = orderedHands[index];
+            ActiveIndex = _orderedHands[index];
         }
 
         public void ActivateItem()
@@ -485,13 +470,16 @@ namespace Content.Server.GameObjects
                     var playerEntity = session.AttachedEntity;
 
                     if (playerEntity == Owner && HasHand(msg.Index))
+                    {
                         ActiveIndex = msg.Index;
+                    }
+
                     break;
                 }
 
                 case ClientAttackByInHandMsg msg:
                 {
-                    if (!hands.TryGetValue(msg.Index, out var slot))
+                    if (!_hands.TryGetValue(msg.Index, out var slot))
                     {
                         Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand index '{0}'",
                             msg.Index);
@@ -513,7 +501,10 @@ namespace Content.Server.GameObjects
                         {
                             var entity = slot.ContainedEntity;
                             if (!Drop(entity))
+                            {
                                 break;
+                            }
+
                             interactionSystem.Interaction(Owner, entity);
                         }
                     }
@@ -521,7 +512,7 @@ namespace Content.Server.GameObjects
                     break;
                 }
 
-                case UseInHandMsg msg:
+                case UseInHandMsg _:
                 {
                     var playerEntity = session.AttachedEntity;
                     var used = GetActiveHand?.Owner;
@@ -552,7 +543,7 @@ namespace Content.Server.GameObjects
 
         public void HandleSlotModifiedMaybe(ContainerModifiedMessage message)
         {
-            foreach (var container in hands.Values)
+            foreach (var container in _hands.Values)
             {
                 if (container != message.Container)
                 {
@@ -570,6 +561,26 @@ namespace Content.Server.GameObjects
                 physics.LinearVelocity = Vector2.Zero;
                 return;
             }
+        }
+
+        void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)
+        {
+            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            {
+                return;
+            }
+
+            AddHand(eventArgs.SlotName);
+        }
+
+        void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs eventArgs)
+        {
+            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            {
+                return;
+            }
+
+            RemoveHand(eventArgs.SlotName);
         }
     }
 }

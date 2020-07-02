@@ -1,40 +1,37 @@
-﻿using Content.Shared.BodySystem;
+﻿using System;
+using System.Collections.Generic;
+using Content.Server.BodySystem;
+using Content.Server.Health.BodySystem.Surgery.SurgeryData;
+using Content.Shared.BodySystem;
+using Content.Shared.Health.BodySystem.BodyPart;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
 
-
-
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.BodyParts
 {
-
-
     /// <summary>
     ///     Data class representing a singular limb such as an arm or a leg. Typically held within a BodyManagerComponent,
     ///     which coordinates functions between BodyParts.
     /// </summary>
     public class BodyPart
     {
+        [ViewVariables]
+        private SurgeryData _surgeryData;
 
         [ViewVariables]
-        private ISurgeryData _surgeryData;
+        private readonly List<Mechanism> _mechanisms = new List<Mechanism>();
 
         [ViewVariables]
-        private List<Mechanism> _mechanisms = new List<Mechanism>();
-
-        [ViewVariables]
-        private int _sizeUsed = 0;
+        private int _sizeUsed;
 
         /// <summary>
         ///     Body part name.
         /// </summary>
         [ViewVariables]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         ///     Plural version of this body part's name.
@@ -44,55 +41,55 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///     Path to the RSI that represents this BodyPart.
-        /// </summary>			  
+        /// </summary>
         [ViewVariables]
         public string RSIPath { get; set; }
 
         /// <summary>
         ///     RSI state that represents this BodyPart.
-        /// </summary>			  
+        /// </summary>
         [ViewVariables]
         public string RSIState { get; set; }
 
         /// <summary>
-        ///     BodyPartType that this body part is considered. 
+        ///     BodyPartType that this body part is considered.
         /// </summary>
         [ViewVariables]
         public BodyPartType PartType { get; set; }
 
         /// <summary>
         ///     Max HP of this body part.
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
         public int MaxDurability { get; set; }
 
         /// <summary>
         ///     Current HP of this body part based on sum of all damage types.
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
         public int CurrentDurability => MaxDurability - CurrentDamages.Damage;
 
         /// <summary>
         ///     Current damage dealt to this BodyPart.
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
         public AbstractDamageContainer CurrentDamages { get; set; }
 
         /// <summary>
         ///     At what HP this body part is completely destroyed.
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
         public int DestroyThreshold { get; set; }
 
         /// <summary>
         ///     Armor of the body part against attacks.
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
         public float Resistance { get; set; }
 
         /// <summary>
         ///     Determines many things: how many mechanisms can be fit inside a body part, fitting through tiny crevices, etc.
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
         public int Size { get; set; }
 
@@ -121,9 +118,6 @@ namespace Content.Server.BodySystem
             LoadFromPrototype(data);
         }
 
-
-
-
         /// <summary>
         ///     Attempts to add a Mechanism. Returns true if successful, false if there was an error (e.g. not enough room in BodyPart). Use InstallDroppedMechanism if you want to easily install an IEntity with a DroppedMechanismComponent.
         /// </summary>
@@ -150,7 +144,7 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///     Tries to remove the given Mechanism reference from the given BodyPart reference. Returns null if there was an error in spawning the entity or removing the mechanism, otherwise returns a reference to the DroppedMechanismComponent on the newly spawned entity.
-        /// </summary>	
+        /// </summary>
         public DroppedMechanismComponent DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
         {
             if (!_mechanisms.Contains(mechanismTarget))
@@ -166,7 +160,7 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///     Tries to destroy the given Mechanism in the given BodyPart. Returns false if there was an error, true otherwise. Does NOT spawn a dropped entity.
-        /// </summary>	
+        /// </summary>
         public bool DestroyMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget)
         {
             if (!_mechanisms.Contains(mechanismTarget))
@@ -177,7 +171,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g. 
+        ///     Returns whether the given SurgertToolType can be used on the current state of this BodyPart (e.g.
         /// </summary>
         public bool SurgeryCheck(SurgeryToolType toolType)
         {
@@ -194,7 +188,7 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///    Loads the given BodyPartPrototype - current data on this BodyPart will be overwritten!
-        /// </summary>	
+        /// </summary>
         public virtual void LoadFromPrototype(BodyPartPrototype data)
         {
             Name = data.Name;
@@ -220,7 +214,6 @@ namespace Content.Server.BodySystem
                 }
                 _mechanisms.Add(new Mechanism(mechanismData));
             }
-
         }
     }
 }

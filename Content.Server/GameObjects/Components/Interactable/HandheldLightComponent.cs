@@ -17,6 +17,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {

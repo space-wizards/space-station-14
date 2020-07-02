@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.BodySystem;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Timing;
+using Content.Server.Health.BodySystem.BodyParts;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
@@ -304,6 +307,50 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         public IEntity User { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when a body part
+    ///     is added to their owning entity.
+    /// </summary>
+    public interface IBodyPartAdded
+    {
+        void BodyPartAdded(BodyPartAddedEventArgs eventArgs);
+    }
+
+    public class BodyPartAddedEventArgs : EventArgs
+    {
+        public BodyPartAddedEventArgs(BodyPart part, string slotName)
+        {
+            Part = part;
+            SlotName = slotName;
+        }
+
+        public BodyPart Part { get; }
+
+        public string SlotName { get; }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when a body part
+    ///     is removed from their owning entity.
+    /// </summary>
+    public interface IBodyPartRemoved
+    {
+        void BodyPartRemoved(BodyPartRemovedEventArgs eventArgs);
+    }
+
+    public class BodyPartRemovedEventArgs : EventArgs
+    {
+        public BodyPartRemovedEventArgs(BodyPart part, string slotName)
+        {
+            Part = part;
+            SlotName = slotName;
+        }
+
+        public BodyPart Part { get; }
+
+        public string SlotName { get; }
     }
 
     /// <summary>

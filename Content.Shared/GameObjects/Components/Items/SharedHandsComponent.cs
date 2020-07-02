@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Components.Items
 {
     public abstract class SharedHandsComponent : Component
     {
@@ -15,10 +15,10 @@ namespace Content.Shared.GameObjects
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly Dictionary<string, EntityUid> Hands;
+        public readonly Dictionary<string, EntityUid?> Hands;
         public readonly string ActiveIndex;
 
-        public HandsComponentState(Dictionary<string, EntityUid> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(Dictionary<string, EntityUid?> hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;

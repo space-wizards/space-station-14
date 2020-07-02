@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -28,20 +29,15 @@ namespace Content.Client.UserInterface
         [ViewVariables]
         private IEntity _entity;
 
-        public ItemStatusPanel(bool isRightHand)
+        public ItemStatusPanel(Texture texture, StyleBox.Margin margin)
         {
-            // isRightHand means on the LEFT of the screen.
-            // Keep that in mind.
             var panel = new StyleBoxTexture
             {
-                Texture = ResC.GetTexture(isRightHand
-                    ? "/Nano/item_status_right.svg.96dpi.png"
-                    : "/Nano/item_status_left.svg.96dpi.png")
+                Texture = texture
             };
             panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
             panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
-            panel.SetPatchMargin((isRightHand ? StyleBox.Margin.Left : StyleBox.Margin.Right) | StyleBox.Margin.Top,
-                13);
+            panel.SetPatchMargin(margin, 13);
 
             AddChild(_panel = new PanelContainer
             {
@@ -65,6 +61,20 @@ namespace Content.Client.UserInterface
                 }
             });
             SizeFlagsVertical = SizeFlags.ShrinkEnd;
+        }
+
+        // isRightHand means on the LEFT of the screen.
+        // Keep that in mind.
+        public static ItemStatusPanel FromSide(bool isRightHand)
+        {
+            var texture = ResC.GetTexture(isRightHand
+                ? "/Nano/item_status_right.svg.96dpi.png"
+                : "/Nano/item_status_left.svg.96dpi.png");
+            var margin = (isRightHand
+                ? StyleBox.Margin.Left
+                : StyleBox.Margin.Right) | StyleBox.Margin.Top;
+
+            return new ItemStatusPanel(texture, margin);
         }
 
         public void Update(IEntity entity)

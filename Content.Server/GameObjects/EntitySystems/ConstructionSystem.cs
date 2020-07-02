@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Construction;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Utility;
 using Content.Shared.Construction;

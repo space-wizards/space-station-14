@@ -12,7 +12,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     public class ItemComponent : Component

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -9,7 +10,7 @@ namespace Content.Server.GameObjects
 {
     public class ContainerSlot : BaseContainer
     {
-        [ViewVariables]
+        [CanBeNull, ViewVariables]
         public IEntity ContainedEntity { get; private set; } = null;
 
         /// <inheritdoc />
