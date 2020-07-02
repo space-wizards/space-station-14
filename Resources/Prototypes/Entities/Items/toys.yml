@@ -567,9 +567,9 @@
     - Single
     fireRate: 0.5
     capacity: 1
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Guns/Gunshots/click.ogg
-    soundInsert: /Audio/Guns/MagIn/drawbow2.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/click.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
 
 - type: entity
   name: ToyGunBase
@@ -610,9 +610,9 @@
     caliber: Cap
     capacity: 6
     autoCycle: true
-    soundGunshot: /Audio/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/revolver_magin.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
