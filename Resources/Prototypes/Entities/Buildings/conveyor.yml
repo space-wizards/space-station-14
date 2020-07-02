@@ -1,0 +1,23 @@
+﻿- type: entity
+  id: ConveyorBelt
+  name: conveyor belt
+  description: A conveyor belt, commonly used to transport large numbers of items elsewhere quite quickly.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.4,0.4,0.4"
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    netsync: true
+    sprite: Buildings/conveyor.rsi
+    state: conveyor_started_cw_r
+  - type: Icon
+    sprite: Buildings/recycling.rsi
+    state: conveyor_loose
+  - type: Conveyor
