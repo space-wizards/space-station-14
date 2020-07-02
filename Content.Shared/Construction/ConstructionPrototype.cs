@@ -215,6 +215,7 @@ namespace Content.Shared.Construction
             Glass,
             Cable,
             Gold,
+            Phoron,
         }
     }
 }

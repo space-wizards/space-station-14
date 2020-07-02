@@ -108,6 +108,9 @@ namespace Content.Shared.GameObjects.Components.Sound
 
         public void ExposeData(ObjectSerializer serializer)
         {
+            if (!serializer.Reading)
+                return;
+
             Filename = serializer.ReadDataField("filename", "");
             Delay = serializer.ReadDataField("delay", 0u);
             RandomDelay = serializer.ReadDataField("randomdelay", 0u);

@@ -12,6 +12,8 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: stool_base
+  - type: Strap
+    position: Stand
 
 - type: entity
   name: bar stool
@@ -38,6 +40,8 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: officechair_white
+  - type: Strap
+    position: Stand
 
 - type: entity
   name: dark office chair
@@ -53,6 +57,8 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: officechair_dark
+  - type: Strap
+    position: Stand
 
 - type: entity
   name: chair
@@ -68,6 +74,8 @@
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: chair
+  - type: Strap
+    position: Stand
 
 - type: entity
   name: wooden chair
@@ -84,11 +92,17 @@
   name: bed
   id: Bed
   components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
   - type: Sprite
     sprite: Buildings/furniture.rsi
     state: bed
   - type: Icon
     sprite: Buildings/furniture.rsi
     state: bed
+  - type: Strap
+    position: Down
+    rotation: -90
   placement:
     mode: SnapgridCenter

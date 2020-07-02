@@ -77,7 +77,7 @@ namespace Content.Client.UserInterface
                 if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
                     grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
 
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, BoundKeyState.Down,
+                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
                     grid.MapToGrid(mousePosWorld), args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.

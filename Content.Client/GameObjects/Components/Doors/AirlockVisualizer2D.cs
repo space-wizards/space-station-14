@@ -95,6 +95,9 @@ namespace Content.Client.GameObjects.Components.Doors
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            if (component.Owner.Deleted)
+                return;
+            
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
             if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))

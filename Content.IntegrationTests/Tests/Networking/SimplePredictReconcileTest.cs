@@ -41,6 +41,10 @@ namespace Content.IntegrationTests.Tests.Networking
             var (client, server) = await StartConnectedServerClientPair(
                 new ClientContentIntegrationOption
                 {
+                    // This test is designed around specific timing values and when I wrote it interpolation was off.
+                    // As such, I would have to update half this test to make sure it works with interpolation.
+                    // I'm kinda lazy.
+                    CVarOverrides = {{"net.interp", "false"}},
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
@@ -450,7 +454,8 @@ namespace Content.IntegrationTests.Tests.Networking
                     component.Foo = message.NewFoo;
                 }
 
-                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo,
+                    message.NewFoo));
             }
         }
 

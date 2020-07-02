@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         [CanBeNull]
-        private static ICollection<string> FindAccessTags(IEntity entity)
+        public static ICollection<string> FindAccessTags(IEntity entity)
         {
             if (entity.TryGetComponent(out IAccess accessComponent))
             {

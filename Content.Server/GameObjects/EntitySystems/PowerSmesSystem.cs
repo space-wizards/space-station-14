@@ -15,8 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var entity in RelevantEntities)
             {
-                var comp = entity.GetComponent<SmesComponent>();
-                comp.OnUpdate();
+                entity.GetComponent<SmesComponent>().OnUpdate();
             }
         }
     }
