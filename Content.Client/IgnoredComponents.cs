@@ -130,6 +130,7 @@
             "PowerReceiver",
             "Wire",
             "StressTestMovement",
+            "Toys"
         };
     }
 }

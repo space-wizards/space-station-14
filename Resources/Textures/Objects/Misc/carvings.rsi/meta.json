@@ -4,9 +4,11 @@
     "x": 32,
     "y": 32
   },
+  "license": "",
+  "copyright": "By Bright",
   "states": [
     {
-      "name": "cuff",
+      "name": "helpme",
       "directions": 1,
       "delays": [
         [
