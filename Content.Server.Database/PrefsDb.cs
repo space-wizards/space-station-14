@@ -26,8 +26,8 @@ namespace Content.Server.Database
         {
             return await _prefsCtx
                 .Preferences
-                .Include(p => p.HumanoidProfiles)
-                .ThenInclude(h => h.Jobs)
+                .Include(p => p.HumanoidProfiles).ThenInclude(h => h.Jobs)
+                .Include(p => p.HumanoidProfiles).ThenInclude(h => h.Antags)
                 .SingleOrDefaultAsync(p => p.Username == username);
         }
 

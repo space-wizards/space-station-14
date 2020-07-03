@@ -15,6 +15,29 @@ namespace Content.Server.Database.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4");
 
+            modelBuilder.Entity("Content.Server.Database.Antag", b =>
+                {
+                    b.Property<int>("AntagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AntagName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Preference")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProfileHumanoidProfileId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AntagId");
+
+                    b.HasIndex("ProfileHumanoidProfileId");
+
+                    b.ToTable("Antag");
+                });
+
             modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
                 {
                     b.Property<int>("HumanoidProfileId")
@@ -121,6 +144,15 @@ namespace Content.Server.Database.Migrations
                         .IsUnique();
 
                     b.ToTable("Preferences");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Antag", b =>
+                {
+                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
+                        .WithMany("Antags")
+                        .HasForeignKey("ProfileHumanoidProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
