@@ -20,6 +20,7 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
 using Content.Shared.Preferences;
@@ -704,6 +705,25 @@ namespace Content.Server.GameTicking
                     if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
                     _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
+
+                    var playerEntity = args.Session.AttachedEntity;
+                    if (playerEntity != null && playerEntity.TryGetComponent(out IMoverComponent mover))
+                    {
+                        var subTick = _gameTiming.TickFraction;
+                        var cardinalDirections = new[]
+                        {
+                            Direction.East,
+                            Direction.North,
+                            Direction.West,
+                            Direction.South
+                        };
+
+                        foreach (var direction in cardinalDirections)
+                        {
+                            mover.SetVelocityDirection(direction, subTick, false);
+                        }
+                    }
+
                     ServerEmptyUpdateRestartCheck();
                     break;
                 }

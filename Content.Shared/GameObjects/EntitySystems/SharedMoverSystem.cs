@@ -14,6 +14,7 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 
 #nullable enable
 
