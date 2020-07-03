@@ -331,7 +331,6 @@ namespace Content.Client.UserInterface
                 {
                     Children =
                     {
-                        (_preferenceUnavailableButton = new OptionButton()),
                         new ScrollContainer
                         {
                             SizeFlagsVertical = SizeFlags.FillExpand,
@@ -345,7 +344,7 @@ namespace Content.Client.UserInterface
 
                 tabContainer.AddChild(antagVBox);
 
-                tabContainer.SetTabTitle(1, Loc.GetString("Antags"));
+                tabContainer.SetTabTitle(2, Loc.GetString("Antags"));
 
                 _antagPreferences = new List<AntagPreferenceSelector>();
 
