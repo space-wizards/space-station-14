@@ -707,14 +707,6 @@ namespace Content.Server.GameTicking
 
                     _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
 
-                    var playerEntity = args.Session.AttachedEntity;
-
-                    if (playerEntity != null)
-                    {
-                        var physics = playerEntity.GetComponent<PhysicsComponent>();
-                        (physics.Controller as MoverController)?.StopMoving();
-                    }
-
                     ServerEmptyUpdateRestartCheck();
                     break;
                 }
