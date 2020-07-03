@@ -20,9 +20,9 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
-using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
+using Content.Shared.Physics;
 using Content.Shared.Preferences;
 using Prometheus;
 using Robust.Server.Interfaces;
@@ -33,6 +33,7 @@ using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
@@ -707,21 +708,11 @@ namespace Content.Server.GameTicking
                     _chatManager.DispatchServerAnnouncement($"Player {args.Session.SessionId} left server!");
 
                     var playerEntity = args.Session.AttachedEntity;
-                    if (playerEntity != null && playerEntity.TryGetComponent(out IMoverComponent mover))
-                    {
-                        var subTick = _gameTiming.TickFraction;
-                        var cardinalDirections = new[]
-                        {
-                            Direction.East,
-                            Direction.North,
-                            Direction.West,
-                            Direction.South
-                        };
 
-                        foreach (var direction in cardinalDirections)
-                        {
-                            mover.SetVelocityDirection(direction, subTick, false);
-                        }
+                    if (playerEntity != null)
+                    {
+                        var physics = playerEntity.GetComponent<PhysicsComponent>();
+                        (physics.Controller as MoverController)?.StopMoving();
                     }
 
                     ServerEmptyUpdateRestartCheck();

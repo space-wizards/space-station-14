@@ -55,8 +55,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
+        public void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
             CollidableComponent? collider = null)
         {
             if (physics.Controller == null)
