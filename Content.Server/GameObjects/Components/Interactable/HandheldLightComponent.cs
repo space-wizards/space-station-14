@@ -17,6 +17,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System;
+using Content.Server.GameObjects.Components.Items.Clothing;
+using Content.Server.GameObjects.Components.Items.Storage;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {

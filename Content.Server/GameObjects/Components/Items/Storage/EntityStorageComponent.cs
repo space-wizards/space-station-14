@@ -212,6 +212,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private bool AddToContents(IEntity entity)
         {
+            if (!entity.HasComponent<InEntityStorageComponent>())
+            {
+                entity.AddComponent<InEntityStorageComponent>();
+            }
+
             var collidableComponent = Owner.GetComponent<ICollidableComponent>();
             ICollidableComponent entityCollidableComponent;
             if (entity.TryGetComponent(out entityCollidableComponent))
@@ -272,6 +277,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                     if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
                     {
                         entityCollidableComponent.CanCollide = true;
+                    }
+
+                    if (contained.HasComponent<InEntityStorageComponent>())
+                    {
+                        contained.RemoveComponent<InEntityStorageComponent>();
                     }
                 }
             }
@@ -407,6 +417,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         public void OnDestroy(DestructionEventArgs eventArgs)
         {
+            Open = true;
             EmptyContents();
         }
     }

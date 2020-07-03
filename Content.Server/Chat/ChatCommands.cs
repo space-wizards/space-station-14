@@ -11,6 +11,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 
 namespace Content.Server.Chat
 {

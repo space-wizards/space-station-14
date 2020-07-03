@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     public class StoreableComponent : Component

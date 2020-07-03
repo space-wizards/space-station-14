@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -24,7 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     /// <summary>
     /// Storage component for containing entities within this one, matches a UI on the client which shows stored entities
