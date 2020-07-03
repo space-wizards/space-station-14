@@ -598,12 +598,12 @@ namespace Content.Client.UserInterface
         private class AntagPreferenceSelector : Control
         {
             public AntagPrototype Antag { get; }
-            private readonly OptionButton _optionButton;
+            private readonly CheckBox _checkBox;
 
             public bool Preference
             {
-                get => _optionButton.SelectedId == 1;
-                set => _optionButton.SelectId(value ? 1 : 0);
+                get => _checkBox.Pressed;
+                set => _checkBox.Pressed = value;
             }
 
             public event Action<bool> PreferenceChanged;
@@ -611,25 +611,21 @@ namespace Content.Client.UserInterface
             public AntagPreferenceSelector(AntagPrototype antag)
             {
                 Antag = antag;
-                _optionButton = new OptionButton();
-                _optionButton.AddItem(Loc.GetString("Enabled"), (int) 1);
-                _optionButton.AddItem(Loc.GetString("Disabled"), (int) 0);
 
-                _optionButton.OnItemSelected += args =>
-                {
-                    _optionButton.SelectId(args.Id);
-                    PreferenceChanged?.Invoke(args.Id == 1);
-                };
-
+                _checkBox = new CheckBox {Text = $"{antag.Name}"};
+                _checkBox.OnToggled += OnCheckBoxToggled;
 
                 AddChild(new HBoxContainer
                 {
                     Children =
                     {
-                        new Label {Text = antag.Name, CustomMinimumSize = (175, 0)},
-                        _optionButton
+                        _checkBox
                     }
                 });
+            }
+            private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
+            {
+                PreferenceChanged?.Invoke(Preference);
             }
         }
     }
