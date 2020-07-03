@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Players;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Mobs
@@ -95,7 +97,7 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Gives this mind a new role.
         /// </summary>
-        /// <param name="role">The type of the role to give.</param>
+        /// <param name="t">The type of the role to give.</param>
         /// <returns>The instance of the role.</returns>
         /// <exception cref="ArgumentException">
         ///     Thrown if we already have a role with this type.
@@ -115,7 +117,7 @@ namespace Content.Server.Mobs
         /// <summary>
         ///     Removes a role from this mind.
         /// </summary>
-        /// <param name="role">The type of the role to remove.</param>
+        /// <param name="t">The type of the role to remove.</param>
         /// <exception cref="ArgumentException">
         ///     Thrown if we do not have this role.
         /// </exception>
@@ -183,7 +185,7 @@ namespace Content.Server.Mobs
             // Player is CURRENTLY connected.
             if (Session != null && OwnedMob != null && !alreadyAttached)
             {
-                Session.AttachToEntity(entity!);
+                Session.AttachToEntity(entity);
             }
 
             VisitingEntity = null;
@@ -208,7 +210,7 @@ namespace Content.Server.Mobs
 
             // Make sure to remove control from our old owner if they're logged in.
             var oldSession = Session;
-            oldSession?.AttachToEntity(null!);
+            oldSession?.AttachToEntity(null);
 
             if (SessionId.HasValue)
             {
