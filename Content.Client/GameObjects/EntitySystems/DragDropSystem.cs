@@ -29,8 +29,6 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class DragDropSystem : EntitySystem
     {
-        // how long to wait on mousedown until initiating a drag
-        private const float WaitForDragTime = 0.85f;
         // mouse must remain within this distance of
         // mousedown screen position in order for drag to be triggered.
         // any movement beyond this will cancel the drag
@@ -83,20 +81,18 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private enum DragState
         {
-            NOT_DRAGGING,
+            NotDragging,
             // not dragging yet, waiting to see
             // if they hold for long enough
-            MOUSEDOWN,
+            MouseDown,
             // currently dragging something
-            DRAGGING,
+            Dragging,
         }
 
 
         public override void Initialize()
         {
-            base.Initialize();
-            IoCManager.InjectDependencies(this);
-            _state = DragState.NOT_DRAGGING;
+            _state = DragState.NotDragging;
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
             _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
@@ -111,7 +107,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Shutdown()
         {
-            CancelDrag(false);
+            CancelDrag(false, null);
             CommandBinds.Unregister<DragDropSystem>();
             base.Shutdown();
         }
@@ -137,12 +133,12 @@ namespace Content.Client.GameObjects.EntitySystems
             return false;
         }
 
-        private bool OnUseMouseDown(PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             var dragger = args.Session.AttachedEntity;
             // cancel any current dragging if there is one (shouldn't be because they would've had to have lifted
             // the mouse, canceling the drag, but just being cautious)
-            CancelDrag(false);
+            CancelDrag(false, null);
 
             // possibly initiating a drag
             // check if the clicked entity is draggable
@@ -166,7 +162,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         _draggedEntity = entity;
                         _draggable = draggable;
                         _mouseDownTime = 0;
-                        _state = DragState.MOUSEDOWN;
+                        _state = DragState.MouseDown;
                         _mouseDownScreenPos = _inputManager.MouseScreenPosition;
                         // don't want anything else to process the click,
                         // but we will save the event so we can "re-play" it if this drag does
@@ -180,16 +176,16 @@ namespace Content.Client.GameObjects.EntitySystems
             return false;
         }
 
-        private bool OnUseMouseUp(PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool OnUseMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_state == DragState.MOUSEDOWN)
+            if (_state == DragState.MouseDown)
             {
                 // quick mouseup, definitely treat it as a normal click by
                 // replaying the original
-                CancelDrag(true);
+                CancelDrag(true, null);
                 return false;
             }
-            if (_state != DragState.DRAGGING) return false;
+            if (_state != DragState.Dragging) return false;
 
             // remaining CancelDrag calls will not replay the click because
             // by this time we've determined the input was actually a drag attempt
@@ -202,7 +198,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger) == false)
             {
                 {
-                    CancelDrag(false);
+                    CancelDrag(false, null);
                     return false;
                 }
             }
@@ -217,11 +213,11 @@ namespace Content.Client.GameObjects.EntitySystems
                     RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _draggedEntity.Uid,
                         entity.Uid));
 
-                    CancelDrag(false);
+                    CancelDrag(false, null);
                     return true;
                 }
             }
-            CancelDrag(false);
+            CancelDrag(false, null);
             return false;
         }
 
@@ -230,14 +226,14 @@ namespace Content.Client.GameObjects.EntitySystems
             // this is checked elsewhere but adding this as a failsafe
             if (_draggedEntity == null || _draggedEntity.Deleted)
             {
-                Logger.Warning("Programming error. Cannot initiate drag, no dragged entity or entity" +
+                Logger.Error("Programming error. Cannot initiate drag, no dragged entity or entity" +
                                " was deleted.");
                 return;
             }
 
             if (_draggedEntity.TryGetComponent<SpriteComponent>(out var draggedSprite))
             {
-                _state = DragState.DRAGGING;
+                _state = DragState.Dragging;
                 // pop up drag shadow under mouse
                 var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
                 _dragShadow = _entityManager.SpawnEntity("dragshadow", mousePos);
@@ -259,7 +255,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HighlightTargets()
         {
-            if (_state != DragState.DRAGGING || _draggedEntity == null ||
+            if (_state != DragState.Dragging || _draggedEntity == null ||
                 _draggedEntity.Deleted || _dragShadow == null || _dragShadow.Deleted)
             {
                 Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
@@ -314,7 +310,9 @@ namespace Content.Client.GameObjects.EntitySystems
         /// (essentially reverting the drag attempt and allowing the original click
         /// to proceed as if no drag was performed)
         /// </summary>
-        private void CancelDrag(bool fireSavedCmd)
+        /// <param name="cause">if fireSavedCmd is true, this should be passed with the value of
+        ///  the pointer cmd that caused the drag to be cancelled</param>
+        private void CancelDrag(bool fireSavedCmd, FullInputCmdMessage cause)
         {
             RemoveHighlights();
             if (_dragShadow != null)
@@ -326,7 +324,7 @@ namespace Content.Client.GameObjects.EntitySystems
             _draggedEntity = null;
             _draggable = null;
             _dragger = null;
-            _state = DragState.NOT_DRAGGING;
+            _state = DragState.NotDragging;
 
             _mouseDownTime = 0;
 
@@ -334,8 +332,13 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 var savedValue = _savedMouseDown.Value;
                 _isReplaying = true;
+                // adjust the timing info based on the current tick so it appears as if it happened now
+                var replayMsg = savedValue.OriginalMessage;
+                var adjustedInputMsg = new FullInputCmdMessage(cause.Tick, cause.SubTick,
+                    (int) cause.InputSequence, replayMsg.InputFunctionId, replayMsg.State, replayMsg.Coordinates, replayMsg.ScreenCoordinates);
+
                 _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use,
-                    savedValue.OriginalMessage, true);
+                    adjustedInputMsg, true);
                 _isReplaying = false;
             }
 
@@ -346,40 +349,35 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            if (_state == DragState.MOUSEDOWN)
+            if (_state == DragState.MouseDown)
             {
                 var screenPos = _inputManager.MouseScreenPosition;
                 if (_draggedEntity == null || _draggedEntity.Deleted || (_mouseDownScreenPos - screenPos).Length > DragDeadzone)
                 {
                     // something happened to the clicked entity or we moved the mouse off the target so
                     // we shouldn't replay the original click
-                    CancelDrag(false);
+                    CancelDrag(false, null);
                     return;
                 }
                 else
                 {
-                    // tick down
-                    _mouseDownTime += frameTime;
-                    if (_mouseDownTime > WaitForDragTime)
-                    {
-                        // initiate actual drag
-                        StartDragging();
-                        _mouseDownTime = 0;
-                    }
+                    // initiate actual drag
+                    StartDragging();
+                    _mouseDownTime = 0;
                 }
             }
-            else if (_state == DragState.DRAGGING)
+            else if (_state == DragState.Dragging)
             {
                 if (_draggedEntity == null || _draggedEntity.Deleted)
                 {
-                    CancelDrag(false);
+                    CancelDrag(false, null);
                     return;
                 }
                 // still in range of the thing we are dragging?
                 if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
                         _draggedEntity.Transform.MapPosition, ignoredEnt: _dragger) == false)
                 {
-                    CancelDrag(false);
+                    CancelDrag(false, null);
                     return;
                 }
 
