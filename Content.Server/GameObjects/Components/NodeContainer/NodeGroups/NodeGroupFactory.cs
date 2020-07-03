@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 #pragma warning disable 649
         [Dependency] private readonly IReflectionManager _reflectionManager;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory;
-        [Dependency] private readonly INodeGroupManager _groupManager;
 #pragma warning restore 649
 
         public void Initialize()
