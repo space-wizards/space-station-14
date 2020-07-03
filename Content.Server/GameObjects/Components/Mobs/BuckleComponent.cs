@@ -93,13 +93,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (hands.GetActiveHand != null)
-            {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("Your hand isn't free!"));
-                return false;
-            }
-
             if (Buckled)
             {
                 _notifyManager.PopupMessage(Owner, user,
