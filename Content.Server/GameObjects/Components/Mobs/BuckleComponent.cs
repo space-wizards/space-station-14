@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -60,22 +61,6 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        private bool IsContained()
-        {
-            var parent = Owner.Transform.Parent;
-            if (parent == null)
-            {
-                return false;
-            }
-
-            if (parent.Owner.TryGetComponent(out ContainerManagerComponent container))
-            {
-                return container.ContainsEntity(Owner);
-            }
-
-            return false;
-        }
-
         private bool TryBuckle(IEntity user, IEntity to)
         {
             if (user == null || user == to)
@@ -94,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             var range = SharedInteractionSystem.InteractionRange / 2;
 
             if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range) ||
-                IsContained())
+                ContainerHelpers.IsInContainer(Owner))
             {
                 _notifyManager.PopupMessage(user, user,
                     Loc.GetString("You can't reach there!"));
