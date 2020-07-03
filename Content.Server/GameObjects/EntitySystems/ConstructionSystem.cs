@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
 
-            SubscribeLocalEvent<AfterAttackMessage>(HandleToolInteraction);
+            SubscribeLocalEvent<AfterInteractMessage>(HandleToolInteraction);
         }
 
         private void HandleStartStructureConstruction(TryStartStructureConstructionMessage msg, EntitySessionEventArgs args)
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
             TryStartItemConstruction(placingEnt, msg.PrototypeName);
         }
 
-        private void HandleToolInteraction(AfterAttackMessage msg)
+        private void HandleToolInteraction(AfterInteractMessage msg)
         {
             if(msg.Handled)
                 return;
