@@ -149,6 +149,16 @@ namespace Content.Server.GameObjects.Components.Strap
             OccupiedSize = 0;
         }
 
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out BuckleComponent buckle))
+            {
+                return false;
+            }
+
+            return buckle.ToggleBuckle(eventArgs.User, Owner);
+        }
+
         [Verb]
         private sealed class StrapVerb : Verb<StrapComponent>
         {
@@ -200,16 +210,6 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out BuckleComponent buckle))
-            {
-                return false;
-            }
-
-            return buckle.ToggleBuckle(eventArgs.User, Owner);
         }
     }
 }
