@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
@@ -10,7 +11,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     /// </summary>
     public interface INodeGroup
     {
-        public IReadOnlyList<Node> Nodes { get; }
+        IReadOnlyList<Node> Nodes { get; }
+
+        bool Dirty { get; }
 
         void AddNode(Node node);
 
@@ -25,6 +28,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void BeforeRemakeSpread();
 
         void AfterRemakeSpread();
+
+        void RemakeGroup();
     }
 
     [NodeGroup(NodeGroupID.Default)]
@@ -33,6 +38,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
         private readonly List<Node> _nodes = new List<Node>();
+
+        public bool Dirty { get; private set; } = false;
 
         [ViewVariables]
         public int NodeCount => Nodes.Count;
@@ -49,7 +56,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             _nodes.Remove(node);
             OnRemoveNode(node);
-            RemakeGroup();
+            Dirty = true;
         }
 
         public void CombineGroup(INodeGroup newGroup)
@@ -67,13 +74,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
             AfterCombine();
             newGroup.AfterCombine();
+            IoCManager.Resolve<INodeGroupManager>().RemoveGroup(this);
         }
 
         /// <summary>
         ///     Causes all <see cref="Node"/>s to remake their groups. Called when a <see cref="Node"/> is removed
         ///     and may have split a group in two, so multiple new groups may need to be formed.
         /// </summary>
-        private void RemakeGroup()
+        public void RemakeGroup()
         {
             BeforeRemake();
             foreach (var node in Nodes)
@@ -108,6 +116,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
+            public bool Dirty => false;
             private readonly List<Node> _nodes = new List<Node>();
             public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }
@@ -116,6 +125,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void AfterCombine() { }
             public void BeforeRemakeSpread() { }
             public void AfterRemakeSpread() { }
+            public void RemakeGroup() { }
         }
     }
 }

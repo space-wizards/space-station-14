@@ -27,6 +27,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 #pragma warning disable 649
         [Dependency] private readonly IReflectionManager _reflectionManager;
         [Dependency] private readonly IDynamicTypeFactory _typeFactory;
+        [Dependency] private readonly INodeGroupManager _groupManager;
 #pragma warning restore 649
 
         public void Initialize()
@@ -49,7 +50,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             if (_groupTypes.TryGetValue(nodeGroupType, out var type))
             {
-                return _typeFactory.CreateInstance<INodeGroup>(type);
+                var newGroup = _typeFactory.CreateInstance<INodeGroup>(type);
+                _groupManager.AddNodeGroup(newGroup);
+                return newGroup;
             }
             throw new ArgumentException($"{nodeGroupType} did not have an associated {nameof(INodeGroup)}.");
         }
