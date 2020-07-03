@@ -9,8 +9,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         private readonly Dictionary<Node, List<TNetConnector>> _netConnectorComponents = new Dictionary<Node, List<TNetConnector>>();
 
-        private bool _netCleared = false;
-
         protected override void OnAddNode(Node node)
         {
             var newNetConnectorComponents = node.Owner
@@ -28,15 +26,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnRemoveNode(Node node)
         {
-            if (!_netCleared)
+            foreach (var netConnectorComponent in _netConnectorComponents[node])
             {
-                foreach (var netConnectorComponent in _netConnectorComponents[node])
-                {
-                    netConnectorComponent.ClearNet();
-                }
+                netConnectorComponent.ClearNet();
             }
-            _netCleared = true;
-
             _netConnectorComponents.Remove(node);
         }
     }
