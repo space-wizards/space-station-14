@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Strap
         /// The sum of the sizes of all the buckled entities in this strap
         /// </summary>
         [ViewVariables]
-        public int OccupiedSize { get; private set; }
+        private int OccupiedSize { get; set; }
 
         public bool HasSpace(BuckleComponent buckle)
         {

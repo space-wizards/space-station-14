@@ -17,6 +17,7 @@
     caps: 27
   - type: Pourable
     transferAmount: 5.0
+  - type: CanSpill
 
 - type: entity
   name: large beaker
@@ -37,6 +38,7 @@
     caps: 27
   - type: Pourable
     transferAmount: 5.0
+  - type: CanSpill
 
 - type: entity
   name: dropper
@@ -55,6 +57,7 @@
     caps: 19
   - type: Pourable
     transferAmount: 5.0
+  - type: CanSpill
 
 - type: entity
   name: syringe
@@ -73,3 +76,4 @@
     caps: 19
   - type: Injector
     injectOnly: false
+  - type: CanSpill

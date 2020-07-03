@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
@@ -45,6 +46,23 @@ namespace Content.Server.GameObjects.Components.Power
                 _lightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent bulb);
 
                 return bulb;
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent component)
+        {
+            base.HandleMessage(message, component);
+
+            switch (message)
+            {
+                case BeginDeconstructCompMsg msg:
+                    if (!msg.BlockDeconstruct && !(_lightBulbContainer.ContainedEntity is null))
+                    {
+                        var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
+                        notifyManager.PopupMessage(Owner, msg.User, "Remove the bulb.");
+                        msg.BlockDeconstruct = true;
+                    }
+                    break;
             }
         }
 
