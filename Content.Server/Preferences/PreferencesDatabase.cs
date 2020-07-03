@@ -107,6 +107,11 @@ namespace Content.Server.Preferences
                         .Where(j => j.Value != JobPriority.Never)
                         .Select(j => new Job {JobName = j.Key, Priority = (DbJobPriority) j.Value})
                 );
+                entity.Antags.AddRange(
+                    humanoid.AntagPreferences
+                        .Where(a => a.Value == true)
+                        .Select(a => new Antag {AntagName = a.Key, Preference = a.Value})
+                );
                 await _prefsDb.SaveCharacterSlotAsync(username, entity);
             }
             finally
@@ -140,6 +145,7 @@ namespace Content.Server.Preferences
         private static HumanoidCharacterProfile ConvertProfiles(HumanoidProfile profile)
         {
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
+            var antags = profile.Antags.ToDictionary(a => a.AntagName, a => a.Preference);
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Age,
@@ -154,7 +160,8 @@ namespace Content.Server.Preferences
                     Color.FromHex(profile.SkinColor)
                 ),
                 jobs,
-                (PreferenceUnavailableMode) profile.PreferenceUnavailable
+                (PreferenceUnavailableMode) profile.PreferenceUnavailable,
+                antags
             );
         }
     }

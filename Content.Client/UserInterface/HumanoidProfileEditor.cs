@@ -6,6 +6,7 @@ using Content.Client.Interfaces;
 using Content.Client.Utility;
 using Content.Shared;
 using Content.Shared.Jobs;
+using Content.Shared.Antags;
 using Content.Shared.Preferences;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -42,6 +43,7 @@ namespace Content.Client.UserInterface
         private readonly FacialHairStylePicker _facialHairPicker;
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
+        private readonly List<AntagPreferenceSelector> _antagPreferences;
 
         private bool _isDirty;
         public int CharacterSlot;
@@ -320,6 +322,53 @@ namespace Content.Client.UserInterface
 
             #endregion
 
+            #region Antags
+
+            {
+                var antagList = new VBoxContainer();
+
+                var antagVBox = new VBoxContainer
+                {
+                    Children =
+                    {
+                        (_preferenceUnavailableButton = new OptionButton()),
+                        new ScrollContainer
+                        {
+                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            Children =
+                            {
+                                antagList
+                            }
+                        }
+                    }
+                };
+
+                tabContainer.AddChild(antagVBox);
+
+                tabContainer.SetTabTitle(1, Loc.GetString("Antags"));
+
+                _antagPreferences = new List<AntagPreferenceSelector>();
+
+                foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
+                {
+                    if(!antag.Antagonist)
+                    {
+                        continue;
+                    }
+                    var selector = new AntagPreferenceSelector(antag);
+                    antagList.AddChild(selector);
+                    _antagPreferences.Add(selector);
+
+                    selector.PreferenceChanged += priority =>
+                    {
+                        Profile = Profile.WithAntagPreference(antag.ID, priority);
+                        IsDirty = true;
+                    };
+                }
+            }
+
+            #endregion
+
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
 
@@ -466,6 +515,7 @@ namespace Content.Client.UserInterface
             UpdateHairPickers();
             UpdateSaveButton();
             UpdateJobPriorities();
+            UpdateAntagPreferences();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
@@ -528,6 +578,56 @@ namespace Content.Client.UserInterface
                     {
                         icon,
                         new Label {Text = job.Name, CustomMinimumSize = (175, 0)},
+                        _optionButton
+                    }
+                });
+            }
+        }
+
+        private void UpdateAntagPreferences()
+        {
+            foreach (var preferenceSelector in _antagPreferences)
+            {
+                var antagId = preferenceSelector.Antag.ID;
+
+                var preference = Profile.AntagPreferences.GetValueOrDefault(antagId, true);
+
+                preferenceSelector.Preference = preference;
+            }
+        }
+
+        private class AntagPreferenceSelector : Control
+        {
+            public AntagPrototype Antag { get; }
+            private readonly OptionButton _optionButton;
+
+            public bool Preference
+            {
+                get => _optionButton.SelectedId == 1;
+                set => _optionButton.SelectId(value ? 1 : 0);
+            }
+
+            public event Action<bool> PreferenceChanged;
+
+            public AntagPreferenceSelector(AntagPrototype antag)
+            {
+                Antag = antag;
+                _optionButton = new OptionButton();
+                _optionButton.AddItem(Loc.GetString("Enabled"), (int) 1);
+                _optionButton.AddItem(Loc.GetString("Disabled"), (int) 0);
+
+                _optionButton.OnItemSelected += args =>
+                {
+                    _optionButton.SelectId(args.Id);
+                    PreferenceChanged?.Invoke(args.Id == 1);
+                };
+
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        new Label {Text = antag.Name, CustomMinimumSize = (175, 0)},
                         _optionButton
                     }
                 });

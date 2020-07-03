@@ -133,13 +133,6 @@ namespace Content.Server.Mobs
             _roles.Remove(role);
         }
 
-        public bool HasRole<T>() where T : Role
-        {
-            var t = typeof(T);
-
-            return _roles.Any(role => role.GetType() == t);
-        }
-
         /// <summary>
         ///     Transfer this mind's control over to a new entity.
         /// </summary>

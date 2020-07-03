@@ -56,7 +56,7 @@ namespace Content.Server.PDA
             var entity = _entityManager.GetEntity(acc.AccountHolder);
             if (entity.TryGetComponent(out MindComponent mindComponent))
             {
-                if (mindComponent.Mind.AllRoles.Any(role => !role.Antag))
+                if (mindComponent.Mind.AllRoles.Any(role => !role.Antagonist))
                 {
                     return false;
                 }

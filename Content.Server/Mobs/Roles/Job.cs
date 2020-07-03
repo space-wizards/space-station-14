@@ -11,7 +11,7 @@ namespace Content.Server.Mobs.Roles
         public JobPrototype Prototype { get; }
 
         public override string Name { get; }
-        public override bool Antag => false;
+        public override bool Antagonist => false;
 
         public string StartingGear => Prototype.StartingGear;
 

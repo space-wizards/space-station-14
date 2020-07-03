@@ -8,8 +8,10 @@ using Content.Server.Players;
 using Content.Server.Sandbox;
 using NFluidsynth;
 using Robust.Server.Interfaces.Player;
+using Content.Shared.Antags;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Logger = Robust.Shared.Log.Logger;
 
@@ -21,11 +23,14 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IChatManager _chatManager;
         [Dependency] private readonly IGameTicker _gameTicker;
         [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
         public int MinPlayers { get; set; } = 5;
         public int MinTraitors { get; set; } = 2;
         public int PlayersPerTraitor { get; set; } = 5;
+        private static string TraitorID = "SuspicionTraitor";
+        private static string InnocentID = "SuspicionInnocent";
 
         public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
@@ -43,13 +48,15 @@ namespace Content.Server.GameTicking.GamePresets
             {
                 var traitor = _random.PickAndTake(list);
                 var mind = traitor.Data.ContentData().Mind;
-                mind.AddRole(new SuspicionTraitorRole(mind));
+                var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorID);
+                mind.AddRole(new Antag(mind, antagPrototype));
             }
 
             foreach (var player in list)
             {
                 var mind = player.Data.ContentData().Mind;
-                mind.AddRole(new SuspicionInnocentRole(mind));
+                var antagPrototype = _prototypeManager.Index<AntagPrototype>(InnocentID);
+                mind.AddRole(new Antag(mind, antagPrototype));
             }
 
             _gameTicker.AddGameRule<RuleSuspicion>();

@@ -316,13 +316,13 @@ namespace Content.Server.GameTicking
                 var mind = ply.ContentData().Mind;
                 if (mind != null)
                 {
-                    var antag = mind.AllRoles.Any(role => role.Antag);
+                    var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity.Name,
                         Role = antag
-                            ? mind.AllRoles.First(role => role.Antag).Name
+                            ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
                         Antag = antag
                     };
@@ -803,7 +803,7 @@ namespace Content.Server.GameTicking
             var mindComponent = mob.GetComponent<MindComponent>();
             if (mindComponent.HasMind) //Redundancy checks.
             {
-                if (mindComponent.Mind.AllRoles.Any(role => role.Antag)) //Give antags a new uplinkaccount.
+                if (mindComponent.Mind.AllRoles.Any(role => role.Antagonist)) //Give antags a new uplinkaccount.
                 {
                     var uplinkAccount =
                         new UplinkAccount(mob.Uid,
