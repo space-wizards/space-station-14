@@ -45,7 +45,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         /// <summary>
         ///     Toggles one of the four cardinal directions. Each of the four directions are
-        ///     composed into a single direction vector, <see cref="PlayerInputMoverComponent.VelocityDir"/>. Enabling
+        ///     composed into a single direction vector, <see cref="SharedPlayerInputMoverComponent.VelocityDir"/>. Enabling
         ///     opposite directions will cancel each other out, resulting in no direction.
         /// </summary>
         /// <param name="direction">Direction to toggle.</param>
