@@ -14,7 +14,6 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 
 #nullable enable
 
@@ -55,7 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        public void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
             CollidableComponent? collider = null)
         {
             if (physics.Controller == null)
