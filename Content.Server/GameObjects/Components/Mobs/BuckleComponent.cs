@@ -14,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -286,7 +287,16 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new BuckleComponentState(Buckled);
+            int? drawDepth = null;
+
+            if (BuckledTo != null &&
+                Owner.Transform.WorldRotation.GetCardinalDir() == Direction.North &&
+                BuckledTo.Owner.TryGetComponent(out SpriteComponent strapSprite))
+            {
+                drawDepth = strapSprite.DrawDepth - 1;
+            }
+
+            return new BuckleComponentState(Buckled, drawDepth);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
