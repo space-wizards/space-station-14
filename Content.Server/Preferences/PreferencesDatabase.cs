@@ -109,7 +109,6 @@ namespace Content.Server.Preferences
                 );
                 entity.Antags.AddRange(
                     humanoid.AntagPreferences
-                        .Where(a => a.Value == true)
                         .Select(a => new Antag {AntagName = a.Key, Preference = a.Value})
                 );
                 await _prefsDb.SaveCharacterSlotAsync(username, entity);
