@@ -50,9 +50,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             if (_groupTypes.TryGetValue(nodeGroupType, out var type))
             {
-                var newGroup = _typeFactory.CreateInstance<INodeGroup>(type);
-                _groupManager.AddNodeGroup(newGroup);
-                return newGroup;
+                return _typeFactory.CreateInstance<INodeGroup>(type);
             }
             throw new ArgumentException($"{nodeGroupType} did not have an associated {nameof(INodeGroup)}.");
         }

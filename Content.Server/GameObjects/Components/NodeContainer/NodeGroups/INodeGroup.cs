@@ -13,8 +13,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         IReadOnlyList<Node> Nodes { get; }
 
-        bool Dirty { get; }
-
         void AddNode(Node node);
 
         void RemoveNode(Node node);
@@ -39,8 +37,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public IReadOnlyList<Node> Nodes => _nodes;
         private readonly List<Node> _nodes = new List<Node>();
 
-        public bool Dirty { get; private set; } = false;
-
         [ViewVariables]
         public int NodeCount => Nodes.Count;
 
@@ -56,7 +52,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             _nodes.Remove(node);
             OnRemoveNode(node);
-            Dirty = true;
+            IoCManager.Resolve<INodeGroupManager>().AddDirtyNodeGroup(this);
         }
 
         public void CombineGroup(INodeGroup newGroup)
@@ -74,7 +70,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
             AfterCombine();
             newGroup.AfterCombine();
-            IoCManager.Resolve<INodeGroupManager>().RemoveGroup(this);
         }
 
         /// <summary>
@@ -116,7 +111,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
-            public bool Dirty => false;
             private readonly List<Node> _nodes = new List<Node>();
             public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }
