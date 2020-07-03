@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components;
 using Content.Shared.Physics;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -11,10 +10,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using System;
 using Robust.Shared.Interfaces.Physics;
-using CannyFastMath;
-using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Throw
@@ -60,7 +56,7 @@ namespace Content.Server.Throw
                 if (colComp.PhysicsShapes.Count == 0)
                     colComp.PhysicsShapes.Add(new PhysShapeAabb());
 
-                colComp.PhysicsShapes[0].CollisionMask |= (int) (CollisionGroup.MobImpassable | CollisionGroup.Impassable);
+                colComp.PhysicsShapes[0].CollisionMask |= (int) CollisionGroup.ThrownItem;
                 colComp.Status = BodyStatus.InAir;
             }
             var angle = new Angle(targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager));
@@ -87,8 +83,7 @@ namespace Content.Server.Throw
             // scaling is handled elsewhere, this is just multiplying by 60 independent of timing as a fix until elsewhere values are updated
             var spd = throwForce * 60;
 
-            physComp.SetController<ThrowController>();
-            (physComp.Controller as ThrowController)?.StartThrow(angle.ToVec() * spd);
+            projComp.StartThrow(angle.ToVec() * spd);
 
             if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics)
                                        && physics.Controller is MoverController mover)
@@ -139,7 +134,7 @@ namespace Content.Server.Throw
 
             // Calculate the force necessary to land a throw based on throw duration, mass and distance.
             var distance = (targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager)).Length;
-            var throwDuration = ThrowController.DefaultThrowTime;
+            var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
             if (thrownEnt.TryGetComponent(out PhysicsComponent physicsComponent))
             {

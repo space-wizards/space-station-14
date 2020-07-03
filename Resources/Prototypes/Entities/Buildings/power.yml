@@ -103,6 +103,8 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
     supplyRate: 3000
+  - type: Physics
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -114,6 +116,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -127,6 +133,8 @@
   - type: Damageable
   - type: Breakable
     thresholdvalue: 100
+  - type: Physics
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -138,6 +146,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -149,6 +161,9 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
   - type: BatteryStorage
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
   
 - type: entity
   id: DebugBatteryDischarger
@@ -159,6 +174,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -170,6 +189,9 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerSupplier
   - type: BatteryDischarger
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
     
 - type: entity
   id: DebugSmes
@@ -211,6 +233,8 @@
   - type: PowerSupplier
   - type: BatteryDischarger
     activeSupplyRate: 1000
+  - type: Physics
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -222,6 +246,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -241,6 +269,9 @@
     voltage: Medium
   - type: BatteryDischarger
     activeSupplyRate: 1000
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
 
 - type: entity
   id: DebugApc
@@ -294,6 +325,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
@@ -301,6 +336,9 @@
   - type: Icon
     texture: Objects/Furniture/wirelessmachine.png
   - type: PowerReceiver
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
 
 - type: entity
   id: SolarPanel

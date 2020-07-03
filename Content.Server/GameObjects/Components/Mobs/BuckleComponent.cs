@@ -11,7 +11,6 @@ using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -23,17 +22,29 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent, IActionBlocker, IInteractHand, IEffectBlocker
+    public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
+        [CanBeNull] private StrapComponent _buckledTo;
         private int _size;
 
         [ViewVariables, CanBeNull]
-        public StrapComponent BuckledTo { get; private set; }
+        public StrapComponent BuckledTo
+        {
+            get => _buckledTo;
+            private set
+            {
+                _buckledTo = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables]
+        protected override bool Buckled => BuckledTo != null;
 
         [ViewVariables]
         public int Size => _size;
@@ -43,9 +54,9 @@ namespace Content.Server.GameObjects.Components.Mobs
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Buckled,
-                    BuckledTo == null
-                        ? "/Textures/Mob/UI/Buckle/unbuckled.png"
-                        : "/Textures/Mob/UI/Buckle/buckled.png");
+                    Buckled
+                        ? "/Textures/Mob/UI/Buckle/buckled.png"
+                        : "/Textures/Mob/UI/Buckle/unbuckled.png");
             }
         }
 
@@ -87,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (BuckledTo != null)
+            if (Buckled)
             {
                 _notifyManager.PopupMessage(Owner, user,
                     Loc.GetString(Owner == user
@@ -278,24 +289,14 @@ namespace Content.Server.GameObjects.Components.Mobs
             BuckleStatus();
         }
 
+        public override ComponentState GetComponentState()
+        {
+            return new BuckleComponentState(Buckled);
+        }
+
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
-        }
-
-        bool IActionBlocker.CanMove()
-        {
-            return BuckledTo == null;
-        }
-
-        bool IActionBlocker.CanChangeDirection()
-        {
-            return BuckledTo == null;
-        }
-
-        bool IEffectBlocker.CanFall()
-        {
-            return BuckledTo == null;
         }
 
         [Verb]
@@ -303,8 +304,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             protected override void GetData(IEntity user, BuckleComponent component, VerbData data)
             {
-                if (!ActionBlockerSystem.CanInteract(user) ||
-                    component.BuckledTo == null)
+                if (!ActionBlockerSystem.CanInteract(user) || !component.Buckled)
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;

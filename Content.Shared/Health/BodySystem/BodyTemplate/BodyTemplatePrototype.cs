@@ -58,7 +58,7 @@ namespace Content.Shared.BodySystem {
                                 tempConnections.Add(connection);
                         }
                     }
-                    else if (slotConnections.Contains(slotName))
+                    else if (slotConnections.Contains(targetSlotName))
                     {
                         tempConnections.Add(slotName);
                     }

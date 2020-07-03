@@ -16,6 +16,7 @@
     transferAmount: 5
   - type: Drink
     isOpen: true
+  - type: CanSpill
 
 
 # Containers
