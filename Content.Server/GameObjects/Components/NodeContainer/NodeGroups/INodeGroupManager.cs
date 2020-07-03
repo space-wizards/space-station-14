@@ -9,10 +9,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     public interface INodeGroupManager
     {
         /// <summary>
-        ///     Add an <see cref="INodeGroup"/> to be updated.
+        ///     Add a <see cref="INodeGroup"/> to be updated.
         /// </summary>
         void AddNodeGroup(INodeGroup nodeGroup);
 
+        /// <summary>
+        ///     Remove a <see cref="INodeGroup"/> from updating.
+        /// </summary>
+        /// <param name="nodeGroup"></param>
         void RemoveGroup(INodeGroup nodeGroup);
 
         void Update(float frameTime);
@@ -39,6 +43,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private float _accumulatedFrameTime;
 
+        private float _remakeDelay = 1f;
+
+        /// <summary>
+        ///     Used in <see cref="BaseNodeGroup.CombineGroup(INodeGroup)"/> to remove a merged group
+        ///     from the manager.
+        /// </summary>
         public void AddNodeGroup(INodeGroup nodeGroup)
         {
             if (_updating)
@@ -54,13 +64,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public void RemoveGroup(INodeGroup nodeGroup)
         {
             _nodeGroups.Remove(nodeGroup);
-            _queuedNewNodeGroups.Remove(nodeGroup);
         }
 
         public void Update(float frameTime)
         {
             _accumulatedFrameTime += frameTime;
-            if (_accumulatedFrameTime <= 1)
+            if (_accumulatedFrameTime <= _remakeDelay)
                 return;
             _accumulatedFrameTime = 0;
 
