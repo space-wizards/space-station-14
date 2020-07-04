@@ -1,0 +1,31 @@
+- type: entity
+  abstract: true
+  id: PipeBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    drawdepth: BelowFloor  
+  - type: IconSmooth
+    mode: CardinalFlags
+  - type: Destructible
+    thresholdvalue: 100
+    
+- type: entity
+  parent: PipeBase
+  id: VerticalPipe
+  name: Vertical Pipe
+  components:
+  - type: Sprite
+    sprite: Objects/Power/hv_cable.rsi
+    state: hvcable_0
+  - type: IconSmooth
+    base: hvcable_
+    key: hv_cables
+  - type: NodeContainer
+    nodeTypes: { Default : ["DirectionalNode"] }
