@@ -25,12 +25,13 @@ namespace Content.Server.Database.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProfileHumanoidProfileId")
+                    b.Property<int>("HumanoidProfileId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AntagId");
 
-                    b.HasIndex("ProfileHumanoidProfileId");
+                    b.HasIndex("HumanoidProfileId", "AntagName")
+                        .IsUnique();
 
                     b.ToTable("Antag");
                 });
@@ -147,7 +148,7 @@ namespace Content.Server.Database.Migrations
                 {
                     b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
                         .WithMany("Antags")
-                        .HasForeignKey("ProfileHumanoidProfileId")
+                        .HasForeignKey("HumanoidProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

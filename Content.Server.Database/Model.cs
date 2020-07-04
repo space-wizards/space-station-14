@@ -64,6 +64,10 @@ namespace Content.Server.Database
             modelBuilder.Entity<HumanoidProfile>()
                 .HasIndex(p => new {p.Slot, p.PrefsId})
                 .IsUnique();
+
+            modelBuilder.Entity<Antag>()
+                .HasIndex(p => new {p.HumanoidProfileId , p.AntagName})
+                .IsUnique();
         }
     }
 
@@ -119,6 +123,7 @@ namespace Content.Server.Database
     {
         public int AntagId { get; set; }
         public HumanoidProfile Profile { get; set; } = null!;
+        public int HumanoidProfileId { get; set; }
 
         public string AntagName { get; set; } = null!;
     }
