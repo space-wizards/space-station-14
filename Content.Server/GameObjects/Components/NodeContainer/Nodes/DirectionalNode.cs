@@ -13,12 +13,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         protected override IEnumerable<Node> GetReachableNodes()
         {
+            var test = Enum.GetValues(typeof(CardinalDirection));
             foreach (CardinalDirection direction in Enum.GetValues(typeof(CardinalDirection)))
             {
-                ConnectionFromCardinal(direction, out var ownNeededConnection, out var otherDirToCheck);
+                ConnectionFromCardinal(direction, out var ownNeededConnection, out var theirNeededConnection);
                 if ((ownNeededConnection & _connectionDirection) == Connection.None)
                 {
-                    yield break;
+                    continue;
                 }
                 var directionalNodesInDirection = Owner.GetComponent<SnapGridComponent>()
                     .GetInDir((Direction) direction)
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     .Where(node => node != null && node != this);
                 foreach (var pipe in directionalNodesInDirection)
                 {
-                    if ((pipe._connectionDirection & otherDirToCheck) != Connection.None)
+                    if ((pipe._connectionDirection & theirNeededConnection) != Connection.None)
                     {
                         yield return pipe;
                     }
@@ -86,10 +87,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         Horizontial = Left | Right,
 
         //Bends
-        A = Up | Left,
-        B = Up | Right,
-        C = Down | Left,
-        D = Down | Right,
+        NWBend = Up | Left,
+        NEBend = Up | Right,
+        SWBend = Down | Left,
+        SEBend = Down | Right,
 
         //T-Junctions
         TUp = Up | Horizontial,
