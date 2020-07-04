@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Strap;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
@@ -7,14 +8,11 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -27,15 +25,15 @@ namespace Content.Server.GameObjects.Components.Mobs
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        [CanBeNull] private StrapComponent _buckledTo;
+        private StrapComponent? _buckledTo;
         private int _size;
 
-        [ViewVariables, CanBeNull]
-        public StrapComponent BuckledTo
+        [ViewVariables]
+        public StrapComponent? BuckledTo
         {
             get => _buckledTo;
             private set
@@ -87,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            if (!user.HasComponent<HandsComponent>())
             {
                 _notifyManager.PopupMessage(user, user,
                     Loc.GetString("You don't have hands!"));
