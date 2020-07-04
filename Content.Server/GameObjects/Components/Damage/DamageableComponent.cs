@@ -5,7 +5,6 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects;
-using Pidgin;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -16,7 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
@@ -47,10 +45,8 @@ namespace Content.Server.GameObjects
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
         private Dictionary<DamageType, string> _soundArray;
-        string? _baseDamageSound;
+        string _baseDamageSound;
         
-
-
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
