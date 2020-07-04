@@ -53,7 +53,10 @@ namespace Content.Shared.Preferences
             var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>())
             {
-                antagList.Add(antag.Name);
+                if(antag.SetPreference)
+                {
+                    antagList.Add(antag.Name);
+                }
             }
 
             return new HumanoidCharacterProfile("John Doe", 18, Sex.Male, HumanoidCharacterAppearance.Default(),

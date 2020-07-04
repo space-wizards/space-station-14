@@ -350,7 +350,7 @@ namespace Content.Client.UserInterface
 
                 foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
                 {
-                    if(!antag.Antagonist)
+                    if(!antag.SetPreference)
                     {
                         continue;
                     }

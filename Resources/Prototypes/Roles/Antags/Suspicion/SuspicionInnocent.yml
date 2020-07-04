@@ -2,4 +2,5 @@
   id: SuspicionInnocent
   name: "innocent"
   antagonist: false
+  setPreference: false
   objective: "Discover and eliminate all traitors."

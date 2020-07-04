@@ -31,12 +31,18 @@ namespace Content.Shared.Antags
         /// </summary>
         public bool Antagonist { get; private set; }
 
+        /// <summary>
+        ///     Whether or not the player can set the antag role in antag preferences.
+        /// </summary>
+        public bool SetPreference { get; private set; }
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             ID = mapping.GetNode("id").AsString();
             Name = Loc.GetString(mapping.GetNode("name").ToString());
             Objective = mapping.GetNode("objective").ToString();
             Antagonist = mapping.GetNode("antagonist").AsBool();
+            SetPreference = mapping.GetNode("setPreference").AsBool();
         }
     }
 }
