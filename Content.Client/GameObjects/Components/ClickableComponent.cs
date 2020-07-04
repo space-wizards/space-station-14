@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Robust.Client.Graphics.ClientEye;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -7,8 +8,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Client.GameObjects.Components
 {
