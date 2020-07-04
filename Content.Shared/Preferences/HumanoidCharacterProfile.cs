@@ -141,11 +141,17 @@ namespace Content.Shared.Preferences
             var list = new List<string>(_antagPreferences);
             if(pref)
             {
-                list.Add(antagId);
+                if(!list.Contains(antagId))
+                {
+                    list.Add(antagId);
+                }
             }
             else
             {
-                list.Remove(antagId);
+                if(list.Contains(antagId))
+                {
+                    list.Remove(antagId);
+                }
             }
             return new HumanoidCharacterProfile(Name, Age, Sex, Appearance, _jobPriorities, PreferenceUnavailable, list);
         }

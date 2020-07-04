@@ -69,12 +69,13 @@ namespace Content.Server.GameTicking.GamePresets
                 if(prefList.Count() == 0)
                 {
                     traitor = _random.PickAndTake(list);
-                    Logger.Info("Insufficient traitors, picking at random.");
+                    Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");
                 }
                 else
                 {
                     traitor = _random.PickAndTake(prefList);
                     list.Remove(traitor);
+                    Logger.InfoS("preset", "Selected a preferred traitor.");
                 }
                 var mind = traitor.Data.ContentData().Mind;
                 var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorID);

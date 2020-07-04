@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
@@ -358,9 +358,9 @@ namespace Content.Client.UserInterface
                     antagList.AddChild(selector);
                     _antagPreferences.Add(selector);
 
-                    selector.PreferenceChanged += priority =>
+                    selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile.WithAntagPreference(antag.ID, priority);
+                        Profile = Profile.WithAntagPreference(antag.Name, preference);
                         IsDirty = true;
                     };
                 }
