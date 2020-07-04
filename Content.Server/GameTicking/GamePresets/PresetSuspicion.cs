@@ -13,6 +13,7 @@ using Robust.Shared.Random;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Log;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
 
@@ -68,10 +69,12 @@ namespace Content.Server.GameTicking.GamePresets
                 if(prefList.Count() == 0)
                 {
                     traitor = _random.PickAndTake(list);
+                    Logger.Info("Insufficient traitors, picking at random.");
                 }
                 else
                 {
                     traitor = _random.PickAndTake(prefList);
+                    list.Remove(traitor);
                 }
                 var mind = traitor.Data.ContentData().Mind;
                 var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorID);
