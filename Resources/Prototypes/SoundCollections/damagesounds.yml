@@ -1,0 +1,4 @@
+﻿- type: soundCollection
+  id: DamageSounds
+  files:
+    - /Audio/effects/damage/hit.ogg

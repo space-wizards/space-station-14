@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects;
+using Pidgin;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
-    //TODO: add support for component add/remove
-
     /// <summary>
     /// A component that handles receiving damage and healing,
     /// as well as informing other components of it.
@@ -20,6 +28,11 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     public class DamageableComponent : SharedDamageableComponent, IDamageableComponent
     {
+        #pragma warning disable 649
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IRobustRandom _random;
+        #pragma warning restore 649
+
         /// <inheritdoc />
         public override string Name => "Damageable";
 
@@ -33,6 +46,10 @@ namespace Content.Server.GameObjects
         [ViewVariables]
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
+        private Dictionary<DamageType, string> _soundArray;
+        string? _baseDamageSound;
+        
+
 
         Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
@@ -43,7 +60,7 @@ namespace Content.Server.GameObjects
         {
             return new DamageComponentState(_currentDamage);
         }
-
+        /// <inheritdoc/>
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -53,6 +70,9 @@ namespace Content.Server.GameObjects
             {
                 Resistances = ResistanceSet.GetResistanceSet(name);
             });
+
+            serializer.DataField(ref _soundArray, "sounds", null);
+            serializer.DataField(ref _baseDamageSound, "default sound", null);
         }
 
         public bool IsDead()
@@ -111,7 +131,6 @@ namespace Content.Server.GameObjects
             amount = Resistances.CalculateDamage(damageType, amount);
             _currentDamage[damageType] = Math.Max(0, _currentDamage[damageType] + amount);
             UpdateForDamageType(damageType, oldValue);
-
             Damaged?.Invoke(this, new DamageEventArgs(damageType, amount, source, sourceMob));
 
             if (Resistances.AppliesToTotal(damageType))
@@ -119,6 +138,42 @@ namespace Content.Server.GameObjects
                 oldTotalValue = _currentDamage[DamageType.Total];
                 _currentDamage[DamageType.Total] = Math.Max(0, _currentDamage[DamageType.Total] + amount);
                 UpdateForDamageType(DamageType.Total, oldTotalValue);
+            }
+
+            PlayDamageSound(Owner, damageType);
+        }
+
+        
+
+        /// <summary>
+        /// Handles playing a damage sound from entity damaged.
+        /// </summary>
+        public void PlayDamageSound(IEntity entity, DamageType damageType, AudioParams? audioParams = null)
+        {
+            if(_soundArray != null)
+            {
+                if (_soundArray.TryGetValue(damageType, out var soundEffect))
+                {
+                    if(Uri.IsWellFormedUriString(soundEffect, UriKind.RelativeOrAbsolute))
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity(soundEffect, Owner, audioParams);
+                    else
+                    {
+                        var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(soundEffect);
+                        var file = _random.Pick(soundCollection.PickFiles);
+                        EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default);
+                    }
+                    return;
+                }
+            }
+
+            if (_baseDamageSound == null) return;
+
+            if (Uri.IsWellFormedUriString(_baseDamageSound, UriKind.Absolute)) EntitySystem.Get<AudioSystem>().PlayFromEntity(_baseDamageSound, Owner, audioParams);
+            else
+            {
+                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_baseDamageSound);
+                var file = _random.Pick(soundCollection.PickFiles);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(file, Owner, AudioParams.Default);
             }
         }
 

@@ -1,4 +1,4 @@
-# Both humans and NPCs inherit from this.
+﻿# Both humans and NPCs inherit from this.
 # Anything human specific (e.g. UI, input) goes under HumanMob_Content
 - type: entity
   save: false
@@ -124,6 +124,15 @@
     BasePreset: bodyPreset.BasicHuman
   - type: HeatResistance
   - type: Damageable
+    sounds:
+      Brute: /Audio/effects/damage/hit.ogg
+      Electric: Audio/effects/damage/swoosh.ogg
+    default sound: DamageSounds
+    ## To use a SoundCollectionPrototype instead of a URL used the ID of the Sound Collection Component.
+
+  - type: Eye
+    zoom: 0.5, 0.5
+  - type: CameraRecoil
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
