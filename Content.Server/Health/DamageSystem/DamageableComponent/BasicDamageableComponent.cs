@@ -22,48 +22,65 @@ namespace Content.Server.DamageSystem
         [ViewVariables]
         public DamageContainer DamageContainer { get; private set; }
 
-        Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
-
-        public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
-        public event EventHandler<DamageEventArgs> Damaged;
-
         public override void Initialize()
         {
             base.Initialize();
-            foreach (var damagebehavior in Owner.GetAllComponents<IOnDamageBehavior>())
-            {
-                //AddThresholdsFrom(damagebehavior);
-                Damaged += damagebehavior.OnDamaged;
-            }
+            ForceHealthChangedEvent(); //Just in case something activates at default health. TODO: is there a way to call this a bit later this maybe?
         }
+
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            // TODO: Writing.
+            // TODO: YAML writing/reading.
         }
 
-        public override bool TakeDamage(DamageType damageType, int amount, IEntity source)
+        public override bool ChangeDamage(DamageType damageType, int amount, IEntity source)
         {
-            return true;
+            if (DamageContainer.SupportsDamageType(damageType)){
+                int finalDamage = Resistances.CalculateDamage(damageType, amount);
+                DamageContainer.ChangeDamageValue(damageType, finalDamage);
+                List<HealthChangeData> data = new List<HealthChangeData> { new HealthChangeData(damageType, DamageContainer.GetDamageValue(damageType), finalDamage) };
+                TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
+                return true;
+            }
+            return false;
         }
 
         public override bool SetDamage(DamageType damageType, int newValue, IEntity source)
         {
-            return true;
+            if (DamageContainer.SupportsDamageType(damageType))
+            {
+                HealthChangeData data = new HealthChangeData(damageType, newValue, newValue-DamageContainer.GetDamageValue(damageType));
+                DamageContainer.SetDamageValue(damageType, newValue);
+                List<HealthChangeData> dataList = new List<HealthChangeData> { data };
+                TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, dataList));
+                return true;
+            }
+            return false;
         }
 
         public override void HealAllDamage()
         {
-            
+            List<HealthChangeData> data = new List<HealthChangeData>();
+            foreach (DamageType type in DamageContainer.SupportedDamageTypes)
+            {
+                data.Add(new HealthChangeData(type, 0, -DamageContainer.GetDamageValue(type)));
+                DamageContainer.SetDamageValue(type, 0);
+            }
+            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
         }
 
-        public override bool IsDead()
-        {
-            return false;
+        /// <summary>
+        ///     Invokes the HealthChangedEvent with the current values of health. 
+        /// </summary>
+        public void ForceHealthChangedEvent() {
+            List<HealthChangeData> data = new List<HealthChangeData>();
+            foreach (DamageType type in DamageContainer.SupportedDamageTypes)
+            {
+                data.Add(new HealthChangeData(type, DamageContainer.GetDamageValue(type), 0));
+            }
+            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
         }
-
-
     }
 }

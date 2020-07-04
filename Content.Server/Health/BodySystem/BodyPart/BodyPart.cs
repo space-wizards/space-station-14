@@ -96,7 +96,7 @@ namespace Content.Server.BodySystem
         ///     Current HP of this BodyPart based on sum of all damage types.
         /// </summary>		
         [ViewVariables]
-        public int CurrentDurability => MaxDurability - CurrentDamages.Damage;
+        public int CurrentDurability => MaxDurability - CurrentDamages.TotalDamage;
 
         /// <summary>
         ///     Current damage dealt to this BodyPart.

@@ -31,7 +31,7 @@ namespace Content.Shared.DamageSystem
         }
 
         /// <summary>
-        ///     Adjusts input damage with the resistance set values.
+        ///     Adjusts input damage with the resistance set values. Only applies reduction if the amount is damage (positive), not healing (negative).
         /// </summary>
         /// <param name="damageType">Type of damage.</param>
         /// <param name="amount">Incoming amount of damage.</param>

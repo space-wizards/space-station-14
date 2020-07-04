@@ -8,7 +8,7 @@ namespace Content.Shared.DamageSystem {
 
     public static class DamageContainerValues
     {
-        public static readonly Dictionary<DamageClass, List<DamageType>> DamageClassToType = new Dictionary<DamageClass, List<DamageType>>
+        private static readonly Dictionary<DamageClass, List<DamageType>> ClassToType = new Dictionary<DamageClass, List<DamageType>>
         {
             { DamageClass.Brute, new List<DamageType>{ DamageType.Blunt, DamageType.Piercing }},
             { DamageClass.Burn, new List<DamageType>{ DamageType.Heat, DamageType.Disintegration }},
@@ -17,7 +17,7 @@ namespace Content.Shared.DamageSystem {
         };
 
         //TODO: autogenerate this lol
-        public static readonly Dictionary<DamageType, DamageClass> DamageTypeToClass = new Dictionary<DamageType, DamageClass>
+        private static readonly Dictionary<DamageType, DamageClass> TypeToClass = new Dictionary<DamageType, DamageClass>
         {
             { DamageType.Blunt, DamageClass.Brute },
             { DamageType.Piercing, DamageClass.Brute },
@@ -27,5 +27,15 @@ namespace Content.Shared.DamageSystem {
             { DamageType.DNA, DamageClass.Toxin },
             { DamageType.Asphyxiation, DamageClass.Airloss }
         };
+
+        public static DamageClass DamageTypeToClass(DamageType t)
+        {
+            return TypeToClass[t];
+        }
+        public static List<DamageType> DamageClassToType(DamageClass c)
+        {
+            return ClassToType[c];
+        }
+
     }
 }
