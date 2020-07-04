@@ -29,9 +29,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("Preference")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("ProfileHumanoidProfileId")
                         .HasColumnType("integer");
 

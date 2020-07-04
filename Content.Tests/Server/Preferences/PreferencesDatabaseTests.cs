@@ -36,7 +36,7 @@ namespace Content.Tests.Server.Preferences
                     {SharedGameTicker.OverflowJob, JobPriority.High}
                 },
                 PreferenceUnavailableMode.StayInLobby,
-                new Dictionary<string, bool>{}
+                new List<string>{}
             );
         }
 

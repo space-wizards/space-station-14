@@ -2,38 +2,20 @@
 using Content.Server.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Content.Server.Database.Migrations
+namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqlitePreferencesDbContext))]
-    partial class SqlitePreferencesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200704063112_AntagList")]
+    partial class AntagList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.4");
-
-            modelBuilder.Entity("Content.Server.Database.Antag", b =>
-                {
-                    b.Property<int>("AntagId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("AntagName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ProfileHumanoidProfileId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AntagId");
-
-                    b.HasIndex("ProfileHumanoidProfileId");
-
-                    b.ToTable("Antag");
-                });
 
             modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
                 {
@@ -141,15 +123,6 @@ namespace Content.Server.Database.Migrations
                         .IsUnique();
 
                     b.ToTable("Preferences");
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Antag", b =>
-                {
-                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
-                        .WithMany("Antags")
-                        .HasForeignKey("ProfileHumanoidProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>

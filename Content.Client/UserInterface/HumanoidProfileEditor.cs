@@ -589,7 +589,7 @@ namespace Content.Client.UserInterface
             {
                 var antagId = preferenceSelector.Antag.ID;
 
-                var preference = Profile.AntagPreferences.GetValueOrDefault(antagId, true);
+                var preference = Profile.AntagPreferences.Contains(antagId);
 
                 preferenceSelector.Preference = preference;
             }

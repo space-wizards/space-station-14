@@ -121,7 +121,6 @@ namespace Content.Server.Database
         public HumanoidProfile Profile { get; set; } = null!;
 
         public string AntagName { get; set; } = null!;
-        public bool Preference { get; set; }
     }
 
     public enum DbPreferenceUnavailableMode

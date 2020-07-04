@@ -109,7 +109,7 @@ namespace Content.Server.Preferences
                 );
                 entity.Antags.AddRange(
                     humanoid.AntagPreferences
-                        .Select(a => new Antag {AntagName = a.Key, Preference = a.Value})
+                        .Select(a => new Antag {AntagName = a})
                 );
                 await _prefsDb.SaveCharacterSlotAsync(username, entity);
             }
@@ -144,7 +144,7 @@ namespace Content.Server.Preferences
         private static HumanoidCharacterProfile ConvertProfiles(HumanoidProfile profile)
         {
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
-            var antags = profile.Antags.ToDictionary(a => a.AntagName, a => a.Preference);
+            var antags = profile.Antags.Select(a => a.AntagName);
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Age,
@@ -160,7 +160,7 @@ namespace Content.Server.Preferences
                 ),
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
-                antags
+                antags.ToList()
             );
         }
     }
