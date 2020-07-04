@@ -1,16 +1,16 @@
-﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects;
 using Content.Server.Interfaces.Chat;
-using Content.Shared.Antags;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
+using Content.Shared.Antags;
 
 namespace Content.Server.Mobs.Roles
 {
-    public sealed class Antag : Role
+    public class SuspicionInnocentRole : Role
     {
         public AntagPrototype Prototype { get; }
 
-        public Antag(Mind mind, AntagPrototype antagPrototype) : base(mind)
+        public SuspicionInnocentRole(Mind mind, AntagPrototype antagPrototype) : base(mind)
         {
             Prototype = antagPrototype;
             Name = antagPrototype.Name;

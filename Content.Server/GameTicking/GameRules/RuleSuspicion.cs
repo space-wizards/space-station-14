@@ -60,7 +60,7 @@ namespace Content.Server.GameTicking.GameRules
                 return;
 
             message.Species.Owner.Description +=
-                mind.Mind.AllRoles.Any(role => role.Antagonist) ? "\nThey were a traitor!" : "\nThey were an innocent!";
+                mind.Mind.HasRole<SuspicionTraitorRole>() ? "\nThey were a traitor!" : "\nThey were an innocent!";
         }
 
         public override void Removed()
@@ -87,7 +87,7 @@ namespace Content.Server.GameTicking.GameRules
                 {
                     continue;
                 }
-                if (playerSession.ContentData().Mind.AllRoles.Any(role => role.Antagonist))
+                if (playerSession.ContentData().Mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else
                     innocentsAlive++;
