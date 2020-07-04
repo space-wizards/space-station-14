@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Strap;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
@@ -7,7 +8,6 @@ using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -24,15 +24,15 @@ namespace Content.Server.GameObjects.Components.Mobs
     public class BuckleComponent : SharedBuckleComponent, IInteractHand
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        [CanBeNull] private StrapComponent _buckledTo;
+        private StrapComponent? _buckledTo;
         private int _size;
 
-        [ViewVariables, CanBeNull]
-        public StrapComponent BuckledTo
+        [ViewVariables]
+        public StrapComponent? BuckledTo
         {
             get => _buckledTo;
             private set
