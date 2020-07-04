@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [Node("DirectionalNode")]
     public class DirectionalNode : Node
     {
-        private Connection _connectionDirection = Connection.Vertical;
+        private Connection _connectionDirection;
 
         protected override IEnumerable<Node> GetReachableNodes()
         {
@@ -28,11 +28,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     .SelectMany(container => container.Nodes)
                     .OfType<DirectionalNode>()
                     .Where(node => node != null && node != this);
-                foreach (var pipe in directionalNodesInDirection)
+                foreach (var directionalNode in directionalNodesInDirection)
                 {
-                    if ((pipe._connectionDirection & theirNeededConnection) != Connection.None)
+                    if ((directionalNode._connectionDirection & theirNeededConnection) != Connection.None)
                     {
-                        yield return pipe;
+                        yield return directionalNode;
                     }
                 }
             }
@@ -87,16 +87,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         Horizontial = Left | Right,
 
         //Bends
-        NWBend = Up | Left,
-        NEBend = Up | Right,
-        SWBend = Down | Left,
-        SEBend = Down | Right,
+        ULBend = Up | Left,
+        URBend = Up | Right,
+        DLBend = Down | Left,
+        DRBend = Down | Right,
 
         //T-Junctions
         TUp = Up | Horizontial,
         TDown = Down | Horizontial,
-        TLeft = Vertical | Left,
-        TRight = Vertical | Right,
+        TLeft = Left | Vertical,
+        TRight = Right | Vertical,
 
         //Four way
         All = Up | Down | Left | Right,
