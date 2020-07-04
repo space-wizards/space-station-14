@@ -232,7 +232,7 @@ namespace Content.Client.GameObjects.Components.Instruments
                             .Min(x => x.Tick) - 1;
                     }
 
-                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f);
+                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel!.Ping / 1000f);
                     var delay = (uint) (_renderer!.SequencerTimeScale * (.2 + sqrtLag));
                     var delta = delay - _sequenceStartTick;
 

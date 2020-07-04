@@ -386,7 +386,7 @@ namespace Content.Server.GameObjects.Components
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    ToolComponent tool = null;
+                    ToolComponent? tool = null;
                     activeHandEntity?.TryGetComponent(out tool);
 
                     switch (msg.Action)
