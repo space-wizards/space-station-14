@@ -49,21 +49,11 @@ namespace Content.Shared.Preferences
 
         public static HumanoidCharacterProfile Default()
         {
-            var antagList = new List<string>();
-            var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var antag in _prototypeManager.EnumeratePrototypes<AntagPrototype>())
-            {
-                if(antag.SetPreference)
-                {
-                    antagList.Add(antag.Name);
-                }
-            }
-
             return new HumanoidCharacterProfile("John Doe", 18, Sex.Male, HumanoidCharacterAppearance.Default(),
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
-                }, PreferenceUnavailableMode.StayInLobby, antagList);
+                }, PreferenceUnavailableMode.StayInLobby, new List<string>());
         }
 
         public string Name { get; }
