@@ -148,8 +148,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            BuckledTo = strap;
-
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(BuckleVisuals.Buckled, true);
@@ -176,6 +174,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                     break;
             }
 
+            BuckledTo = strap;
             BuckleStatus();
 
             return true;
