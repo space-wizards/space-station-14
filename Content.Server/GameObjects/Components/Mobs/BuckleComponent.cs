@@ -212,8 +212,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                     .PlayFromEntity(strap.UnbuckleSound, Owner);
             }
 
-            Owner.Transform.DetachParent();
-            Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+            if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
+            {
+                Owner.Transform.DetachParent();
+                Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+            }
+
             BuckledTo = null;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -268,12 +272,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.Startup();
             BuckleStatus();
         }
-
         public override void OnRemove()
         {
             base.OnRemove();
 
-            if (BuckledTo != null && BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
+            if (BuckledTo != null &&
+                BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
             {
                 strap.Remove(this);
             }
