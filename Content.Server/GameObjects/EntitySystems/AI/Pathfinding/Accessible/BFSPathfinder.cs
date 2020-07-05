@@ -52,8 +52,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     
                     // So currently tileCost gets the octile distance between the 2 so we'll also use that for our range check
                     var tileCost = PathfindingHelpers.GetTileCost(pathfindingArgs, startNode, neighbor);
-                    if (tileCost == null || tileCost > pathfindingArgs.Proximity) continue;
+                    var direction = PathfindingHelpers.RelativeDirection(neighbor, currentNode);
                     
+                    if (tileCost == null || 
+                        tileCost > pathfindingArgs.Proximity || 
+                        !PathfindingHelpers.DirectionTraversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, currentNode, direction))
+                    {
+                        continue;
+                    }
+
                     openTiles.Enqueue(neighbor);
                     yield return neighbor;
                 }

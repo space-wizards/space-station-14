@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             {
                 if (pathfindingArgs.Proximity > 0.0f)
                 {
-                    foreach (var node in BFSPathfinder.GetNodesInRange(pathfindingArgs))
+                    foreach (var node in BFSPathfinder.GetNodesInRange(pathfindingArgs, false))
                     {
                         endNode = node;
                         return true;
