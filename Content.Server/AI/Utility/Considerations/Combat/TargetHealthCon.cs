@@ -1,4 +1,3 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects;
@@ -8,9 +7,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
 {
     public sealed class TargetHealthCon : Consideration
     {
-        public TargetHealthCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 

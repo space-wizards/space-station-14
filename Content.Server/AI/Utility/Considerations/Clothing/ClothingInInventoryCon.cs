@@ -1,5 +1,5 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
+using Content.Server.AI.WorldState.States.Clothing;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -8,25 +8,27 @@ namespace Content.Server.AI.Utility.Considerations.Clothing
 {
     public sealed class ClothingInInventoryCon : Consideration
     {
-        private readonly EquipmentSlotDefines.SlotFlags _slot;
-
-        public ClothingInInventoryCon(EquipmentSlotDefines.SlotFlags slotFlags, IResponseCurve curve) : base(curve)
+        public ClothingInInventoryCon Slot(EquipmentSlotDefines.SlotFlags slotFlags, Blackboard context)
         {
-            _slot = slotFlags;
+            // Ideally we'd just use a variable but then if we were iterating through multiple AI at once it'd be
+            // Stuffed so we need to store it on the AI's context.
+            context.GetState<ClothingSlotFlagConState>().SetValue(slotFlags);
+            return this;
         }
 
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
-            var inventory = context.GetState<InventoryState>().GetValue();
+            var slots = context.GetState<ClothingSlotConState>().GetValue();
+            var slotFlags = EquipmentSlotDefines.SlotMasks[slots];
 
-            foreach (var entity in inventory)
+            foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (!entity.TryGetComponent(out ClothingComponent clothingComponent))
                 {
                     continue;
                 }
 
-                if ((clothingComponent.SlotFlags & _slot) != 0)
+                if ((clothingComponent.SlotFlags & slotFlags) != 0)
                 {
                     return 1.0f;
                 }
