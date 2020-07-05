@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Server.GameObjects.Components
 
             if (physics.Anchored)
             {
-                var args = new AnchoredEventArgs(Owner);
+                var args = new AnchoredEventArgs();
 
                 foreach (var component in Owner.GetAllComponents<IAnchored>())
                 {
@@ -38,7 +39,7 @@ namespace Content.Server.GameObjects.Components
             }
             else
             {
-                var args = new UnAnchoredEventArgs(Owner);
+                var args = new UnAnchoredEventArgs();
 
                 foreach (var unAnchored in Owner.GetAllComponents<IUnAnchored>())
                 {
@@ -58,6 +59,36 @@ namespace Content.Server.GameObjects.Components
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return Anchor(eventArgs.User, eventArgs.Using);
+        }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when they're anchored.
+    /// </summary>
+    public interface IAnchored
+    {
+        void Anchored(AnchoredEventArgs eventArgs);
+    }
+
+    public class AnchoredEventArgs : EventArgs
+    {
+        public AnchoredEventArgs()
+        {
+        }
+    }
+
+    /// <summary>
+    ///     This interface gives components behavior when they're unanchored.
+    /// </summary>
+    public interface IUnAnchored
+    {
+        void UnAnchored(UnAnchoredEventArgs eventArgs);
+    }
+
+    public class UnAnchoredEventArgs : EventArgs
+    {
+        public UnAnchoredEventArgs()
+        {
         }
     }
 }

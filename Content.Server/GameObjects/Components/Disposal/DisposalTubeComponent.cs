@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
