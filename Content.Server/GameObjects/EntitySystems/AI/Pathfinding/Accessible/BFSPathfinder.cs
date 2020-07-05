@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="range"></param>
         /// <param name="fromStart">Whether we traverse from the starting tile or the end tile</param>
         /// <returns></returns>
-        public static IEnumerable<PathfindingNode> GetTilesInRange(PathfindingArgs pathfindingArgs, float range, bool fromStart = true)
+        public static IEnumerable<PathfindingNode> GetNodesInRange(PathfindingArgs pathfindingArgs, bool fromStart = true)
         {
             var pathfindingSystem = EntitySystem.Get<PathfindingSystem>();
             // Don't need a priority queue given not looking for shortest path
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     
                     // So currently tileCost gets the octile distance between the 2 so we'll also use that for our range check
                     var tileCost = PathfindingHelpers.GetTileCost(pathfindingArgs, startNode, neighbor);
-                    if (tileCost == null || tileCost > range) continue;
+                    if (tileCost == null || tileCost > pathfindingArgs.Proximity) continue;
                     
                     openTiles.Enqueue(neighbor);
                     yield return neighbor;
