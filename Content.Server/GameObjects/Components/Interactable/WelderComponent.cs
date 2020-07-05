@@ -100,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
         }
 
-        private bool TryWeld(float value, IEntity user = null, bool silent = false)
+        private bool TryWeld(float value, IEntity? user = null, bool silent = false)
         {
             if (!WelderLit)
             {
@@ -133,7 +133,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Deactivates welding tool if active, activates welding tool if possible
         /// </summary>
-        private bool ToggleWelderStatus(IEntity user = null)
+        private bool ToggleWelderStatus(IEntity? user = null)
         {
             var item = Owner.GetComponent<ItemComponent>();
 
