@@ -1,4 +1,6 @@
-﻿using Content.Server.Interfaces;
+﻿﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces;
 ﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -29,25 +31,7 @@ namespace Content.Server
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "ConstructionGhost",
-                "IconSmooth",
-                "SubFloorHide",
-                "LowWall",
-                "ReinforcedWall",
-                "Window",
-                "CharacterInfo",
-                "InteractionOutline",
-                "MeleeWeaponArcAnimation",
-                "AnimationsTest",
-                "ItemStatus",
-                "Marker",
-                "EmergencyLight",
-                "Clickable",
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }
@@ -75,7 +59,8 @@ namespace Content.Server
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
-
+            IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<INodeFactory>().Initialize();
         }
 
         public override void PostInit()

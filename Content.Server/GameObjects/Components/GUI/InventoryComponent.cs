@@ -78,7 +78,14 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            return SlotContainers[slot].ContainedEntity?.GetComponent<T>();
+            var containedEntity = SlotContainers[slot].ContainedEntity;
+            if (containedEntity?.Deleted == true)
+            {
+                SlotContainers[slot] = null;
+                containedEntity = null;
+                Dirty();
+            }
+            return containedEntity?.GetComponent<T>();
         }
 
         public bool TryGetSlotItem<T>(Slots slot, out T itemComponent) where T : ItemComponent

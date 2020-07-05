@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: Airlock
   name: airlock
   description: It opens, it closes, and maybe crushes you.
@@ -15,6 +15,9 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: bolted
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
@@ -40,7 +43,7 @@
       close_sound: /Audio/machines/airlock_close.ogg
       deny_sound: /Audio/machines/airlock_deny.ogg
     - type: WiresVisualizer2D
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock

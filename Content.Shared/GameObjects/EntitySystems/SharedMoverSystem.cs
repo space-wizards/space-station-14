@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.Configuration;
@@ -13,7 +13,6 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 #nullable enable
@@ -55,8 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, SharedPhysicsComponent physics,
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
             CollidableComponent? collider = null)
         {
             if (physics.Controller == null)
@@ -112,7 +110,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         }
 
-        protected abstract void SetController(SharedPhysicsComponent physics);
+        protected abstract void SetController(PhysicsComponent physics);
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             CollidableComponent collider)
