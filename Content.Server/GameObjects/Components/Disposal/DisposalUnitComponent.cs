@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -40,6 +41,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalUnit";
 
+        private bool Functional()
+        {
+            return !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+                   receiver.Powered;
+        }
+
         private bool TryInsert(IEntity entity)
         {
             // TODO: Click drag
@@ -53,8 +60,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool TryFlush()
         {
-            if (Owner.TryGetComponent(out PowerConsumerComponent consumer) &&
-                consumer.ReceivedPower == 0)
+            if (!Functional())
             {
                 return false;
             }
@@ -84,6 +90,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _flushSound, "flushSound", "/Audio/machines/disposalflush.ogg");
         }
 
@@ -99,14 +106,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (!Owner.GetComponent<PhysicsComponent>().Anchored) // TODO
-            {
-                return;
-            }
-
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DisposalVisuals.Anchored, true);
+                var anchored = !Owner.GetComponent<PhysicsComponent>().Anchored;
+                appearance.SetData(DisposalVisuals.Anchored, anchored);
             }
         }
 

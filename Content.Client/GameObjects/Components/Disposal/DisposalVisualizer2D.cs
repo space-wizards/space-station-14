@@ -40,7 +40,7 @@ namespace Content.Client.GameObjects.Components.Disposal
             }
 
             appearance.TryGetData(DisposalVisuals.Anchored, out bool anchored);
-            sprite.LayerSetState(DisposalVisualLayers.Anchored, anchored
+            sprite.LayerSetState(0, anchored
                 ? _stateAnchored
                 : _stateUnAnchored);
         }
@@ -55,14 +55,9 @@ namespace Content.Client.GameObjects.Components.Disposal
             }
 
             component.TryGetData(DisposalVisuals.Anchored, out bool anchored);
-            sprite.LayerSetState(DisposalVisualLayers.Anchored, anchored
+            sprite.LayerSetState(0, anchored
                 ? _stateAnchored
                 : _stateUnAnchored);
         }
-    }
-
-    public enum DisposalVisualLayers
-    {
-        Anchored
     }
 }

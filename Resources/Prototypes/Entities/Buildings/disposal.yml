@@ -25,9 +25,7 @@
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
-    layers:
-    - state: conpipe-s
-      map: ["enum.DisposalVisualLayers.Anchored"]
+    state: conpipe-s
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: conpipe-s
@@ -47,9 +45,7 @@
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
-    layers:
-    - state: conpipe-t
-      map: ["enum.DisposalVisualLayers.Anchored"]
+    state: conpipe-t
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: conpipe-t
@@ -68,16 +64,11 @@
   components:
   - type: Sprite
     sprite: Buildings/disposal.rsi
-    layers:
-    - state: condisposal
-      map: ["enum.DisposalVisualLayers.Anchored"]
+    state: condisposal
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: condisposal
   - type: PowerReceiver
-    drawtype: Both
-    load: 100
-    priority: Low
   - type: DisposalUnit
   - type: Appearance
     visuals:
@@ -94,9 +85,7 @@
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
-    layers:
-      - state: conpipe-j1
-        map: ["enum.DisposalVisualLayers.Anchored"]
+    state: conpipe-j1
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: conpipe-j1
