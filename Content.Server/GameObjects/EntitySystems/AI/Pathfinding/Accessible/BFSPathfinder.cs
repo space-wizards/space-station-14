@@ -14,7 +14,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <summary>
         /// Gets all of the tiles in range that can we access
         /// </summary>
-        /// If you want Dikstra then add distances
+        /// If you want Dikstra then add distances.
+        /// Doesn't use the JobQueue as it will generally be encapsulated by other jobs
         /// <param name="pathfindingArgs"></param>
         /// <param name="range"></param>
         /// <param name="fromStart">Whether we traverse from the starting tile or the end tile</param>
