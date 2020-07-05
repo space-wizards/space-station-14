@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         protected override void SetController(PhysicsComponent physics)
         {
-            ((PhysicsComponent) physics).SetController<MoverController>();
+            physics.SetController<MoverController>();
         }
 
         private static void PlayerAttached(PlayerAttachSystemMessage ev)
@@ -95,6 +95,11 @@ namespace Content.Server.GameObjects.EntitySystems
             if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
+            }
+
+            if (ev.Entity.TryGetComponent(out PhysicsComponent physics))
+            {
+                (physics.Controller as MoverController)?.StopMoving();
             }
         }
 

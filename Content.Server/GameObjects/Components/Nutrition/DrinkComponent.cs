@@ -128,6 +128,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (!_opened)
             {
                 target.PopupMessage(target, Loc.GetString("Open it first!"));
+                return false;
             }
 
             if (_contents.CurrentVolume.Float() <= 0)
