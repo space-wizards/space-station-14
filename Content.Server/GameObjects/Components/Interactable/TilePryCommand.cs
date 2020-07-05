@@ -46,6 +46,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             var playerGrid = player.AttachedEntity.Transform.GridID;
             var mapGrid = mapManager.GetGrid(playerGrid);
             var playerPosition = player.AttachedEntity.Transform.GridPosition;
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
 
             for (var i = -radius; i <= radius; i++)
             {
@@ -53,11 +54,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                 {
                     var tile = mapGrid.GetTileRef(playerPosition.Offset((i, j)));
                     var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-                    var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-
                     var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (!tileDef.CanCrowbar) return;
+                    if (!tileDef.CanCrowbar) continue;
 
                     var underplating = tileDefinitionManager["underplating"];
                     mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
