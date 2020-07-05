@@ -8,9 +8,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    hard: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+      bounds: "-0.2,-0.2,0.2,0.2"
       layer:
       - Opaque
       - Impassable

@@ -3,6 +3,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Recycling
 {
@@ -11,13 +13,24 @@ namespace Content.Server.GameObjects.Components.Recycling
     {
         public override string Name => "Recycler";
 
-        private bool Safe { get; set; } = true;
+        /// <summary>
+        ///     Whether or not sentient beings will be recycled
+        /// </summary>
+        [ViewVariables]
+        private bool _safe;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _safe, "safe", true);
+        }
 
         void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
             // TODO: Prevent collision with recycled items
             var species = collidedWith.HasComponent<SpeciesComponent>();
-            if (species && !Safe)
+            if (species && _safe)
             {
                 return;
             }
