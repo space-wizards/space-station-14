@@ -43,6 +43,9 @@ binds:
 - function: FocusChatWindow
   type: State
   key: T
+- function: FocusOOCWindow
+  type: State
+  key: LBracket
 - function: EditorLinePlace
   type: State
   key: MouseLeft
