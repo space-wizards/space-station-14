@@ -74,7 +74,7 @@
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: condisposal
-  - type: PowerDevice
+  - type: PowerReceiver
     drawtype: Both
     load: 100
     priority: Low
