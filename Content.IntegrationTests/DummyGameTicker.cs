@@ -53,7 +53,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void MakeJoinGame(IPlayerSession player)
+        public void MakeJoinGame(IPlayerSession player, string jobId)
         {
         }
 

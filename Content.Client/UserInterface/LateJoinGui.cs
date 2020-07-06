@@ -1,14 +1,16 @@
-using System.Collections.Generic;
-using Robust.Client.Graphics;
+using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Content.Shared.Jobs;
-using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -18,6 +20,7 @@ namespace Robust.Client.UserInterface.CustomControls
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IClientConsole _console;
 #pragma warning restore 649
         /*private readonly Button ApplyButton;
         private readonly CheckBox VSyncCheckBox;
@@ -27,12 +30,16 @@ namespace Robust.Client.UserInterface.CustomControls
 
         protected override Vector2? CustomSize => (360, 560);
 
+        public event Action<string> SelectedId;
+
+        private Dictionary<string, int> AvailablePositions;
+
         public LateJoinGui(/*IConfigurationManager configMan*/)
         {
             IoCManager.InjectDependencies(this);
-            //configManager = configMan;
 
-            Title = "Late Join";
+            Title = Loc.GetString("Late Join");
+
             var jobList = new VBoxContainer();
             var vBox = new VBoxContainer
             {
@@ -50,33 +57,16 @@ namespace Robust.Client.UserInterface.CustomControls
                 };
             Contents.AddChild(vBox);
 
-            /*VSyncCheckBox = new CheckBox {Text = "VSync"};
-            vBox.AddChild(VSyncCheckBox);
-            VSyncCheckBox.OnToggled += OnCheckBoxToggled;
-
-            FullscreenCheckBox = new CheckBox {Text = "Fullscreen"};
-            vBox.AddChild(FullscreenCheckBox);
-            FullscreenCheckBox.OnToggled += OnCheckBoxToggled;
-
-            HighResLightsCheckBox = new CheckBox {Text = "High-Res Lights"};
-            vBox.AddChild(HighResLightsCheckBox);
-            HighResLightsCheckBox.OnToggled += OnCheckBoxToggled;
-
-            ApplyButton = new Button
-            {
-                Text = "Apply", TextAlign = Label.AlignMode.Center,
-                SizeFlagsVertical = SizeFlags.ShrinkCenter
-            };
-            vBox.AddChild(ApplyButton);
-            ApplyButton.OnPressed += OnApplyButtonPressed;
-
-            VSyncCheckBox.Pressed = configManager.GetCVar<bool>("display.vsync");
-            HighResLightsCheckBox.Pressed = configManager.GetCVar<bool>("display.highreslights");
-            FullscreenCheckBox.Pressed = ConfigIsFullscreen;*/
-
             foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>().OrderBy(j => j.Name))
             {
-                var jobSelector = new HBoxContainer();
+                var jobButton = new JobButton
+                {
+                    JobId = job.ID
+                };
+                var jobSelector = new HBoxContainer
+                {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
+                };
 
                 var icon = new TextureRect
                 {
@@ -93,53 +83,54 @@ namespace Robust.Client.UserInterface.CustomControls
 
                 var jobLabel = new Label
                 {
-                    //SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                    //SizeFlagsVertical = SizeFlags.ShrinkCenter,
                     Text = job.Name
                 };
                 jobSelector.AddChild(jobLabel);
 
-                var button = new JobButton
+                Logger.InfoS("latejoin", $"Job: {job.ID}, Positions: {job.TotalPositions}");
+                var jobPrototype = _prototypeManager.Index<JobPrototype>(job.ID);
+                Logger.InfoS("latejoin", $"Weird Job: {jobPrototype.ID}, Positions: {job.TotalPositions}");
+                if(jobPrototype.TotalPositions == 0) //TODO: Make this work. GetAvailablePositions() is serverside
                 {
-                    Text = Loc.GetString("Select"),
-                    ToolTip = Loc.GetString($"Join as {job.Name}."),
-                    TextAlign = Label.AlignMode.Center,
-                    JobId = job.ID
+                    Logger.InfoS("latejoin", $"Disabling {job.ID}");
+                    jobButton.Disabled = true;
+                }
+                jobButton.AddChild(jobSelector);
+                jobList.AddChild(jobButton);
+                //jobButton.OnPressed += OnJobButtonPressed;
+                jobButton.OnPressed += args =>
+                {
+                    SelectedId?.Invoke(jobButton.JobId);
                 };
-                /*if(job.TotalPositions == 0) //TODO: Make this work. GetAvailablePositions() is serverside
+                /*jobButton.OnItemSelected += args =>
                 {
-                    button.Disabled = true;
-                }*/
-                jobSelector.AddChild(button);
-                jobList.AddChild(jobSelector);
+                    _optionButton.SelectId(args.Id);
+                    PriorityChanged?.Invoke(Priority);
+                };*/
             }
+
+            SelectedId += jobId =>
+            {
+                Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
+                _console.ProcessCommand($"joingame {CommandParsing.Escape(jobId)}");
+                Close();
+            };
+
+
         }
 
-        private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
+        public string ReturnId()
         {
-            /*configManager.SetCVar("display.vsync", VSyncCheckBox.Pressed);
-            configManager.SetCVar("display.highreslights", HighResLightsCheckBox.Pressed);
-            configManager.SetCVar("display.windowmode",
-                (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
-            configManager.SaveToFile();
-            UpdateApplyButton();*/
+            return SelectedId.ToString();
         }
 
-        private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
+    }
+    class JobButton : ContainerButton
+    {
+        public string JobId { get; set; }
+        public JobButton()
         {
-            UpdateApplyButton();
-        }
-
-        private void UpdateApplyButton()
-        {
-            //var isVSyncSame = VSyncCheckBox.Pressed == configManager.GetCVar<bool>("display.vsync");
-            //var isHighResLightsSame = HighResLightsCheckBox.Pressed == configManager.GetCVar<bool>("display.highreslights");
-            //var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
-            //ApplyButton.Disabled = isVSyncSame && isHighResLightsSame && isFullscreenSame;
-        }
-        private class JobButton : Button
-        {
-            public string JobId { get; set; }
+            AddStyleClass(StyleClassButton);
         }
     }
 }
