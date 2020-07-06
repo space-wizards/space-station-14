@@ -214,10 +214,7 @@ namespace Content.Server.GameObjects.Components
 
         private bool AddToContents(IEntity entity)
         {
-            if (!entity.HasComponent<InEntityStorageComponent>())
-            {
-                entity.AddComponent<InEntityStorageComponent>();
-            }
+            entity.EnsureComponent<InEntityStorageComponent>();
 
             var collidableComponent = Owner.GetComponent<ICollidableComponent>();
             ICollidableComponent entityCollidableComponent;
