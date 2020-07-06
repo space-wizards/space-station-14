@@ -13,6 +13,8 @@ using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.Serialization;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.DamageSystem;
+using Content.Shared.DamageSystem;
 
 namespace Content.Server.BodySystem {
 
@@ -20,7 +22,7 @@ namespace Content.Server.BodySystem {
     ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
     /// </summary>
     [RegisterComponent]
-    public class BodyManagerComponent : Component, IBodyPartContainer {
+    public class BodyManagerComponent : IDamageableComponent, IBodyPartContainer {
 
         public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649
@@ -79,6 +81,7 @@ namespace Content.Server.BodySystem {
                 return _partDictionary.Values;
             }
         }
+
 
         /// <summary>
         ///     Recursive search that returns whether a given <see cref="BodyPart"/> is connected to the center <see cref="BodyPart"/>.
@@ -468,5 +471,46 @@ namespace Content.Server.BodySystem {
             }
         }
 
+
+        /////////
+        /////////  IDamageableComponent implementations
+        /////////
+
+        public override int TotalDamage => throw new NotImplementedException();
+
+        public override List<DamageState> SupportedDamageStates => throw new NotImplementedException();
+
+        public override DamageState CurrentDamageState { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
+
+        public override bool ChangeDamage(DamageType damageType, int amount, IEntity source, bool ignoreResistances, HealthChangeParams extraParams = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ChangeDamage(DamageClass damageClass, int amount, IEntity source, bool ignoreResistances, HealthChangeParams extraParams = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool SetDamage(DamageType damageType, int newValue, IEntity source, HealthChangeParams extraParams = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void HealAllDamage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ForceHealthChangedEvent()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class BodyManagerHealthChangeParams : HealthChangeParams
+    {
+
     }
 }
+

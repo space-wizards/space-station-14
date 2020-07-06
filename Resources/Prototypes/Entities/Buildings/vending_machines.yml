@@ -33,7 +33,8 @@
       - SmallImpassable
   - type: SnapGrid
     offset: Center
-  - type: Damageable
+  - type: BasicDamageable
+    maxHP: 50
   - type: Breakable
   - type: Appearance
     visuals:

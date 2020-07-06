@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -45,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             serializer.DataField(ref _soundHitSpecies, "soundHitSpecies", null);
         }
 
-        public float TimeLeft { get; set; } = 10;
+        public float TimeLeft { get; set; } = 10; 
 
         /// <summary>
         /// Function that makes the collision of this object ignore a specific entity so we don't collide with ourselves
@@ -71,13 +72,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
 
-            if (entity.TryGetComponent(out DamageableComponent damage))
+            if (entity.TryGetComponent(out IDamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
                 foreach (var (damageType, amount) in _damages)
                 {
-                    damage.TakeDamage(damageType, amount, Owner, shooter);
+                    damage.ChangeDamage(damageType, amount, shooter, false);
                 }
             }
 

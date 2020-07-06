@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.Operators;
@@ -7,6 +7,7 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
@@ -113,36 +114,27 @@ namespace Content.Server.AI.Utility.AiLogic
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(SelfEntity);
             _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
-            if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed += DeathHandle;
+                damageableComponent.HealthChangedEvent += DeathHandle;
             }
         }
 
         public override void Shutdown()
         {
             // TODO: If DamageableComponent removed still need to unsubscribe?
-            if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed -= DeathHandle;
+                damageableComponent.HealthChangedEvent -= DeathHandle;
             }
 
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
         }
 
-        private void DeathHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
+        private void DeathHandle(HealthChangedEventArgs eventArgs)
         {
-            if (eventArgs.DamageThreshold.ThresholdType == ThresholdType.Death)
-            {
-                _isDead = true;
-            }
-
-            // TODO: If we get healed - double-check what it should be
-            if (eventArgs.DamageThreshold.ThresholdType == ThresholdType.None)
-            {
-                _isDead = false;
-            }
+            _isDead = eventArgs.DamageableComponent.Dead;
         }
         
         private void ReceivedAction()

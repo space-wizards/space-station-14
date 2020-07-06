@@ -14,6 +14,6 @@ namespace Content.Server.DamageSystem
         /// </summary>
         /// <param name="obj"><see cref="IDamageableComponent"/> that triggered this function.</param>
         /// <param name="e">Details of how the health changed.</param>
-        void OnHealthChanged(HealthChangedEventArgs e) { }
+        public abstract void OnHealthChanged(HealthChangedEventArgs e);
     }
 }

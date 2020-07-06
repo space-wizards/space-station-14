@@ -6,7 +6,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 1
+      Blunt: 1
 
 - type: entity
   id: BulletDonkSoft
@@ -27,4 +27,4 @@
     state: foamdart
   - type: Projectile
     damages:
-      Brute: 1
+      Blunt: 1

@@ -15,9 +15,8 @@
     shapes:
     - !type:PhysShapeAabb
       layer: [MobMask]
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
   - type: Occluder
     sizeX: 32
     sizeY: 32

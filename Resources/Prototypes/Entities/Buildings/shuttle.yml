@@ -16,9 +16,8 @@
   - type: EntityStorage
     showContents: true
     noDoor: true
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
   - type: Physics
   - type: ShuttleController
   - type: Strap

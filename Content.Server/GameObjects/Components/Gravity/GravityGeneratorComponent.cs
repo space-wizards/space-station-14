@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             var damageable = Owner.GetComponent<DamageableComponent>();
             var breakable = Owner.GetComponent<BreakableComponent>();
             damageable.HealAllDamage();
-            breakable.broken = false;
+            breakable.Broken = false;
             _intact = true;
 
             var notifyManager = IoCManager.Resolve<IServerNotifyManager>();

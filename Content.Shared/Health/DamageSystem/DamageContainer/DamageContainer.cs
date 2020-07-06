@@ -74,9 +74,14 @@ namespace Content.Shared.DamageSystem
         }
 
 
-        public bool SupportsDamageType(DamageType type)
+        public bool SupportsDamageClass(DamageClass damageClass)
         {
-            return SupportedDamageClasses.Contains(DamageContainerValues.DamageTypeToClass(type));
+            return SupportedDamageClasses.Contains(damageClass);
+        }
+
+        public bool SupportsDamageType(DamageType damageType)
+        {
+            return SupportedDamageClasses.Contains(DamageContainerValues.DamageTypeToClass(damageType));
         }
 
         /// <summary>
@@ -104,6 +109,8 @@ namespace Content.Shared.DamageSystem
             if (SupportedDamageClasses.Contains(classType))
             {
                 _damageList[type] = _damageList[type] + delta;
+                if (_damageList[type] < 0)
+                        _damageList[type] = 0;
                 return true;
             }
             return false;
@@ -115,6 +122,8 @@ namespace Content.Shared.DamageSystem
         public void ChangeDamageValue(DamageType type, int delta)
         {
             _damageList[type] = _damageList[type] + delta;
+            if (_damageList[type] < 0)
+                _damageList[type] = 0;
         }
 
         /// <summary>

@@ -6,4 +6,4 @@
   components:
   - type: Projectile
     damages:
-      Brute: 70
+      Piercing: 70

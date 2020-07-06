@@ -16,7 +16,7 @@
   - type: IconSmooth
     mode: CardinalFlags
   - type: Destructible
-    thresholdvalue: 100
+    health: 100
   - type: SubFloorHide
   
 - type: entity
@@ -36,7 +36,7 @@
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
   - type: Destructible
-    spawnondestroy: HVWireStack1
+    spawnOnDestroy: HVWireStack1
   
 - type: entity
   parent: WireBase
@@ -56,7 +56,7 @@
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
   - type: Destructible
-    spawnondestroy: MVWireStack1
+    spawnOnDestroy: MVWireStack1
     
 - type: entity
   parent: WireBase
@@ -78,7 +78,7 @@
     wireDroppedOnCutPrototype: ApcExtensionCableStack1
     wireType: Apc
   - type: Destructible
-    spawnondestroy: ApcExtensionCableStack1
+    spawnOnDestroy: ApcExtensionCableStack1
     
 - type: entity
   id: DebugGenerator 
@@ -130,9 +130,8 @@
     nodeTypes: { HVPower : ["AdjacentNode"] }
   - type: PowerConsumer
     drawRate: 50
-  - type: Damageable
   - type: Breakable
-    thresholdvalue: 100
+    maxHP: 100
   - type: Physics
     Anchored: true
   - type: Anchorable
@@ -366,9 +365,8 @@
     supply: 1500
   - type: SnapGrid
     offset: Center
-  - type: Damageable
   - type: Breakable
-    thresholdvalue: 100
+    maxHP: 100
   
 #Depriciated, to be removed from maps
 

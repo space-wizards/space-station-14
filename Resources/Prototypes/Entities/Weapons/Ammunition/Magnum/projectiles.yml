@@ -6,7 +6,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 32
+      Piercing: 32
 
 - type: entity
   id: BulletMagnumFlash
@@ -16,7 +16,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 32
+      Piercing: 32
 
 - type: entity
   id: BulletMagnumHV
@@ -26,7 +26,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 35
+      Piercing: 35
 
 - type: entity
   id: BulletMagnumPractice
@@ -36,7 +36,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 1
+      Blunt: 1
 
 - type: entity
   id: BulletMagnumRubber
@@ -46,4 +46,4 @@
   components:
   - type: Projectile
     damages:
-      Brute: 3
+      Blunt: 3

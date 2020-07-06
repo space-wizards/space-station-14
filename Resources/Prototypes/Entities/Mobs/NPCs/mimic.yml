@@ -44,7 +44,6 @@
     BaseTemplate: bodyTemplate.Humanoid
     BasePreset: bodyPreset.BasicHuman
   - type: HeatResistance
-  - type: Damageable
   - type: CombatMode
   - type: Teleportable
   - type: CharacterInfo

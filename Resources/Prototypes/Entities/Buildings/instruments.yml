@@ -17,9 +17,8 @@
    - type: SnapGrid
      offset: Center
 
-   - type: Damageable
    - type: Destructible
-     thresholdvalue: 50
+     maxHP: 50
 
    - type: UserInterface
      interfaces:

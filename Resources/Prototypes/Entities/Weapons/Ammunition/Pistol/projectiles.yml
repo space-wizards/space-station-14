@@ -6,7 +6,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 24
+      Piercing: 24
 
 - type: entity
   id: BulletPistolFlash
@@ -16,7 +16,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 24
+      Piercing: 24
 
 - type: entity
   id: BulletPistolHV
@@ -26,7 +26,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 28
+      Piercing: 28
 
 - type: entity
   id: BulletPistolPractice
@@ -36,7 +36,7 @@
   components:
   - type: Projectile
     damages:
-      Brute: 2
+      Blunt: 2
 
 - type: entity
   id: BulletPistolRubber
@@ -46,4 +46,4 @@
   components:
   - type: Projectile
     damages:
-      Brute: 3
+      Blunt: 3
