@@ -262,9 +262,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            if (!ActionBlockerSystem.CanInteract(player) ||
-                ContainerHelpers.TryGetContainer(player, out var container) &&
-                container.Owner != attacked)
+            if (!ActionBlockerSystem.CanInteract(player))
+            {
+                return;
+            }
+
+            // In a container where the attacked entity is not the container's owner and either the attacked entity is null, not contained or in a different container
+            if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
+                attacked != playerContainer.Owner &&
+                (attacked == null ||
+                 !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
+                 attackedContainer != playerContainer))
             {
                 return;
             }
