@@ -47,6 +47,9 @@ namespace Content.Client.State
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(s => FocusChat(_gameChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
+                InputCmdHandler.FromDelegate(s => FocusOOC(_gameChat)));
         }
 
         public override void Shutdown()
@@ -66,6 +69,17 @@ namespace Content.Client.State
 
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
+        }
+        internal static void FocusOOC(ChatBox chat)
+        {
+            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
+            chat.Input.InsertAtCursor("[");
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Content.Client.Sandbox
         private SandboxWindow _window;
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
-        private bool _sandboxWindowToggled = false;
+        private bool _sandboxWindowToggled;
 
         public void Initialize()
         {
@@ -115,6 +115,7 @@ namespace Content.Client.Sandbox
         {
             _window = null;
             _gameHud.SandboxButtonDown = false;
+            _sandboxWindowToggled = false;
         }
 
         private void OnRespawnButtonOnOnPressed(BaseButton.ButtonEventArgs args)

@@ -72,7 +72,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _deleting = true;
             if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
             {
-                AnchorUpdate();
                 physics.AnchoredChanged -= AnchorUpdate;
             }
             NodeGroup.RemoveNode(this);
