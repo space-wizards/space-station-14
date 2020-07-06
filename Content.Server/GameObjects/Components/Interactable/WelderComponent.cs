@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Remoting;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;

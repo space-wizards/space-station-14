@@ -1,8 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
@@ -19,8 +17,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System;
-using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
 
 namespace Content.Server.GameObjects.Components.Interactable

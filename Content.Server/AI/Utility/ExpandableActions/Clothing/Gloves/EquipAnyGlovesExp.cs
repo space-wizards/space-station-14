@@ -6,7 +6,6 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Inventory;
 
