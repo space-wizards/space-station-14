@@ -35,3 +35,4 @@
       state_bloody: grinder-o1bld
   - type: Recycler
   - type: Conveyor
+    angle: 90
