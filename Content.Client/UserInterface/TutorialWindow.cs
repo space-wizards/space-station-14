@@ -76,6 +76,7 @@ Open character window: [color=#a4885c]{8}[/color]
 Open crafting window: [color=#a4885c]{9}[/color]
 Focus chat: [color=#a4885c]{10}[/color]
 Focus OOC: [color=#a4885c]{26}[/color]
+Focus Admin Chat: [color=#a4885c]{27}[/color]
 Use hand/object in hand: [color=#a4885c]{22}[/color]
 Do wide attack: [color=#a4885c]{23}[/color]
 Use targeted entity: [color=#a4885c]{11}[/color]
@@ -112,7 +113,8 @@ Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(WideAttack),
                 Key(SmartEquipBackpack),
                 Key(SmartEquipBelt),
-                Key(FocusOOC)));
+                Key(FocusOOC),
+                Key(FocusAdminChat)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });

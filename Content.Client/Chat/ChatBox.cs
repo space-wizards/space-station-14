@@ -26,6 +26,7 @@ namespace Content.Client.Chat
         public Button AllButton { get; }
         public Button LocalButton { get; }
         public Button OOCButton { get; }
+        public Button AdminButton { get; }
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -34,7 +35,7 @@ namespace Content.Client.Chat
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
-        public ChatBox()
+        public ChatBox(bool admin = false)
         {
             /*MarginLeft = -475.0f;
             MarginTop = 10.0f;
@@ -95,6 +96,16 @@ namespace Content.Client.Chat
                 ToggleMode = true,
             };
 
+            if(admin)
+            {
+                AdminButton = new Button
+                {
+                    Text = _localize.GetString("Admin"),
+                    Name = "Admin",
+                    ToggleMode = true,
+                };
+            }
+
             AllButton.OnToggled += OnFilterToggled;
             LocalButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
@@ -102,6 +113,11 @@ namespace Content.Client.Chat
             hBox.AddChild(AllButton);
             hBox.AddChild(LocalButton);
             hBox.AddChild(OOCButton);
+            if(AdminButton != null)
+            {
+                AdminButton.OnToggled += OnFilterToggled;
+                hBox.AddChild(AdminButton);
+            }
 
             AddChild(outerVBox);
         }
