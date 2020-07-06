@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
@@ -181,11 +183,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (_currentThirstThreshold == ThirstThreshold.Dead)
             {
-                if (Owner.TryGetComponent(out DamageableComponent damage))
+                if (Owner.TryGetComponent(out IDamageableComponent damageable))
                 {
-                    if (!damage.IsDead())
+                    if (damageable.CurrentDamageState != DamageState.Dead)
                     {
-                        damage.TakeDamage(DamageType.Brute, 2);
+                        damageable.ChangeDamage(DamageType.Blunt, 2, null, true);
                     }
                 }
             }

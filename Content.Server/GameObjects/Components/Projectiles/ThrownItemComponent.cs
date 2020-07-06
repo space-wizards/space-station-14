@@ -1,5 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Projectiles;
+﻿using Content.Server.DamageSystem;
+using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -31,9 +33,9 @@ namespace Content.Server.GameObjects.Components
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (!_shouldCollide) return;
-            if (entity.TryGetComponent(out DamageableComponent damage))
+            if (entity.TryGetComponent(out IDamageableComponent damage))
             {
-                damage.TakeDamage(DamageType.Brute, 10, Owner, User);
+                damage.ChangeDamage(DamageType.Blunt, 10, Owner, false);
             }
 
             // Stop colliding with mobs, this mimics not having enough velocity to do damage

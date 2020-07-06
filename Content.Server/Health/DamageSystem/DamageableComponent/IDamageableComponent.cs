@@ -1,8 +1,12 @@
 ﻿using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Observer;
 using Content.Shared.DamageSystem;
+using Content.Shared.GameObjects.Components.Movement;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Players;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +16,7 @@ namespace Content.Server.DamageSystem
     /// <summary>
     ///     When attached to an <see cref="IEntity"/>, this component allows it to take damage and manages its damage-related interactions.
     /// </summary>
-    public abstract class IDamageableComponent : Component, IExAct
+    public abstract class IDamageableComponent : Component, IExAct, IRelayMoveInput
     {
         /// <summary>
         ///     Called when the entity's <see cref="IDamageableComponent"/> values change. Of note is that a "deal 0 damage" call will still trigger
@@ -108,6 +112,14 @@ namespace Content.Server.DamageSystem
         protected void TryInvokeHealthChangedEvent(HealthChangedEventArgs e)
         {
             HealthChangedEvent?.Invoke(e);
+        }
+        		
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
+        {
+            if (CurrentDamageState == DamageState.Dead)
+            {
+                new Ghost().Execute(null, (IPlayerSession) session, null);
+            }
         }
     }
 

@@ -155,7 +155,7 @@ namespace Content.Server.Chat
             }
             // Default suicide, bite your tongue
             chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
-            dmgComponent.ChangeDamage(DamageType.Piercing, 500, owner); //TODO: dmg value needs to be a max damage of some sorts
+            dmgComponent.ChangeDamage(DamageType.Piercing, 500, owner, true);
         }
     }
 }

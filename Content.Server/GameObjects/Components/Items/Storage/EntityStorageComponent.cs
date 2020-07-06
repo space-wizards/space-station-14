@@ -154,8 +154,8 @@ namespace Content.Server.GameObjects.Components
                 if(!entity.Transform.IsMapTransform)
                     continue;
 
-                // only items that can be stored in an inventory, or a mob, can be eaten by a locker
-                if (!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<SpeciesComponent>())
+                // only entities with StoreAbleComponent can be eaten by a locker
+                if (!entity.HasComponent<StoreableComponent>())
                     continue;
 
                 if (!AddToContents(entity))

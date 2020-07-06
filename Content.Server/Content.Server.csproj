@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Health\DamageSystem\DamageableComponent\MobDamageableComponent\" />
     <Folder Include="Health\DamageSystem\HealthHUD\" />
   </ItemGroup>
 </Project>

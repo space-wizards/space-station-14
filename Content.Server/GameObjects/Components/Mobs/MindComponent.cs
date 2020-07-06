@@ -12,6 +12,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Content.Server.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -121,8 +122,8 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             var dead = false;
 
-            if(Owner.TryGetComponent<SpeciesComponent>(out var species))
-                if (species.CurrentDamageState is DeadState)
+            if(Owner.TryGetComponent<IDamageableComponent>(out var damageable))
+                if (damageable.CurrentDamageState == DamageState.Dead)
                     dead = true;
 
             if(!HasMind)

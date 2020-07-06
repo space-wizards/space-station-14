@@ -1,6 +1,7 @@
-using Content.Server.AI.Utility.Curves;
+﻿using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects;
 using Content.Shared.GameObjects;
 
@@ -14,13 +15,12 @@ namespace Content.Server.AI.Utility.Considerations.Combat
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || !target.TryGetComponent(out DamageableComponent damageableComponent))
+            if (target == null || !target.TryGetComponent(out IDamageableComponent damageableComponent))
             {
                 return 0.0f;
             }
 
-            // Just went with max health
-            return damageableComponent.CurrentDamage[DamageType.Total] / 300.0f;
+            return damageableComponent.TotalDamage / 300.0f;
         }
     }
 }

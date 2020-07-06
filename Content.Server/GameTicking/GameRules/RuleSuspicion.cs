@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
@@ -40,12 +41,12 @@ namespace Content.Server.GameTicking.GameRules
         {
             _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
 
-            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
+            //_entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
 
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
 
-        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
+        /*private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
         {
             var owner = message.Species.Owner;
 
@@ -60,7 +61,7 @@ namespace Content.Server.GameTicking.GameRules
 
             message.Species.Owner.Description +=
                 mind.Mind.HasRole<SuspicionTraitorRole>() ? "\nThey were a traitor!" : "\nThey were an innocent!";
-        }
+        }*/
 
         public override void Removed()
         {
@@ -77,12 +78,12 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     continue;
                 }
 
-                if (!species.CurrentDamageState.IsConscious)
+                if (damageable.CurrentDamageState != DamageState.Alive)
                 {
                     continue;
                 }

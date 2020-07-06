@@ -35,6 +35,12 @@ namespace Content.Server.DamageSystem
             _actSystem = _entitySystemManager.GetEntitySystem<ActSystem>();
         }
 
+        public void FixAllDamage() //Might want to move this down and have a more standardized method of revival
+        {
+            HealAllDamage();
+            CurrentDamageState = DamageState.Alive;
+        }
+
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
             var prob = IoCManager.Resolve<IRobustRandom>();

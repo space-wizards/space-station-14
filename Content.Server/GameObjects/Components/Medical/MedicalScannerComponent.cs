@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -15,6 +13,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
@@ -57,16 +56,12 @@ namespace Content.Server.GameObjects.Components.Medical
                 return EmptyUIState;
             }
 
-            var damageable = body.GetComponent<DamageableComponent>();
-            var species = body.GetComponent<SpeciesComponent>();
-            var deathThreshold =
-                species.DamageTemplate.DamageThresholds.FirstOrNull(x => x.ThresholdType == ThresholdType.Death);
-            if (!deathThreshold.HasValue)
-            {
+            //TODO: make work with BodyManagerComponent
+            var damageable = body.GetComponent<IDamageableComponent>();
+            //if(damageable.CurrentDamageState == DamageState.Dead)
                 return EmptyUIState;
-            }
 
-            var deathThresholdValue = deathThreshold.Value.Value;
+            /*
             var currentHealth = damageable.CurrentDamage[DamageType.Total];
 
             var dmgDict = new Dictionary<string, int>();
@@ -83,6 +78,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 deathThresholdValue - currentHealth,
                 deathThresholdValue,
                 dmgDict);
+            */
         }
 
         private void UpdateUserInterface()
@@ -93,13 +89,13 @@ namespace Content.Server.GameObjects.Components.Medical
             _userInterface.SetState(newState);
         }
 
-        private MedicalScannerStatus GetStatusFromDamageState(IDamageState damageState)
+        private MedicalScannerStatus GetStatusFromDamageState(DamageState damageState)
         {
             switch (damageState)
             {
-                case NormalState _: return MedicalScannerStatus.Green;
-                case CriticalState _: return MedicalScannerStatus.Red;
-                case DeadState _: return MedicalScannerStatus.Death;
+                case DamageState.Alive: return MedicalScannerStatus.Green;
+                case DamageState.Critical: return MedicalScannerStatus.Red;
+                case DamageState.Dead: return MedicalScannerStatus.Death;
                 default: throw new ArgumentException(nameof(damageState));
             }
         }
@@ -108,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Medical
             var body = _bodyContainer.ContainedEntity;
             return body == null
                 ? MedicalScannerStatus.Open
-                : GetStatusFromDamageState(body.GetComponent<SpeciesComponent>().CurrentDamageState);
+                : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
         }
 
         private void UpdateAppearance()

@@ -1,5 +1,7 @@
 ﻿using System;
+using Content.Server.DamageSystem;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects;
 using Content.Shared.Maths;
 using Robust.Shared.GameObjects;
@@ -43,11 +45,11 @@ namespace Content.Server.GameObjects
 
             _secondsSinceLastDamageUpdate += frameTime;
 
-            Owner.TryGetComponent(out DamageableComponent component);
+            Owner.TryGetComponent(out IDamageableComponent component);
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {
-                component?.TakeDamage(DamageType.Heat, fireDamage);
+                component?.ChangeDamage(DamageType.Heat, fireDamage, null, false);
                 _secondsSinceLastDamageUpdate -= 1;
             }
         }

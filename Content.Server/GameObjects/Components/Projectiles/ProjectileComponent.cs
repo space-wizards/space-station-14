@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="entity"></param>
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
+            if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
             } else if (_soundHit != null)

@@ -46,12 +46,6 @@ namespace Content.Server.DamageSystem
             }
         }
 
-        public override void Initialize()
-        {
-            HealthChangedEvent += DeathCheck;
-            base.Initialize();
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);

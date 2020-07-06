@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Interactable;
+﻿using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.EntitySystems;
@@ -20,6 +19,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Server.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {
@@ -112,15 +112,13 @@ namespace Content.Server.GameObjects.Components.Gravity
                 return false;
 
             // Repair generator
-            var damageable = Owner.GetComponent<DamageableComponent>();
             var breakable = Owner.GetComponent<BreakableComponent>();
-            damageable.HealAllDamage();
-            breakable.Broken = false;
+            breakable.FixAllDamage();
             _intact = true;
 
             var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder."));
 
             return true;
         }

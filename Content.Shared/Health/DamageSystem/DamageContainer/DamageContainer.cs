@@ -93,11 +93,40 @@ namespace Content.Shared.DamageSystem
         }
 
         /// <summary>
-        ///     Grabs the damage value for the given <see cref="DamageType"/>. Does not check whether the value is supported, and so will throw an error if an invalid type is given.
+        ///     Grabs the damage value for the given <see cref="DamageType"/>. Does not check whether the type is supported, and so will throw an error if an invalid type is given.
         /// </summary>
         public int GetDamageValue(DamageType type)
         {
             return _damageList[type];
+        }
+
+        /// <summary>
+        ///     Attempts to grab the sum of damage values for the given <see cref="DamageClass"/>. Returns false if the container does not support that class.
+        /// </summary>
+        public bool TryGetDamageClassSum(DamageClass damageClass, out int damage)
+        {
+            damage = 0;
+            if(SupportsDamageClass(damageClass)) {
+                foreach (DamageType type in DamageContainerValues.DamageClassToType(damageClass))
+                {
+                    damage += GetDamageValue(type);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        ///     Grabs the sum of damage values for the given <see cref="DamageClass"/>. Does not check whether the class is supported, and so will throw an error if an invalid type is given.
+        /// </summary>
+        public int GetDamageClassSum(DamageClass damageClass)
+        {
+            int sum = 0;
+            foreach (DamageType type in DamageContainerValues.DamageClassToType(damageClass))
+            {
+                sum += GetDamageValue(type);
+            }
+            return sum;
         }
 
         /// <summary>
