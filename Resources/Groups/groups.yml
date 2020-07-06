@@ -81,6 +81,7 @@
   - hostlogin
   - deleteewc
   - tilepry
+  - anchor
   CanViewVar: true
   CanAdminPlace: true
 
@@ -150,6 +151,7 @@
   - deleteewc
   - sudo
   - tilepry
+  - anchor
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

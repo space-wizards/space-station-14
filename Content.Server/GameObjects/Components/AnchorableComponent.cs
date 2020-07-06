@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -13,41 +15,103 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Anchorable";
 
-        private bool Anchor(IEntity user, IEntity utilizing)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="utilizing"></param>
+        /// <param name="physics"></param>
+        /// <param name="force"></param>
+        /// <returns></returns>
+        private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out PhysicsComponent physics, bool force = false)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent physics) ||
-                !utilizing.TryGetComponent(out ToolComponent tool))
+            if (!Owner.TryGetComponent(out physics))
             {
                 return false;
             }
 
-            if (!tool.UseTool(user, Owner, ToolQuality.Anchoring))
+            if (!force)
             {
-                return false;
-            }
-
-            physics.Anchored = !physics.Anchored;
-
-            if (physics.Anchored)
-            {
-                var args = new AnchoredEventArgs();
-
-                foreach (var component in Owner.GetAllComponents<IAnchored>())
+                if (utilizing == null ||
+                    !utilizing.TryGetComponent(out ToolComponent tool) ||
+                    !tool.UseTool(user, Owner, ToolQuality.Anchoring))
                 {
-                    component.Anchored(args);
-                }
-            }
-            else
-            {
-                var args = new UnAnchoredEventArgs();
-
-                foreach (var unAnchored in Owner.GetAllComponents<IUnAnchored>())
-                {
-                    unAnchored.UnAnchored(args);
+                    return false;
                 }
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Tries to anchor the owner of this component.
+        /// </summary>
+        /// <param name="user">The entity doing the anchoring</param>
+        /// <param name="utilizing">The tool being used, if any</param>
+        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <returns>true if anchored, false otherwise</returns>
+        public bool TryAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        {
+            if (!Valid(user, utilizing, out var physics, force))
+            {
+                return false;
+            }
+
+            physics.Anchored = true;
+
+            var args = new AnchoredEventArgs();
+
+            foreach (var component in Owner.GetAllComponents<IAnchored>())
+            {
+                component.Anchored(args);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Tries to unanchor the owner of this component.
+        /// </summary>
+        /// <param name="user">The entity doing the unanchoring</param>
+        /// <param name="utilizing">The tool being used, if any</param>
+        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <returns>true if unanchored, false otherwise</returns>
+        private bool TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        {
+            if (!Valid(user, utilizing, out var physics, force))
+            {
+                return false;
+            }
+
+            physics.Anchored = false;
+
+            var args = new UnAnchoredEventArgs();
+
+            foreach (var unAnchored in Owner.GetAllComponents<IUnAnchored>())
+            {
+                unAnchored.UnAnchored(args);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Tries to toggle the anchored status of this component's owner.
+        /// </summary>
+        /// <param name="user">The entity doing the unanchoring</param>
+        /// <param name="utilizing">The tool being used, if any</param>
+        /// <param name="force">Whether or not to ignore valid tool checks</param>
+        /// <returns>true if toggled, false otherwise</returns>
+        private bool TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        {
+            if (!Owner.TryGetComponent(out PhysicsComponent physics))
+            {
+                return false;
+            }
+
+            return physics.Anchored ?
+                TryUnAnchor(user, utilizing, force) :
+                TryAnchor(user, utilizing, force);
         }
 
         public override void Initialize()
@@ -56,9 +120,9 @@ namespace Content.Server.GameObjects.Components
             Owner.EnsureComponent<PhysicsComponent>();
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return Anchor(eventArgs.User, eventArgs.Using);
+            return TryToggleAnchor(eventArgs.User, eventArgs.Using);
         }
     }
 
