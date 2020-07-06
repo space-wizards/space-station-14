@@ -82,6 +82,7 @@
   - deleteewc
   - tilepry
   - anchor
+  - unanchor
   CanViewVar: true
   CanAdminPlace: true
 
@@ -152,6 +153,7 @@
   - sudo
   - tilepry
   - anchor
+  - unanchor
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

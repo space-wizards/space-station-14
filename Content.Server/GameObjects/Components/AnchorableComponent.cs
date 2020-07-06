@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        private bool TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public bool TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
             if (!Valid(user, utilizing, out var physics, force))
             {

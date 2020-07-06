@@ -121,4 +121,60 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
     }
+
+    class UnAnchorCommand : IClientCommand
+    {
+        public string Command => "unanchor";
+        public string Description => "Unanchors all entities in a radius around the user";
+        public string Help => $"Usage: {Command} <radius>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            if (player?.AttachedEntity == null)
+            {
+                return;
+            }
+
+            if (args.Length != 1)
+            {
+                shell.SendText(player, Help);
+                return;
+            }
+
+            if (!int.TryParse(args[0], out var radius))
+            {
+                shell.SendText(player, $"{args[0]} isn't a valid integer.");
+                return;
+            }
+
+            if (radius < 0)
+            {
+                shell.SendText(player, "Radius must be positive.");
+                return;
+            }
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            if (!mapManager.TryGetGrid(player.AttachedEntity.Transform.GridID, out var grid))
+            {
+                shell.SendText(player, "You are not on a valid grid.");
+                return;
+            }
+
+            var snapGrids = grid.GetSnapGridCell(player.AttachedEntity.Transform.GridPosition, SnapGridOffset.Center);
+
+            foreach (var snapGrid in snapGrids)
+            {
+                foreach (var cell in snapGrid.GetCellsInSquareArea(radius))
+                {
+                    foreach (var entity in cell.GetLocal())
+                    {
+                        if (entity.TryGetComponent(out AnchorableComponent anchorable))
+                        {
+                            anchorable.TryUnAnchor(player.AttachedEntity, force: true);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
