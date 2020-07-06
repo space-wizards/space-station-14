@@ -360,7 +360,7 @@ namespace Content.Client.UserInterface
 
                     selector.PreferenceChanged += preference =>
                     {
-                        Profile = Profile.WithAntagPreference(antag.Name, preference);
+                        Profile = Profile.WithAntagPreference(antag.ID, preference);
                         IsDirty = true;
                     };
                 }
