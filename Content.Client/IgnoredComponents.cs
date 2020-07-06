@@ -134,6 +134,7 @@
             "DisposalEntry",
             "DisposalUnit",
             "DisposalJunction",
+            "DisposalBend",
             "Recycler",
             "Conveyor"
         };

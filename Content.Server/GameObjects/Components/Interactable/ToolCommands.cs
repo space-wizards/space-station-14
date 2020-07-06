@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     class UnAnchorCommand : IClientCommand
     {
         public string Command => "unanchor";
-        public string Description => "Unanchors all entities in a radius around the user";
+        public string Description => "Unanchors all anchorable entities in a radius around the user";
         public string Help => $"Usage: {Command} <radius>";
 
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)

@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                var anchored = !Owner.GetComponent<PhysicsComponent>().Anchored;
+                var anchored = Owner.GetComponent<PhysicsComponent>().Anchored;
                 appearance.SetData(DisposalVisuals.Anchored, anchored);
             }
         }

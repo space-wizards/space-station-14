@@ -58,9 +58,12 @@
 
 - type: entity
   id: DisposalUnit
-  parent: DisposalPipeBase
   name: disposal unit
   description: A pneumatic waste disposal unit
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Disposal
   components:
   - type: Sprite
     sprite: Buildings/disposal.rsi
@@ -75,6 +78,26 @@
     - type: DisposalVisualizer2D
       state_anchored: disposal
       state_unanchored: condisposal
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Anchorable
+  - type: Destructible
+    thresholdvalue: 100
 
 - type: entity
   id: DisposalJunction
