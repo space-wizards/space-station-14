@@ -117,3 +117,23 @@
     - type: DisposalVisualizer2D
       state_anchored: pipe-j2
       state_unanchored: conpipe-j2
+
+- type: entity
+  id: DisposalBend
+  parent: DisposalPipeBase
+  name: disposal bend
+  description: A tube bent at a 90 degree angle.
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Buildings/disposal.rsi
+    state: conpipe-c
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: conpipe-c
+  - type: DisposalBend
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer2D
+      state_anchored: pipe-c
+      state_unanchored: conpipe-c
