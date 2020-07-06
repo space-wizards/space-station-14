@@ -120,6 +120,16 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
         }
 
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+
+            foreach (var entity in _contents.ContainedEntities)
+            {
+                entity.RemoveComponent<InEntityStorageComponent>();
+            }
+        }
+
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
             ToggleOpen(eventArgs.User);
@@ -355,6 +365,31 @@ namespace Content.Server.GameObjects.Components
             return _contents.CanInsert(entity);
         }
 
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+
+            if (Open)
+                return false;
+
+            if (!CanWeldShut)
+                return false;
+
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
+                return false;
+
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
+                return false;
+
+            IsWeldedShut ^= true;
+            return true;
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            Open = true;
+            EmptyContents();
+        }
+
         [Verb]
         private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
         {
@@ -393,31 +428,6 @@ namespace Content.Server.GameObjects.Components
             }
 
             data.Text = component.Open ? "Close" : "Open";
-        }
-
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-
-            if (Open)
-                return false;
-
-            if (!CanWeldShut)
-                return false;
-
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
-                return false;
-
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
-                return false;
-
-            IsWeldedShut ^= true;
-            return true;
-        }
-
-        public void OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Open = true;
-            EmptyContents();
         }
     }
 }
