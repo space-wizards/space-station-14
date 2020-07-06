@@ -29,10 +29,8 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public class DragDropSystem : EntitySystem
     {
-        // mouse must remain within this distance of
-        // mousedown screen position in order for drag to be triggered.
-        // any movement beyond this will cancel the drag
-        private const float DragDeadzone = 0.05f;
+        // drag will be triggered when mouse leaves this deadzone around the click position.
+        private const float DragDeadzone = 2f;
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
         private const float TargetRecheckInterval = 0.25f;
@@ -182,7 +180,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 // quick mouseup, definitely treat it as a normal click by
                 // replaying the original
-                CancelDrag(true, null);
+                CancelDrag(true, args.OriginalMessage);
                 return false;
             }
             if (_state != DragState.Dragging) return false;
@@ -334,8 +332,7 @@ namespace Content.Client.GameObjects.EntitySystems
                 _isReplaying = true;
                 // adjust the timing info based on the current tick so it appears as if it happened now
                 var replayMsg = savedValue.OriginalMessage;
-                var adjustedInputMsg = new FullInputCmdMessage(cause.Tick, cause.SubTick,
-                    (int) cause.InputSequence, replayMsg.InputFunctionId, replayMsg.State, replayMsg.Coordinates, replayMsg.ScreenCoordinates);
+                var adjustedInputMsg = new FullInputCmdMessage(cause.Tick, cause.SubTick, replayMsg.InputFunctionId, replayMsg.State, replayMsg.Coordinates, replayMsg.ScreenCoordinates, replayMsg.Uid);
 
                 _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use,
                     adjustedInputMsg, true);
@@ -352,14 +349,14 @@ namespace Content.Client.GameObjects.EntitySystems
             if (_state == DragState.MouseDown)
             {
                 var screenPos = _inputManager.MouseScreenPosition;
-                if (_draggedEntity == null || _draggedEntity.Deleted || (_mouseDownScreenPos - screenPos).Length > DragDeadzone)
+                if (_draggedEntity == null || _draggedEntity.Deleted)
                 {
                     // something happened to the clicked entity or we moved the mouse off the target so
                     // we shouldn't replay the original click
                     CancelDrag(false, null);
                     return;
                 }
-                else
+                else if ((_mouseDownScreenPos - screenPos).Length > DragDeadzone)
                 {
                     // initiate actual drag
                     StartDragging();
