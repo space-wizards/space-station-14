@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Dictionary of tubes connecting to this one mapped by their direction
         /// </summary>
         [ViewVariables]
-        public Dictionary<Direction, IDisposalTubeComponent> Connected { get; } =
+        protected Dictionary<Direction, IDisposalTubeComponent> Connected { get; } =
             new Dictionary<Direction, IDisposalTubeComponent>();
 
         /// <summary>

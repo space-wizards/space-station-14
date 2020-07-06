@@ -26,12 +26,12 @@ namespace Content.Client.Commands
         }
     }
 
-    internal sealed class ShowWiresCommand : IConsoleCommand
+    internal sealed class ShowSubFloor : IConsoleCommand
     {
         // ReSharper disable once StringLiteralTypo
-        public string Command => "showwires";
-        public string Description => "Makes wires always visible.";
-        public string Help => "";
+        public string Command => "showsubfloor";
+        public string Description => "Makes entities below the floor always visible.";
+        public string Help => $"Usage: {Command}";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
@@ -41,7 +41,6 @@ namespace Content.Client.Commands
             return false;
         }
     }
-
 
     internal sealed class NotifyCommand : IConsoleCommand
     {
