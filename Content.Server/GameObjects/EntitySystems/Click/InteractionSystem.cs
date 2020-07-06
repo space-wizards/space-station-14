@@ -263,7 +263,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             if (!ActionBlockerSystem.CanInteract(player) ||
-                ContainerHelpers.IsInContainer(player))
+                ContainerHelpers.TryGetContainer(player, out var container) &&
+                container.Owner != attacked)
             {
                 return;
             }
