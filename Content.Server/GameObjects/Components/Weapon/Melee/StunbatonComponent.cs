@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
 
-        public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
             var cell = Cell;
             if (!Activated || entities.Count == 0 || cell == null)
@@ -118,7 +118,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 TurnOff();
             }
 
-            return false;
+            return true;
         }
 
         private bool ToggleStatus(IEntity user)
