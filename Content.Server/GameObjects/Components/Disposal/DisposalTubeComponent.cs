@@ -19,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     // TODO: Make unanchored pipes pullable
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IAnchored, IUnAnchored
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastClang;
@@ -135,6 +135,40 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        private void AnchoredChanged()
+        {
+            var physics = Owner.GetComponent<PhysicsComponent>();
+
+            if (physics.Anchored)
+            {
+                Anchored();
+            }
+            else
+            {
+                UnAnchored();
+            }
+        }
+
+        private void Anchored()
+        {
+            Connect();
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
+            }
+        }
+
+        private void UnAnchored()
+        {
+            Disconnect();
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, false);
+            }
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -147,6 +181,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             Contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             Owner.EnsureComponent<AnchorableComponent>();
+
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
+
+            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
@@ -188,26 +226,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     _lastClang = timing.CurTime;
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
                     break;
-            }
-        }
-
-        void IAnchored.Anchored(AnchoredEventArgs eventArgs)
-        {
-            Connect();
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, true);
-            }
-        }
-
-        void IUnAnchored.UnAnchored(UnAnchoredEventArgs eventArgs)
-        {
-            Disconnect();
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, false);
             }
         }
     }

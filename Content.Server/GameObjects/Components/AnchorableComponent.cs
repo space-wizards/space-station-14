@@ -59,13 +59,6 @@ namespace Content.Server.GameObjects.Components
 
             physics.Anchored = true;
 
-            var args = new AnchoredEventArgs();
-
-            foreach (var component in Owner.GetAllComponents<IAnchored>())
-            {
-                component.Anchored(args);
-            }
-
             return true;
         }
 
@@ -84,13 +77,6 @@ namespace Content.Server.GameObjects.Components
             }
 
             physics.Anchored = false;
-
-            var args = new UnAnchoredEventArgs();
-
-            foreach (var unAnchored in Owner.GetAllComponents<IUnAnchored>())
-            {
-                unAnchored.UnAnchored(args);
-            }
 
             return true;
         }
@@ -123,36 +109,6 @@ namespace Content.Server.GameObjects.Components
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryToggleAnchor(eventArgs.User, eventArgs.Using);
-        }
-    }
-
-    /// <summary>
-    ///     This interface gives components behavior when they're anchored.
-    /// </summary>
-    public interface IAnchored
-    {
-        void Anchored(AnchoredEventArgs eventArgs);
-    }
-
-    public class AnchoredEventArgs : EventArgs
-    {
-        public AnchoredEventArgs()
-        {
-        }
-    }
-
-    /// <summary>
-    ///     This interface gives components behavior when they're unanchored.
-    /// </summary>
-    public interface IUnAnchored
-    {
-        void UnAnchored(UnAnchoredEventArgs eventArgs);
-    }
-
-    public class UnAnchoredEventArgs : EventArgs
-    {
-        public UnAnchoredEventArgs()
-        {
         }
     }
 }

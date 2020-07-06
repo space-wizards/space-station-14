@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
@@ -23,7 +22,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing, IAnchored, IUnAnchored
+    public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing
     {
         /// <summary>
         ///     The delay for an entity trying to move out of this unit
@@ -87,6 +86,36 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
+        private void AnchoredChanged()
+        {
+            var physics = Owner.GetComponent<PhysicsComponent>();
+
+            if (physics.Anchored)
+            {
+                Anchored();
+            }
+            else
+            {
+                UnAnchored();
+            }
+        }
+
+        private void Anchored()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, true);
+            }
+        }
+
+        private void UnAnchored()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalVisuals.Anchored, false);
+            }
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -100,6 +129,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             Owner.EnsureComponent<AnchorableComponent>();
+
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
+
+            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
@@ -141,22 +174,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsert(eventArgs.Using);
-        }
-
-        void IAnchored.Anchored(AnchoredEventArgs eventArgs)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, true);
-            }
-        }
-
-        void IUnAnchored.UnAnchored(UnAnchoredEventArgs eventArgs)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, false);
-            }
         }
 
         [Verb]
