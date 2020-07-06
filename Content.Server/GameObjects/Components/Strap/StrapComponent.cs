@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Strap;
@@ -35,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Strap
         public override StrapPosition Position
         {
             get => _position;
-            set
+            protected set
             {
                 _position = value;
                 Dirty();
@@ -148,6 +147,11 @@ namespace Content.Server.GameObjects.Components.Strap
 
             BuckledEntities.Clear();
             OccupiedSize = 0;
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new StrapComponentState(Position);
         }
 
         [Verb]
