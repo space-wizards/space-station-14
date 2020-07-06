@@ -120,16 +120,6 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
         }
 
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            foreach (var entity in _contents.ContainedEntities)
-            {
-                entity.RemoveComponent<InEntityStorageComponent>();
-            }
-        }
-
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
             ToggleOpen(eventArgs.User);
@@ -224,8 +214,6 @@ namespace Content.Server.GameObjects.Components
 
         private bool AddToContents(IEntity entity)
         {
-            entity.EnsureComponent<InEntityStorageComponent>();
-
             var collidableComponent = Owner.GetComponent<ICollidableComponent>();
             ICollidableComponent entityCollidableComponent;
             if (entity.TryGetComponent(out entityCollidableComponent))
@@ -286,11 +274,6 @@ namespace Content.Server.GameObjects.Components
                     if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
                     {
                         entityCollidableComponent.CanCollide = true;
-                    }
-
-                    if (contained.HasComponent<InEntityStorageComponent>())
-                    {
-                        contained.RemoveComponent<InEntityStorageComponent>();
                     }
                 }
             }

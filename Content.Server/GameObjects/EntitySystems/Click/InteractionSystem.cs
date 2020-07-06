@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
@@ -261,7 +262,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            if (!ActionBlockerSystem.CanInteract(player))
+            if (!ActionBlockerSystem.CanInteract(player) ||
+                ContainerHelpers.IsInContainer(player))
             {
                 return;
             }
