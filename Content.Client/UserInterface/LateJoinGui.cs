@@ -3,7 +3,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
 using Content.Shared.Jobs;
 using Robust.Shared.IoC;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -22,11 +21,6 @@ namespace Robust.Client.UserInterface.CustomControls
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IClientConsole _console;
 #pragma warning restore 649
-        /*private readonly Button ApplyButton;
-        private readonly CheckBox VSyncCheckBox;
-        private readonly CheckBox FullscreenCheckBox;
-        private readonly CheckBox HighResLightsCheckBox;*/
-        //private readonly IConfigurationManager configManager;
 
         protected override Vector2? CustomSize => (360, 560);
 
@@ -34,7 +28,7 @@ namespace Robust.Client.UserInterface.CustomControls
 
         private Dictionary<string, int> AvailablePositions;
 
-        public LateJoinGui(/*IConfigurationManager configMan*/)
+        public LateJoinGui()
         {
             IoCManager.InjectDependencies(this);
 
@@ -85,28 +79,15 @@ namespace Robust.Client.UserInterface.CustomControls
                 {
                     Text = job.Name
                 };
+
                 jobSelector.AddChild(jobLabel);
 
-                Logger.InfoS("latejoin", $"Job: {job.ID}, Positions: {job.TotalPositions}");
-                var jobPrototype = _prototypeManager.Index<JobPrototype>(job.ID);
-                Logger.InfoS("latejoin", $"Weird Job: {jobPrototype.ID}, Positions: {job.TotalPositions}");
-                if(jobPrototype.TotalPositions == 0) //TODO: Make this work. GetAvailablePositions() is serverside
-                {
-                    Logger.InfoS("latejoin", $"Disabling {job.ID}");
-                    jobButton.Disabled = true;
-                }
                 jobButton.AddChild(jobSelector);
                 jobList.AddChild(jobButton);
-                //jobButton.OnPressed += OnJobButtonPressed;
                 jobButton.OnPressed += args =>
                 {
                     SelectedId?.Invoke(jobButton.JobId);
                 };
-                /*jobButton.OnItemSelected += args =>
-                {
-                    _optionButton.SelectId(args.Id);
-                    PriorityChanged?.Invoke(Priority);
-                };*/
             }
 
             SelectedId += jobId =>
