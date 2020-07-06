@@ -1,5 +1,5 @@
 using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory

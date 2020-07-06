@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;

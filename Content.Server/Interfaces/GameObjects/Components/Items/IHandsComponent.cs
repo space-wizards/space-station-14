@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;

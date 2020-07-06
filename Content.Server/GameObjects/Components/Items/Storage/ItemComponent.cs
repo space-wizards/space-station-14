@@ -1,8 +1,5 @@
-using System;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Destructible;
+﻿using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Server.Utility;
@@ -21,7 +18,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Items.Storage
+namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
