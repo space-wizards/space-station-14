@@ -96,3 +96,24 @@
     - type: DisposalVisualizer2D
       state_anchored: pipe-j1
       state_unanchored: conpipe-j1
+
+- type: entity
+  id: DisposalYJunction
+  parent: DisposalPipeBase
+  name: disposal y-junction
+  description: A three-way junction with another exit point.
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Buildings/disposal.rsi
+    state: conpipe-j2
+  - type: Icon
+    sprite: Buildings/disposal.rsi
+    state: conpipe-j2
+  - type: DisposalJunction
+    sideDegrees: 90
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer2D
+      state_anchored: pipe-j2
+      state_unanchored: conpipe-j2
