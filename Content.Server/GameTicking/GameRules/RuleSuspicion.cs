@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
@@ -38,8 +39,6 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
-
             _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
 
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
@@ -86,7 +85,6 @@ namespace Content.Server.GameTicking.GameRules
                 {
                     continue;
                 }
-
                 if (playerSession.ContentData().Mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else

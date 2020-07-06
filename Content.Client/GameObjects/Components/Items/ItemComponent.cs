@@ -1,4 +1,6 @@
-﻿using Content.Shared.GameObjects;
+﻿using Content.Client.GameObjects.Components.Storage;
+using Content.Client.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;

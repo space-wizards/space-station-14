@@ -1,6 +1,7 @@
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             {
                 Owner.Delete();
             }
-            
+
             return true;
         }
 

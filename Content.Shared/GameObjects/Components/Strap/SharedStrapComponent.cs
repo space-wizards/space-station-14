@@ -26,12 +26,27 @@ namespace Content.Shared.GameObjects.Components.Strap
     {
         public sealed override string Name => "Strap";
 
-        public virtual StrapPosition Position { get; set; }
+        public sealed override uint? NetID => ContentNetIDs.STRAP;
 
-        [Serializable, NetSerializable]
-        public enum StrapVisuals
+        public abstract StrapPosition Position { get; protected set; }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StrapComponentState : ComponentState
+    {
+        public readonly StrapPosition Position;
+
+        public StrapComponentState(StrapPosition position) : base(ContentNetIDs.BUCKLE)
         {
-            RotationAngle
+            Position = position;
         }
+
+        public bool Buckled { get; }
+    }
+
+    [Serializable, NetSerializable]
+    public enum StrapVisuals
+    {
+        RotationAngle
     }
 }

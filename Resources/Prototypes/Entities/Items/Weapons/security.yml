@@ -23,3 +23,30 @@
       HeldPrefix: off
 
     - type: ItemCooldown
+
+- type: entity
+  name: flash
+  parent: BaseItem
+  id: Flash
+  components:
+    - type: Sprite
+      sprite: Objects/Melee/flash.rsi
+      state: flash
+
+    - type: Icon
+      sprite: Objects/Melee/flash.rsi
+      state: flash
+
+    - type: Flash
+      damage: 0
+      cooldownTime: 1
+      arc: smash
+      hitSound: /Audio/weapons/flash.ogg
+      slowTo: 0.7
+
+    - type: Item
+      Size: 2
+      sprite: Objects/Melee/flash.rsi
+
+    - type: ItemCooldown
+

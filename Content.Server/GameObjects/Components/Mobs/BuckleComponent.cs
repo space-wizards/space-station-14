@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
@@ -22,7 +23,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent, IInteractHand
+    public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
@@ -303,6 +304,11 @@ namespace Content.Server.GameObjects.Components.Mobs
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
+        }
+
+        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
+        {
+            return TryBuckle(eventArgs.User, eventArgs.Target);
         }
 
         [Verb]

@@ -5,6 +5,8 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
+using Content.Server.GameObjects.Components.Sound;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;

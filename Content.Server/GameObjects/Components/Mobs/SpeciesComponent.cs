@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Observer;
 using Content.Shared.GameObjects;
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects
             statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Health);
 
             Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
-            overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
+            overlayEffectsComponent?.ClearOverlays();
         }
 
         bool IActionBlocker.CanMove()

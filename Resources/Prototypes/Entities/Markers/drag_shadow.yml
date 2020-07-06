@@ -1,0 +1,7 @@
+- type: entity
+  name: drag shadow
+  id: dragshadow
+  components:
+    - type: Sprite
+      layers:
+        - shader: unshaded

@@ -26,6 +26,7 @@ namespace Content.Client
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(nameof(MsgPreferencesAndSettings),
                 HandlePreferencesAndSettings);
+            _netManager.RegisterNetMessage<MsgUpdateCharacter>(nameof(MsgUpdateCharacter));
         }
 
         public void SelectCharacter(ICharacterProfile profile)

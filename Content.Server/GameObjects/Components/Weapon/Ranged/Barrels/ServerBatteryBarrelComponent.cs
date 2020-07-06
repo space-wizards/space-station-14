@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Server.GameObjects;
@@ -69,9 +70,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 return (int) Math.Ceiling((float) (powerCell.GetComponent<BatteryComponent>().MaxCharge / _baseFireCost));
             }
         }
-        
+
         private AppearanceComponent _appearanceComponent;
-        
+
         // Sounds
         private string _soundPowerCellInsert;
         private string _soundPowerCellEject;
@@ -111,10 +112,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 _appearanceComponent = appearanceComponent;
             }
-            
+
             UpdateAppearance();
         }
-        
+
         public void UpdateAppearance()
         {
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, _powerCellContainer.ContainedEntity != null);
@@ -224,14 +225,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 return null;
             }
-            
+
             var entity = _powerCellContainer.ContainedEntity;
             _powerCellContainer.Remove(entity);
             if (_soundPowerCellEject != null)
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundPowerCellEject, Owner.Transform.GridPosition, AudioParams.Default.WithVolume(-2));
             }
-            
+
             UpdateAppearance();
             //Dirty();
             return entity;
@@ -243,8 +244,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 return false;
             }
-            
-            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent) || 
+
+            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent) ||
                 PowerCellEntity == null)
             {
                 return false;
@@ -255,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 return false;
             }
-            
+
             var powerCell = RemovePowerCell();
             handsComponent.PutInHand(itemComponent);
             powerCell.Transform.GridPosition = eventArgs.User.Transform.GridPosition;

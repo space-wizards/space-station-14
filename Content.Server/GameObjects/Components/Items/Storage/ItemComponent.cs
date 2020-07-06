@@ -1,4 +1,8 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+using System;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Destructible;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Server.Utility;
@@ -89,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var userPos = user.Transform.MapPosition;
             var itemPos = Owner.Transform.MapPosition;
 
-            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
+            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)

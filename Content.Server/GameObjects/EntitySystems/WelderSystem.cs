@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
     ///     Despite the name, it's only really used for the welder logic in tools. Go figure.

@@ -10,6 +10,7 @@ using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameTicking.GamePresets;
@@ -23,6 +24,7 @@ using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.Jobs;
+using Content.Shared.Physics;
 using Content.Shared.Preferences;
 using Prometheus;
 using Robust.Server.Interfaces;
@@ -33,6 +35,7 @@ using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
@@ -266,12 +269,12 @@ namespace Content.Server.GameTicking
             }
 
             // Time to start the preset.
-            var preset = MakeGamePreset();
+            var preset = MakeGamePreset(profiles);
 
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
                 SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
-                var newPreset = MakeGamePreset();
+                var newPreset = MakeGamePreset(profiles);
                 _chatManager.DispatchServerAnnouncement(
                     $"Failed to start {preset.ModeTitle} mode! Defaulting to {newPreset.ModeTitle}...");
                 if (!newPreset.Start(readyPlayers, force))
@@ -305,7 +308,7 @@ namespace Content.Server.GameTicking
 
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
-            roundEndMessage.GamemodeTitle = MakeGamePreset().ModeTitle;
+            roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
@@ -317,13 +320,13 @@ namespace Content.Server.GameTicking
                 var mind = ply.ContentData().Mind;
                 if (mind != null)
                 {
-                    var antag = mind.AllRoles.Any(role => role.Antag);
+                    var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
                         PlayerOOCName = ply.Name,
                         PlayerICName = mind.CurrentEntity.Name,
                         Role = antag
-                            ? mind.AllRoles.First(role => role.Antag).Name
+                            ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
                         Antag = antag
                     };
@@ -804,7 +807,7 @@ namespace Content.Server.GameTicking
             var mindComponent = mob.GetComponent<MindComponent>();
             if (mindComponent.HasMind) //Redundancy checks.
             {
-                if (mindComponent.Mind.AllRoles.Any(role => role.Antag)) //Give antags a new uplinkaccount.
+                if (mindComponent.Mind.AllRoles.Any(role => role.Antagonist)) //Give antags a new uplinkaccount.
                 {
                     var uplinkAccount =
                         new UplinkAccount(mob.Uid,
@@ -882,8 +885,8 @@ namespace Content.Server.GameTicking
 
         private string GetInfoText()
         {
-            var gmTitle = MakeGamePreset().ModeTitle;
-            var desc = MakeGamePreset().Description;
+            var gmTitle = MakeGamePreset(null).ModeTitle;
+            var desc = MakeGamePreset(null).Description;
             return _localization.GetString(@"Hi and welcome to [color=white]Space Station 14![/color]
 
 The current game mode is: [color=white]{0}[/color].
@@ -897,9 +900,11 @@ The current game mode is: [color=white]{0}[/color].
             _netManager.ServerSendToMany(infoMsg, _playersInLobby.Keys.Select(p => p.ConnectedClient).ToList());
         }
 
-        private GamePreset MakeGamePreset()
+        private GamePreset MakeGamePreset(Dictionary<string, HumanoidCharacterProfile> readyProfiles)
         {
-            return _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
+            var preset = _dynamicTypeFactory.CreateInstance<GamePreset>(_presetType ?? typeof(PresetSandbox));
+            preset.readyProfiles = readyProfiles;
+            return preset;
         }
 
 #pragma warning disable 649

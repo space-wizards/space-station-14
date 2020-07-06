@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
@@ -81,9 +81,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
-        public virtual bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
-            return false;
+            return true;
         }
 
         void IAttack.Attack(AttackEventArgs eventArgs)
@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
             }
 
-            if(OnHitEntities(hitEntities)) return;
+            if(!OnHitEntities(hitEntities, eventArgs)) return;
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];

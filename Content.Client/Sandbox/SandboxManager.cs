@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -36,7 +37,7 @@ namespace Content.Client.Sandbox
         private SandboxWindow _window;
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
-        private bool _sandboxWindowToggled = false;
+        private bool _sandboxWindowToggled;
 
         public void Initialize()
         {
@@ -114,6 +115,7 @@ namespace Content.Client.Sandbox
         {
             _window = null;
             _gameHud.SandboxButtonDown = false;
+            _sandboxWindowToggled = false;
         }
 
         private void OnRespawnButtonOnOnPressed(BaseButton.ButtonEventArgs args)
