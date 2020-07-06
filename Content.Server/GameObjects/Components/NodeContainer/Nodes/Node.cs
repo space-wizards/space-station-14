@@ -19,14 +19,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
         /// </summary>
         [ViewVariables]
-        public NodeGroupID NodeGroupID { get; private set; }
+        public NodeGroupID NodeGroupID => _nodeGroupID;
+        private NodeGroupID _nodeGroupID;
 
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
         private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
         [ViewVariables]
-        public IEntity Owner { get; private set; }
+        public IEntity Owner { get; set; }
 
         private bool _needsGroup = true;
 
@@ -36,12 +37,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 #pragma warning disable 649
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
-
-        public void Initialize(NodeGroupID nodeGroupID, IEntity owner)
-        {
-            NodeGroupID = nodeGroupID;
-            Owner = owner;
-        }
 
         public void OnContainerInitialize()
         {

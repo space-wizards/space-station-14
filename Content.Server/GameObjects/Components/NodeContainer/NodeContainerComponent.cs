@@ -1,7 +1,5 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+﻿using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -25,32 +23,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         [Dependency] private readonly INodeFactory _nodeFactory;
 #pragma warning restore 649
 
-        /// <summary>
-        ///     A set of <see cref="NodeGroupID"/>s and <see cref="Node"/> implementation names
-        ///     to be created and held in this container.
-        /// </summary>
-        [ViewVariables]
-        private Dictionary<NodeGroupID, List<string>> _nodeTypes;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _nodeTypes, "nodeTypes", new Dictionary<NodeGroupID, List<string>> { });
         }
 
         protected override void Startup()
         {
             base.Startup();
-            foreach (var nodeType in _nodeTypes)
-            {
-                var nodeGroupID = nodeType.Key;
-                foreach (var nodeName in nodeType.Value)
-                {
-                    _nodes.Add(MakeNewNode(nodeName, nodeGroupID, Owner));
-                }
-            }
             foreach (var node in _nodes)
             {
+                node.Owner = Owner;
                 node.OnContainerInitialize();
             }
         }
@@ -61,13 +44,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             {
                 node.OnContainerRemove();
             }
-            _nodes = null;
             base.OnRemove();
-        }
-
-        private Node MakeNewNode(string nodeName, NodeGroupID groupID, IEntity owner)
-        {
-            return _nodeFactory.MakeNode(nodeName, groupID, owner);
         }
     }
 }
