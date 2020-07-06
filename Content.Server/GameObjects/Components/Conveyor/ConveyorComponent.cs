@@ -4,8 +4,9 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Recycling
+namespace Content.Server.GameObjects.Components.Conveyor
 {
+    // TODO: Start/stop, directional textures
     [RegisterComponent]
     public class ConveyorComponent : Component, ICollideBehavior
     {

@@ -22,8 +22,8 @@
   - type: Sprite
     netsync: true
     sprite: Buildings/conveyor.rsi
-    state: conveyor_started_cw_r
+    state: conveyor_started_cw
   - type: Icon
-    sprite: Buildings/recycling.rsi
-    state: conveyor_loose
+    sprite: Buildings/conveyor.rsi
+    state: conveyor_started_cw
   - type: Conveyor
