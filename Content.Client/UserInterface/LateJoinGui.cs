@@ -26,8 +26,6 @@ namespace Robust.Client.UserInterface.CustomControls
 
         public event Action<string> SelectedId;
 
-        private Dictionary<string, int> AvailablePositions;
-
         public LateJoinGui()
         {
             IoCManager.InjectDependencies(this);
