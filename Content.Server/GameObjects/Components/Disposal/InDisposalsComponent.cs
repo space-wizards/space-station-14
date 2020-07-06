@@ -1,5 +1,5 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
-using JetBrains.Annotations;
+﻿#nullable enable
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -14,17 +14,17 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override string Name => "InDisposals";
 
 #pragma warning disable 649
-        [Dependency] private readonly IComponentManager _componentManager;
+        [Dependency] private readonly IComponentManager _componentManager = default!;
 #pragma warning restore 649
 
-        [CanBeNull, ViewVariables]
-        public IDisposalTubeComponent PreviousTube { get; private set; }
+        [ViewVariables]
+        public IDisposalTubeComponent? PreviousTube { get; private set; }
 
-        [CanBeNull, ViewVariables]
-        private IDisposalTubeComponent CurrentTube { get; set; }
+        [ViewVariables]
+        private IDisposalTubeComponent? CurrentTube { get; set; }
 
-        [CanBeNull, ViewVariables]
-        private IDisposalTubeComponent NextTube { get; set; }
+        [ViewVariables]
+        private IDisposalTubeComponent? NextTube { get; set; }
 
         /// <summary>
         ///     The total amount of time that it will take for this entity to
