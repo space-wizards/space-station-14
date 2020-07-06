@@ -9,6 +9,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalJunctionComponent : DisposalTubeComponent
     {
 #pragma warning disable 649
