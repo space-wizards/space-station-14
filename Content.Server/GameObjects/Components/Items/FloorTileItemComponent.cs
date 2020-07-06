@@ -1,5 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;

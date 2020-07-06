@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
 
-            SubscribeLocalEvent<AfterAttackMessage>(HandleToolInteraction);
+            SubscribeLocalEvent<AfterInteractMessage>(HandleToolInteraction);
         }
 
         private void HandleStartStructureConstruction(TryStartStructureConstructionMessage msg, EntitySessionEventArgs args)
@@ -71,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
             TryStartItemConstruction(placingEnt, msg.PrototypeName);
         }
 
-        private void HandleToolInteraction(AfterAttackMessage msg)
+        private void HandleToolInteraction(AfterInteractMessage msg)
         {
             if(msg.Handled)
                 return;
@@ -238,7 +239,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             if (!InteractionChecks.InRangeUnobstructed(placingEnt, loc.ToMap(_mapManager),
-                ignoredEnt: placingEnt, insideBlockerValid: prototype.CanBuildInImpassable))
+                ignoredEnt: placingEnt, ignoreInsideBlocker: prototype.CanBuildInImpassable))
             {
                 return false;
             }
@@ -436,7 +437,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return false;
             }
-            
+
             var sound = EntitySystemManager.GetEntitySystem<AudioSystem>();
 
             switch (step)

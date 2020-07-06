@@ -1,5 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Projectiles;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;

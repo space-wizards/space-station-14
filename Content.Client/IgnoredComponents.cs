@@ -25,7 +25,6 @@
             "ItemTeleporter",
             "Portal",
             "EntityStorage",
-            "PlaceableSurface",
             "Wirecutter",
             "Screwdriver",
             "Multitool",
