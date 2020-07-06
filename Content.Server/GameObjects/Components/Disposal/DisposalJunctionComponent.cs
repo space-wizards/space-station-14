@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -16,28 +18,30 @@ namespace Content.Server.GameObjects.Components.Disposal
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
-        private int _sideDegrees;
+        /// <summary>
+        ///     The angles to connect to in radians.
+        ///     Parsed from YAML files as degrees.
+        /// </summary>
+        private double[] _angles;
 
         public override string Name => "DisposalJunction";
 
         protected override Direction[] ConnectableDirections()
         {
             var direction = Owner.Transform.LocalRotation;
-            var opposite = new Angle(direction.Theta + Math.PI);
-            var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
 
-            return new[] {direction.GetDir(), opposite.GetDir(), side.GetDir()};
+            return _angles.Select(radian => new Angle(direction.Theta + radian).GetDir()).ToArray();
         }
 
         public override Direction NextDirection(InDisposalsComponent inDisposals)
         {
             var next = Owner.Transform.LocalRotation;
+            var directions = ConnectableDirections().Skip(1).ToArray();
+
             if (Connected.TryGetValue(next.GetDir(), out var forwardTube) &&
                 inDisposals.PreviousTube == forwardTube)
             {
-                next = _random.Prob(0.5f)
-                    ? new Angle(next.Theta + Math.PI)
-                    : new Angle(MathHelper.DegreesToRadians(next.Degrees + _sideDegrees));
+                return _random.Pick(directions);
             }
 
             return next.GetDir();
@@ -46,7 +50,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _sideDegrees, "sideDegrees", -90);
+
+            var degrees = new List<double>();
+            serializer.DataField(ref degrees, "angles", null);
+
+            _angles = degrees.Select(MathHelper.DegreesToRadians).ToArray();
         }
     }
 }

@@ -18,6 +18,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
+    // TODO: Make unanchored pipes pullable
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IAnchored, IUnAnchored
     {
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);

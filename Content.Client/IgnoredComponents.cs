@@ -133,6 +133,7 @@
             "DisposalTransit",
             "DisposalEntry",
             "DisposalUnit",
+            "DisposalJunction",
             "Recycler",
             "Conveyor"
         };

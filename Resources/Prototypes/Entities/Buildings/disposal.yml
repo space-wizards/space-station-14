@@ -90,7 +90,10 @@
     sprite: Buildings/disposal.rsi
     state: conpipe-j1
   - type: DisposalJunction
-    sideDegrees: -90
+    angles:
+    - 0
+    - -90
+    - 180
   - type: Appearance
     visuals:
     - type: DisposalVisualizer2D
@@ -106,17 +109,20 @@
   - type: Sprite
     drawdepth: BelowFloor
     sprite: Buildings/disposal.rsi
-    state: conpipe-j2
+    state: conpipe-y
   - type: Icon
     sprite: Buildings/disposal.rsi
-    state: conpipe-j2
+    state: conpipe-y
   - type: DisposalJunction
-    sideDegrees: 90
+    angles:
+    - 0
+    - 90
+    - -90
   - type: Appearance
     visuals:
     - type: DisposalVisualizer2D
-      state_anchored: pipe-j2
-      state_unanchored: conpipe-j2
+      state_anchored: pipe-y
+      state_unanchored: conpipe-y
 
 - type: entity
   id: DisposalBend
