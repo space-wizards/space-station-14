@@ -7,7 +7,7 @@
   - type: SecureEntityStorage
   - type: Sprite
     netsync: false
-    sprite: Buildings/closet.rsi
+    sprite: Constructible/Structures/closet.rsi
     layers:
     - state: generic
     - state: generic_door

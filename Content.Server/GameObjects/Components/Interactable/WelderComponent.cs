@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Runtime.Remoting;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -192,7 +193,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Fuel == 0)
                 ToggleWelderStatus();
 
-            Dirty();
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
@@ -205,6 +205,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
             chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
             return SuicideKind.Brute;
+        }
+
+        public void SolutionChanged(SolutionChangeEventArgs eventArgs)
+        {
+            Dirty();
         }
     }
 }

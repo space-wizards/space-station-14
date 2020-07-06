@@ -33,9 +33,9 @@
     capacity: 60
     fillPrototype: CartridgeMagnum
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box.rsi
 
 - type: entity
   id: BoxMagnumFlash
@@ -46,9 +46,9 @@
     capacity: 60
     fillPrototype: CartridgeMagnumFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_flash.rsi
 
 - type: entity
   id: BoxMagnumHV
@@ -59,9 +59,9 @@
     capacity: 60
     fillPrototype: CartridgeMagnumHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_hv.rsi
 
 - type: entity
   id: BoxMagnumPractice
@@ -72,9 +72,9 @@
     capacity: 60
     fillPrototype: CartridgeMagnumPractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_practice.rsi
 
 - type: entity
   id: BoxMagnumRubber
@@ -85,6 +85,6 @@
     capacity: 60
     fillPrototype: CartridgeMagnumRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Magnum/magnum_box_rubber.rsi

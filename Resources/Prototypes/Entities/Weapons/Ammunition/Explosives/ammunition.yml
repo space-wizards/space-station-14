@@ -10,11 +10,11 @@
     caseless: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Explosives/rpg.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Explosives/rpg.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
 
 - type: entity
@@ -27,13 +27,13 @@
     projectile: BulletGrenadeBaton
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_baton.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_baton.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_baton.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_baton.rsi
     state: base
   - type: Appearance
     visuals:
@@ -49,13 +49,13 @@
     projectile: BulletGrenadeBlast
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_blast.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_blast.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_blast.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_blast.rsi
     state: base
   - type: Appearance
     visuals:
@@ -71,13 +71,13 @@
     projectile: BulletGrenadeFlash
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_flash.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_flash.rsi
     state: base
   - type: Appearance
     visuals:
@@ -93,13 +93,13 @@
     projectile: BulletGrenadeFrag
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_frag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_frag.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Explosives/grenade_frag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/grenade_frag.rsi
     state: base
   - type: Appearance
     visuals:

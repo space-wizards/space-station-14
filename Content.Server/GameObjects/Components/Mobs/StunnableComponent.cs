@@ -1,5 +1,8 @@
 using System;
 using System.Threading;
+using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Shared.Audio;
@@ -68,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             serializer.DataField(ref _helpInterval, "helpInterval", 1f);
             serializer.DataField(ref _helpKnockdownRemove, "helpKnockdownRemove", 1f);
             serializer.DataField(ref _stunTexture, "stunTexture",
-                "/Textures/Objects/Melee/stunbaton.rsi/stunbaton_off.png");
+                "/Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png");
         }
 
         /// <summary>
@@ -168,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             Timer.Spawn(((int) _helpInterval * 1000), () => _canHelp = true);
 
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .PlayFromEntity("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
 
             _knockdownTimer -= _helpKnockdownRemove;
 

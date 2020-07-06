@@ -18,6 +18,7 @@ namespace Content.Server.Interfaces.Chat
         void EntityMe(IEntity source, string action);
 
         void SendOOC(IPlayerSession player, string message);
+        void SendAdminChat(IPlayerSession player, string message);
         void SendDeadChat(IPlayerSession player, string message);
 
         void SendHookOOC(string sender, string message);

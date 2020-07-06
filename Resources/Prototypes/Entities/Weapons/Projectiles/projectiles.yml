@@ -9,10 +9,10 @@
   - type: Sprite
     netsync: false
     directional: false
-    sprite: Objects/Guns/Projectiles/bullet.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Icon
-    sprite: Objects/Guns/Projectiles/bullet.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
     state: bullet
   - type: Collidable
     hard: false
@@ -28,7 +28,7 @@
   - type: Physics
     edgeslide: false
   - type: Projectile
-    soundHit: /Audio/Guns/Hits/bullet_hit.ogg
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Brute: 20
 
@@ -39,7 +39,7 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Guns/Hits/snap.ogg
+    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Brute: 10
   - type: FlashProjectile
@@ -72,7 +72,7 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Guns/Hits/snap.ogg
+    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Brute: 3
   - type: StunnableProjectile
@@ -88,7 +88,7 @@
     ammoVelocity: 20
     caliber: Energy
   - type: Projectile
-    soundHitSpecies: "/Audio/Guns/Hits/taser_hit.ogg"
+    soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
   - type: StunnableProjectile
@@ -96,13 +96,13 @@
     knockdownAmount: 5
   - type: Sprite
     directional: false
-    sprite: Objects/Guns/Projectiles/spark.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
     - state: spark
       shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Projectiles/spark.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     state: spark
     color: "#ffff33"
   - type: Collidable
@@ -124,7 +124,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/rocket.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
   - type: ExplosiveProjectile
   - type: Projectile
@@ -147,11 +147,11 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/effects/gen_hit.ogg
+    soundHit: /Audio/Effects/gen_hit.ogg
   - type: StunnableProjectile
     paralyzeAmount: 8
 
@@ -163,7 +163,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile
@@ -182,11 +182,11 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/effects/flash_bang.ogg
+    soundHit: /Audio/Effects/flash_bang.ogg
   - type: FlashProjectile
     range: 7
 
@@ -199,7 +199,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Projectiles/grenade.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
   - type: ExplosiveProjectile
   - type: Projectile

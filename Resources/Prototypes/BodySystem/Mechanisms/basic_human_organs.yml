@@ -18,7 +18,7 @@
 - type: mechanism
   id: mechanism.Brain.BasicHuman
   name: "human brain"
-  rsiPath: Objects/BodySystem/Organs/basic_human.rsi
+  rsiPath: Mobs/Parts/organs_human.rsi
   rsiState: "brain_human"
   description: "The source of incredible, unending intelligence. Honk."
   durability: 10
@@ -28,7 +28,7 @@
 - type: mechanism
   id: mechanism.Eyes.BasicHuman
   name: "human eyes"
-  rsiPath: Objects/BodySystem/Organs/basic_human.rsi
+  rsiPath: Mobs/Parts/organs_human.rsi
   rsiState: "eyes_human"
   description: "Ocular organ capable of turning light into a colorful visual."
   durability: 10
@@ -38,7 +38,7 @@
 - type: mechanism
   id: mechanism.Heart.BasicHuman
   name: "human heart"
-  rsiPath: Objects/BodySystem/Organs/basic_human.rsi
+  rsiPath: Mobs/Parts/organs_human.rsi
   rsiState: "heart_human"
   description: "Pumps blood throughout a body. Essential for any entity with blood."
   durability: 10
@@ -48,7 +48,7 @@
 - type: mechanism
   id: mechanism.Lungs.BasicHuman
   name: "human lungs"
-  rsiPath: Objects/BodySystem/Organs/basic_human.rsi
+  rsiPath: Mobs/Parts/organs_human.rsi
   rsiState: "lungs_human"
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   durability: 13
@@ -58,7 +58,7 @@
 - type: mechanism
   id: mechanism.Liver.BasicHuman
   name: "human liver"
-  rsiPath: Objects/BodySystem/Organs/basic_human.rsi
+  rsiPath: Mobs/Parts/organs_human.rsi
   rsiState: "liver_human"
   description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
   durability: 15
@@ -68,7 +68,7 @@
 - type: mechanism
   id: mechanism.Kidneys.BasicHuman
   name: "human kidneys"
-  rsiPath: Objects/BodySystem/Organs/basic_human.rsi
+  rsiPath: Mobs/Parts/organs_human.rsi
   rsiState: "kidneys_human"
   description: "Filters toxins out of a bloodstream."
   durability: 20

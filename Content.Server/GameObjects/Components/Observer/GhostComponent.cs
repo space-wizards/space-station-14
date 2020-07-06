@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
 using Content.Shared.GameObjects.EntitySystems;

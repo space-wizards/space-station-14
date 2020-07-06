@@ -4,6 +4,7 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -43,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Damage
                     {
                             if (welder.WelderLit) return CallDamage(eventArgs, tool);
                     }
-                        break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue. 
+                        break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
                 }
 
                     if (tool.HasQuality(toolQuality)) return CallDamage(eventArgs, tool);
