@@ -1,5 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Items
             {
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/items/genhit.ogg", eventArgs.ClickLocation);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", eventArgs.ClickLocation);
                 if(_stack.Count < 1){
                     Owner.Delete();
                 }

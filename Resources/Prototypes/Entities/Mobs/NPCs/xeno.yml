@@ -18,11 +18,12 @@
   - type: InteractionOutline
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mob/xeno.rsi
+    sprite: Mobs/Species/xeno.rsi
     state: running
   - type: Icon
-    sprite: Mob/xeno.rsi
+    sprite: Mobs/Species/xeno.rsi
     state: running
+  - type: Clickable
   - type: Physics
     mass: 85
   - type: Collidable

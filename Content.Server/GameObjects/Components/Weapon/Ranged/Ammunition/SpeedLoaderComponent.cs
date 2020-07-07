@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -38,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _capacity, "capacity", 6);
             serializer.DataField(ref _fillPrototype, "fillPrototype", null);
-            
+
             _spawnedAmmo = new Stack<IEntity>(_capacity);
         }
 
@@ -56,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 }
             }
         }
-        
+
         void IMapInit.MapInit()
         {
             _unspawnedCount += _capacity;
@@ -91,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 Owner.PopupMessage(user, Loc.GetString("No room"));
                 return false;
             }
-            
+
             _spawnedAmmo.Push(entity);
             _ammoContainer.Insert(entity);
             UpdateAppearance();
@@ -149,10 +150,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 return;
             }
-            
+
             // This area is dirty but not sure of an easier way to do it besides add an interface or somethin
             bool changed = false;
-            
+
             if (eventArgs.Target.TryGetComponent(out RevolverBarrelComponent revolverBarrel))
             {
                 for (var i = 0; i < Capacity; i++)
@@ -193,9 +194,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                     TryInsertAmmo(eventArgs.User, ammo);
                     break;
                 }
-                
+
             }
-            
+
             if (changed)
             {
                 UpdateAppearance();

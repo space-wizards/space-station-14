@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.Jobs;
@@ -114,6 +115,54 @@ namespace Content.Server.Mobs
             else
             {
                 shell.SendText(player, "Can't find that mind");
+            }
+        }
+    }
+
+    public class AddOverlayCommand : IClientCommand
+    {
+        public string Command => "addoverlay";
+        public string Description => "Adds an overlay by its ID";
+        public string Help => "addoverlay <id>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Expected 1 argument.");
+                return;
+            }
+
+            if (player?.AttachedEntity != null)
+            {
+                if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
+                {
+                    overlayEffectsComponent.AddOverlay(args[0]);
+                }
+            }
+        }
+    }
+
+    public class RemoveOverlayCommand : IClientCommand
+    {
+        public string Command => "rmoverlay";
+        public string Description => "Removes an overlay by its ID";
+        public string Help => "rmoverlay <id>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (args.Length != 1)
+            {
+                shell.SendText(player, "Expected 1 argument.");
+                return;
+            }
+
+            if (player?.AttachedEntity != null)
+            {
+                if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
+                {
+                    overlayEffectsComponent.RemoveOverlay(args[0]);
+                }
             }
         }
     }

@@ -4,9 +4,10 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/utensils.rsi
+    sprite: Objects/Misc/utensils.rsi
+
   - type: Icon
-    sprite: Objects/utensils.rsi
+    sprite: Objects/Misc/utensils.rsi
 
 
 - type: entity

@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.Click
 {
     public interface IExamine
     {
@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var inDetailsRange = Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(examiner.Transform.MapPosition, entity.Transform.MapPosition,
-                    ExamineDetailsRange, predicate: entity0 => entity0 == examiner || entity0 == entity, insideBlockerValid: true);
+                    ExamineDetailsRange, predicate: entity0 => entity0 == examiner || entity0 == entity, ignoreInsideBlocker: true);
 
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())

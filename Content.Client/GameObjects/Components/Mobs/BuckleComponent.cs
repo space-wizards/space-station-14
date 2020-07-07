@@ -1,10 +1,12 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿using Content.Client.GameObjects.Components.Strap;
+using Content.Client.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent
+    public class BuckleComponent : SharedBuckleComponent, IClientDraggable
     {
         private bool _buckled;
 
@@ -19,5 +21,15 @@ namespace Content.Client.GameObjects.Components.Mobs
         }
 
         protected override bool Buckled => _buckled;
+
+        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
+        {
+            return eventArgs.Target.HasComponent<StrapComponent>();
+        }
+
+        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
+        {
+            return true;
+        }
     }
 }

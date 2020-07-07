@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
     /// This interface gives components behavior on whether entities solution (implying SolutionComponent is in place) is changed

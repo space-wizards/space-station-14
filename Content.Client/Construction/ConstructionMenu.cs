@@ -185,16 +185,16 @@ namespace Content.Client.Construction
                             switch (tool.ToolQuality)
                             {
                                 case ToolQuality.Anchoring:
-                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.rsi/icon.png");
                                     text = "Wrench";
                                     break;
                                 case ToolQuality.Prying:
-                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.rsi/icon.png");
                                     text = "Crowbar";
                                     break;
                                 case ToolQuality.Screwing:
                                     icon = _resourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/screwdriver.png");
+                                        "/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
                                     text = "Screwdriver";
                                     break;
                                 case ToolQuality.Welding:
@@ -204,7 +204,7 @@ namespace Content.Client.Construction
                                     break;
                                 case ToolQuality.Cutting:
                                     icon = _resourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/wirecutter.png");
+                                        "/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
                                     text = "Wirecutters";
                                     break;
                                 default:

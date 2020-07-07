@@ -6,7 +6,7 @@
   components:
   - type: DroppedBodyPart
   - type: Sprite
-    texture: Objects\BodySystem\Organs\eyes_grey.png
+    texture: Mobs/Parts/Organs/eyes_grey.png
   - type: Icon
   - type: UserInterface
     interfaces:
@@ -21,7 +21,7 @@
   components:
   - type: DroppedMechanism
   - type: Sprite
-    texture: Objects\BodySystem\Organs\eyes_grey.png
+    texture: Mobs/Parts/Organs/eyes_grey.png
   - type: Icon
   - type: UserInterface
     interfaces:

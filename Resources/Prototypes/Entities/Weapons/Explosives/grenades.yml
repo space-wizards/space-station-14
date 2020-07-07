@@ -5,12 +5,12 @@
   id: ExGrenade
   components:
   - type: Sprite
-    sprite: Objects/Grenades/grenade.rsi
+    sprite: Objects/Weapons/Grenades/grenade.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Icon
-    sprite: Objects/Grenades/grenade.rsi
+    sprite: Objects/Weapons/Grenades/grenade.rsi
     state: icon
   - type: Item
     Size: 5
@@ -27,7 +27,7 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: flashbang
@@ -36,12 +36,12 @@
   id: GrenadeFlashBang
   components:
   - type: Sprite
-    sprite: Objects/Grenades/flashbang.rsi
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Icon
-    sprite: Objects/Grenades/flashbang.rsi
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
     state: icon
   - type: Item
     Size: 5
@@ -54,7 +54,7 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: Syndicate minibomb
@@ -63,12 +63,12 @@
   id: SyndieMiniBomb
   components:
   - type: Sprite
-    sprite: Objects/Grenades/syndgrenade.rsi
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     layers:
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: Icon
-    sprite: Objects/Grenades/syndgrenade.rsi
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     state: icon
   - type: Item
     Size: 5
@@ -85,4 +85,4 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer2D
-      countdown_sound: /Audio/effects/countdown.ogg
+      countdown_sound: /Audio/Effects/countdown.ogg

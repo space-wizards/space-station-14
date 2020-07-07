@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.BodySystem;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
@@ -65,7 +66,7 @@ namespace Content.Server.BodySystem
             {
                 var toSend = new Dictionary<string, int>(); //Create dictionary to send to client (text to be shown : data sent back if selected)
                 foreach (var(key, value) in bodyManager.PartDictionary) { //For each limb in the target, add it to our cache if it is a valid option.
-                    if (value.SurgeryCheck(_surgeryType)) 
+                    if (value.SurgeryCheck(_surgeryType))
                     {
                         _optionsCache.Add(_idHash, value);
                         toSend.Add(key + ": " + value.Name, _idHash++);
@@ -171,7 +172,7 @@ namespace Content.Server.BodySystem
         }
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible <see cref="BodyPart">BodyParts</see> that can be operated on. 
+        ///     Called after the client chooses from a list of possible <see cref="BodyPart">BodyParts</see> that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {

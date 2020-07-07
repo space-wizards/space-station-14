@@ -60,9 +60,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnum
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag.rsi
 
 - type: entity
   id: MagazineMagnumFlash
@@ -72,9 +72,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_flash.rsi
 
 - type: entity
   id: MagazineMagnumHV
@@ -84,9 +84,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_hv.rsi
 
 - type: entity
   id: MagazineMagnumPractice
@@ -96,9 +96,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumPractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_practice.rsi
 
 - type: entity
   id: MagazineMagnumRubber
@@ -108,9 +108,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_mag_rubber.rsi
 
 - type: entity
   id: MagazineMagnumSmg
@@ -120,9 +120,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnum
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag.rsi
 
 - type: entity
   id: MagazineMagnumSmgHV
@@ -132,9 +132,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_hv.rsi
 
 - type: entity
   id: MagazineMagnumSmgPractice
@@ -144,9 +144,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumPractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_practice.rsi
 
 - type: entity
   id: MagazineMagnumSmgRubber
@@ -156,6 +156,6 @@
   - type: RangedMagazine
     fillPrototype: CartridgeMagnumRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Magnum/magnum_smg_mag_rubber.rsi

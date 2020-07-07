@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
@@ -52,7 +53,7 @@ namespace Content.Server.GameObjects.EntitySystems
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
 
-            SubscribeLocalEvent<AfterAttackMessage>(HandleToolInteraction);
+            SubscribeLocalEvent<AfterInteractMessage>(HandleToolInteraction);
         }
 
         private void HandleStartStructureConstruction(TryStartStructureConstructionMessage msg, EntitySessionEventArgs args)
@@ -71,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems
             TryStartItemConstruction(placingEnt, msg.PrototypeName);
         }
 
-        private void HandleToolInteraction(AfterAttackMessage msg)
+        private void HandleToolInteraction(AfterInteractMessage msg)
         {
             if(msg.Handled)
                 return;
@@ -238,7 +239,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var prototype = _prototypeManager.Index<ConstructionPrototype>(prototypeName);
 
             if (!InteractionChecks.InRangeUnobstructed(placingEnt, loc.ToMap(_mapManager),
-                ignoredEnt: placingEnt, insideBlockerValid: prototype.CanBuildInImpassable))
+                ignoredEnt: placingEnt, ignoreInsideBlocker: prototype.CanBuildInImpassable))
             {
                 return false;
             }
@@ -273,7 +274,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            Get<AudioSystem>().PlayAtCoords("/Audio/items/deconstruct.ogg", loc);
+            Get<AudioSystem>().PlayAtCoords("/Audio/Items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
@@ -325,7 +326,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", placingEnt);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", placingEnt);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
@@ -436,7 +437,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return false;
             }
-            
+
             var sound = EntitySystemManager.GetEntitySystem<AudioSystem>();
 
             switch (step)

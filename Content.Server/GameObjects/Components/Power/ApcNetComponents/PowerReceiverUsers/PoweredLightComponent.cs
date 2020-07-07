@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Sound;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
@@ -98,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Power
             {
                 damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
                 var audioSystem = EntitySystem.Get<AudioSystem>();
-                audioSystem.PlayFromEntity("/Audio/effects/lightburn.ogg", Owner);
+                audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
             }
 
             void Eject()
@@ -191,7 +192,7 @@ namespace Content.Server.GameObjects.Components.Power
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else

@@ -56,6 +56,11 @@ namespace Content.Server.AI.WorldState
             }
         }
 
+        public void GetState(Type type, out IAiState state)
+        {
+            state = _states[type];
+        }
+
         /// <summary>
         /// Get the AI state class
         /// </summary>

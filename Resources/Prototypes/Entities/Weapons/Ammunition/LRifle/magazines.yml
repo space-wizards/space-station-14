@@ -36,9 +36,9 @@
     magazineType: Box
     capacity: 50
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -54,9 +54,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeLRifle
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag.rsi
 
 - type: entity
   id: MagazineLRifleFlash
@@ -66,9 +66,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeLRifleFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_flash.rsi
 
 - type: entity
   id: MagazineLRifleHV
@@ -78,9 +78,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeLRifleHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_hv.rsi
 
 - type: entity
   id: MagazineLRiflePractice
@@ -90,9 +90,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeLRiflePractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_practice.rsi
 
 - type: entity
   id: MagazineLRifleRubber
@@ -102,9 +102,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeLRifleRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_mag_rubber.rsi
 
 - type: entity
   id: MagazineLRifleMaxim
@@ -116,9 +116,9 @@
     capacity: 96
     magazineType: Pan
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/maxim.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/maxim.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/maxim.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/maxim.rsi
 
 - type: entity
   id: MagazineLRiflePkBox
@@ -130,9 +130,9 @@
     magazineType: Box
     capacity: 80
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/pk_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/pk_box.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/LRifle/pk_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/pk_box.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
