@@ -7,6 +7,7 @@ using Content.Shared.Interfaces;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
@@ -40,6 +41,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         // Required dependencies
         [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IReflectionManager _reflectionManager;
+        [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
@@ -58,6 +60,10 @@ namespace Content.Client.GameObjects.Components.Mobs
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
+
+            if(_playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity != Owner)
+                return;
+
             if (!(curState is OverlayEffectComponentState state) || ActiveOverlays.Equals(state.Overlays))
             {
                 return;
@@ -68,7 +74,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void SetEffects(List<OverlayContainer> newOverlays)
         {
-            foreach (var container in ActiveOverlays.ShallowClone())
+            foreach (var container in ActiveOverlays.ToArray())
             {
                 if (!newOverlays.Contains(container))
                 {
