@@ -17,15 +17,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer
 
         [ViewVariables]
         public IReadOnlyList<Node> Nodes => _nodes;
-        private List<Node> _nodes = new List<Node>();
+        private List<Node> _nodes;
 
-#pragma warning disable 649
-        [Dependency] private readonly INodeFactory _nodeFactory;
-#pragma warning restore 649
+        private static bool _didRegisterSerializer;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            if (!_didRegisterSerializer)
+            {
+                YamlObjectSerializer.RegisterTypeSerializer(typeof(Node), new NodeTypeSerializer());
+                _didRegisterSerializer = true;
+            }
+            serializer.DataField(ref _nodes, "nodes", new List<Node>());
         }
 
         protected override void Startup()
