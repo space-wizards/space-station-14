@@ -61,6 +61,7 @@ namespace Content.Server
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<INodeFactory>().Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
         }
 
         public override void PostInit()
@@ -69,7 +70,6 @@ namespace Content.Server
 
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             _gameTicker.Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();

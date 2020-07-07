@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
@@ -128,6 +129,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             if (!_opened)
             {
                 target.PopupMessage(target, Loc.GetString("Open it first!"));
+                return false;
             }
 
             if (_contents.CurrentVolume.Float() <= 0)

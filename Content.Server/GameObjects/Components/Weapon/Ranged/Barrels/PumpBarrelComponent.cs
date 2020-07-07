@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;

@@ -46,7 +46,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         protected override void SetController(PhysicsComponent physics)
         {
-            ((PhysicsComponent)physics).SetController<MoverController>();
+            physics.SetController<MoverController>();
         }
     }
 }

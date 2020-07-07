@@ -1,6 +1,7 @@
 ﻿using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
 using JetBrains.Annotations;

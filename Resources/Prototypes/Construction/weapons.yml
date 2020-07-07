@@ -10,10 +10,16 @@
   steps:
   - material: Metal
     amount: 1
+    reverse:
+      tool: Screwing
 
   - material: Cable
     amount: 3
+    reverse:
+      tool: Screwing
 
   # Should probably use a shard but y'know.
   - material: Glass
     amount: 1
+    reverse:
+      tool: Screwing

@@ -74,6 +74,8 @@
   - mindinfo
   - addrole
   - rmrole
+  - addoverlay
+  - rmoverlay
   - showtime
   - group
   - addai
@@ -121,6 +123,8 @@
   - mindinfo
   - addrole
   - rmrole
+  - addoverlay
+  - rmoverlay
   - srvpopupmsg
   - group
   - showtime

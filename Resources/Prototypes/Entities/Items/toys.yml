@@ -589,18 +589,18 @@
   description: Looks almost like the real thing! Ages 8 and up.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Toys.rsi
+    sprite: Objects/Fun/toys.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Fun/Toys.rsi
+    sprite: Objects/Fun/toys.rsi
     state: base
   - type: Item
     Size: 24
-    sprite: Objects/Fun/Toys.rsi
+    sprite: Objects/Fun/toys.rsi
     state: base
   - type: RangedWeapon
   - type: BoltActionBarrel
