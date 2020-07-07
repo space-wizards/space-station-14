@@ -16,7 +16,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Client.GameObjects.Components.Weapons
 {
     [RegisterComponent]
-    public sealed class ClientFlashableComponent : SharedFlashableComponent
+    public sealed class FlashableComponent : SharedFlashableComponent
     {
         private CancellationTokenSource _cancelToken;
         private TimeSpan _startTime;
@@ -31,7 +31,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             }
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
-            if (playerManager.LocalPlayer.ControlledEntity != Owner)
+            if (playerManager?.LocalPlayer != null && playerManager.LocalPlayer.ControlledEntity != Owner)
             {
                 return;
             }

@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.Explosion
         public override string Name => "FlashExplosive";
 
         private float _range;
-        private double _duration;
+        private float _duration;
         private string _sound;
         private bool _deleteOnFlash;
 
@@ -29,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             base.ExposeData(serializer);
 
             serializer.DataField(ref _range, "range", 7.0f);
-            serializer.DataField(ref _duration, "duration", 8.0);
+            serializer.DataField(ref _duration, "duration", 8.0f);
             serializer.DataField(ref _sound, "sound", "/Audio/Effects/flash_bang.ogg");
             serializer.DataField(ref _deleteOnFlash, "deleteOnFlash", true);
         }
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Explosion
             ContainerHelpers.TryGetContainer(Owner, out var container);
             if (container == null || !container.Owner.HasComponent<EntityStorageComponent>())
             {
-                ServerFlashableComponent.FlashAreaHelper(Owner, _range, _duration);
+                FlashableComponent.FlashAreaHelper(Owner, _range, _duration);
             }
 
             if (_sound != null)
