@@ -55,8 +55,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Buckled,
                     Buckled
-                        ? "/Textures/Mob/UI/Buckle/buckled.png"
-                        : "/Textures/Mob/UI/Buckle/unbuckled.png");
+                        ? "/Textures/Interface/StatusEffects/Buckle/buckled.png"
+                        : "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
             }
         }
 

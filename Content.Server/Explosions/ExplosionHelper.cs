@@ -128,7 +128,7 @@ namespace Content.Server.Explosions
                 Shaded = false
             };
             entitySystemManager.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            entitySystemManager.GetEntitySystem<AudioSystem>().PlayAtCoords("/Audio/effects/explosion.ogg", coords);
+            entitySystemManager.GetEntitySystem<AudioSystem>().PlayAtCoords("/Audio/Effects/explosion.ogg", coords);
 
             // Knock back cameras of all players in the area.
 

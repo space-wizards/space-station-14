@@ -26,13 +26,13 @@
     angleIncrease: 10
     angleDecay: 60
     magFillPrototype: MagazinePistolSmg
-    soundGunshot: /Audio/Guns/Gunshots/smg.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundRack: /Audio/Guns/Cock/smg_cock.ogg
-    soundBoltOpen: /Audio/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Guns/MagIn/smg_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/smg_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/smg.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
 
 - type: entity
   name: Atreides
@@ -41,7 +41,7 @@
   description: Pla-ket-ket-ket-ket
   components:
   - type: Sprite
-    sprite: Objects/Guns/SMGs/atreides.rsi
+    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -50,10 +50,10 @@
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/SMGs/atreides.rsi
+    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/atreides.rsi
+    sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic
@@ -82,7 +82,7 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -91,10 +91,10 @@
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic
@@ -125,7 +125,7 @@
   description: An excellent fully automatic Heavy SMG. Rifled to take a larger caliber than a typical submachine gun, but unlike other heavy SMGs makes use of increased caliber to achieve excellent armor penetration capabilities. Suffers a bit less from poor recoil control and has worse than average fire rate.
   components:
   - type: Sprite
-    sprite: Objects/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -134,10 +134,10 @@
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/drozd.rsi
+    sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     fireRate: 6
@@ -167,7 +167,7 @@
   description: Pla-ket-ket-ket-ket
   components:
   - type: Sprite
-    sprite: Objects/Guns/SMGs/straylight.rsi
+    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -176,10 +176,10 @@
       - state: mag-0
         map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/SMGs/straylight.rsi
+    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/straylight.rsi
+    sprite: Objects/Weapons/Guns/SMGs/straylight.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic
@@ -205,7 +205,7 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/SMGs/wt550.rsi
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -218,10 +218,10 @@
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/SMGs/wt550.rsi
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/wt550.rsi
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic
@@ -246,7 +246,7 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/SMGs/zoric.rsi
+    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -255,10 +255,10 @@
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/SMGs/zoric.rsi
+    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/SMGs/zoric.rsi
+    sprite: Objects/Weapons/Guns/SMGs/zoric.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     currentSelector: Automatic

@@ -170,7 +170,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetclose.ogg", Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -179,7 +179,7 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetopen.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetopen.ogg", Owner);
 
         }
 

@@ -274,7 +274,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            Get<AudioSystem>().PlayAtCoords("/Audio/items/deconstruct.ogg", loc);
+            Get<AudioSystem>().PlayAtCoords("/Audio/Items/deconstruct.ogg", loc);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
@@ -326,7 +326,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", placingEnt);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", placingEnt);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.

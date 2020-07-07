@@ -6,7 +6,7 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    texture: Buildings/TurrBase.png
+    texture: Constructible/Misc/TurrBase.png
 
 - type: entity
   id: TurretTopGun
@@ -17,7 +17,7 @@
   - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
-    texture: Buildings/TurrTop.png
+    texture: Constructible/Misc/TurrTop.png
     directional: false
 
 - type: entity
@@ -29,7 +29,7 @@
   - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
-    texture: Buildings/TurrLamp.png
+    texture: Constructible/Misc/TurrLamp.png
     directional: false
   - type: PointLight
     radius: 512

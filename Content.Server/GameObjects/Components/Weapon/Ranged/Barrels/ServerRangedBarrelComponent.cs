@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _canMuzzleFlash, "canMuzzleFlash", true);
             // Sounds
             serializer.DataField(ref _soundGunshot, "soundGunshot", null);
-            serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Guns/Empty/empty.ogg");
+            serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Weapons/Guns/Empty/empty.ogg");
         }
 
         public override void OnAdd()

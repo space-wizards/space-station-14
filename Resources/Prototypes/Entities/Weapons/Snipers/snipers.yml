@@ -28,9 +28,9 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 15
-    soundGunshot: /Audio/Guns/Gunshots/sniper.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/bullet_insert.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
 
 - type: entity
   name: Kardashev-Mosin
@@ -39,11 +39,11 @@
   description: Weapon for hunting, or endless trench warfare. If you’re on a budget, it’s a darn good rifle for just about everything.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Snipers/bolt_gun.rsi
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: Icon
-    sprite: Objects/Guns/Snipers/bolt_gun.rsi
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: Item
-    sprite: Objects/Guns/Snipers/bolt_gun.rsi
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
   - type: Appearance
@@ -57,9 +57,9 @@
   description: Weapon for hunting, or endless trench warfare. If you’re on a budget, it’s a darn good rifle for just about everything.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Snipers/bolt_gun_wood.rsi
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: Icon
-    sprite: Objects/Guns/Snipers/bolt_gun_wood.rsi
+    sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
   - type: Appearance
@@ -73,9 +73,9 @@
   description: A portable anti-armour rifle, fitted with a scope, it was originally designed for use against armoured exosuits. It is capable of punching through windows and non-reinforced walls with ease. Fires armor piercing 14.5mm shells.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Snipers/heavy_sniper.rsi
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Icon
-    sprite: Objects/Guns/Snipers/heavy_sniper.rsi
+    sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: AntiMaterial

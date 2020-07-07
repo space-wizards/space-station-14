@@ -12,10 +12,10 @@
   - type: Collidable
   - type: LoopingSound
   - type: Sprite
-    sprite: Buildings/light_tube.rsi
+    sprite: Constructible/Lighting/light_tube.rsi
     state: on
   - type: Icon
-    sprite: Buildings/light_tube.rsi
+    sprite: Constructible/Lighting/light_tube.rsi
     state: on
   - type: PointLight
     radius: 8
@@ -35,10 +35,10 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    sprite: Buildings/light_tube.rsi
+    sprite: Constructible/Lighting/light_tube.rsi
     state: off
   - type: Icon
-    sprite: Buildings/light_tube.rsi
+    sprite: Constructible/Lighting/light_tube.rsi
     state: off
   - type: PointLight
     enabled: false
@@ -54,10 +54,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Buildings/light_small.rsi
+    sprite: Constructible/Lighting/light_small.rsi
     state: off
   - type: Icon
-    sprite: Buildings/light_small.rsi
+    sprite: Constructible/Lighting/light_small.rsi
     state: off
   - type: PointLight
     energy: 1.0

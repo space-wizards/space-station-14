@@ -8974,7 +8974,7 @@ entities:
     pos: 31.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/youtool.rsi
+  - sprite: Constructible/Power/VendingMachines/youtool.rsi
     type: Sprite
   - SerialNumber: RYNA-8760
     WireSeed: 1360281528
@@ -15516,7 +15516,7 @@ entities:
     pos: -29.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/youtool.rsi
+  - sprite: Constructible/Power/VendingMachines/youtool.rsi
     type: Sprite
   - SerialNumber: RPGM-5471
     WireSeed: 1742069662
@@ -15528,7 +15528,7 @@ entities:
     pos: -11.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/sovietsoda.rsi
+  - sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
     type: Sprite
   - SerialNumber: NVGJ-3894
     WireSeed: 844269927
@@ -15600,7 +15600,7 @@ entities:
     pos: 29.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cola.rsi
+  - sprite: Constructible/Power/VendingMachines/cola.rsi
     type: Sprite
   - SerialNumber: QQFJ-6186
     WireSeed: 1754739504
@@ -15670,7 +15670,7 @@ entities:
     pos: 9.5,28.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/snack.rsi
+  - sprite: Constructible/Power/VendingMachines/snack.rsi
     type: Sprite
   - SerialNumber: ETEK-6817
     WireSeed: 2090195893
@@ -20927,7 +20927,7 @@ entities:
     pos: 31.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/engivend.rsi
+  - sprite: Constructible/Power/VendingMachines/engivend.rsi
     type: Sprite
   - SerialNumber: PBIP-1768
     WireSeed: 1566618327
@@ -21409,7 +21409,7 @@ entities:
     pos: -22.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/snack.rsi
+  - sprite: Constructible/Power/VendingMachines/snack.rsi
     type: Sprite
   - SerialNumber: SEML-1014
     WireSeed: 1521930307
@@ -21421,7 +21421,7 @@ entities:
     pos: -34.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cola.rsi
+  - sprite: Constructible/Power/VendingMachines/cola.rsi
     type: Sprite
   - SerialNumber: OFVJ-3613
     WireSeed: 681961778
@@ -22354,7 +22354,7 @@ entities:
     pos: 19.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
   - SerialNumber: ZETC-9911
     WireSeed: 1806878269
@@ -22366,7 +22366,7 @@ entities:
     pos: 6.5,-11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
   - SerialNumber: GZGK-6351
     WireSeed: 2142912283
@@ -23659,7 +23659,7 @@ entities:
   - parent: 0
     pos: 0.5,-4.5
     type: Transform
-  - sprite: Buildings/VendingMachines/cigs.rsi
+  - sprite: Constructible/Power/VendingMachines/cigs.rsi
     type: Sprite
   - SerialNumber: LQQS-9626
     WireSeed: 1162309017
@@ -23670,7 +23670,7 @@ entities:
   - parent: 0
     pos: -0.5,-4.5
     type: Transform
-  - sprite: Buildings/VendingMachines/snack.rsi
+  - sprite: Constructible/Power/VendingMachines/snack.rsi
     type: Sprite
   - SerialNumber: UTZI-3622
     WireSeed: 241374962
@@ -23753,7 +23753,7 @@ entities:
     pos: 1.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cola.rsi
+  - sprite: Constructible/Power/VendingMachines/cola.rsi
     type: Sprite
   - SerialNumber: UJIM-0013
     WireSeed: 1599139719
@@ -23775,7 +23775,7 @@ entities:
     pos: 6.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/cigs.rsi
+  - sprite: Constructible/Power/VendingMachines/cigs.rsi
     type: Sprite
   - SerialNumber: HKLI-4112
     WireSeed: 911429600
@@ -25003,7 +25003,7 @@ entities:
     pos: -17.5,-9.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/theater.rsi
+  - sprite: Constructible/Power/VendingMachines/theater.rsi
     type: Sprite
   - SerialNumber: OOCP-5021
     WireSeed: 1336485199
@@ -26646,7 +26646,7 @@ entities:
     pos: -4.5,-7.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/boozeomat.rsi
+  - sprite: Constructible/Power/VendingMachines/boozeomat.rsi
     type: Sprite
   - SerialNumber: DHCS-0497
     WireSeed: 1858375876

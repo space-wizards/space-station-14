@@ -22,8 +22,8 @@ namespace Content.Client.UserInterface.Stylesheets
 
         public StyleSpace(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSans10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansBold16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 16);
 
             // Button styles.
             var buttonNormal = new StyleBoxTexture(BaseButton)

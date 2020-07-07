@@ -39,7 +39,7 @@ namespace Content.Client.UserInterface
 
             AddChild(margin);
 
-            var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,

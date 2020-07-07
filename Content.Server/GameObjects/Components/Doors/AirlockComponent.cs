@@ -382,7 +382,7 @@ namespace Content.Server.GameObjects.Components.Doors
             BoltsDown = newBolts;
 
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(newBolts ? "/Audio/machines/boltsdown.ogg" : "/Audio/machines/boltsup.ogg", Owner);
+                .PlayFromEntity(newBolts ? "/Audio/Machines/boltsdown.ogg" : "/Audio/Machines/boltsup.ogg", Owner);
         }
     }
 }

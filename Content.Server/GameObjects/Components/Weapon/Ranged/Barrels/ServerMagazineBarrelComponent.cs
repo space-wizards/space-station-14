@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundRack, "soundRack", null);
             serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
             serializer.DataField(ref _soundMagEject, "soundMagEject", null);
-            serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Guns/EmptyAlarm/smg_empty_alarm.ogg");
+            serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
         }
 
         public override ComponentState GetComponentState()

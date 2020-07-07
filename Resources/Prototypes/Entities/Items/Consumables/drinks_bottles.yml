@@ -22,9 +22,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/absinthebottle.rsi
+    sprite: Objects/Consumable/Drinks/absinthebottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/absinthebottle.rsi
+    sprite: Objects/Consumable/Drinks/absinthebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -34,9 +34,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/alco-green.rsi
+    sprite: Objects/Consumable/Drinks/alco-green.rsi
   - type: Icon
-    sprite: Objects/Drinks/alco-green.rsi
+    sprite: Objects/Consumable/Drinks/alco-green.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -51,9 +51,9 @@
       - ReagentId: chem.Ale
         Quantity: 80
   - type: Sprite
-    sprite: Objects/Drinks/alebottle.rsi
+    sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/alebottle.rsi
+    sprite: Objects/Consumable/Drinks/alebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -63,9 +63,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/bottleofnothing.rsi
+    sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
   - type: Icon
-    sprite: Objects/Drinks/bottleofnothing.rsi
+    sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -80,9 +80,9 @@
       - ReagentId: chem.Cognac
         Quantity: 80
   - type: Sprite
-    sprite: Objects/Drinks/cognacbottle.rsi
+    sprite: Objects/Consumable/Drinks/cognacbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/cognacbottle.rsi
+    sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -92,9 +92,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/ginbottle.rsi
+    sprite: Objects/Consumable/Drinks/ginbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/ginbottle.rsi
+    sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -104,9 +104,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/goldschlagerbottle.rsi
+    sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/goldschlagerbottle.rsi
+    sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -121,9 +121,9 @@
       - ReagentId: chem.H2O
         Quantity: 80
   - type: Sprite
-    sprite: Objects/Drinks/kahluabottle.rsi
+    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/kahluabottle.rsi
+    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -133,9 +133,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/patronbottle.rsi
+    sprite: Objects/Consumable/Drinks/patronbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/patronbottle.rsi
+    sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -145,9 +145,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/pwinebottle.rsi
+    sprite: Objects/Consumable/Drinks/pwinebottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/pwinebottle.rsi
+    sprite: Objects/Consumable/Drinks/pwinebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -157,9 +157,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rumbottle.rsi
+    sprite: Objects/Consumable/Drinks/rumbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/rumbottle.rsi
+    sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -169,9 +169,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/tequillabottle.rsi
+    sprite: Objects/Consumable/Drinks/tequillabottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/tequillabottle.rsi
+    sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -181,9 +181,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/vermouthbottle.rsi
+    sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/vermouthbottle.rsi
+    sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -198,9 +198,9 @@
       - ReagentId: chem.Vodka
         Quantity: 80
   - type: Sprite
-    sprite: Objects/Drinks/vodkabottle.rsi
+    sprite: Objects/Consumable/Drinks/vodkabottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/vodkabottle.rsi
+    sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -215,9 +215,9 @@
       - ReagentId: chem.Whiskey
         Quantity: 80
   - type: Sprite
-    sprite: Objects/Drinks/whiskeybottle.rsi
+    sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/whiskeybottle.rsi
+    sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -232,6 +232,6 @@
       - ReagentId: chem.Wine
         Quantity: 80
   - type: Sprite
-    sprite: Objects/Drinks/winebottle.rsi
+    sprite: Objects/Consumable/Drinks/winebottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/winebottle.rsi
+    sprite: Objects/Consumable/Drinks/winebottle.rsi
