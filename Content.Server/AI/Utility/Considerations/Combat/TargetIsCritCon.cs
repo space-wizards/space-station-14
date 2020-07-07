@@ -1,16 +1,12 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects;
-using Content.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.Combat
 {
     public sealed class TargetIsCritCon : Consideration
     {
-        public TargetIsCritCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
