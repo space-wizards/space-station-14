@@ -47,8 +47,7 @@ namespace Content.Server.DamageSystem
                 HealthChangedEvent += behavior.OnHealthChanged;
             }
             ForceHealthChangedEvent(); //Just in case something activates at default health. TODO: is there a way to call this a bit later this maybe?
-        }
-
+        } 
 
         /// <summary>
         ///     Changes the specified <see cref="DamageType"/>, applying resistance values only if it is damage. Returns false if the given damageType is not supported or improper HealthChangeParams were provided; true otherwise.

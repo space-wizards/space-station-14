@@ -116,9 +116,6 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Species
-    Template: Human
-    HeatResistance: 323
     
   - type: BodyManager
     BaseTemplate: bodyTemplate.Humanoid
@@ -244,10 +241,6 @@
           - SmallImpassable
           layer:
           - MobImpassable
-
-    - type: Species
-      Template: Human
-      HeatResistance: 323
       
     - type: BodyManager
       BaseTemplate: bodyTemplate.Humanoid

@@ -144,6 +144,17 @@ namespace Content.Server.BodySystem
             LoadFromPrototype(data);
         }
 
+        /// <summary>
+        ///     This function is called by <see cref="BodyManagerComponent"/>'s Tick function, which is called by <see cref="BodySystem"/> every tick.
+        /// </summary>
+        public void Tick(float frameTime)
+        {
+            foreach (Mechanism mechanism in Mechanisms)
+            {
+                mechanism.Tick(frameTime);
+            }
+        }
+
 
 
         /// <summary>
@@ -193,21 +204,10 @@ namespace Content.Server.BodySystem
 
 
 
-
-
-
-
-
-
-
-
         public bool CanAttachBodyPart(BodyPart toBeConnected)
         {
             return _surgeryData.CanAttachBodyPart(toBeConnected);
         }
-
-
-
 
 
 
@@ -322,6 +322,8 @@ namespace Content.Server.BodySystem
             Type surgeryDataType = Type.GetType(data.SurgeryDataName);
             if(surgeryDataType == null)
                 throw new InvalidOperationException("No ISurgeryData was found with the name " + data.SurgeryDataName + "!");
+            if (!surgeryDataType.IsSubclassOf(typeof(ISurgeryData)))
+                throw new InvalidOperationException("Class " + data.SurgeryDataName + " is not a subtype of ISurgeryData, but was provided as a ISurgeryData for BodyPart prototype " + data.ID + "!");
             _surgeryData = (ISurgeryData)Activator.CreateInstance(surgeryDataType, this);
             foreach (string mechanismPrototypeID in data.Mechanisms)
             {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿  using System.Collections.Generic;
 using Content.Server.DamageSystem;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
@@ -10,13 +10,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Health.Damageable
+namespace Content.Server.DamageSystem
 {
 
     /// <summary>
     ///     When attached to an <see cref="IEntity"/>, allows it to take damage and deletes it after taking enough damage.
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(IDamageableComponent))]
     public class DestructibleComponent : BasicRuinableComponent, IDestroyAct
     {
 #pragma warning disable 649
@@ -52,11 +53,14 @@ namespace Content.Server.Health.Damageable
 
         protected override void DestructionBehavior()
         {
-            var pos = Owner.Transform.GridPosition;
-            _actSystem.HandleDestruction(Owner, true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
-            if (_destroySound != string.Empty)
+            if (!Owner.Deleted)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_destroySound, pos);
+                var pos = Owner.Transform.GridPosition;
+                _actSystem.HandleDestruction(Owner, true); //This will call IDestroyAct.OnDestroy on this component (and all other components on this entity)
+                if (_destroySound != string.Empty)
+                {
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords(_destroySound, pos);
+                }
             }
         }
 

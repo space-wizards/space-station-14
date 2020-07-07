@@ -67,7 +67,7 @@ namespace Content.Server.DamageSystem
         protected void PerformDestruction()
         {
             CurrentDamageState = DamageState.Dead;
-            if (_destroySound != string.Empty)
+            if (!Owner.Deleted && _destroySound != string.Empty)
             {
                 var pos = Owner.Transform.GridPosition;
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_destroySound, pos);

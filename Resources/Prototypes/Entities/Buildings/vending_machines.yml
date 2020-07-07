@@ -33,9 +33,8 @@
       - SmallImpassable
   - type: SnapGrid
     offset: Center
-  - type: BasicDamageable
-    maxHP: 50
   - type: Breakable
+    maxHP: 50 
   - type: Appearance
     visuals:
     - type: VendingMachineVisualizer2D

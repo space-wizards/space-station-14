@@ -17,6 +17,7 @@ namespace Content.Server.DamageSystem
     ///     When attached to an <see cref="IEntity"/>, allows it to take damage and sets it to a "broken state" after taking enough damage.
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(IDamageableComponent))]
     public class BreakableComponent : BasicRuinableComponent, IExAct {
 
         //TODO: Repair needs to set CurrentDamageState to DamageState.Alive, but it doesn't exist... should be easy enough if it's just an interface you can slap on BreakableComponent
@@ -61,10 +62,11 @@ namespace Content.Server.DamageSystem
 
         protected override void DestructionBehavior()
         {
-            var pos = Owner.Transform.GridPosition;
+            
             _actSystem.HandleBreakage(Owner);
-            if (_destroySound != string.Empty)
+            if (!Owner.Deleted && _destroySound != string.Empty)
             {
+                var pos = Owner.Transform.GridPosition;
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_destroySound, pos);
             }
         }

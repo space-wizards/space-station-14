@@ -24,6 +24,8 @@
   durability: 10
   size: 1
   compatibility: Biological
+  behaviors:
+    - Content.Server.BodySystem.BrainBehavior
 
 - type: mechanism
   id: mechanism.Eyes.BasicHuman

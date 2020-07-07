@@ -76,13 +76,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
-                foreach (var (damageType, amount) in _damages)
+                foreach (var (damageType, amount) in _damages) 
                 {
                     damage.ChangeDamage(damageType, amount, shooter, false);
                 }
             }
 
-            if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
+            if (!  entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
                                 && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
             {
                 var direction = physicsComponent.LinearVelocity.Normalized;

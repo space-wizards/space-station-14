@@ -79,13 +79,29 @@ namespace Content.Server.BodySystem {
         [ViewVariables]
         public BodyPartCompatibility Compatibility { get; set; }
 
+        /// <summary>
+        ///     The behaviors that this mechanism performs.
+        /// </summary>
+        [ViewVariables]
+        public List<MechanismBehavior> MechanismBehaviors { get; set; }
+
         public Mechanism(MechanismPrototype data)
         {
             LoadFromPrototype(data);
         }
 
 
-
+        /// <summary>
+        ///     This function is called by <see cref="BodyPart"/>'s Tick function, which is called by <see cref="BodyManagerComponent"/>'s Tick function,
+        ///     which is called by <see cref="BodySystem"/> every tick.
+        /// </summary>
+        public void Tick(float frameTime)
+        {
+            foreach (MechanismBehavior behavior in MechanismBehaviors)
+            {
+                behavior.Tick(frameTime);
+            }
+        }
 
 
 
@@ -105,6 +121,18 @@ namespace Content.Server.BodySystem {
             Resistance = data.Resistance;
             Size = data.Size;
             Compatibility = data.Compatibility;
+            MechanismBehaviors = new List<MechanismBehavior>();
+            foreach (string mechanismBehaviorName in data.BehaviorClasses)
+            {
+                Type mechanismBehaviorType = Type.GetType(mechanismBehaviorName);
+                if (mechanismBehaviorType == null)
+                    throw new InvalidOperationException("No MechanismBehavior was found with the name " + mechanismBehaviorName + "!");
+                if (!mechanismBehaviorType.IsSubclassOf(typeof(MechanismBehavior)))
+                    throw new InvalidOperationException("Class " + mechanismBehaviorName + " is not a subtype of MechanismBehavior, but was provided as a MechanismBehavior for mechanism prototype " + data.ID + "!");
+                MechanismBehavior newBehavior = (MechanismBehavior) Activator.CreateInstance(mechanismBehaviorType, this);
+                MechanismBehaviors.Add(newBehavior);
+                
+            }
         }
     }
 }
