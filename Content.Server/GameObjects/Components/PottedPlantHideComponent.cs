@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components
         private void Rustle()
         {
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .PlayFromEntity("/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

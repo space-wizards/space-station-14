@@ -11,9 +11,9 @@ namespace Content.Client.UserInterface
         private TargetingZone _activeZone = TargetingZone.Middle;
         public const string StyleClassTargetDollZone = "target-doll-zone";
 
-        private const string TextureHigh = "/Textures/UserInterface/target-doll-high.svg.96dpi.png";
-        private const string TextureMiddle = "/Textures/UserInterface/target-doll-middle.svg.96dpi.png";
-        private const string TextureLow = "/Textures/UserInterface/target-doll-low.svg.96dpi.png";
+        private const string TextureHigh = "/Textures/Interface/target-doll-high.svg.96dpi.png";
+        private const string TextureMiddle = "/Textures/Interface/target-doll-middle.svg.96dpi.png";
+        private const string TextureLow = "/Textures/Interface/target-doll-low.svg.96dpi.png";
 
         private readonly TextureButton _buttonHigh;
         private readonly TextureButton _buttonMiddle;

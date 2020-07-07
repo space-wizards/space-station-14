@@ -3,10 +3,10 @@
   name: "R&D server"
   components:
   - type: Sprite
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/server.rsi
     state: server
   - type: Icon
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/server.rsi
     state: server
   - type: Clickable
   - type: InteractionOutline
@@ -25,14 +25,14 @@
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/tdopler.rsi
     layers:
     - state: tdoppler-off
     - state: tdoppler
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/tdopler.rsi
     state: tdoppler
   - type: Clickable
   - type: InteractionOutline

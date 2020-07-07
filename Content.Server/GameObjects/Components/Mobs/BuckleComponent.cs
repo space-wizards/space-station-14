@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Strap;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
@@ -57,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 status.ChangeStatusEffectIcon(StatusEffect.Buckled,
                     Buckled
                         ? BuckledTo!.BuckledIcon
-                        : "/Textures/Mob/UI/Buckle/unbuckled.png");
+                        : "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
             }
         }
 

@@ -103,10 +103,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _fillPrototype, "fillPrototype", null);
             serializer.DataField(ref _autoCycle, "autoCycle", false);
 
-            serializer.DataField(ref _soundCycle, "soundCycle", "/Audio/Guns/Cock/sf_rifle_cock.ogg");
-            serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", "/Audio/Guns/Bolt/rifle_bolt_open.ogg");
-            serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", "/Audio/Guns/Bolt/rifle_bolt_closed.ogg");
-            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Guns/MagIn/bullet_insert.ogg");
+            serializer.DataField(ref _soundCycle, "soundCycle", "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
+            serializer.DataField(ref _soundBoltOpen, "soundBoltOpen", "/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
+            serializer.DataField(ref _soundBoltClosed, "soundBoltClosed", "/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
+            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
         }
 
         void IMapInit.MapInit()

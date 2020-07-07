@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     });
                 }
 
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/flash.ogg", Owner.Transform.GridPosition,
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/flash.ogg", Owner.Transform.GridPosition,
                     AudioParams.Default);
 
                 return true;

@@ -93,7 +93,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId) continue;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/effects/alert.ogg", player.AttachedEntity);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/alert.ogg", player.AttachedEntity);
             }
         }
 

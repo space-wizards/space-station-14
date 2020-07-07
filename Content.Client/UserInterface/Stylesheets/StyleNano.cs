@@ -41,17 +41,17 @@ namespace Content.Client.UserInterface.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansItalic10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 10);
-            var notoSans12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSansItalic12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Italic.ttf", 12);
-            var notoSansBold12 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 12);
+            var notoSans10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansItalic10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Italic.ttf", 10);
+            var notoSans12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 12);
+            var notoSansItalic12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Italic.ttf", 12);
+            var notoSansBold12 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
-            var notoSans16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 16);
-            var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
-            var notoSansBold20 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 20);
-            var textureCloseButton = resCache.GetTexture("/Nano/cross.svg.png");
-            var windowHeaderTex = resCache.GetTexture("/Nano/window_header.png");
+            var notoSans16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 16);
+            var notoSansBold16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSansBold20 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 20);
+            var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
+            var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
                 Texture = windowHeaderTex,
@@ -59,7 +59,7 @@ namespace Content.Client.UserInterface.Stylesheets
                 ExpandMarginBottom = 3,
                 ContentMarginBottomOverride = 0
             };
-            var windowBackgroundTex = resCache.GetTexture("/Nano/window_background.png");
+            var windowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background.png");
             var windowBackground = new StyleBoxTexture
             {
                 Texture = windowBackgroundTex,
@@ -67,7 +67,7 @@ namespace Content.Client.UserInterface.Stylesheets
             windowBackground.SetPatchMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
             windowBackground.SetExpandMargin(StyleBox.Margin.Horizontal | StyleBox.Margin.Bottom, 2);
 
-            var textureInvertedTriangle = resCache.GetTexture("/Nano/inverted_triangle.svg.png");
+            var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
             // Button styles.
             var buttonNormal = new StyleBoxTexture(BaseButton)
@@ -90,7 +90,7 @@ namespace Content.Client.UserInterface.Stylesheets
                 Modulate = ButtonColorDisabled
             };
 
-            var lineEditTex = resCache.GetTexture("/Nano/lineedit.png");
+            var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
             {
                 Texture = lineEditTex,
@@ -98,7 +98,7 @@ namespace Content.Client.UserInterface.Stylesheets
             lineEdit.SetPatchMargin(StyleBox.Margin.All, 3);
             lineEdit.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
-            var tabContainerPanelTex = resCache.GetTexture("/Nano/tabcontainer_panel.png");
+            var tabContainerPanelTex = resCache.GetTexture("/Textures/Interface/Nano/tabcontainer_panel.png");
             var tabContainerPanel = new StyleBoxTexture
             {
                 Texture = tabContainerPanelTex,
@@ -152,11 +152,11 @@ namespace Content.Client.UserInterface.Stylesheets
             progressBarForeground.SetContentMarginOverride(StyleBox.Margin.Vertical, 5);
 
             // CheckBox
-            var checkBoxTextureChecked = resCache.GetTexture("/Nano/checkbox_checked.svg.96dpi.png");
-            var checkBoxTextureUnchecked = resCache.GetTexture("/Nano/checkbox_unchecked.svg.96dpi.png");
+            var checkBoxTextureChecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_checked.svg.96dpi.png");
+            var checkBoxTextureUnchecked = resCache.GetTexture("/Textures/Interface/Nano/checkbox_unchecked.svg.96dpi.png");
 
             // Tooltip box
-            var tooltipTexture = resCache.GetTexture("/Nano/tooltip.png");
+            var tooltipTexture = resCache.GetTexture("/Textures/Interface/Nano/tooltip.png");
             var tooltipBox = new StyleBoxTexture
             {
                 Texture = tooltipTexture,
@@ -165,7 +165,7 @@ namespace Content.Client.UserInterface.Stylesheets
             tooltipBox.SetContentMarginOverride(StyleBox.Margin.Horizontal, 5);
 
             // Placeholder
-            var placeholderTexture = resCache.GetTexture("/Nano/placeholder.png");
+            var placeholderTexture = resCache.GetTexture("/Textures/Interface/Nano/placeholder.png");
             var placeholder = new StyleBoxTexture {Texture = placeholderTexture};
             placeholder.SetPatchMargin(StyleBox.Margin.All, 19);
             placeholder.SetExpandMargin(StyleBox.Margin.All, -5);
@@ -185,7 +185,7 @@ namespace Content.Client.UserInterface.Stylesheets
             itemListItemBackgroundTransparent.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             // NanoHeading
-            var nanoHeadingTex = resCache.GetTexture("/Nano/nanoheading.svg.96dpi.png");
+            var nanoHeadingTex = resCache.GetTexture("/Textures/Interface/Nano/nanoheading.svg.96dpi.png");
             var nanoHeadingBox = new StyleBoxTexture
             {
                 Texture = nanoHeadingTex,
@@ -199,7 +199,7 @@ namespace Content.Client.UserInterface.Stylesheets
             nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
 
             // Stripe background
-            var stripeBackTex = resCache.GetTexture("/Nano/stripeback.svg.96dpi.png");
+            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png");
             var stripeBack = new StyleBoxTexture
             {
                 Texture = stripeBackTex,
@@ -207,9 +207,9 @@ namespace Content.Client.UserInterface.Stylesheets
             };
 
             // Slider
-            var sliderOutlineTex = resCache.GetTexture("/Nano/slider_outline.svg.96dpi.png");
-            var sliderFillTex = resCache.GetTexture("/Nano/slider_fill.svg.96dpi.png");
-            var sliderGrabTex = resCache.GetTexture("/Nano/slider_grabber.svg.96dpi.png");
+            var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
+            var sliderFillTex = resCache.GetTexture("/Textures/Interface/Nano/slider_fill.svg.96dpi.png");
+            var sliderGrabTex = resCache.GetTexture("/Textures/Interface/Nano/slider_grabber.svg.96dpi.png");
 
             var sliderFillBox = new StyleBoxTexture
             {

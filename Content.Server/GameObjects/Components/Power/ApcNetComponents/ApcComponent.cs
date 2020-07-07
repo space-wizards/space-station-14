@@ -80,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 MainBreakerEnabled = !MainBreakerEnabled;
                 _uiDirty = true;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
             }
         }
 

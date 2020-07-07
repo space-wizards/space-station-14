@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/items/drink.ogg");
+            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
             serializer.DataField(ref _defaultToOpened, "isOpen", false); //For things like cups of coffee.
             serializer.DataField(ref _soundCollection, "openSounds","canOpenSounds");
         }

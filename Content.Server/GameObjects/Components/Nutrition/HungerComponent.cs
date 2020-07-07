@@ -72,11 +72,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [UsedImplicitly]
         public static readonly string[] _hungerThresholdImages =
         {
-            "/Textures/Mob/UI/Hunger/Overfed.png",
-            "/Textures/Mob/UI/Hunger/Okay.png",
-            "/Textures/Mob/UI/Hunger/Peckish.png",
-            "/Textures/Mob/UI/Hunger/Starving.png",
-            "/Textures/Mob/UI/Hunger/Dead.png",
+            "/Textures/Interface/StatusEffects/Hunger/Overfed.png",
+            "/Textures/Interface/StatusEffects/Hunger/Okay.png",
+            "/Textures/Interface/StatusEffects/Hunger/Peckish.png",
+            "/Textures/Interface/StatusEffects/Hunger/Starving.png",
+            "/Textures/Interface/StatusEffects/Hunger/Dead.png",
         };
 
         public void HungerThresholdEffect(bool force = false)

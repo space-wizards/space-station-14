@@ -34,7 +34,7 @@ namespace Content.Client.State
 
         public override void Startup()
         {
-            var panelTex = ResC.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = ResC.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,

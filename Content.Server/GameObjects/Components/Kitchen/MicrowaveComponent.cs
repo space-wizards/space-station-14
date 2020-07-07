@@ -84,8 +84,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
             serializer.DataField(ref _badRecipeName, "failureResult", "FoodBadRecipe");
             serializer.DataField(ref _cookTimeDefault, "cookTime", 5);
             serializer.DataField(ref _cookTimeMultiplier, "cookTimeMultiplier", 1000);
-            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/machines/microwave_start_beep.ogg" );
-            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/machines/microwave_done_beep.ogg" );
+            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/Machines/microwave_start_beep.ogg" );
+            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/Machines/microwave_done_beep.ogg" );
         }
 
         public override void Initialize()
@@ -442,7 +442,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.PlayFromEntity("/Audio/machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)

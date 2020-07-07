@@ -44,6 +44,8 @@ namespace Content.Client.Sandbox
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
                 message => SetAllowed(message.SandboxAllowed));
 
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
+
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,

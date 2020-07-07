@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Utensil
             }
 
             serializer.DataField(ref _breakChance, "breakChance", 0);
-            serializer.DataField(ref _breakSound, "breakSound", "/Audio/items/snap.ogg");
+            serializer.DataField(ref _breakSound, "breakSound", "/Audio/Items/snap.ogg");
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
