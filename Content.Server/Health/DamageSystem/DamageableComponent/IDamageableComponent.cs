@@ -1,5 +1,6 @@
 ﻿using Content.Server.BodySystem;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Observer;
 using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects.Components.Movement;

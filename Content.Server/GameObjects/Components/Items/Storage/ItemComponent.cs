@@ -1,6 +1,4 @@
-using System;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Destructible;
+﻿using System;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;

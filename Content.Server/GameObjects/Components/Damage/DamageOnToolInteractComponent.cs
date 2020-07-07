@@ -5,6 +5,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.DamageSystem;
+using Content.Shared.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -29,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Damage
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<DamageableComponent>();
+            Owner.EnsureComponent<DestructibleComponent>();
         }
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
@@ -55,11 +57,12 @@ namespace Content.Server.GameObjects.Components.Damage
 
         protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
         {
-            if (eventArgs.Target.TryGetComponent<DamageableComponent>(out var damageable))
+            if (eventArgs.Target.TryGetComponent<DestructibleComponent>(out var damageable))
             {
-                if(tool.HasQuality(ToolQuality.Welding)) damageable.TakeDamage(Shared.GameObjects.DamageType.Heat, Damage, eventArgs.Using, eventArgs.User);
+                if(tool.HasQuality(ToolQuality.Welding))
+                    damageable.ChangeDamage(DamageType.Heat, Damage, eventArgs.User, false);
                 else
-                damageable.TakeDamage(Shared.GameObjects.DamageType.Brute, Damage, eventArgs.Using, eventArgs.User);
+                    damageable.ChangeDamage(DamageType.Blunt, Damage, eventArgs.User, false);
                 return true;
             }
                 return false;

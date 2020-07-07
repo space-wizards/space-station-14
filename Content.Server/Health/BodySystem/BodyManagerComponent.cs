@@ -12,6 +12,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.DamageSystem;
 using Content.Shared.DamageSystem;
+using Content.Server.Mobs;
 
 namespace Content.Server.BodySystem {
 
@@ -19,6 +20,7 @@ namespace Content.Server.BodySystem {
     ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(IDamageableComponent))]
     public class BodyManagerComponent : IDamageableComponent, IBodyPartContainer {
 
         public sealed override string Name => "BodyManager";
@@ -178,16 +180,13 @@ namespace Content.Server.BodySystem {
                 }
                 if (speedSum <= 0.001f || _activeLegs.Count <= 0) //Case: no way of moving. Fall down.
                 {
-                    if (Owner.TryGetComponent(out StunnableComponent stunnable))
-                    {
-                        stunnable.Stun(1f);
-                        stunnable.Knockdown(5f);
-                    }
+                    StandingStateHelper.Down(Owner);
                     playerMover.BaseWalkSpeed = 0.8f;
                     playerMover.BaseSprintSpeed = 2.0f;
                 }
                 else //Case: have at least one leg. Set movespeed.
                 {
+                    StandingStateHelper.Standing(Owner);
                     playerMover.BaseWalkSpeed = speedSum / (_activeLegs.Count - (float) (Math.Log((double) _activeLegs.Count, (double) 4.0))); //Extra legs stack diminishingly. Final speed = speed sum/(leg count-log4(leg count))
                     playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
                 }
@@ -196,6 +195,8 @@ namespace Content.Server.BodySystem {
 
 
         #region IDamageableComponent Implementation
+
+        //TODO: all of this
 
         public override int TotalDamage => 0;
 
@@ -211,32 +212,59 @@ namespace Content.Server.BodySystem {
         }
         private DamageState _currentDamageState;
 
+        public int TempDamageThing = 0;
+
         public override bool ChangeDamage(DamageType damageType, int amount, IEntity source, bool ignoreResistances, HealthChangeParams extraParams = null)
         {
-            CurrentDamageState = DamageState.Dead;
-            List<HealthChangeData> data = new List<HealthChangeData> { new HealthChangeData(damageType, 0, 0) };
+            if (amount > 0)
+                TempDamageThing++;
+            else if (amount < 0)
+                TempDamageThing--;
+            if (TempDamageThing >= 10)
+            {
+                CurrentDamageState = DamageState.Dead;
+            }
+            List<HealthChangeData> data = new List<HealthChangeData> { new HealthChangeData(DamageType.Blunt, 0, 0) };
             TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
             return true;
         }
 
         public override bool ChangeDamage(DamageClass damageClass, int amount, IEntity source, bool ignoreResistances, HealthChangeParams extraParams = null)
         {
+            if (amount > 0)
+                TempDamageThing++;
+            else if (amount < 0)
+                TempDamageThing--;
+            if (TempDamageThing >= 10)
+            {
+                CurrentDamageState = DamageState.Dead;
+            }
+            List<HealthChangeData> data = new List<HealthChangeData> { new HealthChangeData(DamageType.Blunt, 0, 0) };
+            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
             return true;
         }
 
         public override bool SetDamage(DamageType damageType, int newValue, IEntity source, HealthChangeParams extraParams = null)
         {
+            TempDamageThing = newValue;
+            if (TempDamageThing > 10)
+            {
+                CurrentDamageState = DamageState.Dead;
+            }
+            List<HealthChangeData> data = new List<HealthChangeData> { new HealthChangeData(DamageType.Blunt, TempDamageThing, 1) };
+            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
             return true;
         }
 
         public override void HealAllDamage()
         {
-            return;
+            TempDamageThing = 0;
         }
 
         public override void ForceHealthChangedEvent()
         {
-            return;
+            List<HealthChangeData> data = new List<HealthChangeData> { new HealthChangeData(DamageType.Blunt, 0, 0) };
+            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
         }
 
         #endregion
