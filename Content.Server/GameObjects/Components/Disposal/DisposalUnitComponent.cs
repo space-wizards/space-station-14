@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
@@ -7,44 +8,50 @@ using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    public class DisposalUnitComponent : Component, IInteractHand, IInteractUsing
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing
     {
+        public override string Name => "DisposalUnit";
+
         /// <summary>
         ///     The delay for an entity trying to move out of this unit
         /// </summary>
         private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
+        /// <summary>
+        ///     Last time that an entity tried to exit this disposal unit
+        /// </summary>
         private TimeSpan _lastExitAttempt;
 
         /// <summary>
-        ///     The sound file that is played when this unit flushes its contents
+        ///     The time that it takes this disposal unit to flush its contents
         /// </summary>
-        private string _flushSound;
+        [ViewVariables]
+        private TimeSpan _flushTime;
 
-        [ViewVariables] private Container _container;
+        /// <summary>
+        ///     Token used to cancel delayed appearance changes
+        /// </summary>
+        private CancellationTokenSource _cancellationTokenSource;
 
-        public override string Name => "DisposalUnit";
-
-        private bool Functional()
-        {
-            return !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
-                   receiver.Powered;
-        }
+        /// <summary>
+        ///     Container of entities inside this disposal unit
+        /// </summary>
+        [ViewVariables]
+        private Container _container;
 
         private bool TryInsert(IEntity entity)
         {
@@ -57,9 +64,17 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _container.Remove(entity);
         }
 
+        private bool CanFlush()
+        {
+            return (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+                    receiver.Powered) &&
+                   (!Owner.TryGetComponent(out PhysicsComponent physics) ||
+                    physics.Anchored);
+        }
+
         private bool TryFlush()
         {
-            if (!Functional())
+            if (!CanFlush())
             {
                 return false;
             }
@@ -81,7 +96,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 entryComponent.TryInsert(entity);
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords(_flushSound, Owner.Transform.GridPosition);
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(DisposalUnitVisuals.VisualState, DisposalUnitVisualState.Flushing);
+
+                Timer.Spawn(_flushTime, AnchoredChanged, _cancellationTokenSource.Token);
+            }
 
             return true;
         }
@@ -104,7 +124,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DisposalVisuals.Anchored, true);
+                appearance.SetData(DisposalUnitVisuals.VisualState, DisposalUnitVisualState.Anchored);
             }
         }
 
@@ -112,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DisposalVisuals.Anchored, false);
+                appearance.SetData(DisposalUnitVisuals.VisualState, DisposalUnitVisualState.UnAnchored);
             }
         }
 
@@ -120,7 +140,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _flushSound, "flushSound", "/Audio/machines/disposalflush.ogg");
+            var flushSeconds = 2;
+            serializer.DataField(ref flushSeconds, "flushTime", 2);
+
+            _flushTime = TimeSpan.FromSeconds(flushSeconds);
         }
 
         public override void Initialize()
@@ -128,22 +151,30 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Initialize();
 
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
-            Owner.EnsureComponent<AnchorableComponent>();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-
-            physics.AnchoredChanged += AnchoredChanged;
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         protected override void Startup()
         {
             base.Startup();
 
+            Owner.EnsureComponent<AnchorableComponent>();
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
+
+            physics.AnchoredChanged += AnchoredChanged;
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 var anchored = Owner.GetComponent<PhysicsComponent>().Anchored;
                 appearance.SetData(DisposalVisuals.Anchored, anchored);
             }
+        }
+
+        public override void OnRemove()
+        {
+            _cancellationTokenSource.Cancel();
+            _container = null;
+
+            base.OnRemove();
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)

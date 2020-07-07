@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
@@ -13,6 +14,20 @@ namespace Content.Client.GameObjects.Components.Disposal
     {
         private string _stateAnchored;
         private string _stateUnAnchored;
+
+        private void ChangeState(AppearanceComponent appearance)
+        {
+            if (!appearance.Owner.TryGetComponent(out ISpriteComponent sprite))
+            {
+                return;
+            }
+
+            appearance.TryGetData(DisposalVisuals.Anchored, out bool anchored);
+
+            sprite.LayerSetState(0, anchored
+                ? _stateAnchored
+                : _stateUnAnchored);
+        }
 
         public override void LoadData(YamlMappingNode node)
         {
@@ -33,31 +48,20 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.InitializeEntity(entity);
 
-            if (!entity.TryGetComponent(out ISpriteComponent sprite) ||
-                !entity.TryGetComponent(out AppearanceComponent appearance))
-            {
-                return;
-            }
-
-            appearance.TryGetData(DisposalVisuals.Anchored, out bool anchored);
-            sprite.LayerSetState(0, anchored
-                ? _stateAnchored
-                : _stateUnAnchored);
+            var appearance = entity.EnsureComponent<AppearanceComponent>();
+            ChangeState(appearance);
         }
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (!component.Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (component.Owner.Deleted)
             {
                 return;
             }
 
-            component.TryGetData(DisposalVisuals.Anchored, out bool anchored);
-            sprite.LayerSetState(0, anchored
-                ? _stateAnchored
-                : _stateUnAnchored);
+            ChangeState(component);
         }
     }
 }

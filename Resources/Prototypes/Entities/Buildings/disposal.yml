@@ -66,18 +66,17 @@
     - Disposal
   components:
   - type: Sprite
+    netsync: false
     sprite: Buildings/disposal.rsi
-    state: condisposal
+    layers:
+    - state: condisposal
+      map: ["enum.DisposalUnitVisualLayers.Base"]
   - type: Icon
     sprite: Buildings/disposal.rsi
     state: condisposal
   - type: PowerReceiver
   - type: DisposalUnit
-  - type: Appearance
-    visuals:
-    - type: DisposalVisualizer2D
-      state_anchored: disposal
-      state_unanchored: condisposal
+    flushTime: 2
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -98,6 +97,14 @@
   - type: Anchorable
   - type: Destructible
     thresholdvalue: 100
+  - type: Appearance
+    visuals:
+    - type: DisposalUnitVisualizer2D
+      state_anchored: disposal
+      state_unanchored: condisposal
+      state_flush: disposal-flush
+      flush_sound: /Audio/machines/disposalflush.ogg
+      flush_time: 2
 
 - type: entity
   id: DisposalJunction
