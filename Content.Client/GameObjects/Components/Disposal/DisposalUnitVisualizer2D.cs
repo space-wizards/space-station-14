@@ -75,8 +75,9 @@ namespace Content.Client.GameObjects.Components.Disposal
             }
 
             var flushSound = node.GetNode("flush_sound").AsString();
+            var flushTime = node.GetNode("flush_time").AsFloat();
 
-            _flushAnimation = new Animation {Length = TimeSpan.FromSeconds(2)};
+            _flushAnimation = new Animation {Length = TimeSpan.FromSeconds(flushTime)};
 
             var flick = new AnimationTrackSpriteFlick();
             _flushAnimation.AnimationTracks.Add(flick);
