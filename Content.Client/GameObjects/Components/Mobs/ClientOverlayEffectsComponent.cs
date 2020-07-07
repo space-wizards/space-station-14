@@ -61,7 +61,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if(_playerManager.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity != Owner)
+            if(_playerManager?.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity != Owner)
                 return;
 
             if (!(curState is OverlayEffectComponentState state) || ActiveOverlays.Equals(state.Overlays))
