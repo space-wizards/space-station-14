@@ -31,7 +31,9 @@
     base: hvcable_
     key: hv_cables
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
@@ -50,8 +52,9 @@
   - type: IconSmooth
     base: mvcable_
     key: mv_cables
-  - type: NodeContainer
-    nodeTypes: { MVPower : ["AdjacentNode"] }
+    nodes:
+    - type: AdjacentNode
+      groupID: MVPower
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
@@ -70,8 +73,9 @@
   - type: IconSmooth
     base: lvcable_
     key: lv_cables
-  - type: NodeContainer
-    nodeTypes: { Apc : ["AdjacentNode"] }
+    nodes:
+    - type: AdjacentNode
+      groupID: Apc
   - type: PowerProvider
     voltage: Apc
   - type: Wire
@@ -100,7 +104,10 @@
   - type: Icon
     texture: Objects/Power/generator.png
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
   - type: Anchorable
@@ -121,7 +128,10 @@
   - type: Icon
     texture: Objects/Power/wiredmachine.png
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: PowerConsumer
     drawRate: 50
   - type: Damageable
@@ -146,7 +156,10 @@
     texture: Objects/Power/provider.png
   - type: Battery
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
   
@@ -167,7 +180,10 @@
     texture: Objects/Power/provider.png
   - type: Battery
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger
     
@@ -204,7 +220,10 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -233,7 +252,12 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], MVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
+    - type: AdjacentNode
+      groupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
     activeDrawRate: 1500
@@ -271,7 +295,12 @@
     maxCharge: 10000
     startingCharge: 10000
   - type: NodeContainer
-    nodeTypes: { MVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: MVPower
+    - type: AdjacentNode
+      groupID: Apc
   - type: PowerConsumer
     voltage: Medium
   - type: BatteryStorage
@@ -322,7 +351,10 @@
     sprite: Buildings/solar_panel.rsi
     state: normal
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
   - type: PowerSupplier
   - type: SolarPanel
     supply: 1500
@@ -340,7 +372,11 @@
   parent: ApcExtensionCable
   components:
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
+    - type: AdjacentNode
+      groupID: Apc
 
 - type: entity
   id: Generator
@@ -357,7 +393,12 @@
   parent: DebugApc
   components:
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+  - type: NodeContainer
+    nodes:
+    - type: AdjacentNode
+      groupID: HVPower
+    - type: AdjacentNode
+      groupID: Apc
   - type: PowerConsumer
     voltage: High
   - type: BatteryStorage

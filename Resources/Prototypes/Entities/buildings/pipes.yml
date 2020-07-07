@@ -28,4 +28,3 @@
     base: hvcable_
     key: hv_cables
   - type: NodeContainer
-    nodeTypes: { Default : ["DirectionalNode"] }
