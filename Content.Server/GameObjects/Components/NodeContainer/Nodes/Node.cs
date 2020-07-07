@@ -1,6 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +14,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    public abstract class Node
+    public abstract class Node : IExposeData
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
@@ -33,10 +35,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private bool _deleting = false;
 
-
 #pragma warning disable 649
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            throw new System.NotImplementedException();
+        }
 
         public void OnContainerInitialize()
         {
