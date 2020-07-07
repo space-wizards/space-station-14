@@ -1,8 +1,9 @@
 ﻿#nullable enable
+using System.Linq;
 using Content.Shared.Maps;
 using Robust.Server.Interfaces.Console;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -97,26 +98,14 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(player.AttachedEntity.Transform.GridID, out var grid))
-            {
-                shell.SendText(player, "You are not on a valid grid.");
-                return;
-            }
+            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
+            var entities = serverEntityManager.GetEntitiesInRange(player.AttachedEntity, radius).ToList();
 
-            var snapGrids = grid.GetSnapGridCell(player.AttachedEntity.Transform.GridPosition, SnapGridOffset.Center);
-
-            foreach (var snapGrid in snapGrids)
+            foreach (var entity in entities)
             {
-                foreach (var cell in snapGrid.GetCellsInSquareArea(radius))
+                if (entity.TryGetComponent(out AnchorableComponent anchorable))
                 {
-                    foreach (var entity in cell.GetLocal())
-                    {
-                        if (entity.TryGetComponent(out AnchorableComponent anchorable))
-                        {
-                            anchorable.TryAnchor(player.AttachedEntity, force: true);
-                        }
-                    }
+                    anchorable.TryAnchor(player.AttachedEntity, force: true);
                 }
             }
         }
@@ -153,26 +142,14 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(player.AttachedEntity.Transform.GridID, out var grid))
-            {
-                shell.SendText(player, "You are not on a valid grid.");
-                return;
-            }
+            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
+            var entities = serverEntityManager.GetEntitiesInRange(player.AttachedEntity, radius).ToList();
 
-            var snapGrids = grid.GetSnapGridCell(player.AttachedEntity.Transform.GridPosition, SnapGridOffset.Center);
-
-            foreach (var snapGrid in snapGrids)
+            foreach (var entity in entities)
             {
-                foreach (var cell in snapGrid.GetCellsInSquareArea(radius))
+                if (entity.TryGetComponent(out AnchorableComponent anchorable))
                 {
-                    foreach (var entity in cell.GetLocal())
-                    {
-                        if (entity.TryGetComponent(out AnchorableComponent anchorable))
-                        {
-                            anchorable.TryUnAnchor(player.AttachedEntity, force: true);
-                        }
-                    }
+                    anchorable.TryUnAnchor(player.AttachedEntity, force: true);
                 }
             }
         }
