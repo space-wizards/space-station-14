@@ -28,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         /// <summary>
         /// An enum representing the current state being applied to the user
         /// </summary>
-        private readonly List<OverlayContainer> _currentEffects = new List<OverlayContainer>();
+        private List<OverlayContainer> _currentEffects = new List<OverlayContainer>();
 
         [ViewVariables(VVAccess.ReadOnly)]
         public List<OverlayContainer> ActiveOverlays
@@ -49,7 +49,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    SetEffects(ActiveOverlays);
+                    var overlays = new List<OverlayContainer>(_currentEffects);
+                    _currentEffects.Clear();
+                    SetEffects(overlays);
                     break;
                 case PlayerDetachedMsg _:
                     ActiveOverlays = new List<OverlayContainer>();
@@ -61,13 +63,19 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             base.HandleComponentState(curState, nextState);
 
-            if(_playerManager?.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity != Owner)
-                return;
-
-            if (!(curState is OverlayEffectComponentState state) || ActiveOverlays.Equals(state.Overlays))
+            if (!(curState is OverlayEffectComponentState state))
             {
                 return;
             }
+
+            if (_playerManager?.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity != Owner)
+            {
+                _currentEffects = state.Overlays;
+                return;
+            }
+
+            if (ActiveOverlays.Equals(state.Overlays))
+                return;
 
             ActiveOverlays = state.Overlays;
         }
