@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects;
+#nullable enable
+using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
@@ -22,8 +23,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.EntitySystems
 {
