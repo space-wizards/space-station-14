@@ -104,7 +104,6 @@
   - type: Icon
     texture: Objects/Power/generator.png
   - type: NodeContainer
-  - type: NodeContainer
     nodes:
     - type: AdjacentNode
       groupID: HVPower
@@ -127,7 +126,6 @@
     texture: Objects/Power/wiredmachine.png
   - type: Icon
     texture: Objects/Power/wiredmachine.png
-  - type: NodeContainer
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
@@ -156,7 +154,6 @@
     texture: Objects/Power/provider.png
   - type: Battery
   - type: NodeContainer
-  - type: NodeContainer
     nodes:
     - type: AdjacentNode
       groupID: HVPower
@@ -179,7 +176,6 @@
   - type: Icon
     texture: Objects/Power/provider.png
   - type: Battery
-  - type: NodeContainer
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
@@ -220,7 +216,6 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: NodeContainer
-  - type: NodeContainer
     nodes:
     - type: AdjacentNode
       groupID: HVPower
@@ -251,7 +246,6 @@
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
-  - type: NodeContainer
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
@@ -294,7 +288,6 @@
   - type: Battery
     maxCharge: 10000
     startingCharge: 10000
-  - type: NodeContainer
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
@@ -351,7 +344,6 @@
     sprite: Buildings/solar_panel.rsi
     state: normal
   - type: NodeContainer
-  - type: NodeContainer
     nodes:
     - type: AdjacentNode
       groupID: HVPower
@@ -392,7 +384,6 @@
   name: Depriciated Apc
   parent: DebugApc
   components:
-  - type: NodeContainer
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
