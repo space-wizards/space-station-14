@@ -1,7 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _sound, "sound", "/Audio/effects/Fluids/watersplash.ogg");
+            serializer.DataFieldCached(ref _sound, "sound", "/Audio/Effects/Fluids/watersplash.ogg");
         }
 
         /// <inheritdoc />

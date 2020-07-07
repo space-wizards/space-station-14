@@ -46,9 +46,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/brick.rsi
+    sprite: Constructible/Structures/Walls/brick.rsi
   - type: Icon
-    sprite: Buildings/Walls/brick.rsi
+    sprite: Constructible/Structures/Walls/brick.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -62,9 +62,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/clock.rsi
+    sprite: Constructible/Structures/Walls/clock.rsi
   - type: Icon
-    sprite: Buildings/Walls/clock.rsi
+    sprite: Constructible/Structures/Walls/clock.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -78,9 +78,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/clown.rsi
+    sprite: Constructible/Structures/Walls/clown.rsi
   - type: Icon
-    sprite: Buildings/Walls/clown.rsi
+    sprite: Constructible/Structures/Walls/clown.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -95,9 +95,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/cult.rsi
+    sprite: Constructible/Structures/Walls/cult.rsi
   - type: Icon
-    sprite: Buildings/Walls/cult.rsi
+    sprite: Constructible/Structures/Walls/cult.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -111,9 +111,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/debug.rsi
+    sprite: Constructible/Structures/Walls/debug.rsi
   - type: Icon
-    sprite: Buildings/Walls/debug.rsi
+    sprite: Constructible/Structures/Walls/debug.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -127,9 +127,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/diamond.rsi
+    sprite: Constructible/Structures/Walls/diamond.rsi
   - type: Icon
-    sprite: Buildings/Walls/diamond.rsi
+    sprite: Constructible/Structures/Walls/diamond.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -144,9 +144,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/gold.rsi
+    sprite: Constructible/Structures/Walls/gold.rsi
   - type: Icon
-    sprite: Buildings/Walls/gold.rsi
+    sprite: Constructible/Structures/Walls/gold.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -160,9 +160,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/ice.rsi
+    sprite: Constructible/Structures/Walls/ice.rsi
   - type: Icon
-    sprite: Buildings/Walls/ice.rsi
+    sprite: Constructible/Structures/Walls/ice.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -176,9 +176,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/metal.rsi
+    sprite: Constructible/Structures/Walls/metal.rsi
   - type: Icon
-    sprite: Buildings/Walls/metal.rsi
+    sprite: Constructible/Structures/Walls/metal.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -192,9 +192,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/plasma.rsi
+    sprite: Constructible/Structures/Walls/plasma.rsi
   - type: Icon
-    sprite: Buildings/Walls/plasma.rsi
+    sprite: Constructible/Structures/Walls/plasma.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -208,9 +208,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/plastic.rsi
+    sprite: Constructible/Structures/Walls/plastic.rsi
   - type: Icon
-    sprite: Buildings/Walls/plastic.rsi
+    sprite: Constructible/Structures/Walls/plastic.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -225,9 +225,9 @@
   components:
   - type: Sprite
     color: "#889192"
-    sprite: Buildings/Walls/solid.rsi
+    sprite: Constructible/Structures/Walls/solid.rsi
   - type: Icon
-    sprite: Buildings/Walls/solid.rsi
+    sprite: Constructible/Structures/Walls/solid.rsi
     state: rgeneric
   - type: Destructible
     health: 300
@@ -244,9 +244,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/riveted.rsi
+    sprite: Constructible/Structures/Walls/riveted.rsi
   - type: Icon
-    sprite: Buildings/Walls/riveted.rsi
+    sprite: Constructible/Structures/Walls/riveted.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -260,9 +260,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/sandstone.rsi
+    sprite: Constructible/Structures/Walls/sandstone.rsi
   - type: Icon
-    sprite: Buildings/Walls/sandstone.rsi
+    sprite: Constructible/Structures/Walls/sandstone.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -276,9 +276,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/silver.rsi
+    sprite: Constructible/Structures/Walls/silver.rsi
   - type: Icon
-    sprite: Buildings/Walls/silver.rsi
+    sprite: Constructible/Structures/Walls/silver.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -293,9 +293,9 @@
   components:
   - type: Sprite
     color: "#889192"
-    sprite: Buildings/Walls/solid.rsi
+    sprite: Constructible/Structures/Walls/solid.rsi
   - type: Icon
-    sprite: Buildings/Walls/solid.rsi
+    sprite: Constructible/Structures/Walls/solid.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -310,9 +310,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/uranium.rsi
+    sprite: Constructible/Structures/Walls/uranium.rsi
   - type: Icon
-    sprite: Buildings/Walls/uranium.rsi
+    sprite: Constructible/Structures/Walls/uranium.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder
@@ -326,9 +326,9 @@
   parent: base_wall
   components:
   - type: Sprite
-    sprite: Buildings/Walls/wood.rsi
+    sprite: Constructible/Structures/Walls/wood.rsi
   - type: Icon
-    sprite: Buildings/Walls/wood.rsi
+    sprite: Constructible/Structures/Walls/wood.rsi
   - type: Destructible
     health: 100
     spawnOnDestroy: Girder

@@ -34,9 +34,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeSRifle
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag.rsi
 
 - type: entity
   id: MagazineSRifleFlash
@@ -46,9 +46,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeSRifleFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_flash.rsi
 
 - type: entity
   id: MagazineSRifleHV
@@ -58,9 +58,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeSRifleHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_hv.rsi
 
 - type: entity
   id: MagazineSRiflePractice
@@ -70,9 +70,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeSRiflePractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_practice.rsi
 
 - type: entity
   id: MagazineSRifleRubber
@@ -82,6 +82,6 @@
   - type: RangedMagazine
     fillPrototype: CartridgeSRifleRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/SRifle/s_rifle_mag_rubber.rsi

@@ -1,7 +1,7 @@
-﻿using Content.Server.DamageSystem;
+﻿﻿using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.DamageSystem;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;

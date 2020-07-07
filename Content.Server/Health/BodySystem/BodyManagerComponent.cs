@@ -7,15 +7,11 @@ using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Shared.Interfaces.Serialization;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.DamageSystem;
 using Content.Shared.DamageSystem;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.BodySystem {
 

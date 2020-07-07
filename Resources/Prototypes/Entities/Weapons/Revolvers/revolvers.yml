@@ -18,7 +18,7 @@
   description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Revolvers/deckard.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -28,10 +28,10 @@
       map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Revolvers/deckard.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Revolvers/deckard.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
     currentSelector: Single
@@ -41,9 +41,9 @@
     caliber: Magnum
     capacity: 5
     autoCycle: true
-    soundGunshot: /Audio/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/revolver_magin.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
@@ -59,12 +59,12 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Revolvers/inspector.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Icon
-    sprite: Objects/Guns/Revolvers/inspector.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Revolvers/inspector.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
@@ -73,10 +73,10 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Guns/Gunshots/revolver.ogg
-    soundEject: /Audio/Guns/MagOut/revolver_magout.ogg
-    soundInsert: /Audio/Guns/MagIn/revolver_magin.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
   name: Mateba
@@ -85,12 +85,12 @@
   description: A rooty tooty point and shooty.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Revolvers/mateba.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Icon
-    sprite: Objects/Guns/Revolvers/mateba.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Revolvers/mateba.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
     currentSelector: Single
@@ -99,7 +99,7 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Guns/Gunshots/revolver.ogg
-    soundEject: /Audio/Guns/MagOut/revolver_magout.ogg
-    soundInsert: /Audio/Guns/MagIn/revolver_magin.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg

@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/effects/Fluids/splat.ogg");
+            serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
             serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
             serializer.DataField(ref _evaporateTime, "evaporate_time", 600.0f);
             // Long-term probably have this based on the underlying reagents

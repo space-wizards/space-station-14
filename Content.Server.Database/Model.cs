@@ -64,6 +64,10 @@ namespace Content.Server.Database
             modelBuilder.Entity<HumanoidProfile>()
                 .HasIndex(p => new {p.Slot, p.PrefsId})
                 .IsUnique();
+
+            modelBuilder.Entity<Antag>()
+                .HasIndex(p => new {p.HumanoidProfileId , p.AntagName})
+                .IsUnique();
         }
     }
 
@@ -90,6 +94,7 @@ namespace Content.Server.Database
         public string EyeColor { get; set; } = null!;
         public string SkinColor { get; set; } = null!;
         public List<Job> Jobs { get; } = new List<Job>();
+        public List<Antag> Antags { get; } = new List<Antag>();
         public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
         public int PrefsId { get; set; }
@@ -112,6 +117,15 @@ namespace Content.Server.Database
         Low = 1,
         Medium = 2,
         High = 3
+    }
+
+    public class Antag
+    {
+        public int AntagId { get; set; }
+        public HumanoidProfile Profile { get; set; } = null!;
+        public int HumanoidProfileId { get; set; }
+
+        public string AntagName { get; set; } = null!;
     }
 
     public enum DbPreferenceUnavailableMode
