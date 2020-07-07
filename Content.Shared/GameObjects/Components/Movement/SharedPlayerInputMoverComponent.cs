@@ -189,11 +189,16 @@ namespace Content.Shared.GameObjects.Components.Movement
                 _lastInputSubTick = 0;
             }
 
-            var fraction = (subTick - _lastInputSubTick) / (float) ushort.MaxValue;
+            if (_lastInputSubTick >= subTick)
+            {
+                var fraction = (subTick - _lastInputSubTick) / (float) ushort.MaxValue;
 
-            ref var lastMoveAmount = ref Sprinting ? ref _curTickSprintMovement : ref _curTickWalkMovement;
+                ref var lastMoveAmount = ref Sprinting ? ref _curTickSprintMovement : ref _curTickWalkMovement;
 
-            lastMoveAmount += DirVecForButtons(_heldMoveButtons) * fraction;
+                lastMoveAmount += DirVecForButtons(_heldMoveButtons) * fraction;
+
+                _lastInputSubTick = subTick;
+            }
 
             if (enabled)
             {
@@ -203,8 +208,6 @@ namespace Content.Shared.GameObjects.Components.Movement
             {
                 _heldMoveButtons &= ~bit;
             }
-
-            _lastInputSubTick = subTick;
 
             Dirty();
         }
