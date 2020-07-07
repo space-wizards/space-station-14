@@ -29,14 +29,7 @@ namespace Content.Client.State
         {
             base.Startup();
 
-            if(_groupController.CanCommand("asay"))
-            {
-                _gameChat = new ChatBox(true);
-            }
-            else
-            {
-                _gameChat = new ChatBox(false);
-            }
+            _gameChat = new ChatBox();
 
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chat;
+using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -35,7 +36,7 @@ namespace Content.Client.Chat
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
-        public ChatBox(bool admin = false)
+        public ChatBox()
         {
             /*MarginLeft = -475.0f;
             MarginTop = 10.0f;
@@ -59,6 +60,7 @@ namespace Content.Client.Chat
 
             outerVBox.AddChild(panelContainer);
             outerVBox.AddChild(hBox);
+
 
             var contentMargin = new MarginContainer
             {
@@ -96,7 +98,8 @@ namespace Content.Client.Chat
                 ToggleMode = true,
             };
 
-            if(admin)
+            var groupController = IoCManager.Resolve<IClientConGroupController>();
+            if(groupController.CanCommand("asay"))
             {
                 AdminButton = new Button
                 {
