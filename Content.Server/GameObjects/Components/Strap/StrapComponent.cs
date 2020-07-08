@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Strap
             serializer.DataField(ref _position, "position", StrapPosition.None);
             serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/Effects/buckle.ogg");
             serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/Effects/unbuckle.ogg");
-            serializer.DataField(ref _buckledIcon, "buckledIcon", "/Textures/Mob/UI/Buckle/buckled.png");
+            serializer.DataField(ref _buckledIcon, "buckledIcon", "/Textures/Interface/StatusEffects/Buckle/buckled.png");
             serializer.DataField(ref _rotation, "rotation", 0);
 
             var defaultSize = 100;
