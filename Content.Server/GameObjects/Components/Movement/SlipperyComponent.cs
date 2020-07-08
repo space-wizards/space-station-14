@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Throw;
 using Content.Shared.Physics;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -18,6 +23,24 @@ namespace Content.Server.GameObjects.Components.Movement
         public override string Name => "Slippery";
 
         private List<EntityUid> _slipped = new List<EntityUid>();
+
+        /// <summary>
+        ///     How many seconds the mob will be paralyzed for.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ParalyzeTime { get; set; } = 5f;
+
+        /// <summary>
+        ///     Percentage of shape intersection for a slip to occur.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float IntersectPercentage { get; set; } = 0.3f;
+
+        /// <summary>
+        ///     Path to the sound to be played when a mob slips.
+        /// </summary>
+        [ViewVariables]
+        public string SlipSound { get; set; }
 
         public override void Initialize()
         {
@@ -33,6 +56,8 @@ namespace Content.Server.GameObjects.Components.Movement
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 5f);
+            serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
         }
 
         public void CollideWith(IEntity collidedWith)
@@ -46,13 +71,14 @@ namespace Content.Server.GameObjects.Components.Movement
 
             var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
 
-            Logger.Info($"{percentage}");
-
-            if (percentage < 0.2f)
+            if (percentage < IntersectPercentage)
                 return;
 
             stun.Paralyze(5f);
             _slipped.Add(collidedWith.Uid);
+
+            if(!string.IsNullOrEmpty(SlipSound))
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(SlipSound, Owner);
         }
 
         public void Update(float frameTime)
@@ -60,9 +86,11 @@ namespace Content.Server.GameObjects.Components.Movement
             foreach (var uid in _slipped.ToArray())
             {
                 if(!uid.IsValid() || !_entityManager.EntityExists(uid)) continue;
+
                 var entity = _entityManager.GetEntity(uid);
                 var collidable = Owner.GetComponent<ICollidableComponent>();
                 var otherCollidable = entity.GetComponent<ICollidableComponent>();
+
                 if (!collidable.WorldAABB.Intersects(otherCollidable.WorldAABB))
                     _slipped.Remove(uid);
             }
