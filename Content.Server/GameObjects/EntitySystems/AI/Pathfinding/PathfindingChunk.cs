@@ -156,12 +156,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return _nodes[chunkX, chunkY];
         }
 
-        public void UpdateNode(TileRef tile)
-        {
-            var node = GetNode(tile);
-            node.UpdateTile(tile);
-        }
-
         private void CreateNode(TileRef tile, PathfindingChunk parent = null)
         {
             if (parent == null)
