@@ -82,6 +82,7 @@
   - warp
   - hostlogin
   - deleteewc
+  - asay
   CanViewVar: true
   CanAdminPlace: true
 
@@ -152,6 +153,7 @@
   - warp
   - deleteewc
   - sudo
+  - asay
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
