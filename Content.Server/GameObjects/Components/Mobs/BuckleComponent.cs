@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
@@ -13,6 +14,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -27,10 +29,29 @@ namespace Content.Server.GameObjects.Components.Mobs
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 #pragma warning restore 649
 
+        /// <summary>
+        ///     The amount of space that this entity occupies in a <see cref="StrapComponent"/>.
+        /// </summary>
         private int _size;
+
+        /// <summary>
+        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+        /// </summary>
         private float _range;
+
+        /// <summary>
+        ///     The amount of time that must pass for this entity to
+        ///     be able to unbuckle after recently buckling.
+        /// </summary>
+        private TimeSpan _unbuckleDelay;
+
+        /// <summary>
+        ///     The time that this entity buckled at.
+        /// </summary>
+        private TimeSpan _buckleTime;
 
         private StrapComponent? _buckledTo;
 
@@ -41,6 +62,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             private set
             {
                 _buckledTo = value;
+                _buckleTime = _gameTiming.CurTime;
                 Dirty();
             }
         }
@@ -188,6 +210,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (!force)
             {
+                if (_gameTiming.CurTime < _buckleTime + _unbuckleDelay)
+                {
+                    return false;
+                }
+
                 if (!ActionBlockerSystem.CanInteract(user))
                 {
                     _notifyManager.PopupMessage(user, user,
@@ -199,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                 if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
                 {
-                    _notifyManager.PopupMessage(user, user,
+                    _notifyManager.PopupMessage(Owner, user,
                         Loc.GetString("You can't reach there!"));
                     return false;
                 }
@@ -260,6 +287,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             serializer.DataField(ref _size, "size", 100);
             serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 2);
+
+            var seconds = 0.25f;
+            serializer.DataField(ref seconds, "cooldown", 0.25f);
+
+            _unbuckleDelay = TimeSpan.FromSeconds(seconds);
         }
 
         protected override void Startup()
@@ -267,6 +299,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.Startup();
             BuckleStatus();
         }
+
         public override void OnRemove()
         {
             base.OnRemove();
@@ -278,6 +311,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             BuckledTo = null;
+            _buckleTime = default;
             BuckleStatus();
         }
 
