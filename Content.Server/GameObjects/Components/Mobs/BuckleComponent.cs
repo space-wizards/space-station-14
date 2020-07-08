@@ -29,8 +29,10 @@ namespace Content.Server.GameObjects.Components.Mobs
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        private StrapComponent? _buckledTo;
         private int _size;
+        private float _range;
+
+        private StrapComponent? _buckledTo;
 
         [ViewVariables]
         public StrapComponent? BuckledTo
@@ -74,10 +76,18 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            var strapPosition = Owner.Transform.MapPosition;
-            var range = SharedInteractionSystem.InteractionRange / 2;
+            if (!to.TryGetComponent(out StrapComponent strap))
+            {
+                _notifyManager.PopupMessage(Owner, user,
+                    Loc.GetString(Owner == user
+                        ? "You can't buckle yourself there!"
+                        : "You can't buckle {0:them} there!", Owner));
+                return false;
+            }
 
-            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range) ||
+            var strapPosition = strap.Owner.Transform.MapPosition;
+
+            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range) ||
                 ContainerHelpers.IsInContainer(Owner))
             {
                 _notifyManager.PopupMessage(user, user,
@@ -98,15 +108,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                     Loc.GetString(Owner == user
                         ? "You are already buckled in!"
                         : "{0:They} are already buckled in!", Owner));
-                return false;
-            }
-
-            if (!to.TryGetComponent(out StrapComponent strap))
-            {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner));
                 return false;
             }
 
@@ -195,9 +196,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
 
                 var strapPosition = Owner.Transform.MapPosition;
-                var range = SharedInteractionSystem.InteractionRange / 2;
 
-                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
                 {
                     _notifyManager.PopupMessage(user, user,
                         Loc.GetString("You can't reach there!"));
@@ -265,6 +265,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.ExposeData(serializer);
 
             serializer.DataField(ref _size, "size", 100);
+            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 2);
         }
 
         protected override void Startup()
