@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components
 
         private void StopThrow()
         {
-            if (Owner.Deleted)
+            if (Deleted)
             {
                 return;
             }
