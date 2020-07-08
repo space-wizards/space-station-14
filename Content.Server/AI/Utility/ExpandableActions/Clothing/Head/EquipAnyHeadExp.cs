@@ -20,7 +20,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            foreach (var entity in context.GetState<InventoryState>().GetValue())
+            foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (entity.TryGetComponent(out ClothingComponent clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)

@@ -224,6 +224,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (!ActionBlockerSystem.CanInteract(user) ||
                     !user.TryGetComponent<HandsComponent>(out var hands) ||
                     hands.GetActiveHand == null ||
+                    hands.GetActiveHand.Owner == component.Owner ||
                     !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -323,6 +324,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (!ActionBlockerSystem.CanInteract(user) ||
                     !user.TryGetComponent<HandsComponent>(out var hands) ||
                     hands.GetActiveHand == null ||
+                    hands.GetActiveHand.Owner == component.Owner ||
                     !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
                     data.Visibility = VerbVisibility.Invisible;

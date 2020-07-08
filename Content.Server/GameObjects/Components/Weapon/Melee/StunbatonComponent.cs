@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         private float _slowdownTime = 5f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 1000;
+        [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 50;
 
         [ViewVariables]
         public bool Activated => _activated;
@@ -89,13 +89,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
-            var cell = Cell;
-            if (!Activated || entities.Count == 0 || cell == null)
-                return false;
-            if (!cell.TryUseCharge(EnergyPerUse))
-            {
-                return false;
-            }
+            if (!Activated || entities.Count == 0 || Cell == null)
+                return true;
+
+            if (!Cell.TryUseCharge(EnergyPerUse))
+                return true;
+
             EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
@@ -113,11 +112,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                     else
                         stunnable.Slowdown(_slowdownTime);
             }
-            if(cell.CurrentCharge < EnergyPerUse)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                TurnOff();
-            }
+
+            if (!(Cell.CurrentCharge < EnergyPerUse)) return true;
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            TurnOff();
 
             return true;
         }

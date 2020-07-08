@@ -1,7 +1,6 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Shared.GameObjects;
-
-#nullable enable
 
 namespace Content.Client.GameObjects.Components.Projectiles
 {

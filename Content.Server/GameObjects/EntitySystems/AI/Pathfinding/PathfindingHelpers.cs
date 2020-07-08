@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -18,15 +20,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             {
                 if (pathfindingArgs.Proximity > 0.0f)
                 {
-                    // TODO: Should make this account for proximities,
-                    // probably some kind of breadth-first search to find a valid one
-                    foreach (var node in endNode.GetNeighbors())
+                    foreach (var node in BFSPathfinder.GetNodesInRange(pathfindingArgs, false))
                     {
-                        if (Traversable(pathfindingArgs.CollisionMask, pathfindingArgs.Access, node))
-                        {
-                            endNode = node;
-                            return true;
-                        }
+                        endNode = node;
+                        return true;
                     }
                 }
 

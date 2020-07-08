@@ -4,6 +4,7 @@ using Content.Client.Chat;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
@@ -25,6 +26,7 @@ namespace Content.Client.State
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IChatManager _chatManager;
+        [Dependency] private readonly IClientConGroupController _groupController = default!;
 #pragma warning restore 649
 
         [ViewVariables] private ChatBox _gameChat;
@@ -34,6 +36,7 @@ namespace Content.Client.State
             base.Startup();
 
             _gameChat = new ChatBox();
+
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
@@ -50,6 +53,9 @@ namespace Content.Client.State
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
                 InputCmdHandler.FromDelegate(s => FocusOOC(_gameChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
+                InputCmdHandler.FromDelegate(s => FocusAdminChat(_gameChat)));
         }
 
         public override void Shutdown()
@@ -80,6 +86,18 @@ namespace Content.Client.State
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
             chat.Input.InsertAtCursor("[");
+        }
+
+        internal static void FocusAdminChat(ChatBox chat)
+        {
+            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
+            chat.Input.InsertAtCursor("]");
         }
     }
 }

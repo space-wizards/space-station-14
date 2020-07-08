@@ -4,6 +4,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Players;
 using Content.Shared.GameObjects;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
@@ -77,6 +78,19 @@ namespace Content.Server.Chat
         {
             var chat = IoCManager.Resolve<IChatManager>();
             chat.SendOOC(player, string.Join(" ", args));
+        }
+    }
+
+    internal class AdminChatCommand : IClientCommand
+    {
+        public string Command => "asay";
+        public string Description => "Send chat messages to the private admin chat channel.";
+        public string Help => "asay <text>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            var chat = IoCManager.Resolve<IChatManager>();
+            chat.SendAdminChat(player, string.Join(" ", args));
         }
     }
 
