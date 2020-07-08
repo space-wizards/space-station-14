@@ -10,12 +10,22 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    drawdepth: BelowFloor  
-  - type: IconSmooth
-    mode: CardinalFlags
+    texture: Objects/Power/generator.png
+  - type: Icon
+    texture: Objects/Power/generator.png
   - type: Destructible
     thresholdvalue: 100
-    
+
+- type: entity
+  parent: PipeBase
+  id: FourwayPipe
+  name: Fourway Pipe
+  components:
+  - type: NodeContainer
+    nodes:
+    - type: PipeNode
+      pipeDirection: All
+
 - type: entity
   parent: PipeBase
   id: VerticalPipe
@@ -23,5 +33,25 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: DirectionalNode
-      connectionDirection: Vertical
+    - type: PipeNode
+      pipeDirection: Vertical
+      
+- type: entity
+  parent: PipeBase
+  id: UpLeftBendPipe
+  name: Up-Left Bend Pipe
+  components:
+  - type: NodeContainer
+    nodes:
+    - type: PipeNode
+      pipeDirection: ULBend
+      
+- type: entity
+  parent: PipeBase
+  id: TUpPipe
+  name: T-Up Pipe
+  components:
+  - type: NodeContainer
+    nodes:
+    - type: PipeNode
+      pipeDirection: TUp

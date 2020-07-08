@@ -8,16 +8,16 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
-    [Node("DirectionalNode")]
-    public class DirectionalNode : Node
+    [Node("PipeNode")]
+    public class PipeNode : Node
     {
         [ViewVariables]
-        private Connection _connectionDirection;
+        private PipeDirection _pipeDirection;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _connectionDirection, "connectionDirection", Connection.None);
+            serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
         }
 
         protected override IEnumerable<Node> GetReachableNodes()
@@ -25,8 +25,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             var test = Enum.GetValues(typeof(CardinalDirection));
             foreach (CardinalDirection direction in Enum.GetValues(typeof(CardinalDirection)))
             {
-                ConnectionFromCardinal(direction, out var ownNeededConnection, out var theirNeededConnection);
-                if ((ownNeededConnection & _connectionDirection) == Connection.None)
+                PipeDirectionFromCardinal(direction, out var ownNeededConnection, out var theirNeededConnection);
+                if ((ownNeededConnection & _pipeDirection) == PipeDirection.None)
                 {
                     continue;
                 }
@@ -35,11 +35,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                     .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
                     .Where(container => container != null)
                     .SelectMany(container => container.Nodes)
-                    .OfType<DirectionalNode>()
+                    .OfType<PipeNode>()
                     .Where(node => node != null && node != this);
                 foreach (var directionalNode in directionalNodesInDirection)
                 {
-                    if ((directionalNode._connectionDirection & theirNeededConnection) != Connection.None)
+                    if ((directionalNode._pipeDirection & theirNeededConnection) != PipeDirection.None)
                     {
                         yield return directionalNode;
                     }
@@ -47,25 +47,25 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             }
         }
 
-        private void ConnectionFromCardinal(CardinalDirection direction, out Connection sameDir, out Connection oppDir)
+        private void PipeDirectionFromCardinal(CardinalDirection direction, out PipeDirection sameDir, out PipeDirection oppDir)
         {
             switch (direction)
             {
                 case CardinalDirection.North:
-                    sameDir = Connection.Up;
-                    oppDir = Connection.Down;
+                    sameDir = PipeDirection.Up;
+                    oppDir = PipeDirection.Down;
                     break;
                 case CardinalDirection.South:
-                    sameDir = Connection.Down;
-                    oppDir = Connection.Up;
+                    sameDir = PipeDirection.Down;
+                    oppDir = PipeDirection.Up;
                     break;
                 case CardinalDirection.East:
-                    sameDir = Connection.Right;
-                    oppDir = Connection.Left;
+                    sameDir = PipeDirection.Right;
+                    oppDir = PipeDirection.Left;
                     break;
                 case CardinalDirection.West:
-                    sameDir = Connection.Left;
-                    oppDir = Connection.Right;
+                    sameDir = PipeDirection.Left;
+                    oppDir = PipeDirection.Right;
                     break;
                 default:
                     throw new ArgumentException("Invalid Direction.");
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         West = Direction.West,
     }
 
-    public enum Connection
+    public enum PipeDirection
     {
         None  = 0,
 
