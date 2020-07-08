@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
