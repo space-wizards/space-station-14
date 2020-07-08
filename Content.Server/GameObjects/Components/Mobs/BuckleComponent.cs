@@ -142,10 +142,15 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            if (ContainerHelpers.IsInContainer(Owner))
+            if (ContainerHelpers.TryGetContainer(Owner, out var ownerContainer))
             {
-                _notifyManager.PopupMessage(strap.Owner, user,
-                    Loc.GetString("You can't reach there!"));
+                if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
+                    ownerContainer != strapContainer)
+                {
+                    _notifyManager.PopupMessage(strap.Owner, user,
+                        Loc.GetString("You can't reach there!"));
+                    return false;
+                }
             }
 
             if (!user.HasComponent<HandsComponent>())
