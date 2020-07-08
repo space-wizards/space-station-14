@@ -22,7 +22,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         protected override IEnumerable<Node> GetReachableNodes()
         {
-            var test = Enum.GetValues(typeof(CardinalDirection));
             foreach (CardinalDirection direction in Enum.GetValues(typeof(CardinalDirection)))
             {
                 PipeDirectionFromCardinal(direction, out var ownNeededConnection, out var theirNeededConnection);
