@@ -138,20 +138,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 switch (request.Item2.Status)
                 {
                     case JobStatus.Pending:
+                    case JobStatus.Finished:
                         break;
                     case JobStatus.Running:
-                        request.Item1.Cancel();
-                        break;
                     case JobStatus.Paused:
-                        request.Item1.Cancel();
-                        break;
                     case JobStatus.Waiting:
                         request.Item1.Cancel();
                         break;
-                    case JobStatus.Finished:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
 
                 switch (request.Item2.Exception)
