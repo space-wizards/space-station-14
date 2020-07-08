@@ -17,7 +17,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects
 {
     [RegisterComponent]
-    public class ItemComponent : Component
+    [ComponentReference(typeof(IItemComponent))]
+    public class ItemComponent : Component, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;

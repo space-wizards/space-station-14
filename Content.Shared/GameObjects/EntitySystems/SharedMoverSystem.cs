@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.Configuration;
@@ -129,7 +130,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 // TODO: Item check.
                 var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
                                 || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                               && true; // !entity.HasComponent<ItemComponent>(); // This can't be an item
+                               && !entity.HasComponent<IItemComponent>(); // This can't be an item
 
                 if (touching)
                 {

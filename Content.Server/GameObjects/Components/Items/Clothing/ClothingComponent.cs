@@ -18,6 +18,7 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
     [ComponentReference(typeof(StoreableComponent))]
+    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
 #pragma warning disable 649

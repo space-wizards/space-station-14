@@ -25,7 +25,8 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
+    [ComponentReference(typeof(IItemComponent))]
+    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
