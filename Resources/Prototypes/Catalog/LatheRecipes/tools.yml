@@ -10,7 +10,7 @@
   id: Screwdriver
   icon:
     sprite: Objects/Tools/screwdriver.rsi
-    state: screwdriver
+    state: screwdriver-map
   result: Screwdriver
   completetime: 500
   materials:
@@ -38,6 +38,7 @@
 
 - type: latheRecipe
   id: CableStack
+  name: cable coil
   icon: Objects/Tools/cable_coil.png
   result: CableStack
   completetime: 500
