@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Runtime.Remoting;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -27,8 +28,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
 #pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager;
-        [Dependency] private IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
         public override string Name => "Welder";
@@ -44,10 +45,11 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// </summary>
         public const float FuelLossRate = 0.5f;
 
-        private bool _welderLit = false;
-        private WelderSystem _welderSystem;
-        private SpriteComponent _spriteComponent;
-        private SolutionComponent _solutionComponent;
+        private bool _welderLit;
+        private WelderSystem _welderSystem = default!;
+        private SpriteComponent? _spriteComponent;
+        private SolutionComponent? _solutionComponent;
+        private PointLightComponent? _pointLightComponent;
 
         [ViewVariables]
         public float Fuel => _solutionComponent?.Solution.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
@@ -79,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
+            Owner.TryGetComponent(out _pointLightComponent);
         }
 
         public override ComponentState GetComponentState()
@@ -98,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
         }
 
-        private bool TryWeld(float value, IEntity user = null, bool silent = false)
+        private bool TryWeld(float value, IEntity? user = null, bool silent = false)
         {
             if (!WelderLit)
             {
@@ -131,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <summary>
         /// Deactivates welding tool if active, activates welding tool if possible
         /// </summary>
-        private bool ToggleWelderStatus(IEntity user = null)
+        private bool ToggleWelderStatus(IEntity? user = null)
         {
             var item = Owner.GetComponent<ItemComponent>();
 
@@ -140,7 +143,10 @@ namespace Content.Server.GameObjects.Components.Interactable
                 WelderLit = false;
                 // Layer 1 is the flame.
                 item.EquippedPrefix = "off";
-                _spriteComponent.LayerSetVisible(1, false);
+                _spriteComponent?.LayerSetVisible(1, false);
+
+                if (_pointLightComponent != null) _pointLightComponent.Enabled = false;
+
                 PlaySoundCollection("WelderOff", -5);
                 _welderSystem.Unsubscribe(this);
                 return true;
@@ -154,7 +160,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             WelderLit = true;
             item.EquippedPrefix = "on";
-            _spriteComponent.LayerSetVisible(1, true);
+            _spriteComponent?.LayerSetVisible(1, true);
+
+            if (_pointLightComponent != null) _pointLightComponent.Enabled = true;
+
             PlaySoundCollection("WelderOn", -5);
             _welderSystem.Subscribe(this);
             return true;
@@ -188,7 +197,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!HasQuality(ToolQuality.Welding) || !WelderLit)
                 return;
 
-            _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+            _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
             if (Fuel == 0)
                 ToggleWelderStatus();

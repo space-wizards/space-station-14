@@ -96,9 +96,12 @@
       reagents:
         - ReagentId: chem.WeldingFuel
           Quantity: 100
-
   - type: Welder
     useSoundCollection: Welder
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: orange
 
 - type: entity
   name: wrench
