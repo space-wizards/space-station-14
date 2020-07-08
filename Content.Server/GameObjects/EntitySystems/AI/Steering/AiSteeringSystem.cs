@@ -135,7 +135,32 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             
             if (_pathfindingRequests.TryGetValue(entity, out var request))
             {
-                request.Item1.Cancel();
+                switch (request.Item2.Status)
+                {
+                    case JobStatus.Pending:
+                        break;
+                    case JobStatus.Running:
+                        request.Item1.Cancel();
+                        break;
+                    case JobStatus.Paused:
+                        request.Item1.Cancel();
+                        break;
+                    case JobStatus.Waiting:
+                        request.Item1.Cancel();
+                        break;
+                    case JobStatus.Finished:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                switch (request.Item2.Exception)
+                {
+                    case null:
+                        break;
+                    default:
+                        throw request.Item2.Exception;
+                }
                 _pathfindingRequests.Remove(entity);
             }
             
@@ -246,7 +271,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             }
             
             // Check if we have arrived
-            if ((entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length <= steeringRequest.ArrivalDistance)
+            var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
+            if (targetDistance <= steeringRequest.ArrivalDistance)
             {
                 // TODO: If we need LOS and are moving to an entity then we may not be in range yet
                 // Chuck out a ray every half second or so and keep moving until we are?
@@ -293,8 +319,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             // Check if we even have a path to follow
             // If the route's empty we could be close and may not need a re-path so we won't check if it is
-            if (!_paths.ContainsKey(entity) && !_pathfindingRequests.ContainsKey(entity))
+            if (!_paths.ContainsKey(entity) && !_pathfindingRequests.ContainsKey(entity) && targetDistance > 1.5f)
             {
+                controller.VelocityDir = Vector2.Zero;
                 RequestPath(entity, steeringRequest);
                 return SteeringStatus.Pending;
             }
@@ -441,7 +468,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - entity.Transform.GridPosition.Position).Length <= 1.5f)
+                if ((steeringRequest.TargetGrid.Position - entity.Transform.GridPosition.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;   
                 }
