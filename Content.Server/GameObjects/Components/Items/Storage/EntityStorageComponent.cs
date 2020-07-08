@@ -3,12 +3,13 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -49,6 +50,8 @@ namespace Content.Server.GameObjects.Components
         private bool _showContents;
         private bool _open;
         private bool _isWeldedShut;
+        private int _collisionMaskStorage;
+        private int _collisionLayerStorage;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -167,7 +170,7 @@ namespace Content.Server.GameObjects.Components
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetclose.ogg", Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -176,15 +179,27 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetopen.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetopen.ogg", Owner);
 
         }
 
         private void ModifyComponents()
         {
-            if (Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
+            if (!IsCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
-                collidableComponent.CanCollide = IsCollidableWhenOpen || !Open;
+                var physShape = collidableComponent.PhysicsShapes[0];
+                if (Open)
+                {
+                    _collisionMaskStorage = physShape.CollisionMask;
+                    physShape.CollisionMask = (int)CollisionGroup.Impassable;
+                    _collisionLayerStorage = physShape.CollisionLayer;
+                    physShape.CollisionLayer = (int)CollisionGroup.None;
+                }
+                else
+                {
+                    physShape.CollisionMask = _collisionMaskStorage;
+                    physShape.CollisionLayer = _collisionLayerStorage;
+                }
             }
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))

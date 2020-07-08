@@ -1,7 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/effects/Fluids/slosh.ogg");
+            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
             // The turbo mop will pickup more
             serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
         }

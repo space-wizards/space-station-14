@@ -1,20 +1,20 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   name: mop
   id: MopItem
   description: A mop that can't be stopped, viscera cleanup detail awaits.
   components:
   - type: Sprite
-    sprite: Objects/Janitorial/mop.rsi
+    sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
 
   - type: Icon
-    sprite: Objects/Janitorial/mop.rsi
+    sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
 
   - type: Item
     Size: 10
-    sprite: Objects/Janitorial/mop.rsi
+    sprite: Objects/Specific/Janitorial/mop.rsi
 
   - type: Mop
   - type: Solution
@@ -30,10 +30,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Janitorial/mopbucket.png
+    texture: Objects/Specific/Janitorial/mopbucket.png
     drawdepth: Objects
   - type: Icon
-    texture: Objects/Janitorial/mopbucket.png
+    texture: Objects/Specific/Janitorial/mopbucket.png
   - type: InteractionOutline
   - type: Bucket
   - type: LoopingSound
@@ -53,6 +53,7 @@
   - type: Physics
     mass: 5
     Anchored: false
+  - type: CanSpill
 
 - type: entity
   parent: BaseItem
@@ -62,10 +63,10 @@
   components:
   - type: Clickable
   - type: Sprite
-    texture: Objects/Janitorial/bucket.png
+    texture: Objects/Specific/Janitorial/bucket.png
     drawdepth: Objects
   - type: Icon
-    texture: Objects/Janitorial/bucket.png
+    texture: Objects/Specific/Janitorial/bucket.png
   - type: Bucket
   - type: LoopingSound
   - type: Solution
@@ -84,6 +85,7 @@
   - type: Physics
     mass: 5
     Anchored: false
+  - type: CanSpill
 
 - type: entity
   name: wet floor sign
@@ -92,13 +94,13 @@
   description: Caution! Wet Floor!
   components:
   - type: Sprite
-    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
 
   - type: Icon
-    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
 
   - type: Item
-    sprite: Objects/Janitorial/wet_floor_sign.rsi
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
 

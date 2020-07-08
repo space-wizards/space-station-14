@@ -25,14 +25,14 @@
     angleIncrease: 10
     angleDecay: 60
     magNeedsOpenBolt: true
-    soundGunshot: /Audio/Guns/Gunshots/lmg.ogg
-    soundEmpty: /Audio/Guns/Empty/lmg_empty.ogg
-    soundRack: /Audio/Guns/Cock/lmg_cock.ogg
-    soundBoltOpen: /Audio/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Guns/Bolt/rifle_bolt_closed.ogg
-    soundAutoEject: /Audio/Guns/EmptyAlarm/lmg_empty_alarm.ogg
-    soundMagInsert: /Audio/Guns/MagIn/lmg_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/lmg_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundAutoEject: /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/lmg_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/lmg_magout.ogg
 
 - type: entity
   name: L6 SAW
@@ -41,7 +41,7 @@
   description: A rather traditionally made L6 SAW with a pleasantly lacquered wooden pistol grip. This one is unmarked.
   components:
   - type: Sprite
-    sprite: Objects/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -50,10 +50,10 @@
     - state: mag-3
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/LMGs/l6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     magFillPrototype: MagazineLRifleBox
@@ -77,7 +77,7 @@
   description: Kalashnikov's Machinegun, a well preserved and maintained antique weapon of war.
   components:
   - type: Sprite
-    sprite: Objects/Guns/LMGs/pk.rsi
+    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -86,10 +86,10 @@
     - state: mag-5
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/LMGs/pk.rsi
+    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/LMGs/pk.rsi
+    sprite: Objects/Weapons/Guns/LMGs/pk.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     magFillPrototype: MagazineLRiflePkBox

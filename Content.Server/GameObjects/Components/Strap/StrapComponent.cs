@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Strap
         public override StrapPosition Position
         {
             get => _position;
-            set
+            protected set
             {
                 _position = value;
                 Dirty();
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Strap
         /// The sum of the sizes of all the buckled entities in this strap
         /// </summary>
         [ViewVariables]
-        public int OccupiedSize { get; private set; }
+        private int OccupiedSize { get; set; }
 
         public bool HasSpace(BuckleComponent buckle)
         {
@@ -121,8 +121,8 @@ namespace Content.Server.GameObjects.Components.Strap
             base.ExposeData(serializer);
 
             serializer.DataField(ref _position, "position", StrapPosition.None);
-            serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/effects/buckle.ogg");
-            serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/effects/unbuckle.ogg");
+            serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/Effects/buckle.ogg");
+            serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/Effects/unbuckle.ogg");
             serializer.DataField(ref _rotation, "rotation", 0);
 
             var defaultSize = 100;
@@ -147,6 +147,11 @@ namespace Content.Server.GameObjects.Components.Strap
 
             BuckledEntities.Clear();
             OccupiedSize = 0;
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new StrapComponentState(Position);
         }
 
         [Verb]

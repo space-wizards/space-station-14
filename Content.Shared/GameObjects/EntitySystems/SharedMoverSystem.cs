@@ -1,4 +1,6 @@
+﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.Configuration;
@@ -13,10 +15,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
-
-#nullable enable
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -55,8 +54,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, SharedPhysicsComponent physics,
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
             CollidableComponent? collider = null)
         {
             if (physics.Controller == null)
@@ -112,7 +110,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         }
 
-        protected abstract void SetController(SharedPhysicsComponent physics);
+        protected abstract void SetController(PhysicsComponent physics);
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             CollidableComponent collider)
@@ -132,7 +130,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 // TODO: Item check.
                 var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
                                 || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                               && true; // !entity.HasComponent<ItemComponent>(); // This can't be an item
+                               && !entity.HasComponent<IItemComponent>(); // This can't be an item
 
                 if (touching)
                 {

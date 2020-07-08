@@ -1,17 +1,17 @@
-- type: entity
+﻿- type: entity
   id: CrateGeneric
   name: crate
   description: A large container for items.
   components:
   - type: Sprite
     netsync: false
-    sprite: Buildings/crate.rsi
+    sprite: Constructible/Structures/Crates/generic.rsi
     layers:
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
   - type: Icon
-    sprite: Buildings/crate.rsi
+    sprite: Constructible/Structures/Crates/generic.rsi
     state: crate
   - type: Clickable
   - type: InteractionOutline

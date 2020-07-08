@@ -13,10 +13,10 @@
     netsync: false
     color: "#889192"
     drawdepth: Walls
-    sprite: Buildings/low_wall.rsi
+    sprite: Constructible/Structures/Walls/low_wall.rsi
 
   - type: Icon
-    sprite: Buildings/low_wall.rsi
+    sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
 
   - type: Collidable
@@ -42,4 +42,4 @@
   - type: Sprite
     color: "#889192"
     drawdepth: WallMountedItems
-    sprite: Buildings/low_wall.rsi
+    sprite: Constructible/Structures/Walls/low_wall.rsi

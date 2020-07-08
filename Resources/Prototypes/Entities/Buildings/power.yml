@@ -10,7 +10,7 @@
   - type: SnapGrid
     offset: Center
   - type: Icon
-    texture: Objects/Power/eightdirwire.png
+    texture: Constructible/Power/eightdirwire.png
   - type: Sprite
     drawdepth: BelowFloor  
   - type: IconSmooth
@@ -25,7 +25,7 @@
   name: HV Wire
   components:
   - type: Sprite
-    sprite: Objects/Power/hv_cable.rsi
+    sprite: Constructible/Power/hv_cable.rsi
     state: hvcable_0
   - type: IconSmooth
     base: hvcable_
@@ -47,7 +47,7 @@
   components:
   - type: Sprite
     color: Yellow
-    sprite: Objects/Power/mv_cable.rsi
+    sprite: Constructible/Power/mv_cable.rsi
     state: mvcable_0
   - type: IconSmooth
     base: mvcable_
@@ -68,7 +68,7 @@
   components:
   - type: Sprite
     color: Green
-    sprite: Objects/Power/lv_cable.rsi
+    sprite: Constructible/Power/lv_cable.rsi
     state: lvcable_0
   - type: IconSmooth
     base: lvcable_
@@ -100,15 +100,17 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects/Power/generator.png
+    texture: Constructible/Power/generator.png
   - type: Icon
-    texture: Objects/Power/generator.png
+    texture: Constructible/Power/generator.png
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
       groupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
+  - type: Physics
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -120,12 +122,16 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects/Power/wiredmachine.png
+    texture: Constructible/Power/wiredmachine.png
   - type: Icon
-    texture: Objects/Power/wiredmachine.png
+    texture: Constructible/Power/wiredmachine.png
   - type: NodeContainer
     nodes:
     - type: AdjacentNode
@@ -135,6 +141,8 @@
   - type: Damageable
   - type: Breakable
     thresholdvalue: 100
+  - type: Physics
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -146,12 +154,16 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects/Power/provider.png
+    texture: Constructible/Power/provider.png
   - type: Icon
-    texture: Objects/Power/provider.png
+    texture: Constructible/Power/provider.png
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -159,6 +171,9 @@
       groupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
   
 - type: entity
   id: DebugBatteryDischarger
@@ -169,12 +184,16 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects/Power/provider.png
+    texture: Constructible/Power/provider.png
   - type: Icon
-    texture: Objects/Power/provider.png
+    texture: Constructible/Power/provider.png
   - type: Battery
   - type: NodeContainer
     nodes:
@@ -182,6 +201,9 @@
       groupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
     
 - type: entity
   id: DebugSmes
@@ -200,13 +222,13 @@
     offset: Center
   - type: Sprite
     netsync: false
-    sprite: Buildings/smes.rsi
+    sprite: Constructible/Power/smes.rsi
     state: smes
     layers:
     - state: smes-display
       shader: unshaded
   - type: Icon
-    sprite: Buildings/smes.rsi
+    sprite: Constructible/Power/smes.rsi
     state: smes
   - type: Smes
   - type: Appearance
@@ -225,6 +247,8 @@
   - type: PowerSupplier
   - type: BatteryDischarger
     activeSupplyRate: 1000
+  - type: Physics
+    Anchored: true
   - type: Anchorable
 
 - type: entity
@@ -236,12 +260,16 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects\Power\storage.png
+    texture: Constructible/Power/storage.png
   - type: Icon
-    texture: Objects\Power\storage.png
+    texture: Constructible/Power/storage.png
     state: smes
   - type: Battery
     maxCharge: 1000
@@ -259,6 +287,9 @@
     voltage: Medium
   - type: BatteryDischarger
     activeSupplyRate: 1000
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
 
 - type: entity
   id: DebugApc
@@ -278,10 +309,10 @@
     drawdepth: WallMountedItems
     netsync: false
     texture: ""
-    sprite: "Buildings/apc.rsi"
+    sprite: "Constructible/Power/apc.rsi"
     state: apc0
   - type: Icon
-    texture: Buildings/apc.rsi/apc0.png
+    texture: Constructible/Power/apc.rsi/apc0.png
   - type: Appearance
     visuals:
     - type: ApcVisualizer2D
@@ -316,13 +347,20 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Objects/Furniture/wirelessmachine.png
+    texture: Constructible/Power/wirelessmachine.png
   - type: Icon
-    texture: Objects/Furniture/wirelessmachine.png
+    texture: Constructible/Power/wirelessmachine.png
   - type: PowerReceiver
+  - type: Physics
+    Anchored: true
+  - type: Anchorable
 
 - type: entity
   id: SolarPanel
@@ -338,10 +376,10 @@
     - !type:PhysShapeAabb
       layer: [MobMask, Opaque]
   - type: Sprite
-    sprite: Buildings/solar_panel.rsi
+    sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: Icon
-    sprite: Buildings/solar_panel.rsi
+    sprite: Constructible/Power/solar_panel.rsi
     state: normal
   - type: NodeContainer
     nodes:

@@ -32,9 +32,9 @@
   - type: RangedMagazine
     fillPrototype: ShellShotgun
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_pellets.rsi
 
 - type: entity
   id: MagazineShotgunBeanbag
@@ -44,9 +44,9 @@
   - type: RangedMagazine
     fillPrototype: ShellShotgunBeanbag
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_beanbag.rsi
 
 - type: entity
   id: MagazineShotgunSlug
@@ -56,6 +56,6 @@
   - type: RangedMagazine
     fillPrototype: ShellShotgunSlug
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12_slug.rsi

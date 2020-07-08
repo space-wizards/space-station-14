@@ -1,26 +1,21 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects;
-using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
-    public class ProjectileComponent : Component, ICollideSpecial, ICollideBehavior
+    public class ProjectileComponent : SharedProjectileComponent, ICollideBehavior
     {
-        public override string Name => "Projectile";
-
-        public bool IgnoreShooter = true;
+        protected override EntityUid Shooter => _shooter;
 
         private EntityUid _shooter = EntityUid.Invalid;
 
@@ -32,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             get => _damages;
             set => _damages = value;
         }
-        
+
         public bool DeleteOnCollide => _deleteOnCollide;
         private bool _deleteOnCollide;
 
@@ -59,18 +54,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public void IgnoreEntity(IEntity shooter)
         {
             _shooter = shooter.Uid;
-        }
-
-        /// <summary>
-        /// Special collision override, can be used to give custom behaviors deciding when to collide
-        /// </summary>
-        /// <param name="collidedwith"></param>
-        /// <returns></returns>
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
-        {
-            if (IgnoreShooter && collidedwith.Owner.Uid == _shooter)
-                return true;
-            return false;
+            Dirty();
         }
 
         /// <summary>
@@ -86,7 +70,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
-            
+
             if (entity.TryGetComponent(out DamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
@@ -108,6 +92,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
         void ICollideBehavior.PostCollide(int collideCount)
         {
             if (collideCount > 0 && DeleteOnCollide) Owner.Delete();
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new ProjectileComponentState(NetID!.Value, _shooter, IgnoreShooter);
         }
     }
 }

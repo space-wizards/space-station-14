@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Timers;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Server.GameObjects;
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             serializer.DataField(ref _caseless, "caseless", false);
             // Being both caseless and shooting yourself doesn't make sense
             DebugTools.Assert(!(_ammoIsProjectile && _caseless));
-            serializer.DataField(ref _muzzleFlashSprite, "muzzleFlash", "Objects/Guns/Projectiles/bullet_muzzle.png");
+            serializer.DataField(ref _muzzleFlashSprite, "muzzleFlash", "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
             serializer.DataField(ref _soundCollectionEject, "soundCollectionEject", "CasingEject");
 
             if (_projectilesFired < 1)
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         Magnum,
         AntiMaterial,
         Shotgun,
-        Cap, // Placeholder
+        Cap, 
         Rocket,
         Dart, // Placeholder
         Grenade,

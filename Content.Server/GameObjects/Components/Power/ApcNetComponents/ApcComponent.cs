@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
 using System;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.IoC;
 using Robust.Shared.Interfaces.Timing;
 
@@ -79,7 +80,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 MainBreakerEnabled = !MainBreakerEnabled;
                 _uiDirty = true;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
             }
         }
 

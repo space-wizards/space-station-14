@@ -1734,7 +1734,7 @@ entities:
     pos: -11.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/youtool.rsi
+  - sprite: Constructible/Power/VendingMachines/youtool.rsi
     type: Sprite
 - uid: 183
   type: Generator
@@ -3797,7 +3797,7 @@ entities:
     pos: -11.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/engivend.rsi
+  - sprite: Constructible/Power/VendingMachines/engivend.rsi
     type: Sprite
 - uid: 419
   type: Table
@@ -6510,7 +6510,7 @@ entities:
     pos: 29.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 716
   type: VendingMachineMedical
@@ -6519,7 +6519,7 @@ entities:
     pos: 27.5,-5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 717
   type: VendingMachineMedical
@@ -6528,7 +6528,7 @@ entities:
     pos: 25.5,-5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 718
   type: VendingMachineWallMedical
@@ -6537,7 +6537,7 @@ entities:
     pos: 1.5,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/wallmed.rsi
+  - sprite: Constructible/Power/VendingMachines/wallmed.rsi
     type: Sprite
 - uid: 719
   type: MedkitFilled

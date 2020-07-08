@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components;
+#nullable enable
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Sound;
@@ -19,11 +21,8 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.EntitySystems
 {
@@ -66,7 +65,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
 
                 var mover = entity.GetComponent<IMoverComponent>();
-                var physics = entity.GetComponent<SharedPhysicsComponent>();
+                var physics = entity.GetComponent<PhysicsComponent>();
                 if (entity.TryGetComponent<CollidableComponent>(out var collider))
                 {
                     UpdateKinematics(entity.Transform, mover, physics, collider);
@@ -78,9 +77,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        protected override void SetController(SharedPhysicsComponent physics)
+        protected override void SetController(PhysicsComponent physics)
         {
-            ((PhysicsComponent) physics).SetController<MoverController>();
+            physics.SetController<MoverController>();
         }
 
         private static void PlayerAttached(PlayerAttachSystemMessage ev)
@@ -96,6 +95,11 @@ namespace Content.Server.GameObjects.EntitySystems
             if (ev.Entity.HasComponent<PlayerInputMoverComponent>())
             {
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
+            }
+
+            if (ev.Entity.TryGetComponent(out PhysicsComponent physics))
+            {
+                (physics.Controller as MoverController)?.StopMoving();
             }
         }
 
