@@ -128,7 +128,6 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
             msg.MessageWrap = $"{_localizationManager.GetString("ADMIN")}: {player.SessionId}: {{0}}";
-            msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
