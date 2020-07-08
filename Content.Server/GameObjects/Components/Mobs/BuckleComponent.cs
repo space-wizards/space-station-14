@@ -10,6 +10,7 @@ using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -27,9 +28,10 @@ namespace Content.Server.GameObjects.Components.Mobs
     public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
     {
 #pragma warning disable 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
         /// <summary>
@@ -281,6 +283,16 @@ namespace Content.Server.GameObjects.Components.Mobs
             return TryBuckle(user, to);
         }
 
+        private void InsertIntoContainer(EntInsertedIntoContainerMessage message)
+        {
+            if (message.Entity != Owner)
+            {
+                return;
+            }
+
+            TryUnbuckle(Owner, true);
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -294,6 +306,13 @@ namespace Content.Server.GameObjects.Components.Mobs
             _unbuckleDelay = TimeSpan.FromSeconds(seconds);
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _entityManager.EventBus.SubscribeEvent<EntInsertedIntoContainerMessage>(EventSource.Local, this, InsertIntoContainer);
+        }
+
         protected override void Startup()
         {
             base.Startup();
@@ -303,6 +322,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         public override void OnRemove()
         {
             base.OnRemove();
+
+            _entityManager.EventBus.UnsubscribeEvents(this);
 
             if (BuckledTo != null &&
                 BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
