@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <summary>
         /// Pathfinding request jobs we're waiting on
         /// </summary>
-        private readonly Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)> _pathfindingRequests = 
+        private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, Job<Queue<TileRef>> Job)> _pathfindingRequests = 
             new Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)>();
         
         /// <summary>
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             
             if (_pathfindingRequests.TryGetValue(entity, out var request))
             {
-                switch (request.Item2.Status)
+                switch (request.Job.Status)
                 {
                     case JobStatus.Pending:
                     case JobStatus.Finished:
@@ -143,16 +143,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     case JobStatus.Running:
                     case JobStatus.Paused:
                     case JobStatus.Waiting:
-                        request.Item1.Cancel();
+                        request.CancelToken.Cancel();
                         break;
                 }
 
-                switch (request.Item2.Exception)
+                switch (request.Job.Exception)
                 {
                     case null:
                         break;
                     default:
-                        throw request.Item2.Exception;
+                        throw request.Job.Exception;
                 }
                 _pathfindingRequests.Remove(entity);
             }
@@ -276,9 +276,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             
             // Handle pathfinding job
             // If we still have an existing path then keep following that until the new path arrives
-            if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Item2.Status == JobStatus.Finished)
+            if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Job.Status == JobStatus.Finished)
             {
-                switch (pathRequest.Item2.Exception)
+                switch (pathRequest.Job.Exception)
                 {
                     case null:
                         break;
@@ -287,10 +287,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                         controller.VelocityDir = Vector2.Zero;
                         return SteeringStatus.NoPath;
                     default:
-                        throw pathRequest.Item2.Exception;
+                        throw pathRequest.Job.Exception;
                 }
                 // No actual path
-                var path = _pathfindingRequests[entity].Item2.Result;
+                var path = _pathfindingRequests[entity].Job.Result;
                 if (path == null || path.Count == 0)
                 {
                     controller.VelocityDir = Vector2.Zero;
