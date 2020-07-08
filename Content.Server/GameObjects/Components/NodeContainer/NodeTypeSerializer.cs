@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             var mapping = (YamlMappingNode) node;
             var nodeType = mapping.GetNode("type").ToString();
             var newNode = _nodeFactory.MakeNode(nodeType);
-            newNode.ExposeData(serializer);
+            newNode.ExposeData(YamlObjectSerializer.NewReader((YamlMappingNode) node));
             return newNode;
         }
 

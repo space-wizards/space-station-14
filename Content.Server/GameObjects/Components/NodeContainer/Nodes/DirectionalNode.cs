@@ -1,5 +1,7 @@
 ﻿using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [Node("DirectionalNode")]
     public class DirectionalNode : Node
     {
+        [ViewVariables]
         private Connection _connectionDirection;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _connectionDirection, "connectionDirection", Connection.None);
+        }
 
         protected override IEnumerable<Node> GetReachableNodes()
         {

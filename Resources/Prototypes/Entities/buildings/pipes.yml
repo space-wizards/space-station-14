@@ -21,10 +21,7 @@
   id: VerticalPipe
   name: Vertical Pipe
   components:
-  - type: Sprite
-    sprite: Objects/Power/hv_cable.rsi
-    state: hvcable_0
-  - type: IconSmooth
-    base: hvcable_
-    key: hv_cables
   - type: NodeContainer
+    nodes:
+    - type: DirectionalNode
+      connectionDirection: Vertical

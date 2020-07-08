@@ -39,9 +39,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
 #pragma warning restore 649
 
-        public void ExposeData(ObjectSerializer serializer)
+        public virtual void ExposeData(ObjectSerializer serializer)
         {
-            throw new System.NotImplementedException();
+            serializer.DataField(ref _nodeGroupID, "groupID", NodeGroupID.Default);
         }
 
         public void OnContainerInitialize()
