@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Timers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Throw;
 using Content.Shared.Physics;
@@ -12,6 +13,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -37,6 +39,12 @@ namespace Content.Server.GameObjects.Components.Movement
         public float IntersectPercentage { get; set; } = 0.3f;
 
         /// <summary>
+        ///     Entities will only be slipped if their speed exceeds this limit.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float RequiredSlipSpeed { get; set; } = 0f;
+
+        /// <summary>
         ///     Path to the sound to be played when a mob slips.
         /// </summary>
         [ViewVariables]
@@ -49,8 +57,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
             collidable.Hard = false;
             var shape = collidable.PhysicsShapes[0];
-            shape.CollisionMask |= (int) CollisionGroup.MobImpassable;
-            shape.CollisionLayer = (int)CollisionGroup.None;
+            shape.CollisionLayer |= (int) CollisionGroup.MobImpassable;
+            shape.CollisionMask = (int)CollisionGroup.None;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -58,6 +66,7 @@ namespace Content.Server.GameObjects.Components.Movement
             base.ExposeData(serializer);
             serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 5f);
             serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
+            serializer.DataField(this, x => RequiredSlipSpeed, "requiredSlipSpeed", 0f);
         }
 
         public void CollideWith(IEntity collidedWith)
@@ -66,7 +75,11 @@ namespace Content.Server.GameObjects.Components.Movement
                 ||  _slipped.Contains(collidedWith.Uid)
                 ||  !collidedWith.TryGetComponent(out StunnableComponent stun)
                 ||  !collidedWith.TryGetComponent(out ICollidableComponent otherBody)
+                ||  !collidedWith.TryGetComponent(out PhysicsComponent otherPhysics)
                 ||  !Owner.TryGetComponent(out ICollidableComponent body))
+                return;
+
+            if (otherPhysics.LinearVelocity.Length < RequiredSlipSpeed)
                 return;
 
             var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
