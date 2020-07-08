@@ -29,9 +29,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _indices = indices;
         }
 
-        public void Initialize()
+        public void Initialize(IMapGrid grid)
         {
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(GridId);
             for (var x = 0; x < ChunkSize; x++)
             {
                 for (var y = 0; y < ChunkSize; y++)
