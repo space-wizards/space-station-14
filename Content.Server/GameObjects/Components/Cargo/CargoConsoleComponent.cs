@@ -1,9 +1,10 @@
-﻿using Content.Server.Cargo;
+﻿#nullable enable
+using Content.Server.Cargo;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -19,39 +20,43 @@ namespace Content.Server.GameObjects.Components.Cargo
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
 #pragma warning disable 649
-        [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager;
+        [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
 #pragma warning restore 649
 
         [ViewVariables]
         public int Points = 1000;
 
-        private BoundUserInterface _userInterface;
+        private BoundUserInterface _userInterface  = default!;
 
         [ViewVariables]
-        public GalacticMarketComponent Market { get; private set; }
-        [ViewVariables]
-        public CargoOrderDatabaseComponent Orders { get; private set; }
-
-        private CargoBankAccount _bankAccount;
+        public GalacticMarketComponent Market { get; private set; } = default!;
 
         [ViewVariables]
-        [CanBeNull]
-        public CargoBankAccount BankAccount
+        public CargoOrderDatabaseComponent Orders { get; private set; } = default!;
+
+        private CargoBankAccount? _bankAccount;
+
+        [ViewVariables]
+        public CargoBankAccount? BankAccount
         {
             get => _bankAccount;
             private set
             {
                 if (_bankAccount == value)
+                {
                     return;
+                }
+
                 if (_bankAccount != null)
                 {
                     _bankAccount.OnBalanceChange -= UpdateUIState;
                 }
 
                 _bankAccount = value;
+
                 if (value != null)
                 {
-                    _bankAccount.OnBalanceChange += UpdateUIState;
+                    value.OnBalanceChange += UpdateUIState;
                 }
 
                 UpdateUIState();
@@ -60,9 +65,9 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
-        private PowerReceiverComponent _powerReceiver;
+        private PowerReceiverComponent _powerReceiver = default!;
         private bool Powered => _powerReceiver.Powered;
-        private CargoConsoleSystem _cargoConsoleSystem;
+        private CargoConsoleSystem _cargoConsoleSystem = default!;
 
         public override void Initialize()
         {
@@ -97,8 +102,11 @@ namespace Content.Server.GameObjects.Components.Cargo
             {
                 case CargoConsoleAddOrderMessage msg:
                 {
-                    if (msg.Amount <= 0)
+                    if (msg.Amount <= 0 || _bankAccount == null)
+                    {
                         break;
+                    }
+
                     _cargoOrderDataManager.AddOrder(Orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId, msg.Amount, _bankAccount.Id);
                     break;
                 }
@@ -110,8 +118,12 @@ namespace Content.Server.GameObjects.Components.Cargo
                 case CargoConsoleApproveOrderMessage msg:
                 {
                     if (_requestOnly ||
-                        !Orders.Database.TryGetOrder(msg.OrderNumber, out var order))
+                        !Orders.Database.TryGetOrder(msg.OrderNumber, out var order) ||
+                        _bankAccount == null)
+                    {
                         break;
+                    }
+
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
                     if (product == null)
                         break;

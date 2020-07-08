@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -128,7 +128,7 @@ namespace Content.Server.Explosions
                 Shaded = false
             };
             entitySystemManager.GetEntitySystem<EffectSystem>().CreateParticle(message);
-            entitySystemManager.GetEntitySystem<AudioSystem>().PlayAtCoords("/Audio/effects/explosion.ogg", coords);
+            entitySystemManager.GetEntitySystem<AudioSystem>().PlayAtCoords("/Audio/Effects/explosion.ogg", coords);
 
             // Knock back cameras of all players in the area.
 

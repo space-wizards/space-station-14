@@ -52,10 +52,10 @@ namespace Content.Server.GameObjects.Components.Projectiles
             serializer.DataField(ref _collisionMask, "layers", (int) CollisionGroup.Opaque, WithFormat.Flags<CollisionLayer>());
             serializer.DataField(ref _damage, "damage", 10.0f);
             serializer.DataField(ref _damageType, "damageType", DamageType.Heat);
-            serializer.DataField(ref _spriteName, "spriteName", "Objects/Guns/Projectiles/laser.png");
+            serializer.DataField(ref _spriteName, "spriteName", "Objects/Weapons/Guns/Projectiles/laser.png");
             serializer.DataField(ref _muzzleFlash, "muzzleFlash", null);
             serializer.DataField(ref _impactFlash, "impactFlash", null);
-            serializer.DataField(ref _soundHitWall, "soundHitWall", "/Audio/Guns/Hits/laser_sear_wall.ogg");
+            serializer.DataField(ref _soundHitWall, "soundHitWall", "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
         }
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity hitEntity = null)

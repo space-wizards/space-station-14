@@ -7,26 +7,21 @@
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
-    sprite: Buildings/tables.rsi
-
+    sprite: Constructible/Structures/Tables/generic.rsi
   - type: Icon
-    sprite: Buildings/tables.rsi
+    sprite: Constructible/Structures/Tables/generic.rsi
     state: plain_preview
-
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       layer:
       - SmallImpassable
       - MobImpassable
-
   - type: SnapGrid
     offset: Center
-
   - type: IconSmooth
-    key: tables
+    key: generic
     base: solid_
-
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50
@@ -38,9 +33,11 @@
   parent: Table
   name: "wood table"
   components:
+  - type: Sprite
+    sprite: Constructible/Structures/Tables/wood.rsi
   - type: IconSmooth
+    key: wood
     base: wood_
-
   - type: Damageable
   - type: Destructible
     thresholdvalue: 50

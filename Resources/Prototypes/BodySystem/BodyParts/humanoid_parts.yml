@@ -2,7 +2,7 @@
   id: bodyPart.Torso.BasicHuman
   name: "human torso"
   plural: "human torsos"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/body_human.rsi
   rsiState: "torso_m"
   partType: Torso
   durability: 100
@@ -17,12 +17,11 @@
     - mechanism.Liver.BasicHuman
     - mechanism.Kidneys.BasicHuman
 
-
 - type: bodyPart
   id: bodyPart.Head.BasicHuman
   name: "human head"
   plural: "human heads"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/body_human.rsi
   rsiState: head_m
   partType: Head
   durability: 50
@@ -35,13 +34,11 @@
     - mechanism.Brain.BasicHuman
     - mechanism.Eyes.BasicHuman
 
-
-
 - type: bodyPart
   id: bodyPart.Arm.BasicHuman
   name: "human arm"
   plural: "human arms"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/body_human.rsi
   rsiState: r_arm
   partType: Arm
   durability: 40
@@ -54,13 +51,11 @@
     - !type:ArmLength
       length: 2.4
 
-
-
 - type: bodyPart
   id: bodyPart.Hand.BasicHuman
   name: "human hand"
   plural: "human hands"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/body_human.rsi
   rsiState: r_hand
   partType: Hand
   durability: 30
@@ -70,12 +65,11 @@
   compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
 
-
 - type: bodyPart
   id: bodyPart.Leg.BasicHuman
   name: "human leg"
   plural: "human legs"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/body_human.rsi
   rsiState: r_leg
   partType: Leg
   durability: 45
@@ -85,12 +79,11 @@
   compatibility: Biological
   surgeryDataType: BiologicalsurgeryDataType
 
-
 - type: bodyPart
   id: bodyPart.Foot.BasicHuman
   name: "human foot"
   plural: "human feet"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/body_human.rsi
   rsiState: r_foot
   partType: Foot
   durability: 30

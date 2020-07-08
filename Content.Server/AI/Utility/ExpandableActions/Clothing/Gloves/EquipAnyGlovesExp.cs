@@ -21,12 +21,8 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Gloves
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            if (!owner.TryGetComponent(out AiControllerComponent controller))
-            {
-                throw new InvalidOperationException();
-            }
 
-            foreach (var entity in context.GetState<InventoryState>().GetValue())
+            foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (entity.TryGetComponent(out ClothingComponent clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.GLOVES) != 0)

@@ -1,6 +1,6 @@
 - type: shader
   id: CooldownAnimation
   kind: source
-  path: "/Shaders/cooldown.swsl"
+  path: "/Textures/Shaders/cooldown.swsl"
   params:
     progress: 0

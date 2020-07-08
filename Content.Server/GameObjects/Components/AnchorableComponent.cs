@@ -1,8 +1,8 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;

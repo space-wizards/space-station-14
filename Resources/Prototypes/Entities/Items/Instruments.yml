@@ -19,14 +19,14 @@
   - type: Instrument
     program: 62
   - type: Sprite
-    sprite: Objects/Instruments/h_synthesizer.rsi
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/h_synthesizer.rsi
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/h_synthesizer.rsi
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
 
 
 - type: entity
@@ -37,14 +37,14 @@
   - type: Instrument
     program: 25
   - type: Sprite
-    sprite: Objects/Instruments/guitar.rsi
+    sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/guitar.rsi
+    sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/guitar.rsi
+    sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
   name: violin
@@ -54,14 +54,14 @@
   - type: Instrument
     program: 40
   - type: Sprite
-    sprite: Objects/Instruments/violin.rsi
+    sprite: Objects/Fun/Instruments/violin.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/violin.rsi
+    sprite: Objects/Fun/Instruments/violin.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/violin.rsi
+    sprite: Objects/Fun/Instruments/violin.rsi
 
 - type: entity
   name: trumpet
@@ -71,9 +71,9 @@
   - type: Instrument
     program: 56
   - type: Sprite
-    texture: Objects/Instruments/otherinstruments.rsi/trumpet.png
+    texture: Objects/Fun/Instruments/otherinstruments.rsi/trumpet.png
   - type: Icon
-    texture: Objects/Instruments/otherinstruments.rsi/trumpet.png
+    texture: Objects/Fun/Instruments/otherinstruments.rsi/trumpet.png
 
 - type: entity
   name: electric guitar
@@ -83,14 +83,14 @@
   - type: Instrument
     program: 27
   - type: Sprite
-    sprite: Objects/Instruments/eguitar.rsi
+    sprite: Objects/Fun/Instruments/eguitar.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/eguitar.rsi
+    sprite: Objects/Fun/Instruments/eguitar.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/eguitar.rsi
+    sprite: Objects/Fun/Instruments/eguitar.rsi
 
 - type: entity
   name: accordion
@@ -100,14 +100,14 @@
   - type: Instrument
     program: 21
   - type: Sprite
-    sprite: Objects/Instruments/accordion.rsi
+    sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/accordion.rsi
+    sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/accordion.rsi
+    sprite: Objects/Fun/Instruments/accordion.rsi
 
 - type: entity
   name: harmonica
@@ -117,14 +117,14 @@
   - type: Instrument
     program: 22
   - type: Sprite
-    sprite: Objects/Instruments/harmonica.rsi
+    sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/harmonica.rsi
+    sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/harmonica.rsi
+    sprite: Objects/Fun/Instruments/harmonica.rsi
 
 - type: entity
   name: recorder
@@ -134,14 +134,14 @@
   - type: Instrument
     program: 74
   - type: Sprite
-    sprite: Objects/Instruments/recorder.rsi
+    sprite: Objects/Fun/Instruments/recorder.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/recorder.rsi
+    sprite: Objects/Fun/Instruments/recorder.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/recorder.rsi
+    sprite: Objects/Fun/Instruments/recorder.rsi
 
 - type: entity
   name: trombone
@@ -151,14 +151,14 @@
   - type: Instrument
     program: 57
   - type: Sprite
-    sprite: Objects/Instruments/trombone.rsi
+    sprite: Objects/Fun/Instruments/trombone.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/trombone.rsi
+    sprite: Objects/Fun/Instruments/trombone.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/trombone.rsi
+    sprite: Objects/Fun/Instruments/trombone.rsi
 
 - type: entity
   name: saxophone
@@ -168,14 +168,14 @@
   - type: Instrument
     program: 67
   - type: Sprite
-    sprite: Objects/Instruments/saxophone.rsi
+    sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/saxophone.rsi
+    sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/saxophone.rsi
+    sprite: Objects/Fun/Instruments/saxophone.rsi
 
 - type: entity
   name: glockenspiel
@@ -185,14 +185,14 @@
   - type: Instrument
     program: 9
   - type: Sprite
-    sprite: Objects/Instruments/glockenspiel.rsi
+    sprite: Objects/Fun/Instruments/glockenspiel.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/glockenspiel.rsi
+    sprite: Objects/Fun/Instruments/glockenspiel.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/glockenspiel.rsi
+    sprite: Objects/Fun/Instruments/glockenspiel.rsi
 
 - type: entity
   name: banjo
@@ -202,14 +202,14 @@
   - type: Instrument
     program: 105
   - type: Sprite
-    sprite: Objects/Instruments/banjo.rsi
+    sprite: Objects/Fun/Instruments/banjo.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/banjo.rsi
+    sprite: Objects/Fun/Instruments/banjo.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/banjo.rsi
+    sprite: Objects/Fun/Instruments/banjo.rsi
     
 - type: entity
   name: gilded bike horn
@@ -221,11 +221,11 @@
     program: 1
     bank: 1
   - type: Sprite
-    sprite: Objects/Instruments/bike_horn.rsi
+    sprite: Objects/Fun/Instruments/bike_horn.rsi
     state: icon
   - type: Icon
-    sprite: Objects/Instruments/bike_horn.rsi
+    sprite: Objects/Fun/Instruments/bike_horn.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Instruments/bike_horn.rsi
+    sprite: Objects/Fun/Instruments/bike_horn.rsi

@@ -6,7 +6,7 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    texture: Buildings/TurrBase.png
+    texture: Constructible/Misc/TurrBase.png
 
 - type: entity
   id: TurretTopGun
@@ -17,11 +17,8 @@
   - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
-    texture: Buildings/TurrTop.png
+    texture: Constructible/Misc/TurrTop.png
     directional: false
-  - type: AiController
-    logic: AimShootLife
-    vision: 6.0
 
 - type: entity
   id: TurretTopLight
@@ -32,11 +29,8 @@
   - type: Collidable
   - type: Sprite
     drawdepth: WallMountedItems
-    texture: Buildings/TurrLamp.png
+    texture: Constructible/Misc/TurrLamp.png
     directional: false
-  - type: AiController
-    logic: AimShootLife
-    vision: 6.0
   - type: PointLight
     radius: 512
     mask: flashlight_mask

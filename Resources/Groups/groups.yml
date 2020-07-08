@@ -74,12 +74,15 @@
   - mindinfo
   - addrole
   - rmrole
+  - addoverlay
+  - rmoverlay
   - showtime
   - group
   - addai
   - warp
   - hostlogin
   - deleteewc
+  - asay
   - tilepry
   - anchor
   - unanchor
@@ -124,6 +127,8 @@
   - mindinfo
   - addrole
   - rmrole
+  - addoverlay
+  - rmoverlay
   - srvpopupmsg
   - group
   - showtime
@@ -151,6 +156,7 @@
   - warp
   - deleteewc
   - sudo
+  - asay
   - tilepry
   - anchor
   - unanchor

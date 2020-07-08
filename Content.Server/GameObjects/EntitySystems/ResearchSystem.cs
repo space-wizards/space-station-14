@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     public class ResearchSystem : EntitySystem
     {

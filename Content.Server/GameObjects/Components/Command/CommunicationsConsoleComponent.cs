@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Command;

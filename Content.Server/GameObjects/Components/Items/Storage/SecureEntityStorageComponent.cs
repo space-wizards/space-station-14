@@ -1,5 +1,5 @@
 using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
@@ -109,7 +109,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (CheckAccess(user)) return;
 
             Locked = false;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_off.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private void DoLock(IEntity user)
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             if (CheckAccess(user)) return;
 
             Locked = true;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/door_lock_on.ogg", Owner, AudioParams.Default.WithVolume(-5));
         }
 
         private bool CheckAccess(IEntity user)

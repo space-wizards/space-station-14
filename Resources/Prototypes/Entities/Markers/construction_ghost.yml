@@ -4,8 +4,6 @@
   components:
   - type: Sprite
     color: '#3F38'
-    layers:
-    - shader: unshaded
   - type: ConstructionGhost
   - type: Collidable
   - type: Clickable

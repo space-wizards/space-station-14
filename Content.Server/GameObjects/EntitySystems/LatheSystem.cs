@@ -2,7 +2,7 @@ using Content.Server.GameObjects.Components.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     public class LatheSystem : EntitySystem
     {

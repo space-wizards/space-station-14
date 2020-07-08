@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,8 +13,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
-
-#nullable enable
 
 namespace Content.Client.UserInterface
 {

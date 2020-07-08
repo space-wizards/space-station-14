@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces;
@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components
         private void Rustle()
         {
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .PlayFromEntity("/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

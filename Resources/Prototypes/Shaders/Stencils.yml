@@ -1,7 +1,7 @@
 - type: shader
   id: StencilClear
   kind: source
-  path: "/Shaders/stencil_clear.swsl"
+  path: "/Textures/Shaders/stencil_clear.swsl"
   stencil:
     ref: 0
     op: Replace
@@ -10,7 +10,7 @@
 - type: shader
   id: StencilMask
   kind: source
-  path: "/Shaders/stencil_mask.swsl"
+  path: "/Textures/Shaders/stencil_mask.swsl"
   stencil:
     ref: 1
     op: Replace
