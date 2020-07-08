@@ -21,9 +21,9 @@
     offset: Center
   - type: Sprite
     netsync: true
-    sprite: Buildings/conveyor.rsi
+    sprite: Constructible/Power/conveyor.rsi
     state: conveyor_started_cw
   - type: Icon
-    sprite: Buildings/conveyor.rsi
+    sprite: Constructible/Power/conveyor.rsi
     state: conveyor_started_cw
   - type: Conveyor

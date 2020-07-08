@@ -24,10 +24,10 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-s
   - type: Icon
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-s
   - type: DisposalTransit
   - type: Appearance
@@ -44,10 +44,10 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-t
   - type: Icon
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-t
   - type: DisposalEntry
   - type: Appearance
@@ -67,12 +67,12 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     layers:
     - state: condisposal
       map: ["enum.DisposalUnitVisualLayers.Base"]
   - type: Icon
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: condisposal
   - type: PowerReceiver
   - type: DisposalUnit
@@ -114,10 +114,10 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1
   - type: Icon
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1
   - type: DisposalJunction
     angles:
@@ -138,10 +138,10 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-y
   - type: Icon
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-y
   - type: DisposalJunction
     angles:
@@ -162,10 +162,10 @@
   components:
   - type: Sprite
     drawdepth: BelowFloor
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-c
   - type: Icon
-    sprite: Buildings/disposal.rsi
+    sprite: Constructible/Power/disposal.rsi
     state: conpipe-c
   - type: DisposalBend
   - type: Appearance

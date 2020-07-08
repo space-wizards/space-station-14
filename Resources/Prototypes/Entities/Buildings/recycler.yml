@@ -21,12 +21,12 @@
     offset: Center
   - type: Sprite
     netsync: true
-    sprite: Buildings/recycling.rsi
+    sprite: Constructible/Power/recycling.rsi
     layers:
     - state: grinder-o1
       map: ["enum.RecyclerVisualLayers.Bloody"]
   - type: Icon
-    sprite: Buildings/recycling.rsi
+    sprite: Constructible/Power/recycling.rsi
     state: grinder-o0
   - type: Appearance
     visuals:
