@@ -31,12 +31,14 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [Serializable, NetSerializable]
         protected sealed class BuckleComponentState : ComponentState
         {
-            public BuckleComponentState(bool buckled) : base(ContentNetIDs.BUCKLE)
+            public BuckleComponentState(bool buckled, int? drawDepth) : base(ContentNetIDs.BUCKLE)
             {
                 Buckled = buckled;
+                DrawDepth = drawDepth;
             }
 
             public bool Buckled { get; }
+            public int? DrawDepth;
         }
 
         [Serializable, NetSerializable]

@@ -24,6 +24,7 @@ using Robust.Shared.Audio;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
