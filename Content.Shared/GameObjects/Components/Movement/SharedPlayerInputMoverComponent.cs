@@ -188,7 +188,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 _lastInputSubTick = 0;
             }
 
-            if (_lastInputSubTick >= subTick)
+            if (subTick >= _lastInputSubTick)
             {
                 var fraction = (subTick - _lastInputSubTick) / (float) ushort.MaxValue;
 
