@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct
+    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private IEntitySystemManager _entitySystemManager;
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Fuel == 0)
                 ToggleWelderStatus();
 
-            Dirty();
+            //Dirty();
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
@@ -206,6 +206,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
             chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
             return SuicideKind.Brute;
+        }
+
+        public void SolutionChanged(SolutionChangeEventArgs eventArgs)
+        {
+            Dirty();
         }
     }
 }
