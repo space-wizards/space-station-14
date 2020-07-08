@@ -72,6 +72,8 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables]
         protected override bool Buckled => BuckledTo != null;
 
+        public bool ContainerChanged { get; private set; }
+
         [ViewVariables]
         public int Size => _size;
 
@@ -83,6 +85,30 @@ namespace Content.Server.GameObjects.Components.Mobs
                     Buckled
                         ? BuckledTo!.BuckledIcon
                         : "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+            }
+        }
+
+        private void ReAttach(StrapComponent strap)
+        {
+            var ownTransform = Owner.Transform;
+            var strapTransform = strap.Owner.Transform;
+
+            ownTransform.GridPosition = strapTransform.GridPosition;
+            ownTransform.AttachParent(strapTransform);
+
+            switch (strap.Position)
+            {
+                case StrapPosition.None:
+                    ownTransform.WorldRotation = strapTransform.WorldRotation;
+                    break;
+                case StrapPosition.Stand:
+                    StandingStateHelper.Standing(Owner);
+                    ownTransform.WorldRotation = strapTransform.WorldRotation;
+                    break;
+                case StrapPosition.Down:
+                    StandingStateHelper.Down(Owner);
+                    ownTransform.WorldRotation = Angle.South;
+                    break;
             }
         }
 
@@ -176,26 +202,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 appearance.SetData(BuckleVisuals.Buckled, true);
             }
 
-            var ownTransform = Owner.Transform;
-            var strapTransform = strap.Owner.Transform;
-
-            ownTransform.GridPosition = strapTransform.GridPosition;
-            ownTransform.AttachParent(strapTransform);
-
-            switch (strap.Position)
-            {
-                case StrapPosition.None:
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
-                    break;
-                case StrapPosition.Stand:
-                    StandingStateHelper.Standing(Owner);
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
-                    break;
-                case StrapPosition.Down:
-                    StandingStateHelper.Down(Owner);
-                    ownTransform.WorldRotation = Angle.South;
-                    break;
-            }
+            ReAttach(strap);
 
             BuckledTo = strap;
             BuckleStatus();
@@ -283,14 +290,38 @@ namespace Content.Server.GameObjects.Components.Mobs
             return TryBuckle(user, to);
         }
 
-        private void InsertIntoContainer(EntInsertedIntoContainerMessage message)
+        private void InsertIntoContainer(ContainerModifiedMessage message)
         {
             if (message.Entity != Owner)
             {
                 return;
             }
 
-            TryUnbuckle(Owner, true);
+            ContainerChanged = true;
+        }
+
+        public void Update()
+        {
+            if (!ContainerChanged || BuckledTo == null)
+            {
+                return;
+            }
+
+            var contained = ContainerHelpers.TryGetContainer(Owner, out var ownContainer);
+            var strapContained = ContainerHelpers.TryGetContainer(BuckledTo.Owner, out var strapContainer);
+
+            if (contained != strapContained || ownContainer != strapContainer)
+            {
+                TryUnbuckle(Owner, true);
+                return;
+            }
+
+            if (!contained && !strapContained)
+            {
+                ReAttach(BuckledTo);
+            }
+
+            ContainerChanged = false;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -311,6 +342,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.Initialize();
 
             _entityManager.EventBus.SubscribeEvent<EntInsertedIntoContainerMessage>(EventSource.Local, this, InsertIntoContainer);
+            _entityManager.EventBus.SubscribeEvent<EntRemovedFromContainerMessage>(EventSource.Local, this, InsertIntoContainer);
         }
 
         protected override void Startup()
@@ -331,7 +363,8 @@ namespace Content.Server.GameObjects.Components.Mobs
                 strap.Remove(this);
             }
 
-            BuckledTo = null;
+            TryUnbuckle(Owner, true);
+
             _buckleTime = default;
             BuckleStatus();
         }
