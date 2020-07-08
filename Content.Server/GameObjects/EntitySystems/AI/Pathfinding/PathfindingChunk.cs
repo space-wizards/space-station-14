@@ -29,9 +29,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _indices = indices;
         }
 
-        public void Initialize()
+        public void Initialize(IMapGrid grid)
         {
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(GridId);
             for (var x = 0; x < ChunkSize; x++)
             {
                 for (var y = 0; y < ChunkSize; y++)
@@ -155,12 +154,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             var chunkY = tile.Y - _indices.Y;
 
             return _nodes[chunkX, chunkY];
-        }
-
-        public void UpdateNode(TileRef tile)
-        {
-            var node = GetNode(tile);
-            node.UpdateTile(tile);
         }
 
         private void CreateNode(TileRef tile, PathfindingChunk parent = null)
