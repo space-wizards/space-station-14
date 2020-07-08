@@ -193,7 +193,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (Fuel == 0)
                 ToggleWelderStatus();
 
-            //Dirty();
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
