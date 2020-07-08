@@ -246,18 +246,12 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool ToggleBuckle(IEntity user, IEntity to)
         {
-            if (BuckledTo == null)
-            {
-                return TryBuckle(user, to);
-            }
-            else if (BuckledTo.Owner == to)
+            if (BuckledTo?.Owner == to)
             {
                 return TryUnbuckle(user);
             }
-            else
-            {
-                return false;
-            }
+
+            return TryBuckle(user, to);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
