@@ -137,12 +137,15 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             var strapPosition = strap.Owner.Transform.MapPosition;
 
-            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range) ||
-                ContainerHelpers.IsInContainer(Owner))
+            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You can't reach there!"));
                 return false;
+            }
+
+            if (ContainerHelpers.IsInContainer(Owner))
+            {
+                _notifyManager.PopupMessage(strap.Owner, user,
+                    Loc.GetString("You can't reach there!"));
             }
 
             if (!user.HasComponent<HandsComponent>())
