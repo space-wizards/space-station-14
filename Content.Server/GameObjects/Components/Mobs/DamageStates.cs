@@ -32,6 +32,8 @@ namespace Content.Server.GameObjects
     {
         public void EnterState(IEntity entity)
         {
+            entity.TryGetComponent(out AppearanceComponent appearanceComponent);
+            appearanceComponent?.SetData(DamageStateVisuals.State, DamageStateVisualData.Normal);
         }
 
         public void ExitState(IEntity entity)
@@ -111,6 +113,8 @@ namespace Content.Server.GameObjects
             if(entity.TryGetComponent(out StunnableComponent stun))
                 stun.CancelAll();
 
+            entity.TryGetComponent(out AppearanceComponent appearanceComponent);
+            appearanceComponent?.SetData(DamageStateVisuals.State, DamageStateVisualData.Crit);
             StandingStateHelper.Down(entity);
         }
 
@@ -193,6 +197,8 @@ namespace Content.Server.GameObjects
                 stun.CancelAll();
 
             StandingStateHelper.Down(entity);
+            entity.TryGetComponent(out AppearanceComponent appearanceComponent);
+            appearanceComponent?.SetData(DamageStateVisuals.State, DamageStateVisualData.Dead);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {
