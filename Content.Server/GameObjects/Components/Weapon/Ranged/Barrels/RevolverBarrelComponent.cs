@@ -172,17 +172,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// Takes a projectile out if possible
         /// IEnumerable just to make supporting shotguns saner
         /// </summary>
-        /// <param name="spawnAt"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(MapCoordinates spawnAt)
+        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
-                bullet = ammoComponent.TakeBullet(spawnAt);
+                bullet = ammoComponent.TakeBullet(spawnAtGrid, spawnAtMap);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = null;

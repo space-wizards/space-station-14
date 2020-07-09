@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(MapCoordinates spawnAt)
+        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             if (BoltOpen)
             {
@@ -193,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
+            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAtGrid, spawnAtMap);
         }
 
         private void Cycle(bool manual = false)
