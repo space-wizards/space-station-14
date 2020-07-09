@@ -209,7 +209,7 @@ namespace Content.Server.GameTicking
                 string ID = args[0];
                 var positions = ticker.GetAvailablePositions();
 
-                if(positions.GetValueOrDefault(ID, 0) == 0)
+                if(positions.GetValueOrDefault(ID, 0) == 0) //n < 0 is treated as infinite
                 {
                     var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
                     shell.SendText(player, $"{jobPrototype.Name} has no available slots.");
