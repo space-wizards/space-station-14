@@ -3,8 +3,10 @@ using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -13,6 +15,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
         private DamageStateVisualData _data = DamageStateVisualData.Normal;
         private Dictionary<DamageStateVisualData, string> _stateMap = new Dictionary<DamageStateVisualData,string>();
+        private int? _originalDrawDepth = null;
         
         public override void LoadData(YamlMappingNode node)
         {
@@ -49,7 +52,22 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             _data = data;
 
-            sprite.LayerSetState(DamageStateVisualLayers.Base, _stateMap[_data]);
+            if (_stateMap.TryGetValue(_data, out var state))
+            {
+                sprite.LayerSetState(DamageStateVisualLayers.Base, state);
+            }
+
+            // So they don't draw over mobs anymore
+            if (_data == DamageStateVisualData.Dead)
+            {
+                _originalDrawDepth = sprite.DrawDepth;
+                sprite.DrawDepth = (int) DrawDepth.FloorObjects;
+            } 
+            else if (_originalDrawDepth != null)
+            {
+                sprite.DrawDepth = _originalDrawDepth.Value;
+                _originalDrawDepth = null;
+            }
         }
     }
 

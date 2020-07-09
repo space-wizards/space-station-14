@@ -17,8 +17,10 @@
   - type: InteractionOutline
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Species/xeno_hunter.rsi
-    state: running
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+      sprite: Mobs/Species/xeno_hunter.rsi
   - type: Icon
     sprite: Mobs/Species/xeno_hunter.rsi
     state: standing
