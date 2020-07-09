@@ -5,6 +5,7 @@ using Content.Server.Throw;
 using Content.Shared.Audio;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -73,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void CollideWith(IEntity collidedWith)
         {
-            if (Owner.Transform.ParentUid == collidedWith.Uid
+            if (ContainerHelpers.IsInContainer(Owner)
                 ||  _slipped.Contains(collidedWith.Uid)
                 ||  !collidedWith.TryGetComponent(out StunnableComponent stun)
                 ||  !collidedWith.TryGetComponent(out ICollidableComponent otherBody)
