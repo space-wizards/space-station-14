@@ -287,7 +287,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
                     var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(_mapManager)).LengthSquared;
-                    InteractAfter(player, item, coordinates, distSqrt > InteractionRangeSquared);
+                    InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
                 return;

@@ -58,7 +58,8 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public GridCoordinates ClickLocation { get; }
 
         /// <summary>
-        /// Is the click location close enough to reach by the player?
+        /// Is the click location close enough to reach by the player? This does not check for obstructions, just that the target is within
+        /// reach radius around the user.
         /// </summary>
         public bool CanReach { get; }
 
