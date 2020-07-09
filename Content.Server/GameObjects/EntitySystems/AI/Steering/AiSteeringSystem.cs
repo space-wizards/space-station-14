@@ -10,6 +10,7 @@ using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -319,7 +320,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 return SteeringStatus.Pending;
             }
             
-            var ignoredCollision = new List<IEntity>();
+            var ignoredCollision = new List<EntityUid>();
             // Check if the target entity has moved - If so then re-path
             // TODO: Patch the path from the target's position back towards us, stopping if it ever intersects the current path
             // Probably need a separate "PatchPath" job
@@ -338,7 +339,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     RequestPath(entity, steeringRequest);
                 }
                 
-                ignoredCollision.Add(entitySteer.Target);
+                ignoredCollision.Add(entitySteer.Target.Uid);
             }
 
             HandleStuck(entity);
@@ -596,9 +597,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="direction">entity's travel direction</param>
         /// <param name="ignoredTargets"></param>
         /// <returns></returns>
-        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
+        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<EntityUid> ignoredTargets)
         {
-            if (direction == Vector2.Zero || !entity.HasComponent<CollidableComponent>())
+            if (direction == Vector2.Zero || !entity.TryGetComponent(out CollidableComponent collidableComponent))
             {
                 return Vector2.Zero;
             }
@@ -606,6 +607,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // We'll check tile-by-tile
             // Rewriting this frequently so not many comments as they'll go stale
             // I realise this is bad so please rewrite it ;-;
+            var entityCollisionMask = collidableComponent.CollisionMask;
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
@@ -625,10 +627,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 var node = _pathfindingSystem.GetNode(tile);
                 // Assume the immovables have already been checked
-                foreach (var uid in node.PhysicsUids)
+                foreach (var (uid, layer) in node.PhysicsLayers)
                 {
-                    // Ignore myself / my target if applicable
-                    if (uid == entity.Uid || ignoredTargets.Contains(entity)) continue;
+                    // Ignore myself / my target if applicable / if my mask doesn't collide
+                    if (uid == entity.Uid || ignoredTargets.Contains(uid) || (entityCollisionMask & layer) == 0) continue;
                     // God there's so many ways to do this
                     // err for now we'll just assume the first entity is the center and just add a vector for it
                     var collisionEntity = _entityManager.GetEntity(uid);
