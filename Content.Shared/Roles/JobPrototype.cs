@@ -35,7 +35,7 @@ namespace Content.Shared.Jobs
         /// <summary>
         ///     The total amount of positions available.
         /// </summary>
-        public int TotalPositions { get; set; }
+        public int TotalPositions { get; private set; }
 
         public string StartingGear { get; private set; }
 

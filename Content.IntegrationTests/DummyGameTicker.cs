@@ -109,5 +109,10 @@ namespace Content.IntegrationTests
         {
             return false;
         }
+
+        public Dictionary<string, int> GetAvailablePositions()
+        {
+            return new Dictionary<string, int>();
+        }
     }
 }

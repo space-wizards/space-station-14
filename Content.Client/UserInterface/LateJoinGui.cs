@@ -55,6 +55,7 @@ namespace Robust.Client.UserInterface.CustomControls
                 {
                     JobId = job.ID
                 };
+
                 var jobSelector = new HBoxContainer
                 {
                     SizeFlagsHorizontal = SizeFlags.FillExpand
@@ -68,7 +69,7 @@ namespace Robust.Client.UserInterface.CustomControls
 
                 if (job.Icon != null)
                 {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/job_icons.rsi"), job.Icon);
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
                     icon.Texture = specifier.Frame0();
                 }
                 jobSelector.AddChild(icon);

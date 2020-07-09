@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -766,7 +766,6 @@ namespace Content.Server.GameTicking
             }
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            jobPrototype.TotalPositions--;
             var job = new Job(data.Mind, jobPrototype);
             data.Mind.AddRole(job);
 

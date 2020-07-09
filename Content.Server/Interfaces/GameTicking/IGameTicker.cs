@@ -50,5 +50,7 @@ namespace Content.Server.Interfaces.GameTicking
         bool TogglePause();
 
         bool DelayStart(TimeSpan time);
+
+        Dictionary<string, int> GetAvailablePositions();
     }
 }

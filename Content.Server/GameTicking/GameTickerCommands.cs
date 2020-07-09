@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
@@ -206,9 +207,11 @@ namespace Content.Server.GameTicking
             else if(ticker.RunLevel == GameRunLevel.InRound)
             {
                 string ID = args[0];
-                var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
-                if(jobPrototype.TotalPositions == 0)
+                var positions = ticker.GetAvailablePositions();
+
+                if(positions.GetValueOrDefault(ID, 0) == 0)
                 {
+                    var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
                     shell.SendText(player, $"{jobPrototype.Name} has no available slots.");
                     return;
                 }
