@@ -52,7 +52,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         private TimeSpan _lastFire;
 
         public abstract IEntity PeekAmmo();
-        public abstract IEntity TakeProjectile(GridCoordinates spawnAt);
+        public abstract IEntity TakeProjectile(MapCoordinates spawnAt);
 
         // Recoil / spray control
         private Angle _minAngle;
@@ -189,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile(shooter.Transform.GridPosition);
+            var projectile = TakeProjectile(shooter.Transform.MapPosition);
             if (projectile == null)
             {
                 soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.GridPosition);

@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <param name="spawnAt"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(MapCoordinates spawnAt)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;

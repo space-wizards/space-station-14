@@ -137,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return ammo;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(MapCoordinates spawnAt)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 

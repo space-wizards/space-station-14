@@ -184,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(MapCoordinates spawnAt)
         {
             if (BoltOpen)
             {

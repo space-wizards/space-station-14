@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet(GridCoordinates spawnAt)
+        public IEntity TakeBullet(MapCoordinates spawnAt)
         {
             if (_ammoIsProjectile)
             {
@@ -167,7 +167,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         Magnum,
         AntiMaterial,
         Shotgun,
-        Cap, 
+        Cap,
         Rocket,
         Dart, // Placeholder
         Grenade,
