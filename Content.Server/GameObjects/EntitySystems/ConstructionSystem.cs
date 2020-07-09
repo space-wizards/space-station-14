@@ -78,6 +78,10 @@ namespace Content.Server.GameObjects.EntitySystems
             if(msg.Handled)
                 return;
 
+            // You can only construct/deconstruct things within reach
+            if(!msg.CanReach)
+                return;
+
             var targetEnt = msg.Attacked;
             var handEnt = msg.ItemInHand;
 
@@ -156,7 +160,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 else // replace ent with intermediate
                 {
                     // Spawn frame
-                    var frame = EntityManager.SpawnEntity("structureconstructionframe", targetEntPos);
+                    var frame = SpawnCopyTransform("structureconstructionframe", targetEnt.Transform);
                     var construction = frame.GetComponent<ConstructionComponent>();
                     SetupComponent(construction, prototype);
                     construction.Stage = prototype.Stages.Count - 2;
@@ -185,12 +189,20 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
+        private IEntity SpawnCopyTransform(string prototypeId, ITransformComponent toReplace)
+        {
+            var frame = EntityManager.SpawnEntity(prototypeId, toReplace.MapPosition);
+            frame.Transform.WorldRotation = toReplace.WorldRotation;
+            frame.Transform.ParentUid = toReplace.ParentUid;
+            return frame;
+        }
+
         private static void SetupDeconIntermediateSprite(ConstructionComponent constructionComponent, ConstructionPrototype prototype)
         {
             if(!constructionComponent.Owner.TryGetComponent<SpriteComponent>(out var spriteComp))
                 return;
 
-            for (var i = prototype.Stages.Count - 1; i < 0; i--)
+            for (var i = prototype.Stages.Count - 1; i >= 0; i--)
             {
                 if (prototype.Stages[i].Icon != null)
                 {
@@ -331,12 +343,12 @@ namespace Content.Server.GameObjects.EntitySystems
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.
-                var ent = EntityManager.SpawnEntity(prototype.Result, placingEnt.Transform.GridPosition);
+                var ent = SpawnCopyTransform(prototype.Result, placingEnt.Transform);
                 hands.PutInHandOrDrop(ent.GetComponent<ItemComponent>());
             }
             else
             {
-                var frame = EntityManager.SpawnEntity("structureconstructionframe", placingEnt.Transform.GridPosition);
+                var frame = SpawnCopyTransform("structureconstructionframe", placingEnt.Transform);
                 var construction = frame.GetComponent<ConstructionComponent>();
                 SetupComponent(construction, prototype);
 
@@ -379,7 +391,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (constructionComponent.Stage == constructPrototype.Stages.Count - 1)
                 {
                     // Oh boy we get to finish construction!
-                    var ent = EntityManager.SpawnEntity(constructPrototype.Result, transformComponent.GridPosition);
+                    var ent = SpawnCopyTransform(constructPrototype.Result, transformComponent);
                     ent.Transform.LocalRotation = transformComponent.LocalRotation;
 
                     ReplaceInContainerOrGround(constructEntity, ent);
