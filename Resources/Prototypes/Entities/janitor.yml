@@ -124,60 +124,42 @@
     - type: Slippery
       paralyzeTime: 2.5
 
+
 - type: entity
   name: soap
   id: SoapNT
-  parent: BaseItem
+  parent: Soap
   description: A Nanotrasen brand bar of soap. Smells of phoron.
   components:
     - type: Sprite
-      sprite: Objects/Specific/Janitorial/soap.rsi
       state: soapnt
 
     - type: Icon
-      sprite: Objects/Specific/Janitorial/soap.rsi
       state: soapnt
-
-    - type: Item
-      sprite: Objects/Specific/Janitorial/soap.rsi
-
-    - type: Slippery
 
 - type: entity
   name: soap
   id: SoapDeluxe
-  parent: BaseItem
+  parent: Soap
   description: A deluxe Waffle Co. brand bar of soap. Smells of condoms.
   components:
     - type: Sprite
-      sprite: Objects/Specific/Janitorial/soap.rsi
       state: soapdeluxe
 
     - type: Icon
-      sprite: Objects/Specific/Janitorial/soap.rsi
       state: soapdeluxe
-
-    - type: Item
-      sprite: Objects/Specific/Janitorial/soap.rsi
-
-    - type: Slippery
 
 - type: entity
   name: soap
   id: SoapSyndie
-  parent: BaseItem
+  parent: Soap
   description: An untrustworthy bar of soap. Smells of fear.
   components:
     - type: Sprite
-      sprite: Objects/Specific/Janitorial/soap.rsi
       state: soapsyndie
 
     - type: Icon
-      sprite: Objects/Specific/Janitorial/soap.rsi
       state: soapsyndie
-
-    - type: Item
-      sprite: Objects/Specific/Janitorial/soap.rsi
 
     - type: Slippery
       paralyzeTime: 5
