@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA 3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at a407fc1f5c25cbce8b653c553f53be294d15b071",
+    "states": [
+        {
+            "name": "soap",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapdeluxe",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapnt",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "soapsyndie",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        }
+    ]
+}
