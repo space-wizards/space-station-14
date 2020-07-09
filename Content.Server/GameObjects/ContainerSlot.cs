@@ -10,7 +10,18 @@ namespace Content.Server.GameObjects
     public class ContainerSlot : BaseContainer
     {
         [ViewVariables]
-        public IEntity ContainedEntity { get; private set; } = null;
+        public IEntity ContainedEntity
+        {
+            get => _containedEntity;
+            private set
+            {
+                _containedEntity = value;
+                _containedArray[0] = value;
+            }
+        }
+
+        private readonly IEntity[] _containedArray = new IEntity[1];
+        private IEntity _containedEntity;
 
         /// <inheritdoc />
         public override IReadOnlyCollection<IEntity> ContainedEntities
@@ -22,7 +33,7 @@ namespace Content.Server.GameObjects
                     return Array.Empty<IEntity>();
                 }
 
-                return new List<IEntity> {ContainedEntity}.AsReadOnly();
+                return _containedArray;
             }
         }
 
