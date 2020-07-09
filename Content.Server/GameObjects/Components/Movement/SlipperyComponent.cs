@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Timers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Throw;
+using Content.Shared.Audio;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     How many seconds the mob will be paralyzed for.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float ParalyzeTime { get; set; } = 5f;
+        public float ParalyzeTime { get; set; } = 3f;
 
         /// <summary>
         ///     Percentage of shape intersection for a slip to occur.
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Movement
         ///     Path to the sound to be played when a mob slips.
         /// </summary>
         [ViewVariables]
-        public string SlipSound { get; set; }
+        public string SlipSound { get; set; } = "/Audio/Effects/slip.ogg";
 
         public override void Initialize()
         {
@@ -64,9 +65,10 @@ namespace Content.Server.GameObjects.Components.Movement
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 5f);
+            serializer.DataField(this, x => ParalyzeTime, "paralyzeTime", 3f);
             serializer.DataField(this, x  => IntersectPercentage, "intersectPercentage", 0.3f);
             serializer.DataField(this, x => RequiredSlipSpeed, "requiredSlipSpeed", 0f);
+            serializer.DataField(this, x => SlipSound, "slipSound", "/Audio/Effects/slip.ogg");
         }
 
         public void CollideWith(IEntity collidedWith)
@@ -79,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 ||  !Owner.TryGetComponent(out ICollidableComponent body))
                 return;
 
-            if (otherPhysics.LinearVelocity.Length < RequiredSlipSpeed)
+            if (otherPhysics.LinearVelocity.Length < RequiredSlipSpeed || stun.KnockedDown)
                 return;
 
             var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -91,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Movement
             _slipped.Add(collidedWith.Uid);
 
             if(!string.IsNullOrEmpty(SlipSound))
-                EntitySystem.Get<AudioSystem>().PlayFromEntity(SlipSound, Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(SlipSound, Owner, AudioHelpers.WithVariation(0.2f));
         }
 
         public void Update(float frameTime)
