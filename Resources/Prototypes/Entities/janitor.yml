@@ -163,3 +163,33 @@
 
     - type: Slippery
       paralyzeTime: 5
+
+- type: entity
+  name: soap
+  id: SoapHomemade
+  parent: Soap
+  description: A homemade bar of soap. Smells of... well....
+  components:
+    - type: Sprite
+      state: soapgibs
+
+    - type: Icon
+      state: soapgibs
+
+    - type: Slippery
+      paralyzeTime: 2
+
+- type: entity
+  name: omega soap
+  id: SoapOmega
+  parent: Soap
+  description: The most advanced soap known to mankind. Smells of bluespace.
+  components:
+    - type: Sprite
+      state: soapomega
+
+    - type: Icon
+      state: soapomega
+
+    - type: Slippery
+      paralyzeTime: 7
