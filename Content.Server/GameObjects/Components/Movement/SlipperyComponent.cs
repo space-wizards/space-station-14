@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             collidable.Hard = false;
             var shape = collidable.PhysicsShapes[0];
-            shape.CollisionLayer |= (int) CollisionGroup.MobImpassable;
+            shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
             shape.CollisionMask = (int)CollisionGroup.None;
         }
 
