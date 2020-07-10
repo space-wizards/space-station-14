@@ -103,8 +103,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
                 var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
                 label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
-                             $"Nodes traversed: {message.ClosedTiles.Count}\n" +
-                             $"Nodes per ms: {message.ClosedTiles.Count / (message.TimeTaken * 1000)}";
+                             $"Nodes traversed: {message.CameFrom.Count}\n" +
+                             $"Nodes per ms: {message.CameFrom.Count / (message.TimeTaken * 1000)}";
             }
         }
 
