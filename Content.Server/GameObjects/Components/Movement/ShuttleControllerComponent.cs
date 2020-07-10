@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         /// <summary>
         ///     The entity that's currently controlling this component.
-        ///     Changed from <see cref="AddController"/> and <see cref="RemoveController"/>
+        ///     Changed from <see cref="SetController"/> and <see cref="RemoveController"/>
         /// </summary>
         private IEntity? _controller;
 
@@ -134,7 +134,11 @@ namespace Content.Server.GameObjects.Components.Movement
             return result;
         }
 
-        private void AddController(IEntity entity)
+        /// <summary>
+        ///     Changes the entity currently controlling this shuttle controller
+        /// </summary>
+        /// <param name="entity">The entity to set</param>
+        private void SetController(IEntity entity)
         {
             if (_controller != null ||
                 !entity.TryGetComponent(out MindComponent mind) ||
@@ -172,6 +176,11 @@ namespace Content.Server.GameObjects.Components.Movement
             _controller = null;
         }
 
+        /// <summary>
+        ///     Updates the state of an entity that is no longer controlling this shuttle controller.
+        ///     Called from <see cref="RemoveController"/>
+        /// </summary>
+        /// <param name="entity">The entity to update</param>
         private void UpdateRemovedEntity(IEntity entity)
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
@@ -196,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (buckled)
             {
-                AddController(entity);
+                SetController(entity);
             }
             else
             {
