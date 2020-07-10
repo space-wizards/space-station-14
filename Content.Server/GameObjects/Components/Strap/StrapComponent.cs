@@ -29,9 +29,6 @@ namespace Content.Server.GameObjects.Components.Strap
         /// </summary>
         private HashSet<IEntity> BuckledEntities { get; set; }
 
-        /// <summary>
-        /// The change in position to the strapped mob
-        /// </summary>
         public override StrapPosition Position
         {
             get => _position;
@@ -84,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Strap
         }
 
         /// <summary>
+        /// DO NOT CALL THIS DIRECTLY.
         /// Adds a buckled entity. Called from <see cref="BuckleComponent.TryBuckle"/>
         /// </summary>
         /// <param name="buckle">The component to add</param>
@@ -108,6 +106,8 @@ namespace Content.Server.GameObjects.Components.Strap
                 appearance.SetData(StrapVisuals.RotationAngle, _rotation);
             }
 
+            SendMessage(new StrapMessage(buckle.Owner, Owner));
+
             return true;
         }
 
@@ -120,6 +120,7 @@ namespace Content.Server.GameObjects.Components.Strap
             if (BuckledEntities.Remove(buckle.Owner))
             {
                 OccupiedSize -= buckle.Size;
+                SendMessage(new UnStrapMessage(buckle.Owner, Owner));
             }
         }
 

@@ -72,12 +72,12 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables]
         protected override bool Buckled => BuckledTo != null;
 
-        public bool ContainerChanged { get; private set; }
+        private bool ContainerChanged { get; set; }
 
         [ViewVariables]
         public int Size => _size;
 
-        private void BuckleStatus()
+        private void UpdateStatus()
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
@@ -213,7 +213,9 @@ namespace Content.Server.GameObjects.Components.Mobs
             ReAttach(strap);
 
             BuckledTo = strap;
-            BuckleStatus();
+            UpdateStatus();
+
+            SendMessage(new BuckleMessage(Owner, to));
 
             return true;
         }
@@ -249,19 +251,13 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
             }
 
-            if (BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
-            {
-                strap.Remove(this);
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(strap.UnbuckleSound, Owner);
-            }
-
             if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
             {
                 Owner.Transform.DetachParent();
                 Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
             }
 
+            var oldBuckledTo = BuckledTo;
             BuckledTo = null;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -283,7 +279,16 @@ namespace Content.Server.GameObjects.Components.Mobs
                 species.CurrentDamageState.EnterState(Owner);
             }
 
-            BuckleStatus();
+            UpdateStatus();
+
+            if (oldBuckledTo.Owner.TryGetComponent(out StrapComponent strap))
+            {
+                strap.Remove(this);
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(strap.UnbuckleSound, Owner);
+            }
+
+            SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
             return true;
         }
@@ -356,7 +361,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         protected override void Startup()
         {
             base.Startup();
-            BuckleStatus();
+            UpdateStatus();
         }
 
         public override void OnRemove()
@@ -374,7 +379,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             TryUnbuckle(Owner, true);
 
             _buckleTime = default;
-            BuckleStatus();
+            UpdateStatus();
         }
 
         public override ComponentState GetComponentState()

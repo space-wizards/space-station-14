@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -93,6 +94,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                             }
 
                             buckle.TryUnbuckle(player);
+                            break;
+                        case StatusEffect.Piloting:
+                            if (!player.TryGetComponent(out ShuttleControllerComponent controller))
+                            {
+                                break;
+                            }
+
+                            controller.RemoveController();
                             break;
                     }
 

@@ -11,7 +11,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (!component.TryGetData<bool>(SharedBuckleComponent.BuckleVisuals.Buckled, out var buckled) ||
+            if (!component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
                 !buckled)
             {
                 return;
