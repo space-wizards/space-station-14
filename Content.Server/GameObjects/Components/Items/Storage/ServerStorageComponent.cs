@@ -98,8 +98,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             _ensureInitialCalculated();
 
-            Logger.DebugS("Storage", "Storage (UID {0}) had entity (UID {1}) removed from it.", Owner.Uid,
-                message.Entity.Uid);
+            Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) removed from it.");
 
             if (!message.Entity.TryGetComponent(out StorableComponent storable))
             {
@@ -132,9 +131,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
 
             _ensureInitialCalculated();
-            Logger.DebugS("Storage", "Storage (UID {0}) had entity (UID {1}) inserted into it.", Owner.Uid,
-                message.Entity.Uid);
+
+            Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
+
             _storageUsed += message.Entity.GetComponent<StorableComponent>().ObjectSize;
+
             UpdateClientInventories();
         }
 
@@ -169,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <returns></returns>
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.Using.Uid);
+            Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 
             if (Owner.HasComponent<PlaceableSurfaceComponent>())
             {
@@ -197,7 +198,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             var userSession = entity.GetComponent<BasicActorComponent>().playerSession;
 
-            Logger.DebugS("Storage", "Storage (UID {0}) \"used\" by player session (UID {1}).", Owner.Uid, userSession.AttachedEntityUid);
+            Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) \"used\" by player session (UID {userSession.AttachedEntityUid}).");
 
             SubscribeSession(userSession);
             SendNetworkMessage(new OpenStorageUIMessage(), userSession.ConnectedClient);
@@ -225,7 +226,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             if (!SubscribedSessions.Contains(session))
             {
-                Logger.DebugS("Storage", "Storage (UID {0}) subscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) subscribed player session (UID {session.AttachedEntityUid}).");
 
                 session.PlayerStatusChanged += HandlePlayerSessionChangeEvent;
                 SubscribedSessions.Add(session);
@@ -241,7 +242,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             if (SubscribedSessions.Contains(session))
             {
-                Logger.DebugS("Storage", "Storage (UID {0}) unsubscribed player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) unsubscribed player session (UID {session.AttachedEntityUid}).");
 
                 SubscribedSessions.Remove(session);
                 SendNetworkMessage(new CloseStorageUIMessage(), session.ConnectedClient);
@@ -259,7 +260,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs sessionStatus)
         {
-            Logger.DebugS("Storage", "Storage (UID {0}) handled a status change in player session (UID {1}).", Owner.Uid, sessionStatus.Session.AttachedEntityUid);
+            Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) handled a status change in player session (UID {sessionStatus.Session.AttachedEntityUid}).");
 
             if (sessionStatus.NewStatus != SessionStatus.InGame)
             {
@@ -274,7 +275,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             if (session.AttachedEntity == null)
             {
-                Logger.DebugS("Storage", "Storage (UID {0}) detected no attached entity in player session (UID {1}).", Owner.Uid, session.AttachedEntityUid);
+                Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) detected no attached entity in player session (UID {session.AttachedEntityUid}).");
 
                 UnsubscribeSession(session);
                 return;
