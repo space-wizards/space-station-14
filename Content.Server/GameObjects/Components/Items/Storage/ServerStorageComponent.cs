@@ -336,8 +336,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         return;
                     }
 
-                    var ownerTransform = Owner.GetComponent<ITransformComponent>();
-                    var playerTransform = player.GetComponent<ITransformComponent>();
+                    var ownerTransform = Owner.Transform;
+                    var playerTransform = player.Transform;
 
                     if (!playerTransform.GridPosition.InRange(_mapManager, ownerTransform.GridPosition, 2) ||
                         !ownerTransform.IsMapTransform &&
