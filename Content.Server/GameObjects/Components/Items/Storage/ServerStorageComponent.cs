@@ -76,10 +76,10 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Verifies the object can be inserted by checking if it is storable and if it keeps under the capacity limit
+        ///     Verifies if an entity can be stored and if it fits
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">The entity to check</param>
+        /// <returns>true if it can be inserted, false otherwise</returns>
         public bool CanInsert(IEntity entity)
         {
             EnsureInitialCalculated();
@@ -100,20 +100,20 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Inserts into the storage container
+        ///     Inserts into the storage container
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">The entity to insert</param>
+        /// <returns>true if the entity was inserted, false otherwise</returns>
         public bool Insert(IEntity entity)
         {
             return CanInsert(entity) && _storage.Insert(entity);
         }
 
         /// <summary>
-        /// Removes from the storage container and updates the stored value
+        ///     Removes from the storage container and updates the stored value
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <param name="entity">The entity to remove</param>
+        /// <returns>true if no longer in storage, false otherwise</returns>
         public bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
@@ -161,35 +161,42 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Inserts an entity into the storage component from the players active hand.
+        ///     Inserts an entity into storage from the player's active hand
         /// </summary>
+        /// <param name="player">The player to insert an entity from</param>
+        /// <returns>true if inserted, false otherwise</returns>
         public bool PlayerInsertEntity(IEntity player)
         {
             EnsureInitialCalculated();
 
-            if (!player.TryGetComponent(out IHandsComponent hands) || hands.GetActiveHand == null)
+            if (!player.TryGetComponent(out IHandsComponent hands) ||
+                hands.GetActiveHand == null)
             {
                 return false;
             }
 
             var toInsert = hands.GetActiveHand;
 
-            if (hands.Drop(toInsert.Owner))
+            if (!hands.Drop(toInsert.Owner))
             {
-                if (Insert(toInsert.Owner))
-                {
-                    return true;
-                }
-                else
-                {
-                    hands.PutInHand(toInsert);
-                }
+                Owner.PopupMessage(player, "Can't insert.");
+                return false;
             }
 
-            Owner.PopupMessage(player, "Can't insert.");
-            return false;
+            if (!Insert(toInsert.Owner))
+            {
+                hands.PutInHand(toInsert);
+                Owner.PopupMessage(player, "Can't insert.");
+                return false;
+            }
+
+            return true;
         }
 
+        /// <summary>
+        ///     Opens the storage UI for an entity
+        /// </summary>
+        /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
             EnsureInitialCalculated();
@@ -204,7 +211,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Updates the storage UI on all subscribed actors, informing them of the state of the container.
+        ///     Updates the storage UI on all subscribed actors, informing them of the state of the container.
         /// </summary>
         private void UpdateClientInventories()
         {
@@ -215,8 +222,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Updates storage UI on a client, informing them of the state of the container.
+        ///     Updates storage UI on a client, informing them of the state of the container.
         /// </summary>
+        /// <param name="session">The client to be updated</param>
         private void UpdateClientInventory(IPlayerSession session)
         {
             if (session.AttachedEntity == null)
@@ -238,7 +246,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Adds a session to the update list.
+        ///     Adds a session to the update list.
         /// </summary>
         /// <param name="session">The session to add</param>
         private void SubscribeSession(IPlayerSession session)
@@ -257,7 +265,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         }
 
         /// <summary>
-        /// Removes a session from the update list.
+        ///     Removes a session from the update list.
         /// </summary>
         /// <param name="session">The session to remove</param>
         public void UnsubscribeSession(IPlayerSession session)
@@ -396,7 +404,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// Inserts storable entities into this storage container if possible, otherwise return to the hand of the user
         /// </summary>
         /// <param name="eventArgs"></param>
-        /// <returns></returns>
+        /// <returns>true if inserted, false otherwise</returns>
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             Logger.DebugS("Storage", $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
