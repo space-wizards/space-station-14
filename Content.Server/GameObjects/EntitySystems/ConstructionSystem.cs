@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
@@ -87,6 +88,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             // A tool has to interact with an entity.
             if(targetEnt is null || handEnt is null)
+                return;
+
+            var interaction = Get<InteractionSystem>();
+            if(!interaction.InRangeUnobstructed(handEnt.Transform.MapPosition, targetEnt.Transform.MapPosition, ignoredEnt: targetEnt, ignoreInsideBlocker: true))
                 return;
 
             // Cannot deconstruct an entity with no prototype.
