@@ -1,6 +1,5 @@
-using Content.Server.GameObjects.Components.Projectiles;
+﻿using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -49,6 +48,11 @@ namespace Content.Server.GameObjects.Components
 
         private void StopThrow()
         {
+            if (Deleted)
+            {
+                return;
+            }
+
             if (Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 body.PhysicsShapes[0].CollisionMask &= (int) ~CollisionGroup.ThrownItem;

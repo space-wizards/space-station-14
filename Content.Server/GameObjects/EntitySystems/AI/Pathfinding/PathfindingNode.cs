@@ -27,8 +27,8 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         public int BlockedCollisionMask { get; private set; }
         private readonly Dictionary<EntityUid, int> _blockedCollidables = new Dictionary<EntityUid, int>(0);
 
-        public IReadOnlyCollection<EntityUid> PhysicsUids => _physicsUids;
-        private readonly HashSet<EntityUid> _physicsUids = new HashSet<EntityUid>(0);
+        public IReadOnlyDictionary<EntityUid, int> PhysicsLayers => _physicsLayers;
+        private readonly Dictionary<EntityUid, int> _physicsLayers = new Dictionary<EntityUid, int>(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
@@ -115,11 +115,12 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 return;
             }
             
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out CollidableComponent collidableComponent) && 
+                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0)
             {
                 if (entity.TryGetComponent(out PhysicsComponent physicsComponent) && !physicsComponent.Anchored)
                 {
-                    _physicsUids.Add(entity.Uid);
+                    _physicsLayers.Add(entity.Uid, collidableComponent.CollisionLayer);
                 }
                 else
                 {
@@ -139,9 +140,9 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             // There's no guarantee that the entity isn't deleted
             // 90% of updates are probably entities moving around
             // Entity can't be under multiple categories so just checking each once is fine.
-            if (_physicsUids.Contains(entity.Uid))
+            if (_physicsLayers.ContainsKey(entity.Uid))
             {
-                _physicsUids.Remove(entity.Uid);
+                _physicsLayers.Remove(entity.Uid);
             } 
             else if (_accessReaders.ContainsKey(entity.Uid))
             {

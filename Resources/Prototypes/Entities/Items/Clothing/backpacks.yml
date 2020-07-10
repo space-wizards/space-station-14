@@ -104,8 +104,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
     layers:
-    - state: hoding
+    - state: holding
     - state: holding-unlit
       shader: unshaded
   - type: Icon

@@ -11,10 +11,9 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -264,6 +263,19 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             if (!ActionBlockerSystem.CanInteract(player))
             {
                 return;
+            }
+
+            // In a container where the attacked entity is not the container's owner
+            if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
+                attacked != playerContainer.Owner)
+            {
+                // Either the attacked entity is null, not contained or in a different container
+                if (attacked == null ||
+                    !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
+                    attackedContainer != playerContainer)
+                {
+                    return;
+                }
             }
 
             // TODO: Check if client should be able to see that object to click on it in the first place

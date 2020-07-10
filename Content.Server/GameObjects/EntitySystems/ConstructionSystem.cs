@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
