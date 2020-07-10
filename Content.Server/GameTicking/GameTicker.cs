@@ -352,11 +352,11 @@ namespace Content.Server.GameTicking
             _spawnObserver(player);
         }
 
-        public void MakeJoinGame(IPlayerSession player)
+        public void MakeJoinGame(IPlayerSession player, string jobId = null)
         {
             if (!_playersInLobby.ContainsKey(player)) return;
 
-            SpawnPlayer(player);
+            SpawnPlayer(player, jobId);
         }
 
         public void ToggleReady(IPlayerSession player, bool ready)
