@@ -290,7 +290,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
-        private void HandlePlayerSessionChangeEvent(object obj, SessionStatusEventArgs sessionStatus)
+        private void HandlePlayerSessionChangeEvent(object? obj, SessionStatusEventArgs sessionStatus)
         {
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) handled a status change in player session (UID {sessionStatus.Session.AttachedEntityUid}).");
 
