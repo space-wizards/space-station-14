@@ -131,7 +131,7 @@
             "Slippery",
             "EmitSoundOnThrow",
             "Flash",
-            "DamageOnToolInteract"
+            "DamageOnToolInteract",
         };
     }
 }
