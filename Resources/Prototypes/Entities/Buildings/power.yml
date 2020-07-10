@@ -32,7 +32,7 @@
     key: hv_cables
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
@@ -53,7 +53,7 @@
     base: mvcable_
     key: mv_cables
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: MVPower
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
@@ -74,7 +74,7 @@
     base: lvcable_
     key: lv_cables
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: Apc
   - type: PowerProvider
     voltage: Apc
@@ -105,7 +105,7 @@
     texture: Constructible/Power/generator.png
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
@@ -134,7 +134,7 @@
     texture: Constructible/Power/wiredmachine.png
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: PowerConsumer
     drawRate: 50
@@ -167,7 +167,7 @@
   - type: Battery
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
@@ -197,7 +197,7 @@
   - type: Battery
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger
@@ -239,7 +239,7 @@
     startingCharge: 1000
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
@@ -276,9 +276,9 @@
     startingCharge: 1000
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: MVPower
   - type: PowerConsumer
   - type: BatteryStorage
@@ -321,9 +321,9 @@
     startingCharge: 10000
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: MVPower
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: Apc
   - type: PowerConsumer
     voltage: Medium
@@ -383,7 +383,7 @@
     state: normal
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
   - type: PowerSupplier
   - type: SolarPanel
@@ -403,9 +403,9 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: Apc
 
 - type: entity
@@ -424,9 +424,9 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: HVPower
-    - type: AdjacentNode
+    - type: Adjacent
       groupID: Apc
   - type: PowerConsumer
     voltage: High

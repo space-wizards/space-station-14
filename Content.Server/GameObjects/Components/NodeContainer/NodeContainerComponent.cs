@@ -18,16 +18,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer
         public IReadOnlyList<Node> Nodes => _nodes;
         private List<Node> _nodes;
 
-        private static bool _didRegisterSerializer;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (!_didRegisterSerializer)
-            {
-                YamlObjectSerializer.RegisterTypeSerializer(typeof(Node), new NodeTypeSerializer());
-                _didRegisterSerializer = true;
-            }
             serializer.DataField(ref _nodes, "nodes", new List<Node>());
         }
 
@@ -36,8 +29,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             base.Startup();
             foreach (var node in _nodes)
             {
-                node.Owner = Owner;
-                node.OnContainerInitialize();
+                node.Initialize(Owner);
             }
         }
 

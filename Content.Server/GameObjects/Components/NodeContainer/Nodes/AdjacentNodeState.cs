@@ -7,18 +7,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     /// <summary>
     ///     A <see cref="Node"/> that can reach other <see cref="AdjacentNode"/>s that are directly adjacent to it.
     /// </summary>
-    [Node("AdjacentNode")]
-    public class AdjacentNode : Node
+    [NodeState(NodeStateID.Adjacent)]
+    public class AdjacentNodeState : BaseNodeState
     {
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
-            return Owner.GetComponent<SnapGridComponent>()
+            return Node.Owner
+                .GetComponent<SnapGridComponent>()
                 .GetCardinalNeighborCells()
                 .SelectMany(sgc => sgc.GetLocal())
                 .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
                 .Where(container => container != null)
                 .SelectMany(container => container.Nodes)
-                .Where(node => node != null && node != this);
+                .Where(node => node != null && node != Node);
         }
     }
 }

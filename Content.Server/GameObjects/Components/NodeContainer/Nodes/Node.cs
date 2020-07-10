@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    public abstract class Node : IExposeData
+    public class Node : IExposeData
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
@@ -30,7 +30,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
         [ViewVariables]
-        public IEntity Owner { get; set; }
+        public BaseNodeState NodeState { get; private set; }
+
+        [ViewVariables]
+        public IEntity Owner { get; private set; }
 
         [ViewVariables]
         private bool _needsGroup = true;
@@ -54,10 +57,17 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public virtual void ExposeData(ObjectSerializer serializer)
         {
             serializer.DataField(ref _nodeGroupID, "groupID", NodeGroupID.Default);
+            serializer.DataReadFunction("type", NodeStateID.Default, type =>
+            {
+                NodeState = IoCManager.Resolve<INodeStateFactory>().MakeNodeState(type);
+                NodeState.ExposeData(serializer);
+            });
         }
 
-        public void OnContainerInitialize()
+        public void Initialize(IEntity owner)
         {
+            Owner = owner;
+            NodeState.Initialize(this);
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
             if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
@@ -110,15 +120,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _needsGroup = true;
         }
 
-        /// <summary>
-        ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
-        ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.
-        /// </summary>
-        protected abstract IEnumerable<Node> GetReachableNodes();
-
         private IEnumerable<Node> GetReachableCompatibleNodes()
         {
-            return GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
+            return NodeState.GetReachableNodes().Where(node => node.NodeGroupID == NodeGroupID)
                 .Where(node => node.Connectable);
         }
 
@@ -166,5 +170,12 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 ClearNodeGroup();
             }
         }
+    }
+
+    public enum NodeStateID
+    {
+        Default,
+        Adjacent,
+        Pipe,
     }
 }

@@ -8,8 +8,8 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
-    [Node("PipeNode")]
-    public class PipeNode : Node
+    [NodeState(NodeStateID.Pipe)]
+    public class PipeNodeState : BaseNodeState
     {
         [ViewVariables]
         private PipeDirection _pipeDirection;
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
         }
 
-        protected override IEnumerable<Node> GetReachableNodes()
+        public override IEnumerable<Node> GetReachableNodes()
         {
             foreach (CardinalDirection direction in Enum.GetValues(typeof(CardinalDirection)))
             {
@@ -29,18 +29,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 {
                     continue;
                 }
-                var directionalNodesInDirection = Owner.GetComponent<SnapGridComponent>()
+                var directionalNodesInDirection = Node.Owner.GetComponent<SnapGridComponent>()
                     .GetInDir((Direction) direction)
                     .Select(entity => entity.TryGetComponent<NodeContainerComponent>(out var container) ? container : null)
                     .Where(container => container != null)
                     .SelectMany(container => container.Nodes)
-                    .OfType<PipeNode>()
-                    .Where(node => node != null && node != this);
-                foreach (var directionalNode in directionalNodesInDirection)
+                    .Where(node => node != null && node != Node)
+                    .Select(node => node.NodeState)
+                    .OfType<PipeNodeState>();
+                foreach (var pipeNodeState in directionalNodesInDirection)
                 {
-                    if ((directionalNode._pipeDirection & theirNeededConnection) != PipeDirection.None)
+                    if ((pipeNodeState._pipeDirection & theirNeededConnection) != PipeDirection.None)
                     {
-                        yield return directionalNode;
+                        yield return pipeNodeState.Node;
                     }
                 }
             }
