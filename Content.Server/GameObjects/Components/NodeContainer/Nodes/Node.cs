@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Robust.Shared.GameObjects.Components;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -41,8 +42,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// <summary>
         ///     If this node should be considered for connection by other nodes.
         /// </summary>
+        [ViewVariables]
         private bool Connectable => !_deleting && Anchored;
 
+        [ViewVariables]
         private bool Anchored => !Owner.TryGetComponent<PhysicsComponent>(out var physics) || physics.Anchored;
 
         /// <summary>
@@ -50,9 +53,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool _deleting = false;
 
-#pragma warning disable 649
-        [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
-#pragma warning restore 649
+        private INodeGroupFactory _nodeGroupFactory;
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {
@@ -66,8 +67,13 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public void Initialize(IEntity owner)
         {
+            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
             Owner = owner;
             NodeState.Initialize(this);
+        }
+
+        public void OnContainerStartup()
+        {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();
             if (Owner.TryGetComponent<PhysicsComponent>(out var physics))
