@@ -11,7 +11,7 @@ namespace Content.Server.AI.Utility.BehaviorSets
             Actions = new IAiUtility[]
             {
                 new PickUpNearbyDrinkExp(),
-                new UseDrinkInHandsExp(),
+                new UseDrinkInInventoryExp(),
             };
         }
     }
