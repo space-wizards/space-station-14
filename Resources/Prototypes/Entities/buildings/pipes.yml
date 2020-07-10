@@ -9,10 +9,11 @@
   - type: Collidable
   - type: SnapGrid
     offset: Center
-  - type: Sprite
-    texture: Objects/Power/generator.png
   - type: Icon
-    texture: Objects/Power/generator.png
+    texture: Constructible/Power/eightdirwire.png
+  - type: Sprite
+    sprite: Constructible/Power/hv_cable.rsi
+    state: hvcable_0
   - type: Destructible
     thresholdvalue: 100
 
