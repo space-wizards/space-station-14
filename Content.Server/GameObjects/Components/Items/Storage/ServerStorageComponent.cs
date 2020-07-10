@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Interfaces.GameObjects;
@@ -14,7 +15,6 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -34,18 +34,18 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         IDragDrop
     {
 #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 #pragma warning restore 649
 
-        private Container _storage;
+        private Container? _storage;
 
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax = 10000;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
-        public IReadOnlyCollection<IEntity> StoredEntities => _storage.ContainedEntities;
+        public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
 
         private void EnsureInitialCalculated()
         {
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// <returns>true if the entity was inserted, false otherwise</returns>
         public bool Insert(IEntity entity)
         {
-            return CanInsert(entity) && _storage.Insert(entity);
+            return CanInsert(entity) && _storage?.Insert(entity) == true;
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public bool Remove(IEntity entity)
         {
             EnsureInitialCalculated();
-            return _storage.Remove(entity);
+            return _storage?.Remove(entity) == true;
         }
 
         public void HandleEntityMaybeInserted(EntInsertedIntoContainerMessage message)
@@ -235,6 +235,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
+            if (_storage == null)
+            {
+                Logger.WarningS("Storage", $"{nameof(UpdateClientInventory)} called with null {nameof(_storage)}");
+
+                return;
+            }
+
             var storedEntities = new Dictionary<EntityUid, int>();
 
             foreach (var entities in _storage.ContainedEntities)
@@ -314,7 +321,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -333,7 +340,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                     if (player == null)
                     {
-                        return;
+                        break;
                     }
 
                     var ownerTransform = Owner.Transform;
@@ -343,27 +350,26 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         !ownerTransform.IsMapTransform &&
                         !playerTransform.ContainsEntity(ownerTransform))
                     {
-                        return;
+                        break;
                     }
 
                     var entity = _entityManager.GetEntity(remove.EntityUid);
 
-                    // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-                    if (entity == null || !_storage.Contains(entity))
+                    if (entity == null || _storage?.Contains(entity) == false)
                     {
-                        return;
+                        break;
                     }
 
                     var item = entity.GetComponent<ItemComponent>();
                     if (item == null ||
                         !player.TryGetComponent(out HandsComponent hands))
                     {
-                        return;
+                        break;
                     }
 
                     if (hands.CanPutInHand(item))
                     {
-                        return;
+                        break;
                     }
 
                     hands.PutInHand(item);
@@ -378,14 +384,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
                     if (player == null)
                     {
-                        return;
+                        break;
                     }
 
                     var storagePosition = Owner.Transform.MapPosition;
 
                     if (!InteractionChecks.InRangeUnobstructed(player, storagePosition))
                     {
-                        return;
+                        break;
                     }
 
                     PlayerInsertEntity(player);
@@ -394,7 +400,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 }
                 case CloseStorageUIMessage _:
                 {
-                    UnsubscribeSession(session as IPlayerSession);
+                    if (!(session is IPlayerSession playerSession))
+                    {
+                        break;
+                    }
+
+                    UnsubscribeSession(playerSession);
                     break;
                 }
             }
@@ -436,7 +447,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            var storedEntities = _storage.ContainedEntities.ToList();
+            var storedEntities = StoredEntities?.ToList();
+
+            if (storedEntities == null)
+            {
+                return;
+            }
+
             foreach (var entity in storedEntities)
             {
                 Remove(entity);
@@ -450,7 +467,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return;
             }
 
-            var storedEntities = _storage.ContainedEntities.ToList();
+            var storedEntities = StoredEntities?.ToList();
+
+            if (storedEntities == null)
+            {
+                return;
+            }
+
             foreach (var entity in storedEntities)
             {
                 var exActs = entity.GetAllComponents<IExAct>();
@@ -469,8 +492,14 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            // empty everything out
-            foreach (var storedEntity in StoredEntities.ToList())
+            var storedEntities = StoredEntities?.ToList();
+
+            if (storedEntities == null)
+            {
+                return false;
+            }
+
+            foreach (var storedEntity in storedEntities)
             {
                 if (Remove(storedEntity))
                 {
