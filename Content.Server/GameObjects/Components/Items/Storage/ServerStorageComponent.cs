@@ -103,6 +103,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             if (!message.Entity.TryGetComponent(out StorableComponent storable))
             {
+                Logger.WarningS("Storage", $"Removed entity {message.Entity.Uid} without a StorableComponent from storage {Owner.Uid} at {Owner.Transform.MapPosition}");
+
                 RecalculateStorageUsed();
                 return;
             }
