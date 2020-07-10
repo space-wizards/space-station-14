@@ -427,8 +427,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="node"></param>
         /// <param name="existingRegions"></param>
+        /// <param name="x">This is already calculated in advance so may as well re-use it</param>
+        /// <param name="y">This is already calculated in advance so may as well re-use it</param>
         /// <returns></returns>
-        private PathfindingRegion CalculateNode(PathfindingNode node, Dictionary<PathfindingNode, PathfindingRegion> existingRegions)
+        private PathfindingRegion CalculateNode(PathfindingNode node, Dictionary<PathfindingNode, PathfindingRegion> existingRegions, int x, int y)
         {
             DebugTools.Assert(_regions.ContainsKey(node.ParentChunk.GridId));
             DebugTools.Assert(_regions[node.ParentChunk.GridId].ContainsKey(node.ParentChunk));
@@ -452,47 +454,45 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             // Relative x and y of the chunk
             // If one of our bottom / left neighbors are in a region try to join them
             // Otherwise, make our own region.
-            var x = node.TileRef.X - parentChunk.Indices.X;
-            var y = node.TileRef.Y - parentChunk.Indices.Y;
             var leftNeighbor = x > 0 ? parentChunk.Nodes[x - 1, y] : null;
             var bottomNeighbor = y > 0 ? parentChunk.Nodes[x, y - 1] : null;
             PathfindingRegion leftRegion;
             PathfindingRegion bottomRegion;
 
-            // We'll check if our left or down neighbors are already in a region and join them, unless we're a door
-            if (node.AccessReaders.Count == 0)
+            // We'll check if our left or down neighbors are already in a region and join them
+            
+            // Is left node valid to connect to
+            if (leftNeighbor != null &&
+                existingRegions.TryGetValue(leftNeighbor, out leftRegion) && 
+                !leftRegion.IsDoor)
             {
-                // Is left node valid to connect to
-                if (leftNeighbor != null &&
-                    existingRegions.TryGetValue(leftNeighbor, out leftRegion) && 
-                    !leftRegion.IsDoor)
-                {
-                    // We'll try and connect the left node's region to the bottom region if they're separate (yay merge)
-                    if (bottomNeighbor != null && existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) &&
-                        !bottomRegion.IsDoor)
-                    {
-                        bottomRegion.Add(node);
-                        existingRegions.Add(node, bottomRegion);
-                        MergeInto(leftRegion, bottomRegion);
-                        return bottomRegion;
-                    }
-
-                    leftRegion.Add(node);
-                    existingRegions.Add(node, leftRegion);
-                    return leftRegion;
-                }
-
-                //Is bottom node valid to connect to
-                if (bottomNeighbor != null && 
-                    existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) && 
+                // We'll try and connect the left node's region to the bottom region if they're separate (yay merge)
+                if (bottomNeighbor != null && existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) &&
                     !bottomRegion.IsDoor)
                 {
                     bottomRegion.Add(node);
                     existingRegions.Add(node, bottomRegion);
+                    MergeInto(leftRegion, bottomRegion);
                     return bottomRegion;
                 }
+
+                leftRegion.Add(node);
+                existingRegions.Add(node, leftRegion);
+                UpdateRegionEdge(leftRegion, node);
+                return leftRegion;
             }
 
+            //Is bottom node valid to connect to
+            if (bottomNeighbor != null && 
+                existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) && 
+                !bottomRegion.IsDoor)
+            {
+                bottomRegion.Add(node);
+                existingRegions.Add(node, bottomRegion);
+                UpdateRegionEdge(bottomRegion, node);
+                return bottomRegion;
+            }
+            
             // If we can't join an existing region then we'll make our own
             var newRegion = new PathfindingRegion(node, new HashSet<PathfindingNode> {node}, node.AccessReaders.Count > 0);
             _regions[parentChunk.GridId][parentChunk].Add(newRegion);
@@ -557,7 +557,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 for (var x = 0; x < PathfindingChunk.ChunkSize; x++)
                 {
                     var node = chunk.Nodes[x, y];
-                    var region = CalculateNode(node, nodeRegions);
+                    var region = CalculateNode(node, nodeRegions, x, y);
                     // Currently we won't store a separate region for each mask / space / whatever because muh effort
                     // Long-term you'll want to account for it probably
                     if (region == null)
