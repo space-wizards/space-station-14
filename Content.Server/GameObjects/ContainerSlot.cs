@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects
         private IEntity _containedEntity;
 
         /// <inheritdoc />
-        public override IReadOnlyCollection<IEntity> ContainedEntities
+        public override IReadOnlyList<IEntity> ContainedEntities
         {
             get
             {
