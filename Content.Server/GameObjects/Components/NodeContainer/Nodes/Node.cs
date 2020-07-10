@@ -23,8 +23,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     implementation is used as a group, detailed in <see cref="INodeGroupFactory"/>.
         /// </summary>
         [ViewVariables]
-        public NodeGroupID NodeGroupID => _nodeGroupID;
-        private NodeGroupID _nodeGroupID;
+        public NodeGroupID NodeGroupID { get; private set; }
 
         [ViewVariables]
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
@@ -57,7 +56,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _nodeGroupID, "groupID", NodeGroupID.Default);
+            serializer.DataField(this, x => NodeGroupID, "groupID", NodeGroupID.Default);
             serializer.DataReadFunction("type", NodeStateID.Default, type =>
             {
                 NodeState = IoCManager.Resolve<INodeStateFactory>().MakeNodeState(type);

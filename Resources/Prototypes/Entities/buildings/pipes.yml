@@ -23,7 +23,7 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: PipeNode
+    - type: Pipe
       pipeDirection: All
 
 - type: entity
@@ -33,7 +33,7 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: PipeNode
+    - type: Pipe
       pipeDirection: Vertical
       
 - type: entity
@@ -43,7 +43,7 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: PipeNode
+    - type: Pipe
       pipeDirection: ULBend
       
 - type: entity
@@ -53,5 +53,5 @@
   components:
   - type: NodeContainer
     nodes:
-    - type: PipeNode
+    - type: Pipe
       pipeDirection: TUp
