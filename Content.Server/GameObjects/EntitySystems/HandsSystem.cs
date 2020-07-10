@@ -18,6 +18,7 @@ using System;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction

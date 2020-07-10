@@ -21,9 +21,9 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(StoreableComponent))]
+    [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
+    public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;

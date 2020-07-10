@@ -4,9 +4,9 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
-    public class StoreableComponent : Component
+    public class StorableComponent : Component
     {
-        public override string Name => "Storeable";
+        public override string Name => "Storable";
 
         public int ObjectSize = 0;
 
