@@ -200,3 +200,16 @@
     sprite: Objects/Consumable/Trash/waffles.rsi
   - type: Icon
     sprite: Objects/Consumable/Trash/waffles.rsi
+
+- type: entity
+  name: banana peel
+  parent: TrashBase
+  id: TrashBananaPeel
+  components:
+    - type: Sprite
+      sprite: Objects/Consumable/Food/banana.rsi
+      state: peel
+    - type: Icon
+      sprite: Objects/Consumable/Food/banana.rsi
+      state: peel
+    - type: Slippery

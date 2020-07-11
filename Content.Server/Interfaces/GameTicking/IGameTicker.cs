@@ -26,7 +26,7 @@ namespace Content.Server.Interfaces.GameTicking
 
         void Respawn(IPlayerSession targetPlayer);
         void MakeObserve(IPlayerSession player);
-        void MakeJoinGame(IPlayerSession player);
+        void MakeJoinGame(IPlayerSession player, string jobId);
         void ToggleReady(IPlayerSession player, bool ready);
 
         GridCoordinates GetLateJoinSpawnPoint();
@@ -50,5 +50,7 @@ namespace Content.Server.Interfaces.GameTicking
         bool TogglePause();
 
         bool DelayStart(TimeSpan time);
+
+        Dictionary<string, int> GetAvailablePositions();
     }
 }

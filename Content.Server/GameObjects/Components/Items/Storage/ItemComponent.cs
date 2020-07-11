@@ -1,8 +1,5 @@
-using System;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Destructible;
+﻿using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Server.Utility;
@@ -21,11 +18,12 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
+    [ComponentReference(typeof(IItemComponent))]
+    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;

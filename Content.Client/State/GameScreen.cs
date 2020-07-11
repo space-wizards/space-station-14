@@ -26,7 +26,6 @@ namespace Content.Client.State
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IClientConGroupController _groupController = default!;
 #pragma warning restore 649
 
         [ViewVariables] private ChatBox _gameChat;

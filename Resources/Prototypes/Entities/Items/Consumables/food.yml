@@ -3027,3 +3027,21 @@
     sprite: Objects/Consumable/Food/milkape.rsi
   - type: Icon
     sprite: Objects/Consumable/Food/milkape.rsi
+
+- type: entity
+  name: banana
+  parent: FoodBase
+  id: FoodBanana
+  description: Rich in potassium.
+  components:
+    - type: Food
+      trash: TrashBananaPeel
+    - type: Solution
+      contents:
+        reagents:
+          - ReagentId: chem.Nutriment
+            Quantity: 6
+    - type: Sprite
+      sprite: Objects/Consumable/Food/banana.rsi
+    - type: Icon
+      sprite: Objects/Consumable/Food/banana.rsi

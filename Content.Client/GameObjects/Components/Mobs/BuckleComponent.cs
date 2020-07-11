@@ -1,6 +1,7 @@
-﻿using Content.Client.GameObjects.Components.Strap;
+using Content.Client.GameObjects.Components.Strap;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Mobs
@@ -9,6 +10,9 @@ namespace Content.Client.GameObjects.Components.Mobs
     public class BuckleComponent : SharedBuckleComponent, IClientDraggable
     {
         private bool _buckled;
+        private int? _originalDrawDepth;
+
+        protected override bool Buckled => _buckled;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
@@ -18,9 +22,25 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             _buckled = buckle.Buckled;
-        }
 
-        protected override bool Buckled => _buckled;
+            if (!Owner.TryGetComponent(out SpriteComponent ownerSprite))
+            {
+                return;
+            }
+
+            if (_buckled && buckle.DrawDepth.HasValue)
+            {
+                _originalDrawDepth ??= ownerSprite.DrawDepth;
+                ownerSprite.DrawDepth = buckle.DrawDepth.Value;
+                return;
+            }
+
+            if (!_buckled && _originalDrawDepth.HasValue)
+            {
+                ownerSprite.DrawDepth = _originalDrawDepth.Value;
+                _originalDrawDepth = null;
+            }
+        }
 
         bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
         {

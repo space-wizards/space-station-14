@@ -1,6 +1,7 @@
 using System;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.State
 {
@@ -20,7 +21,8 @@ namespace Content.Server.AI.Utility.Considerations.State
         protected override float GetScore(Blackboard context)
         {
             var stateData = context.GetState<StoredStateIsNullState>().GetValue();
-            return stateData == null ? 1.0f : 0.0f;
+            context.GetStoredState(stateData, out StoredStateData<IEntity> state);
+            return state.GetValue() == null ? 1.0f : 0.0f;
         }
     }
 }

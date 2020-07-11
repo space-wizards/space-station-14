@@ -128,13 +128,17 @@
             "StressTestMovement",
             "Toys",
             "SurgeryTool",
+            "Slippery",
+            "EmitSoundOnThrow",
+            "Flash",
+            "DamageOnToolInteract",
             "DisposalTransit",
             "DisposalEntry",
             "DisposalUnit",
             "DisposalJunction",
             "DisposalBend",
             "Recycler",
-            "Conveyor"
+            "Conveyor",
         };
     }
 }

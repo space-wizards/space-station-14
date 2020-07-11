@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Sound;
@@ -136,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return ammo;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
@@ -165,7 +166,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
             else
             {
-                entity = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition);
+                entity = Owner.Transform.GridID != GridId.Invalid ?
+                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition)
+                    : Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.MapPosition);
             }
 
             if (entity.TryGetComponent(out ProjectileComponent projectileComponent))

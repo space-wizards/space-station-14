@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet(GridCoordinates spawnAt)
+        public IEntity TakeBullet(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             if (_ammoIsProjectile)
             {
@@ -122,7 +122,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
 
-            var entity = Owner.EntityManager.SpawnEntity(_projectileId, spawnAt);
+            var entity = spawnAtGrid.GridID != GridId.Invalid ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid) : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
+
             DebugTools.AssertNotNull(entity);
             return entity;
         }
@@ -167,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         Magnum,
         AntiMaterial,
         Shotgun,
-        Cap, 
+        Cap,
         Rocket,
         Dart, // Placeholder
         Grenade,

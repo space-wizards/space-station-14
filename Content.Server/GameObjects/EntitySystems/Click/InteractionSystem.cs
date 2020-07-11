@@ -11,10 +11,9 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -266,6 +265,19 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
+            // In a container where the attacked entity is not the container's owner
+            if (ContainerHelpers.TryGetContainer(player, out var playerContainer) &&
+                attacked != playerContainer.Owner)
+            {
+                // Either the attacked entity is null, not contained or in a different container
+                if (attacked == null ||
+                    !ContainerHelpers.TryGetContainer(attacked, out var attackedContainer) ||
+                    attackedContainer != playerContainer)
+                {
+                    return;
+                }
+            }
+
             // TODO: Check if client should be able to see that object to click on it in the first place
 
             // Clicked on empty space behavior, try using ranged attack
@@ -274,7 +286,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
-                    InteractAfter(player, item, coordinates);
+                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(_mapManager)).LengthSquared;
+                    InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
                 return;
@@ -318,9 +331,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, GridCoordinates clickLocation)
+        private void InteractAfter(IEntity user, IEntity weapon, GridCoordinates clickLocation, bool canReach)
         {
-            var message = new AfterInteractMessage(user, weapon, null, clickLocation);
+            var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
             if (message.Handled)
             {
@@ -328,7 +341,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation};
+            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation, CanReach = canReach};
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -368,7 +381,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation);
+            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, true);
             RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
             {
@@ -379,7 +392,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Target = attacked
+                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
             };
 
             foreach (var afterAttack in afterAttacks)
@@ -675,7 +688,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation);
+            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, false);
             RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
@@ -683,7 +696,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Target = attacked
+                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
             };
 
             //See if we have a ranged attack interaction
