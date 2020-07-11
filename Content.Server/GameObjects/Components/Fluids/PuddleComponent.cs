@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.Physics;
@@ -49,7 +50,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
-        private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
+        public ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
         private float _evaporateTime;
         private string _spillSound;
 
@@ -78,6 +79,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
         private SolutionComponent _contents;
+        public bool EmptyHolder => _contents.ReagentList.Count == 0;
         private int _spriteVariants;
         // Whether the underlying solution color should be used
         private bool _recolor;
@@ -87,11 +89,12 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
             serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
-            serializer.DataField(ref _evaporateTime, "evaporate_time", 600.0f);
+            serializer.DataField(ref _evaporateTime, "evaporate_time", 20.0f);
             // Long-term probably have this based on the underlying reagents
-            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(2));
+            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
             serializer.DataField(ref _recolor, "recolor", false);
+
         }
 
         public override void Initialize()
@@ -121,6 +124,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
             _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
+
+            UpdateStatus();
         }
 
         // Flow rate should probably be controlled globally so this is it for now
@@ -174,12 +179,36 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        private void UpdateStatus()
+        public void Evaporate()
         {
-            // If UpdateStatus is getting called again it means more fluid has been updated so let's just wait
-            _evaporationToken?.Cancel();
+            _contents.SplitSolution(ReagentUnit.Min(ReagentUnit.New(1), _contents.CurrentVolume));
+            if (CurrentVolume == 0)
+            {
+                Owner.Delete();
+            }
+            else
+            {
+                UpdateStatus();
+            }
+        }
 
-            if (CurrentVolume > _evaporateThreshold)
+        public void UpdateStatus()
+        {
+            _evaporationToken?.Cancel();
+            if(Owner.Deleted) return;
+
+            UpdateAppearance();
+
+            if (CurrentVolume < ReagentUnit.New(3) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
+            {
+                Owner.RemoveComponent<SlipperyComponent>();
+            }
+            else if (CurrentVolume >= ReagentUnit.New(3) && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
+            {
+                Owner.AddComponent<SlipperyComponent>();
+            }
+
+            if (_evaporateThreshold == ReagentUnit.New(-1) || CurrentVolume > _evaporateThreshold)
             {
                 return;
             }
@@ -187,12 +216,12 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), CheckEvaporate, _evaporationToken.Token);
+            Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
         }
 
         private void UpdateAppearance()
         {
-            if (Owner.Deleted)
+            if (Owner.Deleted || EmptyHolder)
             {
                 return;
             }

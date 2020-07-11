@@ -132,6 +132,9 @@
             "EmitSoundOnThrow",
             "Flash",
             "DamageOnToolInteract",
+            "CustodialClosetFill",
+            "NoSlip",
+            "TrashSpawner",
         };
     }
 }

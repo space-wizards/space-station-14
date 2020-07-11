@@ -27621,7 +27621,7 @@ entities:
     WireSeed: 772636827
     type: Wires
 - uid: 2915
-  type: AirlockServiceLocked
+  type: Airlock
   components:
   - name: Custodial Closet
     type: MetaData
@@ -27632,6 +27632,9 @@ entities:
   - SerialNumber: BJWI-6517
     WireSeed: 1001186873
     type: Wires
+  - access:
+    - - Janitor
+    type: AccessReader
 - uid: 2916
   type: AirlockMaintCommonLocked
   components:
