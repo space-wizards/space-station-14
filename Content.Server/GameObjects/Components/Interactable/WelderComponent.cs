@@ -99,6 +99,16 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public bool UseTool(IEntity user, IEntity target, ToolQuality toolQualityNeeded, float fuelConsumed)
         {
+            // Checks to make sure the thing being welded is a container before checking contents
+            if (target.Prototype.Components.ContainsKey("EntityStorage"))
+            {
+                // Checks if user is in the container before welding
+                if (target.GetComponent<ContainerManagerComponent>().ContainsEntity(user))
+                {
+                   _notifyManager.PopupMessage(Owner, user, Loc.GetString("Your too cramped!"));
+                    return false;
+                }
+            }
             return base.UseTool(user, target, toolQualityNeeded) && TryWeld(fuelConsumed, user);
         }
 
