@@ -53,10 +53,15 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private Container _container;
 
-        private bool TryInsert(IEntity entity)
+        private bool CanInsert(IEntity entity)
         {
-            // TODO: Click drag
-            return _container.Insert(entity);
+            return entity.HasComponent<DisposableComponent>() &&
+                   _container.CanInsert(entity);
+        }
+
+        public bool TryInsert(IEntity entity)
+        {
+            return CanInsert(entity) && _container.Insert(entity);
         }
 
         private bool Remove(IEntity entity)
@@ -79,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
+            // TODO connections
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var entry = snapGrid
                 .GetLocal()
@@ -86,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (entry == null)
             {
-                return false; // TODO connections
+                return false;
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();

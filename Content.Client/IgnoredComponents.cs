@@ -134,7 +134,6 @@
             "DamageOnToolInteract",
             "DisposalTransit",
             "DisposalEntry",
-            "DisposalUnit",
             "DisposalJunction",
             "DisposalBend",
             "Recycler",

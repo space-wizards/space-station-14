@@ -413,25 +413,24 @@ namespace Content.Server.GameObjects
             return false;
         }
 
-        public bool DragDrop(DragDropEventArgs eventArgs)
+        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
         {
-            if (eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface))
+            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent placeable) &&
+                   placeable.IsPlaceable;
+        }
+
+        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
+        {
+            // empty everything out
+            foreach (var storedEntity in StoredEntities.ToList())
             {
-                if (!placeableSurface.IsPlaceable) return false;
-
-                // empty everything out
-                foreach (var storedEntity in StoredEntities.ToList())
+                if (Remove(storedEntity))
                 {
-                    if (Remove(storedEntity))
-                    {
-                        storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
-                    }
+                    storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
                 }
-
-                return true;
             }
 
-            return false;
+            return true;
         }
     }
 }

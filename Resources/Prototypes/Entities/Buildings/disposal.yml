@@ -86,12 +86,6 @@
       layer:
       - Impassable
       - MobImpassable
-      - VaultImpassable
-      - Opaque
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable
