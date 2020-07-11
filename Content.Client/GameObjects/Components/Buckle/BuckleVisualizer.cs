@@ -1,5 +1,7 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Buckle;
+using Content.Shared.GameObjects.Components.Strap;
+using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
@@ -7,26 +9,25 @@ using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.GameObjects.Components.Buckle
 {
-    public class SpeciesVisualizer2D : AppearanceVisualizer
+    [UsedImplicitly]
+    public class BuckleVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
-            base.OnChangeData(component);
-
-            if (component.TryGetData<SharedSpeciesComponent.MobState>(SharedSpeciesComponent.MobVisuals.RotationState, out var state))
+            if (!component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) ||
+                !buckled)
             {
-                switch (state)
-                {
-                    case SharedSpeciesComponent.MobState.Standing:
-                        SetRotation(component, 0);
-                        break;
-                    case SharedSpeciesComponent.MobState.Down:
-                        SetRotation(component, Angle.FromDegrees(90));
-                        break;
-                }
+                return;
             }
+
+            if (!component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle))
+            {
+                return;
+            }
+
+            SetRotation(component, Angle.FromDegrees(angle));
         }
 
         private void SetRotation(AppearanceComponent component, Angle rotation)
@@ -40,7 +41,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             if (animation.HasRunningAnimation("rotate"))
+            {
                 animation.Stop("rotate");
+            }
 
             animation.Play(new Animation
             {

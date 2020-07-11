@@ -3,7 +3,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.GameObjects.Components.Buckle
 {
     public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker
     {
@@ -11,7 +11,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
-        protected abstract bool Buckled { get; }
+        /// <summary>
+        ///     True if the entity is buckled, false otherwise.
+        /// </summary>
+        public abstract bool Buckled { get; }
 
         bool IActionBlocker.CanMove()
         {
@@ -27,24 +30,24 @@ namespace Content.Shared.GameObjects.Components.Mobs
         {
             return !Buckled;
         }
+    }
 
-        [Serializable, NetSerializable]
-        protected sealed class BuckleComponentState : ComponentState
+    [Serializable, NetSerializable]
+    public sealed class BuckleComponentState : ComponentState
+    {
+        public BuckleComponentState(bool buckled, int? drawDepth) : base(ContentNetIDs.BUCKLE)
         {
-            public BuckleComponentState(bool buckled, int? drawDepth) : base(ContentNetIDs.BUCKLE)
-            {
-                Buckled = buckled;
-                DrawDepth = drawDepth;
-            }
-
-            public bool Buckled { get; }
-            public int? DrawDepth;
+            Buckled = buckled;
+            DrawDepth = drawDepth;
         }
 
-        [Serializable, NetSerializable]
-        public enum BuckleVisuals
-        {
-            Buckled
-        }
+        public bool Buckled { get; }
+        public int? DrawDepth;
+    }
+
+    [Serializable, NetSerializable]
+    public enum BuckleVisuals
+    {
+        Buckled
     }
 }

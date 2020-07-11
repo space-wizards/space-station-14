@@ -27,8 +27,6 @@ namespace Content.Shared.GameObjects.Components.Strap
         public sealed override string Name => "Strap";
 
         public sealed override uint? NetID => ContentNetIDs.STRAP;
-
-        public abstract StrapPosition Position { get; protected set; }
     }
 
     [Serializable, NetSerializable]
@@ -40,8 +38,6 @@ namespace Content.Shared.GameObjects.Components.Strap
         {
             Position = position;
         }
-
-        public bool Buckled { get; }
     }
 
     [Serializable, NetSerializable]
