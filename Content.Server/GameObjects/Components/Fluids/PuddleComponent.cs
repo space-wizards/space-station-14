@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Chemistry;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
@@ -16,6 +17,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -28,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    public class PuddleComponent : Component
+    public class PuddleComponent : Component, IExamine
     {
         // Current design: Something calls the SpillHelper.Spill, that will either
         // A) Add to an existing puddle at the location (normalised to tile-center) or
@@ -45,6 +47,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly ILocalizationManager _loc;
 #pragma warning restore 649
 
         public override string Name => "Puddle";
@@ -62,6 +65,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             get => _slipThreshold;
             set => _slipThreshold = value;
         }
+        private bool _slippery = false;
         private float _evaporateTime;
         private string _spillSound;
 
@@ -100,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
             serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
-            serializer.DataField(ref _evaporateTime, "evaporate_time", 20.0f);
+            serializer.DataField(ref _evaporateTime, "evaporate_time", 5.0f);
             // Long-term probably have this based on the underlying reagents
             serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
@@ -137,6 +141,14 @@ namespace Content.Server.GameObjects.Components.Fluids
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
 
             UpdateStatus();
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if(_slippery)
+            {
+                message.AddText(_loc.GetString("It looks slippery."));
+            }
         }
 
         // Flow rate should probably be controlled globally so this is it for now
@@ -227,10 +239,12 @@ namespace Content.Server.GameObjects.Components.Fluids
             if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
             {
                 Owner.RemoveComponent<SlipperyComponent>();
+                _slippery = false;
             }
             else if (CurrentVolume >= _slipThreshold && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
             {
                 Owner.AddComponent<SlipperyComponent>();
+                _slippery = true;
             }
         }
 
