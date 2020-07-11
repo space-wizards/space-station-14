@@ -88,9 +88,159 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             }
         }
 
+        public PathfindingNode GetNeighbor(Direction direction)
+        {
+            var chunkXOffset = TileRef.X - ParentChunk.Indices.X;
+            var chunkYOffset = TileRef.Y - ParentChunk.Indices.Y;
+            MapIndices neighborMapIndices;
+
+            switch (direction)
+            {
+                case Direction.East:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.NorthEast:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset + 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y + 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.North:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset, chunkYOffset + 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y + 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.NorthWest:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset + 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y + 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.West:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.SouthWest:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset - 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y - 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.South:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset, chunkYOffset - 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y - 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.SouthEast:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset - 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y - 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+        }
+
         public void UpdateTile(TileRef newTile)
         {
             TileRef = newTile;
+            ParentChunk.Dirty();
         }
 
         /// <summary>
@@ -111,6 +261,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 if (entity.TryGetComponent(out AccessReader accessReader) && !_accessReaders.ContainsKey(entity.Uid))
                 {
                     _accessReaders.Add(entity.Uid, accessReader);
+                    ParentChunk.Dirty();
                 }
                 return;
             }
@@ -126,6 +277,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 {
                     _blockedCollidables.TryAdd(entity.Uid, collidableComponent.CollisionLayer);
                     GenerateMask();
+                    ParentChunk.Dirty();
                 }
             }
         }
@@ -147,11 +299,13 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             else if (_accessReaders.ContainsKey(entity.Uid))
             {
                 _accessReaders.Remove(entity.Uid);
+                ParentChunk.Dirty();
             } 
             else if (_blockedCollidables.ContainsKey(entity.Uid))
             {
                 _blockedCollidables.Remove(entity.Uid);
                 GenerateMask();
+                ParentChunk.Dirty();
             }
         }
 
