@@ -6,6 +6,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     [NodeState(NodeStateID.Default)]
     public class BaseNodeState
     {
+        /// <summary>
+        ///     The <see cref="Node"/> this is the <see cref="Node.NodeState"/> of.
+        /// </summary>
         public Node Node { get; private set; }
 
         public void Initialize(Node node)

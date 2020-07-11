@@ -28,6 +28,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public INodeGroup NodeGroup { get => _nodeGroup; set => SetNodeGroup(value); }
         private INodeGroup _nodeGroup = BaseNodeGroup.NullGroup;
 
+        /// <summary>
+        ///  Determines how this will look for other <see cref="Node"/>s to connect to.
+        /// </summary>
         [ViewVariables]
         public BaseNodeState NodeState { get; private set; }
 
