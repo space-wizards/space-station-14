@@ -30,17 +30,6 @@ namespace Content.Shared.GameObjects.Components.Strap
     }
 
     [Serializable, NetSerializable]
-    public sealed class StrapComponentState : ComponentState
-    {
-        public readonly StrapPosition Position;
-
-        public StrapComponentState(StrapPosition position) : base(ContentNetIDs.BUCKLE)
-        {
-            Position = position;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public enum StrapVisuals
     {
         RotationAngle

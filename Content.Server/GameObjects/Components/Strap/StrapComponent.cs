@@ -22,7 +22,17 @@ namespace Content.Server.GameObjects.Components.Strap
         private string _buckleSound;
         private string _unbuckleSound;
         private string _buckledIcon;
+
+        /// <summary>
+        /// The angle in degrees to rotate the player by when they get strapped
+        /// </summary>
+        [ViewVariables]
         private int _rotation;
+
+        /// <summary>
+        /// The size of the strap which is compared against when buckling entities
+        /// </summary>
+        [ViewVariables]
         private int _size;
         private int _occupiedSize;
 
@@ -34,15 +44,7 @@ namespace Content.Server.GameObjects.Components.Strap
         /// <summary>
         /// The change in position to the strapped mob
         /// </summary>
-        public virtual StrapPosition Position
-        {
-            get => _position;
-            protected set
-            {
-                _position = value;
-                Dirty();
-            }
-        }
+        public StrapPosition Position => _position;
 
         /// <summary>
         /// The sound to be played when a mob is buckled
@@ -61,18 +63,6 @@ namespace Content.Server.GameObjects.Components.Strap
         /// </summary>
         [ViewVariables]
         public string BuckledIcon => _buckledIcon;
-
-        /// <summary>
-        /// The angle in degrees to rotate the player by when they get strapped
-        /// </summary>
-        [ViewVariables]
-        public int Rotation => _rotation;
-
-        /// <summary>
-        /// The size of the strap which is compared against when buckling entities
-        /// </summary>
-        [ViewVariables]
-        public int Size => _size;
 
         /// <summary>
         /// The sum of the sizes of all the buckled entities in this strap
@@ -165,11 +155,6 @@ namespace Content.Server.GameObjects.Components.Strap
 
             _buckledEntities.Clear();
             _occupiedSize = 0;
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new StrapComponentState(Position);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

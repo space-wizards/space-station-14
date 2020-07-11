@@ -13,6 +13,7 @@ namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
     [TestOf(typeof(BuckleComponent))]
+    [TestOf(typeof(StrapComponent))]
     public class BuckleTest : ContentIntegrationTest
     {
         [Test]
@@ -99,7 +100,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(buckle.TryBuckle(human, chair));
                 Assert.True(buckle.Buckled);
 
-                // Still in cooldown
+                // On cooldown
                 Assert.False(buckle.TryUnbuckle(human));
                 Assert.True(buckle.Buckled);
                 Assert.False(buckle.ToggleBuckle(human, chair));
