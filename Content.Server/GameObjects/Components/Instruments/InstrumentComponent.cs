@@ -1,13 +1,11 @@
 using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
 using Content.Server.Mobs;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Instruments;
-using NFluidsynth;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -15,16 +13,12 @@ using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
-using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 
 namespace Content.Server.GameObjects.Components.Instruments
 {
@@ -120,8 +114,9 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
         {
-            if (e.NewStatus == SessionStatus.Disconnected)
-                InstrumentPlayer = null;
+            if (e.Session != _instrumentPlayer || e.NewStatus != SessionStatus.Disconnected) return;
+            InstrumentPlayer = null;
+            Clean();
         }
 
         public override void Initialize()
@@ -210,9 +205,13 @@ namespace Content.Server.GameObjects.Components.Instruments
                     _lastSequencerTick = Math.Max(maxTick, minTick + 1);
                     break;
                 case InstrumentStartMidiMessage startMidi:
+                    if (session != _instrumentPlayer)
+                        break;
                     Playing = true;
                     break;
                 case InstrumentStopMidiMessage stopMidi:
+                    if (session != _instrumentPlayer)
+                        break;
                     Playing = false;
                     Clean();
                     break;
@@ -302,6 +301,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             if (_instrumentPlayer != null && !ActionBlockerSystem.CanInteract(_instrumentPlayer.AttachedEntity))
             {
                 InstrumentPlayer = null;
+                Clean();
             }
 
             if ((_batchesDropped >= MaxMidiBatchDropped

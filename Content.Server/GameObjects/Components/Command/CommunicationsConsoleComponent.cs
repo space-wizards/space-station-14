@@ -1,5 +1,6 @@
+﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Command;
@@ -21,8 +22,8 @@ namespace Content.Server.GameObjects.Components.Command
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface;
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
         private RoundEndSystem RoundEndSystem => _entitySystemManager.GetEntitySystem<RoundEndSystem>();
 
         public override void Initialize()
@@ -31,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Command
 
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CommunicationsConsoleUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
             RoundEndSystem.OnRoundEndCountdownStarted += UpdateBoundInterface;
             RoundEndSystem.OnRoundEndCountdownCancelled += UpdateBoundInterface;

@@ -11,7 +11,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     [UsedImplicitly]
     public sealed class CombatModeSystem : SharedCombatModeSystem

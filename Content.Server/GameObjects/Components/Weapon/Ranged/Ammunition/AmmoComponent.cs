@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Timers;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Robust.Server.GameObjects;
@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         /// </summary>
         public float Velocity => _velocity;
         private float _velocity;
-        
+
         private string _muzzleFlashSprite;
 
         public string SoundCollectionEject => _soundCollectionEject;
@@ -89,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             serializer.DataField(ref _caseless, "caseless", false);
             // Being both caseless and shooting yourself doesn't make sense
             DebugTools.Assert(!(_ammoIsProjectile && _caseless));
-            serializer.DataField(ref _muzzleFlashSprite, "muzzleFlash", "Objects/Guns/Projectiles/bullet_muzzle.png");
+            serializer.DataField(ref _muzzleFlashSprite, "muzzleFlash", "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png");
             serializer.DataField(ref _soundCollectionEject, "soundCollectionEject", "CasingEject");
 
             if (_projectilesFired < 1)
@@ -104,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-        public IEntity TakeBullet()
+        public IEntity TakeBullet(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             if (_ammoIsProjectile)
             {
@@ -121,12 +121,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 appearanceComponent.SetData(AmmoVisuals.Spent, true);
             }
-            
-            var entity = Owner.EntityManager.SpawnEntity(_projectileId, Owner.Transform.GridPosition);
+
+            var entity = spawnAtGrid.GridID != GridId.Invalid ? Owner.EntityManager.SpawnEntity(_projectileId, spawnAtGrid) : Owner.EntityManager.SpawnEntity(_projectileId, spawnAtMap);
+
             DebugTools.AssertNotNull(entity);
             return entity;
         }
-        
+
         public void MuzzleFlash(GridCoordinates grid, Angle angle)
         {
             if (_muzzleFlashSprite == null)
@@ -138,7 +139,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             var deathTime = time + TimeSpan.FromMilliseconds(200);
             // Offset the sprite so it actually looks like it's coming from the gun
             var offset = angle.ToVec().Normalized / 2;
-            
+
             var message = new EffectSystemMessage
             {
                 EffectSprite = _muzzleFlashSprite,
@@ -167,7 +168,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         Magnum,
         AntiMaterial,
         Shotgun,
-        Cap, // Placeholder
+        Cap,
         Rocket,
         Dart, // Placeholder
         Grenade,

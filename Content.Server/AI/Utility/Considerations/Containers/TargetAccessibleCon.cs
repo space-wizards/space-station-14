@@ -1,8 +1,7 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Shared.Containers;
 
 namespace Content.Server.AI.Utility.Considerations.Containers
@@ -12,9 +11,7 @@ namespace Content.Server.AI.Utility.Considerations.Containers
     /// </summary>
     public sealed class TargetAccessibleCon : Consideration
     {
-        public TargetAccessibleCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             var target = context.GetState<TargetEntityState>().GetValue();
             if (target == null)

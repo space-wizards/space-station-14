@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Doors;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
@@ -9,6 +10,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.Pathfinding
 {
@@ -16,10 +18,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
     {
         public PathfindingChunk ParentChunk => _parentChunk;
         private readonly PathfindingChunk _parentChunk;
-        
-        public Dictionary<Direction, PathfindingNode> Neighbors => _neighbors;
-        private Dictionary<Direction, PathfindingNode> _neighbors = new Dictionary<Direction, PathfindingNode>();
-        
+
         public TileRef TileRef { get; private set; }
         
         /// <summary>
@@ -28,8 +27,8 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         public int BlockedCollisionMask { get; private set; }
         private readonly Dictionary<EntityUid, int> _blockedCollidables = new Dictionary<EntityUid, int>(0);
 
-        public IReadOnlyCollection<EntityUid> PhysicsUids => _physicsUids;
-        private readonly HashSet<EntityUid> _physicsUids = new HashSet<EntityUid>(0);
+        public IReadOnlyDictionary<EntityUid, int> PhysicsLayers => _physicsLayers;
+        private readonly Dictionary<EntityUid, int> _physicsLayers = new Dictionary<EntityUid, int>(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
@@ -45,72 +44,48 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             GenerateMask();
         }
 
-        public void AddNeighbor(Direction direction, PathfindingNode node)
+        /// <summary>
+        /// Return our neighboring nodes (even across chunks)
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PathfindingNode> GetNeighbors()
         {
-            _neighbors.Add(direction, node);
-        }
-
-        public void AddNeighbor(PathfindingNode node)
-        {
-            if (node.TileRef.GridIndex != TileRef.GridIndex)
+            List<PathfindingChunk> neighborChunks = null;
+            if (ParentChunk.OnEdge(this))
             {
-                throw new InvalidOperationException();
+                neighborChunks = ParentChunk.RelevantChunks(this).ToList();
             }
-
-            Direction direction;
-            if (node.TileRef.X < TileRef.X)
+            
+            for (var x = -1; x <= 1; x++)
             {
-                if (node.TileRef.Y > TileRef.Y)
+                for (var y = -1; y <= 1; y++)
                 {
-                    direction = Direction.NorthWest;
-                } else if (node.TileRef.Y < TileRef.Y)
-                {
-                    direction = Direction.SouthWest;
-                }
-                else
-                {
-                    direction = Direction.West;
-                }
-            }
-            else if (node.TileRef.X > TileRef.X)
-            {
-                if (node.TileRef.Y > TileRef.Y)
-                {
-                    direction = Direction.NorthEast;
-                } else if (node.TileRef.Y < TileRef.Y)
-                {
-                    direction = Direction.SouthEast;
-                }
-                else
-                {
-                    direction = Direction.East;
+                    if (x == 0 && y == 0) continue;
+                    var indices = new MapIndices(TileRef.X + x, TileRef.Y + y);
+                    if (ParentChunk.InBounds(indices))
+                    {
+                        var (relativeX, relativeY) = (indices.X - ParentChunk.Indices.X,
+                            indices.Y - ParentChunk.Indices.Y);
+                        yield return ParentChunk.Nodes[relativeX, relativeY];
+                    }
+                    else
+                    {
+                        DebugTools.AssertNotNull(neighborChunks);
+                        // Get the relevant chunk and then get the node on it
+                        foreach (var neighbor in neighborChunks)
+                        {
+                            // A lot of edge transitions are going to have a single neighboring chunk
+                            // (given > 1 only affects corners)
+                            // So we can just check the count to see if it's inbound
+                            if (neighborChunks.Count > 0 && !neighbor.InBounds(indices)) continue;
+                            var (relativeX, relativeY) = (indices.X - neighbor.Indices.X,
+                                indices.Y - neighbor.Indices.Y);
+                            yield return neighbor.Nodes[relativeX, relativeY];
+                            break;
+                        }
+                    }
                 }
             }
-            else
-            {
-                if (node.TileRef.Y > TileRef.Y)
-                {
-                    direction = Direction.North;
-                }
-                else
-                {
-                    direction = Direction.South;
-                }
-            }
-
-            if (_neighbors.ContainsKey(direction))
-            {
-                // Should we verify that they align?
-                return;
-            }
-
-            _neighbors.Add(direction, node);
-        }
-
-        public PathfindingNode GetNeighbor(Direction direction)
-        {
-            _neighbors.TryGetValue(direction, out var node);
-            return node;
         }
 
         public void UpdateTile(TileRef newTile)
@@ -123,6 +98,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         /// </summary>
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
+        /// TODO: Could probably optimise this slightly more.
         public void AddEntity(IEntity entity)
         {
             // If we're a door
@@ -139,11 +115,12 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 return;
             }
             
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out CollidableComponent collidableComponent) && 
+                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0)
             {
                 if (entity.TryGetComponent(out PhysicsComponent physicsComponent) && !physicsComponent.Anchored)
                 {
-                    _physicsUids.Add(entity.Uid);
+                    _physicsLayers.Add(entity.Uid, collidableComponent.CollisionLayer);
                 }
                 else
                 {
@@ -153,25 +130,28 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             }
         }
 
+        /// <summary>
+        /// Remove the entity from this node.
+        /// Will check each category and remove it from the applicable one
+        /// </summary>
+        /// <param name="entity"></param>
         public void RemoveEntity(IEntity entity)
         {
-            if (_accessReaders.ContainsKey(entity.Uid))
+            // There's no guarantee that the entity isn't deleted
+            // 90% of updates are probably entities moving around
+            // Entity can't be under multiple categories so just checking each once is fine.
+            if (_physicsLayers.ContainsKey(entity.Uid))
+            {
+                _physicsLayers.Remove(entity.Uid);
+            } 
+            else if (_accessReaders.ContainsKey(entity.Uid))
             {
                 _accessReaders.Remove(entity.Uid);
-                return;
-            }
-
-            if (entity.HasComponent<CollidableComponent>())
+            } 
+            else if (_blockedCollidables.ContainsKey(entity.Uid))
             {
-                if (entity.TryGetComponent(out PhysicsComponent physicsComponent) && physicsComponent.Anchored)
-                {
-                    _blockedCollidables.Remove(entity.Uid);
-                    GenerateMask();
-                }
-                else
-                {
-                    _physicsUids.Remove(entity.Uid);
-                }
+                _blockedCollidables.Remove(entity.Uid);
+                GenerateMask();
             }
         }
 

@@ -1,15 +1,12 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components.Chemistry;
 
-namespace Content.Server.AI.Utility.Considerations.Nutrition
+namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
 {
     public sealed class FoodValueCon : Consideration
     {
-        public FoodValueCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 

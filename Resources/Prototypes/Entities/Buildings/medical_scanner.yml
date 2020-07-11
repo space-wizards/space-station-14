@@ -5,15 +5,15 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Buildings/medical_scanner.rsi
+    sprite: Constructible/Power/medical_scanner.rsi
     layers:
     - state: scanner_open
       map: ["enum.MedicalScannerVisualLayers.Machine"]
     - state: scanner_terminal_blue
       map: ["enum.MedicalScannerVisualLayers.Terminal"]
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: Icon
-    sprite: Buildings/medical_scanner.rsi
+    sprite: Constructible/Power/medical_scanner.rsi
     state: scanner_open
   - type: Anchorable
   - type: Clickable

@@ -45,7 +45,7 @@ namespace Content.Client.UserInterface
 
             AddChild(margin);
 
-            var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -136,7 +136,6 @@ namespace Content.Client.UserInterface
             _createNewCharacterButton = new Button
             {
                 Text = "Create new slot...",
-                ToolTip = $"A maximum of {preferencesManager.Settings.MaxCharacterSlots} characters are allowed."
             };
             _createNewCharacterButton.OnPressed += args =>
             {
@@ -155,6 +154,8 @@ namespace Content.Client.UserInterface
             hBox.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
+
+            preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
         public void Save() => _humanoidProfileEditor.Save();
@@ -164,6 +165,15 @@ namespace Content.Client.UserInterface
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
             _charactersVBox.RemoveAllChildren();
+
+            if (!_preferencesManager.ServerDataLoaded)
+            {
+                return;
+            }
+
+            _createNewCharacterButton.ToolTip =
+                $"A maximum of {_preferencesManager.Settings.MaxCharacterSlots} characters are allowed.";
+
             var characterIndex = 0;
             foreach (var character in _preferencesManager.Preferences.Characters)
             {

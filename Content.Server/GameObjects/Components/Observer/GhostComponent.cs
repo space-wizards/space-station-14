@@ -1,6 +1,7 @@
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
@@ -15,7 +16,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Observer
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent, IActionBlocker
+    public class GhostComponent : SharedGhostComponent
     {
         private bool _canReturnToBody = true;
 
@@ -75,13 +76,5 @@ namespace Content.Server.GameObjects.Components.Observer
                     break;
             }
         }
-
-        public bool CanInteract() => false;
-        public bool CanUse() => false;
-        public bool CanThrow() => false;
-        public bool CanDrop() => false;
-        public bool CanPickup() => false;
-        public bool CanEmote() => false;
-        public bool CanAttack() => false;
     }
 }

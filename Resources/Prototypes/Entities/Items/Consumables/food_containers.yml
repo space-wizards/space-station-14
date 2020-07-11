@@ -21,9 +21,9 @@
       FoodAppleCakeSlice: 100
     trash: TrashTray
   - type: Sprite
-    sprite: Objects/FoodContainers/apple_cake.rsi
+    sprite: Objects/Consumable/FoodContainers/apple_cake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/apple_cake.rsi
+    sprite: Objects/Consumable/FoodContainers/apple_cake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -34,9 +34,9 @@
     prototypes:
       FoodBananaBreadSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/bananabread.rsi
+    sprite: Objects/Consumable/FoodContainers/bananabread.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/bananabread.rsi
+    sprite: Objects/Consumable/FoodContainers/bananabread.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -47,9 +47,9 @@
     prototypes:
       FoodBirthdayCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/birthdaycake.rsi
+    sprite: Objects/Consumable/FoodContainers/birthdaycake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/birthdaycake.rsi
+    sprite: Objects/Consumable/FoodContainers/birthdaycake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -60,9 +60,9 @@
     prototypes:
       FoodBrainCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/braincake.rsi
+    sprite: Objects/Consumable/FoodContainers/braincake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/braincake.rsi
+    sprite: Objects/Consumable/FoodContainers/braincake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -73,9 +73,9 @@
     prototypes:
       FoodBreadSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/bread.rsi
+    sprite: Objects/Consumable/FoodContainers/bread.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/bread.rsi
+    sprite: Objects/Consumable/FoodContainers/bread.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -86,9 +86,9 @@
     prototypes:
       FoodCarrotCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/carrotcake.rsi
+    sprite: Objects/Consumable/FoodContainers/carrotcake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/carrotcake.rsi
+    sprite: Objects/Consumable/FoodContainers/carrotcake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -99,9 +99,9 @@
     prototypes:
       FoodCheeseCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/cheesecake.rsi
+    sprite: Objects/Consumable/FoodContainers/cheesecake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/cheesecake.rsi
+    sprite: Objects/Consumable/FoodContainers/cheesecake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -112,9 +112,9 @@
     prototypes:
       FoodCheeseWedge: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/apple_cake.rsi
+    sprite: Objects/Consumable/FoodContainers/apple_cake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/apple_cake.rsi
+    sprite: Objects/Consumable/FoodContainers/apple_cake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -125,9 +125,9 @@
     prototypes:
       FoodChocolateCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/chocolatecake.rsi
+    sprite: Objects/Consumable/FoodContainers/chocolatecake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/chocolatecake.rsi
+    sprite: Objects/Consumable/FoodContainers/chocolatecake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -138,9 +138,9 @@
     prototypes:
       FoodCreamCheeseBreadSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/creamcheesebread.rsi
+    sprite: Objects/Consumable/FoodContainers/creamcheesebread.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/creamcheesebread.rsi
+    sprite: Objects/Consumable/FoodContainers/creamcheesebread.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -153,9 +153,9 @@
       FoodDonut: 70
       FoodFrostedDonut: 30
   - type: Sprite
-    sprite: Objects/FoodContainers/donutbox.rsi
+    sprite: Objects/Consumable/FoodContainers/donutbox.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/donutbox.rsi
+    sprite: Objects/Consumable/FoodContainers/donutbox.rsi
   - type: Appearance
     visuals:
     - type: FoodContainerVisualizer2D
@@ -173,9 +173,11 @@
     prototypes:
       FoodContainerEggBox: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/eggbox_shut.rsi
+    sprite: Objects/Consumable/FoodContainers/eggbox_shut.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/eggbox_shut.rsi
+    sprite: Objects/Consumable/FoodContainers/eggbox_shut.rsi
+  - type: Item
+    sprite: Objects/Consumable/FoodContainers/eggbox_shut.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -187,11 +189,13 @@
     prototypes:
       FoodEgg: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/eggbox.rsi
+    sprite: Objects/Consumable/FoodContainers/eggbox.rsi
     state: eggbox-12
   - type: Icon
-    sprite: Objects/FoodContainers/eggbox.rsi
+    sprite: Objects/Consumable/FoodContainers/eggbox.rsi
     state: eggbox-12
+  - type: Item
+    sprite: Objects/Consumable/FoodContainers/eggbox.rsi
   - type: Appearance
     visuals:
     - type: FoodContainerVisualizer2D
@@ -208,9 +212,9 @@
     prototypes:
       FoodLemonCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/lemoncake.rsi
+    sprite: Objects/Consumable/FoodContainers/lemoncake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/lemoncake.rsi
+    sprite: Objects/Consumable/FoodContainers/lemoncake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -221,9 +225,9 @@
     prototypes:
       FoodLimeCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/limecake.rsi
+    sprite: Objects/Consumable/FoodContainers/limecake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/limecake.rsi
+    sprite: Objects/Consumable/FoodContainers/limecake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -234,9 +238,9 @@
     prototypes:
       FoodMeatBreadSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/meatbread.rsi
+    sprite: Objects/Consumable/FoodContainers/meatbread.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/meatbread.rsi
+    sprite: Objects/Consumable/FoodContainers/meatbread.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -248,9 +252,9 @@
     prototypes:
       FoodMeatPizzaSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/meatpizza.rsi
+    sprite: Objects/Consumable/FoodContainers/meatpizza.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/meatpizza.rsi
+    sprite: Objects/Consumable/FoodContainers/meatpizza.rsi
 
 # These two will probably get moved one day
 - type: entity
@@ -262,9 +266,9 @@
     prototypes:
       FoodContainerMonkeyCubeWrap: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/monkeycubebox.rsi
+    sprite: Objects/Consumable/FoodContainers/monkeycubebox.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/monkeycubebox.rsi
+    sprite: Objects/Consumable/FoodContainers/monkeycubebox.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -275,9 +279,9 @@
     prototypes:
       FoodMonkeyCube: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/monkeycubewrap.rsi
+    sprite: Objects/Consumable/FoodContainers/monkeycubewrap.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/monkeycubewrap.rsi
+    sprite: Objects/Consumable/FoodContainers/monkeycubewrap.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -289,9 +293,9 @@
     prototypes:
       FoodMushroomPizzaSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/mushroompizza.rsi
+    sprite: Objects/Consumable/FoodContainers/mushroompizza.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/mushroompizza.rsi
+    sprite: Objects/Consumable/FoodContainers/mushroompizza.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -302,9 +306,9 @@
     prototypes:
       FoodOrangeCakeSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/orangecake.rsi
+    sprite: Objects/Consumable/FoodContainers/orangecake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/orangecake.rsi
+    sprite: Objects/Consumable/FoodContainers/orangecake.rsi
 
 # TODO: Probably replace it with a stacking thing
 - type: entity
@@ -316,9 +320,9 @@
     prototypes:
       FoodContainerPizzaBox: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/pizzaboxstack.rsi
+    sprite: Objects/Consumable/FoodContainers/pizzaboxstack.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/pizzaboxstack.rsi
+    sprite: Objects/Consumable/FoodContainers/pizzaboxstack.rsi
   - type: Appearance
     visuals:
     - type: FoodContainerVisualizer2D
@@ -339,9 +343,11 @@
       FoodContainerMushroomPizza: 25
       FoodContainerVegetablePizza: 25
   - type: Sprite
-    sprite: Objects/FoodContainers/pizzabox_open.rsi
+    sprite: Objects/Consumable/FoodContainers/pizzabox.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/pizzabox_open.rsi
+    sprite: Objects/Consumable/FoodContainers/pizzabox.rsi
+  - type: Item
+    sprite: Objects/Consumable/FoodContainers/pizzabox.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -353,9 +359,9 @@
     prototypes:
       FoodMargheritaPizzaSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/pizzamargherita.rsi
+    sprite: Objects/Consumable/FoodContainers/pizzamargherita.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/pizzamargherita.rsi
+    sprite: Objects/Consumable/FoodContainers/pizzamargherita.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -367,9 +373,9 @@
       FoodPlainCakeSlice: 100
     trash: TrashTray
   - type: Sprite
-    sprite: Objects/FoodContainers/plaincake.rsi
+    sprite: Objects/Consumable/FoodContainers/plaincake.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/plaincake.rsi
+    sprite: Objects/Consumable/FoodContainers/plaincake.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -380,9 +386,11 @@
     prototypes:
       FoodPumpkinPieSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/pumpkinpie.rsi
+    sprite: Objects/Consumable/FoodContainers/pumpkinpie.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/pumpkinpie.rsi
+    sprite: Objects/Consumable/FoodContainers/pumpkinpie.rsi
+  - type: Item
+    sprite: Objects/Consumable/FoodContainers/pumpkinpie.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -393,9 +401,9 @@
     prototypes:
       FoodTofuBreadSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/tofubread.rsi
+    sprite: Objects/Consumable/FoodContainers/tofubread.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/tofubread.rsi
+    sprite: Objects/Consumable/FoodContainers/tofubread.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -407,9 +415,9 @@
     prototypes:
       FoodVegetablePizzaSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/vegetablepizza.rsi
+    sprite: Objects/Consumable/FoodContainers/vegetablepizza.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/vegetablepizza.rsi
+    sprite: Objects/Consumable/FoodContainers/vegetablepizza.rsi
 
 - type: entity
   parent: FoodContainerBase
@@ -420,6 +428,6 @@
     prototypes:
       FoodXenomeatBreadSlice: 100
   - type: Sprite
-    sprite: Objects/FoodContainers/xenomeatbread.rsi
+    sprite: Objects/Consumable/FoodContainers/xenomeatbread.rsi
   - type: Icon
-    sprite: Objects/FoodContainers/xenomeatbread.rsi
+    sprite: Objects/Consumable/FoodContainers/xenomeatbread.rsi

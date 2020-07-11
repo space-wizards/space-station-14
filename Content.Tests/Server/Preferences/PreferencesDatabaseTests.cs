@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Server.Preferences;
 using Content.Shared;
@@ -34,7 +35,8 @@ namespace Content.Tests.Server.Preferences
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
                 },
-                PreferenceUnavailableMode.StayInLobby
+                PreferenceUnavailableMode.StayInLobby,
+                new List<string>{}
             );
         }
 
@@ -44,64 +46,64 @@ namespace Content.Tests.Server.Preferences
         }
 
         [Test]
-        public void TestUserDoesNotExist()
+        public async Task TestUserDoesNotExist()
         {
             var db = GetDb();
-            Assert.Null(db.GetPlayerPreferences("[The database should be empty so any string should do]"));
+            Assert.Null(await db.GetPlayerPreferencesAsync("[The database should be empty so any string should do]"));
         }
 
         [Test]
-        public void TestUserDoesExist()
+        public async Task TestUserDoesExist()
         {
             var db = GetDb();
             const string username = "bobby";
-            db.SaveSelectedCharacterIndex(username, 0);
-            var prefs = db.GetPlayerPreferences(username);
+            await db.SaveSelectedCharacterIndexAsync(username, 0);
+            var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.NotNull(prefs);
             Assert.Zero(prefs.SelectedCharacterIndex);
             Assert.That(prefs.Characters.ToList().TrueForAll(character => character is null));
         }
 
         [Test]
-        public void TestUpdateCharacter()
+        public async Task TestUpdateCharacter()
         {
             var db = GetDb();
             const string username = "charlie";
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
-            db.SaveSelectedCharacterIndex(username, slot);
-            db.SaveCharacterSlot(username, originalProfile, slot);
-            var prefs = db.GetPlayerPreferences(username);
+            await db.SaveSelectedCharacterIndexAsync(username, slot);
+            await db.SaveCharacterSlotAsync(username, originalProfile, slot);
+            var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(prefs.Characters.ElementAt(slot).MemberwiseEquals(originalProfile));
         }
 
         [Test]
-        public void TestDeleteCharacter()
+        public async Task TestDeleteCharacter()
         {
             var db = GetDb();
             const string username = "charlie";
             const int slot = 0;
-            db.SaveSelectedCharacterIndex(username, slot);
-            db.SaveCharacterSlot(username, CharlieCharlieson(), slot);
-            db.SaveCharacterSlot(username, null, slot);
-            var prefs = db.GetPlayerPreferences(username);
+            await db.SaveSelectedCharacterIndexAsync(username, slot);
+            await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), slot);
+            await db.SaveCharacterSlotAsync(username, null, slot);
+            var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(prefs.Characters.ToList().TrueForAll(character => character is null));
         }
 
         [Test]
-        public void TestInvalidSlot()
+        public async Task TestInvalidSlot()
         {
             var db = GetDb();
             const string username = "charlie";
             const int slot = -1;
 
-            db.SaveSelectedCharacterIndex(username, slot);
-            db.SaveCharacterSlot(username, CharlieCharlieson(), slot);
-            var prefs = db.GetPlayerPreferences(username);
+            await db.SaveSelectedCharacterIndexAsync(username, slot);
+            await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), slot);
+            var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.AreEqual(prefs.SelectedCharacterIndex, 0);
 
-            db.SaveSelectedCharacterIndex(username, MaxCharacterSlots);
-            prefs = db.GetPlayerPreferences(username);
+            await db.SaveSelectedCharacterIndexAsync(username, MaxCharacterSlots);
+            prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.AreEqual(prefs.SelectedCharacterIndex, MaxCharacterSlots - 1);
         }
     }

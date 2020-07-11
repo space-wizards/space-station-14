@@ -1,24 +1,17 @@
+#nullable enable
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.Physics;
-using JetBrains.Annotations;
-using NFluidsynth;
 using Robust.Shared.GameObjects;
 using Robust.Client.Audio.Midi;
-using Robust.Client.Player;
-using Robust.Shared.Interfaces.Log;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
 using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -32,24 +25,23 @@ namespace Content.Client.GameObjects.Components.Instruments
         /// <summary>
         ///     Called when a midi song stops playing.
         /// </summary>
-        public event Action OnMidiPlaybackEnded;
+        public event Action? OnMidiPlaybackEnded;
 
 #pragma warning disable 649
-        [Dependency] private readonly IMidiManager _midiManager;
+        [Dependency] private readonly IMidiManager _midiManager = default!;
 
-        [Dependency] private readonly IGameTiming _gameTiming;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [Dependency] private readonly IClientNetManager _netManager;
+        [Dependency] private readonly IClientNetManager _netManager = default!;
 #pragma warning restore 649
 
-        [CanBeNull]
-        private IMidiRenderer _renderer;
+        private IMidiRenderer? _renderer;
 
         private byte _instrumentProgram = 1;
 
-        private byte _instrumentBank = 0;
+        private byte _instrumentBank;
 
-        private uint _sequenceDelay = 0;
+        private uint _sequenceDelay;
 
         private uint _sequenceStartTick;
 
@@ -108,6 +100,12 @@ namespace Content.Client.GameObjects.Components.Instruments
                 }
             }
         }
+
+        /// <summary>
+        ///     Whether this instrument is handheld or not.
+        /// </summary>
+        [ViewVariables]
+        public bool Handheld { get; set; } // TODO: Replace this by simply checking if the entity has an ItemComponent.
 
         /// <summary>
         ///     Whether there's a midi song being played or not.
@@ -198,11 +196,12 @@ namespace Content.Client.GameObjects.Components.Instruments
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+            serializer.DataField(this, x => Handheld, "handheld", false);
             serializer.DataField(ref _instrumentProgram, "program", (byte) 1);
             serializer.DataField(ref _instrumentBank, "bank", (byte) 0);
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -233,7 +232,7 @@ namespace Content.Client.GameObjects.Components.Instruments
                             .Min(x => x.Tick) - 1;
                     }
 
-                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel.Ping / 1000f);
+                    var sqrtLag = MathF.Sqrt(_netManager.ServerChannel!.Ping / 1000f);
                     var delay = (uint) (_renderer!.SequencerTimeScale * (.2 + sqrtLag));
                     var delta = delay - _sequenceStartTick;
 
@@ -258,12 +257,12 @@ namespace Content.Client.GameObjects.Components.Instruments
                     }
 
                     break;
-                case InstrumentStartMidiMessage startMidiMessage:
+                case InstrumentStartMidiMessage _:
                 {
                     SetupRenderer(true);
                     break;
                 }
-                case InstrumentStopMidiMessage stopMidiMessage:
+                case InstrumentStopMidiMessage _:
                 {
                     EndRenderer(true);
                     break;
@@ -271,7 +270,7 @@ namespace Content.Client.GameObjects.Components.Instruments
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
             if (!(curState is InstrumentState state)) return;
@@ -363,7 +362,7 @@ namespace Content.Client.GameObjects.Components.Instruments
 
         private TimeSpan _lastMeasured = TimeSpan.MinValue;
 
-        private int _sentWithinASec = 0;
+        private int _sentWithinASec;
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 

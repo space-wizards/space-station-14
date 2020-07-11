@@ -1,4 +1,5 @@
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
@@ -30,7 +31,7 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (_target.TryGetComponent(out ItemComponent itemComponent))
+            if (!_target.TryGetComponent(out ItemComponent itemComponent))
             {
                 return Outcome.Failed;
             }

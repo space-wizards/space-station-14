@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
+using Content.Server.GameObjects.Components.Sound;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
@@ -45,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/items/eatfood.ogg");
+            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/eatfood.ogg");
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
             serializer.DataField(ref _trashPrototype, "trash", null);
 

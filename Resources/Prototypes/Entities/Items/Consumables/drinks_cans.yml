@@ -17,6 +17,7 @@
     state: icon
   - type: Icon
     state: icon
+  - type: CanSpill
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -26,9 +27,11 @@
   components:
   - type: Solution
   - type: Sprite
-    sprite: Objects/Drinks/cola.rsi
+    sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Icon
-    sprite: Objects/Drinks/cola.rsi
+    sprite: Objects/Consumable/Drinks/cola.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/cola.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -37,9 +40,11 @@
   description: ''
   components:
   - type: Sprite
-    sprite: Objects/Drinks/ice_tea_can.rsi
+    sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Icon
-    sprite: Objects/Drinks/ice_tea_can.rsi
+    sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -48,20 +53,24 @@
   description: You wanted ORANGE. It gave you Lemon Lime.
   components:
   - type: Sprite
-    sprite: Objects/Drinks/lemon-lime.rsi
+    sprite: Objects/Consumable/Drinks/lemon-lime.rsi
   - type: Icon
-    sprite: Objects/Drinks/lemon-lime.rsi
+    sprite: Objects/Consumable/Drinks/lemon-lime.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/lemon-lime.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkPurpleCan
-  name: purple can
-  description: ''
+  id: DrinkGrapeCan
+  name: grape soda can
+  description: 'Sweetened drink with a grape flavor and a deep purple color.'
   components:
   - type: Sprite
-    sprite: Objects/Drinks/purple_can.rsi
+    sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Icon
-    sprite: Objects/Drinks/purple_can.rsi
+    sprite: Objects/Consumable/Drinks/purple_can.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/purple_can.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -70,9 +79,11 @@
   description: Blows right through you like a space wind.
   components:
   - type: Sprite
-    sprite: Objects/Drinks/space_mountain_wind.rsi
+    sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
   - type: Icon
-    sprite: Objects/Drinks/space_mountain_wind.rsi
+    sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -81,9 +92,11 @@
   description: Tastes like a hull breach in your mouth.
   components:
   - type: Sprite
-    sprite: Objects/Drinks/space-up.rsi
+    sprite: Objects/Consumable/Drinks/space-up.rsi
   - type: Icon
-    sprite: Objects/Drinks/space-up.rsi
+    sprite: Objects/Consumable/Drinks/space-up.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/space-up.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -92,9 +105,11 @@
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
   - type: Sprite
-    sprite: Objects/Drinks/starkist.rsi
+    sprite: Objects/Consumable/Drinks/starkist.rsi
   - type: Icon
-    sprite: Objects/Drinks/starkist.rsi
+    sprite: Objects/Consumable/Drinks/starkist.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/starkist.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -103,9 +118,11 @@
   description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: Sprite
-    sprite: Objects/Drinks/thirteen_loko.rsi
+    sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
   - type: Icon
-    sprite: Objects/Drinks/thirteen_loko.rsi
+    sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -115,9 +132,11 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/changelingsting.rsi
+    sprite: Objects/Consumable/Drinks/changelingsting.rsi
   - type: Icon
-    sprite: Objects/Drinks/changelingsting.rsi
+    sprite: Objects/Consumable/Drinks/changelingsting.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/changelingsting.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -127,9 +146,11 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/dr_gibb.rsi
+    sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Icon
-    sprite: Objects/Drinks/dr_gibb.rsi
+    sprite: Objects/Consumable/Drinks/dr_gibb.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/dr_gibb.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -139,23 +160,8 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/energy_drink.rsi
+    sprite: Objects/Consumable/Drinks/energy_drink.rsi
   - type: Icon
-    sprite: Objects/Drinks/energy_drink.rsi
-
-- type: entity
-  parent: DrinkCanBaseFull
-  id: DrinkGrapeSoda
-  name: Grape soda
-  description: Sweetened drink with a grape flavor and a deep purple color.
-  components:
-  - type: Drink
-  - type: Solution
-    contents:
-      reagents:
-      - ReagentId: chem.Cola
-        Quantity: 20
-  - type: Sprite
-    sprite: Objects/Drinks/grapesoda.rsi
-  - type: Icon
-    sprite: Objects/Drinks/grapesoda.rsi
+    sprite: Objects/Consumable/Drinks/energy_drink.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/energy_drink.rsi

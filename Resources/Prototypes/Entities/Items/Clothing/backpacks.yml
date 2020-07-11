@@ -5,17 +5,17 @@
   description: A convenient storage pack
   components:
   - type: Sprite
-    sprite: Clothing/backpacks.rsi
+    sprite: Clothing/Back/Backpacks/backpack.rsi
     state: backpack
   - type: Icon
-    sprite: Clothing/backpacks.rsi
+    sprite: Clothing/Back/Backpacks/backpack.rsi
     state: backpack
   - type: Clothing
     Size: 9999
     QuickEquip: false
     Slots:
     - back
-    sprite: Clothing/backpacks.rsi
+    sprite: Clothing/Back/Backpacks/backpack.rsi
     HeldPrefix: backpack
   - type: Storage
     Capacity: 100
@@ -27,12 +27,13 @@
   description: It's a backpack made by Honk! Co.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/clown.rsi
     state: clown
-
   - type: Icon
+    sprite: Clothing/Back/Backpacks/clown.rsi
     state: clown
-
   - type: Clothing
+    sprite: Clothing/Back/Backpacks/clown.rsi
     HeldPrefix: clown
 
 - type: entity
@@ -42,14 +43,14 @@
   description: It's a very robust backpack.
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/security.rsi
     state: security
-
   - type: Icon
+    sprite: Clothing/Back/Backpacks/security.rsi
     state: security
-
   - type: Clothing
+    sprite: Clothing/Back/Backpacks/security.rsi
     HeldPrefix: security
-
 
 - type: entity
   parent: BackpackClothing
@@ -57,14 +58,14 @@
   name: engineering backpack
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/engineering.rsi
     state: engineering
-
   - type: Icon
+    sprite: Clothing/Back/Backpacks/engineering.rsi
     state: engineering
-
   - type: Clothing
+    sprite: Clothing/Back/Backpacks/engineering.rsi
     HeldPrefix: engineering
-
 
 - type: entity
   parent: BackpackClothing
@@ -72,14 +73,14 @@
   name: medical backpack
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/medical.rsi
     state: medical
-
   - type: Icon
+    sprite: Clothing/Back/Backpacks/medical.rsi
     state: medical
-
   - type: Clothing
+    sprite: Clothing/Back/Backpacks/medical.rsi
     HeldPrefix: medical
-
 
 - type: entity
   parent: BackpackClothing
@@ -87,14 +88,14 @@
   name: captain's backpack
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/captain.rsi
     state: captain
-
   - type: Icon
+    sprite: Clothing/Back/Backpacks/captain.rsi
     state: captain
-
   - type: Clothing
+    sprite: Clothing/Back/Backpacks/captain.rsi
     HeldPrefix: captain
-
 
 - type: entity
   parent: BackpackClothing
@@ -102,17 +103,18 @@
   name: bag of holding
   components:
   - type: Sprite
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
     layers:
     - state: holding
     - state: holding-unlit
       shader: unshaded
-
   - type: Icon
+    sprite: Clothing/Back/Backpacks/holding.rsi
     state: holding
-
   - type: Clothing
+    sprite: Clothing/Back/Backpacks/holding.rsi
     HeldPrefix: holding
-
 
 - type: entity
   parent: BackpackClothing
@@ -120,17 +122,16 @@
   name: satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel.rsi
     state: satchel
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel.rsi
     state: satchel
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel.rsi
     ClothingPrefix: satchel
-
   - type: Storage
     Capacity: 300
-
 
 - type: entity
   parent: BackpackClothing
@@ -138,15 +139,15 @@
   name: engineering satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     state: satchel-engineering
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     state: satchel-engineering
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
     HeldPrefix: engineering
     ClothingPrefix: satchel-engineering
-
 
 - type: entity
   parent: BackpackClothing
@@ -154,15 +155,15 @@
   name: medical satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_medical.rsi
     state: satchel-medical
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_medical.rsi
     state: satchel-medical
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_medical.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-medical
-
 
 - type: entity
   parent: BackpackClothing
@@ -170,15 +171,15 @@
   name: chemistry satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     state: satchel-chemistry
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     state: satchel-chemistry
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-chemistry
-
 
 - type: entity
   parent: BackpackClothing
@@ -186,15 +187,15 @@
   name: genetics satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
     state: satchel-genetics
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
     state: satchel-genetics
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-genetics
-
 
 - type: entity
   parent: BackpackClothing
@@ -202,15 +203,15 @@
   name: virology satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_virology.rsi
     state: satchel-virology
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_virology.rsi
     state: satchel-virology
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_virology.rsi
     HeldPrefix: medical
     ClothingPrefix: satchel-virology
-
 
 - type: entity
   parent: BackpackClothing
@@ -218,14 +219,14 @@
   name: science satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_science.rsi
     state: satchel-science
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_science.rsi
     state: satchel-science
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_science.rsi
     ClothingPrefix: satchel-science
-
 
 - type: entity
   parent: BackpackClothing
@@ -233,15 +234,15 @@
   name: security satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_security.rsi
     state: satchel-security
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_security.rsi
     state: satchel-security
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_security.rsi
     HeldPrefix: security
     ClothingPrefix: satchel-security
-
 
 - type: entity
   parent: BackpackClothing
@@ -249,15 +250,15 @@
   name: captain's satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_captain.rsi
     state: satchel-captain
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_captain.rsi
     state: satchel-captain
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_captain.rsi
     HeldPrefix: captain
     ClothingPrefix: satchel-captain
-
 
 - type: entity
   parent: BackpackClothing
@@ -265,14 +266,14 @@
   name: hydroponics satchel
   components:
   - type: Sprite
+    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     state: satchel-hydroponics
-
   - type: Icon
+    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     state: satchel-hydroponics
-
   - type: Clothing
+    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
     ClothingPrefix: satchel-hydroponics
-
 
 - type: entity
   parent: BackpackClothing
@@ -280,14 +281,14 @@
   name: messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier.rsi
     state: courier
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier.rsi
     state: courier
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier.rsi
     ClothingPrefix: courier
-
 
 - type: entity
   parent: BackpackClothing
@@ -295,15 +296,15 @@
   name: chemistry messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_chemistry.rsi
     state: courier-chemistry
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_chemistry.rsi
     state: courier-chemistry
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_chemistry.rsi
     HeldPrefix: medical
     ClothingPrefix: courier-chemistry
-
 
 - type: entity
   parent: BackpackClothing
@@ -311,15 +312,15 @@
   name: medical messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_medical.rsi
     state: courier-medical
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_medical.rsi
     state: courier-medical
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_medical.rsi
     HeldPrefix: medical
     ClothingPrefix: courier-medical
-
 
 - type: entity
   parent: BackpackClothing
@@ -327,15 +328,15 @@
   name: virology messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_virology.rsi
     state: courier-virology
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_virology.rsi
     state: courier-virology
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_virology.rsi
     HeldPrefix: medical
     ClothingPrefix: courier-virology
-
 
 - type: entity
   parent: BackpackClothing
@@ -343,15 +344,15 @@
   name: engineering messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_engineering.rsi
     state: courier-engineering
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_engineering.rsi
     state: courier-engineering
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_engineering.rsi
     HeldPrefix: engineering
     ClothingPrefix: courier-engineering
-
 
 - type: entity
   parent: BackpackClothing
@@ -359,14 +360,14 @@
   name: science messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_science.rsi
     state: courier-science
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_science.rsi
     state: courier-science
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_science.rsi
     ClothingPrefix: courier-science
-
 
 - type: entity
   parent: BackpackClothing
@@ -374,15 +375,15 @@
   name: captain's messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_captain.rsi
     state: courier-captain
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_captain.rsi
     state: courier-captain
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_captain.rsi
     HeldPrefix: captain
     ClothingPrefix: courier-captain
-
 
 - type: entity
   parent: BackpackClothing
@@ -390,14 +391,14 @@
   name: hydroponics messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
     state: courier-hydroponics
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
     state: courier-hydroponics
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
     ClothingPrefix: courier-hydroponics
-
 
 - type: entity
   parent: BackpackClothing
@@ -405,11 +406,12 @@
   name: security messenger bag
   components:
   - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_security.rsi
     state: courier-security
-
   - type: Icon
+    sprite: Clothing/Back/Couriers/courier_security.rsi
     state: courier-security
-
   - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_security.rsi
     HeldPrefix: security
     ClothingPrefix: courier-security

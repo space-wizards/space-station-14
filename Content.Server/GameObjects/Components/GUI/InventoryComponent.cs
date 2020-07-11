@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks.Dataflow;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -77,7 +78,14 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            return SlotContainers[slot].ContainedEntity?.GetComponent<T>();
+            var containedEntity = SlotContainers[slot].ContainedEntity;
+            if (containedEntity?.Deleted == true)
+            {
+                SlotContainers[slot] = null;
+                containedEntity = null;
+                Dirty();
+            }
+            return containedEntity?.GetComponent<T>();
         }
 
         public bool TryGetSlotItem<T>(Slots slot, out T itemComponent) where T : ItemComponent
@@ -408,7 +416,7 @@ namespace Content.Server.GameObjects
             {
                 foreach (var entity in slot.ContainedEntities)
                 {
-                    var exActs = entity.GetAllComponents<IExAct>();
+                    var exActs = entity.GetAllComponents<IExAct>().ToList();
                     foreach (var exAct in exActs)
                     {
                         exAct.OnExplosion(eventArgs);

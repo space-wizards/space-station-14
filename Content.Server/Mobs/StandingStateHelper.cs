@@ -1,14 +1,12 @@
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Mobs
 {
@@ -23,22 +21,30 @@ namespace Content.Server.Mobs
         /// <returns>False if the mob was already downed or couldn't set the state</returns>
         public static bool Down(IEntity entity, bool playSound = true, bool dropItems = true)
         {
-            if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
+            if (!EffectBlockerSystem.CanFall(entity) ||
+                !entity.TryGetComponent(out AppearanceComponent appearance))
+            {
+                return false;
+            }
 
+            var newState = SharedSpeciesComponent.MobState.Down;
             appearance.TryGetData<SharedSpeciesComponent.MobState>(SharedSpeciesComponent.MobVisuals.RotationState, out var oldState);
 
-                var newState = SharedSpeciesComponent.MobState.Down;
-            if (newState == oldState)
-                return false;
-
-            appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+            if (newState != oldState)
+            {
+                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+            }
 
             if (playSound)
+            {
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
                     .PlayFromEntity(AudioHelpers.GetRandomFileFromSoundCollection("bodyfall"), entity, AudioHelpers.WithVariation(0.25f));
+            }
 
             if(dropItems)
+            {
                 DropAllItemsInHands(entity, false);
+            }
 
             return true;
         }

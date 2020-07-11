@@ -1,5 +1,6 @@
 using Content.Server.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Robust.Shared.Containers;
 using Robust.Shared.Interfaces.GameObjects;

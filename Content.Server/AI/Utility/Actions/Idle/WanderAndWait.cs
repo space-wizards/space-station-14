@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.ActionBlocker;
-using Content.Server.AI.Utility.Curves;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.WorldState;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -22,12 +23,9 @@ namespace Content.Server.AI.Utility.Actions.Idle
     public sealed class WanderAndWait : UtilityAction
     {
         public override bool CanOverride => false;
-        public override float Bonus => IdleBonus;
+        public override float Bonus => 1.0f;
 
-        public WanderAndWait(IEntity owner) : base(owner)
-        {
-            // TODO: Need a Success method that gets called to update context (e.g. when we last did X)
-        }
+        public WanderAndWait(IEntity owner) : base(owner) {}
 
         public override void SetupOperators(Blackboard context)
         {
@@ -49,12 +47,18 @@ namespace Content.Server.AI.Utility.Actions.Idle
                 new WaitOperator(waitTime),
             });
         }
+        
+        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override Consideration[] Considerations { get; } = {
-            new CanMoveCon(
-                new BoolCurve())
-            // Last wander? If we also want to sit still
-        };
+            return new[]
+            {
+                considerationsManager.Get<CanMoveCon>()
+                    .BoolCurve(context),
+
+            };
+        }
 
         private GridCoordinates FindRandomGrid()
         {

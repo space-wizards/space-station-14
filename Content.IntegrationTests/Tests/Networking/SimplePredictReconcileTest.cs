@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,6 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
-
-#nullable enable
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -41,6 +40,10 @@ namespace Content.IntegrationTests.Tests.Networking
             var (client, server) = await StartConnectedServerClientPair(
                 new ClientContentIntegrationOption
                 {
+                    // This test is designed around specific timing values and when I wrote it interpolation was off.
+                    // As such, I would have to update half this test to make sure it works with interpolation.
+                    // I'm kinda lazy.
+                    CVarOverrides = {{"net.interp", "false"}},
                     ContentBeforeIoC = () =>
                     {
                         IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<PredictionTestEntitySystem>();
@@ -450,7 +453,8 @@ namespace Content.IntegrationTests.Tests.Networking
                     component.Foo = message.NewFoo;
                 }
 
-                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo, message.NewFoo));
+                EventTriggerList.Add((_gameTiming.CurTick, _gameTiming.IsFirstTimePredicted, old, component.Foo,
+                    message.NewFoo));
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -24,8 +24,10 @@ using Robust.Shared.Audio;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -63,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private uint _currentCookTimerTime = 1;
 #endregion
 
-        private bool _powered => _powerDevice.Powered;
+        private bool _powered => _powerReceiver.Powered;
         private bool _hasContents => _solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0;
         private bool _uiDirty = true;
         private bool _lostPower = false;
@@ -72,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => _uiDirty = true;
         private AudioSystem _audioSystem;
         private AppearanceComponent _appearance;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
         private BoundUserInterface _userInterface;
         private Container _storage;
 
@@ -82,8 +84,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
             serializer.DataField(ref _badRecipeName, "failureResult", "FoodBadRecipe");
             serializer.DataField(ref _cookTimeDefault, "cookTime", 5);
             serializer.DataField(ref _cookTimeMultiplier, "cookTimeMultiplier", 1000);
-            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/machines/microwave_start_beep.ogg" );
-            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/machines/microwave_done_beep.ogg" );
+            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/Machines/microwave_start_beep.ogg" );
+            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/Machines/microwave_done_beep.ogg" );
         }
 
         public override void Initialize()
@@ -95,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
             _storage = ContainerManagerComponent.Ensure<Container>("microwave_entity_container", Owner, out var existed);
             _appearance = Owner.GetComponent<AppearanceComponent>();
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _audioSystem = EntitySystem.Get<AudioSystem>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MicrowaveUiKey.Key);
@@ -440,7 +442,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.PlayFromEntity("/Audio/machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
@@ -451,7 +453,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DisconnectBodyPart(head, true);
+                    var droppedHead = bodyManagerComponent.DropBodyPart(head);
                     _storage.Insert(droppedHead);
                     headCount++;
                 }

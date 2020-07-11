@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -27,6 +29,7 @@ namespace Content.Server.Chat
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
         [Dependency] private readonly IMoMMILink _mommiLink;
+        [Dependency] private readonly IConGroupController _conGroupController;
 #pragma warning restore 649
 
         public void Initialize()
@@ -108,6 +111,23 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
+            _netManager.ServerSendToMany(msg, clients.ToList());
+        }
+
+        public void SendAdminChat(IPlayerSession player, string message)
+        {
+            if(!_conGroupController.CanCommand(player, "asay"))
+            {
+                SendOOC(player, message);
+                return;
+            }
+            var clients = _playerManager.GetPlayersBy(x => _conGroupController.CanCommand(x, "asay")).Select(p => p.ConnectedClient);;
+
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+
+            msg.Channel = ChatChannel.AdminChat;
+            msg.Message = message;
+            msg.MessageWrap = $"{_localizationManager.GetString("ADMIN")}: {player.SessionId}: {{0}}";
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 

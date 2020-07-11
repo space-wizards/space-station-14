@@ -1,19 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
-using Content.Shared.Physics;
-using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.EntitySystemMessages;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -24,7 +21,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -44,19 +40,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
 #pragma warning restore 649
-        
+
         public override FireRateSelector FireRateSelector => _fireRateSelector;
         private FireRateSelector _fireRateSelector;
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
         private FireRateSelector _allRateSelectors;
         public override float FireRate => _fireRate;
         private float _fireRate;
-        
+
         // _lastFire is when we actually fired (so if we hold the button then recoil doesn't build up if we're not firing)
         private TimeSpan _lastFire;
-        
+
         public abstract IEntity PeekAmmo();
-        public abstract IEntity TakeProjectile();
+        public abstract IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap);
 
         // Recoil / spray control
         private Angle _minAngle;
@@ -98,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 var minAngle = serializer.ReadDataField("minAngle", 0) / 2;
                 _minAngle = Angle.FromDegrees(minAngle);
-                // Random doubles it as it's +/- so uhh we'll just half it here for readability 
+                // Random doubles it as it's +/- so uhh we'll just half it here for readability
                 var maxAngle = serializer.ReadDataField("maxAngle", 45) / 2;
                 _maxAngle = Angle.FromDegrees(maxAngle);
                 var angleIncrease = serializer.ReadDataField("angleIncrease", (40 / _fireRate));
@@ -106,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var angleDecay = serializer.ReadDataField("angleDecay", (float) 20);
                 _angleDecay = angleDecay * (float) Math.PI / 180;
                 serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
-                
+
                 // FireRate options
                 var allFireRates = serializer.ReadDataField("allSelectors", new List<FireRateSelector>());
                 foreach (var fireRate in allFireRates)
@@ -125,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _canMuzzleFlash, "canMuzzleFlash", true);
             // Sounds
             serializer.DataField(ref _soundGunshot, "soundGunshot", null);
-            serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Guns/Empty/empty.ogg");
+            serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Weapons/Guns/Empty/empty.ogg");
         }
 
         public override void OnAdd()
@@ -140,10 +136,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void OnRemove()
         {
             base.OnRemove();
-            var rangedWeapon = Owner.GetComponent<ServerRangedWeaponComponent>();
-            rangedWeapon.Barrel = null;
-            rangedWeapon.FireHandler -= Fire;
-            rangedWeapon.WeaponCanFireHandler -= WeaponCanFire;
+            if (Owner.TryGetComponent(out ServerRangedWeaponComponent rangedWeaponComponent))
+            {
+                rangedWeaponComponent.Barrel = null;
+                rangedWeaponComponent.FireHandler -= Fire;
+                rangedWeaponComponent.WeaponCanFireHandler -= WeaponCanFire;
+            }
         }
 
         private Angle GetRecoilAngle(Angle direction)
@@ -191,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             var ammo = PeekAmmo();
-            var projectile = TakeProjectile();
+            var projectile = TakeProjectile(shooter.Transform.GridPosition, shooter.Transform.MapPosition);
             if (projectile == null)
             {
                 soundSystem.PlayAtCoords(_soundEmpty, Owner.Transform.GridPosition);
@@ -234,7 +232,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 // Invalid types
                 throw new InvalidOperationException();
             }
-            
+
             soundSystem.PlayAtCoords(_soundGunshot, Owner.Transform.GridPosition);
             _lastFire = _gameTiming.CurTime;
 
@@ -251,9 +249,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// <param name="prototypeManager"></param>
         /// <param name="ejectDirections"></param>
         public static void EjectCasing(
-            IEntity entity, 
+            IEntity entity,
             bool playSound = true,
-            IRobustRandom robustRandom = null, 
+            IRobustRandom robustRandom = null,
             IPrototypeManager prototypeManager = null,
             Direction[] ejectDirections = null)
         {
@@ -266,7 +264,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 ejectDirections = new[] {Direction.East, Direction.North, Direction.South, Direction.West};
             }
-            
+
             const float ejectOffset = 0.2f;
             var ammo = entity.GetComponent<AmmoComponent>();
             var offsetPos = (robustRandom.NextFloat() * ejectOffset, robustRandom.NextFloat() * ejectOffset);
@@ -328,7 +326,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             for (var i = 0; i < count; i++)
             {
                 IEntity projectile;
-                
+
                 if (i == 0)
                 {
                     projectile = baseProjectile;
@@ -353,21 +351,21 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var physicsComponent = projectile.GetComponent<PhysicsComponent>();
                 physicsComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
-                
+
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
                 projectile.GetComponent<PhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
         }
-        
+
         /// <summary>
         ///     Returns a list of numbers that form a set of equal intervals between the start and end value. Used to calculate shotgun spread angles.
         /// </summary>
         private List<Angle> Linspace(double start, double end, int intervals)
         {
             DebugTools.Assert(intervals > 1);
-            
+
             var linspace = new List<Angle>(intervals);
 
             for (var i = 0; i <= intervals - 1; i++)
@@ -396,11 +394,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 {
                     return;
                 }
-                
+
                 damageable.TakeDamage(
-                    hitscan.DamageType, 
-                    (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), 
-                    Owner, 
+                    hitscan.DamageType,
+                    (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero),
+                    Owner,
                     shooter);
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
                 //even numbers if halfway between two numbers, rather than rounding to nearest

@@ -13,6 +13,7 @@
   - toggleready
   - ghost
   - suicide
+  - hostlogin
 
 - Index: 50
   Name: Moderator
@@ -33,6 +34,7 @@
   - kick
   - listplayers
   - loc
+  - hostlogin
 
 - Index: 100
   Name: Administrator
@@ -72,10 +74,15 @@
   - mindinfo
   - addrole
   - rmrole
+  - addoverlay
+  - rmoverlay
   - showtime
   - group
   - addai
   - warp
+  - hostlogin
+  - deleteewc
+  - asay
   CanViewVar: true
   CanAdminPlace: true
 
@@ -117,6 +124,8 @@
   - mindinfo
   - addrole
   - rmrole
+  - addoverlay
+  - rmoverlay
   - srvpopupmsg
   - group
   - showtime
@@ -142,6 +151,9 @@
   - gc
   - gc_mode
   - warp
+  - deleteewc
+  - sudo
+  - asay
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

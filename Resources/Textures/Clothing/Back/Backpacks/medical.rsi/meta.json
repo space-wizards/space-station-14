@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "medical-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "medical",
+            "directions": 1
+        },
+        {
+            "name": "medical-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "medical-inhand-right",
+            "directions": 4
+        }
+    ]
+}

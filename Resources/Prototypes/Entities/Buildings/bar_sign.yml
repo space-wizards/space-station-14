@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: BarSign
   name: bar sign
   components:
@@ -7,12 +7,12 @@
   - type: Collidable
   - type: Sprite
     drawdepth: WallTops
-    sprite: Buildings/barsign.rsi
+    sprite: Constructible/Misc/barsign.rsi
     state: empty
   - type: Icon
-    sprite: Buildings/barsign.rsi
+    sprite: Constructible/Misc/barsign.rsi
     state: empty
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: BarSign
 
 

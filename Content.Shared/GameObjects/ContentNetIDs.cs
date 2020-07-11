@@ -50,8 +50,17 @@
         public const uint PDA = 1044;
         public const uint PATHFINDER_DEBUG = 1045;
         public const uint AI_DEBUG = 1046;
-        public const uint FLASHABLE = 1047;
-		
+        public const uint PLAYER_INPUT_MOVER = 1047;
+        public const uint STUNNABLE = 1048;
+        public const uint HUNGER = 1049;
+        public const uint THIRST = 1050;
+
+        public const uint FLASHABLE = 1051;
+        public const uint BUCKLE = 1052;
+        public const uint PROJECTILE = 1053;
+        public const uint THROWN_ITEM = 1054;
+        public const uint STRAP = 1055;
+
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;
     }

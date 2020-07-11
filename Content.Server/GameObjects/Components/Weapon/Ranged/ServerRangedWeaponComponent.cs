@@ -2,7 +2,9 @@ using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -18,11 +20,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
     public sealed class ServerRangedWeaponComponent : SharedRangedWeaponComponent, IHandSelected
     {
         private TimeSpan _lastFireTime;
-        
+
         public Func<bool> WeaponCanFireHandler;
         public Func<IEntity, bool> UserCanFireHandler;
         public Action<IEntity, GridCoordinates> FireHandler;
-        
+
         public ServerRangedBarrelComponent Barrel
         {
             get => _barrel;
@@ -95,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             {
                 return;
             }
-            
+
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
             var span = curTime - _lastFireTime;
             if (span.TotalSeconds < 1 / _barrel.FireRate)

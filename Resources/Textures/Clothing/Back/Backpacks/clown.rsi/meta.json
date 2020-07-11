@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "clown-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "clown",
+            "directions": 1
+        },
+        {
+            "name": "clown-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "clown-equipped-BACKPACK",
+            "directions": 4
+        }
+    ]
+}

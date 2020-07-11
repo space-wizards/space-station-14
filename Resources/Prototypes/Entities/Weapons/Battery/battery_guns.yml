@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -14,11 +14,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     minAngle: 10
@@ -31,7 +31,7 @@
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Guns/Gunshots/laser.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -47,7 +47,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -55,11 +55,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/laser_cannon.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
@@ -72,7 +72,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
     ammoPrototype: RedHeavyLaser
-    soundGunshot: /Audio/Guns/Gunshots/laser_cannon.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -88,7 +88,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/xray.rsi
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -96,11 +96,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/xray.rsi
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/xray.rsi
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
     currentSelector: Single
@@ -114,7 +114,7 @@
     powerCellPrototype: PowerCellSmallSuper
     base_fire_cost: 600
     ammoPrototype: XrayLaser
-    soundGunshot: /Audio/Guns/Gunshots/laser3.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -130,7 +130,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -138,11 +138,11 @@
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Icon
-    sprite: Objects/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Battery/taser.rsi
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
     prefix: icon
   - type: RangedWeapon
   - type: BatteryBarrel
@@ -156,7 +156,7 @@
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
     ammoPrototype: BulletTaser
-    soundGunshot: /Audio/Guns/Gunshots/taser.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D

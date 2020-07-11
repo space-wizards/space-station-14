@@ -5,7 +5,7 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Buildings/closet.rsi
+    sprite: Constructible/Structures/closet.rsi
     layers:
     - state: generic
     - state: generic_door
@@ -14,7 +14,7 @@
       visible: false
       map: ["enum.StorageVisualLayers.Welded"]
   - type: Icon
-    sprite: Buildings/closet.rsi
+    sprite: Constructible/Structures/closet.rsi
     state: generic_door
   - type: Clickable
   - type: InteractionOutline

@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -50,19 +53,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)]
         private float _slowdownTime = 5f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 1000;
+        [ViewVariables(VVAccess.ReadWrite)] public float EnergyPerUse { get; set; } = 50;
 
         [ViewVariables]
         public bool Activated => _activated;
 
         [ViewVariables]
-        private PowerCellComponent Cell
+        private BatteryComponent Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
+                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
                 return cell;
             }
         }
@@ -84,13 +87,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _slowdownTime, "slowdownTime", 5f);
         }
 
-        public override bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        protected override bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
-            var cell = Cell;
-            if (!Activated || entities.Count == 0 || cell == null || !cell.CanDeductCharge(EnergyPerUse))
-                return false;
+            if (!Activated || entities.Count == 0 || Cell == null)
+                return true;
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            if (!Cell.TryUseCharge(EnergyPerUse))
+                return true;
+
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Weapons/egloves.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
             foreach (var entity in entities)
             {
@@ -108,14 +113,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                         stunnable.Slowdown(_slowdownTime);
             }
 
-            cell.DeductCharge(EnergyPerUse);
-            if(cell.Charge < EnergyPerUse)
-            {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
-                TurnOff();
-            }
+            if (!(Cell.CurrentCharge < EnergyPerUse)) return true;
 
-            return false;
+            EntitySystem.Get<AudioSystem>().PlayAtCoords(AudioHelpers.GetRandomFileFromSoundCollection("sparks"), Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            TurnOff();
+
+            return true;
         }
 
         private bool ToggleStatus(IEntity user)
@@ -162,15 +165,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (cell == null)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
             }
 
-            if (cell.Charge < EnergyPerUse)
+            if (cell.CurrentCharge < EnergyPerUse)
             {
-                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+                EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Machines/button.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -191,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
             if (Cell != null) return false;
 
@@ -202,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magin.ogg", Owner);
 
             Dirty();
 
@@ -233,7 +236,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/items/weapons/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
+            EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/pistol_magout.ogg", Owner.Transform.GridPosition, AudioHelpers.WithVariation(0.25f));
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

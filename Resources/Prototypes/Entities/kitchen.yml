@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: KitchenMicrowave
   name: microwave
   description: It's magic.
@@ -33,7 +33,7 @@
     IsScrapingFloor: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Kitchen/microwave.rsi
+    sprite: Constructible/Power/microwave.rsi
     drawdepth: Items
     layers:
     - state: mw0
@@ -41,8 +41,7 @@
     - state: mw_unlit
       shader: unshaded
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
-
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: Icon
-    sprite: Objects/Kitchen/microwave.rsi
+    sprite: Constructible/Power/microwave.rsi
     state: mw0
