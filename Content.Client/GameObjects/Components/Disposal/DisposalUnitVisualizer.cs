@@ -13,7 +13,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Disposal
 {
     [UsedImplicitly]
-    public class DisposalUnitVisualizer2D : AppearanceVisualizer
+    public class DisposalUnitVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "disposal_unit_animation";
 

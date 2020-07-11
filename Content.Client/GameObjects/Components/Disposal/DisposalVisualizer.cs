@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Disposal
 {
     [UsedImplicitly]
-    public class DisposalVisualizer2D : AppearanceVisualizer
+    public class DisposalVisualizer : AppearanceVisualizer
     {
         private string _stateAnchored;
         private string _stateUnAnchored;
