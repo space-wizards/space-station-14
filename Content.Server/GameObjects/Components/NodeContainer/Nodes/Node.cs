@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Robust.Shared.GameObjects.Components;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {

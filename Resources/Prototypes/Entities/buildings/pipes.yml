@@ -13,7 +13,6 @@
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
     sprite: Constructible/Power/hv_cable.rsi
-    state: hvcable_0
   - type: Destructible
     thresholdvalue: 100
 
@@ -22,6 +21,8 @@
   id: FourwayPipe
   name: Fourway Pipe
   components:
+  - type: Sprite
+    state: hvcable_15
   - type: NodeContainer
     nodes:
     - type: Pipe
@@ -32,6 +33,8 @@
   id: VerticalPipe
   name: Vertical Pipe
   components:
+  - type: Sprite
+    state: hvcable_3
   - type: NodeContainer
     nodes:
     - type: Pipe
@@ -42,6 +45,8 @@
   id: UpLeftBendPipe
   name: Up-Left Bend Pipe
   components:
+  - type: Sprite
+    state: hvcable_9
   - type: NodeContainer
     nodes:
     - type: Pipe
@@ -52,6 +57,8 @@
   id: TUpPipe
   name: T-Up Pipe
   components:
+  - type: Sprite
+    state: hvcable_13
   - type: NodeContainer
     nodes:
     - type: Pipe
