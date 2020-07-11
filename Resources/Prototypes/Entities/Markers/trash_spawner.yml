@@ -15,13 +15,13 @@
     - type: InteractionOutline
     - type: Collidable
     - type: TrashSpawner
-      rare_prototypes:
+      rarePrototypes:
         - PuddleVomit
         - TrashPizzaBoxMessy
         - TrashPlate
         - TrashSnackBowl
         - TrashTray
-      rare_chance: 0.05
+      rareChance: 0.05
       prototypes:
         - TrashRaisins
         - TrashCandy

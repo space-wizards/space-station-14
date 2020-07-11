@@ -41,8 +41,8 @@ namespace Content.Server.GameObjects.Components.Markers
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => RarePrototypes, "rare_prototypes", new List<string>());
-            serializer.DataField(this, x => RareChance, "rare_chance", 0.05f);
+            serializer.DataField(this, x => RarePrototypes, "rarePrototypes", new List<string>());
+            serializer.DataField(this, x => RareChance, "rareChance", 0.05f);
             serializer.DataField(this, x => Offset, "offset", 0.2f);
         }
         public override void Spawn()
@@ -81,7 +81,6 @@ namespace Content.Server.GameObjects.Components.Markers
         {
             Spawn();
             Owner.Delete();
-            return;
         }
     }
 }

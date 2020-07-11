@@ -92,9 +92,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 return;
 
             if(!EffectBlockerSystem.CanSlip(collidedWith))
-            {
                 return;
-            }
 
             stun.Paralyze(5f);
             _slipped.Add(collidedWith.Uid);

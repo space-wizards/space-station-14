@@ -50,7 +50,18 @@ namespace Content.Server.GameObjects.Components.Fluids
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
-        public ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
+        private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
+        public ReagentUnit EvaporateThreshold
+        {
+            get => _evaporateThreshold;
+            set => _evaporateThreshold = value;
+        }
+        private ReagentUnit _slipThreshold = ReagentUnit.New(3);
+        public ReagentUnit SlipThreshold
+        {
+            get => _slipThreshold;
+            set => _slipThreshold = value;
+        }
         private float _evaporateTime;
         private string _spillSound;
 
@@ -198,15 +209,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             if(Owner.Deleted) return;
 
             UpdateAppearance();
-
-            if (CurrentVolume < ReagentUnit.New(3) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
-            {
-                Owner.RemoveComponent<SlipperyComponent>();
-            }
-            else if (CurrentVolume >= ReagentUnit.New(3) && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
-            {
-                Owner.AddComponent<SlipperyComponent>();
-            }
+            UpdateSlip();
 
             if (_evaporateThreshold == ReagentUnit.New(-1) || CurrentVolume > _evaporateThreshold)
             {
@@ -217,6 +220,18 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             // KYS to evaporate
             Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
+        }
+
+        private void UpdateSlip()
+        {
+            if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
+            {
+                Owner.RemoveComponent<SlipperyComponent>();
+            }
+            else if (CurrentVolume >= _slipThreshold && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
+            {
+                Owner.AddComponent<SlipperyComponent>();
+            }
         }
 
         private void UpdateAppearance()
