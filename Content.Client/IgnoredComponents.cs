@@ -127,7 +127,11 @@
             "Wire",
             "StressTestMovement",
             "Toys",
-            "SurgeryTool"
+            "SurgeryTool",
+            "Slippery",
+            "EmitSoundOnThrow",
+            "Flash",
+            "DamageOnToolInteract",
         };
     }
 }

@@ -25,10 +25,7 @@ namespace Content.Server.AI.WorldState
         void CheckCache();
     }
 
-    public interface IStoredState
-    {
-        
-    }
+    public interface IStoredState {}
 
     /// <summary>
     /// The default class for state values. Also see CachedStateData and PlanningStateData

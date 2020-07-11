@@ -220,6 +220,11 @@ namespace Content.Server.GameObjects
 
         public virtual void Deny()
         {
+            if (State == DoorState.Open)
+            {
+                return;
+            }
+
             SetAppearance(DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
             {
