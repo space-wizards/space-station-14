@@ -20,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.Components.Container;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -105,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 // Checks if user is in the container before welding
                 if (target.GetComponent<ContainerManagerComponent>().ContainsEntity(user))
                 {
-                   _notifyManager.PopupMessage(Owner, user, Loc.GetString("You're too cramped!"));
+                   //_notifyManager.PopupMessage(Owner, user, Loc.GetString("You're too cramped!"));
                     return false;
                 }
             }
