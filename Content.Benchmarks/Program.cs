@@ -6,8 +6,7 @@ namespace Content.Benchmarks
     {
         public static void Main(string[] args)
         {
-            BenchmarkRunner.Run<ComponentManagerGetAllComponents>();
-            //ComponentManagerGetAllComponents.TestRun();
+            BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
         }
     }
 }
