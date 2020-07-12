@@ -20,6 +20,7 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -44,6 +45,7 @@ namespace Content.Server.GameObjects
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _occlusion;
         public bool Occlusion
         {
