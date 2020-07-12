@@ -6,11 +6,11 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Atmos
 {
-    [Serializable, NetSerializable]
     /// <summary>
     /// Convenience struct for representing a gas ID.
     /// </summary>
     /// <remarks>Should be elided at runtime.</remarks>
+    [Serializable, NetSerializable]
     public struct Gas : IEquatable<Gas>
     {
         private string _id;

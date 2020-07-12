@@ -75,7 +75,7 @@ namespace Content.Client.Debugging
 
             SubscribeNetworkEvent<ZoneInfo>(UpdateZoneOverlay);
 
-            _font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"), 10);
+            _font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
         private void UpdateZoneOverlay(ZoneInfo zoneInfo)
