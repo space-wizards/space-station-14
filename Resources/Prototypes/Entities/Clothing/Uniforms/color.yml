@@ -1,0 +1,228 @@
+- type: entity
+  parent: UniformBase
+  id: UniformColorBase
+  abstract: true
+  description: A standard issue colored jumpsuit. Variety is the spice of life!
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/color.rsi
+  - type: Icon
+    sprite: Clothing/Uniforms/color.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/color.rsi
+
+# worldwide
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorGrey
+  description: A tasteful grey jumpsuit that reminds you of the good old days.
+  name: grey jumpsuit
+  components:
+  - type: Sprite
+    state: grey
+  - type: Icon
+    state: grey
+  - type: Clothing
+    HeldPrefix: grey
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorBlack
+  name: black jumpsuit
+  components:
+  - type: Sprite
+    state: black
+  - type: Icon
+    state: black
+  - type: Clothing
+    HeldPrefix: black
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorBlue
+  name: blue jumpsuit
+  components:
+  - type: Sprite
+    state: blue
+  - type: Icon
+    state: blue
+  - type: Clothing
+    HeldPrefix: blue
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorGreen
+  name: green jumpsuit
+  components:
+  - type: Sprite
+    state: green
+  - type: Icon
+    state: green
+  - type: Clothing
+    HeldPrefix: green
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorOrange
+  name: orange jumpsuit
+  description: "Don't wear this near paranoid security officers."
+  components:
+  - type: Sprite
+    state: orange
+  - type: Icon
+    state: orange
+  - type: Clothing
+    HeldPrefix: orange
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorPink
+  name: pink jumpsuit
+  description: "Just looking at this makes you feel fabulous."
+  components:
+  - type: Sprite
+    state: pink
+  - type: Icon
+    state: pink
+  - type: Clothing
+    ClothingPrefix: pink
+    HeldPrefix: purple
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorRed
+  name: red jumpsuit
+  components:
+  - type: Sprite
+    state: red
+  - type: Icon
+    state: red
+  - type: Clothing
+    HeldPrefix: red
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorWhite
+  name: white jumpsuit
+  components:
+  - type: Sprite
+    state: white
+  - type: Icon
+    state: white
+  - type: Clothing
+    HeldPrefix: white
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorYellow
+  name: yellow jumpsuit
+  components:
+  - type: Sprite
+    state: yellow
+  - type: Icon
+    state: yellow
+  - type: Clothing
+    HeldPrefix: yellow
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorDarkBlue
+  name: dark blue jumpsuit
+  components:
+  - type: Sprite
+    state: darkblue
+  - type: Icon
+    state: darkblue
+  - type: Clothing
+    ClothingPrefix: darkblue
+    HeldPrefix: blue
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorTeal
+  name: teal jumpsuit
+  components:
+  - type: Sprite
+    state: teal
+  - type: Icon
+    state: teal
+  - type: Clothing
+    ClothingPrefix: teal
+    HeldPrefix: blue
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorPurple
+  name: purple jumpsuit
+  components:
+  - type: Sprite
+    state: lightpurple
+  - type: Icon
+    state: lightpurple
+  - type: Clothing
+    ClothingPrefix: lightpurple
+    HeldPrefix: purple
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorDarkGreen
+  name: dark green jumpsuit
+  components:
+  - type: Sprite
+    state: darkgreen
+  - type: Icon
+    state: darkgreen
+  - type: Clothing
+    ClothingPrefix: darkgreen
+    HeldPrefix: green
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorLightBrown
+  name: light brown jumpsuit
+  components:
+  - type: Sprite
+    state: lightbrown
+  - type: Icon
+    state: lightbrown
+  - type: Clothing
+    HeldPrefix: lightbrown
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorBrown
+  name: brown jumpsuit
+  components:
+  - type: Sprite
+    state: brown
+  - type: Icon
+    state: brown
+  - type: Clothing
+    ClothingPrefix: brown
+    HeldPrefix: lightbrown
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorMaroon
+  name: maroon jumpsuit
+  components:
+  - type: Sprite
+    state: maroon
+  - type: Icon
+    state: maroon
+  - type: Clothing
+    ClothingPrefix: maroon
+    HeldPrefix: red
+
+- type: entity
+  parent: UniformColorBase
+  id: UniformColorRainbow
+  name: rainbow jumpsuit
+  description: A multi-colored jumpskirt!
+  components:
+  - type: Sprite
+    state: rainbow
+  - type: Icon
+    state: rainbow
+  - type: Clothing
+    HeldPrefix: rainbow

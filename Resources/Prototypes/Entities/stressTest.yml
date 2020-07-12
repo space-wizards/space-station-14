@@ -1,7 +1,0 @@
-- type: entity
-  id: StressTest
-  name: StressTest
-  components:
-  - type: Sprite
-    texture: Effects/explosion.png
-  - type: StressTestMovement
