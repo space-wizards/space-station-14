@@ -361,6 +361,11 @@ namespace Content.Server.GameObjects.Components
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
                 return false;
+            if(_contents.Contains(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                return false;
+            }
 
             IsWeldedShut ^= true;
             return true;
