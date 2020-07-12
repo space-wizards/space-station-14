@@ -26,6 +26,21 @@
     HeldPrefix: grey
 
 - type: entity
+  parent: UniformColorGrey
+  id: UniformColorGreySkirt
+  description: A tasteful grey jumpskirt that reminds you of the good old days.
+  name: grey jumpskirt
+  components:
+  - type: Sprite
+    state: grey_skirt
+  - type: Icon
+    state: grey_skirt
+  - type: Clothing
+    ClothingPrefix: grey_skirt
+    femaleMask: UniformTop
+
+# Black
+- type: entity
   parent: UniformColorBase
   id: UniformColorBlack
   name: black jumpsuit
@@ -37,6 +52,20 @@
   - type: Clothing
     HeldPrefix: black
 
+- type: entity
+  parent: UniformColorBlack
+  id: UniformColorBlackSkirt
+  name: black jumpskirt
+  components:
+  - type: Sprite
+    state: black_skirt
+  - type: Icon
+    state: black_skirt
+  - type: Clothing
+    ClothingPrefix: black_skirt
+    femaleMask: UniformTop
+
+# Blue
 - type: entity
   parent: UniformColorBase
   id: UniformColorBlue
@@ -50,6 +79,20 @@
     HeldPrefix: blue
 
 - type: entity
+  parent: UniformColorBlue
+  id: UniformColorBlueSkirt
+  name: grey jumpskirt
+  components:
+  - type: Sprite
+    state: blue_skirt
+  - type: Icon
+    state: blue_skirt
+  - type: Clothing
+    ClothingPrefix: blue_skirt
+    femaleMask: UniformTop
+
+# Green
+- type: entity
   parent: UniformColorBase
   id: UniformColorGreen
   name: green jumpsuit
@@ -61,6 +104,20 @@
   - type: Clothing
     HeldPrefix: green
 
+- type: entity
+  parent: UniformColorGreen
+  id: UniformColorGreenSkirt
+  name: green jumpskirt
+  components:
+  - type: Sprite
+    state: green_skirt
+  - type: Icon
+    state: green_skirt
+  - type: Clothing
+    ClothingPrefix: green_skirt
+    femaleMask: UniformTop
+
+# Orange
 - type: entity
   parent: UniformColorBase
   id: UniformColorOrange
@@ -74,6 +131,20 @@
   - type: Clothing
     HeldPrefix: orange
 
+- type: entity
+  parent: UniformColorOrange
+  id: UniformColorOrangeSkirt
+  name: orange jumpskirt
+  components:
+  - type: Sprite
+    state: orange_skirt
+  - type: Icon
+    state: orange_skirt
+  - type: Clothing
+    ClothingPrefix: orange_skirt
+    femaleMask: UniformTop
+
+# Pink
 - type: entity
   parent: UniformColorBase
   id: UniformColorPink
@@ -89,6 +160,20 @@
     HeldPrefix: purple
 
 - type: entity
+  parent: UniformColorPink
+  id: UniformColorPinkSkirt
+  name: pink jumpskirt
+  components:
+  - type: Sprite
+    state: pink_skirt
+  - type: Icon
+    state: pink_skirt
+  - type: Clothing
+    ClothingPrefix: pink_skirt
+    femaleMask: UniformTop
+
+# Red
+- type: entity
   parent: UniformColorBase
   id: UniformColorRed
   name: red jumpsuit
@@ -100,6 +185,20 @@
   - type: Clothing
     HeldPrefix: red
 
+- type: entity
+  parent: UniformColorRed
+  id: UniformColorRedSkirt
+  name: red jumpskirt
+  components:
+  - type: Sprite
+    state: red_skirt
+  - type: Icon
+    state: red_skirt
+  - type: Clothing
+    ClothingPrefix: red_skirt
+    femaleMask: UniformTop
+
+# White
 - type: entity
   parent: UniformColorBase
   id: UniformColorWhite
@@ -113,6 +212,20 @@
     HeldPrefix: white
 
 - type: entity
+  parent: UniformColorWhite
+  id: UniformColorWhiteSkirt
+  name: white jumpskirt
+  components:
+  - type: Sprite
+    state: white_skirt
+  - type: Icon
+    state: white_skirt
+  - type: Clothing
+    ClothingPrefix: white_skirt
+    femaleMask: UniformTop
+
+# Yellow
+- type: entity
   parent: UniformColorBase
   id: UniformColorYellow
   name: yellow jumpsuit
@@ -124,6 +237,20 @@
   - type: Clothing
     HeldPrefix: yellow
 
+- type: entity
+  parent: UniformColorYellow
+  id: UniformColorYellowSkirt
+  name: yellow jumpskirt
+  components:
+  - type: Sprite
+    state: yellow_skirt
+  - type: Icon
+    state: yellow_skirt
+  - type: Clothing
+    ClothingPrefix: yellow_skirt
+    femaleMask: UniformTop
+
+# Dark blue
 - type: entity
   parent: UniformColorBase
   id: UniformColorDarkBlue
@@ -138,6 +265,20 @@
     HeldPrefix: blue
 
 - type: entity
+  parent: UniformColorDarkBlue
+  id: UniformColorDarkBlueSkirt
+  name: dark blue jumpskirt
+  components:
+  - type: Sprite
+    state: darkblue_skirt
+  - type: Icon
+    state: darkblue_skirt
+  - type: Clothing
+    ClothingPrefix: darkblue_skirt
+    femaleMask: UniformTop
+
+# Teal
+- type: entity
   parent: UniformColorBase
   id: UniformColorTeal
   name: teal jumpsuit
@@ -150,6 +291,20 @@
     ClothingPrefix: teal
     HeldPrefix: blue
 
+- type: entity
+  parent: UniformColorTeal
+  id: UniformColorTealSkirt
+  name: teal jumpskirt
+  components:
+  - type: Sprite
+    state: teal_skirt
+  - type: Icon
+    state: teal_skirt
+  - type: Clothing
+    ClothingPrefix: teal_skirt
+    femaleMask: UniformTop
+
+# Purple
 - type: entity
   parent: UniformColorBase
   id: UniformColorPurple
@@ -164,6 +319,20 @@
     HeldPrefix: purple
 
 - type: entity
+  parent: UniformColorPurple
+  id: UniformColorPurpleSkirt
+  name: purple jumpskirt
+  components:
+  - type: Sprite
+    state: lightpurple_skirt
+  - type: Icon
+    state: lightpurple_skirt
+  - type: Clothing
+    ClothingPrefix: lightpurple_skirt
+    femaleMask: UniformTop
+
+# Dark Green
+- type: entity
   parent: UniformColorBase
   id: UniformColorDarkGreen
   name: dark green jumpsuit
@@ -177,6 +346,20 @@
     HeldPrefix: green
 
 - type: entity
+  parent: UniformColorDarkGreen
+  id: UniformColorDarkGreenSkirt
+  name: dark green jumpskirt
+  components:
+  - type: Sprite
+    state: darkgreen_skirt
+  - type: Icon
+    state: darkgreen_skirt
+  - type: Clothing
+    ClothingPrefix: darkgreen_skirt
+    femaleMask: UniformTop
+
+# Light Brown
+- type: entity
   parent: UniformColorBase
   id: UniformColorLightBrown
   name: light brown jumpsuit
@@ -188,6 +371,20 @@
   - type: Clothing
     HeldPrefix: lightbrown
 
+- type: entity
+  parent: UniformColorLightBrown
+  id: UniformColorLightBrownSkirt
+  name: light brown jumpskirt
+  components:
+  - type: Sprite
+    state: lightbrown_skirt
+  - type: Icon
+    state: lightbrown_skirt
+  - type: Clothing
+    ClothingPrefix: lightbrown_skirt
+    femaleMask: UniformTop
+
+# Brown
 - type: entity
   parent: UniformColorBase
   id: UniformColorBrown
@@ -202,6 +399,20 @@
     HeldPrefix: lightbrown
 
 - type: entity
+  parent: UniformColorBrown
+  id: UniformColorBrownSkirt
+  name: brown jumpskirt
+  components:
+  - type: Sprite
+    state: brown_skirt
+  - type: Icon
+    state: brown_skirt
+  - type: Clothing
+    ClothingPrefix: brown_skirt
+    femaleMask: UniformTop
+
+# Maroon
+- type: entity
   parent: UniformColorBase
   id: UniformColorMaroon
   name: maroon jumpsuit
@@ -215,6 +426,20 @@
     HeldPrefix: red
 
 - type: entity
+  parent: UniformColorMaroon
+  id: UniformColorMaroonSkirt
+  name: maroon jumpskirt
+  components:
+  - type: Sprite
+    state: maroon_skirt
+  - type: Icon
+    state: maroon_skirt
+  - type: Clothing
+    ClothingPrefix: maroon_skirt
+    femaleMask: UniformTop
+
+# Rainbow
+- type: entity
   parent: UniformColorBase
   id: UniformColorRainbow
   name: rainbow jumpsuit
@@ -226,3 +451,16 @@
     state: rainbow
   - type: Clothing
     HeldPrefix: rainbow
+
+- type: entity
+  parent: UniformColorRainbow
+  id: UniformColorRainbowSkirt
+  name: rainbow jumpskirt
+  components:
+  - type: Sprite
+    state: rainbow_skirt
+  - type: Icon
+    state: rainbow_skirt
+  - type: Clothing
+    ClothingPrefix: rainbow_skirt
+    femaleMask: UniformTop

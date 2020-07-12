@@ -15,6 +15,20 @@
 
 - type: entity
   parent: UniformBartender
+  id: UniformBartenderSkirt
+  name: bartender's skirt
+  components:
+  - type: Sprite
+    state: skirt
+  - type: Icon
+    state: skirt
+  - type: Clothing
+    ClothingPrefix: skirt
+    femaleMask: UniformTop
+
+
+- type: entity
+  parent: UniformBartender
   id: UniformBartenderPurple
   name: purple bartender's uniform
   components:
