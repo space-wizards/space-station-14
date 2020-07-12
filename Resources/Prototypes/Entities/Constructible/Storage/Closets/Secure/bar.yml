@@ -7,14 +7,6 @@
     visuals:
     - type: StorageVisualizer2D
       state: cabinet
-
   - type: Icon
     state: cabinet_door
-
-
-# LockerBooze Filled
-- type: entity
-  id: LockerBoozeFilled
-  suffix: Filled
-  parent: LockerBooze
 

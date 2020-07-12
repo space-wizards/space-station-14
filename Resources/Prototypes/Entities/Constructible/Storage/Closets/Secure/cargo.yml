@@ -1,4 +1,3 @@
-# QM
 - type: entity
   id: LockerQuarterMaster
   parent: LockerSecureBase
@@ -8,12 +7,5 @@
     visuals:
     - type: StorageVisualizer2D
       state: qm
-
   - type: Icon
     state: qm_door
-
-# LockerQuarterMaster Filled
-- type: entity
-  id: LockerQuarterMasterFilled
-  suffix: Filled
-  parent: LockerQuarterMaster

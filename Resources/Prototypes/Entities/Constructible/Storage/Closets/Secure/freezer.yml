@@ -7,6 +7,5 @@
     visuals:
     - type: StorageVisualizer2D
       state: freezer
-
   - type: Icon
     state: freezer_door

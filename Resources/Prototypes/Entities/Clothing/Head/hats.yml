@@ -1496,6 +1496,7 @@
     sprite: Clothing/Head/hoshat.rsi
 
 - type: entity
+  parent: HatBase
   id: HatIhsvoidhelm
   name: IHS voidhelm
   description: ''
@@ -1505,10 +1506,10 @@
   - type: Icon
     sprite: Clothing/Head/ihsvoidhelm.rsi
   - type: Clothing
-  parent: HatBase
     sprite: Clothing/Head/ihsvoidhelm.rsi
 
 - type: entity
+  parent: HatBase
   id: HatIhsvoidhelmOn
   name: IHS voidhelm (on)
   description: ''
@@ -1518,7 +1519,6 @@
   - type: Icon
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
   - type: Clothing
-  parent: HatBase
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
 
 - type: entity
@@ -1730,6 +1730,7 @@
     sprite: Clothing/Head/merc_rig_sealed.rsi
 
 - type: entity
+  parent: HatBase
   id: HatMetroid
   name: metroid
   description: ''
@@ -1739,7 +1740,6 @@
   - type: Icon
     sprite: Clothing/Head/metroid.rsi
   - type: Clothing
-  parent: HatBase
     sprite: Clothing/Head/metroid.rsi
 
 - type: entity
@@ -2589,7 +2589,6 @@
 
 - type: entity
   parent: HatBase
-  parent: HatBase
   id: HatSecHelm
   name: sec helm
   description: ''
@@ -2609,18 +2608,17 @@
   - type: Sprite
   - type: Icon
     sprite: Clothing/Head/skubhead.rsi
-    sprite: Clothing/Head/skubhead.rsi
   - type: Clothing
-
     sprite: Clothing/Head/skubhead.rsi
+
 - type: entity
   parent: HatBase
   id: HatSombrero
   name: sombrero
   description: ''
   components:
-    sprite: Clothing/Head/sombrero.rsi
   - type: Sprite
+    sprite: Clothing/Head/sombrero.rsi
   - type: Icon
     sprite: Clothing/Head/sombrero.rsi
   - type: Clothing
@@ -3043,6 +3041,7 @@
     sprite: Clothing/Head/violetwizard.rsi
 
 - type: entity
+  parent: HatBase
   id: HatVoid
   name: void
   description: ''
@@ -3052,7 +3051,6 @@
   - type: Icon
     sprite: Clothing/Head/void.rsi
   - type: Clothing
-  parent: HatBase
     sprite: Clothing/Head/void.rsi
 
 - type: entity

@@ -7,14 +7,5 @@
     visuals:
     - type: StorageVisualizer2D
       state: rd
-
   - type: Icon
     state: rd_door
-
-
-# LockerResearchDirector Filled
-- type: entity
-  id: LockerResearchDirectorFilled
-  suffix: Filled
-  parent: LockerResearchDirector
-

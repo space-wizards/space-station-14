@@ -1,0 +1,291 @@
+- type: entity
+  id: LockerJanitor
+  parent: WardrobeMixed
+  name: "custodial closet"
+  description: "It's a storage unit for janitorial clothes and gear."
+  components:
+  - type: CustodialClosetFill
+
+- type: entity
+  id: LockerToolFilled
+  parent: LockerTool
+  suffix: Filled
+  components:
+  - type: ToolLockerFill
+
+- type: entity
+  id: LockerEmergencyFilledRandom
+  parent: LockerEmergency
+  suffix: Filled, Random
+  components:
+  - type: EmergencyClosetFill
+
+- type: entity
+  id: LockerBoozeFilled
+  suffix: Filled
+  parent: LockerBooze
+
+- type: entity
+  id: LockerQuarterMasterFilled
+  suffix: Filled
+  parent: LockerQuarterMaster
+
+- type: entity
+  id: LockerCaptainFilled
+  suffix: Filled
+  parent: LockerCaptain
+
+- type: entity
+  id: LockerHeadOfPersonnelFilled
+  suffix: Filled
+  parent: LockerHeadOfPersonnel
+
+- type: entity
+  id: LockerChiefEngineerFilled
+  suffix: Filled
+  parent: LockerChiefEngineer
+
+- type: entity
+  id: LockerElectricalSuppliesFilled
+  suffix: Filled
+  parent: LockerElectricalSupplies
+
+- type: entity
+  id: LockerWeldingSuppliesFilled
+  suffix: Filled
+  parent: LockerWeldingSupplies
+
+- type: entity
+  id: LockerAtmosphericsFilled
+  suffix: Filled
+  parent: LockerAtmospherics
+
+- type: entity
+  id: LockerEngineerFilled
+  suffix: Filled
+  parent: LockerEngineer
+
+- type: entity
+  id: LockerBotanistFilled
+  suffix: Filled
+  parent: LockerBotanist
+
+- type: entity
+  id: LockerMedicineFilled
+  suffix: Filled
+  parent: LockerMedicine
+
+- type: entity
+  id: LockerMedicalFilled
+  suffix: Filled
+  parent: LockerMedical
+
+- type: entity
+  id: LockerChemistryFilled
+  suffix: Filled
+  parent: LockerChemistry
+
+- type: entity
+  id: LockerChiefMedicalOfficerFilled
+  suffix: Filled
+  parent: LockerChiefMedicalOfficer
+
+- type: entity
+  id: LockerResearchDirectorFilled
+  suffix: Filled
+  parent: LockerResearchDirector
+
+- type: entity
+  id: LockerHeadOfSecurityFilled
+  suffix: Filled
+  parent: LockerHeadOfSecurity
+
+- type: entity
+  id: LockerWardenFilled
+  suffix: Filled
+  parent: LockerWarden
+
+- type: entity
+  id: LockerSecurityFilled
+  suffix: Filled
+  parent: LockerSecurity
+
+- type: entity
+  id: LockerFormalFilled
+  suffix: Filled
+  parent: LockerFormal
+
+- type: entity
+  id: LockerChefFilled
+  suffix: Filled
+  parent: LockerChef
+
+- type: entity
+  id: LockerJanitorFilled
+  suffix: Filled
+  parent: LockerJanitor
+
+- type: entity
+  id: LockerLegalFilled
+  suffix: Filled
+  parent: LockerLegal
+
+- type: entity
+  id: WardrobeChapelFilled
+  suffix: Filled
+  parent: WardrobeChapel
+
+- type: entity
+  id: WardrobeSecurityFilled
+  suffix: Filled
+  parent: WardrobeSecurity
+
+- type: entity
+  id: WardrobeCargoFilled
+  suffix: Filled
+  parent: WardrobeCargo
+
+- type: entity
+  id: WardrobeAtmosphericsFilled
+  suffix: Filled
+  parent: WardrobeAtmospherics
+
+- type: entity
+  id: WardrobeEngineeringFilled
+  suffix: Filled
+  parent: WardrobeEngineering
+
+- type: entity
+  id: WardrobeMedicalDoctorFilled
+  suffix: Filled
+  parent: WardrobeMedicalDoctor
+
+- type: entity
+  id: WardrobeRoboticsFilled
+  suffix: Filled
+  parent: WardrobeRobotics
+
+- type: entity
+  id: WardrobeChemistryFilled
+  suffix: Filled
+  parent: WardrobeChemistry
+
+- type: entity
+  id: WardrobeGeneticsFilled
+  suffix: Filled
+  parent: WardrobeGenetics
+
+- type: entity
+  id: WardrobeVirologyFilled
+  suffix: Filled
+  parent: WardrobeVirology
+
+- type: entity
+  id: WardrobeScienceFilled
+  suffix: Filled
+  parent: WardrobeScience
+
+- type: entity
+  id: WardrobeBotanistFilled
+  suffix: Filled
+  parent: WardrobeBotanist
+
+- type: entity
+  id: LockerL3Filled
+  suffix: Filled, Generic
+  parent: LockerL3
+
+- type: entity
+  id: LockerL3VirologyFilled
+  suffix: Filled, Virology
+  parent: LockerL3Virology
+
+- type: entity
+  id: LockerL3SecurityFilled
+  suffix: Filled, Security
+  parent: LockerL3Security
+
+- type: entity
+  id: LockerL3JanitorFilled
+  suffix: Filled, Janitor
+  parent: LockerL3Janitor
+
+- type: entity
+  id: LockerL3ScienceFilled
+  suffix: Filled, Science
+  parent: LockerL3Virology
+
+- type: entity
+  id: LockerSyndicatePersonalFilled
+  suffix: Filled
+  parent: LockerSyndicatePersonal
+
+- type: entity
+  id: LockerBombFilled
+  parent: LockerBomb
+  suffix: Filled
+
+- type: entity
+  id: LockerRadiationSuitFilled
+  parent: LockerRadiationSuit
+  suffix: Filled
+
+- type: entity
+  id: LockerFireFilled
+  parent: LockerFire
+  suffix: Filled
+
+- type: entity
+  id: WardrobePajama
+  parent: WardrobeWhite
+  name: pajama wardrobe
+
+- type: entity
+  id: WardrobeBlueFilled
+  suffix: Filled
+  parent: WardrobeBlue
+
+- type: entity
+  id: WardrobePinkFilled
+  suffix: Filled
+  parent: WardrobePink
+
+- type: entity
+  id: WardrobeBlackFilled
+  suffix: Filled
+  parent: WardrobeBlack
+
+- type: entity
+  id: WardrobeGreenFilled
+  suffix: Filled
+  parent: WardrobeGreen
+
+- type: entity
+  id: WardrobePrisonFilled
+  suffix: Filled
+  parent: WardrobePrison
+
+- type: entity
+  id: WardrobeYellowFilled
+  suffix: Filled
+  parent: WardrobeYellow
+
+- type: entity
+  id: WardrobeWhiteFilled
+  suffix: Filled
+  parent: WardrobeWhite
+
+- type: entity
+  id: WardrobePajamaFilled
+  suffix: Filled
+  parent: WardrobePajama
+
+- type: entity
+  id: WardrobeGreyFilled
+  suffix: Filled
+  parent: WardrobeGrey
+
+- type: entity
+  id: WardrobeMixedFilled
+  suffix: Filled
+  parent: WardrobeMixed

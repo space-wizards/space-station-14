@@ -1,4 +1,3 @@
-# Captain
 - type: entity
   id: LockerCaptain
   parent: LockerSecureBase
@@ -8,11 +7,9 @@
     visuals:
     - type: StorageVisualizer2D
       state: cap
-
   - type: Icon
     state: cap_door
 
-# HoP
 - type: entity
   id: LockerHeadOfPersonnel
   parent: LockerSecureBase
@@ -22,19 +19,5 @@
     visuals:
     - type: StorageVisualizer2D
       state: hop
-
   - type: Icon
     state: hop_door
-
-
-# LockerCaptain Filled
-- type: entity
-  id: LockerCaptainFilled
-  suffix: Filled
-  parent: LockerCaptain
-
-# LockerHeadOfPersonnel Filled
-- type: entity
-  id: LockerHeadOfPersonnelFilled
-  suffix: Filled
-  parent: LockerHeadOfPersonnel

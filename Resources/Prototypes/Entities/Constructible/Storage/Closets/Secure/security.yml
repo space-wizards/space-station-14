@@ -8,7 +8,6 @@
     visuals:
     - type: StorageVisualizer2D
       state: hos
-
   - type: Icon
     state: hos_door
 
@@ -22,7 +21,6 @@
     visuals:
     - type: StorageVisualizer2D
       state: warden
-
   - type: Icon
     state: warden_door
 
@@ -36,24 +34,5 @@
     visuals:
     - type: StorageVisualizer2D
       state: sec
-
   - type: Icon
     state: sec_door
-
-# LockerHeadOfSecurity Filled
-- type: entity
-  id: LockerHeadOfSecurityFilled
-  suffix: Filled
-  parent: LockerHeadOfSecurity
-
-# LockerWarden Filled
-- type: entity
-  id: LockerWardenFilled
-  suffix: Filled
-  parent: LockerWarden
-
-# LockerSecurity Filled
-- type: entity
-  id: LockerSecurityFilled
-  suffix: Filled
-  parent: LockerSecurity

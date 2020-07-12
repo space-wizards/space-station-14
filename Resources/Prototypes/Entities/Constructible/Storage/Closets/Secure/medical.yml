@@ -9,7 +9,6 @@
     visuals:
     - type: StorageVisualizer2D
       state: med
-
   - type: Icon
     state: med_door
 
@@ -23,7 +22,6 @@
     visuals:
     - type: StorageVisualizer2D
       state: med_secure
-
   - type: Icon
     state: med_secure_door
 
@@ -38,7 +36,6 @@
     - type: StorageVisualizer2D
       state: med
       state_closed: chemical_door
-
   - type: Icon
     state: chemical_door
 
@@ -52,31 +49,5 @@
     visuals:
     - type: StorageVisualizer2D
       state: cmo
-
   - type: Icon
     state: cmo_door
-
-
-# LockerMedicine Filled
-- type: entity
-  id: LockerMedicineFilled
-  suffix: Filled
-  parent: LockerMedicine
-
-# LockerMedical Filled
-- type: entity
-  id: LockerMedicalFilled
-  suffix: Filled
-  parent: LockerMedical
-
-# LockerChemistry Filled
-- type: entity
-  id: LockerChemistryFilled
-  suffix: Filled
-  parent: LockerChemistry
-
-# LockerChiefMedicalOfficer Filled
-- type: entity
-  id: LockerChiefMedicalOfficerFilled
-  suffix: Filled
-  parent: LockerChiefMedicalOfficer
