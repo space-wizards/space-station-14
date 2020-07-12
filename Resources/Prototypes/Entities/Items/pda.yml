@@ -84,6 +84,8 @@
     - state: unlit_pda_screen
       shader: unshaded
       map: ["enum.PDAVisualLayers.Unlit"]
+  - type: Slippery
+    paralyzeTime: 4
 
 - type: entity
   name: Cargo PDA
