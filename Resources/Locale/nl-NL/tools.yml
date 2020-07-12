@@ -1,0 +1,19 @@
+# Example Dutch translations
+
+- msgid: Wrench
+  msgstr: Moersleutel
+
+- msgid: Welding Tool
+  msgstr: Lasapparaat
+
+- msgid: Crowbar
+  msgstr: Koevoet
+
+- msgid: Screwdriver
+  msgstr: Schroevendraaier
+
+- msgid: Wirecutters
+  msgstr: Draadtang
+
+- msgid: Multitool
+  msgstr: Multi Tool # This is what google translate gives me idk.

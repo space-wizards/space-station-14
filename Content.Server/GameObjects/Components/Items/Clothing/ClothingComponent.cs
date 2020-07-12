@@ -3,20 +3,30 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
     [ComponentReference(typeof(StoreableComponent))]
+    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
+#pragma warning disable 649
+        [Dependency] private readonly IServerNotifyManager _serverNotifyManager;
+#pragma warning restore 649
+
         public override string Name => "Clothing";
         public override uint? NetID => ContentNetIDs.CLOTHING;
 
@@ -82,16 +92,38 @@ namespace Content.Server.GameObjects
                     hands.Drop(Owner);
                     inv.Unequip(slot);
                     hands.PutInHand(item);
+
+                    if (!TryEquip(inv, slot, eventArgs.User))
+                    {
+                        hands.Drop(item.Owner);
+                        inv.Equip(slot, item);
+                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
+                    }
                 }
                 else
                 {
                     hands.Drop(Owner);
+                    if (!TryEquip(inv, slot, eventArgs.User))
+                        hands.PutInHand(Owner.GetComponent<ItemComponent>());
                 }
 
-                return inv.Equip(slot, this);
+                return true;
             }
 
             return false;
+        }
+
+        private bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
+        {
+            if (!inv.Equip(slot, this, out var reason))
+            {
+                if (reason != null)
+                    _serverNotifyManager.PopupMessage(Owner, user, reason);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

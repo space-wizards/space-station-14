@@ -88,21 +88,15 @@ namespace Content.Server
             }
 
             var password = _configurationManager.GetCVar<string>("status.mommipassword");
-            OOCPostMessage message;
 
-            using (var streamReader = new StreamReader(request.Body, EncodingHelpers.UTF8))
-            using (var jsonReader = new JsonTextReader(streamReader))
+            OOCPostMessage message = null;
+            try
             {
-                var serializer = new JsonSerializer();
-                try
-                {
-                    message = serializer.Deserialize<OOCPostMessage>(jsonReader);
-                }
-                catch (JsonSerializationException)
-                {
-                    response.StatusCode = (int) HttpStatusCode.BadRequest;
-                    return true;
-                }
+                message = request.GetFromJson<OOCPostMessage>();
+            }
+            catch (JsonSerializationException)
+            {
+                // message null so enters block down below.
             }
 
             if (message == null)

@@ -1,26 +1,32 @@
 ﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
 // ReSharper disable once RedundantUsingDirective
+
+using System;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Materials;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Research;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Research
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class LatheComponent : SharedLatheComponent, IAttackBy, IActivate
+    public class LatheComponent : SharedLatheComponent, IInteractUsing, IActivate
     {
         public const int VolumePerSheet = 3750;
 
@@ -32,20 +38,35 @@ namespace Content.Server.GameObjects.Components.Research
         [ViewVariables]
         public bool Producing { get; private set; } = false;
 
+        private AppearanceComponent _appearance;
+        private LatheState _state = LatheState.Base;
+
+        protected virtual LatheState State
+        {
+            get => _state;
+            set => _state = value;
+        }
+
         private LatheRecipePrototype _producingRecipe = null;
-        private PowerDeviceComponent _powerDevice;
-        private bool Powered => _powerDevice.Powered;
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
+
+        private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 
         public override void Initialize()
         {
             base.Initialize();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(LatheUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            _appearance = Owner.GetComponent<AppearanceComponent>();
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
+            if (!Powered)
+                return;
+
             switch (message.Message)
             {
                 case LatheQueueRecipeMessage msg:
@@ -71,13 +92,15 @@ namespace Content.Server.GameObjects.Components.Research
 
                 case LatheServerSyncMessage msg:
                     if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
-                    ||  !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
+                    || !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
 
-                    if(database.SyncWithServer())
+                    if (database.SyncWithServer())
                         protoDatabase.Sync();
 
                     break;
             }
+
+
         }
 
         internal bool Produce(LatheRecipePrototype recipe)
@@ -100,12 +123,17 @@ namespace Content.Server.GameObjects.Components.Research
 
             _userInterface.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
 
+            State = LatheState.Producing;
+            SetAppearance(LatheVisualState.Producing);
+
             Timer.Spawn(recipe.CompleteTime, () =>
             {
                 Producing = false;
                 _producingRecipe = null;
                 Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
                 _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
+                State = LatheState.Base;
+                SetAppearance(LatheVisualState.Idle);
             });
 
             return true;
@@ -124,17 +152,17 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return;
             }
+
             OpenUserInterface(actor.playerSession);
-            return;
         }
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
-            ||  !eventArgs.AttackWith.TryGetComponent(out MaterialComponent material)) return false;
+                ||  !eventArgs.Using.TryGetComponent(out MaterialComponent material)) return false;
 
             var multiplier = 1;
 
-            if (eventArgs.AttackWith.TryGetComponent(out StackComponent stack)) multiplier = stack.Count;
+            if (eventArgs.Using.TryGetComponent(out StackComponent stack)) multiplier = stack.Count;
 
             var totalAmount = 0;
 
@@ -151,13 +179,38 @@ namespace Content.Server.GameObjects.Components.Research
 
             foreach (var mat in material.MaterialTypes.Values)
             {
-
                 storage.InsertMaterial(mat.ID, VolumePerSheet * multiplier);
             }
 
-            eventArgs.AttackWith.Delete();
+            State = LatheState.Inserting;
+            switch (material.MaterialTypes.Values.First().Name)
+            {
+                case "Steel":
+                    SetAppearance(LatheVisualState.InsertingMetal);
+                    break;
+                case "Glass":
+                    SetAppearance(LatheVisualState.InsertingGlass);
+                    break;
+                case "Gold":
+                    SetAppearance(LatheVisualState.InsertingGold);
+                    break;
+            }
 
-            return false;
+            Timer.Spawn(InsertionTime, () =>
+            {
+                State = LatheState.Base;
+                SetAppearance(LatheVisualState.Idle);
+            });
+
+            eventArgs.Using.Delete();
+
+            return true;
+        }
+
+        private void SetAppearance(LatheVisualState state)
+        {
+            if (_appearance != null || Owner.TryGetComponent(out _appearance))
+                _appearance.SetData(PowerDeviceVisuals.VisualState, state);
         }
 
         private Queue<string> GetIDQueue()
@@ -169,6 +222,13 @@ namespace Content.Server.GameObjects.Components.Research
             }
 
             return queue;
+        }
+
+        protected enum LatheState
+        {
+            Base,
+            Inserting,
+            Producing
         }
     }
 }

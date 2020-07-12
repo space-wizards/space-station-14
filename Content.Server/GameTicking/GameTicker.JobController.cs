@@ -19,7 +19,7 @@ namespace Content.Server.GameTicking
         private readonly Dictionary<string, int> _spawnedPositions = new Dictionary<string, int>();
 
         private Dictionary<IPlayerSession, string> AssignJobs(List<IPlayerSession> available,
-            Dictionary<IPlayerSession, HumanoidCharacterProfile> profiles)
+            Dictionary<string, HumanoidCharacterProfile> profiles)
         {
             // Calculate positions available round-start for each job.
             var availablePositions = GetBasePositions(true);
@@ -38,7 +38,7 @@ namespace Content.Server.GameTicking
                     var candidates = available
                         .Select(player =>
                         {
-                            var profile = profiles[player];
+                            var profile = profiles[player.Name];
 
                             var availableJobs = profile.JobPriorities
                                 .Where(j =>
@@ -124,7 +124,7 @@ namespace Content.Server.GameTicking
         /// <summary>
         ///     Gets the remaining available job positions in the current round.
         /// </summary>
-        private Dictionary<string, int> GetAvailablePositions()
+        public Dictionary<string, int> GetAvailablePositions()
         {
             var basePositions = GetBasePositions(false);
 

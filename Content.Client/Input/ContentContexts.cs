@@ -13,9 +13,12 @@ namespace Content.Client.Input
         {
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
+            common.AddFunction(ContentKeyFunctions.FocusOOC);
+            common.AddFunction(ContentKeyFunctions.FocusAdminChat);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenTutorial);
-            common.AddFunction(ContentKeyFunctions.UseOrAttack);
+            common.AddFunction(ContentKeyFunctions.TakeScreenshot);
+            common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
@@ -27,16 +30,18 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenContextMenu);
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
+            human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
+            human.AddFunction(ContentKeyFunctions.SmartEquipBelt);
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
             human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
-            human.AddFunction(ContentKeyFunctions.Attack);
+            human.AddFunction(ContentKeyFunctions.WideAttack);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
-            ghost.AddFunction(EngineKeyFunctions.Run);
+            ghost.AddFunction(EngineKeyFunctions.Walk);
             ghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
             common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);

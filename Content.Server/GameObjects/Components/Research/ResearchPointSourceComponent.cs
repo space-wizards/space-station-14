@@ -1,5 +1,6 @@
+﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -14,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private int _pointsPerSecond;
         private bool _active;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
 
         [ViewVariables]
         public int PointsPerSecond
@@ -33,13 +34,13 @@ namespace Content.Server.GameObjects.Components.Research
         /// <summary>
         /// Whether this can be used to produce research points.
         /// </summary>
-        /// <remarks>If no <see cref="PowerDeviceComponent"/> is found, it's assumed power is not required.</remarks>
-        public bool CanProduce => Active && (_powerDevice is null || _powerDevice.Powered);
+        /// <remarks>If no <see cref="PowerReceiverComponent"/> is found, it's assumed power is not required.</remarks>
+        public bool CanProduce => Active && (_powerReceiver is null || _powerReceiver.Powered);
 
         public override void Initialize()
         {
             base.Initialize();
-            Owner.TryGetComponent(out _powerDevice);
+            Owner.TryGetComponent(out _powerReceiver);
         }
 
         public override void ExposeData(ObjectSerializer serializer)

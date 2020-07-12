@@ -4,6 +4,7 @@ using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests
@@ -15,6 +16,12 @@ namespace Content.IntegrationTests
         public event Action<GameRunLevelChangedEventArgs> OnRunLevelChanged
         {
             add { }
+            remove { }
+        }
+
+        public event Action<GameRuleAddedEventArgs> OnRuleAdded
+        {
+            add{ }
             remove { }
         }
 
@@ -30,7 +37,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void StartRound()
+        public void StartRound(bool force = false)
         {
         }
 
@@ -46,7 +53,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void MakeJoinGame(IPlayerSession player)
+        public void MakeJoinGame(IPlayerSession player, string jobId)
         {
         }
 
@@ -54,9 +61,18 @@ namespace Content.IntegrationTests
         {
         }
 
+        public GridCoordinates GetLateJoinSpawnPoint() => GridCoordinates.InvalidGrid;
+        public GridCoordinates GetJobSpawnPoint(string jobId) => GridCoordinates.InvalidGrid;
+        public GridCoordinates GetObserverSpawnPoint() => GridCoordinates.InvalidGrid;
+
         public T AddGameRule<T>() where T : GameRule, new()
         {
             return new T();
+        }
+
+        public bool HasGameRule(Type type)
+        {
+            return false;
         }
 
         public void RemoveGameRule(GameRule rule)
@@ -65,12 +81,38 @@ namespace Content.IntegrationTests
 
         public IEnumerable<GameRule> ActiveGameRules { get; } = Array.Empty<GameRule>();
 
-        public void SetStartPreset(Type type)
+        public bool TryGetPreset(string name, out Type type)
+        {
+            type = default;
+            return false;
+        }
+
+        public void SetStartPreset(Type type, bool force = false)
         {
         }
 
-        public void SetStartPreset(string type)
+        public void SetStartPreset(string name, bool force = false)
         {
+        }
+
+        public bool DelayStart(TimeSpan time)
+        {
+            return true;
+        }
+
+        public bool PauseStart(bool pause = true)
+        {
+            return true;
+        }
+
+        public bool TogglePause()
+        {
+            return false;
+        }
+
+        public Dictionary<string, int> GetAvailablePositions()
+        {
+            return new Dictionary<string, int>();
         }
     }
 }

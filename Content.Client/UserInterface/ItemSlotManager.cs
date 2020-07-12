@@ -15,6 +15,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -30,21 +31,8 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IResourceCache _resourceCache;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 0649
-
-        private const int CooldownLevels = 8;
-
-        private readonly Texture[] _texturesCooldownOverlay = new Texture[CooldownLevels];
-
-        public void Initialize()
-        {
-            for (var i = 0; i < CooldownLevels; i++)
-            {
-                _texturesCooldownOverlay[i] =
-                    _resourceCache.GetTexture($"/Textures/UserInterface/Inventory/cooldown-{i}.png");
-            }
-        }
 
         public bool SetItemSlot(ItemSlotButton button, IEntity entity)
         {
@@ -65,8 +53,6 @@ namespace Content.Client.UserInterface
 
         public bool OnButtonPressed(GUIBoundKeyEventArgs args, IEntity item)
         {
-            args.Handle();
-
             if (item == null)
                 return false;
 
@@ -87,9 +73,12 @@ namespace Content.Client.UserInterface
                 var func = args.Function;
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, funcId, BoundKeyState.Down, mousePosWorld,
-                    args.PointerLocation, item.Uid);
+                var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
+                if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
+                    grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+
+                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
+                    grid.MapToGrid(mousePosWorld), args.PointerLocation, item.Uid);
 
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer.Session;
@@ -99,12 +88,13 @@ namespace Content.Client.UserInterface
             {
                 return false;
             }
+            args.Handle();
             return true;
         }
 
         public void UpdateCooldown(ItemSlotButton button, IEntity entity)
         {
-            var cooldownTexture = button.CooldownCircle;
+            var cooldownDisplay = button.CooldownDisplay;
 
             if (entity != null
                 && entity.TryGetComponent(out ItemCooldownComponent cooldown)
@@ -115,31 +105,24 @@ namespace Content.Client.UserInterface
                 var end = cooldown.CooldownEnd.Value;
 
                 var length = (end - start).TotalSeconds;
-                var progress = (_gameTiming.CurTime - start).TotalSeconds;
-                var ratio = (float)(progress / length);
+                var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
+                var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                var textureIndex = CalculateCooldownLevel(ratio);
-                if (textureIndex == CooldownLevels)
+                cooldownDisplay.Progress = (float)ratio.Clamp(-1, 1);
+
+                if (ratio > -1f)
                 {
-                    cooldownTexture.Visible = false;
+                    cooldownDisplay.Visible = true;
                 }
                 else
                 {
-                    cooldownTexture.Visible = true;
-                    cooldownTexture.Texture = _texturesCooldownOverlay[textureIndex];
+                    cooldownDisplay.Visible = false;
                 }
             }
             else
             {
-                cooldownTexture.Visible = false;
+                cooldownDisplay.Visible = false;
             }
-        }
-
-        internal static int CalculateCooldownLevel(float cooldownValue)
-        {
-            var val = cooldownValue.Clamp(0, 1);
-            val *= CooldownLevels;
-            return (int)Math.Floor(val);
         }
     }
 }

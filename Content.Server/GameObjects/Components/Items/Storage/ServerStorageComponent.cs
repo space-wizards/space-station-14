@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
@@ -19,6 +22,8 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -30,11 +35,11 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IAttackBy, IUse, IActivate, IStorageComponent, IDestroyAct
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
+        IDragDrop
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
@@ -44,6 +49,7 @@ namespace Content.Server.GameObjects
         private int StorageUsed = 0;
         private int StorageCapacityMax = 10000;
         public HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
+        public IReadOnlyCollection<IEntity> StoredEntities => storage.ContainedEntities;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private bool _occlusion;
@@ -70,7 +76,7 @@ namespace Content.Server.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 10000);
-            serializer.DataField(ref StorageUsed, "used", 0);
+            //serializer.DataField(ref StorageUsed, "used", 0);
             serializer.DataField(ref _occlusion, "occlusion", true);
         }
 
@@ -152,15 +158,16 @@ namespace Content.Server.GameObjects
         /// <param name="user"></param>
         /// <param name="attackwith"></param>
         /// <returns></returns>
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            _ensureInitialCalculated();
-            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.AttackWith.Uid);
+            Logger.DebugS("Storage", "Storage (UID {0}) attacked by user (UID {1}) with entity (UID {2}).", Owner.Uid, eventArgs.User.Uid, eventArgs.Using.Uid);
 
             if(Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
                 return false;
             }
+
+
 
             return PlayerInsertEntity(eventArgs.User);
          }
@@ -270,18 +277,22 @@ namespace Content.Server.GameObjects
         /// and puts the removed entity in hand or on the ground
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="netChannel"></param>
-        /// <param name="component"></param>
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        /// <param name="channel"></param>
+        /// <param name="session"></param>
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleNetworkMessage(message, channel, session);
+
+            if (session == null)
+            {
+                throw new ArgumentException(nameof(session));
+            }
 
             switch (message)
             {
                 case RemoveEntityMessage _:
                 {
                     _ensureInitialCalculated();
-                    var session = _playerManager.GetSessionByChannel(netChannel);
                     var playerentity = session.AttachedEntity;
 
                     var ourtransform = Owner.GetComponent<ITransformComponent>();
@@ -294,16 +305,16 @@ namespace Content.Server.GameObjects
                         var entity = _entityManager.GetEntity(remove.EntityUid);
                         if (entity != null && storage.Contains(entity))
                         {
-                            Remove(entity);
 
                             var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))
                             {
-                                if (hands.PutInHand(item))
+                                if (hands.CanPutInHand(item) && hands.PutInHand(item))
+                                    {
                                     return;
+                                    }
                             }
 
-                            entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
                     break;
@@ -311,7 +322,7 @@ namespace Content.Server.GameObjects
                 case InsertEntityMessage _:
                 {
                     _ensureInitialCalculated();
-                    var playerEntity = _playerManager.GetSessionByChannel(netChannel).AttachedEntity;
+                    var playerEntity = session.AttachedEntity;
                     var storageTransform = Owner.GetComponent<ITransformComponent>();
                     var playerTransform = playerEntity.GetComponent<ITransformComponent>();
                     // TODO: Replace by proper entity range check once it is implemented.
@@ -326,9 +337,7 @@ namespace Content.Server.GameObjects
                 }
                 case CloseStorageUIMessage _:
                 {
-                    var session = _playerManager.GetSessionByChannel(netChannel);
-
-                    UnsubscribeSession(session);
+                    UnsubscribeSession(session as IPlayerSession);
                     break;
                 }
             }
@@ -356,7 +365,7 @@ namespace Content.Server.GameObjects
 
             foreach (var entity in storage.ContainedEntities)
             {
-                var item = entity.GetComponent<ItemComponent>();
+                var item = entity.GetComponent<StoreableComponent>();
                 StorageUsed += item.ObjectSize;
             }
 
@@ -372,11 +381,31 @@ namespace Content.Server.GameObjects
             }
         }
 
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            var storedEntities = storage.ContainedEntities.ToList();
+            foreach (var entity in storedEntities)
+            {
+                var exActs = entity.GetAllComponents<IExAct>();
+                foreach (var exAct in exActs)
+                {
+                    exAct.OnExplosion(eventArgs);
+                }
+            }
+        }
+
         /// <summary>
         /// Inserts an entity into the storage component from the players active hand.
         /// </summary>
-        private bool PlayerInsertEntity(IEntity player)
+        public bool PlayerInsertEntity(IEntity player)
         {
+            _ensureInitialCalculated();
+
             if (!player.TryGetComponent(out IHandsComponent hands) || hands.GetActiveHand == null)
                 return false;
 
@@ -395,6 +424,27 @@ namespace Content.Server.GameObjects
             }
 
             Owner.PopupMessage(player, "Can't insert.");
+            return false;
+        }
+
+        public bool DragDrop(DragDropEventArgs eventArgs)
+        {
+            if (eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface))
+            {
+                if (!placeableSurface.IsPlaceable) return false;
+
+                // empty everything out
+                foreach (var storedEntity in StoredEntities.ToList())
+                {
+                    if (Remove(storedEntity))
+                    {
+                        storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                    }
+                }
+
+                return true;
+            }
+
             return false;
         }
     }

@@ -1,5 +1,6 @@
 using Content.Client.Chat;
 using Content.Client.Interfaces;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -17,6 +18,7 @@ namespace Content.Client.UserInterface
         public Label StartTime { get; }
         public Button ReadyButton { get; }
         public Button ObserveButton { get; }
+        public Button CreditsButton { get; }
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
         public ItemList OnlinePlayerItemList { get; }
@@ -37,7 +39,7 @@ namespace Content.Client.UserInterface
 
             AddChild(margin);
 
-            var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -69,7 +71,7 @@ namespace Content.Client.UserInterface
                             new Label
                             {
                                 Text = Loc.GetString("Lobby"),
-                                StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                                StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                                 /*MarginBottom = 40,
                                 MarginLeft = 8,*/
                                 VAlign = Label.VAlignMode.Center
@@ -78,17 +80,24 @@ namespace Content.Client.UserInterface
                     },
                     (ServerName = new Label
                     {
-                        StyleClasses = {NanoStyle.StyleClassLabelHeadingBigger},
+                        StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                         /*MarginBottom = 40,
                         GrowHorizontal = GrowDirection.Both,*/
                         VAlign = Label.VAlignMode.Center,
                         SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
                     }),
+                    (CreditsButton = new Button
+                    {
+                        SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                        Text = Loc.GetString("Credits"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
+                        //GrowHorizontal = GrowDirection.Begin
+                    }),
                     (LeaveButton = new Button
                     {
                         SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Text = Loc.GetString("Leave"),
-                        StyleClasses = {NanoStyle.StyleClassButtonBig},
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
                         //GrowHorizontal = GrowDirection.Begin
                     })
                 }
@@ -100,7 +109,7 @@ namespace Content.Client.UserInterface
             {
                 PanelOverride = new StyleBoxFlat
                 {
-                    BackgroundColor = NanoStyle.NanoGold,
+                    BackgroundColor = StyleNano.NanoGold,
                     ContentMarginTopOverride = 2
                 },
             });
@@ -146,20 +155,20 @@ namespace Content.Client.UserInterface
                                             (ObserveButton = new Button
                                             {
                                                 Text = Loc.GetString("Observe"),
-                                                StyleClasses = {NanoStyle.StyleClassButtonBig}
+                                                StyleClasses = {StyleNano.StyleClassButtonBig}
                                             }),
                                             (StartTime = new Label
                                             {
                                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                                                 Align = Label.AlignMode.Right,
                                                 FontColorOverride = Color.DarkGray,
-                                                StyleClasses = {NanoStyle.StyleClassLabelBig}
+                                                StyleClasses = {StyleNano.StyleClassLabelBig}
                                             }),
                                             (ReadyButton = new Button
                                             {
                                                 ToggleMode = true,
                                                 Text = Loc.GetString("Ready Up"),
-                                                StyleClasses = {NanoStyle.StyleClassButtonBig}
+                                                StyleClasses = {StyleNano.StyleClassButtonBig}
                                             }),
                                         }
                                     }
@@ -188,7 +197,7 @@ namespace Content.Client.UserInterface
 
             hBox.AddChild(new PanelContainer
             {
-                PanelOverride = new StyleBoxFlat {BackgroundColor = NanoStyle.NanoGold}, CustomMinimumSize = (2, 0)
+                PanelOverride = new StyleBoxFlat {BackgroundColor = StyleNano.NanoGold}, CustomMinimumSize = (2, 0)
             });
 
             {

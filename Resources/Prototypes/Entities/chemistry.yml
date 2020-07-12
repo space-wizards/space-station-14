@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseItem
+  id: ReagentItem
+  name: "reagent item"
+  abstract: true
+  components:
+  - type: Solution
+    maxVol: 5

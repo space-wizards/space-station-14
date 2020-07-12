@@ -1,0 +1,58 @@
+- type: entity
+  id: CartridgeLRifleBase
+  name: cartridge (.30 rifle)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Ammo
+    caliber: LRifle
+  - type: Sprite
+    netsync: false
+    directional: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+
+- type: entity
+  id: CartridgeLRifle
+  name: cartridge (.30 rifle)
+  parent: CartridgeLRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletLRifle
+
+- type: entity
+  id: CartridgeLRifleFlash
+  name: cartridge (.30 rifle flash)
+  parent: CartridgeLRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletLRifleFlash
+
+- type: entity
+  id: CartridgeLRifleHV
+  name: cartridge (.30 rifle high-velocity)
+  parent: CartridgeLRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletLRifleHV
+    ammoVelocity: 30
+
+- type: entity
+  id: CartridgeLRiflePractice
+  name: cartridge (.30 rifle practice)
+  parent: CartridgeLRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletLRiflePractice
+
+- type: entity
+  id: CartridgeLRifleRubber
+  name: cartridge (.30 rifle rubber)
+  parent: CartridgeLRifleBase
+  components:
+  - type: Ammo
+    projectile: BulletLRifleRubber

@@ -35,6 +35,23 @@ namespace Content.Server.GameObjects
             }
         }
 
+        // for shared string dict, since we don't define these anywhere in content
+        [UsedImplicitly]
+        public static readonly string[] _humanStatusImages =
+        {
+            "/Textures/Interface/StatusEffects/Human/human0.png",
+            "/Textures/Interface/StatusEffects/Human/human1.png",
+            "/Textures/Interface/StatusEffects/Human/human2.png",
+            "/Textures/Interface/StatusEffects/Human/human3.png",
+            "/Textures/Interface/StatusEffects/Human/human4.png",
+            "/Textures/Interface/StatusEffects/Human/human5.png",
+            "/Textures/Interface/StatusEffects/Human/human6-0.png",
+            "/Textures/Interface/StatusEffects/Human/human6-1.png",
+            "/Textures/Interface/StatusEffects/Human/humancrit-0.png",
+            "/Textures/Interface/StatusEffects/Human/humancrit-1.png",
+            "/Textures/Interface/StatusEffects/Human/humandead.png",
+        };
+
         public override void ChangeHudState(DamageableComponent damage)
         {
             ThresholdType healthstate = CalculateDamageState(damage);
@@ -49,24 +66,27 @@ namespace Content.Server.GameObjects
                         throw new InvalidOperationException(); //these should all be below the crit value, possibly going over multiple thresholds at once?
                     }
                     var modifier = totaldamage / (critvalue / normalstates); //integer division floors towards zero
-                    statusEffectsComponent?.ChangeStatus(StatusEffect.Health,
-                            "/Textures/Mob/UI/Human/human" + modifier + ".png");
+                    statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Health,
+                            "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
 
-                    overlayComponent?.ChangeOverlay(ScreenEffects.None);
+                    overlayComponent?.RemoveOverlay(OverlayType.GradientCircleMaskOverlay);
+                    overlayComponent?.RemoveOverlay(OverlayType.CircleMaskOverlay);
 
                     return;
                 case ThresholdType.Critical:
-                    statusEffectsComponent?.ChangeStatus(
+                    statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
-                        "/Textures/Mob/UI/Human/humancrit-0.png");
-                    overlayComponent?.ChangeOverlay(ScreenEffects.GradientCircleMask);
+                        "/Textures/Interface/StatusEffects/Human/humancrit-0.png");
+                    overlayComponent?.ClearOverlays();
+                    overlayComponent?.AddOverlay(OverlayType.GradientCircleMaskOverlay);
 
                     return;
                 case ThresholdType.Death:
-                    statusEffectsComponent?.ChangeStatus(
+                    statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
-                        "/Textures/Mob/UI/Human/humandead.png");
-                    overlayComponent?.ChangeOverlay(ScreenEffects.CircleMask);
+                        "/Textures/Interface/StatusEffects/Human/humandead.png");
+                    overlayComponent?.ClearOverlays();
+                    overlayComponent?.AddOverlay(OverlayType.CircleMaskOverlay);
 
                     return;
                 default:

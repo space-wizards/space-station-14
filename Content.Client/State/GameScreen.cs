@@ -1,13 +1,20 @@
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using Content.Client.Chat;
 using Content.Client.Interfaces.Chat;
 using Content.Client.UserInterface;
 using Content.Shared.Input;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.State
@@ -28,6 +35,7 @@ namespace Content.Client.State
             base.Startup();
 
             _gameChat = new ChatBox();
+
             _userInterfaceManager.StateRoot.AddChild(_gameChat);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
             LayoutContainer.SetAnchorAndMarginPreset(_gameChat, LayoutContainer.LayoutPreset.TopRight, margin: 10);
@@ -41,6 +49,12 @@ namespace Content.Client.State
 
             _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
                 InputCmdHandler.FromDelegate(s => FocusChat(_gameChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
+                InputCmdHandler.FromDelegate(s => FocusOOC(_gameChat)));
+
+            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
+                InputCmdHandler.FromDelegate(s => FocusAdminChat(_gameChat)));
         }
 
         public override void Shutdown()
@@ -60,6 +74,29 @@ namespace Content.Client.State
 
             chat.Input.IgnoreNext = true;
             chat.Input.GrabKeyboardFocus();
+        }
+        internal static void FocusOOC(ChatBox chat)
+        {
+            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
+            chat.Input.InsertAtCursor("[");
+        }
+
+        internal static void FocusAdminChat(ChatBox chat)
+        {
+            if (chat == null || chat.UserInterfaceManager.KeyboardFocused != null)
+            {
+                return;
+            }
+
+            chat.Input.IgnoreNext = true;
+            chat.Input.GrabKeyboardFocus();
+            chat.Input.InsertAtCursor("]");
         }
     }
 }

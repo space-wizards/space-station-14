@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     internal class PowerSmesSystem : EntitySystem
     {
@@ -15,8 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var entity in RelevantEntities)
             {
-                var comp = entity.GetComponent<SmesComponent>();
-                comp.OnUpdate();
+                entity.GetComponent<SmesComponent>().OnUpdate();
             }
         }
     }

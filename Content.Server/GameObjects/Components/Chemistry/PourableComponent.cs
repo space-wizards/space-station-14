@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
+using Content.Server.Utility;
+using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -19,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// (DrinkComponent adds a SolutionComponent if one isn't present).
     /// </summary>
     [RegisterComponent]
-    class PourableComponent : Component, IAttackBy
+    class PourableComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -28,13 +32,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public override string Name => "Pourable";
 
-        private int _transferAmount;
+        private ReagentUnit _transferAmount;
 
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.
         /// </summary>
         [ViewVariables]
-        public int TransferAmount
+        public ReagentUnit TransferAmount
         {
             get => _transferAmount;
             set => _transferAmount = value;
@@ -43,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", 5);
+            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0));
         }
 
         /// <summary>
@@ -53,23 +57,43 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="eventArgs">Attack event args</param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            //Get target and check if it can be poured into
+            //Get target solution component
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))
                 return false;
-            if (!targetSolution.CanPourIn)
+
+            //Get attack solution component
+            var attackEntity = eventArgs.Using;
+            if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution))
                 return false;
 
-            //Get attack entity and check if it can pour out.
-            var attackEntity = eventArgs.AttackWith;
-            if (!attackEntity.TryGetComponent<SolutionComponent>(out var attackSolution) || !attackSolution.CanPourOut)
-                return false;
-            if (!attackEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            // Calculate possibe solution transfer
+            if (targetSolution.CanPourIn && attackSolution.CanPourOut)
+            {
+                // default logic (beakers and glasses)
+                // transfer solution from object in hand to attacked
+                return TryTransfer(eventArgs, attackSolution, targetSolution);
+            }
+            else if (targetSolution.CanPourOut && attackSolution.CanPourIn)
+            {
+                // storage tanks and sinks logic
+                // drain solution from attacked object to object in hand
+                return TryTransfer(eventArgs, targetSolution, attackSolution);
+            }
+
+            // No transfer possible
+            return false;
+        }
+
+        bool TryTransfer(InteractUsingEventArgs eventArgs, SolutionComponent fromSolution, SolutionComponent toSolution)
+        {
+            var fromEntity = fromSolution.Owner;
+            if (!fromEntity.TryGetComponent<PourableComponent>(out var fromPourable))
                 return false;
 
             //Get transfer amount. May be smaller than _transferAmount if not enough room
-            int realTransferAmount = Math.Min(attackPourable.TransferAmount, targetSolution.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(fromPourable.TransferAmount, toSolution.EmptyVolume);
             if (realTransferAmount <= 0) //Special message if container is full
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
@@ -78,8 +102,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Move units from attackSolution to targetSolution
-            var removedSolution = attackSolution.SplitSolution(realTransferAmount);
-            if (!targetSolution.TryAddSolution(removedSolution))
+            var removedSolution = fromSolution.SplitSolution(realTransferAmount);
+            if (!toSolution.TryAddSolution(removedSolution))
                 return false;
 
             _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,

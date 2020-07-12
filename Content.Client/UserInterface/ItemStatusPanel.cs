@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -34,8 +35,8 @@ namespace Content.Client.UserInterface
             var panel = new StyleBoxTexture
             {
                 Texture = ResC.GetTexture(isRightHand
-                    ? "/Nano/item_status_right.svg.96dpi.png"
-                    : "/Nano/item_status_left.svg.96dpi.png")
+                    ? "/Textures/Interface/Nano/item_status_right.svg.96dpi.png"
+                    : "/Textures/Interface/Nano/item_status_left.svg.96dpi.png")
             };
             panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
             panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);
@@ -57,7 +58,7 @@ namespace Content.Client.UserInterface
                             (_itemNameLabel = new Label
                             {
                                 ClipText = true,
-                                StyleClasses = {NanoStyle.StyleClassItemStatus}
+                                StyleClasses = {StyleNano.StyleClassItemStatus}
                             })
                         }
                     }

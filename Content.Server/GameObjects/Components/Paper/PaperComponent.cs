@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -9,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class PaperComponent : SharedPaperComponent, IExamine, IAttackBy, IUse
+    public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
     {
 
         private BoundUserInterface _userInterface;
@@ -31,8 +33,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             _userInterface.SetState(new PaperBoundUserInterfaceState(_content, _mode));
         }
 
-        public void Examine(FormattedMessage message)
+        public void Examine(FormattedMessage message, bool inDetailsRange)
         {
+            if (!inDetailsRange)
+                return;
+
             message.AddMarkup(_content);
         }
 
@@ -62,9 +67,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             UpdateUserInterface();
         }
 
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.AttackWith.HasComponent<WriteComponent>())
+            if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
                 return false;

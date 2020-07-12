@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
+using Content.Server.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
-using Robust.Shared.ContentPack;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct
+    [ComponentReference(typeof(SharedSpeciesComponent))]
+    public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct, IRelayMoveInput
     {
         /// <summary>
         /// Damagestates are reached by reaching a certain damage threshold, they will block actions after being reached
@@ -51,9 +55,10 @@ namespace Content.Server.GameObjects
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
+            base.HandleMessage(message, component);
+
             switch (message)
             {
                 case PlayerAttachedMsg _:
@@ -71,10 +76,10 @@ namespace Content.Server.GameObjects
         {
             base.OnRemove();
             Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-            statusEffectsComponent?.RemoveStatus(StatusEffect.Health);
+            statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Health);
 
             Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
-            overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
+            overlayEffectsComponent?.ClearOverlays();
         }
 
         bool IActionBlocker.CanMove()
@@ -115,6 +120,26 @@ namespace Content.Server.GameObjects
         bool IActionBlocker.CanEmote()
         {
             return CurrentDamageState.CanEmote();
+        }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return CurrentDamageState.CanAttack();
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return CurrentDamageState.CanEquip();
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return CurrentDamageState.CanUnequip();
+        }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return CurrentDamageState.CanChangeDirection();
         }
 
         List<DamageThreshold> IOnDamageBehavior.GetAllDamageThresholds()
@@ -168,7 +193,7 @@ namespace Content.Server.GameObjects
 
             currentstate = threshold;
 
-            EntityEventArgs toRaise = new MobDamageStateChangedMessage(this);
+            var toRaise = new MobDamageStateChangedMessage(this);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, toRaise);
         }
 
@@ -192,6 +217,14 @@ namespace Content.Server.GameObjects
             }
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, bruteDamage, null);
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, null);
+        }
+
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
+        {
+            if (CurrentDamageState is DeadState)
+            {
+                new Ghost().Execute(null, (IPlayerSession) session, null);
+            }
         }
     }
 

@@ -3,16 +3,22 @@ using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -24,10 +30,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IResourceCache _resourceCache;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IGameTiming _gameTiming;
 #pragma warning restore 649
 
         private StatusEffectsUI _ui;
-        private IDictionary<StatusEffect, string> _icons = new Dictionary<StatusEffect, string>();
+        private Dictionary<StatusEffect, StatusEffectStatus> _status = new Dictionary<StatusEffect, StatusEffectStatus>();
+        private Dictionary<StatusEffect, CooldownGraphic> _cooldown = new Dictionary<StatusEffect, CooldownGraphic>();
 
         /// <summary>
         /// Allows calculating if we need to act due to this component being controlled by the current mob
@@ -40,10 +48,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             PlayerDetached();
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
+            base.HandleMessage(message, component);
             switch (message)
             {
                 case PlayerAttachedMsg _:
@@ -58,9 +65,9 @@ namespace Content.Client.GameObjects.Components.Mobs
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is StatusEffectComponentState state) || _icons == state.StatusEffects) return;
-            _icons = state.StatusEffects;
-            UpdateIcons();
+            if (!(curState is StatusEffectComponentState state) || _status == state.StatusEffects) return;
+            _status = state.StatusEffects;
+            UpdateStatusEffects();
         }
 
         private void PlayerAttached()
@@ -71,45 +78,80 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
             _ui = new StatusEffectsUI();
             _userInterfaceManager.StateRoot.AddChild(_ui);
-            UpdateIcons();
+            UpdateStatusEffects();
         }
 
         private void PlayerDetached()
         {
-            if (!CurrentlyControlled)
-            {
-                return;
-            }
             _ui?.Dispose();
             _ui = null;
         }
 
-        public void UpdateIcons()
+        public void UpdateStatusEffects()
         {
             if (!CurrentlyControlled || _ui == null)
             {
                 return;
             }
+            _cooldown.Clear();
             _ui.VBox.DisposeAllChildren();
 
-            foreach (var effect in _icons.OrderBy(x => (int) x.Key))
+            foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
-                TextureRect newIcon = new TextureRect
-                {
-                    TextureScale = (2, 2),
-                    Texture = _resourceCache.GetTexture(effect.Value)
-                };
+                var texture = _resourceCache.GetTexture(effect.Icon);
+                var status = new StatusControl(key, texture);
 
-                newIcon.Texture = _resourceCache.GetTexture(effect.Value);
-                _ui.VBox.AddChild(newIcon);
+                if (effect.Cooldown.HasValue)
+                {
+                    var cooldown = new CooldownGraphic();
+                    status.Children.Add(cooldown);
+                    _cooldown[key] = cooldown;
+                }
+
+                status.OnPressed += args => StatusPressed(args, status);
+
+                _ui.VBox.AddChild(status);
             }
         }
 
-        public void RemoveIcon(StatusEffect name)
+        private void StatusPressed(BaseButton.ButtonEventArgs args, StatusControl status)
         {
-            _icons.Remove(name);
-            UpdateIcons();
-            Logger.InfoS("statuseffects", $"Removed icon {name}");
+            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            {
+                return;
+            }
+
+            SendNetworkMessage(new ClickStatusMessage(status.Effect));
+        }
+
+        public void RemoveStatusEffect(StatusEffect name)
+        {
+            _status.Remove(name);
+            UpdateStatusEffects();
+        }
+
+        public void FrameUpdate(float frameTime)
+        {
+            foreach (var (effect, cooldownGraphic) in _cooldown)
+            {
+                var status = _status[effect];
+                if (!status.Cooldown.HasValue)
+                {
+                    cooldownGraphic.Progress = 0;
+                    cooldownGraphic.Visible = false;
+                    continue;
+                }
+
+                var start = status.Cooldown.Value.Item1;
+                var end = status.Cooldown.Value.Item2;
+
+                var length = (end - start).TotalSeconds;
+                var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
+                var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
+
+                cooldownGraphic.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownGraphic.Visible = ratio > -1f;
+            }
         }
     }
 }

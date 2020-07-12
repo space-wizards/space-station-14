@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -17,6 +21,9 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -28,8 +35,8 @@ namespace Content.Server.GameObjects.Components.Chemistry
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    [ComponentReference(typeof(IAttackBy))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IAttackBy
+    [ComponentReference(typeof(IInteractUsing))]
+    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
@@ -41,10 +48,14 @@ namespace Content.Server.GameObjects.Components.Chemistry
         [ViewVariables] private string _packPrototypeId;
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
-        [ViewVariables] private int DispenseAmount = 10;
+        [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
 
         [ViewVariables]
         private SolutionComponent Solution => _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
+
+        private PowerReceiverComponent _powerReceiver;
+        private bool Powered => _powerReceiver.Powered;
+
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -70,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
             InitializeFromPrototype();
             UpdateUserInterface();
@@ -115,22 +127,22 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     TryClear();
                     break;
                 case UiButton.SetDispenseAmount1:
-                    DispenseAmount = 1;
+                    _dispenseAmount = ReagentUnit.New(1);
                     break;
                 case UiButton.SetDispenseAmount5:
-                    DispenseAmount = 5;
+                    _dispenseAmount = ReagentUnit.New(5);
                     break;
                 case UiButton.SetDispenseAmount10:
-                    DispenseAmount = 10;
+                    _dispenseAmount = ReagentUnit.New(10);
                     break;
                 case UiButton.SetDispenseAmount25:
-                    DispenseAmount = 25;
+                    _dispenseAmount = ReagentUnit.New(25);
                     break;
                 case UiButton.SetDispenseAmount50:
-                    DispenseAmount = 50;
+                    _dispenseAmount = ReagentUnit.New(50);
                     break;
                 case UiButton.SetDispenseAmount100:
-                    DispenseAmount = 100;
+                    _dispenseAmount = ReagentUnit.New(100);
                     break;
                 case UiButton.Dispense:
                     if (HasBeaker)
@@ -154,10 +166,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private bool PlayerCanUseDispenser(IEntity playerEntity)
         {
             //Need player entity to check if they are still able to use the dispenser
-            if (playerEntity == null) 
+            if (playerEntity == null)
                 return false;
             //Check if player can interact in their current state
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
+                return false;
+            //Check if device is powered
+            if (!Powered)
                 return false;
 
             return true;
@@ -172,13 +187,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(false, 0, 0,
-                    "", Inventory, Owner.Name, null, DispenseAmount);
+                return new ReagentDispenserBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
+                    "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
             return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), DispenseAmount);
+                beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 
         private void UpdateUserInterface()
@@ -197,7 +212,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
 
             var beaker = _beakerContainer.ContainedEntity;
-            Solution.SolutionChanged -= HandleSolutionChangedEvent;
             _beakerContainer.Remove(_beakerContainer.ContainedEntity);
             UpdateUserInterface();
 
@@ -228,7 +242,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!HasBeaker) return;
 
             var solution = _beakerContainer.ContainedEntity.GetComponent<SolutionComponent>();
-            solution.TryAddReagent(Inventory[dispenseIndex].ID, DispenseAmount, out _);
+            solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }
@@ -251,6 +265,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 return;
             }
 
+            if (!Powered)
+                return;
+
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
@@ -265,7 +282,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-        bool IAttackBy.AttackBy(AttackByEventArgs args)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
@@ -291,7 +308,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 else
                 {
                     _beakerContainer.Insert(activeHandEntity);
-                    Solution.SolutionChanged += HandleSolutionChangedEvent;
                     UpdateUserInterface();
                 }
             }
@@ -304,17 +320,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        private void HandleSolutionChangedEvent()
-        {
-            UpdateUserInterface();
-        }
+        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
 
         private void ClickSound()
         {
-            if (Owner.TryGetComponent(out SoundComponent sound))
-            {
-                sound.Play("/Audio/machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
-            }
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+
         }
+
+
     }
 }

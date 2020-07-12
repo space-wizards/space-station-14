@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage.Fill
             Spawn("Wirecutter");
             Spawn("Welder");
             Spawn("Multitool");
-            Spawn("CableStack");
+            Spawn("ApcExtensionCableStack");
         }
     }
 }

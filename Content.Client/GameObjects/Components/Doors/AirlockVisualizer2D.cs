@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using Content.Client.GameObjects.Components.Wires;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Doors;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -27,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Doors
             var closeSound = node.GetNode("close_sound").AsString();
             var denySound = node.GetNode("deny_sound").AsString();
 
-            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            CloseAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flick);
@@ -49,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Doors
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(closeSound, 0));
             }
 
-            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(1.2f)};
+            OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(0.8f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flick);
@@ -71,16 +72,16 @@ namespace Content.Client.GameObjects.Components.Doors
                 sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(openSound, 0));
             }
 
-            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.45f)};
+            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 DenyAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = DoorVisualLayers.Base;
+                flick.LayerKey = DoorVisualLayers.BaseUnlit;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny", 0f));
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0));
+                sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
             }
         }
 
@@ -94,6 +95,9 @@ namespace Content.Client.GameObjects.Components.Doors
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            if (component.Owner.Deleted)
+                return;
+
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
             if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))
@@ -102,11 +106,13 @@ namespace Content.Client.GameObjects.Components.Doors
             }
 
             var unlitVisible = true;
+            var boltedVisible = false;
             switch (state)
             {
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
                     sprite.LayerSetState(WiresVisualizer2D.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Closing:
@@ -120,14 +126,12 @@ namespace Content.Client.GameObjects.Components.Doors
                     {
                         animPlayer.Play(OpenAnimation, AnimationKey);
                     }
-
                     break;
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     unlitVisible = false;
                     break;
                 case DoorVisualState.Deny:
-                    unlitVisible = false;
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(DenyAnimation, AnimationKey);
@@ -141,14 +145,20 @@ namespace Content.Client.GameObjects.Components.Doors
             {
                 unlitVisible = false;
             }
+            if (component.TryGetData(DoorVisuals.BoltLights, out bool lights) && lights)
+            {
+                boltedVisible = true;
+            }
 
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+            sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
         }
     }
 
     public enum DoorVisualLayers
     {
         Base,
-        BaseUnlit
+        BaseUnlit,
+        BaseBolted
     }
 }

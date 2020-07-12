@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -21,6 +22,7 @@ namespace Content.Shared.Construction
         private string _id;
         private string _result;
         private string _placementMode;
+        private bool _canBuildInImpassable;
 
         /// <summary>
         ///     Friendly name displayed in the construction GUI.
@@ -36,6 +38,11 @@ namespace Content.Shared.Construction
         ///     Texture path inside the construction GUI.
         /// </summary>
         public SpriteSpecifier Icon => _icon;
+
+        /// <summary>
+        ///     If you can start building or complete steps on impassable terrain.
+        /// </summary>
+        public bool CanBuildInImpassable => _canBuildInImpassable;
 
         /// <summary>
         ///     A list of keywords that are used for searching.
@@ -81,6 +88,7 @@ namespace Content.Shared.Construction
             ser.DataField(ref _type, "objecttype", ConstructionType.Structure);
             ser.DataField(ref _result, "result", null);
             ser.DataField(ref _placementMode, "placementmode", "PlaceFree");
+            ser.DataField(ref _canBuildInImpassable, "canbuildinimpassable", false);
 
             _keywords = ser.ReadDataField<List<string>>("keywords", new List<string>());
             {
@@ -131,7 +139,7 @@ namespace Content.Shared.Construction
             if (step.TryGetNode("tool", out node))
             {
                 return new ConstructionStepTool(
-                    node.AsEnum<ConstructionStepTool.ToolType>(),
+                    node.AsEnum<ToolQuality>(),
                     amount
                 );
             }
@@ -183,20 +191,11 @@ namespace Content.Shared.Construction
 
     public class ConstructionStepTool : ConstructionStep
     {
-        public readonly ToolType Tool;
+        public readonly ToolQuality ToolQuality;
 
-        public ConstructionStepTool(ToolType tool, int amount) : base(amount)
+        public ConstructionStepTool(ToolQuality toolQuality, int amount) : base(amount)
         {
-            Tool = tool;
-        }
-
-        public enum ToolType
-        {
-            Wrench,
-            Welder,
-            Screwdriver,
-            Crowbar,
-            Wirecutters,
+            ToolQuality = toolQuality;
         }
     }
 
@@ -215,6 +214,8 @@ namespace Content.Shared.Construction
             Metal,
             Glass,
             Cable,
+            Gold,
+            Phoron,
         }
     }
 }

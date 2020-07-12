@@ -1,6 +1,8 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using RobustPhysics = Robust.Shared.Physics;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Physics
 {
@@ -8,6 +10,7 @@ namespace Content.Shared.Physics
     ///     Defined collision groups for the physics system.
     /// </summary>
     [Flags, PublicAPI]
+    [FlagsFor(typeof(RobustPhysics.CollisionLayer)), FlagsFor(typeof(RobustPhysics.CollisionMask))]
     public enum CollisionGroup
     {
 		None            = 0,
@@ -20,8 +23,9 @@ namespace Content.Shared.Physics
 
         MapGrid         = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
-        // 32 possible groups
         MobMask = Impassable | MobImpassable | VaultImpassable | SmallImpassable,
+        ThrownItem = MobImpassable | Impassable,
+        // 32 possible groups
         AllMask = -1,
     }
 }

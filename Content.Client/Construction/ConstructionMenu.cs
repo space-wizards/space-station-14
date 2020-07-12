@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components.Construction;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -12,7 +13,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -22,11 +23,11 @@ namespace Content.Client.Construction
     public class ConstructionMenu : SS14Window
     {
 #pragma warning disable CS0649
-        [Dependency] readonly IPrototypeManager PrototypeManager;
-        [Dependency] readonly IResourceCache ResourceCache;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IResourceCache _resourceCache;
+        [Dependency] private readonly IEntitySystemManager _systemManager;
 #pragma warning restore
 
-        public ConstructorComponent Owner { get; set; }
         private readonly Button BuildButton;
         private readonly Button EraseButton;
         private readonly LineEdit SearchBar;
@@ -47,7 +48,7 @@ namespace Content.Client.Construction
         {
             IoCManager.InjectDependencies(this);
             Placement = (PlacementManager) IoCManager.Resolve<IPlacementManager>();
-            Placement.PlacementCanceled += OnPlacementCanceled;
+            Placement.PlacementChanged += OnPlacementChanged;
 
             Title = "Construction";
 
@@ -94,7 +95,7 @@ namespace Content.Client.Construction
                 TextAlign = Label.AlignMode.Center,
                 Text = "Build!",
                 Disabled = true,
-                ToggleMode = false
+                ToggleMode = true
             };
             EraseButton = new Button
             {
@@ -107,7 +108,7 @@ namespace Content.Client.Construction
             hSplitContainer.AddChild(guide);
             Contents.AddChild(hSplitContainer);
 
-            BuildButton.OnPressed += OnBuildPressed;
+            BuildButton.OnToggled += OnBuildToggled;
             EraseButton.OnToggled += OnEraseToggled;
             SearchBar.OnTextChanged += OnTextEntered;
             RecipeList.OnItemSelected += OnItemSelected;
@@ -116,17 +117,18 @@ namespace Content.Client.Construction
             PopulateTree();
         }
 
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
 
             if (disposing)
             {
-                Placement.PlacementCanceled -= OnPlacementCanceled;
+                Placement.PlacementChanged -= OnPlacementChanged;
             }
         }
 
-        void OnItemSelected()
+        private void OnItemSelected()
         {
             var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
 
@@ -160,17 +162,17 @@ namespace Content.Client.Construction
                             switch (mat.Material)
                             {
                                 case ConstructionStepMaterial.MaterialType.Metal:
-                                    icon = ResourceCache.GetResource<TextureResource>(
+                                    icon = _resourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Materials/sheet_metal.png");
                                     text = $"Metal x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Glass:
-                                    icon = ResourceCache.GetResource<TextureResource>(
+                                    icon = _resourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Materials/sheet_glass.png");
                                     text = $"Glass x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Cable:
-                                    icon = ResourceCache.GetResource<TextureResource>(
+                                    icon = _resourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/cable_coil.png");
                                     text = $"Cable Coil x{mat.Amount}";
                                     break;
@@ -180,29 +182,29 @@ namespace Content.Client.Construction
 
                             break;
                         case ConstructionStepTool tool:
-                            switch (tool.Tool)
+                            switch (tool.ToolQuality)
                             {
-                                case ConstructionStepTool.ToolType.Wrench:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
+                                case ToolQuality.Anchoring:
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.rsi/icon.png");
                                     text = "Wrench";
                                     break;
-                                case ConstructionStepTool.ToolType.Crowbar:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
+                                case ToolQuality.Prying:
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.rsi/icon.png");
                                     text = "Crowbar";
                                     break;
-                                case ConstructionStepTool.ToolType.Screwdriver:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/screwdriver.png");
+                                case ToolQuality.Screwing:
+                                    icon = _resourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
                                     text = "Screwdriver";
                                     break;
-                                case ConstructionStepTool.ToolType.Welder:
-                                    icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
+                                case ToolQuality.Welding:
+                                    icon = _resourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
                                         .RSI["welder"].Frame0;
                                     text = $"Welding tool ({tool.Amount} fuel)";
                                     break;
-                                case ConstructionStepTool.ToolType.Wirecutters:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/wirecutter.png");
+                                case ToolQuality.Cutting:
+                                    icon = _resourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
                                     text = "Wirecutters";
                                     break;
                                 default:
@@ -219,51 +221,64 @@ namespace Content.Client.Construction
             }
         }
 
-        void OnTextEntered(LineEdit.LineEditEventArgs args)
+        private void OnTextEntered(LineEdit.LineEditEventArgs args)
         {
             var str = args.Text;
             PopulateTree(string.IsNullOrWhiteSpace(str) ? null : str.ToLowerInvariant());
         }
 
-        void OnBuildPressed(BaseButton.ButtonEventArgs args)
+        private void OnBuildToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
-            if (prototype == null)
+            if (args.Pressed)
             {
-                return;
+                var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
+                if (prototype == null)
+                {
+                    return;
+                }
+
+                if (prototype.Type == ConstructionType.Item)
+                {
+                    var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
+                    constructSystem.TryStartItemConstruction(prototype.ID);
+                    BuildButton.Pressed = false;
+                    return;
+                }
+
+                Placement.BeginHijackedPlacing(
+                    new PlacementInformation
+                    {
+                        IsTile = false,
+                        PlacementOption = prototype.PlacementMode
+                    },
+                    new ConstructionPlacementHijack(_systemManager.GetEntitySystem<ConstructionSystem>(), prototype));
             }
-
-            if (prototype.Type != ConstructionType.Structure)
+            else
             {
-                // In-hand attackby doesn't exist so this is the best alternative.
-                var loc = Owner.Owner.GetComponent<ITransformComponent>().GridPosition;
-                Owner.SpawnGhost(prototype, loc, Direction.North);
-                return;
+                Placement.Clear();
             }
-
-            var hijack = new ConstructionPlacementHijack(prototype, Owner);
-            var info = new PlacementInformation
-            {
-                IsTile = false,
-                PlacementOption = prototype.PlacementMode,
-            };
-
-
-            Placement.BeginHijackedPlacing(info, hijack);
+            BuildButton.Pressed = args.Pressed;
         }
 
         private void OnEraseToggled(BaseButton.ButtonToggledEventArgs args)
         {
-            var hijack = new ConstructionPlacementHijack(null, Owner);
-            Placement.ToggleEraserHijacked(hijack);
+            if (args.Pressed) Placement.Clear();
+            Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(_systemManager.GetEntitySystem<ConstructionSystem>(), null));
+            EraseButton.Pressed = args.Pressed;
         }
 
-        void PopulatePrototypeList()
+        private void OnPlacementChanged(object sender, EventArgs e)
+        {
+            BuildButton.Pressed = false;
+            EraseButton.Pressed = false;
+        }
+
+        private void PopulatePrototypeList()
         {
             RootCategory = new CategoryNode("", null);
-            int count = 1;
+            var count = 1;
 
-            foreach (var prototype in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
+            foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
                 var currentNode = RootCategory;
 
@@ -302,7 +317,7 @@ namespace Content.Client.Construction
             Recurse(RootCategory);
         }
 
-        void PopulateTree(string searchTerm = null)
+        private void PopulateTree(string searchTerm = null)
         {
             RecipeList.Clear();
 
@@ -362,25 +377,20 @@ namespace Content.Client.Construction
             }
         }
 
-        private void OnPlacementCanceled(object sender, EventArgs e)
-        {
-            EraseButton.Pressed = false;
-        }
-
         private static int ComparePrototype(ConstructionPrototype x, ConstructionPrototype y)
         {
-            return String.Compare(x.Name, y.Name, StringComparison.Ordinal);
+            return string.Compare(x.Name, y.Name, StringComparison.Ordinal);
         }
 
-        class CategoryNode
+        private class CategoryNode
         {
             public readonly string Name;
             public readonly CategoryNode Parent;
 
-            public SortedDictionary<string, CategoryNode>
+            public readonly SortedDictionary<string, CategoryNode>
                 ChildCategories = new SortedDictionary<string, CategoryNode>();
 
-            public List<ConstructionPrototype> Prototypes = new List<ConstructionPrototype>();
+            public readonly List<ConstructionPrototype> Prototypes = new List<ConstructionPrototype>();
             public int FlattenedIndex = -1;
 
             public CategoryNode(string name, CategoryNode parent)

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.Interfaces.Chat;
 using Content.Shared.Chat;
 using Robust.Client.Console;
@@ -19,6 +19,12 @@ namespace Content.Client.Chat
 {
     internal sealed class ChatManager : IChatManager
     {
+        private struct SpeechBubbleData
+        {
+            public string Message;
+            public SpeechBubble.SpeechType Type;
+        }
+
         /// <summary>
         ///     The max amount of chars allowed to fit in a single speech bubble.
         /// </summary>
@@ -42,6 +48,7 @@ namespace Content.Client.Chat
         private const char ConCmdSlash = '/';
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
+        private const char AdminChatAlias = ']';
 
         private readonly List<StoredChatMessage> filteredHistory = new List<StoredChatMessage>();
 
@@ -49,6 +56,7 @@ namespace Content.Client.Chat
         private bool _allState;
         private bool _localState;
         private bool _oocState;
+        private bool _adminState;
 
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
@@ -59,6 +67,7 @@ namespace Content.Client.Chat
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IEyeManager _eyeManager;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IClientConGroupController _groupController = default!;
 #pragma warning restore 649
 
         private ChatBox _currentChatBox;
@@ -81,10 +90,7 @@ namespace Content.Client.Chat
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
 
-            _speechBubbleRoot = new LayoutContainer
-            {
-                MouseFilter = Control.MouseFilterMode.Ignore
-            };
+            _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
@@ -120,7 +126,7 @@ namespace Content.Client.Chat
 
                 var msg = queueData.MessageQueue.Dequeue();
 
-                queueData.TimeLeft += BubbleDelayBase + msg.Length * BubbleDelayFactor;
+                queueData.TimeLeft += BubbleDelayBase + msg.Message.Length * BubbleDelayFactor;
 
                 // We keep the queue around while it has 0 items. This allows us to keep the timer.
                 // When the timer hits 0 and there's no messages left, THEN we can clear it up.
@@ -147,6 +153,8 @@ namespace Content.Client.Chat
             _currentChatBox.AllButton.Pressed = !_allState;
             _currentChatBox.LocalButton.Pressed = !_localState;
             _currentChatBox.OOCButton.Pressed = !_oocState;
+            if(chatBox.AdminButton != null)
+                _currentChatBox.AdminButton.Pressed = !_adminState;
         }
 
         public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
@@ -187,6 +195,12 @@ namespace Content.Client.Chat
                 case ChatChannel.OOC:
                     color = Color.LightSkyBlue;
                     break;
+                case ChatChannel.Dead:
+                    color = Color.MediumPurple;
+                    break;
+                case ChatChannel.AdminChat:
+                    color = Color.Red;
+                    break;
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);
@@ -211,19 +225,31 @@ namespace Content.Client.Chat
                 case OOCAlias:
                 {
                     var conInput = text.Substring(1);
-                    _console.ProcessCommand($"ooc \"{conInput}\"");
+                    _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    break;
+                }
+                case AdminChatAlias:
+                {
+                    var conInput = text.Substring(1);
+                    if(_groupController.CanCommand("asay")){
+                        _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
+                    }
+                    else
+                    {
+                        _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    }
                     break;
                 }
                 case MeAlias:
                 {
                     var conInput = text.Substring(1);
-                    _console.ProcessCommand($"me \"{conInput}\"");
+                    _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 default:
                 {
                     var conInput = _currentChatBox.DefaultChatFormat != null
-                        ? string.Format(_currentChatBox.DefaultChatFormat, text)
+                        ? string.Format(_currentChatBox.DefaultChatFormat, CommandParsing.Escape(text))
                         : text;
                     _console.ProcessCommand(conInput);
                     break;
@@ -260,10 +286,23 @@ namespace Content.Client.Chat
                         _filteredChannels &= ~ChatChannel.OOC;
                         break;
                     }
+                case "Admin":
+                    _adminState = !_adminState;
+                    if (_adminState)
+                    {
+                        _filteredChannels |= ChatChannel.AdminChat;
+                        break;
+                    }
+                    else
+                    {
+                        _filteredChannels &= ~ChatChannel.AdminChat;
+                        break;
+                    }
 
                 case "ALL":
                     chatBox.LocalButton.Pressed ^= true;
                     chatBox.OOCButton.Pressed ^= true;
+                    chatBox.AdminButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }
@@ -291,13 +330,23 @@ namespace Content.Client.Chat
             WriteChatMessage(storedMessage);
 
             // Local messages that have an entity attached get a speech bubble.
-            if (msg.Channel == ChatChannel.Local && msg.SenderEntity != default)
+            if (msg.SenderEntity == default)
+                return;
+
+            switch (msg.Channel)
             {
-                AddSpeechBubble(msg);
+                case ChatChannel.Local:
+                case ChatChannel.Dead:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
+                    break;
+
+                case ChatChannel.Emotes:
+                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
+                    break;
             }
         }
 
-        private void AddSpeechBubble(MsgChatMessage msg)
+        private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)
         {
             if (!_entityManager.TryGetEntity(msg.SenderEntity, out var entity))
             {
@@ -305,8 +354,18 @@ namespace Content.Client.Chat
                 return;
             }
 
+            var messages = SplitMessage(msg.Message);
+
+            foreach (var message in messages)
+            {
+                EnqueueSpeechBubble(entity, message, speechType);
+            }
+        }
+
+        private List<string> SplitMessage(string msg)
+        {
             // Split message into words separated by spaces.
-            var words = msg.Message.Split(' ');
+            var words = msg.Split(' ');
             var messages = new List<string>();
             var currentBuffer = new List<string>();
 
@@ -346,13 +405,10 @@ namespace Content.Client.Chat
                 messages.Add(string.Join(" ", currentBuffer));
             }
 
-            foreach (var message in messages)
-            {
-                EnqueueSpeechBubble(entity, message);
-            }
+            return messages;
         }
 
-        private void EnqueueSpeechBubble(IEntity entity, string contents)
+        private void EnqueueSpeechBubble(IEntity entity, string contents, SpeechBubble.SpeechType speechType)
         {
             if (!_queuedSpeechBubbles.TryGetValue(entity.Uid, out var queueData))
             {
@@ -360,12 +416,16 @@ namespace Content.Client.Chat
                 _queuedSpeechBubbles.Add(entity.Uid, queueData);
             }
 
-            queueData.MessageQueue.Enqueue(contents);
+            queueData.MessageQueue.Enqueue(new SpeechBubbleData
+            {
+                Message = contents,
+                Type = speechType,
+            });
         }
 
-        private void CreateSpeechBubble(IEntity entity, string contents)
+        private void CreateSpeechBubble(IEntity entity, SpeechBubbleData speechData)
         {
-            var bubble = new SpeechBubble(contents, entity, _eyeManager, this);
+            var bubble = SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity, _eyeManager, this);
 
             if (_activeSpeechBubbles.TryGetValue(entity.Uid, out var existing))
             {
@@ -405,7 +465,7 @@ namespace Content.Client.Chat
             /// </summary>
             public float TimeLeft { get; set; }
 
-            public Queue<string> MessageQueue { get; } = new Queue<string>();
+            public Queue<SpeechBubbleData> MessageQueue { get; } = new Queue<SpeechBubbleData>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Client.Interfaces;
 using Content.Client.State;
+using Content.Client.UserInterface;
 using Content.Shared;
 using Robust.Client.Interfaces.State;
 using Robust.Shared.Interfaces.Network;
@@ -23,6 +24,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public bool IsGameStarted { get; private set; }
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
+        [ViewVariables] public bool Paused { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
@@ -35,9 +37,13 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerJoinGame>(nameof(MsgTickerJoinGame), JoinGame);
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
+            _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
+            _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
 
             _initialized = true;
         }
+
+
 
         private void JoinLobby(MsgTickerJoinLobby message)
         {
@@ -49,6 +55,7 @@ namespace Content.Client.GameTicking
             StartTime = message.StartTime;
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
+            Paused = message.Paused;
 
             LobbyStatusUpdated?.Invoke();
         }
@@ -63,6 +70,20 @@ namespace Content.Client.GameTicking
         private void JoinGame(MsgTickerJoinGame message)
         {
             _stateManager.RequestStateChange<GameScreen>();
+        }
+
+        private void LobbyCountdown(MsgTickerLobbyCountdown message)
+        {
+            StartTime = message.StartTime;
+            Paused = message.Paused;
+        }
+
+        private void RoundEnd(MsgRoundEndMessage message)
+        {
+
+            //This is not ideal at all, but I don't see an immediately better fit anywhere else.
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
+
         }
     }
 }

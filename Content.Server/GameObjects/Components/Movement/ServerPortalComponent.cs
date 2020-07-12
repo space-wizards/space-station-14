@@ -6,11 +6,13 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -47,8 +49,8 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _individualPortalCooldown, "individual_cooldown", 2.1f);
             // How long before anyone can go in it
             serializer.DataField(ref _overallPortalCooldown, "overall_cooldown", 2.0f);
-            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/effects/teleport_departure.ogg");
-            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/effects/teleport_arrival.ogg");
+            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
+            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
         }
 
         public override void Initialize()
@@ -63,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Movement
             base.OnAdd();
             if (Owner.TryGetComponent<CollidableComponent>(out var collide))
             {
-                collide.IsHardCollidable = false;
+                //collide.IsHardCollidable = false;
             }
 
             _state = PortalState.Pending;
@@ -191,25 +193,26 @@ namespace Content.Server.GameObjects.Components.Movement
 
         public void TryPortalEntity(IEntity entity)
         {
-
-            if (!immuneEntities.Contains(entity))
+            if (immuneEntities.Contains(entity) || _connectingTeleporter == null)
             {
-                var position = _connectingTeleporter.Transform.GridPosition;
-                var soundPlayer = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-
-                // Departure
-                // Do we need to rate-limit sounds to stop ear BLAST?
-                soundPlayer.Play(_departureSound, entity.Transform.GridPosition);
-                entity.Transform.DetachParent();
-                entity.Transform.GridPosition = position;
-                soundPlayer.Play(_arrivalSound, entity.Transform.GridPosition);
-                TryChangeState(PortalState.RecentlyTeleported);
-                // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal
-                immuneEntities.Add(entity);
-                _connectingTeleporter.GetComponent<ServerPortalComponent>().immuneEntities.Add(entity);
-                Timer.Spawn(TimeSpan.FromSeconds(_individualPortalCooldown), () => releaseCooldown(entity));
-                StartCooldown();
+                return;
             }
+
+            var position = _connectingTeleporter.Transform.GridPosition;
+            var soundPlayer = EntitySystem.Get<AudioSystem>();
+
+            // Departure
+            // Do we need to rate-limit sounds to stop ear BLAST?
+            soundPlayer.PlayAtCoords(_departureSound, entity.Transform.GridPosition);
+            entity.Transform.DetachParent();
+            entity.Transform.GridPosition = position;
+            soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.GridPosition);
+            TryChangeState(PortalState.RecentlyTeleported);
+            // To stop spam teleporting. Could potentially look at adding a timer to flush this from the portal
+            immuneEntities.Add(entity);
+            _connectingTeleporter.GetComponent<ServerPortalComponent>().immuneEntities.Add(entity);
+            Timer.Spawn(TimeSpan.FromSeconds(_individualPortalCooldown), () => releaseCooldown(entity));
+            StartCooldown();
         }
     }
 }

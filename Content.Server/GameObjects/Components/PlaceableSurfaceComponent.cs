@@ -1,14 +1,14 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Utility;
+using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class PlaceableSurfaceComponent : Component, IAttackBy
+    public class PlaceableSurfaceComponent : SharedPlaceableSurfaceComponent, IInteractUsing
     {
-        public override string Name => "PlaceableSurface";
-
         private bool _isPlaceable;
         public bool IsPlaceable { get => _isPlaceable; set => _isPlaceable = value; }
 
@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components
 
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
-        public bool AttackBy(AttackByEventArgs eventArgs)
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!IsPlaceable)
                 return false;
@@ -27,8 +27,8 @@ namespace Content.Server.GameObjects.Components
             {
                 return false;
             }
-            handComponent.Drop(eventArgs.AttackWith);
-            eventArgs.AttackWith.Transform.WorldPosition = eventArgs.ClickLocation.Position;
+            handComponent.Drop(eventArgs.Using);
+            eventArgs.Using.Transform.WorldPosition = eventArgs.ClickLocation.Position;
             return true;
         }
     }

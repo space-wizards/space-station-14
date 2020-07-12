@@ -1,5 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -34,12 +34,21 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentWalkSpeed { get; set; } = 8;
         public float CurrentSprintSpeed { get; set; }
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float CurrentPushSpeed => 0.0f;
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float GrabRange => 0.0f;
+
         public bool Sprinting { get; set; }
-        public Vector2 VelocityDir { get; } = Vector2.Zero;
+        public (Vector2 walking, Vector2 sprinting) VelocityDir { get; } = (Vector2.Zero, Vector2.Zero);
         public GridCoordinates LastPosition { get; set; }
         public float StepSoundDistance { get; set; }
 
-        public void SetVelocityDirection(Direction direction, bool enabled)
+        public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled)
         {
             var gridId = Owner.Transform.GridID;
 
@@ -56,13 +65,18 @@ namespace Content.Server.GameObjects.Components.Movement
                 if (!gridEntity.HasComponent<ICollidableComponent>())
                 {
                     var collideComp = gridEntity.AddComponent<CollidableComponent>();
-                    collideComp.CollisionEnabled = true;
-                    collideComp.IsHardCollidable = true;
+                    collideComp.CanCollide = true;
+                    //collideComp.IsHardCollidable = true;
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
                 physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * CurrentWalkSpeed;
             }
+        }
+
+        public void SetSprinting(ushort subTick, bool walking)
+        {
+            // Shuttles can't sprint.
         }
 
         private Vector2 CalcNewVelocity(Direction direction, bool enabled)
@@ -105,12 +119,9 @@ namespace Content.Server.GameObjects.Components.Movement
         }
 
         /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null, IComponent component = null)
+        public override void HandleMessage(ComponentMessage message, IComponent component)
         {
-            base.HandleMessage(message, netChannel, component);
-
-            if(netChannel != null)
-                return;
+            base.HandleMessage(message, component);
 
             switch (message)
             {
@@ -127,11 +138,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (!removed)
             {
-                mindComp.Mind.Visit(Owner);
+                mindComp.Mind?.Visit(Owner);
             }
             else
             {
-                mindComp.Mind.UnVisit();
+                mindComp.Mind?.UnVisit();
             }
         }
     }

@@ -7,6 +7,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
@@ -39,12 +40,10 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            MouseFilter = MouseFilterMode.Ignore;
-
-            var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
-            var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
-            var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
-            var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
+            var textureHandLeft = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
+            var textureHandRight = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
+            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
 
             _rightStatusPanel = new ItemStatusPanel(true);
             _leftStatusPanel = new ItemStatusPanel(false);
@@ -54,21 +53,19 @@ namespace Content.Client.UserInterface
             var hBox = new HBoxContainer
             {
                 SeparationOverride = 0,
-                Children = {_rightStatusPanel, _rightButton, _leftButton, _leftStatusPanel},
-                MouseFilter = MouseFilterMode.Ignore
+                Children = {_rightStatusPanel, _rightButton, _leftButton, _leftStatusPanel}
             };
 
             AddChild(hBox);
 
-            _leftButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameLeft);
-            _leftButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameLeft);
-            _rightButton.OnPressed += args => HandKeyBindDown(args.Event, HandNameRight);
-            _rightButton.OnStoragePressed += args => _OnStoragePressed(args.Event, HandNameRight);
+            _leftButton.OnPressed += args => HandKeyBindDown(args, HandNameLeft);
+            _leftButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameLeft);
+            _rightButton.OnPressed += args => HandKeyBindDown(args, HandNameRight);
+            _rightButton.OnStoragePressed += args => _OnStoragePressed(args, HandNameRight);
 
             // Active hand
             _leftButton.AddChild(ActiveHandRect = new TextureRect
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 Texture = textureHandActive,
                 TextureScale = (2, 2)
             });
@@ -122,31 +119,34 @@ namespace Content.Client.UserInterface
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string handIndex)
         {
-            args.Handle();
-
             if (!TryGetHands(out var hands))
                 return;
 
             if (args.Function == ContentKeyFunctions.MouseMiddle)
             {
                 hands.SendChangeHand(handIndex);
+                args.Handle();
                 return;
             }
 
             var entity = hands.GetEntity(handIndex);
             if (entity == null)
             {
-                if (args.CanFocus && hands.ActiveIndex != handIndex)
+                if (args.Function == EngineKeyFunctions.UIClick && hands.ActiveIndex != handIndex)
                 {
                     hands.SendChangeHand(handIndex);
+                    args.Handle();
                 }
                 return;
             }
 
             if (_itemSlotManager.OnButtonPressed(args, entity))
+            {
+                args.Handle();
                 return;
+            }
 
-            if (args.CanFocus)
+            if (args.Function == EngineKeyFunctions.UIClick)
             {
                 if (hands.ActiveIndex == handIndex)
                 {
@@ -156,13 +156,14 @@ namespace Content.Client.UserInterface
                 {
                     hands.AttackByInHand(handIndex);
                 }
+                args.Handle();
                 return;
             }
         }
 
         private void _OnStoragePressed(GUIBoundKeyEventArgs args, string handIndex)
         {
-            if (!args.CanFocus)
+            if (args.Function != EngineKeyFunctions.UIClick)
                 return;
             if (!TryGetHands(out var hands))
                 return;

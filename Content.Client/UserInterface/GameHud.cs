@@ -9,6 +9,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -107,15 +108,15 @@ namespace Content.Client.UserInterface
 
         public void Initialize()
         {
-            RootControl = new LayoutContainer {MouseFilter = Control.MouseFilterMode.Ignore};
+            RootControl = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
-            var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
-            var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
-            var inventoryTexture = _resourceCache.GetTexture("/Textures/UserInterface/inventory.svg.96dpi.png");
-            var craftingTexture = _resourceCache.GetTexture("/Textures/UserInterface/hammer.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/students-cap.svg.96dpi.png");
-            var sandboxTexture = _resourceCache.GetTexture("/Textures/UserInterface/sandbox.svg.96dpi.png");
+            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.96dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/students-cap.svg.96dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {
@@ -237,7 +238,6 @@ namespace Content.Client.UserInterface
 
             HandsContainer = new MarginContainer
             {
-                MouseFilter = MouseFilterMode.Ignore,
                 SizeFlagsVertical = Control.SizeFlags.ShrinkEnd
             };
 
@@ -353,13 +353,11 @@ namespace Content.Client.UserInterface
 
                 AddChild(new MarginContainer
                 {
-                    MouseFilter = MouseFilterMode.Ignore,
                     MarginTopOverride = 4,
                     Children =
                     {
                         new VBoxContainer
                         {
-                            MouseFilter = MouseFilterMode.Ignore,
                             Children =
                             {
                                 (_textureRect = new TextureRect
@@ -367,7 +365,6 @@ namespace Content.Client.UserInterface
                                     Texture = texture,
                                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                                     SizeFlagsVertical = SizeFlags.Expand | SizeFlags.ShrinkCenter,
-                                    MouseFilter = MouseFilterMode.Ignore,
                                     ModulateSelfOverride = ColorNormal,
                                     CustomMinimumSize = (0, 32),
                                     Stretch = TextureRect.StretchMode.KeepCentered
@@ -376,7 +373,6 @@ namespace Content.Client.UserInterface
                                 {
                                     Text = keyName,
                                     SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
-                                    MouseFilter = MouseFilterMode.Ignore,
                                     ModulateSelfOverride = ColorNormal,
                                     StyleClasses = {StyleClassLabelTopButton}
                                 })

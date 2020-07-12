@@ -280,3 +280,7 @@ BuildFiles/Windows/Godot/*
 
 # Working on the tools scripts is getting annoying okay?
 .mypy_cache/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db

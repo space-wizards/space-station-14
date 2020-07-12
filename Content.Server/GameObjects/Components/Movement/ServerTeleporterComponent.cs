@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -16,12 +17,13 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
 
     [RegisterComponent]
-    public class ServerTeleporterComponent : Component, IAfterAttack
+    public class ServerTeleporterComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -56,8 +58,8 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _chargeTime, "charge_time", 0.2f);
             serializer.DataField(ref _cooldown, "cooldown", 2.0f);
             serializer.DataField(ref _avoidCollidable, "avoid_walls", true);
-            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/effects/teleport_departure.ogg");
-            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/effects/teleport_arrival.ogg");
+            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
+            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
             serializer.DataField(ref _cooldownSound, "cooldown_sound", null);
             serializer.DataField(ref _portalAliveTime, "portal_alive_time", 5.0f);  // TODO: Change this to 0 before PR?
         }
@@ -82,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Movement
             _state = newState;
         }
 
-        void IAfterAttack.AfterAttack(AfterAttackEventArgs eventArgs)
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (_teleporterType == TeleporterType.Directed)
             {
@@ -141,8 +143,8 @@ namespace Content.Server.GameObjects.Components.Movement
             Timer.Spawn(TimeSpan.FromSeconds(_chargeTime + _cooldown), () => SetState(ItemTeleporterState.Off));
             if (_cooldownSound != null)
             {
-                var soundPlayer = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
-                soundPlayer.Play(_cooldownSound, Owner);
+                var soundPlayer = EntitySystem.Get<AudioSystem>();
+                soundPlayer.PlayFromEntity(_cooldownSound, Owner);
             }
         }
 
@@ -227,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             // Messy maybe?
             GridCoordinates targetGrid = new GridCoordinates(vector, user.Transform.GridID);
-            var soundPlayer = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>();
+            var soundPlayer = EntitySystem.Get<AudioSystem>();
 
             // If portals use those, otherwise just move em over
             if (_portalAliveTime > 0.0f)
@@ -247,12 +249,12 @@ namespace Content.Server.GameObjects.Components.Movement
             else
             {
                 // Departure
-                soundPlayer.Play(_departureSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_departureSound, user.Transform.GridPosition);
 
                 // Arrival
                 user.Transform.DetachParent();
                 user.Transform.WorldPosition = vector;
-                soundPlayer.Play(_arrivalSound, user.Transform.GridPosition);
+                soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.GridPosition);
             }
 
         }

@@ -1,4 +1,4 @@
-using Robust.Client.UserInterface;
+﻿using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.UserInterface
@@ -14,7 +14,6 @@ namespace Content.Client.UserInterface
         public StatusEffectsUI()
         {
             _vBox = new VBoxContainer();
-            MouseFilter = Control.MouseFilterMode.Ignore;
             AddChild(_vBox);
 
             LayoutContainer.SetGrowHorizontal(this, LayoutContainer.GrowDirection.Begin);

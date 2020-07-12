@@ -1,7 +1,7 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.AI;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -56,17 +56,11 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _visionRadius, "vision", 8.0f);
         }
 
-        /// <summary>
-        ///     Movement speed (m/s) that the entity walks, before modifiers
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseWalkSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseWalkSpeed;
-
-        /// <summary>
-        ///     Movement speed (m/s) that the entity sprints, before modifiers
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseSprintSpeed { get; set; } = PlayerInputMoverComponent.DefaultBaseSprintSpeed;
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            Processor?.Shutdown();
+        }
 
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
@@ -76,14 +70,15 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                float speed = BaseWalkSpeed;
-                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
                 {
-                    speed *= component.WalkSpeedModifier;
+                    return component.CurrentWalkSpeed;
                 }
-                return speed;
+
+                return MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             }
         }
+
         /// <summary>
         ///     Movement speed (m/s) that the entity walks, after modifiers
         /// </summary>
@@ -92,20 +87,29 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                float speed = BaseSprintSpeed;
-                if (Owner.TryGetComponent<MovementSpeedModifierComponent>(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
                 {
-                    speed *= component.SprintSpeedModifier;
+                    return component.CurrentSprintSpeed;
                 }
-                return speed;
+
+                return MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
             }
         }
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float CurrentPushSpeed => 5.0f;
+
+        /// <inheritdoc />
+        [ViewVariables]
+        public float GrabRange => 0.2f;
+
 
         /// <summary>
         ///     Is the entity Sprinting (running)?
         /// </summary>
         [ViewVariables]
-        public bool Sprinting { get; set; }
+        public bool Sprinting { get; } = true;
 
         /// <summary>
         ///     Calculated linear velocity direction of the entity.
@@ -113,11 +117,14 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         public Vector2 VelocityDir { get; set; }
 
+        (Vector2 walking, Vector2 sprinting) IMoverComponent.VelocityDir =>
+            Sprinting ? (Vector2.Zero, VelocityDir) : (VelocityDir, Vector2.Zero);
+
         public GridCoordinates LastPosition { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float StepSoundDistance { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)] public float StepSoundDistance { get; set; }
 
-        public void SetVelocityDirection(Direction direction, bool enabled) { }
+        public void SetVelocityDirection(Direction direction, ushort subTick, bool enabled) { }
+        public void SetSprinting(ushort subTick, bool walking) { }
     }
 }

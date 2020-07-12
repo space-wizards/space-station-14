@@ -1,9 +1,13 @@
-﻿using Content.Server.Cargo;
+﻿﻿using Content.Server.AI.Utility.Considerations;
+ using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
+﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
-using Content.Server.Preferences;
+using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
+using Content.Shared.Kitchen;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.GameObjects;
@@ -28,21 +32,7 @@ namespace Content.Server
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "ConstructionGhost",
-                "IconSmooth",
-                "SubFloorHide",
-                "LowWall",
-                "Window",
-                "CharacterInfo",
-                "InteractionOutline",
-                "MeleeWeaponArcAnimation",
-                "AnimationsTest",
-                "ItemStatus"
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }
@@ -70,27 +60,32 @@ namespace Content.Server
             logManager.GetSawmill("Storage").Level = LogLevel.Info;
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
+            IoCManager.Resolve<INodeGroupFactory>().Initialize();
+            IoCManager.Resolve<INodeFactory>().Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
-            _gameTicker.Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
+            _gameTicker.Initialize();
+            IoCManager.Resolve<RecipeManager>().Initialize();
+            IoCManager.Resolve<BlackboardManager>().Initialize();
+            IoCManager.Resolve<ConsiderationsManager>().Initialize();
+            IoCManager.Resolve<IPDAUplinkManager>().Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
         {
             base.Update(level, frameEventArgs);
 
-            _gameTicker.Update(frameEventArgs);
             switch (level)
             {
                 case ModUpdateLevel.PreEngine:
                 {
-                    IoCManager.Resolve<IGalacticBankManager>().Update(frameEventArgs);
+                    _gameTicker.Update(frameEventArgs);
                     break;
                 }
             }

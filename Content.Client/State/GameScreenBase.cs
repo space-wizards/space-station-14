@@ -1,20 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.GameObjects.Components;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.State
@@ -32,6 +37,9 @@ namespace Content.Client.State
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IGameTiming _timing;
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         private IEntity _lastHoveredEntity;
@@ -43,8 +51,6 @@ namespace Content.Client.State
 
         public override void Shutdown()
         {
-            _playerManager.LocalPlayer.DetachEntity();
-
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
 
@@ -52,24 +58,40 @@ namespace Content.Client.State
         {
             base.FrameUpdate(e);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(new ScreenCoordinates(_inputManager.MouseScreenPosition));
-            var entityToClick = GetEntityUnderPosition(mousePosWorld);
+            var mousePosWorld = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var entityToClick = _userInterfaceManager.CurrentlyHovered != null
+                ? null
+                : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
             if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
             {
-                var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.WorldPosition;
-                var entityPos = entityToClick.Transform.WorldPosition;
-                inRange = (entityPos - playerPos).Length <= VerbUtility.InteractionRange;
+                var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
+                var entityPos = entityToClick.Transform.MapPosition;
+                inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
+                    .InRangeUnobstructed(playerPos, entityPos,
+                        predicate: entity =>
+                            entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick,
+                        ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent outline;
+            if(!_configurationManager.GetCVar<bool>("outline.enabled"))
+            {
+                if(entityToClick != null && entityToClick.TryGetComponent(out outline))
+                {
+                    outline.OnMouseLeave(); //Prevent outline remains from persisting post command.
+                }
+                return;
+            }
+
             if (entityToClick == _lastHoveredEntity)
             {
                 if (entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {
                     outline.UpdateInRange(inRange);
                 }
+
                 return;
             }
 
@@ -87,7 +109,7 @@ namespace Content.Client.State
             }
         }
 
-        public IEntity GetEntityUnderPosition(GridCoordinates coordinates)
+        public IEntity GetEntityUnderPosition(MapCoordinates coordinates)
         {
             var entitiesUnderPosition = GetEntitiesUnderPosition(coordinates);
             return entitiesUnderPosition.Count > 0 ? entitiesUnderPosition[0] : null;
@@ -95,19 +117,24 @@ namespace Content.Client.State
 
         public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
         {
+            return GetEntitiesUnderPosition(coordinates.ToMap(_mapManager));
+        }
+
+        public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
+        {
             // Find all the entities intersecting our click
-            var mapCoords = coordinates.ToMap(_mapManager);
-            var entities = _entityManager.GetEntitiesIntersecting(mapCoords.MapId, mapCoords.Position);
+            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId,
+                Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(IEntity clicked, int drawDepth)>();
+            var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();
             foreach (var entity in entities)
             {
-                if (entity.TryGetComponent<IClientClickableComponent>(out var component)
+                if (entity.TryGetComponent<ClickableComponent>(out var component)
                     && entity.Transform.IsMapTransform
-                    && component.CheckClick(coordinates.Position, out var drawDepthClicked))
+                    && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {
-                    foundEntities.Add((entity, drawDepthClicked));
+                    foundEntities.Add((entity, drawDepthClicked, renderOrder));
                 }
             }
 
@@ -120,9 +147,29 @@ namespace Content.Client.State
             return foundEntities.Select(a => a.clicked).ToList();
         }
 
-        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth)>
+        /// <summary>
+        /// Gets all entities intersecting the given position.
+        ///
+        /// Static alternative to GetEntitiesUnderPosition to cut out
+        /// some of the boilerplate needed to get state manager and check the current state.
+        /// </summary>
+        /// <param name="stateManager">state manager to use to get the current game screen</param>
+        /// <param name="coordinates">coordinates to check</param>
+        /// <returns>the entities under the position, empty list if none found</returns>
+        public static IList<IEntity> GetEntitiesUnderPosition(IStateManager stateManager, GridCoordinates coordinates)
         {
-            public int Compare((IEntity clicked, int depth) x, (IEntity clicked, int depth) y)
+            if (stateManager.CurrentState is GameScreenBase gameScreenBase)
+            {
+                return gameScreenBase.GetEntitiesUnderPosition(coordinates);
+            }
+
+            return ImmutableList<IEntity>.Empty;
+        }
+
+        internal class ClickableEntityComparer : IComparer<(IEntity clicked, int depth, uint renderOrder)>
+        {
+            public int Compare((IEntity clicked, int depth, uint renderOrder) x,
+                (IEntity clicked, int depth, uint renderOrder) y)
             {
                 var val = x.depth.CompareTo(y.depth);
                 if (val != 0)
@@ -130,9 +177,24 @@ namespace Content.Client.State
                     return val;
                 }
 
+                // Turning this off it can make picking stuff out of lockers and such up a bit annoying.
+                /*
+                val = x.renderOrder.CompareTo(y.renderOrder);
+                if (val != 0)
+                {
+                    return val;
+                }
+                */
+
                 var transx = x.clicked.Transform;
                 var transy = y.clicked.Transform;
-                return transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                val = transx.GridPosition.Y.CompareTo(transy.GridPosition.Y);
+                if (val != 0)
+                {
+                    return val;
+                }
+
+                return x.clicked.Uid.CompareTo(y.clicked.Uid);
             }
         }
 
@@ -147,10 +209,15 @@ namespace Content.Client.State
             var func = args.Function;
             var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
-            var mousePosWorld = _eyeManager.ScreenToWorld(args.PointerLocation);
+            var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
-            var message = new FullInputCmdMessage(_timing.CurTick, funcId, args.State, mousePosWorld,
-                args.PointerLocation, entityToClick?.Uid ?? EntityUid.Invalid);
+
+            if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
+                grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+
+            var message = new FullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId, args.State,
+                grid.MapToGrid(mousePosWorld), args.PointerLocation,
+                entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
             var session = _playerManager.LocalPlayer.Session;

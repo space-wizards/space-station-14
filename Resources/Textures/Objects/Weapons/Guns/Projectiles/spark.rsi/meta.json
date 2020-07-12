@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "GPL3",
+    "copyright": "https://github.com/tgstation/tgstation/raw/64e5682495a3d3383546b3bfcd4732c32f09b419/icons/obj/projectiles.dmi",
+    "states": [
+        {
+            "name": "spark",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        }
+    ]
+}

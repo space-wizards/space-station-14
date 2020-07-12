@@ -1,8 +1,15 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Mobs;
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects
 {
@@ -72,6 +79,26 @@ namespace Content.Server.GameObjects
         {
             return true;
         }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return true;
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return true;
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return true;
+        }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return true;
+        }
     }
 
     /// <summary>
@@ -81,10 +108,15 @@ namespace Content.Server.GameObjects
     {
         public void EnterState(IEntity entity)
         {
+            if(entity.TryGetComponent(out StunnableComponent stun))
+                stun.CancelAll();
+
+            StandingStateHelper.Down(entity);
         }
 
         public void ExitState(IEntity entity)
         {
+            StandingStateHelper.Standing(entity);
         }
 
         public bool IsConscious => false;
@@ -127,6 +159,26 @@ namespace Content.Server.GameObjects
         bool IActionBlocker.CanEmote()
         {
             return false;
+        }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanChangeDirection()
+        {
+            return true;
         }
     }
 
@@ -137,29 +189,24 @@ namespace Content.Server.GameObjects
     {
         public void EnterState(IEntity entity)
         {
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var newState = SharedSpeciesComponent.MobState.Down;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
-            }
+            if(entity.TryGetComponent(out StunnableComponent stun))
+                stun.CancelAll();
+
+            StandingStateHelper.Down(entity);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {
-                collidable.CollisionEnabled = false;
+                collidable.CanCollide = false;
             }
         }
 
         public void ExitState(IEntity entity)
         {
-            if (entity.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var newState = SharedSpeciesComponent.MobState.Stand;
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
-            }
+            StandingStateHelper.Standing(entity);
 
             if (entity.TryGetComponent(out CollidableComponent collidable))
             {
-                collidable.CollisionEnabled = true;
+                collidable.CanCollide = true;
             }
         }
 
@@ -201,6 +248,26 @@ namespace Content.Server.GameObjects
         }
 
         bool IActionBlocker.CanEmote()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanAttack()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanEquip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanUnequip()
+        {
+            return false;
+        }
+
+        bool IActionBlocker.CanChangeDirection()
         {
             return false;
         }

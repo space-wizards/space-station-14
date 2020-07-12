@@ -1,4 +1,5 @@
-﻿using Robust.Client.Graphics.Drawing;
+﻿using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -17,10 +18,10 @@ namespace Content.Client.Graphics.Overlays
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public CircleMaskOverlay() : base(nameof(CircleMaskOverlay))
+        public CircleMaskOverlay() : base(nameof(OverlayType.CircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("circlemask").Instance();
+            Shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
         }
 
         protected override void Draw(DrawingHandleBase handle)

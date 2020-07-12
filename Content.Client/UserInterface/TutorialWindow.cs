@@ -46,7 +46,7 @@ namespace Content.Client.UserInterface
             //Get section header font
             var cache = IoCManager.Resolve<IResourceCache>();
             var inputManager = IoCManager.Resolve<IInputManager>();
-            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Nano/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
+            Font headerFont = new VectorFont(cache.GetResource<FontResource>("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf"), _headerFontSize);
 
             var scrollContainer = new ScrollContainer();
             scrollContainer.AddChild(VBox = new VBoxContainer());
@@ -69,10 +69,16 @@ namespace Content.Client.UserInterface
 Switch hands: [color=#a4885c]{4}[/color]
 Use held item: [color=#a4885c]{5}[/color]
 Drop held item: [color=#a4885c]{6}[/color]
+Smart equip from backpack: [color=#a4885c]{24}[/color]
+Smart equip from belt: [color=#a4885c]{25}[/color]
 Open inventory: [color=#a4885c]{7}[/color]
 Open character window: [color=#a4885c]{8}[/color]
 Open crafting window: [color=#a4885c]{9}[/color]
 Focus chat: [color=#a4885c]{10}[/color]
+Focus OOC: [color=#a4885c]{26}[/color]
+Focus Admin Chat: [color=#a4885c]{27}[/color]
+Use hand/object in hand: [color=#a4885c]{22}[/color]
+Do wide attack: [color=#a4885c]{23}[/color]
 Use targeted entity: [color=#a4885c]{11}[/color]
 Throw held item: [color=#a4885c]{12}[/color]
 Examine entity: [color=#a4885c]{13}[/color]
@@ -102,15 +108,21 @@ Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(ShowDebugMonitors),
                 Key(OpenEntitySpawnWindow),
                 Key(OpenTileSpawnWindow),
-                Key(OpenSandboxWindow)));
-
-            //Gameplay
-            VBox.AddChild(new Label { FontOverride = headerFont, Text = Loc.GetString("\nSandbox spawner", Key(OpenSandboxWindow)) });
-            AddFormattedText(SandboxSpawnerContents);
+                Key(OpenSandboxWindow),
+                Key(Use),
+                Key(WideAttack),
+                Key(SmartEquipBackpack),
+                Key(SmartEquipBelt),
+                Key(FocusOOC),
+                Key(FocusAdminChat)));
 
             //Gameplay
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nGameplay" });
             AddFormattedText(GameplayContents);
+
+            //Gameplay
+            VBox.AddChild(new Label { FontOverride = headerFont, Text = Loc.GetString("\nSandbox spawner", Key(OpenSandboxWindow)) });
+            AddFormattedText(SandboxSpawnerContents);
 
             //Feedback
             VBox.AddChild(new Label { FontOverride = headerFont, Text = "\nFeedback" });

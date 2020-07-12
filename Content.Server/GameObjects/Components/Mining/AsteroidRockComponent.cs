@@ -1,10 +1,14 @@
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
@@ -12,7 +16,7 @@ using Robust.Shared.Random;
 namespace Content.Server.GameObjects.Components.Mining
 {
     [RegisterComponent]
-    public class AsteroidRockComponent : Component, IAttackBy
+    public class AsteroidRockComponent : Component, IInteractUsing
     {
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
@@ -28,18 +32,17 @@ namespace Content.Server.GameObjects.Components.Mining
             spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 
-        bool IAttackBy.AttackBy(AttackByEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            var item = eventArgs.AttackWith;
+            var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
 
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Brute, meleeWeaponComponent.Damage, item, eventArgs.User);
 
             if (!item.TryGetComponent(out PickaxeComponent pickaxeComponent)) return true;
-            if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound) &&
-                item.TryGetComponent<SoundComponent>(out var soundComponent))
+            if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))
             {
-                soundComponent.Play(pickaxeComponent.MiningSound, AudioParams.Default);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(pickaxeComponent.MiningSound, Owner, AudioParams.Default);
             }
             return true;
         }

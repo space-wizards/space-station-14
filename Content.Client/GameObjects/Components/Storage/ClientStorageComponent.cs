@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.GameObjects.Components.Interaction;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,6 +14,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
@@ -19,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public class ClientStorageComponent : SharedStorageComponent
+    public class ClientStorageComponent : SharedStorageComponent, IClientDraggable
     {
         private Dictionary<EntityUid, int> StoredEntities { get; set; } = new Dictionary<EntityUid, int>();
         private int StorageSizeUsed;
@@ -31,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this};
+                {StorageEntity = this, Title = Owner.Name};
         }
 
         public override void OnRemove()
@@ -40,9 +43,10 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnRemove();
         }
 
-        public override void HandleMessage(ComponentMessage message, INetChannel netChannel = null,
-            IComponent component = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
+            base.HandleNetworkMessage(message, channel, session);
+
             switch (message)
             {
                 //Updates what we are storing for the UI
@@ -101,8 +105,10 @@ namespace Content.Client.GameObjects.Components.Storage
             private Control VSplitContainer;
             private VBoxContainer EntityList;
             private Label Information;
-            private Button AddItemButton;
             public ClientStorageComponent StorageEntity;
+
+            private StyleBoxFlat _HoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.35f)};
+            private StyleBoxFlat  _unHoveredBox = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.0f)};
 
             protected override Vector2? CustomSize => (180, 320);
 
@@ -111,7 +117,37 @@ namespace Content.Client.GameObjects.Components.Storage
                 Title = "Storage Item";
                 RectClipContent = true;
 
-                VSplitContainer = new VBoxContainer();
+                var containerButton = new ContainerButton
+                {
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                    MouseFilter = MouseFilterMode.Pass,
+                };
+
+                var innerContainerButton = new PanelContainer
+                {
+                    PanelOverride = _unHoveredBox,
+                    SizeFlagsHorizontal = SizeFlags.Fill,
+                    SizeFlagsVertical = SizeFlags.Fill,
+                };
+
+
+                containerButton.AddChild(innerContainerButton);
+                containerButton.OnPressed += args =>
+                {
+                    var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
+
+                    if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                    {
+                        StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+                    }
+                };
+
+                VSplitContainer = new VBoxContainer()
+                {
+                    MouseFilter = MouseFilterMode.Ignore,
+                };
+                containerButton.AddChild(VSplitContainer);
                 Information = new Label
                 {
                     Text = "Items: 0 Volume: 0/0 Stuff",
@@ -124,7 +160,7 @@ namespace Content.Client.GameObjects.Components.Storage
                     SizeFlagsVertical = SizeFlags.FillExpand,
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     HScrollEnabled = true,
-                    VScrollEnabled = true
+                    VScrollEnabled = true,
                 };
                 EntityList = new VBoxContainer
                 {
@@ -133,16 +169,17 @@ namespace Content.Client.GameObjects.Components.Storage
                 listScrollContainer.AddChild(EntityList);
                 VSplitContainer.AddChild(listScrollContainer);
 
-                AddItemButton = new Button
-                {
-                    Text = "Add Item",
-                    ToggleMode = false,
-                    SizeFlagsHorizontal = SizeFlags.FillExpand
-                };
-                AddItemButton.OnPressed += OnAddItemButtonPressed;
-                VSplitContainer.AddChild(AddItemButton);
+                Contents.AddChild(containerButton);
 
-                Contents.AddChild(VSplitContainer);
+                listScrollContainer.OnMouseEntered += args =>
+                {
+                    innerContainerButton.PanelOverride = _HoveredBox;
+                };
+
+                listScrollContainer.OnMouseExited += args =>
+                {
+                    innerContainerButton.PanelOverride = _unHoveredBox;
+                };
             }
 
             public override void Close()
@@ -166,7 +203,8 @@ namespace Content.Client.GameObjects.Components.Storage
 
                     var button = new EntityButton()
                     {
-                        EntityuID = entityuid.Key
+                        EntityuID = entityuid.Key,
+                        MouseFilter = MouseFilterMode.Stop,
                     };
                     button.ActualButton.OnToggled += OnItemButtonToggled;
                     //Name and Size labels set
@@ -242,23 +280,22 @@ namespace Content.Client.GameObjects.Components.Storage
                 };
                 AddChild(ActualButton);
 
-                var hBoxContainer = new HBoxContainer {MouseFilter = MouseFilterMode.Ignore};
+                var hBoxContainer = new HBoxContainer();
                 EntitySpriteView = new SpriteView
                 {
-                    CustomMinimumSize = new Vector2(32.0f, 32.0f), MouseFilter = MouseFilterMode.Ignore
+                    CustomMinimumSize = new Vector2(32.0f, 32.0f)
                 };
                 EntityName = new Label
                 {
                     SizeFlagsVertical = SizeFlags.ShrinkCenter,
                     Text = "Backpack",
-                    MouseFilter = MouseFilterMode.Ignore
                 };
                 hBoxContainer.AddChild(EntitySpriteView);
                 hBoxContainer.AddChild(EntityName);
 
                 EntityControl = new Control
                 {
-                    SizeFlagsHorizontal = SizeFlags.FillExpand, MouseFilter = MouseFilterMode.Ignore
+                    SizeFlagsHorizontal = SizeFlags.FillExpand
                 };
                 EntitySize = new Label
                 {
@@ -279,6 +316,18 @@ namespace Content.Client.GameObjects.Components.Storage
                 hBoxContainer.AddChild(EntityControl);
                 AddChild(hBoxContainer);
             }
+        }
+
+        public bool ClientCanDropOn(CanDropEventArgs eventArgs)
+        {
+            //can only drop on placeable surfaces to empty out contents
+            return eventArgs.Target.HasComponent<PlaceableSurfaceComponent>();
+        }
+
+        public bool ClientCanDrag(CanDragEventArgs eventArgs)
+        {
+            //always draggable, at least for now
+            return true;
         }
     }
 }

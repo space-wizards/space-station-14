@@ -35,19 +35,21 @@ namespace Content.Shared.Chat
 
         /// <summary>
         ///     The sending entity.
-        ///     Only applies to <see cref="ChatChannel.Local"/> and <see cref="ChatChannel.Emotes"/>.
+        ///     Only applies to <see cref="ChatChannel.Local"/>, <see cref="ChatChannel.Dead"/> and <see cref="ChatChannel.Emotes"/>.
         /// </summary>
         public EntityUid SenderEntity { get; set; }
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
-            Channel = (ChatChannel) buffer.ReadByte();
+            Channel = (ChatChannel) buffer.ReadInt16();
             Message = buffer.ReadString();
             MessageWrap = buffer.ReadString();
 
             switch (Channel)
             {
                 case ChatChannel.Local:
+                case ChatChannel.Dead:
+                case ChatChannel.AdminChat:
                 case ChatChannel.Emotes:
                     SenderEntity = buffer.ReadEntityUid();
                     break;
@@ -56,13 +58,15 @@ namespace Content.Shared.Chat
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
         {
-            buffer.Write((byte)Channel);
+            buffer.Write((short)Channel);
             buffer.Write(Message);
             buffer.Write(MessageWrap);
 
             switch (Channel)
             {
                 case ChatChannel.Local:
+                case ChatChannel.Dead:
+                case ChatChannel.AdminChat:
                 case ChatChannel.Emotes:
                     buffer.Write(SenderEntity);
                     break;
