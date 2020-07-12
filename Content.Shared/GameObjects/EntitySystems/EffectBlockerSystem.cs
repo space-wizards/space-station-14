@@ -10,6 +10,7 @@ namespace Content.Shared.GameObjects.EntitySystems
     public interface IEffectBlocker
     {
         bool CanFall() => true;
+        bool CanSlip() => true;
     }
 
     /// <summary>
@@ -27,6 +28,17 @@ namespace Content.Shared.GameObjects.EntitySystems
             }
 
             return canFall;
+        }
+
+        public static bool CanSlip(IEntity entity)
+        {
+            var canSlip = true;
+            foreach (var blocker in entity.GetAllComponents<IEffectBlocker>())
+            {
+                canSlip &= blocker.CanSlip(); // Sets var to false if false
+            }
+
+            return canSlip;
         }
     }
 }
