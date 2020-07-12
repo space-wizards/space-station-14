@@ -153,7 +153,7 @@ namespace Content.Client.Debugging
 
                 foreach (var gas in _parent.CurrentZone.Contents)
                 {
-                    var gasInfo = $"{gas.Gas.Id}: {gas.Quantity} mols, {gas.PartialPressure} kPa";
+                    var gasInfo = $"{gas.GasId}: {gas.Quantity} mols, {gas.PartialPressure} kPa";
                     textPosition = WriteLine(textPosition, gasInfo);
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Map;
@@ -36,7 +37,7 @@ namespace Content.Server.Interfaces.Atmos
         /// </remarks>
         /// <param name="position">The position at which to find the atmosphere</param>
         /// <returns>The atmosphere at the given point, or <code>null</code> in the vacuum of space</returns>
-        IAtmosphere GetAtmosphere(ITransformComponent position);
+        GasMixture GetAtmosphere(ITransformComponent position);
 
         /// <summary>
         /// Update all the ship's atmospheres, both for reactions and updating modified rooms.

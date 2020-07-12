@@ -10,7 +10,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         /// The type of this gas
         /// </summary>
-        public Gas Gas;
+        public string GasId;
 
         /// <summary>
         /// The quantity, in mols, of the gas

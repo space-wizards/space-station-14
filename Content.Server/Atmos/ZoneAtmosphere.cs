@@ -3,7 +3,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos
 {
-    internal class ZoneAtmosphere : Atmosphere
+    internal class ZoneAtmosphere : GasMixture
     {
         private readonly GridAtmosphereManager _parentGridManager;
         private readonly ISet<MapIndices> _cells;
@@ -28,7 +28,6 @@ namespace Content.Server.Atmos
         {
             _parentGridManager = parent;
             _cells = new HashSet<MapIndices>(cells);
-            UpdateCached();
         }
 
         /// <summary>
@@ -41,7 +40,6 @@ namespace Content.Server.Atmos
         public void AddCell(MapIndices cell)
         {
             _cells.Add(cell);
-            UpdateCached();
         }
 
         /// <summary>
@@ -54,7 +52,6 @@ namespace Content.Server.Atmos
         public void RemoveCell(MapIndices cell)
         {
             _cells.Remove(cell);
-            UpdateCached();
         }
     }
 }

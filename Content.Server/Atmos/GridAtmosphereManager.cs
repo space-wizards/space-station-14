@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -16,7 +17,7 @@ namespace Content.Server.Atmos
         private const float RoomHeight = 2.5f;
 
         private readonly IMapGrid _grid;
-        private Dictionary<MapIndices, ZoneAtmosphere> _atmospheres = new Dictionary<MapIndices, ZoneAtmosphere>();
+        private readonly Dictionary<MapIndices, ZoneAtmosphere> _atmospheres = new Dictionary<MapIndices, ZoneAtmosphere>();
 
         private HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
@@ -25,11 +26,11 @@ namespace Content.Server.Atmos
             _grid = grid;
         }
 
-        public IAtmosphere GetAtmosphere(MapIndices indices) => GetZoneAtmosphere(indices);
+        public GasMixture GetAtmosphere(MapIndices indices) => GetZoneAtmosphere(indices);
 
         private ZoneAtmosphere GetZoneAtmosphere(MapIndices indices)
         {
-            if (_atmospheres.TryGetValue(indices, out var atmosphere))
+            if (_atmospheres.TryGetValue(indices, out var atmosphere) && atmosphere != null)
                 return atmosphere;
 
             // If this is clearly space - such as someone moving round outside the station - just return immediately
@@ -57,12 +58,13 @@ namespace Content.Server.Atmos
 
             atmosphere = new ZoneAtmosphere(this, connected);
             // TODO: Not hardcode this
-            //var oneAtmosphere = 101325; // 1 atm in Pa
-            //var roomTemp = 293.15f; // 20c in k
+            var oneAtmosphere = 101325; // 1 atm in Pa
+            var roomTemp = 293.15f; // 20c in k
             // Calculating moles to add: n = (PV)/(RT)
-            //var totalMoles = (oneAtmosphere * atmosphere.Volume) / (IAtmosphere.R * roomTemp);
-            //atmosphere.Add(new Gas("oxygen"), totalMoles * 0.2f, roomTemp);
-            //atmosphere.Add(new Gas("nitrogen"), totalMoles * 0.8f, roomTemp);
+            var totalMoles = (oneAtmosphere * atmosphere.Volume) / (Atmospherics.R * roomTemp);
+            atmosphere.Add("oxygen", totalMoles * 0.2f);
+            atmosphere.Add("nitrogen", totalMoles * 0.8f);
+            atmosphere.Temperature = roomTemp;
 
             foreach (var c in connected)
                 _atmospheres[c] = atmosphere;
@@ -225,8 +227,7 @@ namespace Content.Server.Atmos
                 if (coveredAtmos != null)
                 {
                     newAtmos.Temperature = coveredAtmos.Temperature;
-                    foreach (var gas in coveredAtmos.Gasses)
-                        newAtmos.SetQuantity(gas.Gas, gas.Quantity * newAtmos.Volume / coveredAtmos.Volume);
+                    newAtmos.Merge(coveredAtmos.Remove(newAtmos.Volume));
                 }
 
                 foreach (var cpos in connected)
@@ -283,8 +284,7 @@ namespace Content.Server.Atmos
                 foreach (var atmos in adjacent)
                 {
                     // Copy all the gasses across
-                    foreach (var gas in atmos.Gasses)
-                        replacement.Add(gas.Gas, gas.Quantity, atmos.Temperature);
+                    replacement.Merge(atmos);
                 }
             }
 

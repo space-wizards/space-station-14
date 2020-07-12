@@ -31,7 +31,7 @@ namespace Content.Server.Debugging
         /// <summary>
         /// The last atmosphere to be sent to the client for debugging. Avoids duplicate messages.
         /// </summary>
-        private IAtmosphere _lastSentAtmosphere;
+        private GasMixture _lastSentAtmosphere;
 
         public override void Initialize()
         {
@@ -52,14 +52,14 @@ namespace Content.Server.Debugging
 
             var gridId = @event.Sender.Transform.GridID;
 
-            
+
 
             var gridAtmosphere = _atmosphereMap.GetGridAtmosphereManager(gridId);
 
             var newPos = _mapManager.GetGrid(gridId).SnapGridCellFor(@event.NewPosition, SnapGridOffset.Center);
             var currentZone = (ZoneAtmosphere) gridAtmosphere.GetAtmosphere(newPos);
 
-            if (currentZone == null || Object.ReferenceEquals(currentZone, _lastSentAtmosphere))
+            if (currentZone == null || object.ReferenceEquals(currentZone, _lastSentAtmosphere))
                 return;
 
             var zoneMessage = new ZoneInfo();
