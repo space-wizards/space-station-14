@@ -30,7 +30,7 @@ namespace Content.Server.Atmos
 
         private ZoneAtmosphere GetZoneAtmosphere(MapIndices indices)
         {
-            if (_atmospheres.TryGetValue(indices, out var atmosphere) && atmosphere != null)
+            if (_atmospheres.TryGetValue(indices, out var atmosphere))
                 return atmosphere;
 
             // If this is clearly space - such as someone moving round outside the station - just return immediately

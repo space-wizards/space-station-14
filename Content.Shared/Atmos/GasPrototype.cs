@@ -9,19 +9,19 @@ namespace Content.Shared.Atmos
     [Prototype("gas")]
     public class GasPrototype : IPrototype, IIndexedPrototype
     {
-        public string Name { get; }
+        public string Name { get; private set; }
 
         // TODO: Control gas amount necessary for overlay to appear
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
-        public string ID { get; }
+        public string ID { get; private set; }
 
-        public float SpecificHeat { get; }
+        public float SpecificHeat { get; private set; }
 
         /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
-        public string OverlayPath { get; }
+        public string OverlayPath { get; private set; }
 
         public void LoadFrom(YamlMappingNode mapping)
         {
