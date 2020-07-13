@@ -13,7 +13,7 @@ namespace Content.Client.Commands
         // ReSharper disable once StringLiteralTypo
         public string Command => "pathfinder";
         public string Description => "Toggles visibility of pathfinding debuggers.";
-        public string Help => "pathfinder [hide/nodes/routes/graph]";
+        public string Help => "pathfinder [hide/nodes/routes/graph/regioncache/regions]";
 
         public bool Execute(IDebugConsole console, params string[] args)
         {
@@ -49,6 +49,17 @@ namespace Content.Client.Commands
                         debugSystem.ToggleTooltip(PathfindingDebugMode.Graph);
                         anyAction = true;
                         break;
+                    // Shows every time the cached reachable regions are hit (whether cached already or not)
+                    case "regioncache":
+                        debugSystem.ToggleTooltip(PathfindingDebugMode.CachedRegions);
+                        anyAction = true;
+                        break;
+                    // Shows all of the regions in each chunk
+                    case "regions":
+                        debugSystem.ToggleTooltip(PathfindingDebugMode.Regions);
+                        anyAction = true;
+                        break;
+                    
                     default:
                         continue;
                 }

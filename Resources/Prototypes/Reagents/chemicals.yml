@@ -17,7 +17,7 @@
   id: chem.H2O
   name: water
   desc: A tasty colorless liquid.
-  color: "#DEF7F5"
+  color: "#c0e0ff20"
   metabolism:
     - !type:DefaultDrink
       rate: 1

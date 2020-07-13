@@ -221,6 +221,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             return result;
         }
 
+        public static float OctileDistance(int dstX, int dstY)
+        {
+            if (dstX > dstY)
+            {
+                return 1.4f * dstY + (dstX - dstY);
+            }
+
+            return 1.4f * dstX + (dstY - dstX);
+        }
+
         public static float OctileDistance(PathfindingNode endNode, PathfindingNode currentNode)
         {
             // "Fast Euclidean" / octile.

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,6 +23,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public IEntity User { get; set; }
         public GridCoordinates ClickLocation { get; set; }
         public IEntity Target { get; set; }
+        public bool CanReach { get; set; }
     }
 
     /// <summary>
@@ -56,12 +57,19 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         /// </summary>
         public GridCoordinates ClickLocation { get; }
 
-        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        /// <summary>
+        /// Is the click location close enough to reach by the player? This does not check for obstructions, just that the target is within
+        /// reach radius around the user.
+        /// </summary>
+        public bool CanReach { get; }
+
+        public AfterInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation, bool canReach)
         {
             User = user;
             Attacked = attacked;
             ClickLocation = clickLocation;
             ItemInHand = itemInHand;
+            CanReach = canReach;
         }
     }
 
