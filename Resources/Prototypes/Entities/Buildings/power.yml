@@ -12,13 +12,15 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    drawdepth: BelowFloor  
+    drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
   - type: Destructible
     thresholdvalue: 100
   - type: SubFloorHide
-  
+  - type: Physics
+    Anchored: true
+
 - type: entity
   parent: WireBase
   id: HVWire
@@ -37,7 +39,7 @@
     wireType: HighVoltage
   - type: Destructible
     spawnondestroy: HVWireStack1
-  
+
 - type: entity
   parent: WireBase
   id: MVWire
@@ -57,7 +59,7 @@
     wireType: MediumVoltage
   - type: Destructible
     spawnondestroy: MVWireStack1
-    
+
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
@@ -79,9 +81,9 @@
     wireType: Apc
   - type: Destructible
     spawnondestroy: ApcExtensionCableStack1
-    
+
 - type: entity
-  id: DebugGenerator 
+  id: DebugGenerator
   name: Debug Generator
   placement:
     mode: SnapgridCenter
@@ -164,7 +166,7 @@
   - type: Physics
     Anchored: true
   - type: Anchorable
-  
+
 - type: entity
   id: DebugBatteryDischarger
   name: Debug Battery Discharger
@@ -192,7 +194,7 @@
   - type: Physics
     Anchored: true
   - type: Anchorable
-    
+
 - type: entity
   id: DebugSmes
   name: Debug Smes
@@ -315,7 +317,7 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
-    
+
 - type: entity
   id: DebugPowerReceiver
   name: Debug Power Receiver
@@ -369,7 +371,7 @@
   - type: Damageable
   - type: Breakable
     thresholdvalue: 100
-  
+
 #Depriciated, to be removed from maps
 
 - type: entity
@@ -388,7 +390,7 @@
   - type: PowerSupplier
     voltage: High
     supplyRate: 100000
-  
+
 - type: entity
   id: APC
   name: Depriciated Apc
