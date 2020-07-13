@@ -35,36 +35,45 @@ namespace Content.Server.GameObjects.Components.Conveyor
         [ViewVariables]
         private float _speed;
 
-        private bool _enabled;
+        private ConveyorState _state;
 
         /// <summary>
-        ///     Whether or not the conveyor is turned on
+        ///     The current state of this conveyor
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool Enabled
+        private ConveyorState State
         {
-            get => _enabled;
+            get => _state;
             set
             {
-                _enabled = value;
+                _state = value;
 
                 if (!Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
                     return;
                 }
 
-                appearance.SetData(ConveyorVisuals.Enabled, value);
+                appearance.SetData(ConveyorVisuals.State, value);
             }
         }
 
+        /// <summary>
+        ///     Calculates the angle in which entities on top of this conveyor belt
+        ///     are pushed in
+        /// </summary>
+        /// <returns>
+        ///     The angle when taking into account if the conveyor is reversed
+        /// </returns>
         private Angle GetAngle()
         {
-            return new Angle(Owner.Transform.LocalRotation.Theta + _angle);
+            var adjustment = _state == ConveyorState.Reversed ? MathHelper.Pi : 0;
+
+            return new Angle(Owner.Transform.LocalRotation.Theta + _angle + adjustment);
         }
 
         public void Update(float frameTime)
         {
-            if (!Enabled)
+            if (State == ConveyorState.Stopped)
             {
                 return;
             }
@@ -91,13 +100,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 entity.Transform.WorldPosition += GetAngle().ToVec() * _speed * frameTime;
             }
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Enabled = true;
         }
 
         public override void ExposeData(ObjectSerializer serializer)

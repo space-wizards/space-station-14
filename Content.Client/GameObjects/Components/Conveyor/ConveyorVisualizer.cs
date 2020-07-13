@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Conveyor;
+﻿using System;
+using Content.Shared.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -12,8 +13,9 @@ namespace Content.Client.GameObjects.Components.Conveyor
     [UsedImplicitly]
     public class ConveyorVisualizer : AppearanceVisualizer
     {
-        private string _stateEnabled;
+        private string _stateRunning;
         private string _stateStopped;
+        private string _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -22,25 +24,36 @@ namespace Content.Client.GameObjects.Components.Conveyor
                 return;
             }
 
-            appearance.TryGetData(ConveyorVisuals.Enabled, out bool enabled);
+            appearance.TryGetData(ConveyorVisuals.State, out ConveyorState state);
 
-            sprite.LayerSetState(0, enabled
-                ? _stateEnabled
-                : _stateStopped);
+            var texture = state switch
+            {
+                ConveyorState.Stopped => _stateStopped,
+                ConveyorState.Running => _stateRunning,
+                ConveyorState.Reversed => _stateReversed,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            sprite.LayerSetState(0, texture);
         }
 
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("state_enabled", out var child))
+            if (node.TryGetNode("state_running", out var child))
             {
-                _stateEnabled = child.AsString();
+                _stateRunning = child.AsString();
             }
 
             if (node.TryGetNode("state_stopped", out child))
             {
                 _stateStopped = child.AsString();
+            }
+
+            if (node.TryGetNode("state_reversed", out child))
+            {
+                _stateReversed = child.AsString();
             }
         }
 

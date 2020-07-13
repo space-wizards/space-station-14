@@ -30,5 +30,6 @@
   - type: Appearance
     visuals:
     - type: ConveyorVisualizer
-      state_enabled: conveyor_started_cw
+      state_running: conveyor_started_cw
       state_stopped: conveyor_stopped_cw
+      state_reversed: conveyor_started_cw_r
