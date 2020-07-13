@@ -115,6 +115,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
+        // TODO: Remove from InDisposalsComponent NextTube/PreviousTube/CurrentTube
         private void Disconnect()
         {
             foreach (var connected in Connected.Values)

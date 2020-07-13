@@ -11,6 +11,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Recycling
 {
+    // TODO: Add sound and safe beep
     [RegisterComponent]
     public class RecyclerComponent : Component, ICollideBehavior
     {
