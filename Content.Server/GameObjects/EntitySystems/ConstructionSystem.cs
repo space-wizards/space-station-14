@@ -274,7 +274,10 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Try to find the stack with the material in the user's hand.
-            var hands = placingEnt.GetComponent<HandsComponent>();
+            if(!placingEnt.TryGetComponent<HandsComponent>(out var hands))
+            {
+                return false;
+            };
             var activeHand = hands.GetActiveHand?.Owner;
             if (activeHand == null)
             {
