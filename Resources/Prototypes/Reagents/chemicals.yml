@@ -27,6 +27,14 @@
       rate: 1
 
 - type: reagent
+  id: chem.Ice
+  name: ice
+  desc: Frozen water.
+  color: "#bed8e6"
+  meltingPoint: 0.0
+  boilingPoint: 100.0
+
+- type: reagent
   id: chem.Plasma
   name: plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
