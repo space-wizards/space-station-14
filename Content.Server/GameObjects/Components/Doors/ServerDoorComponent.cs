@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
@@ -34,6 +35,7 @@ namespace Content.Server.GameObjects
         private float OpenTimeCounter;
 
         private CollidableComponent collidableComponent;
+        private AirtightComponent airtightComponent;
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -57,6 +59,7 @@ namespace Content.Server.GameObjects
             base.Initialize();
 
             collidableComponent = Owner.GetComponent<CollidableComponent>();
+            airtightComponent = Owner.GetComponent<AirtightComponent>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _cancellationTokenSource = new CancellationTokenSource();
         }
@@ -156,6 +159,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
+                airtightComponent.Airtight = false;
                 collidableComponent.Hard = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -209,6 +213,7 @@ namespace Content.Server.GameObjects
             {
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
+                airtightComponent.Airtight = true;
                 if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
                 {
                     occluder.Enabled = true;

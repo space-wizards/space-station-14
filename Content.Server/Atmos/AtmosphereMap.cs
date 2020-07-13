@@ -44,7 +44,7 @@ namespace Content.Server.Atmos
             return manager;
         }
 
-        public GasMixture GetAtmosphere(ITransformComponent position)
+        public IAtmosphere GetAtmosphere(ITransformComponent position)
         {
             var indices = _mapManager.GetGrid(position.GridID).SnapGridCellFor(position.GridPosition, SnapGridOffset.Center);
             return GetGridAtmosphereManager(position.GridID).GetAtmosphere(indices);

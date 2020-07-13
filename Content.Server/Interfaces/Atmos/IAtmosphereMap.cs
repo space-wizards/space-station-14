@@ -37,7 +37,7 @@ namespace Content.Server.Interfaces.Atmos
         /// </remarks>
         /// <param name="position">The position at which to find the atmosphere</param>
         /// <returns>The atmosphere at the given point, or <code>null</code> in the vacuum of space</returns>
-        GasMixture GetAtmosphere(ITransformComponent position);
+        IAtmosphere GetAtmosphere(ITransformComponent position);
 
         /// <summary>
         /// Update all the ship's atmospheres, both for reactions and updating modified rooms.

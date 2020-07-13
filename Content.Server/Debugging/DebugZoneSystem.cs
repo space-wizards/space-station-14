@@ -31,7 +31,7 @@ namespace Content.Server.Debugging
         /// <summary>
         /// The last atmosphere to be sent to the client for debugging. Avoids duplicate messages.
         /// </summary>
-        private GasMixture _lastSentAtmosphere;
+        private ZoneAtmosphere _lastSentAtmosphere;
 
         public override void Initialize()
         {

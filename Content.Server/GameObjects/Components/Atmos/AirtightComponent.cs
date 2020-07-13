@@ -24,6 +24,17 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         public bool UseAdjacentAtmosphere;
+        private bool _airtight = true;
+
+        public bool Airtight
+        {
+            get => _airtight;
+            set
+            {
+                _airtight = value;
+                _atmosphereMap.GetGridAtmosphereManager(Owner.Transform.GridID).Invalidate(_snapGrid.Position);
+            }
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -40,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             // it is absent the component will not be airtight. An exception is much easier to track
             // down than the object magically not being airtight, so throw one if the SnapGrid component
             // is missing.
-            if (!Owner.TryGetComponent<SnapGridComponent>(out _snapGrid))
+            if (!Owner.TryGetComponent(out _snapGrid))
                 throw new Exception("Airtight entities must have a SnapGrid component");
         }
 

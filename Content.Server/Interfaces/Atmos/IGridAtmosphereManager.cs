@@ -27,7 +27,7 @@ namespace Content.Server.Interfaces.Atmos
         /// <param name="indices">The position on the grid</param>
         /// <returns>The relevant atmosphere, or <code>null</code> if this cell
         /// is connected to space</returns>
-        GasMixture GetAtmosphere(MapIndices indices);
+        IAtmosphere GetAtmosphere(MapIndices indices);
 
         /// <summary>
         /// Notify the atmosphere system that something at a given position may have changed.

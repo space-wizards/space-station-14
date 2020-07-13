@@ -26,7 +26,7 @@ namespace Content.Server.Atmos
             _grid = grid;
         }
 
-        public GasMixture GetAtmosphere(MapIndices indices) => GetZoneAtmosphere(indices);
+        public IAtmosphere GetAtmosphere(MapIndices indices) => GetZoneAtmosphere(indices);
 
         private ZoneAtmosphere GetZoneAtmosphere(MapIndices indices)
         {
@@ -56,15 +56,15 @@ namespace Content.Server.Atmos
                 return null;
             }
 
-            atmosphere = new ZoneAtmosphere(this, connected);
+            atmosphere = new ZoneAtmosphere(this, connected.ToDictionary(x => x, x => new GasMixture(GetVolumeForCells(1))));
             // TODO: Not hardcode this
-            var oneAtmosphere = 101325; // 1 atm in Pa
-            var roomTemp = 293.15f; // 20c in k
+            //var oneAtmosphere = 101325; // 1 atm in Pa
+            //var roomTemp = 293.15f; // 20c in k
             // Calculating moles to add: n = (PV)/(RT)
-            var totalMoles = (oneAtmosphere * atmosphere.Volume) / (Atmospherics.R * roomTemp);
-            atmosphere.Add("oxygen", totalMoles * 0.2f);
-            atmosphere.Add("nitrogen", totalMoles * 0.8f);
-            atmosphere.Temperature = roomTemp;
+            //var totalMoles = (oneAtmosphere * atmosphere.Volume) / (Atmospherics.R * roomTemp);
+            //atmosphere.Add("oxygen", totalMoles * 0.2f);
+            //atmosphere.Add("nitrogen", totalMoles * 0.8f);
+            //atmosphere.Temperature = roomTemp;
 
             foreach (var c in connected)
                 _atmospheres[c] = atmosphere;
@@ -129,8 +129,11 @@ namespace Content.Server.Atmos
             return inner;
         }
 
-
-        private bool IsObstructed(MapIndices indices) => GetObstructingComponent(indices) != null;
+        private bool IsObstructed(MapIndices indices)
+        {
+            var ac = GetObstructingComponent(indices);
+            return ac != null && ac.Airtight;
+        }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
         {
@@ -235,6 +238,12 @@ namespace Content.Server.Atmos
             }
         }
 
+        public GasMixture GetMixtureOnTile(MapIndices indices)
+        {
+            if (!_atmospheres.TryGetValue(indices, out var zone)) return null;
+            return !zone.CellMixtures.TryGetValue(indices, out var mixture) ? null : mixture;
+        }
+
         private void MergeAtmospheres(MapIndices indices)
         {
             Debug.Assert(!IsObstructed(indices));
@@ -249,19 +258,23 @@ namespace Content.Server.Atmos
                 if (joinedAtmos != null)
                 {
                     // If the block is not in space, just add it to the existing zone
-                    joinedAtmos.AddCell(indices);
+                    // TODO ATMOS Default gas maybe? Prob not.
+                    joinedAtmos.AddCell(indices, new GasMixture(GetVolumeForCells(1)));
                     _atmospheres[indices] = joinedAtmos;
                     return;
                 }
                 else
                 {
                     // Otherwise, try to create a new zone around the block
-                    var connectedCells = FindConnectedCells(indices);
+                    var connectedCells =
+                        FindConnectedCells(indices)
+                            ?.ToDictionary(x => x, x => GetMixtureOnTile(x)
+                                                       ?? new GasMixture(GetVolumeForCells(1)));
 
                     if (connectedCells != null)
                     {
                         var newZone = new ZoneAtmosphere(this, connectedCells);
-                        foreach (var cell in connectedCells)
+                        foreach (var (cell, mix) in connectedCells)
                             _atmospheres[cell] = newZone;
                     }
                 }
@@ -337,8 +350,7 @@ namespace Content.Server.Atmos
 
         internal float GetVolumeForCells(int cellCount)
         {
-            int scale = _grid.TileSize;
-            return scale * scale * cellCount * RoomHeight;
+            return _grid.TileSize * cellCount * Atmospherics.CellVolume;
         }
     }
 }
