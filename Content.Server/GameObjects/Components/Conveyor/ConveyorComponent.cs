@@ -41,10 +41,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             foreach (var entity in intersecting)
             {
-                if (entity == Owner ||
-                    entity.TryGetComponent(out PhysicsComponent physics) &&
-                    physics.Anchored ||
-                    entity.HasComponent<IMapGridComponent>())
+                if (entity == Owner)
+                {
+                    continue;
+                }
+
+                if (entity.TryGetComponent(out PhysicsComponent physics) &&
+                    physics.Anchored)
+                {
+                    continue;
+                }
+
+                if (entity.HasComponent<IMapGridComponent>())
                 {
                     continue;
                 }

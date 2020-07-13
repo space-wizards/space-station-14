@@ -11,7 +11,7 @@
     hard: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.4,-0.4,0.4,0.4"
+      bounds: "-0.49,-0.49,0.49,0.49"
       mask:
       - Impassable
       - MobImpassable
