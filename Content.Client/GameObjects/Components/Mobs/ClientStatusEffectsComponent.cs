@@ -85,6 +85,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             _ui?.Dispose();
             _ui = null;
+            _cooldown.Clear();
         }
 
         public void UpdateStatusEffects()
