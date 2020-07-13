@@ -44,6 +44,8 @@ namespace Content.Client.Sandbox
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
                 message => SetAllowed(message.SandboxAllowed));
 
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess));
+
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
@@ -109,9 +111,12 @@ namespace Content.Client.Sandbox
             _window.RespawnButton.OnPressed += OnRespawnButtonOnOnPressed;
             _window.SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
+            _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
 
             _window.OpenCentered();
         }
+
+
 
         private void WindowOnOnClose()
         {
@@ -135,6 +140,10 @@ namespace Content.Client.Sandbox
             ToggleTilesWindow();
         }
 
+        private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
+        }
         private void ToggleEntitySpawnWindow()
         {
             if(_spawnWindow == null)
