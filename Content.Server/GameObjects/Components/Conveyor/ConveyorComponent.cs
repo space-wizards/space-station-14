@@ -1,10 +1,13 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Shared.GameObjects.Components.Conveyor;
+using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Conveyor
 {
@@ -23,12 +26,36 @@ namespace Content.Server.GameObjects.Components.Conveyor
         ///     to the owner's rotation.
         ///     Parsed from YAML as degrees.
         /// </summary>
+        [ViewVariables]
         private double _angle;
 
         /// <summary>
         ///     The amount of units to move the entity by.
         /// </summary>
+        [ViewVariables]
         private float _speed;
+
+        private bool _enabled;
+
+        /// <summary>
+        ///     Whether or not the conveyor is turned on
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        private bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+
+                if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+                {
+                    return;
+                }
+
+                appearance.SetData(ConveyorVisuals.Enabled, value);
+            }
+        }
 
         private Angle GetAngle()
         {
@@ -37,6 +64,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         public void Update(float frameTime)
         {
+            if (!Enabled)
+            {
+                return;
+            }
+
             var intersecting = _entityManager.GetEntitiesIntersecting(Owner);
 
             foreach (var entity in intersecting)
@@ -59,6 +91,13 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 entity.Transform.WorldPosition += GetAngle().ToVec() * _speed * frameTime;
             }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Enabled = true;
         }
 
         public override void ExposeData(ObjectSerializer serializer)

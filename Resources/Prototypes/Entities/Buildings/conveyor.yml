@@ -27,3 +27,8 @@
     sprite: Constructible/Power/conveyor.rsi
     state: conveyor_started_cw
   - type: Conveyor
+  - type: Appearance
+    visuals:
+    - type: ConveyorVisualizer
+      state_enabled: conveyor_started_cw
+      state_stopped: conveyor_stopped_cw

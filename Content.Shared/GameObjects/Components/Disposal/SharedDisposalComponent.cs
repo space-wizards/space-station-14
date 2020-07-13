@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
-    [NetSerializable, Serializable]
+    [Serializable, NetSerializable]
     public enum DisposalVisuals
     {
         Anchored
