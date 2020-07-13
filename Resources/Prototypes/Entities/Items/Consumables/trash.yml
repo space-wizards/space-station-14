@@ -170,9 +170,8 @@
   - type: Icon
     sprite: Objects/Consumable/Trash/tastybread.rsi
 
-# TODO: Container
 - type: entity
-  name: trash bag (trash)
+  name: trash bag
   parent: TrashBase
   id: TrashBag
   components:
@@ -180,6 +179,8 @@
     sprite: Objects/Consumable/Trash/trashbag.rsi
   - type: Icon
     sprite: Objects/Consumable/Trash/trashbag.rsi
+  - type: Storage
+    Capacity: 125
 
 - type: entity
   name: tray (trash)

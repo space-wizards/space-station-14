@@ -27621,7 +27621,7 @@ entities:
     WireSeed: 772636827
     type: Wires
 - uid: 2915
-  type: AirlockServiceLocked
+  type: Airlock
   components:
   - name: Custodial Closet
     type: MetaData
@@ -27632,6 +27632,9 @@ entities:
   - SerialNumber: BJWI-6517
     WireSeed: 1001186873
     type: Wires
+  - access:
+    - - Janitor
+    type: AccessReader
 - uid: 2916
   type: AirlockMaintCommonLocked
   components:
@@ -29502,5 +29505,670 @@ entities:
   type: LightTube
   components:
   - parent: 3112
+    type: Transform
+- uid: 3114
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -21.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3115
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -31.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3116
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -32.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3117
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -30.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3118
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -25.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3119
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -23.5,14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3120
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -21.5,12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3121
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -17.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3122
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -15.5,9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3123
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -18.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3124
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -18.5,25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3125
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -15.5,24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3126
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -8.5,25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3127
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -7.5,23.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3128
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -4.5,22.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3129
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -2.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3130
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -3.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3131
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 0.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3132
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -36.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3133
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -35.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3134
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -32.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3135
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -22.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3136
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -30.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3137
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -30.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3138
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -19.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3139
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -32.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3140
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -33.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3141
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -33.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3142
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -32.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3143
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -28.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3144
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -21.5,-10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3145
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -21.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3146
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -18.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3147
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -12.5,-15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3148
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -8.5,-15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3149
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -9.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3150
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -8.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3151
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -11.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3152
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -16.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3153
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -6.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3154
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -2.5,-10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3155
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -0.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3156
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -0.5,-8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3157
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 0.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3158
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -11.5,-23.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3159
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -11.5,-27.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3160
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -9.5,-25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3161
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -5.5,-27.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3162
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -2.5,-26.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3163
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -0.5,-22.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3164
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -10.5,-17.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3165
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 7.5,-18.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3166
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 12.5,-19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3167
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 14.5,-21.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3168
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 14.5,-24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3169
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 18.5,-25.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3170
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 22.5,-23.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3171
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 21.5,-20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3172
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 21.5,-17.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3173
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 26.5,-17.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3174
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 27.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3175
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 24.5,-9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3176
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 27.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3177
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 27.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3178
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 25.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3179
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 21.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3180
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 20.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3181
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 32.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3182
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 37.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3183
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 37.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3184
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 42.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3185
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 44.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3186
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 35.5,2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3187
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 27.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3188
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 28.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3189
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 26.5,10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3190
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 27.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3191
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 24.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3192
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 12.5,12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3193
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 12.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3194
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 6.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3195
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 25.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3196
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 19.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3197
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -7.5,5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3198
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -1.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3199
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -8.5,-1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3200
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -17.5,3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3201
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -25.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3202
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: -22.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3203
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 4.5,9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3204
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 1.5,16.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3205
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 13.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3206
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 12.5,15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3207
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 9.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3208
+  type: TrashSpawner
+  components:
+  - parent: 0
+    pos: 7.5,13.5
+    rot: -1.5707963267948966 rad
     type: Transform
 ...

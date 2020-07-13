@@ -157,10 +157,10 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: help_me
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: help_me
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
@@ -182,10 +182,10 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: hello
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: hello
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
@@ -205,10 +205,10 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: thank_you
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: thank_you
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
@@ -228,10 +228,10 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: very_good
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: very_good
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
@@ -251,10 +251,10 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: im_sorry
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: im_sorry
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow

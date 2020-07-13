@@ -140,5 +140,34 @@ namespace Content.Shared.AI
             }
         }
         #endregion
+        #region Reachable Debug
+        [Serializable, NetSerializable]
+        public sealed class ReachableChunkRegionsDebugMessage : EntitySystemMessage
+        {
+            public GridId GridId { get; }
+            public Dictionary<int, Dictionary<int, List<Vector2>>> Regions { get; }
+
+            public ReachableChunkRegionsDebugMessage(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> regions)
+            {
+                GridId = gridId;
+                Regions = regions;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class ReachableCacheDebugMessage : EntitySystemMessage
+        {
+            public GridId GridId { get; }
+            public Dictionary<int, List<Vector2>> Regions { get; }
+            public bool Cached { get; }
+
+            public ReachableCacheDebugMessage(GridId gridId, Dictionary<int, List<Vector2>> regions, bool cached)
+            {
+                GridId = gridId;
+                Regions = regions;
+                Cached = cached;
+            }
+        }
+        #endregion
     }
 }
