@@ -18,3 +18,5 @@
     key: catwalk
     base: catwalk_
   - type: Catwalk
+  - type: Physics
+    Anchored: true

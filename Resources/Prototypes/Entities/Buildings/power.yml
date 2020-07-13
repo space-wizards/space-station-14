@@ -317,6 +317,8 @@
     interfaces:
     - key: enum.ApcUiKey.Key
       type: ApcBoundUserInterface
+  - type: Physics
+    Anchored: true
 
 - type: entity
   id: DebugPowerReceiver

@@ -33,6 +33,8 @@
     offset: Center
   - type: Window
     base: window
+  - type: Physics
+    Anchored: true
 
 - type: entity
   id: ReinforcedWindow
