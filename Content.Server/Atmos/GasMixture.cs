@@ -43,23 +43,8 @@ namespace Content.Server.Atmos
         private Dictionary<string, float> _contents = new Dictionary<string, float>();
         private Dictionary<string, float> _contentsArchived = new Dictionary<string, float>();
 
-        public GasProperty[] Gasses
-        {
-            get
-            {
-                var list = new List<GasProperty>();
-                foreach (var (gas, quantity) in _contents)
-                {
-                    var partialPressure = Pressure * (quantity / Moles);
-                    list.Add(new GasProperty(){GasId = gas, Quantity = quantity, PartialPressure = partialPressure});
-                }
-
-                return list.ToArray();
-            }
-        }
-
-        private float _lastShare;
         public bool Immutable { get; private set; }
+        public float LastShare { get; private set; } = 0;
 
         public float HeatCapacity
         {
@@ -264,7 +249,7 @@ namespace Content.Server.Atmos
                 }
             }
 
-            _lastShare = absMovedMoles;
+            LastShare = absMovedMoles;
 
             if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
             {

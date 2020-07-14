@@ -21,13 +21,6 @@ namespace Content.Server.Interfaces.Atmos
     public interface IGridAtmosphereManager : IDisposable
     {
         /// <summary>
-        /// Get the zone at a position on the grid or null
-        /// </summary>
-        /// <param name="indices">The position on the grid</param>
-        /// <returns>The relevant zone, or <code>null</code> if there's no zone there.</returns>
-        ZoneAtmosphere GetZone(MapIndices indices);
-
-        /// <summary>
         /// Get the tile at a position on the grid or null
         /// </summary>
         /// <param name="indices">The position on the grid</param>
@@ -69,13 +62,6 @@ namespace Content.Server.Interfaces.Atmos
         bool IsSpace(MapIndices indices);
 
         /// <summary>
-        ///     Returns a dictionary with adjacent zones to the specified indices.
-        /// </summary>
-        /// <param name="indices"></param>
-        /// <returns></returns>
-        Dictionary<Direction, ZoneAtmosphere> GetAdjacentZones(MapIndices indices);
-
-        /// <summary>
         ///     Returns a dictionary with adjacent tiles to the specified indices.
         /// </summary>
         /// <param name="indices"></param>
@@ -83,5 +69,9 @@ namespace Content.Server.Interfaces.Atmos
         Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices);
 
         void Update(float frameTime);
+        void AddActiveTile(MapIndices indices);
+        void RemoveActiveTile(MapIndices indices);
+        void AddExcitedGroup(WeakReference<ExcitedGroup> excitedGroup);
+        void RemoveExcitedGroup(WeakReference<ExcitedGroup> excitedGroup);
     }
 }

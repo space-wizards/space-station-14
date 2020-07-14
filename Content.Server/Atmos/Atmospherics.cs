@@ -48,9 +48,19 @@
         public const float OpenHeatTransferCoefficient = 0.4f;
 
         /// <summary>
+        ///     Ratio of air that must move to/from a tile to reset group processing
+        /// </summary>
+        public const float MinimumAirRatioToSuspend = 0.1f;
+
+        /// <summary>
         ///     Minimum ratio of air that must move to/from a tile
         /// </summary>
         public const float MinimumAirRatioToMove = 0.001f;
+
+        /// <summary>
+        ///     Minimum amount of air that has to move before a group processing can be suspended
+        /// </summary>
+        public const float MinimumAirToSuspend = (MolesCellStandard*MinimumAirRatioToSuspend);
 
         public const float MinimumTemperatureToMove = (T20C + 100f);
 

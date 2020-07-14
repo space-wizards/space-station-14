@@ -14,7 +14,7 @@ namespace Content.Server.Atmos
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
         private readonly IMapGrid _grid;
-        private readonly HashSet<ZoneAtmosphere> _zones = new HashSet<ZoneAtmosphere>();
+        private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>();
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>();
 
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
@@ -28,7 +28,6 @@ namespace Content.Server.Atmos
         public void Initialize()
         {
             RepopulateTiles();
-            RepopulateZones();
         }
 
         private void RepopulateTiles()
@@ -38,23 +37,6 @@ namespace Content.Server.Atmos
             foreach (var tile in _grid.GetAllTiles())
             {
                 _tiles.Add(tile.GridIndices, new TileAtmosphere(tile, GetVolumeForCells(1)));
-            }
-        }
-
-        private void RepopulateZones()
-        {
-            foreach (var (indices, tile) in _tiles)
-            {
-                if (tile.Zone != null)
-                    continue;
-
-                var tiles = FindConnectedTiles(indices);
-                var zone = new ZoneAtmosphere(this, tiles);
-
-                foreach (var tileIndices in tiles)
-                {
-                    _tiles[tileIndices].Zone = zone;
-                }
             }
         }
 
@@ -89,9 +71,9 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
-        public ZoneAtmosphere GetZone(MapIndices indices)
+        public ExcitedGroup GetZone(MapIndices indices)
         {
-            return !_tiles.TryGetValue(indices, out var tile) ? null : tile.Zone;
+            return !_tiles.TryGetValue(indices, out var tile) ? null : tile.ExcitedGroup;
         }
 
         /// <inheritdoc />
@@ -174,9 +156,9 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
-        public Dictionary<Direction, ZoneAtmosphere> GetAdjacentZones(MapIndices indices)
+        public Dictionary<Direction, ExcitedGroup> GetAdjacentZones(MapIndices indices)
         {
-            var sides = new Dictionary<Direction, ZoneAtmosphere>();
+            var sides = new Dictionary<Direction, ExcitedGroup>();
             foreach (var dir in Cardinal())
             {
                 var side = indices.Offset(dir);
