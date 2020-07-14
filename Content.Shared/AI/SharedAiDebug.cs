@@ -58,7 +58,6 @@ namespace Content.Shared.AI
             public Queue<TileRef> Route { get; }
             public Dictionary<TileRef, TileRef> CameFrom { get; }
             public Dictionary<TileRef, float> GScores { get; }
-            public HashSet<TileRef> ClosedTiles { get; }
             public double TimeTaken { get; }
 
             public AStarRouteDebug(
@@ -66,14 +65,12 @@ namespace Content.Shared.AI
                 Queue<TileRef> route,
                 Dictionary<TileRef, TileRef> cameFrom,
                 Dictionary<TileRef, float> gScores,
-                HashSet<TileRef> closedTiles,
                 double timeTaken)
             {
                 EntityUid = uid;
                 Route = route;
                 CameFrom = cameFrom;
                 GScores = gScores;
-                ClosedTiles = closedTiles;
                 TimeTaken = timeTaken;
             }
         }
@@ -105,7 +102,6 @@ namespace Content.Shared.AI
             public readonly IEnumerable<Vector2> Route;
             public readonly Dictionary<Vector2, Vector2> CameFrom;
             public readonly Dictionary<Vector2, float> GScores;
-            public readonly List<Vector2> ClosedTiles;
             public double TimeTaken;
 
             public AStarRouteMessage(
@@ -113,14 +109,12 @@ namespace Content.Shared.AI
                 IEnumerable<Vector2> route,
                 Dictionary<Vector2, Vector2> cameFrom,
                 Dictionary<Vector2, float> gScores,
-                List<Vector2> closedTiles,
                 double timeTaken)
             {
                 EntityUid = uid;
                 Route = route;
                 CameFrom = cameFrom;
                 GScores = gScores;
-                ClosedTiles = closedTiles;
                 TimeTaken = timeTaken;
             }
         }
@@ -143,6 +137,35 @@ namespace Content.Shared.AI
                 Route = route;
                 JumpNodes = jumpNodes;
                 TimeTaken = timeTaken;
+            }
+        }
+        #endregion
+        #region Reachable Debug
+        [Serializable, NetSerializable]
+        public sealed class ReachableChunkRegionsDebugMessage : EntitySystemMessage
+        {
+            public GridId GridId { get; }
+            public Dictionary<int, Dictionary<int, List<Vector2>>> Regions { get; }
+
+            public ReachableChunkRegionsDebugMessage(GridId gridId, Dictionary<int, Dictionary<int, List<Vector2>>> regions)
+            {
+                GridId = gridId;
+                Regions = regions;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class ReachableCacheDebugMessage : EntitySystemMessage
+        {
+            public GridId GridId { get; }
+            public Dictionary<int, List<Vector2>> Regions { get; }
+            public bool Cached { get; }
+
+            public ReachableCacheDebugMessage(GridId gridId, Dictionary<int, List<Vector2>> regions, bool cached)
+            {
+                GridId = gridId;
+                Regions = regions;
+                Cached = cached;
             }
         }
         #endregion

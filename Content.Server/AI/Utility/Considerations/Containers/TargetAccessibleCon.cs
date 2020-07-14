@@ -1,13 +1,18 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Movement;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.AI.Utility.Considerations.Containers
 {
     /// <summary>
     /// Returns 1.0f if the item is freely accessible (e.g. in storage we can open, on ground, etc.)
+    /// This can be expensive so consider using this last for the considerations
     /// </summary>
     public sealed class TargetAccessibleCon : Consideration
     {
@@ -36,7 +41,9 @@ namespace Content.Server.AI.Utility.Considerations.Containers
                 }
             }
 
-            return 1.0f;
+            var owner = context.GetState<SelfState>().GetValue();
+
+            return EntitySystem.Get<AiReachableSystem>().CanAccess(owner, target, SharedInteractionSystem.InteractionRange) ? 1.0f : 0.0f;
         }
     }
 }
