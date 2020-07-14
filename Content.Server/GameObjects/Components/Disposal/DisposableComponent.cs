@@ -1,13 +1,8 @@
 ﻿#nullable enable
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
@@ -22,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent? PreviousTube { get; set; }
 
         [ViewVariables]
-        public IDisposalTubeComponent? CurrentTube { get; set; }
+        private IDisposalTubeComponent? CurrentTube { get; set; }
 
         [ViewVariables]
         public IDisposalTubeComponent? NextTube { get; set; }

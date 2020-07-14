@@ -21,6 +21,8 @@ namespace Content.Server.GameObjects.Components.Disposal
     // TODO: Make unanchored pipes pullable
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastClang;
 
@@ -120,7 +122,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        // TODO: Remove from DisposableComponent NextTube/PreviousTube/CurrentTube
         private void Disconnect()
         {
             foreach (var entity in Contents.ContainedEntities)
@@ -229,7 +230,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (!Owner.GetComponent<PhysicsComponent>().Anchored) // TODO
+            if (!Owner.GetComponent<PhysicsComponent>().Anchored)
             {
                 return;
             }
@@ -259,13 +260,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             switch (message)
             {
                 case RelayMovementEntityMessage _:
-                    var timing = IoCManager.Resolve<IGameTiming>();
-                    if (timing.CurTime < _lastClang + ClangDelay)
+                    if (_gameTiming.CurTime < _lastClang + ClangDelay)
                     {
                         break;
                     }
 
-                    _lastClang = timing.CurTime;
+                    _lastClang = _gameTiming.CurTime;
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
                     break;
             }

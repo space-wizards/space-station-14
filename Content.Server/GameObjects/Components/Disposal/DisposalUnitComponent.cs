@@ -84,7 +84,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            // TODO connections
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var entry = snapGrid
                 .GetLocal()
