@@ -49,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _powerWiresPulsed = value;
+                UpdateWiresStatus();
                 UpdatePowerCutStatus();
             }
         }
@@ -108,16 +109,19 @@ namespace Content.Server.GameObjects.Components.Doors
 
             var timingStatus =
                 new StatusLightData(Color.Orange,   !_autoClose ? StatusLightState.Off :
-                                                    !NormalCloseSpeed ? StatusLightState.BlinkingFast :
+                                                    !NormalCloseSpeed ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
-                                                    "TIME"); 
+                                                    "TIME");
+
+            var safetyStatus =
+                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
 
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
             _wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
             _wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
             _wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            _wires.SetStatus(5, new StatusLightData(Color.Red, StatusLightState.Off, "SAFE"));
+            _wires.SetStatus(5, safetyStatus);
             /*
             _wires.SetStatus(6, powerLight);
             _wires.SetStatus(7, powerLight);
@@ -225,12 +229,22 @@ namespace Content.Server.GameObjects.Components.Doors
             /// </summary>
             BoltLight,
 
+            // Placeholder for when AI is implemented
+            AIControl,
+
             /// <summary>
             /// Pulsing causes door to close faster
             /// Cutting disables door timer, causing door to stop closing automatically
             /// Mending restores door timer
             /// </summary>
             Timing,
+
+            /// <summary>
+            /// Pulsing toggles safety
+            /// Cutting disables safety
+            /// Mending enables safety
+            /// </summary>
+            Safety,
         }
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
@@ -240,7 +254,7 @@ namespace Content.Server.GameObjects.Components.Doors
             builder.CreateWire(Wires.Bolts);
             builder.CreateWire(Wires.BoltLight);
             builder.CreateWire(Wires.Timing);
-            builder.CreateWire(5);
+            builder.CreateWire(Wires.Safety);
             /*
             builder.CreateWire(6);
             builder.CreateWire(7);
@@ -287,6 +301,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.Timing:
                         NormalCloseSpeed = !NormalCloseSpeed;
                         break;
+                    case Wires.Safety:
+                        Safety = !Safety;
+                        break;
                 }
             }
 
@@ -306,6 +323,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.Timing:
                         _autoClose = true;
                         break;
+                    case Wires.Safety:
+                        Safety = true;
+                        break;
                 }
             }
 
@@ -321,6 +341,9 @@ namespace Content.Server.GameObjects.Components.Doors
                         break;
                     case Wires.Timing:
                         _autoClose = false;
+                        break;
+                    case Wires.Safety:
+                        Safety = false;
                         break;
                 }
             }

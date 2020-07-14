@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
@@ -41,6 +43,10 @@ namespace Content.Server.GameObjects
         private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
         private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
         private static readonly TimeSpan DenyTime = TimeSpan.FromSeconds(0.45f);
+
+        private static readonly int DoorCrushDamage = 15;
+        private static readonly float DoorStunTime = 5f;
+        protected bool Safety = true;
 
         [ViewVariables]
         private bool _occludes;
@@ -194,10 +200,40 @@ namespace Content.Server.GameObjects
 
         public bool Close()
         {
-            if (collidableComponent.IsColliding(Vector2.Zero, false))
+            // Check if collides with something
+            var collidesWith = collidableComponent.GetCollidingEntities(Vector2.Zero, false);
+            if (collidesWith.Count() != 0)
             {
-                // Do nothing, somebody's in the door.
-                return false;
+                if (Safety)
+                {
+                    // Do nothing, somebody's in the door.
+                    return false;
+                }
+
+                // Crush
+                bool hitSomeone = false;
+                foreach (var e in collidesWith)
+                {
+                    if (!e.TryGetComponent(out StunnableComponent stun)
+                        || !e.TryGetComponent(out DamageableComponent damage)
+                        || !e.TryGetComponent(out ICollidableComponent otherBody)
+                        || !Owner.TryGetComponent(out ICollidableComponent body))
+                        continue;
+
+                    var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+
+                    if (percentage < 0.1f)
+                        continue;
+
+                    damage.TakeDamage(Shared.GameObjects.DamageType.Brute, DoorCrushDamage);
+                    stun.Paralyze(DoorStunTime);
+                    hitSomeone = true;
+                }
+                // If we hit someone, open up after stun (opens right when stun ends)
+                if (hitSomeone)
+                {
+                    Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, () => Open());
+                }
             }
 
             State = DoorState.Closing;
