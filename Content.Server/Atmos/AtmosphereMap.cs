@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Content.Server.Atmos
 {
@@ -19,8 +20,8 @@ namespace Content.Server.Atmos
     internal class AtmosphereMap : IAtmosphereMap, IPostInjectInit
     {
 #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IPauseManager _pauseManager;
+        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager;
+        [Robust.Shared.IoC.Dependency] private readonly IPauseManager _pauseManager;
 #pragma warning restore 649
 
         private readonly Dictionary<GridId, GridAtmosphereManager> _gridAtmosphereManagers =
@@ -28,6 +29,8 @@ namespace Content.Server.Atmos
 
         public void PostInject()
         {
+            _mapManager.OnGridCreated += OnGridCreated;
+            _mapManager.OnGridRemoved += OnGridRemoved;
             _mapManager.TileChanged += AtmosphereMapOnTileChanged;
         }
 
@@ -44,12 +47,6 @@ namespace Content.Server.Atmos
             return manager;
         }
 
-        public IAtmosphere GetAtmosphere(ITransformComponent position)
-        {
-            var indices = _mapManager.GetGrid(position.GridID).SnapGridCellFor(position.GridPosition, SnapGridOffset.Center);
-            return GetGridAtmosphereManager(position.GridID).GetAtmosphere(indices);
-        }
-
         public void Update(float frameTime)
         {
             foreach (var (gridId, atmos) in _gridAtmosphereManagers)
@@ -59,6 +56,20 @@ namespace Content.Server.Atmos
 
                 atmos.Update(frameTime);
             }
+        }
+
+        private void OnGridCreated(GridId gridId)
+        {
+            var gam = new GridAtmosphereManager(_mapManager.GetGrid(gridId));
+            _gridAtmosphereManagers[gridId] = gam;
+            gam.Initialize();
+        }
+
+        private void OnGridRemoved(GridId gridId)
+        {
+            if (!_gridAtmosphereManagers.TryGetValue(gridId, out var gam)) return;
+            gam.Dispose();
+            _gridAtmosphereManagers.Remove(gridId);
         }
 
         private void AtmosphereMapOnTileChanged(object sender, TileChangedEventArgs eventArgs)

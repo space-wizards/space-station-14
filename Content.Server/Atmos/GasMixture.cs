@@ -15,7 +15,7 @@ namespace Content.Server.Atmos
     /// <summary>
     /// A general-purposes, variable volume gas mixture.
     /// </summary>
-    public class GasMixture : IAtmosphere
+    public class GasMixture
     {
         private static GasPrototype GetGas(string gasId) =>
             IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(gasId);

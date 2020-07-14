@@ -1,5 +1,8 @@
-﻿using Content.Server.Atmos;
+﻿using System;
+using System.Collections.Generic;
+using Content.Server.Atmos;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Interfaces.Atmos
 {
@@ -15,24 +18,70 @@ namespace Content.Server.Interfaces.Atmos
     /// without passing through any solid walls, or passing through airlocks
     /// and similar objects which can block gas flow.
     /// </remarks>
-    public interface IGridAtmosphereManager
+    public interface IGridAtmosphereManager : IDisposable
     {
         /// <summary>
-        /// Get the atmosphere at a position on the grid
+        /// Get the zone at a position on the grid or null
         /// </summary>
-        /// <remarks>
-        /// This operation may perform expensive tasks (such as finding the outline of
-        /// the room), however repeat calls must be fast.
-        /// </remarks>
         /// <param name="indices">The position on the grid</param>
-        /// <returns>The relevant atmosphere, or <code>null</code> if this cell
-        /// is connected to space</returns>
-        IAtmosphere GetAtmosphere(MapIndices indices);
+        /// <returns>The relevant zone, or <code>null</code> if there's no zone there.</returns>
+        ZoneAtmosphere GetZone(MapIndices indices);
+
+        /// <summary>
+        /// Get the tile at a position on the grid or null
+        /// </summary>
+        /// <param name="indices">The position on the grid</param>
+        /// <returns>The relevant tile, or <code>null</code> if there's no tile there.</returns>
+        TileAtmosphere GetTile(MapIndices indices);
 
         /// <summary>
         /// Notify the atmosphere system that something at a given position may have changed.
         /// </summary>
-        /// <param name="indices"></param>
+        /// <param name="indices">Position</param>
         void Invalidate(MapIndices indices);
+
+        /// <summary>
+        ///     Gets the volume in liters for a number of cells.
+        /// </summary>
+        /// <param name="cellCount">Number of cells</param>
+        /// <returns>Volume in liters</returns>
+        float GetVolumeForCells(int cellCount);
+
+        /// <summary>
+        ///     Returns whether the tile is zone blocked (meaning it can separate two zones)
+        /// </summary>
+        /// <param name="indices">Position</param>
+        /// <returns></returns>
+        bool IsZoneBlocked(MapIndices indices);
+
+        /// <summary>
+        ///     Returns whether the tile is air blocked (meaning no air can flow through it)
+        /// </summary>
+        /// <param name="indices">Position</param>
+        /// <returns></returns>
+        bool IsAirBlocked(MapIndices indices);
+
+        /// <summary>
+        ///     Returns whether the tile is space.
+        /// </summary>
+        /// <param name="indices">Position</param>
+        /// <returns></returns>
+        bool IsSpace(MapIndices indices);
+
+        /// <summary>
+        ///     Returns a dictionary with adjacent zones to the specified indices.
+        /// </summary>
+        /// <param name="indices"></param>
+        /// <returns></returns>
+        Dictionary<Direction, ZoneAtmosphere> GetAdjacentZones(MapIndices indices);
+
+        /// <summary>
+        ///     Returns a dictionary with adjacent tiles to the specified indices.
+        /// </summary>
+        /// <param name="indices"></param>
+        /// <returns></returns>
+        Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices);
+
+        void Update(float frameTime);
     }
 }

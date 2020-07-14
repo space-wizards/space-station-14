@@ -57,14 +57,14 @@ namespace Content.Server.Debugging
             var gridAtmosphere = _atmosphereMap.GetGridAtmosphereManager(gridId);
 
             var newPos = _mapManager.GetGrid(gridId).SnapGridCellFor(@event.NewPosition, SnapGridOffset.Center);
-            var currentZone = (ZoneAtmosphere) gridAtmosphere.GetAtmosphere(newPos);
+            var currentZone = gridAtmosphere.GetZone(newPos);
 
             if (currentZone == null || object.ReferenceEquals(currentZone, _lastSentAtmosphere))
                 return;
 
             var zoneMessage = new ZoneInfo();
-            zoneMessage.Cells = currentZone.Cells.ToArray();
-            zoneMessage.Contents = currentZone.Gasses.ToArray();
+            zoneMessage.Cells = currentZone.TileIndices.ToArray();
+            zoneMessage.Contents = null;
 
             RaiseNetworkEvent(zoneMessage, actor.playerSession.ConnectedClient);
 

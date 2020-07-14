@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
@@ -6,36 +7,20 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos
 {
-    internal class ZoneAtmosphere : IAtmosphere
+    public class ZoneAtmosphere
     {
-        private readonly GridAtmosphereManager _parentGridManager;
-        private readonly Dictionary<MapIndices, GasMixture> _cells;
-        private GasProperty[] _gasses;
-        private float _moles;
-        private float _pressure;
-        private float _temperature;
+        private readonly IGridAtmosphereManager _parentGridManager;
+        private readonly HashSet<MapIndices> _tileIndices;
 
         /// <summary>
-        /// The collection of grid cells which are a part of this zone.
+        /// The collection of grid tile indices which are a part of this zone.
         /// </summary>
         /// <remarks>
         /// This should be kept in sync with the corresponding entries in <see cref="GridAtmosphereManager"/>.
         /// </remarks>
-        public IEnumerable<MapIndices> Cells => _cells.Keys;
+        public IEnumerable<MapIndices> TileIndices => _tileIndices;
 
-        public IReadOnlyDictionary<MapIndices, GasMixture> CellMixtures => _cells;
-
-        public GasProperty[] Gasses => _gasses;
-
-        public float Moles => _moles;
-
-        public float Pressure => _pressure;
-
-        public float Temperature
-        {
-            get => _temperature;
-            set => _temperature = value;
-        }
+        public float Pressure { get; private set; }
 
         /// <summary>
         /// The volume of this zone.
@@ -43,19 +28,12 @@ namespace Content.Server.Atmos
         /// <remarks>
         /// This is directly calculated from the number of cells in the zone.
         /// </remarks>
-        public float Volume => _parentGridManager.GetVolumeForCells(_cells.Count);
+        public float Volume { get; private set; }
 
-        public ZoneAtmosphere(GridAtmosphereManager parent, IDictionary<MapIndices, GasMixture> cells)
+        public ZoneAtmosphere(IGridAtmosphereManager parent, IEnumerable<MapIndices> cells)
         {
             _parentGridManager = parent;
-            _cells = new Dictionary<MapIndices, GasMixture>(cells);
-            UpdateCached();
-        }
-
-        public ZoneAtmosphere(GridAtmosphereManager parent, IEnumerable<MapIndices> cells)
-        {
-            _parentGridManager = parent;
-            _cells = new Dictionary<MapIndices, GasMixture>(cells.ToDictionary(x => x, x => new GasMixture(_parentGridManager.GetVolumeForCells(1))));
+            _tileIndices = new HashSet<MapIndices>(cells);
             UpdateCached();
         }
 
@@ -66,9 +44,9 @@ namespace Content.Server.Atmos
         /// This does not update the parent <see cref="GridAtmosphereManager"/>.
         /// </remarks>
         /// <param name="cell">The indices of the cell to add.</param>
-        public void AddCell(MapIndices cell, GasMixture mixture)
+        public void AddCell(MapIndices cell)
         {
-            _cells.Add(cell, mixture);
+            _tileIndices.Add(cell);
             UpdateCached();
         }
 
@@ -81,65 +59,14 @@ namespace Content.Server.Atmos
         /// <param name="cell">The indices of the cell to remove.</param>
         public void RemoveCell(MapIndices cell)
         {
-            _cells.Remove(cell);
+            _tileIndices.Remove(cell);
             UpdateCached();
         }
 
-        public GasMixture Remove(float amount)
+        private void UpdateCached()
         {
-            return RemoveRatio(amount / Moles);
-        }
-
-        public GasMixture RemoveRatio(float ratio)
-        {
-            var mixture = new GasMixture(Volume);
-
-            foreach (var (_, cellMixture) in _cells)
-            {
-                mixture.Merge(cellMixture.RemoveRatio(ratio));
-            }
-
-            UpdateCached();
-
-            return mixture;
-        }
-
-        public void Merge(ZoneAtmosphere atmosphere)
-        {
-            Merge(atmosphere.AsGasMixture());
-            UpdateCached();
-        }
-
-        public void Merge(GasMixture mixture)
-        {
-            var ratio = 1 / _cells.Count;
-
-            foreach (var (_, cellMix) in _cells)
-            {
-                cellMix.Merge(mixture.RemoveRatio(ratio));
-            }
-
-            UpdateCached();
-        }
-
-        public void UpdateCached()
-        {
-            var mix = AsGasMixture();
-            _gasses = mix.Gasses;
-            _pressure = mix.Pressure;
-            _temperature = mix.Temperature;
-            _moles = mix.Moles;
-        }
-
-        public GasMixture AsGasMixture()
-        {
-            var mixture = new GasMixture(Volume);
-            foreach (var (_, tileMix) in _cells)
-            {
-                mixture.Merge(tileMix);
-            }
-
-            return mixture;
+            Volume = _parentGridManager.GetVolumeForCells(_tileIndices.Count);
+            // TODO ATMOS Calculate pressure
         }
     }
 }

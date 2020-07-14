@@ -24,22 +24,6 @@ namespace Content.Server.Interfaces.Atmos
         IGridAtmosphereManager GetGridAtmosphereManager(GridId grid);
 
         /// <summary>
-        /// Get the atmosphere for a given transform.
-        /// </summary>
-        /// <remarks>
-        /// This must be functionally equivalent to:
-        /// <code>
-        /// GetGridAtmosphereManager(position.GridID).GetAtmosphere(position.GridPosition);
-        /// </code>
-        /// This method is provided since looking up the atmosphere of an entity is a very
-        /// common operation, and the implementation may wish to apply optimisations for this
-        /// use-case.
-        /// </remarks>
-        /// <param name="position">The position at which to find the atmosphere</param>
-        /// <returns>The atmosphere at the given point, or <code>null</code> in the vacuum of space</returns>
-        IAtmosphere GetAtmosphere(ITransformComponent position);
-
-        /// <summary>
         /// Update all the ship's atmospheres, both for reactions and updating modified rooms.
         /// </summary>
         /// <param name="frameTime">The time since the last update</param>
