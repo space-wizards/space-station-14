@@ -59,7 +59,7 @@
             "IdCardConsole",
             "Airlock",
             "MedicalScanner",
-            "WirePlacer",
+            "ConduitPlacer",
             "Drink",
             "Food",
             "FoodContainer",

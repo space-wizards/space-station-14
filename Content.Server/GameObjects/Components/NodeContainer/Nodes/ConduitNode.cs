@@ -8,12 +8,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     public abstract class ConduitNode : Node
     {
         [ViewVariables]
-        public ConduitLayer ConduitLayer { get; private set; }
+        public ConduitLayer ConduitLayer { get => _conduitLayer; set => SetConduitLayer(value); }
+        private ConduitLayer _conduitLayer;
+
+        private void SetConduitLayer(ConduitLayer conduitLayer)
+        {
+            _conduitLayer = conduitLayer; //todo - make work
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => ConduitLayer, "conduitLayer", ConduitLayer.First);
+            serializer.DataField(ref _conduitLayer, "conduitLayer", ConduitLayer.First);
         }
 
         protected override IEnumerable<Node> GetReachableNodes()

@@ -20,19 +20,10 @@ namespace Content.Server.GameObjects.Components.Power
         [ViewVariables]
         private string _wireDroppedOnCutPrototype;
 
-        /// <summary>
-        ///     Checked by <see cref="WirePlacerComponent"/> to determine if there is
-        ///     already a wire of a type on a tile.
-        /// </summary>
-        [ViewVariables]
-        public WireType WireType => _wireType;
-        private WireType _wireType;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _wireDroppedOnCutPrototype, "wireDroppedOnCutPrototype", "HVWireStack1");
-            serializer.DataField(ref _wireType, "wireType", WireType.HighVoltage);
         }
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
@@ -48,12 +39,5 @@ namespace Content.Server.GameObjects.Components.Power
 
             return true;
         }
-    }
-
-    public enum WireType
-    {
-        HighVoltage,
-        MediumVoltage,
-        Apc,
     }
 }

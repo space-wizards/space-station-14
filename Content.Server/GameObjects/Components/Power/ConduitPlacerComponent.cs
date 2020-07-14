@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer;
-using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
@@ -11,13 +10,12 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Power
 {
     [RegisterComponent]
-    internal class WirePlacerComponent : Component, IAfterInteract
+    public class ConduitPlacerComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerEntityManager _entityManager;
@@ -25,41 +23,54 @@ namespace Content.Server.GameObjects.Components.Power
 #pragma warning restore 649
 
         /// <inheritdoc />
-        public override string Name => "WirePlacer";
+        public override string Name => "ConduitPlacer";
 
         [ViewVariables]
-        private string _wirePrototypeID;
+        private string _conduitPrototypeID;
 
-        [ViewVariables]
-        private WireType _blockingWireType;
+        [ViewVariables(VVAccess.ReadWrite)]
+        private ConduitLayer _blockingConduitLayer;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _wirePrototypeID, "wirePrototypeID", "HVWire");
-            serializer.DataField(ref _blockingWireType, "blockingWireType", WireType.HighVoltage);
+            serializer.DataField(ref _conduitPrototypeID, "conduitPrototypeID", "HVWire");
+            serializer.DataField(ref _blockingConduitLayer, "blockingConduitLayer", ConduitLayer.First);
         }
 
         /// <inheritdoc />
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
-            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+            if (!InteractionChecks.InRangeUnobstructed(eventArgs))
+            {
                 return;
+            }
+            if(!_mapManager.TryGetGrid(eventArgs.ClickLocation.GridID, out var grid))
+            {
+                return;
+            }
             var snapPos = grid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
             var snapCell = grid.GetSnapGridCell(snapPos, SnapGridOffset.Center);
-            if(grid.GetTileRef(snapPos).Tile.IsEmpty)
+            if (grid.GetTileRef(snapPos).Tile.IsEmpty)
+            {
                 return;
+            }
             foreach (var snapComp in snapCell)
             {
-                if (snapComp.Owner.TryGetComponent<WireComponent>(out var wire) && wire.WireType == _blockingWireType)
+                if (snapComp.Owner.TryGetComponent<NodeContainerComponent>(out var container) &&
+                    container.Nodes.OfType<ConduitNode>().Select(conduitNode => conduitNode.ConduitLayer).Contains(_blockingConduitLayer))
                 {
                     return;
                 }
             }
             if (Owner.TryGetComponent(out StackComponent stack) && !stack.Use(1))
                 return;
-            _entityManager.SpawnEntity(_wirePrototypeID, grid.GridTileToLocal(snapPos));
+            var conduitEntity = _entityManager.SpawnEntity(_conduitPrototypeID, grid.GridTileToLocal(snapPos));
+            var conduitNodes = conduitEntity.GetComponent<NodeContainerComponent>().Nodes.OfType<ConduitNode>();
+            foreach (var conduitNode in conduitNodes)
+            {
+                conduitNode.ConduitLayer = _blockingConduitLayer;
+            }
         }
     }
 }
