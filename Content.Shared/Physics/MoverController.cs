@@ -1,4 +1,5 @@
-using Content.Shared.GameObjects.Components.Movement;
+﻿using Content.Shared.GameObjects.Components.Movement;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -9,7 +10,7 @@ namespace Content.Shared.Physics
     public class MoverController : VirtualController
     {
         private Vector2 _velocity;
-        private SharedPhysicsComponent _component = null;
+        private PhysicsComponent _component = null;
 
         public Vector2 Velocity
         {
@@ -17,7 +18,7 @@ namespace Content.Shared.Physics
             set => _velocity = value;
         }
 
-        public override SharedPhysicsComponent ControlledComponent
+        public override PhysicsComponent ControlledComponent
         {
             set => _component = value;
         }

@@ -26,3 +26,12 @@
   electricresistivity: 8.0e-9
   thermalconductivity: 30
   specificheat: 1000
+
+- type: material
+  id: phoron
+  name: phoron
+  icon: Objects/Materials/phoron_sheet.png
+  density: 200
+  electricresistivity: 2.1e-1
+  thermalconductivity: 80
+  specificheat: 2000

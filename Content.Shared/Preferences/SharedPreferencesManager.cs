@@ -30,14 +30,13 @@ namespace Content.Shared.Preferences
             {
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 var length = buffer.ReadInt32();
-                var bytes = buffer.ReadBytes(length);
-                using (var stream = new MemoryStream(bytes))
+                using (var stream = buffer.ReadAsStream(length))
                 {
                     Preferences = serializer.Deserialize<PlayerPreferences>(stream);
                 }
+
                 length = buffer.ReadInt32();
-                bytes = buffer.ReadBytes(length);
-                using (var stream = new MemoryStream(bytes))
+                using (var stream = buffer.ReadAsStream(length))
                 {
                     Settings = serializer.Deserialize<GameSettings>(stream);
                 }
@@ -110,11 +109,8 @@ namespace Content.Shared.Preferences
                 Slot = buffer.ReadInt32();
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
                 var length = buffer.ReadInt32();
-                var bytes = buffer.ReadBytes(length);
-                using (var stream = new MemoryStream(bytes))
-                {
-                    Profile = serializer.Deserialize<ICharacterProfile>(stream);
-                }
+                using var stream = buffer.ReadAsStream(length);
+                Profile = serializer.Deserialize<ICharacterProfile>(stream);
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)

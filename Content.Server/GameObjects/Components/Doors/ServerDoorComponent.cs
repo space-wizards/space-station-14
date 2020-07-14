@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
@@ -96,6 +96,15 @@ namespace Content.Server.GameObjects
             }
             if (entity.HasComponent(typeof(SpeciesComponent)))
             {
+                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
+
+                // TODO: temporary hack to fix the physics system raising collision events akwardly.
+                // E.g. when moving parallel to a door by going off the side of a wall.
+                var (walking, sprinting) = mover.VelocityDir;
+                // Also TODO: walking and sprint dir are added together here
+                // instead of calculating their contribution correctly.
+                var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
+                if (dotProduct <= -0.9f)
                     TryOpen(entity);
             }
         }
@@ -147,13 +156,15 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                collidableComponent.CanCollide = false;
+                collidableComponent.Hard = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
                 State = DoorState.Open;
                 SetAppearance(DoorVisualState.Open);
             }, _cancellationTokenSource.Token);
+
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, false));
         }
 
         public virtual bool CanClose()
@@ -183,14 +194,14 @@ namespace Content.Server.GameObjects
 
         public bool Close()
         {
-            if (collidableComponent.IsColliding(Vector2.Zero))
+            if (collidableComponent.IsColliding(Vector2.Zero, false))
             {
                 // Do nothing, somebody's in the door.
                 return false;
             }
 
             State = DoorState.Closing;
-            collidableComponent.CanCollide = true;
+            collidableComponent.Hard = true;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
 
@@ -203,11 +214,17 @@ namespace Content.Server.GameObjects
                     occluder.Enabled = true;
                 }
             }, _cancellationTokenSource.Token);
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, true));
             return true;
         }
 
         public virtual void Deny()
         {
+            if (State == DoorState.Open)
+            {
+                return;
+            }
+
             SetAppearance(DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
             {

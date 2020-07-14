@@ -34,7 +34,7 @@ binds:
 - function: MoveDown
   type: State
   key: S
-- function: Run
+- function: Walk
   type: State
   key: Shift
 - function: ShowEscapeMenu
@@ -43,6 +43,12 @@ binds:
 - function: FocusChatWindow
   type: State
   key: T
+- function: FocusOOCWindow
+  type: State
+  key: LBracket
+- function: FocusAdminChatWindow
+  type: State
+  key: RBracket
 - function: EditorLinePlace
   type: State
   key: MouseLeft

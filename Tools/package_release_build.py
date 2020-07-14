@@ -75,12 +75,13 @@ WINDOWS_NATIVES = {
 
 LINUX_NATIVES = {
     "libglfw.so.3",
-    "libswnfd.so"
+    "libswnfd.so",
 }
 
 MAC_NATIVES = {
     "libglfw.3.dylib",
-    "libswnfd.dylib"
+    "libswnfd.dylib",
+    "libfreetype.6.dylib"
 }
 
 SERVER_EXTRA_CONTENT_ASSEMBLIES = [

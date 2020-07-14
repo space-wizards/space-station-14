@@ -3,5 +3,5 @@
 # you can do a negation with !.
 *.import
 # Negation would be like this:
-#!/Textures/UserInterface/handsbox.png.import
+#!/Textures/Interface/handsbox.png.import
 /I_MADE_THE_SYMLINK

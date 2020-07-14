@@ -60,7 +60,11 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleDirtyEvent(SubFloorHideDirtyEvent ev)
         {
-            var grid = _mapManager.GetGrid(ev.Sender.Transform.GridID);
+            if (!_mapManager.TryGetGrid(ev.Sender.Transform.GridID, out var grid))
+            {
+                return;
+            }
+
             var indices = grid.WorldToTile(ev.Sender.Transform.WorldPosition);
             UpdateTile(grid, indices);
         }

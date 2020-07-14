@@ -69,6 +69,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{DDD55F86
 		RobustToolbox\Tools\download_natives.py = RobustToolbox\Tools\download_natives.py
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lidgren.Network.UnitTests", "RobustToolbox\Lidgren.Network.UnitTests\Lidgren.Network.UnitTests.csproj", "{682E3140-4F27-4ECB-8029-D436319DDC48}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F0ADA779-40B8-4F7E-BA6C-CDB19F3065D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{682E3140-4F27-4ECB-8029-D436319DDC48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{682E3140-4F27-4ECB-8029-D436319DDC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{682E3140-4F27-4ECB-8029-D436319DDC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{682E3140-4F27-4ECB-8029-D436319DDC48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,6 +159,7 @@ Global
 		{50404922-9637-4394-BF59-165D0850ADC8} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{41B450C0-A361-4CD7-8121-7072B8995CFC} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 		{DDD55F86-0406-42E5-8443-93EDC6BB2D75} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
+		{682E3140-4F27-4ECB-8029-D436319DDC48} = {83B4CBBA-547A-42F0-A7CD-8A67D93196CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA37ED9F-F8D6-468E-A101-658AD605B09A}

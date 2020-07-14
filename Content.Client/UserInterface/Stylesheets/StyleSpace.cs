@@ -5,6 +5,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.UserInterface.Stylesheets
 {
@@ -21,8 +22,8 @@ namespace Content.Client.UserInterface.Stylesheets
 
         public StyleSpace(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Nano/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansBold16 = resCache.GetFont("/Nano/NotoSans/NotoSans-Bold.ttf", 16);
+            var notoSans10 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Regular.ttf", 10);
+            var notoSansBold16 = resCache.GetFont("/Textures/Interface/Nano/NotoSans/NotoSans-Bold.ttf", 16);
 
             // Button styles.
             var buttonNormal = new StyleBoxTexture(BaseButton)
@@ -48,59 +49,44 @@ namespace Content.Client.UserInterface.Stylesheets
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new StyleRule[]
             {
-                // Big Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelHeading}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSansBold16),
-                    new StyleProperty(Label.StylePropertyFontColor, SpaceRed),
-                }),
+                Element<Label>().Class(StyleClassLabelHeading)
+                    .Prop(Label.StylePropertyFont, notoSansBold16)
+                    .Prop(Label.StylePropertyFontColor, SpaceRed),
 
-                // Small Label
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassLabelSubText}, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyFont, notoSans10),
-                    new StyleProperty(Label.StylePropertyFontColor, Color.DarkGray),
-                }),
+                Element<Label>().Class(StyleClassLabelSubText)
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.DarkGray),
 
-                new StyleRule(new SelectorElement(typeof(PanelContainer), new[] {ClassHighDivider}, null, null), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel,
-                        new StyleBoxFlat
-                        {
-                            BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
-                        }),
-                }),
-
-                // Regular buttons!
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonNormal),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonHover),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonPressed),
-                }),
-                new StyleRule(new SelectorElement(typeof(ContainerButton), new[] { ContainerButton.StyleClassButton }, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonDisabled),
-                }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] { Button.StyleClassButton }, null, null), new[]
-                {
-                    new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
-                }),
-
-                new StyleRule(new SelectorChild(
-                        new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),
-                        new SelectorElement(typeof(Label), null, null, null)),
-                    new[]
+                Element<PanelContainer>().Class(ClassHighDivider)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
                     {
-                        new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
+                        BackgroundColor = SpaceRed, ContentMarginBottomOverride = 2, ContentMarginLeftOverride = 2
                     }),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonNormal),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonHover),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonDisabled),
+
+                Element<Label>().Class(ContainerButton.StyleClassButton)
+                    .Prop(Label.StylePropertyAlignMode, Label.AlignMode.Center),
+
+                Child()
+                    .Parent(Element<Button>().Class(ContainerButton.StylePseudoClassDisabled))
+                    .Child(Element<Label>())
+                    .Prop("font-color", Color.FromHex("#E5E5E581")),
+
             }).ToList());
         }
     }

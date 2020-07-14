@@ -8,9 +8,6 @@ namespace Content.Client.UserInterface
 {
     public class ServerInfo : VBoxContainer
     {
-        private const string DiscordUrl = "https://discordapp.com/invite/t2jac3p";
-        private const string WebsiteUrl = "https://spacestation14.io";
-
         private readonly RichTextLabel _richTextLabel;
 
         public ServerInfo()
@@ -27,10 +24,10 @@ namespace Content.Client.UserInterface
             var uriOpener = IoCManager.Resolve<IUriOpener>();
 
             var discordButton = new Button {Text = Loc.GetString("Join us on Discord!")};
-            discordButton.OnPressed += args => uriOpener.OpenUri(DiscordUrl);
+            discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
 
             var websiteButton = new Button {Text = Loc.GetString("Website")};
-            websiteButton.OnPressed += args => uriOpener.OpenUri(WebsiteUrl);
+            websiteButton.OnPressed += args => uriOpener.OpenUri(UILinks.Website);
 
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);

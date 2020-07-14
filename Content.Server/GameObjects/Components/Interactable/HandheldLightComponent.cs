@@ -1,10 +1,10 @@
 ﻿using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.Items.Storage;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -38,13 +39,13 @@ namespace Content.Server.GameObjects.Components.Interactable
         private ClothingComponent _clothingComponent;
 
         [ViewVariables]
-        private PowerCellComponent Cell
+        private BatteryComponent Cell
         {
             get
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out PowerCellComponent cell);
+                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
                 return cell;
             }
         }
@@ -57,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.HasComponent<PowerCellComponent>()) return false;
+            if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
             if (Cell != null) return false;
 
@@ -68,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return false;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magin.ogg", Owner);
 
 
             Dirty();
@@ -99,7 +100,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             _spriteComponent = Owner.GetComponent<SpriteComponent>();
             Owner.TryGetComponent(out _clothingComponent);
             _cellContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out var existed);
+                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out _);
+            Dirty();
         }
 
         /// <summary>
@@ -108,14 +110,17 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// <returns>True if the light's status was toggled, false otherwise.</returns>
         private bool ToggleStatus(IEntity user)
         {
+            var item = Owner.GetComponent<ItemComponent>();
             // Update sprite and light states to match the activation.
             if (Activated)
             {
                 TurnOff();
+                item.EquippedPrefix = "off";
             }
             else
             {
                 TurnOn(user);
+                item.EquippedPrefix = "on";
             }
 
             // Toggle always succeeds.
@@ -132,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(false);
             Activated = false;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
 
         }
 
@@ -147,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (cell == null)
             {
 
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
                 return;
@@ -156,9 +161,9 @@ namespace Content.Server.GameObjects.Components.Interactable
             // To prevent having to worry about frame time in here.
             // Let's just say you need a whole second of charge before you can turn it on.
             // Simple enough.
-            if (cell.AvailableCharge(1) < Wattage)
+            if (Wattage > cell.CurrentCharge)
             {
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/button.ogg", Owner);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Dead cell..."));
                 return;
             }
@@ -166,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = true;
             SetState(true);
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
 
         }
 
@@ -185,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (!Activated) return;
 
             var cell = Cell;
-            if (cell == null || !cell.TryDeductWattage(Wattage, frameTime)) TurnOff();
+            if (cell == null || !cell.TryUseCharge(Wattage * frameTime)) TurnOff();
 
             Dirty();
         }
@@ -214,7 +219,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 cell.Owner.Transform.GridPosition = user.Transform.GridPosition;
             }
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/weapons/pistol_magout.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
 
         }
 
@@ -225,14 +230,14 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return new HandheldLightComponentState(null);
             }
 
-            if (Cell.AvailableCharge(1) < Wattage)
+            if (Wattage > Cell.CurrentCharge)
             {
                 // Practically zero.
                 // This is so the item status works correctly.
                 return new HandheldLightComponentState(0);
             }
 
-            return new HandheldLightComponentState(Cell.Charge / Cell.Capacity);
+            return new HandheldLightComponentState(Cell.CurrentCharge / Cell.MaxCharge);
         }
 
         [Verb]
@@ -240,6 +245,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 if (component.Cell == null)
                 {
                     data.Text = "Eject cell (cell missing)";

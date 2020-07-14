@@ -5,15 +5,19 @@
   id: Beaker
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/beaker.png
+    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/beaker.png
+    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    HeldPrefix: beaker
   - type: Solution
     fillingState: beaker
     maxVol: 50
     caps: 27
   - type: Pourable
     transferAmount: 5.0
+  - type: CanSpill
 
 - type: entity
   name: large beaker
@@ -22,15 +26,19 @@
   id: LargeBeaker
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
+    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/beakerlarge.png
+    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    HeldPrefix: beaker
   - type: Solution
     fillingState: beakerlarge
     maxVol: 100
     caps: 27
   - type: Pourable
     transferAmount: 5.0
+  - type: CanSpill
 
 - type: entity
   name: dropper
@@ -39,9 +47,9 @@
   id: Dropper
   components:
   - type: Sprite
-    texture: Objects/Chemistry/chemicals.rsi/dropper.png
+    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
   - type: Icon
-    texture: Objects/Chemistry/chemicals.rsi/dropper.png
+    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
   - type: Solution
     fillingState: dropper
     fillingSteps: 2
@@ -49,6 +57,7 @@
     caps: 19
   - type: Pourable
     transferAmount: 5.0
+  - type: CanSpill
 
 - type: entity
   name: syringe
@@ -57,9 +66,9 @@
   id: Syringe
   components:
   - type: Sprite
-    texture: Objects/Chemistry/syringe.rsi/0.png
+    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
   - type: Icon
-    texture: Objects/Chemistry/syringe.rsi/0.png
+    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
   - type: Solution
     fillingState: syringe
     fillingSteps: 5
@@ -67,3 +76,4 @@
     caps: 19
   - type: Injector
     injectOnly: false
+  - type: CanSpill

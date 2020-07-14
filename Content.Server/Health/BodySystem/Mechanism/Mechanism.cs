@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Server.BodySystem {
 
     /// <summary>
-    ///     Data class representing a persistent item inside a BodyPart. This includes livers, eyes, cameras, brains, explosive implants, binary communicators, etc.
+    ///     Data class representing a persistent item inside a <see cref="BodyPart"/>. This includes livers, eyes, cameras, brains, explosive implants, binary communicators, and other things.
     /// </summary>
     public class Mechanism {
 
@@ -20,13 +20,13 @@ namespace Content.Server.BodySystem {
         public string Name { get; set; }
 
         /// <summary>
-        ///     Description shown in a mechanism installation console or when examining an uninstalled mechanism.
+        ///     Professional description of the Mechanism.
         /// </summary>				
         [ViewVariables]
         public string Description { get; set; }
 
         /// <summary>
-        ///     The message to display upon examining a mob with this mechanism installed. If the string is empty (""), no message will be displayed.  
+        ///     The message to display upon examining a mob with this Mechanism installed. If the string is empty (""), no message will be displayed.  
         /// </summary>			  
         [ViewVariables]
 		public string ExamineMessage { get; set; }
@@ -44,37 +44,37 @@ namespace Content.Server.BodySystem {
         public string RSIState { get; set; }
 
         /// <summary>
-        ///     Max HP of this mechanism.
+        ///     Max HP of this Mechanism.
         /// </summary>		
 		[ViewVariables]
         public int MaxDurability { get; set; }
 
         /// <summary>
-        ///     Current HP of this mechanism.
+        ///     Current HP of this Mechanism.
         /// </summary>		
         [ViewVariables]
         public int CurrentDurability { get; set; }
 
         /// <summary>
-        ///     At what HP this mechanism is completely destroyed.
+        ///     At what HP this Mechanism is completely destroyed.
         /// </summary>		
         [ViewVariables]
 		public int DestroyThreshold { get; set; }
 
         /// <summary>
-        ///     Armor of this mechanism against attacks.
+        ///     Armor of this Mechanism against attacks.
         /// </summary>		
         [ViewVariables]
 		public int Resistance { get; set; }
 
         /// <summary>
-        ///     Determines a handful of things - mostly whether this mechanism can fit into a BodyPart.
+        ///     Determines a handful of things - mostly whether this Mechanism can fit into a BodyPart.
         /// </summary>		
         [ViewVariables]
 		public int Size { get; set; }
 
         /// <summary>
-        ///     What kind of BodyParts this mechanism can be installed into.
+        ///     What kind of BodyParts this Mechanism can be easily installed into.
         /// </summary>
         [ViewVariables]
         public BodyPartCompatibility Compatibility { get; set; }
@@ -84,8 +84,13 @@ namespace Content.Server.BodySystem {
             LoadFromPrototype(data);
         }
 
+
+
+
+
+
         /// <summary>
-        ///    Loads the given MechanismPrototype - current data on this Mechanism will be overwritten!
+        ///    Loads the given <see cref="MechanismPrototype"/> - current data on this Mechanism will be overwritten!
         /// </summary>	
         public void LoadFromPrototype(MechanismPrototype data)
         {

@@ -48,6 +48,7 @@ namespace Content.Client.Chat
         private const char ConCmdSlash = '/';
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
+        private const char AdminChatAlias = ']';
 
         private readonly List<StoredChatMessage> filteredHistory = new List<StoredChatMessage>();
 
@@ -55,6 +56,7 @@ namespace Content.Client.Chat
         private bool _allState;
         private bool _localState;
         private bool _oocState;
+        private bool _adminState;
 
         // Flag Enums for holding filtered channels
         private ChatChannel _filteredChannels;
@@ -65,6 +67,7 @@ namespace Content.Client.Chat
         [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IEyeManager _eyeManager;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IClientConGroupController _groupController = default!;
 #pragma warning restore 649
 
         private ChatBox _currentChatBox;
@@ -150,6 +153,8 @@ namespace Content.Client.Chat
             _currentChatBox.AllButton.Pressed = !_allState;
             _currentChatBox.LocalButton.Pressed = !_localState;
             _currentChatBox.OOCButton.Pressed = !_oocState;
+            if(chatBox.AdminButton != null)
+                _currentChatBox.AdminButton.Pressed = !_adminState;
         }
 
         public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
@@ -193,6 +198,9 @@ namespace Content.Client.Chat
                 case ChatChannel.Dead:
                     color = Color.MediumPurple;
                     break;
+                case ChatChannel.AdminChat:
+                    color = Color.Red;
+                    break;
             }
 
             _currentChatBox?.AddLine(messageText, message.Channel, color);
@@ -218,6 +226,18 @@ namespace Content.Client.Chat
                 {
                     var conInput = text.Substring(1);
                     _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    break;
+                }
+                case AdminChatAlias:
+                {
+                    var conInput = text.Substring(1);
+                    if(_groupController.CanCommand("asay")){
+                        _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
+                    }
+                    else
+                    {
+                        _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
+                    }
                     break;
                 }
                 case MeAlias:
@@ -266,10 +286,23 @@ namespace Content.Client.Chat
                         _filteredChannels &= ~ChatChannel.OOC;
                         break;
                     }
+                case "Admin":
+                    _adminState = !_adminState;
+                    if (_adminState)
+                    {
+                        _filteredChannels |= ChatChannel.AdminChat;
+                        break;
+                    }
+                    else
+                    {
+                        _filteredChannels &= ~ChatChannel.AdminChat;
+                        break;
+                    }
 
                 case "ALL":
                     chatBox.LocalButton.Pressed ^= true;
                     chatBox.OOCButton.Pressed ^= true;
+                    chatBox.AdminButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }

@@ -47,7 +47,7 @@ namespace Content.Shared.Utility
             }
 
             var preround = toOne * (levels - 1);
-            if (toOne <= threshold || levels == 2)
+            if (toOne <= threshold || levels <= 2)
             {
                 return (int)Math.Ceiling(preround);
             }

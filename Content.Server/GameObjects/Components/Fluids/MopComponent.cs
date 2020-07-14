@@ -1,7 +1,7 @@
 using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces;
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/effects/Fluids/slosh.ogg");
+            serializer.DataFieldCached(ref _pickupSound, "pickup_sound", "/Audio/Effects/Fluids/slosh.ogg");
             // The turbo mop will pickup more
             serializer.DataFieldCached(ref _pickupAmount, "pickup_amount", ReagentUnit.New(5));
         }
@@ -65,17 +65,16 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if (!InteractionChecks.InRangeUnobstructed(eventArgs)) return;
 
-            Solution solution;
+            if (CurrentVolume <= 0)
+            {
+                return;
+            }
+
+            //Solution solution;
             if (eventArgs.Target == null)
             {
-                if (CurrentVolume <= 0)
-                {
-                    return;
-                }
-                // Drop the liquid on the mop on to the ground I guess? Potentially change by design
-                // Maybe even use a toggle mode instead of "Pickup" and "dropoff"
-                solution = _contents.SplitSolution(CurrentVolume);
-                SpillHelper.SpillAt(eventArgs.ClickLocation, solution, "PuddleSmear");
+                // Drop the liquid on the mop on to the ground
+                SpillHelper.SpillAt(eventArgs.ClickLocation, _contents.SplitSolution(CurrentVolume), "PuddleSmear");
 
                 return;
             }
@@ -88,18 +87,34 @@ namespace Content.Server.GameObjects.Components.Fluids
             // - _pickupAmount,
             // - whatever's left in the puddle, or
             // - whatever we can still hold (whichever's smallest)
-            var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, MaxVolume - CurrentVolume);
+            var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, CurrentVolume);
+            bool puddleCleaned = puddleComponent.CurrentVolume - transferAmount <= 0;
+
             if (transferAmount == 0)
             {
-                return;
+                if(puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                {
+                    puddleComponent.Owner.Delete();
+                    transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
+                    puddleCleaned = true;
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                puddleComponent.SplitSolution(transferAmount);
             }
 
-            solution = puddleComponent.SplitSolution(transferAmount);
-            // Probably don't recolor a mop? Could work, if we layered it maybe
-            if (!_contents.TryAddSolution(solution, false, true))
+            if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                // I can't imagine why this would happen
-                throw new InvalidOperationException();
+                SpillHelper.SpillAt(eventArgs.ClickLocation, _contents.SplitSolution(transferAmount), "PuddleSmear");
+            }
+            else
+            {
+                _contents.SplitSolution(transferAmount);
             }
 
             // Give some visual feedback shit's happening (for anyone who can't hear sound)

@@ -12,7 +12,7 @@ namespace Content.Server.GameTicking.GamePresets
         [Dependency] private readonly IGameTicker _gameTicker;
 #pragma warning restore 649
 
-        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers)
+        public override bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false)
         {
             _gameTicker.AddGameRule<RuleDeathMatch>();
             return true;

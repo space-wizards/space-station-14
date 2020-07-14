@@ -29,7 +29,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        private void SetRotation(AppearanceComponent component, Angle rotation)
+        protected void SetRotation(AppearanceComponent component, Angle rotation)
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
 

@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: Airlock
   name: airlock
   description: It opens, it closes, and maybe crushes you.
@@ -8,17 +8,20 @@
   - type: Sprite
     netsync: false
     drawdepth: Mobs # They're on the same layer as mobs, perspective.
-    sprite: Buildings/Doors/airlock_basic.rsi
+    sprite: Constructible/Structures/Doors/airlock_basic.rsi
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+    - state: bolted
+      shader: unshaded
+      map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
-    sprite: Buildings/Doors/airlock_basic.rsi
+    sprite: Constructible/Structures/Doors/airlock_basic.rsi
     state: closed
   - type: Collidable
     shapes:
@@ -36,11 +39,11 @@
   - type: Appearance
     visuals:
     - type: AirlockVisualizer2D
-      open_sound: /Audio/machines/airlock_open.ogg
-      close_sound: /Audio/machines/airlock_close.ogg
-      deny_sound: /Audio/machines/airlock_deny.ogg
+      open_sound: /Audio/Machines/airlock_open.ogg
+      close_sound: /Audio/Machines/airlock_close.ogg
+      deny_sound: /Audio/Machines/airlock_deny.ogg
     - type: WiresVisualizer2D
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
@@ -64,9 +67,9 @@
   - type: Occluder
     enabled: false
   - type: Sprite
-    sprite: Buildings/Doors/airlock_glass.rsi
+    sprite: Constructible/Structures/Doors/airlock_glass.rsi
   - type: Icon
-    sprite: Buildings/Doors/airlock_glass.rsi
+    sprite: Constructible/Structures/Doors/airlock_glass.rsi
 
 - type: entity
   parent: Airlock
@@ -74,6 +77,6 @@
   name: maintenance hatch
   components:
   - type: Sprite
-    sprite: Buildings/Doors/airlock_maint.rsi
+    sprite: Constructible/Structures/Doors/airlock_maint.rsi
   - type: Icon
-    sprite: Buildings/Doors/airlock_maint.rsi
+    sprite: Constructible/Structures/Doors/airlock_maint.rsi

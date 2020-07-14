@@ -9,15 +9,20 @@ using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.State
 {
@@ -83,7 +88,8 @@ namespace Content.Client.State
                     return;
                 }
 
-                _console.ProcessCommand("joingame");
+                new LateJoinGui().OpenCentered();
+                return;
             };
 
             _lobby.ReadyButton.OnToggled += args =>
@@ -92,6 +98,7 @@ namespace Content.Client.State
             };
 
             _lobby.LeaveButton.OnPressed += args => _console.ProcessCommand("disconnect");
+            _lobby.CreditsButton.OnPressed += args => new CreditsWindow().Open();
 
             UpdatePlayerList();
 
@@ -119,21 +126,29 @@ namespace Content.Client.State
             }
 
             string text;
-            var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
-            if (difference.Ticks < 0)
+
+            if (_clientGameTicker.Paused)
             {
-                if (difference.TotalSeconds < -5)
-                {
-                    text = Loc.GetString("Right Now?");
-                }
-                else
-                {
-                    text = Loc.GetString("Right Now");
-                }
+                text = Loc.GetString("Paused");
             }
             else
             {
-                text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+                var difference = _clientGameTicker.StartTime - DateTime.UtcNow;
+                if (difference.Ticks < 0)
+                {
+                    if (difference.TotalSeconds < -5)
+                    {
+                        text = Loc.GetString("Right Now?");
+                    }
+                    else
+                    {
+                        text = Loc.GetString("Right Now");
+                    }
+                }
+                else
+                {
+                    text = $"{(int) Math.Floor(difference.TotalMinutes)}:{difference.Seconds:D2}";
+                }
             }
 
             _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);

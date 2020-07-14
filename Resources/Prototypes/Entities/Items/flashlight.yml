@@ -15,6 +15,9 @@
   - type: Icon
     sprite: Objects/Tools/flashlight.rsi
     state: lantern_off
+  - type: Item
+    sprite: Objects/Tools/flashlight.rsi
+    HeldPrefix: off
   - type: PointLight
     enabled: false
     radius: 3

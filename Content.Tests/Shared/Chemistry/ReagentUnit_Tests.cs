@@ -36,16 +36,6 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        [TestCase("1.001", "1")]
-        [TestCase("0.999", "1")]
-        public void ReagentUnitDecimalTests(string valueAsString, string expected)
-        {
-            var value = decimal.Parse(valueAsString);
-            var result = ReagentUnit.New(value);
-            Assert.AreEqual(expected, $"{result}");
-        }
-
-        [Test]
         [TestCase("1.005", "1.01")]
         [TestCase("0.999", "1")]
         public void ReagentUnitStringTests(string value, string expected)
@@ -116,7 +106,7 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(2.005f, 201)]
         public void FloatRoundingTest(float a, int expected)
         {
-            var result = (int) Math.Round(a * (float) Math.Pow(10, 2), MidpointRounding.AwayFromZero);
+            var result = (int) MathF.Round(a * (float) MathF.Pow(10, 2), MidpointRounding.AwayFromZero);
             Assert.AreEqual(expected, result);
         }
 

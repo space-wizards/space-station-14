@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components.Construction;
-using Content.Client.Interfaces.GameObjects;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Client.Graphics;
@@ -14,7 +13,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Enums;
-using Robust.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -24,11 +23,11 @@ namespace Content.Client.Construction
     public class ConstructionMenu : SS14Window
     {
 #pragma warning disable CS0649
-        [Dependency] readonly IPrototypeManager PrototypeManager;
-        [Dependency] readonly IResourceCache ResourceCache;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IResourceCache _resourceCache;
+        [Dependency] private readonly IEntitySystemManager _systemManager;
 #pragma warning restore
 
-        public ConstructorComponent Owner { get; set; }
         private readonly Button BuildButton;
         private readonly Button EraseButton;
         private readonly LineEdit SearchBar;
@@ -118,6 +117,7 @@ namespace Content.Client.Construction
             PopulateTree();
         }
 
+        /// <inheritdoc />
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -128,7 +128,7 @@ namespace Content.Client.Construction
             }
         }
 
-        void OnItemSelected()
+        private void OnItemSelected()
         {
             var prototype = (ConstructionPrototype) RecipeList.Selected.Metadata;
 
@@ -162,17 +162,17 @@ namespace Content.Client.Construction
                             switch (mat.Material)
                             {
                                 case ConstructionStepMaterial.MaterialType.Metal:
-                                    icon = ResourceCache.GetResource<TextureResource>(
+                                    icon = _resourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Materials/sheet_metal.png");
                                     text = $"Metal x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Glass:
-                                    icon = ResourceCache.GetResource<TextureResource>(
+                                    icon = _resourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Materials/sheet_glass.png");
                                     text = $"Glass x{mat.Amount}";
                                     break;
                                 case ConstructionStepMaterial.MaterialType.Cable:
-                                    icon = ResourceCache.GetResource<TextureResource>(
+                                    icon = _resourceCache.GetResource<TextureResource>(
                                         "/Textures/Objects/Tools/cable_coil.png");
                                     text = $"Cable Coil x{mat.Amount}";
                                     break;
@@ -185,26 +185,26 @@ namespace Content.Client.Construction
                             switch (tool.ToolQuality)
                             {
                                 case ToolQuality.Anchoring:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/wrench.rsi/icon.png");
                                     text = "Wrench";
                                     break;
                                 case ToolQuality.Prying:
-                                    icon = ResourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.png");
+                                    icon = _resourceCache.GetResource<TextureResource>("/Textures/Objects/Tools/crowbar.rsi/icon.png");
                                     text = "Crowbar";
                                     break;
                                 case ToolQuality.Screwing:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/screwdriver.png");
+                                    icon = _resourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
                                     text = "Screwdriver";
                                     break;
                                 case ToolQuality.Welding:
-                                    icon = ResourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
+                                    icon = _resourceCache.GetResource<RSIResource>("/Textures/Objects/tools.rsi")
                                         .RSI["welder"].Frame0;
                                     text = $"Welding tool ({tool.Amount} fuel)";
                                     break;
                                 case ToolQuality.Cutting:
-                                    icon = ResourceCache.GetResource<TextureResource>(
-                                        "/Textures/Objects/Tools/wirecutter.png");
+                                    icon = _resourceCache.GetResource<TextureResource>(
+                                        "/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
                                     text = "Wirecutters";
                                     break;
                                 default:
@@ -221,13 +221,13 @@ namespace Content.Client.Construction
             }
         }
 
-        void OnTextEntered(LineEdit.LineEditEventArgs args)
+        private void OnTextEntered(LineEdit.LineEditEventArgs args)
         {
             var str = args.Text;
             PopulateTree(string.IsNullOrWhiteSpace(str) ? null : str.ToLowerInvariant());
         }
 
-        void OnBuildToggled(BaseButton.ButtonToggledEventArgs args)
+        private void OnBuildToggled(BaseButton.ButtonToggledEventArgs args)
         {
             if (args.Pressed)
             {
@@ -239,7 +239,8 @@ namespace Content.Client.Construction
 
                 if (prototype.Type == ConstructionType.Item)
                 {
-                    Owner.TryStartItemConstruction(prototype.ID);
+                    var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
+                    constructSystem.TryStartItemConstruction(prototype.ID);
                     BuildButton.Pressed = false;
                     return;
                 }
@@ -250,7 +251,7 @@ namespace Content.Client.Construction
                         IsTile = false,
                         PlacementOption = prototype.PlacementMode
                     },
-                    new ConstructionPlacementHijack(prototype, Owner));
+                    new ConstructionPlacementHijack(_systemManager.GetEntitySystem<ConstructionSystem>(), prototype));
             }
             else
             {
@@ -262,7 +263,7 @@ namespace Content.Client.Construction
         private void OnEraseToggled(BaseButton.ButtonToggledEventArgs args)
         {
             if (args.Pressed) Placement.Clear();
-            Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(null, Owner));
+            Placement.ToggleEraserHijacked(new ConstructionPlacementHijack(_systemManager.GetEntitySystem<ConstructionSystem>(), null));
             EraseButton.Pressed = args.Pressed;
         }
 
@@ -272,12 +273,12 @@ namespace Content.Client.Construction
             EraseButton.Pressed = false;
         }
 
-        void PopulatePrototypeList()
+        private void PopulatePrototypeList()
         {
             RootCategory = new CategoryNode("", null);
-            int count = 1;
+            var count = 1;
 
-            foreach (var prototype in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
+            foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
                 var currentNode = RootCategory;
 
@@ -316,7 +317,7 @@ namespace Content.Client.Construction
             Recurse(RootCategory);
         }
 
-        void PopulateTree(string searchTerm = null)
+        private void PopulateTree(string searchTerm = null)
         {
             RecipeList.Clear();
 
@@ -378,18 +379,18 @@ namespace Content.Client.Construction
 
         private static int ComparePrototype(ConstructionPrototype x, ConstructionPrototype y)
         {
-            return String.Compare(x.Name, y.Name, StringComparison.Ordinal);
+            return string.Compare(x.Name, y.Name, StringComparison.Ordinal);
         }
 
-        class CategoryNode
+        private class CategoryNode
         {
             public readonly string Name;
             public readonly CategoryNode Parent;
 
-            public SortedDictionary<string, CategoryNode>
+            public readonly SortedDictionary<string, CategoryNode>
                 ChildCategories = new SortedDictionary<string, CategoryNode>();
 
-            public List<ConstructionPrototype> Prototypes = new List<ConstructionPrototype>();
+            public readonly List<ConstructionPrototype> Prototypes = new List<ConstructionPrototype>();
             public int FlattenedIndex = -1;
 
             public CategoryNode(string name, CategoryNode parent)

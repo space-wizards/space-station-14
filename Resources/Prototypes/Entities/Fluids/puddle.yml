@@ -10,7 +10,7 @@
   - type: Solution
     caps: 1
   - type: Puddle
-    spill_sound: /Audio/effects/Fluids/splat.ogg
+    spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: LoopingSound
   - type: InteractionOutline
@@ -30,43 +30,43 @@
   name: gibblets
   id: PuddleGibblet
   parent: PuddleBase
-  description: Holds spilt milk
+  description: Gross.
   components:
   - type: Sprite
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
   - type: Icon
-    icon: Fluids/gibblet.rsi
+    sprite: Fluids/gibblet.rsi
     state: gibblet-0
   - type: Puddle
     variants: 5
 
 - type: entity
-  name: smear
+  name: puddle
   id: PuddleSmear
   parent: PuddleBase
-  description: Holds spilt milk
+  description: A puddle of liquid.
   components:
   - type: Sprite
     sprite: Fluids/smear.rsi # Placeholder
     state: smear-0
   - type: Icon
-    icon: Fluids/smear.rsi
+    sprite: Fluids/smear.rsi
     state: smear-0
   - type: Puddle
     variants: 7
 
 - type: entity
-  name: splatter
+  name: puddle
   id: PuddleSplatter
   parent: PuddleBase
-  description: Holds spilt milk
+  description: A puddle of liquid.
   components:
   - type: Sprite
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
   - type: Icon
-    icon: Fluids/splatter.rsi
+    sprite: Fluids/splatter.rsi
     state: splatter-0
   - type: Puddle
     variants: 6
@@ -75,29 +75,30 @@
   name: vomit
   id: PuddleVomit
   parent: PuddleBase
-  description:
+  description: Gross.
   components:
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
   - type: Icon
-    icon: Fluids/vomit.rsi
+    sprite: Fluids/vomit.rsi
     state: vomit-0
   - type: Puddle
     variants: 4
     recolor: false
+    evaporate_threshold: -1
 
 - type: entity
   name: toxins vomit
   id: PuddleVomitToxin
-  parent: PuddleBase
-  description: You probably don't want to get too close to this
+  parent: PuddleVomit
+  description: You probably don't want to get too close to this.
   components:
   - type: Sprite
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
   - type: Icon
-    icon: Fluids/vomit_toxin.rsi
+    sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
   - type: Puddle
     variants: 4
@@ -107,13 +108,13 @@
   name: writing
   id: PuddleWriting
   parent: PuddleBase
-  description: Holds spilt milk
+  description: A bit of liquid.
   components:
   - type: Sprite
     sprite: Fluids/writing.rsi # Placeholder
     state: writing-0
   - type: Icon
-    icon: Fluids/writing.rsi
+    sprite: Fluids/writing.rsi
     state: writing-0
   - type: Puddle
     variants: 5

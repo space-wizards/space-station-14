@@ -1,53 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
+using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.BodySystem {
+namespace Content.Server.BodySystem {
 
     /// <summary>
-    ///     This class is a data capsule representing the standard format of a body. For instance, the "humanoid" BodyTemplate
-    ///     defines two arms, each connected to a torso and so on. Capable of loading data from a BodyTemplatePrototype.
+    ///     This class is a data capsule representing the standard format of a <see cref="BodyManagerComponent"/>. For instance, the "humanoid" BodyTemplate
+    ///     defines two arms, each connected to a torso and so on. Capable of loading data from a <see cref="BodyTemplatePrototype"/>.
     /// </summary>	
     public class BodyTemplate {
 
-        private int _hash;
-        private string _name;
-        private string _centerSlot;
-        private Dictionary<string, BodyPartType> _slots = new Dictionary<string, BodyPartType>();
-        private Dictionary<string, List<string>> _connections = new Dictionary<string, List<string>>();
-
         [ViewVariables]
-        public int Hash => _hash;
-
-        [ViewVariables]
-        public string Name => _name;
+        public string Name;
 
         /// <summary>
         ///     The name of the center BodyPart. For humans, this is set to "torso". Used in many calculations.
         /// </summary>					
         [ViewVariables]
-        public string CenterSlot => _centerSlot;
+        public string CenterSlot { get; set; }
 
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType. For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid template.
         /// </summary>			
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots => _slots;
+        public Dictionary<string, BodyPartType> Slots { get; set; }
 
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs. For instance, on the humanoid template "torso" is mapped to a list containing "right arm", "left arm",
-        ///     "left leg", and "right leg". Only one of the limbs in a connection has to map it, i.e. humanoid template chooses to map "head" to "torso" and not the other way around.
+        ///     "left leg", and "right leg". This is mapped both ways during runtime, but in the prototype only one way has to be defined, i.e., "torso" to "left arm" will automatically
+        ///     map "left arm" to "torso".
         /// </summary>			
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections => _connections;
+        public Dictionary<string, List<string>> Connections { get; set; }
 
         public BodyTemplate()
         {
-            _name = "empty";
+            Name = "empty";
+            Slots = new Dictionary<string, BodyPartType>();
+            Connections = new Dictionary<string, List<string>>();
+            CenterSlot = "";
         }
 
         public BodyTemplate(BodyTemplatePrototype data)
@@ -55,34 +47,66 @@ namespace Content.Shared.BodySystem {
             LoadFromPrototype(data);
         }
 
-        /// <summary>
-        ///     Somewhat costly operation. Stores an integer unique to this exact BodyTemplate in _hash when called.
-        /// </summary>		
-        private void CacheHashCode()
+        public bool Equals(BodyTemplate other)
         {
-            int hash = 0;
-            foreach (var(key, value) in _slots)
+            return GetHashCode() == other.GetHashCode();
+        }
+
+        /// <summary>
+        ///     Returns whether the given slot exists in this BodyTemplate.
+        /// </summary>		
+        public bool SlotExists(string slotName)
+        {
+            foreach (string slot in Slots.Keys)
             {
-                hash = HashCode.Combine<int, int>(hash, key.GetHashCode());
+                if (slot == slotName) //string comparison xd
+                    return true;
             }
-            foreach (var (key, value) in _connections)
+            return false;
+        }
+
+        /// <summary>
+        ///     Returns an integer unique to this BodyTemplate's layout. It does not matter in which order the Connections or Slots are defined.
+        /// </summary>		
+        public override int GetHashCode()
+        {
+            int slotsHash = 0;
+            int connectionsHash = 0;
+
+            foreach (var(key, value) in Slots)
             {
-                hash = HashCode.Combine<int, int>(hash, key.GetHashCode());
-                foreach (var connection in value)
+                int slot = key.GetHashCode();
+                slot = HashCode.Combine<int, int>(slot, value.GetHashCode());
+                slotsHash = slotsHash ^ slot;
+            }
+
+            List<int> connections = new List<int>();
+            foreach (var (key, value) in Connections)
+            {
+                foreach (var targetBodyPart in value)
                 {
-                    hash = HashCode.Combine<int, int>(hash, connection.GetHashCode());
+                    int connection = key.GetHashCode() ^ targetBodyPart.GetHashCode();
+                    if (!connections.Contains(connection))
+                        connections.Add(connection);
                 }
             }
-            _hash = hash;
+            foreach (int connection in connections)
+            {
+                connectionsHash = connectionsHash ^ connection;
+            }
+
+            int hash = HashCode.Combine<int, int, int>(slotsHash, connectionsHash, CenterSlot.GetHashCode());
+            if (hash == 0) //One of the unit tests considers 0 to be an error, but it will be 0 if the BodyTemplate is empty, so let's shift that up to 1.
+                hash++;
+            return hash;
         }
 
         public virtual void LoadFromPrototype(BodyTemplatePrototype data)
         {
-            _name = data.Name;
-            _centerSlot = data.CenterSlot;
-            _slots = data.Slots;
-            _connections = data.Connections;
-            CacheHashCode();
+            Name = data.Name;
+            CenterSlot = data.CenterSlot;
+            Slots = data.Slots;
+            Connections = data.Connections;
         }
     }
 }

@@ -69,7 +69,8 @@ namespace Content.IntegrationTests.Tests
                         catch (Exception e)
                         {
                             Logger.LogS(LogLevel.Error, "EntityTest", "Entity '" + prototype.ID + "' threw: " + e.Message);
-                            Assert.Fail();
+                            //Assert.Fail();
+                            throw;
                         }
                     }
                 });

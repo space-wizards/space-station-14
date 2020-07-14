@@ -1,9 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components;
@@ -31,12 +33,12 @@ namespace Content.Server.GameObjects.Components
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
     {
 #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
-        private AudioSystem _audioSystem;
-        private AppearanceComponent _appearance;
-        private BoundUserInterface _userInterface;
+        private AudioSystem _audioSystem = default!;
+        private AppearanceComponent _appearance = default!;
+        private BoundUserInterface _userInterface = default!;
 
         private bool _isPanelOpen;
 
@@ -92,7 +94,7 @@ namespace Content.Server.GameObjects.Components
         }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string SerialNumber
+        public string? SerialNumber
         {
             get => _serialNumber;
             set
@@ -126,16 +128,16 @@ namespace Content.Server.GameObjects.Components
         private readonly List<WireLetter> _availableLetters =
             new List<WireLetter>((WireLetter[]) Enum.GetValues(typeof(WireLetter)));
 
-        private string _boardName;
+        private string _boardName = default!;
 
-        private string _serialNumber;
+        private string? _serialNumber;
 
         // Used to generate wire appearance randomization client side.
         // We honestly don't care what it is or such but do care that it doesn't change between UI re-opens.
         [ViewVariables]
         private int _wireSeed;
         [ViewVariables]
-        private string _layoutId;
+        private string? _layoutId;
 
         public override void Initialize()
         {
@@ -185,7 +187,7 @@ namespace Content.Server.GameObjects.Components
             base.Startup();
 
 
-            WireLayout layout = null;
+            WireLayout? layout = null;
             var hackingSystem = EntitySystem.Get<WireHackingSystem>();
             if (_layoutId != null)
             {
@@ -298,9 +300,9 @@ namespace Content.Server.GameObjects.Components
         {
             [NotNull] private readonly WiresComponent _wires;
             [NotNull] private readonly IWires _owner;
-            [CanBeNull] private readonly WireLayout _layout;
+            private readonly WireLayout? _layout;
 
-            public WiresBuilder(WiresComponent wires, IWires owner, WireLayout layout)
+            public WiresBuilder(WiresComponent wires, IWires owner, WireLayout? layout)
             {
                 _wires = wires;
                 _owner = owner;
@@ -364,12 +366,12 @@ namespace Content.Server.GameObjects.Components
             {
                 case WiresActionMessage msg:
                     var wire = WiresList.Find(x => x.Id == msg.Id);
-                    if (wire == null)
+                    var player = serverMsg.Session.AttachedEntity;
+                    if (wire == null || player == null)
                     {
                         return;
                     }
 
-                    var player = serverMsg.Session.AttachedEntity;
                     if (!player.TryGetComponent(out IHandsComponent handsComponent))
                     {
                         _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
@@ -385,7 +387,7 @@ namespace Content.Server.GameObjects.Components
                     }
 
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
-                    ToolComponent tool = null;
+                    ToolComponent? tool = null;
                     activeHandEntity?.TryGetComponent(out tool);
 
                     switch (msg.Action)
@@ -429,7 +431,7 @@ namespace Content.Server.GameObjects.Components
                                 return;
                             }
 
-                            _audioSystem.PlayFromEntity("/Audio/effects/multitool_pulse.ogg", Owner);
+                            _audioSystem.PlayFromEntity("/Audio/Effects/multitool_pulse.ogg", Owner);
                             break;
                     }
 
@@ -475,7 +477,7 @@ namespace Content.Server.GameObjects.Components
 
             IsPanelOpen = !IsPanelOpen;
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity(IsPanelOpen ? "/Audio/machines/screwdriveropen.ogg" : "/Audio/machines/screwdriverclose.ogg",
+                .PlayFromEntity(IsPanelOpen ? "/Audio/Machines/screwdriveropen.ogg" : "/Audio/Machines/screwdriverclose.ogg",
                     Owner);
             return true;
         }

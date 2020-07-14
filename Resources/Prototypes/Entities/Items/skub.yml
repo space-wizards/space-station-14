@@ -7,18 +7,15 @@
   - type: Sprite
     sprite: Objects/Misc/skub.rsi
     state: icon
-
   - type: Icon
     sprite: Objects/Misc/skub.rsi
     state: icon
-
   - type: Item
     sprite: Objects/Misc/skub.rsi
   - type: ItemCooldown
-
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/skub.ogg
+    sound: /Audio/Items/skub.ogg
 
   - type: UseDelay
     delay: 2.0

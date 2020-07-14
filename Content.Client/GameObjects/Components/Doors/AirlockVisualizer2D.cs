@@ -95,6 +95,9 @@ namespace Content.Client.GameObjects.Components.Doors
 
         public override void OnChangeData(AppearanceComponent component)
         {
+            if (component.Owner.Deleted)
+                return;
+
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             var animPlayer = component.Owner.GetComponent<AnimationPlayerComponent>();
             if (!component.TryGetData(DoorVisuals.VisualState, out DoorVisualState state))
@@ -103,11 +106,13 @@ namespace Content.Client.GameObjects.Components.Doors
             }
 
             var unlitVisible = true;
+            var boltedVisible = false;
             switch (state)
             {
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
                     sprite.LayerSetState(WiresVisualizer2D.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Closing:
@@ -140,14 +145,20 @@ namespace Content.Client.GameObjects.Components.Doors
             {
                 unlitVisible = false;
             }
+            if (component.TryGetData(DoorVisuals.BoltLights, out bool lights) && lights)
+            {
+                boltedVisible = true;
+            }
 
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+            sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
         }
     }
 
     public enum DoorVisualLayers
     {
         Base,
-        BaseUnlit
+        BaseUnlit,
+        BaseBolted
     }
 }

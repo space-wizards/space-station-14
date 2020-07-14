@@ -1,6 +1,6 @@
-﻿using System;
-using Content.Shared.GameObjects.Components.Inventory;
+﻿using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.GameObjects;
+using Math = CannyFastMath.Math;
 
 namespace Content.Server.GameObjects
 {

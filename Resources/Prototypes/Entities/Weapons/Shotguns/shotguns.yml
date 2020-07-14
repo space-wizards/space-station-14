@@ -1,44 +1,241 @@
 - type: entity
-  name: shotgun
+  name: ShotgunBase
   parent: BaseItem
-  id: BaseShotgun
+  id: ShotgunBase
   description: A rooty tooty point and shooty.
   abstract: true
   components:
-  - type: LoopingSound
-  - type: RangedWeapon
-    automatic: false
-    firerate: 20
-  - type: BallisticMagazineWeapon
-    caliber: A12g
-    evenspread : 40
-    magazines:
-    - A12g
-    default_magazine: magazine_12g_shotgun
-    auto_eject_magazine: false
-    sound_auto_eject: /Audio/Guns/EmptyAlarm/smg_empty_alarm.ogg
-    sound_magazine_in: /Audio/Guns/MagIn/smg_magin.ogg
-    sound_magazine_out: /Audio/Guns/MagOut/smg_magout.ogg
-    sound_empty: /Audio/Guns/Empty/empty.ogg
-    sound_gunshot: /Audio/Guns/Gunshots/smg.ogg
+  - type: Sprite
+    netsync: false
+    state: icon
+  - type: Icon
+    state: icon
+  - type: Item
+    Size: 24
+  - type: PumpBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: ShellShotgun
+    caliber: Shotgun
+    capacity: 7
+    fireRate: 2.0
+    minAngle: 10
+    maxAngle: 60
+    angleIncrease: 30
+    angleDecay: 30
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
 
 - type: entity
-  name: magazine fed shotgun
-  parent: BaseShotgun
-  id: MagazineFedShotgun
+  name: Bojevic
+  parent: BaseItem
+  id: ShotgunBojevic
+  description: It's a magazine-fed shotgun designed for close quarters combat, nicknamed 'Striker' by boarding parties. A robust and reliable design allows you to swap magazines on the go and dump as many shells at your foes as you want... if you can manage the recoil, of course.
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/SMGs/c20r.rsi
-    state: c20r-5
+    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+    - state: mag-0
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/SMGs/c20r.rsi
-    state: c20r-5
+    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/bojevic.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    fireRate: 3
+    caliber: Shotgun
+    magazineTypes: 
+    - Rifle
+    magFillPrototype: MagazineShotgun
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
   - type: Appearance
     visuals:
-    - type: BallisticMagazineWeaponVisualizer2D
-      base_state: c20r
-      steps: 6
+    - type: BarrelBoltVisualizer2D
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: double-barreled shotgun
+  parent: BaseItem
+  id: ShotgunDB
+  description: An immortal classic.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    state: icon
   - type: Item
-    Size: 24
-    sprite: Objects/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    state: icon
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+    caliber: Shotgun
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: ShellShotgun
+    capacity: 2
+    fireRate: 8.0
+    minAngle: 10
+    maxAngle: 60
+    angleIncrease: 30
+    angleDecay: 30
+    ammoSpreadRatio: 0.7
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    sound_bolt_open: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
+    sound_bolt_closed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer2D
+
+- type: entity
+  name: Bull
+  parent: ShotgunBase
+  id: ShotgunBull
+  description: A Frozen Star pump-action shotgun. A marvel of engineering, this gun is often used by Ironhammer tactical units. Due to shorter than usual barrels, recoil kicks slightly harder.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-1
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/bull.rsi
+  - type: RangedWeapon
+  - type: PumpBarrel
+    fireRate: 4.0
+    minAngle: 10
+    maxAngle: 120
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: Gladstone
+  parent: ShotgunBase
+  id: ShotgunGladstone
+  description: It is a next-generation Frozen Star shotgun intended as a cost-effective competitor to the aging NT "Regulator 1000". It has a semi-rifled lightweight full-length barrel which gives it exceptional accuracy with all types of ammunition, with a high-capacity magazine tube below it.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+  - type: RangedWeapon
+  - type: PumpBarrel
+    capacity: 9
+    ammoSpreadRatio: 0.5
+
+- type: entity
+  name: Regulator 1000
+  parent: ShotgunBase
+  id: ShotgunRegulator
+  description: Designed for close quarters combat, the Regulator is widely regarded as a weapon of choice for repelling boarders. Some may say that it's too old, but it actually proved itself useful.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/regulator.rsi
+  - type: RangedWeapon
+  - type: PumpBarrel
+    capacity: 7
+    ammoSpreadRatio: 0.7
+
+- type: entity
+  name: Kammerer
+  parent: ShotgunBase
+  id: ShotgunPump
+  description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
+  - type: RangedWeapon
+  - type: PumpBarrel
+    capacity: 4
+    ammoSpreadRatio: 0.7
+
+- type: entity
+  name: sawn-off shotgun
+  parent: BaseItem
+  id: ShotgunSawn
+  description: Omar's coming!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
+    state: icon
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+    caliber: Shotgun
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: ShellShotgun
+    capacity: 2
+    fireRate: 8.0
+    minAngle: 10
+    maxAngle: 90
+    angleIncrease: 45
+    angleDecay: 30
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer2D

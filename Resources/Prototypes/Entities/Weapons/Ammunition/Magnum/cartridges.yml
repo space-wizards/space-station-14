@@ -1,0 +1,58 @@
+- type: entity
+  id: CartridgeMagnumBase
+  name: cartridge (.40 magnum)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Ammo
+    caliber: Magnum
+  - type: Sprite
+    netsync: false
+    directional: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    state: s-casing
+
+- type: entity
+  id: CartridgeMagnum
+  name: cartridge (.40 magnum)
+  parent: CartridgeMagnumBase
+  components:
+  - type: Ammo
+    projectile: BulletMagnum
+
+- type: entity
+  id: CartridgeMagnumFlash
+  name: cartridge (.40 magnum flash)
+  parent: CartridgeMagnumBase
+  components:
+  - type: Ammo
+    projectile: BulletMagnumFlash
+
+- type: entity
+  id: CartridgeMagnumHV
+  name: cartridge (.40 magnum high-velocity)
+  parent: CartridgeMagnumBase
+  components:
+  - type: Ammo
+    projectile: BulletMagnumHV
+    ammoVelocity: 30
+
+- type: entity
+  id: CartridgeMagnumPractice
+  name: cartridge (.40 magnum practice)
+  parent: CartridgeMagnumBase
+  components:
+  - type: Ammo
+    projectile: BulletMagnumPractice
+
+- type: entity
+  id: CartridgeMagnumRubber
+  name: cartridge (.40 magnum rubber)
+  parent: CartridgeMagnumBase
+  components:
+  - type: Ammo
+    projectile: BulletMagnumRubber

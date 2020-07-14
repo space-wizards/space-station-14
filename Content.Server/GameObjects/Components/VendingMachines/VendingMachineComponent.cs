@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.VendingMachines;
@@ -31,7 +34,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
 #pragma warning restore 649
         private AppearanceComponent _appearance;
         private BoundUserInterface _userInterface;
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
 
         private bool _ejecting = false;
         private TimeSpan _animationDuration = TimeSpan.Zero;
@@ -39,7 +42,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private string _description;
         private string _spriteName;
 
-        private bool Powered => _powerDevice.Powered;
+        private bool Powered => _powerReceiver.Powered;
         private bool _broken = false;
 
         public void Activate(ActivateEventArgs eventArgs)
@@ -84,7 +87,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             if (!string.IsNullOrEmpty(_spriteName))
             {
                 var spriteComponent = Owner.GetComponent<SpriteComponent>();
-                const string vendingMachineRSIPath = "Buildings/VendingMachines/{0}.rsi";
+                const string vendingMachineRSIPath = "Constructible/Power/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
 
@@ -103,16 +106,17 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(VendingMachineUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
-            _powerDevice.OnPowerStateChanged += UpdatePower;
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            _powerReceiver.OnPowerStateChanged += UpdatePower;
+            TrySetVisualState(_powerReceiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             InitializeFromPrototype();
         }
 
         public override void OnRemove()
         {
             _appearance = null;
-            _powerDevice.OnPowerStateChanged -= UpdatePower;
-            _powerDevice = null;
+            _powerReceiver.OnPowerStateChanged -= UpdatePower;
+            _powerReceiver = null;
             base.OnRemove();
         }
 

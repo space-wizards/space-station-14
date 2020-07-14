@@ -1,0 +1,32 @@
+- type: entity
+  name: red laser
+  id: RedLaser
+  abstract: true
+  components:
+  - type: Hitscan
+    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
+    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
+    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+    damage: 10
+
+- type: entity
+  name: red heavy laser
+  id: RedHeavyLaser
+  abstract: true
+  components:
+  - type: Hitscan
+    spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
+    muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
+    impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
+    damage: 30
+
+- type: entity
+  name: x-ray laser
+  id: XrayLaser
+  abstract: true
+  components:
+  - type: Hitscan
+    spriteName: Objects/Weapons/Guns/Projectiles/xray.png
+    muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
+    impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
+    damage: 60

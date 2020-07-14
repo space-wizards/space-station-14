@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Movement;
 using Content.Server.Observer;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
+    [ComponentReference(typeof(SharedSpeciesComponent))]
     public class SpeciesComponent : SharedSpeciesComponent, IActionBlocker, IOnDamageBehavior, IExAct, IRelayMoveInput
     {
         /// <summary>
@@ -78,7 +79,7 @@ namespace Content.Server.GameObjects
             statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Health);
 
             Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
-            overlayEffectsComponent?.ChangeOverlay(ScreenEffects.None);
+            overlayEffectsComponent?.ClearOverlays();
         }
 
         bool IActionBlocker.CanMove()
@@ -218,11 +219,11 @@ namespace Content.Server.GameObjects
             Owner.GetComponent<DamageableComponent>().TakeDamage(DamageType.Heat, burnDamage, null);
         }
 
-        void IRelayMoveInput.MoveInputPressed(IPlayerSession session)
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
             if (CurrentDamageState is DeadState)
             {
-                new Ghost().Execute(null, session, null);
+                new Ghost().Execute(null, (IPlayerSession) session, null);
             }
         }
     }

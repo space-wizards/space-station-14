@@ -1,18 +1,34 @@
 - type: entity
-  name: scalpel
   parent: BaseItem
+  id: BaseSurgeryTool
+  abstract: true
+  components:
+  - type: SurgeryTool
+    surgeryType: Incision
+    baseOperateTime: 5
+  - type: UserInterface
+    interfaces:
+    - key: enum.GenericSurgeryUiKey.Key
+      type: GenericSurgeryBoundUserInterface
+
+
+
+
+- type: entity
+  name: scalpel
+  parent: BaseSurgeryTool
   id: scalpel
   desc: A surgical tool used to make incisions into flesh.
   components:
   - type: SurgeryTool
-    surgeryToolClass: Incision
+    surgeryType: Incision
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
 
   - type: ItemCooldown
@@ -22,19 +38,19 @@
 
 - type: entity
   name: retractor
-  parent: BaseItem
+  parent: BaseSurgeryTool
   id: retractor
   desc: A surgical tool used to hold open incisions.
   components:
   - type: SurgeryTool
-    surgeryToolClass: Retraction
+    surgeryType: Retraction
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
 
   - type: ItemCooldown
@@ -44,19 +60,19 @@
 
 - type: entity
   name: cautery
-  parent: BaseItem
+  parent: BaseSurgeryTool
   id: cautery
   desc: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
-    surgeryToolClass: Cauterization
+    surgeryType: Cauterization
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
 
   - type: ItemCooldown
@@ -66,19 +82,19 @@
 
 - type: entity
   name: drill
-  parent: BaseItem
+  parent: BaseSurgeryTool
   id: drill
   desc: A surgical drill for making holes into hard material.
   components:
   - type: SurgeryTool
-    surgeryToolClass: Drilling
+    surgeryType: Drilling
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
 
   - type: ItemCooldown
@@ -88,39 +104,41 @@
 
 - type: entity
   name: bone saw
-  parent: BaseItem
+  parent: BaseSurgeryTool
   id: bone_saw
   desc: A surgical tool used to cauterize open wounds.
   components:
   - type: SurgeryTool
-    surgeryToolClass: BoneSawing
+    surgeryType: Amputation
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
 
   - type: ItemCooldown
   - type: MeleeWeapon
 
+
+
 - type: entity
   name: hemostat
-  parent: BaseItem
+  parent: BaseSurgeryTool
   id: hemostat
   desc: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: SurgeryTool
-    surgeryToolClass: VesselCompression
+    surgeryType: VesselCompression
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
 
   - type: ItemCooldown

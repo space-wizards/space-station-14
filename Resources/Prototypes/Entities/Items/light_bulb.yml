@@ -7,11 +7,11 @@
     bulb: Bulb
 
   - type: Sprite
-    sprite: Objects/Lighting/light_bulb.rsi
+    sprite: Objects/Power/light_bulb.rsi
     state: normal
 
   - type: Icon
-    sprite: Objects/Lighting/light_bulb.rsi
+    sprite: Objects/Power/light_bulb.rsi
     state: normal
 
 - type: entity
@@ -31,11 +31,11 @@
     bulb: Tube
 
   - type: Sprite
-    sprite: Objects/Lighting/light_tube.rsi
+    sprite:  Objects/Power/light_tube.rsi
     state: normal
 
   - type: Icon
-    sprite: Objects/Lighting/light_tube.rsi
+    sprite:  Objects/Power/light_tube.rsi
     state: normal
 
 - type: entity
@@ -49,8 +49,8 @@
     BurningTemperature: 350
     PowerUse: 9
   - type: Sprite
-    sprite: Objects/Lighting/light_tube.rsi
+    sprite:  Objects/Power/light_tube.rsi
     state: normal
   - type: Icon
-    sprite: Objects/Lighting/light_tube.rsi
+    sprite:  Objects/Power/light_tube.rsi
     state: normal

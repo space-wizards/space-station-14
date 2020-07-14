@@ -10,8 +10,8 @@ namespace Content.Shared.Chemistry
     class DefaultMetabolizable : IMetabolizable
     {
         //Rate of metabolism in units / second
-        private decimal _metabolismRate = 1;
-        public decimal MetabolismRate => _metabolismRate;
+        private double _metabolismRate = 1;
+        public double MetabolismRate => _metabolismRate;
 
         void IExposeData.ExposeData(ObjectSerializer serializer)
         {
@@ -20,7 +20,7 @@ namespace Content.Shared.Chemistry
 
         ReagentUnit IMetabolizable.Metabolize(IEntity solutionEntity, string reagentId, float tickTime)
         {
-            return ReagentUnit.New(MetabolismRate * (decimal)tickTime);
+            return ReagentUnit.New(MetabolismRate * tickTime);
         }
     }
 }

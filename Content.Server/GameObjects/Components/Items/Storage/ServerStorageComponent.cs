@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
@@ -21,6 +22,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
@@ -32,7 +34,8 @@ namespace Content.Server.GameObjects
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
+        IDragDrop
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
@@ -60,7 +63,7 @@ namespace Content.Server.GameObjects
             base.ExposeData(serializer);
 
             serializer.DataField(ref StorageCapacityMax, "Capacity", 10000);
-            serializer.DataField(ref StorageUsed, "used", 0);
+            //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
         /// <summary>
@@ -288,16 +291,16 @@ namespace Content.Server.GameObjects
                         var entity = _entityManager.GetEntity(remove.EntityUid);
                         if (entity != null && storage.Contains(entity))
                         {
-                            Remove(entity);
 
                             var item = entity.GetComponent<ItemComponent>();
                             if (item != null && playerentity.TryGetComponent(out HandsComponent hands))
                             {
-                                if (hands.PutInHand(item))
+                                if (hands.CanPutInHand(item) && hands.PutInHand(item))
+                                    {
                                     return;
+                                    }
                             }
 
-                            entity.GetComponent<ITransformComponent>().WorldPosition = ourtransform.WorldPosition;
                         }
                     }
                     break;
@@ -348,7 +351,7 @@ namespace Content.Server.GameObjects
 
             foreach (var entity in storage.ContainedEntities)
             {
-                var item = entity.GetComponent<ItemComponent>();
+                var item = entity.GetComponent<StoreableComponent>();
                 StorageUsed += item.ObjectSize;
             }
 
@@ -361,6 +364,24 @@ namespace Content.Server.GameObjects
             foreach (var entity in storedEntities)
             {
                 Remove(entity);
+            }
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            var storedEntities = storage.ContainedEntities.ToList();
+            foreach (var entity in storedEntities)
+            {
+                var exActs = entity.GetAllComponents<IExAct>();
+                foreach (var exAct in exActs)
+                {
+                    exAct.OnExplosion(eventArgs);
+                }
             }
         }
 
@@ -389,6 +410,27 @@ namespace Content.Server.GameObjects
             }
 
             Owner.PopupMessage(player, "Can't insert.");
+            return false;
+        }
+
+        public bool DragDrop(DragDropEventArgs eventArgs)
+        {
+            if (eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface))
+            {
+                if (!placeableSurface.IsPlaceable) return false;
+
+                // empty everything out
+                foreach (var storedEntity in StoredEntities.ToList())
+                {
+                    if (Remove(storedEntity))
+                    {
+                        storedEntity.Transform.WorldPosition = eventArgs.DropLocation.Position;
+                    }
+                }
+
+                return true;
+            }
+
             return false;
         }
     }

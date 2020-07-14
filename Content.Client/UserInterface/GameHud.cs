@@ -9,6 +9,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -110,12 +111,12 @@ namespace Content.Client.UserInterface
             RootControl = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(RootControl, LayoutContainer.LayoutPreset.Wide);
 
-            var escapeTexture = _resourceCache.GetTexture("/Textures/UserInterface/hamburger.svg.96dpi.png");
-            var characterTexture = _resourceCache.GetTexture("/Textures/UserInterface/character.svg.96dpi.png");
-            var inventoryTexture = _resourceCache.GetTexture("/Textures/UserInterface/inventory.svg.96dpi.png");
-            var craftingTexture = _resourceCache.GetTexture("/Textures/UserInterface/hammer.svg.96dpi.png");
-            var tutorialTexture = _resourceCache.GetTexture("/Textures/UserInterface/students-cap.svg.96dpi.png");
-            var sandboxTexture = _resourceCache.GetTexture("/Textures/UserInterface/sandbox.svg.96dpi.png");
+            var escapeTexture = _resourceCache.GetTexture("/Textures/Interface/hamburger.svg.96dpi.png");
+            var characterTexture = _resourceCache.GetTexture("/Textures/Interface/character.svg.96dpi.png");
+            var inventoryTexture = _resourceCache.GetTexture("/Textures/Interface/inventory.svg.96dpi.png");
+            var craftingTexture = _resourceCache.GetTexture("/Textures/Interface/hammer.svg.96dpi.png");
+            var tutorialTexture = _resourceCache.GetTexture("/Textures/Interface/students-cap.svg.96dpi.png");
+            var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.96dpi.png");
 
             _topButtonsContainer = new HBoxContainer
             {

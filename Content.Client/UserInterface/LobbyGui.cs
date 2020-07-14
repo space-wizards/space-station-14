@@ -18,6 +18,7 @@ namespace Content.Client.UserInterface
         public Label StartTime { get; }
         public Button ReadyButton { get; }
         public Button ObserveButton { get; }
+        public Button CreditsButton { get; }
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
         public ItemList OnlinePlayerItemList { get; }
@@ -38,7 +39,7 @@ namespace Content.Client.UserInterface
 
             AddChild(margin);
 
-            var panelTex = resourceCache.GetTexture("/Nano/button.svg.96dpi.png");
+            var panelTex = resourceCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
             var back = new StyleBoxTexture
             {
                 Texture = panelTex,
@@ -84,6 +85,13 @@ namespace Content.Client.UserInterface
                         GrowHorizontal = GrowDirection.Both,*/
                         VAlign = Label.VAlignMode.Center,
                         SizeFlagsHorizontal = SizeFlags.Expand | SizeFlags.ShrinkCenter
+                    }),
+                    (CreditsButton = new Button
+                    {
+                        SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
+                        Text = Loc.GetString("Credits"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
+                        //GrowHorizontal = GrowDirection.Begin
                     }),
                     (LeaveButton = new Button
                     {

@@ -13,6 +13,8 @@ namespace Content.Client.Input
         {
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
+            common.AddFunction(ContentKeyFunctions.FocusOOC);
+            common.AddFunction(ContentKeyFunctions.FocusAdminChat);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenTutorial);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
@@ -39,7 +41,7 @@ namespace Content.Client.Input
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
-            ghost.AddFunction(EngineKeyFunctions.Run);
+            ghost.AddFunction(EngineKeyFunctions.Walk);
             ghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
             common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);

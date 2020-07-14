@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.EntitySystems
             var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
             lunge.SetData(msg.Angle);
 
-            var entity = EntityManager.SpawnEntity("WeaponArc", attacker.Transform.GridPosition);
+            var entity = EntityManager.SpawnEntity(weaponArc.Prototype, attacker.Transform.GridPosition);
             entity.Transform.LocalRotation = msg.Angle;
 
             var weaponArcAnimation = entity.GetComponent<MeleeWeaponArcAnimationComponent>();

@@ -1,0 +1,104 @@
+- type: entity
+  id: ShellShotgunBase
+  name: shell (.50)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Ammo
+    caliber: Shotgun
+    ammoSpread: 40
+    soundCollectionEject: ShellEject
+  - type: Sprite
+    netsync: false
+    directional: false
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+    drawdepth: FloorObjects
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: base
+  - type: Appearance
+    visuals:
+    - type: SpentAmmoVisualizer2D
+
+- type: entity
+  id: ShellShotgunBeanbag
+  name: shell (.50 beanbag)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_beanbag.rsi
+  - type: Ammo
+    ammoSpread: 0
+    projectile: PelletShotgunBeanbag
+    projectilesFired: 1
+
+- type: entity
+  id: ShellShotgunSlug
+  name: shell (.50 slug)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_slug.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_slug.rsi
+  - type: Ammo
+    projectile: PelletShotgunSlug
+    projectilesFired: 4
+    ammoSpread: 10
+
+- type: entity
+  id: ShellShotgun
+  name: shell (.50)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+  - type: Ammo
+    projectile: PelletShotgun
+    projectilesFired: 6
+
+- type: entity
+  id: ShellShotgunFlash
+  name: shell (.50 flash)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_flash.rsi
+  - type: Ammo
+    projectile: PelletShotgunFlash
+    projectilesFired: 6
+
+- type: entity
+  id: ShellShotgunIncendiary
+  name: shell (.50 incendiary)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_incendiary.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_incendiary.rsi
+  - type: Ammo
+    projectile: PelletShotgun
+    projectilesFired: 6
+
+- type: entity
+  id: ShellShotgunPractice
+  name: shell (.50 practice)
+  parent: ShellShotgunBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell_practice.rsi
+  - type: Ammo
+    projectile: PelletShotgun
+    projectilesFired: 6

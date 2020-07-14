@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Content.Client.State;
@@ -21,11 +22,13 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.Utility;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -47,6 +50,7 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IItemSlotManager _itemSlotManager;
         [Dependency] private readonly IGameTiming _gameTiming;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
+        [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
         private EntityList _currentEntityList;
@@ -110,7 +114,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 return false;
             }
 
-            var entities = gameScreen.GetEntitiesUnderPosition(args.Coordinates);
+            var mapCoordinates = args.Coordinates.ToMap(_mapManager);
+            var entities = _entityManager.GetEntitiesIntersecting(mapCoordinates.MapId,
+                Box2.CenteredAround(mapCoordinates.Position, (0.5f, 0.5f))).ToList();
 
             if (entities.Count == 0)
             {
@@ -119,9 +125,20 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _currentEntityList = new EntityList();
             _currentEntityList.OnPopupHide += CloseAllMenus;
-            for (var i = 0; i < entities.Count; i++)
+            var first = true;
+            foreach (var entity in entities)
             {
-                if (i != 0)
+                if (!entity.TryGetComponent(out ISpriteComponent sprite) || !sprite.Visible)
+                {
+                    continue;
+                }
+
+                if (ContainerHelpers.TryGetContainer(entity, out var container) && !container.ShowContents)
+                {
+                    continue;
+                }
+
+                if (!first)
                 {
                     _currentEntityList.List.AddChild(new PanelContainer
                     {
@@ -130,9 +147,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     });
                 }
 
-                var entity = entities[i];
-
                 _currentEntityList.List.AddChild(new EntityButton(this, entity));
+                first = false;
             }
 
             _userInterfaceManager.ModalRoot.AddChild(_currentEntityList);
@@ -428,7 +444,7 @@ namespace Content.Client.GameObjects.EntitySystems
                     var func = args.Function;
                     var funcId = _master._inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, funcId, BoundKeyState.Down,
+                    var message = new FullInputCmdMessage(_master._gameTiming.CurTick, _master._gameTiming.TickFraction, funcId, BoundKeyState.Down,
                         _entity.Transform.GridPosition,
                         args.PointerLocation, _entity.Uid);
 
@@ -560,7 +576,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/UserInterface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }

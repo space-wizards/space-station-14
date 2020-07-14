@@ -7,16 +7,18 @@
   components:
   - type: Clickable
   - type: Sprite
+    netsync: false
     directional: false
-    texture: Objects/Projectiles/bullet.png
-    #rotation: -180
+    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
+    state: bullet
   - type: Icon
-    texture: Objects/Projectiles/bullet.png
+    sprite: Objects/Weapons/Guns/Projectiles/bullet.rsi
+    state: bullet
   - type: Collidable
     hard: false
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.2,-0.2,0.2,0.2"
+      bounds: "-0.1,-0.1,0.1,0.1"
       layer: [Clickable]
       mask:
       - Impassable
@@ -26,14 +28,9 @@
   - type: Physics
     edgeslide: false
   - type: Projectile
+    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Brute: 20
-
-- type: entity
-  id: ProjectileBullet
-  name: projectilebullet
-  parent: BulletBase
-  abstract: true
 
 - type: entity
   id: BulletBaseFlash
@@ -42,31 +39,21 @@
   abstract: true
   components:
   - type: Projectile
-    velocity: 20
+    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Brute: 10
+  - type: FlashProjectile
+    range: 1
 
 - type: entity
-  id: BulletBaseHighVelocity
+  id: BulletBaseHV
   name: base bullet high-velocity
   parent: BulletBase
   abstract: true
   components:
   - type: Projectile
-    velocity: 27
     damages:
       Brute: 12
-
-- type: entity
-  id: BulletBaseL
-  name: base bullet l
-  parent: BulletBase
-  abstract: true
-  components:
-  - type: Projectile
-    velocity: 15
-    damages:
-      Brute: 10
 
 - type: entity
   id: BulletBasePractice
@@ -75,9 +62,8 @@
   abstract: true
   components:
   - type: Projectile
-    velocity: 20
     damages:
-      Brute: 0
+      Brute: 2
 
 - type: entity
   id: BulletBaseRubber
@@ -86,6 +72,169 @@
   abstract: true
   components:
   - type: Projectile
-    velocity: 20
+    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
+    damages:
+      Brute: 3
+  - type: StunnableProjectile
+    paralyzeAmount: 2
+
+- type: entity
+  name : taser
+  id: BulletTaser
+  abstract: true
+  components:
+  - type: Ammo
+    isProjectile: true
+    ammoVelocity: 20
+    caliber: Energy
+  - type: Projectile
+    soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    damages:
+      Heat: 5
+  - type: StunnableProjectile
+    stunAmount: 5
+    knockdownAmount: 5
+  - type: Sprite
+    directional: false
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
+    state: spark
+    color: "#ffff33"
+  - type: Collidable
+    hard: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.2,0.2,0.2"
+      layer: 32
+      mask: 30
+  - type: Physics
+    edgeslide: false
+
+# Launcher projectiles (grenade / rocket)
+- type: entity
+  id: BulletRocket
+  name: rocket
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
+    state: frag
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 4
+    flashRange: 10
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+
+- type: entity
+  id: BulletGrenadeBaton
+  name: baton grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: Projectile
+    deleteOnCollide: false
+    soundHit: /Audio/Effects/gen_hit.ogg
+  - type: StunnableProjectile
+    paralyzeAmount: 8
+
+- type: entity
+  id: BulletGrenadeBlast
+  name: blast grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 2
+    lightImpactRange: 7
+    flashRange: 10
+
+- type: entity
+  id: BulletGrenadeFlash
+  name: flash grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: Projectile
+    deleteOnCollide: false
+    soundHit: /Audio/Effects/flash_bang.ogg
+  - type: FlashProjectile
+    range: 7
+
+# This is supposed to spawn shrapnel and stuff so uhh... TODO?
+- type: entity
+  id: BulletGrenadeFrag
+  name: frag grenade
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
+    state: grenade
+  - type: ExplosiveProjectile
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 1
+    lightImpactRange: 4
+    flashRange: 10
+
+- type: entity
+  id: BulletFoam
+  name: foam dart
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/toys.rsi
+    state: foamdart
+  - type: Projectile
+    deleteOnCollide: true
+    soundHit: /Audio/Guns/Hits/snap.ogg
     damages:
       Brute: 2
+
+- type: entity
+  id: BulletCap
+  name: cap bullet
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Fun/toys.rsi
+    state: capbullet
+  - type: Projectile
+    deleteOnCollide: true

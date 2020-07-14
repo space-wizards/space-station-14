@@ -3,10 +3,10 @@
   name: "R&D server"
   components:
   - type: Sprite
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/server.rsi
     state: server
   - type: Icon
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/server.rsi
     state: server
   - type: Clickable
   - type: InteractionOutline
@@ -15,9 +15,8 @@
     offset: Center
   - type: ResearchServer
   - type: TechnologyDatabase
-  - type: PowerDevice
-    drawtype: Both
-    load: 200
+  - type: PowerReceiver
+    powerLoad: 200
     priority: Low
 
 - type: entity
@@ -26,14 +25,14 @@
   # We should make this abstract once there are actual point sources.
   components:
   - type: Sprite
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/tdopler.rsi
     layers:
     - state: tdoppler-off
     - state: tdoppler
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
   - type: Icon
-    sprite: Buildings/research.rsi
+    sprite: Constructible/Power/tdopler.rsi
     state: tdoppler
   - type: Clickable
   - type: InteractionOutline
@@ -58,7 +57,7 @@
   - type: Appearance
     visuals:
     - type: PowerDeviceVisualizer2D
-  - type: PowerDevice
+  - type: PowerReceiver
   - type: Anchorable
   - type: Physics
     mass: 25

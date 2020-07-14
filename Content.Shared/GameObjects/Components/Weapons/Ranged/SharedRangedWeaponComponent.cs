@@ -5,40 +5,35 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Weapons.Ranged
 {
-    public class SharedRangedWeaponComponent : Component
+    public abstract class SharedRangedWeaponComponent : Component
     {
-        private float _fireRate;
-        private bool _automatic;
+        // Each RangedWeapon should have a RangedWeapon component +
+        // some kind of RangedBarrelComponent (this dictates what ammo is retrieved).
         public override string Name => "RangedWeapon";
         public override uint? NetID => ContentNetIDs.RANGED_WEAPON;
+    }
 
-        /// <summary>
-        ///     If true, this weapon is fully automatic, holding down left mouse button will keep firing it.
-        /// </summary>
-        public bool Automatic => _automatic;
-
-        /// <summary>
-        ///     If the weapon is automatic, controls how many shots can be fired per second.
-        /// </summary>
-        public float FireRate => _fireRate;
-
-        public override void ExposeData(ObjectSerializer serializer)
+    [Serializable, NetSerializable]
+    public sealed class RangedWeaponComponentState : ComponentState
+    {
+        public FireRateSelector FireRateSelector { get; }
+        
+        public RangedWeaponComponentState(
+            FireRateSelector fireRateSelector
+            ) : base(ContentNetIDs.RANGED_WEAPON)
         {
-            base.ExposeData(serializer);
-
-            serializer.DataField(ref _fireRate, "firerate", 4);
-            serializer.DataField(ref _automatic, "automatic", false);
+            FireRateSelector = fireRateSelector;
         }
+    }
 
-        [Serializable, NetSerializable]
-        protected class SyncFirePosMessage : ComponentMessage
+    [Serializable, NetSerializable]
+    public sealed class FirePosComponentMessage : ComponentMessage
+    {
+        public GridCoordinates Target { get; }
+
+        public FirePosComponentMessage(GridCoordinates target)
         {
-            public readonly GridCoordinates Target;
-
-            public SyncFirePosMessage(GridCoordinates target)
-            {
-                Target = target;
-            }
+            Target = target;
         }
     }
 }

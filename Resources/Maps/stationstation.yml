@@ -1,4 +1,4 @@
-meta:
+﻿meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
@@ -109,8 +109,8 @@ entities:
     pos: -1.47174,4.550247
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
+  - startingCharge: 1000
+    type: PowerCell
 - uid: 2
   type: LaserGun
   components:
@@ -118,8 +118,8 @@ entities:
     pos: -0.6748645,4.487747
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 1200
-    type: HitscanWeaponCapacitor
+  - startingCharge: 1000
+    type: PowerCell
 - uid: 3
   type: Brutepack
   components:
@@ -155,6 +155,8 @@ entities:
     pos: -2.67511,-10.351
     rot: -1.5707963267949 rad
     type: Transform
+  - startingCharge: 1000
+    type: PowerCell
 - uid: 8
   type: PowerCellSmallHigh
   components:
@@ -162,6 +164,8 @@ entities:
     pos: -2.55011,-10.6635
     rot: -1.5707963267949 rad
     type: Transform
+  - startingCharge: 1000
+    type: PowerCell
 - uid: 9
   type: OuterclothingVest
   components:
@@ -296,8 +300,6 @@ entities:
         - 30
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 27
   type: MetalStack
   components:
@@ -312,6 +314,12 @@ entities:
     pos: 8.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 29
   type: PoweredSmallLight
   components:
@@ -327,8 +335,6 @@ entities:
         - 170
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 30
   type: LightBulb
   components:
@@ -341,6 +347,12 @@ entities:
     pos: -6.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 32
   type: solid_wall
   components:
@@ -763,10 +775,8 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -778,6 +788,12 @@ entities:
     pos: -6.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 93
   type: Wire
   components:
@@ -785,6 +801,12 @@ entities:
     pos: -7.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 94
   type: Wire
   components:
@@ -792,6 +814,12 @@ entities:
     pos: -8.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 95
   type: Wire
   components:
@@ -799,6 +827,12 @@ entities:
     pos: -8.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 96
   type: Wire
   components:
@@ -806,6 +840,12 @@ entities:
     pos: -8.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 97
   type: Wire
   components:
@@ -813,6 +853,12 @@ entities:
     pos: -8.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 98
   type: Wire
   components:
@@ -820,6 +866,12 @@ entities:
     pos: -8.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 99
   type: Wire
   components:
@@ -827,6 +879,12 @@ entities:
     pos: -8.5,-1.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 100
   type: Wire
   components:
@@ -834,6 +892,12 @@ entities:
     pos: -6.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 101
   type: Wire
   components:
@@ -841,6 +905,12 @@ entities:
     pos: -6.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 102
   type: Wire
   components:
@@ -848,6 +918,12 @@ entities:
     pos: -6.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 103
   type: Wire
   components:
@@ -855,6 +931,12 @@ entities:
     pos: -6.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 104
   type: Wire
   components:
@@ -862,6 +944,12 @@ entities:
     pos: 4.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 105
   type: Wire
   components:
@@ -869,6 +957,12 @@ entities:
     pos: 4.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 106
   type: Wire
   components:
@@ -876,6 +970,12 @@ entities:
     pos: 4.5,-10.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 107
   type: Wire
   components:
@@ -883,6 +983,12 @@ entities:
     pos: 4.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 108
   type: Wire
   components:
@@ -890,6 +996,12 @@ entities:
     pos: 5.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 109
   type: Wire
   components:
@@ -897,6 +1009,12 @@ entities:
     pos: 6.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 110
   type: Wire
   components:
@@ -904,6 +1022,12 @@ entities:
     pos: 7.5,-8.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 111
   type: Catwalk
   components:
@@ -925,6 +1049,12 @@ entities:
     pos: 3.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 114
   type: Wire
   components:
@@ -932,6 +1062,12 @@ entities:
     pos: 2.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 115
   type: Wire
   components:
@@ -939,6 +1075,12 @@ entities:
     pos: 1.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 116
   type: Wire
   components:
@@ -946,6 +1088,12 @@ entities:
     pos: 0.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 117
   type: Wire
   components:
@@ -953,6 +1101,12 @@ entities:
     pos: -0.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 118
   type: Wire
   components:
@@ -960,6 +1114,12 @@ entities:
     pos: -1.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 119
   type: Wire
   components:
@@ -967,6 +1127,12 @@ entities:
     pos: -2.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 120
   type: Wire
   components:
@@ -974,6 +1140,12 @@ entities:
     pos: -3.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 121
   type: Wire
   components:
@@ -981,6 +1153,12 @@ entities:
     pos: -4.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 122
   type: Wire
   components:
@@ -988,6 +1166,12 @@ entities:
     pos: -5.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 123
   type: Wire
   components:
@@ -995,6 +1179,12 @@ entities:
     pos: 1.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 124
   type: Wire
   components:
@@ -1002,6 +1192,12 @@ entities:
     pos: 1.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 125
   type: Wire
   components:
@@ -1009,6 +1205,12 @@ entities:
     pos: 2.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 126
   type: Wire
   components:
@@ -1016,6 +1218,12 @@ entities:
     pos: -2.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 127
   type: Wire
   components:
@@ -1023,6 +1231,12 @@ entities:
     pos: -2.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 128
   type: Wire
   components:
@@ -1030,6 +1244,12 @@ entities:
     pos: -3.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 129
   type: Wire
   components:
@@ -1037,6 +1257,12 @@ entities:
     pos: -1.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 130
   type: Generator
   components:
@@ -1044,6 +1270,10 @@ entities:
     pos: 2.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 131
   type: Generator
   components:
@@ -1051,6 +1281,10 @@ entities:
     pos: 1.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 132
   type: SmesDry
   components:
@@ -1058,8 +1292,12 @@ entities:
     pos: -1.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 3000
-    type: PowerStorage
+  - supplyRate: 1000
+    type: PowerSupplier
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 133
   type: SmesDry
   components:
@@ -1067,8 +1305,12 @@ entities:
     pos: -2.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 3000
-    type: PowerStorage
+  - supplyRate: 1000
+    type: PowerSupplier
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 134
   type: SmesDry
   components:
@@ -1076,8 +1318,12 @@ entities:
     pos: -3.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
-  - charge: 3000
-    type: PowerStorage
+  - supplyRate: 1000
+    type: PowerSupplier
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 135
   type: Multitool
   components:
@@ -1171,13 +1417,10 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
       Content.Server.GameObjects.Components.EntityStorageComponent149:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -1191,7 +1434,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 149
@@ -1203,7 +1445,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 150
@@ -1215,13 +1456,10 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
       Content.Server.GameObjects.Components.EntityStorageComponent153:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -1327,6 +1565,12 @@ entities:
     pos: -6.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 164
   type: Wire
   components:
@@ -1334,6 +1578,12 @@ entities:
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 165
   type: Wire
   components:
@@ -1341,6 +1591,12 @@ entities:
     pos: 5.5,-11.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 166
   type: Wire
   components:
@@ -1348,6 +1604,12 @@ entities:
     pos: 5.5,-12.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 167
   type: Wire
   components:
@@ -1355,6 +1617,12 @@ entities:
     pos: 5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 168
   type: WiredMachine
   components:
@@ -1362,6 +1630,10 @@ entities:
     pos: 5.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 169
   type: WiredMachine
   components:
@@ -1369,6 +1641,10 @@ entities:
     pos: -6.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 170
   type: LightBulb
   components:
@@ -1458,7 +1734,7 @@ entities:
     pos: -11.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/youtool.rsi
+  - sprite: Constructible/Power/VendingMachines/youtool.rsi
     type: Sprite
 - uid: 183
   type: Generator
@@ -1467,6 +1743,10 @@ entities:
     pos: 0.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 184
   type: Wire
   components:
@@ -1474,6 +1754,12 @@ entities:
     pos: 3.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 185
   type: Wire
   components:
@@ -1481,6 +1767,12 @@ entities:
     pos: 0.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 186
   type: Generator
   components:
@@ -1488,6 +1780,10 @@ entities:
     pos: 3.5,-13.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 187
   type: Table
   components:
@@ -1614,6 +1910,12 @@ entities:
     pos: -8.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 205
   type: Wire
   components:
@@ -1621,6 +1923,12 @@ entities:
     pos: -8.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 206
   type: Wire
   components:
@@ -1628,6 +1936,12 @@ entities:
     pos: -9.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 207
   type: Wire
   components:
@@ -1635,6 +1949,12 @@ entities:
     pos: -9.5,1.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 208
   type: solid_wall
   components:
@@ -1676,8 +1996,6 @@ entities:
         - 211
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 213
   type: ChairOfficeLight
   components:
@@ -1707,8 +2025,6 @@ entities:
         - 316
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 216
   type: MetalStack
   components:
@@ -1763,6 +2079,12 @@ entities:
     pos: -6.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 224
   type: Wire
   components:
@@ -1770,6 +2092,12 @@ entities:
     pos: -9.5,2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 225
   type: Wire
   components:
@@ -1777,6 +2105,12 @@ entities:
     pos: -9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 226
   type: Wire
   components:
@@ -1784,6 +2118,12 @@ entities:
     pos: -8.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 227
   type: Wire
   components:
@@ -1791,6 +2131,12 @@ entities:
     pos: -7.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 228
   type: Wire
   components:
@@ -1798,6 +2144,12 @@ entities:
     pos: -6.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 229
   type: Wire
   components:
@@ -1805,6 +2157,12 @@ entities:
     pos: -5.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 230
   type: Wire
   components:
@@ -1812,6 +2170,12 @@ entities:
     pos: -4.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 231
   type: Wire
   components:
@@ -1819,6 +2183,12 @@ entities:
     pos: -3.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 232
   type: Wire
   components:
@@ -1826,6 +2196,12 @@ entities:
     pos: -2.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 233
   type: Wire
   components:
@@ -1833,6 +2209,12 @@ entities:
     pos: -1.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 234
   type: Wire
   components:
@@ -1840,6 +2222,12 @@ entities:
     pos: -0.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 235
   type: Wire
   components:
@@ -1847,6 +2235,12 @@ entities:
     pos: 0.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 236
   type: LargeBeaker
   components:
@@ -1952,6 +2346,12 @@ entities:
     pos: 4.5,-9.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 251
   type: PoweredSmallLight
   components:
@@ -1966,8 +2366,6 @@ entities:
         - 222
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 252
   type: solid_wall
   components:
@@ -1984,7 +2382,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 254
@@ -1996,7 +2393,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 255
@@ -2008,7 +2404,6 @@ entities:
     type: Transform
   - containers:
       flashlight_cell_container:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 256
@@ -2020,7 +2415,6 @@ entities:
     type: Transform
   - containers:
       flashlight_cell_container:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 257
@@ -2060,7 +2454,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 262
@@ -2072,11 +2465,10 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 263
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.605512,7.638151
@@ -2084,11 +2476,10 @@ entities:
     type: Transform
   - containers:
       magazine_bullet_container:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 264
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.339887,7.669401
@@ -2096,11 +2487,10 @@ entities:
     type: Transform
   - containers:
       magazine_bullet_container:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 265
-  type: magazine_10mm_smg
+  type: MagazinePistolSmg
   components:
   - parent: 0
     pos: -6.027387,7.622526
@@ -2108,7 +2498,6 @@ entities:
     type: Transform
   - containers:
       magazine_bullet_container:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 266
@@ -2120,7 +2509,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 267
@@ -2132,7 +2520,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 268
@@ -2151,10 +2538,8 @@ entities:
     type: Transform
   - containers:
       ballistics_chamber_0:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
       ballistic_gun_magazine:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 270
@@ -2166,10 +2551,8 @@ entities:
     type: Transform
   - containers:
       ballistics_chamber_0:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
       ballistic_gun_magazine:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 271
@@ -2293,7 +2676,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -2516,8 +2898,6 @@ entities:
         - 318
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 318
   type: LightTube
   components:
@@ -2538,8 +2918,6 @@ entities:
         - 320
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 320
   type: LightTube
   components:
@@ -2566,8 +2944,6 @@ entities:
         - 323
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 323
   type: LightBulb
   components:
@@ -2811,6 +3187,12 @@ entities:
     pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 358
   type: Wire
   components:
@@ -2818,6 +3200,12 @@ entities:
     pos: -13.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 359
   type: Wire
   components:
@@ -2825,6 +3213,12 @@ entities:
     pos: -9.5,3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 360
   type: Table
   components:
@@ -2862,7 +3256,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -2876,7 +3269,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -2890,7 +3282,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -2904,7 +3295,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -2918,7 +3308,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -2973,8 +3362,6 @@ entities:
         - 375
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 375
   type: LightTube
   components:
@@ -2995,8 +3382,6 @@ entities:
         - 377
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 377
   type: LightTube
   components:
@@ -3016,8 +3401,6 @@ entities:
         - 379
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 379
   type: LightTube
   components:
@@ -3037,8 +3420,6 @@ entities:
         - 381
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 381
   type: LightTube
   components:
@@ -3058,8 +3439,6 @@ entities:
         - 383
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 383
   type: LightTube
   components:
@@ -3080,8 +3459,6 @@ entities:
         - 385
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 385
   type: LightBulb
   components:
@@ -3108,6 +3485,12 @@ entities:
     pos: -14.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 389
   type: Wire
   components:
@@ -3115,6 +3498,12 @@ entities:
     pos: -12.5,-7.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 390
   type: Catwalk
   components:
@@ -3144,8 +3533,6 @@ entities:
         - 393
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 393
   type: LightTube
   components:
@@ -3172,6 +3559,12 @@ entities:
     pos: -9.5,4.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 397
   type: APC
   components:
@@ -3179,6 +3572,12 @@ entities:
     pos: -16.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 398
   type: Wire
   components:
@@ -3186,6 +3585,12 @@ entities:
     pos: -16.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 399
   type: Wire
   components:
@@ -3193,6 +3598,12 @@ entities:
     pos: -15.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 400
   type: Wire
   components:
@@ -3200,6 +3611,12 @@ entities:
     pos: -14.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 401
   type: Wire
   components:
@@ -3207,6 +3624,12 @@ entities:
     pos: -13.5,-2.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 402
   type: Wire
   components:
@@ -3214,6 +3637,12 @@ entities:
     pos: -13.5,-3.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 403
   type: Wire
   components:
@@ -3221,6 +3650,12 @@ entities:
     pos: -13.5,-4.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 404
   type: Wire
   components:
@@ -3228,6 +3663,12 @@ entities:
     pos: -13.5,-5.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 405
   type: Wire
   components:
@@ -3235,6 +3676,12 @@ entities:
     pos: -13.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 406
   type: Wire
   components:
@@ -3242,6 +3689,12 @@ entities:
     pos: -12.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 407
   type: Wire
   components:
@@ -3249,6 +3702,12 @@ entities:
     pos: -11.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 408
   type: Wire
   components:
@@ -3256,6 +3715,12 @@ entities:
     pos: -10.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 409
   type: Wire
   components:
@@ -3263,6 +3728,12 @@ entities:
     pos: -9.5,-6.5
     rot: -1.5707963267949 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 410
   type: Table
   components:
@@ -3326,7 +3797,7 @@ entities:
     pos: -11.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/engivend.rsi
+  - sprite: Constructible/Power/VendingMachines/engivend.rsi
     type: Sprite
 - uid: 419
   type: Table
@@ -3438,7 +3909,6 @@ entities:
     type: Transform
   - containers:
       ReagentDispenser-reagentContainerContainer:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 435
@@ -3506,7 +3976,6 @@ entities:
     type: Transform
   - containers:
       MedicalScanner-bodyContainer:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 444
@@ -3518,7 +3987,6 @@ entities:
     type: Transform
   - containers:
       MedicalScanner-bodyContainer:
-        entities: []
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 445
@@ -4571,6 +5039,12 @@ entities:
     pos: 1.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 595
   type: Wire
   components:
@@ -4578,6 +5052,12 @@ entities:
     pos: 2.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 596
   type: Wire
   components:
@@ -4585,6 +5065,12 @@ entities:
     pos: 2.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 597
   type: Wire
   components:
@@ -4592,6 +5078,12 @@ entities:
     pos: 2.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 598
   type: Wire
   components:
@@ -4599,6 +5091,12 @@ entities:
     pos: 2.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 599
   type: Wire
   components:
@@ -4606,6 +5104,12 @@ entities:
     pos: 2.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 600
   type: Wire
   components:
@@ -4613,6 +5117,12 @@ entities:
     pos: 2.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 601
   type: Wire
   components:
@@ -4620,6 +5130,12 @@ entities:
     pos: 2.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 602
   type: Wire
   components:
@@ -4627,6 +5143,12 @@ entities:
     pos: 2.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 603
   type: Wire
   components:
@@ -4634,6 +5156,12 @@ entities:
     pos: 3.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 604
   type: Wire
   components:
@@ -4641,6 +5169,12 @@ entities:
     pos: 4.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 605
   type: Wire
   components:
@@ -4648,6 +5182,12 @@ entities:
     pos: 5.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 606
   type: Wire
   components:
@@ -4655,6 +5195,12 @@ entities:
     pos: 5.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 607
   type: Wire
   components:
@@ -4662,6 +5208,12 @@ entities:
     pos: 6.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 608
   type: Wire
   components:
@@ -4669,6 +5221,12 @@ entities:
     pos: 7.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 609
   type: Wire
   components:
@@ -4676,6 +5234,12 @@ entities:
     pos: 8.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 610
   type: Wire
   components:
@@ -4683,6 +5247,12 @@ entities:
     pos: 9.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 611
   type: Wire
   components:
@@ -4690,6 +5260,12 @@ entities:
     pos: 10.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 612
   type: Wire
   components:
@@ -4697,6 +5273,12 @@ entities:
     pos: 11.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 613
   type: Wire
   components:
@@ -4704,6 +5286,12 @@ entities:
     pos: 12.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 614
   type: Wire
   components:
@@ -4711,6 +5299,12 @@ entities:
     pos: 12.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 615
   type: Wire
   components:
@@ -4718,6 +5312,12 @@ entities:
     pos: 13.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 616
   type: Wire
   components:
@@ -4725,6 +5325,12 @@ entities:
     pos: 14.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 617
   type: Wire
   components:
@@ -4732,6 +5338,12 @@ entities:
     pos: 15.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 618
   type: Wire
   components:
@@ -4739,6 +5351,12 @@ entities:
     pos: 16.5,10.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 619
   type: Wire
   components:
@@ -4746,6 +5364,12 @@ entities:
     pos: 16.5,9.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 620
   type: Wire
   components:
@@ -4753,6 +5377,12 @@ entities:
     pos: 16.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 621
   type: Wire
   components:
@@ -4760,6 +5390,12 @@ entities:
     pos: 16.5,7.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 622
   type: Wire
   components:
@@ -4767,6 +5403,12 @@ entities:
     pos: 16.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 623
   type: Wire
   components:
@@ -4774,6 +5416,12 @@ entities:
     pos: 16.5,5.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 624
   type: Wire
   components:
@@ -4781,6 +5429,12 @@ entities:
     pos: 16.5,4.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 625
   type: Wire
   components:
@@ -4788,6 +5442,12 @@ entities:
     pos: 16.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 626
   type: Wire
   components:
@@ -4795,6 +5455,12 @@ entities:
     pos: 16.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 627
   type: Wire
   components:
@@ -4802,6 +5468,12 @@ entities:
     pos: 17.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 628
   type: Wire
   components:
@@ -4809,6 +5481,12 @@ entities:
     pos: 18.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 629
   type: Wire
   components:
@@ -4816,6 +5494,12 @@ entities:
     pos: 18.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 630
   type: APC
   components:
@@ -4823,6 +5507,12 @@ entities:
     pos: 18.5,3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 631
   type: Wire
   components:
@@ -4830,6 +5520,12 @@ entities:
     pos: 1.5,2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 632
   type: Wire
   components:
@@ -4837,6 +5533,12 @@ entities:
     pos: 1.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 633
   type: APC
   components:
@@ -4844,6 +5546,12 @@ entities:
     pos: 1.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 634
   type: Airlock
   components:
@@ -4871,24 +5579,48 @@ entities:
   - parent: 0
     pos: 13.5,6.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 638
   type: Wire
   components:
   - parent: 0
     pos: 13.5,6.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 639
   type: APC
   components:
   - parent: 0
     pos: 28.5,8.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 640
   type: Wire
   components:
   - parent: 0
     pos: 25.5,4.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 641
   type: Poweredlight
   components:
@@ -4904,8 +5636,6 @@ entities:
         - 642
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 642
   type: LightTube
   components:
@@ -4926,8 +5656,6 @@ entities:
         - 644
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 644
   type: LightTube
   components:
@@ -4948,8 +5676,6 @@ entities:
         - 646
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 646
   type: LightTube
   components:
@@ -4962,6 +5688,12 @@ entities:
     pos: 27.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 648
   type: Wire
   components:
@@ -4969,36 +5701,72 @@ entities:
     pos: 26.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 649
   type: Wire
   components:
   - parent: 0
     pos: 15.5,8.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 650
   type: Wire
   components:
   - parent: 0
     pos: 14.5,8.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 651
   type: Wire
   components:
   - parent: 0
     pos: 13.5,8.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 652
   type: Wire
   components:
   - parent: 0
     pos: 15.5,6.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 653
   type: Wire
   components:
   - parent: 0
     pos: 14.5,6.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 654
   type: APC
   components:
@@ -5006,54 +5774,108 @@ entities:
     pos: 30.5,2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 655
   type: Wire
   components:
   - parent: 0
     pos: 19.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 656
   type: Wire
   components:
   - parent: 0
     pos: 20.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 657
   type: Wire
   components:
   - parent: 0
     pos: 21.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 658
   type: Wire
   components:
   - parent: 0
     pos: 22.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 659
   type: Wire
   components:
   - parent: 0
     pos: 23.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 660
   type: Wire
   components:
   - parent: 0
     pos: 24.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 661
   type: Wire
   components:
   - parent: 0
     pos: 25.5,2.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 662
   type: Wire
   components:
   - parent: 0
     pos: 25.5,3.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 663
   type: Poweredlight
   components:
@@ -5068,8 +5890,6 @@ entities:
         - 664
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 664
   type: LightTube
   components:
@@ -5090,8 +5910,6 @@ entities:
         - 666
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 666
   type: LightTube
   components:
@@ -5104,6 +5922,12 @@ entities:
     pos: 30.5,2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 668
   type: Wire
   components:
@@ -5111,6 +5935,12 @@ entities:
     pos: 29.5,2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 669
   type: Poweredlight
   components:
@@ -5126,8 +5956,6 @@ entities:
         - 670
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 670
   type: LightTube
   components:
@@ -5154,6 +5982,12 @@ entities:
     pos: 20.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 674
   type: Wire
   components:
@@ -5161,6 +5995,12 @@ entities:
     pos: 16.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 675
   type: Wire
   components:
@@ -5168,6 +6008,12 @@ entities:
     pos: 16.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 676
   type: Wire
   components:
@@ -5175,6 +6021,12 @@ entities:
     pos: 16.5,-0.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 677
   type: Wire
   components:
@@ -5182,6 +6034,12 @@ entities:
     pos: 16.5,-1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 678
   type: Wire
   components:
@@ -5189,6 +6047,12 @@ entities:
     pos: 16.5,-2.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 679
   type: Wire
   components:
@@ -5196,6 +6060,12 @@ entities:
     pos: 16.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 680
   type: Wire
   components:
@@ -5203,6 +6073,12 @@ entities:
     pos: 17.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 681
   type: Wire
   components:
@@ -5210,6 +6086,12 @@ entities:
     pos: 18.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 682
   type: Wire
   components:
@@ -5217,6 +6099,12 @@ entities:
     pos: 19.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 683
   type: Wire
   components:
@@ -5224,6 +6112,12 @@ entities:
     pos: 20.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 684
   type: Wire
   components:
@@ -5231,6 +6125,12 @@ entities:
     pos: 20.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 685
   type: Wire
   components:
@@ -5238,6 +6138,12 @@ entities:
     pos: 20.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 686
   type: Wire
   components:
@@ -5245,6 +6151,12 @@ entities:
     pos: 20.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 687
   type: Wire
   components:
@@ -5252,6 +6164,12 @@ entities:
     pos: 21.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 688
   type: Wire
   components:
@@ -5259,6 +6177,12 @@ entities:
     pos: 22.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 689
   type: Wire
   components:
@@ -5266,6 +6190,12 @@ entities:
     pos: 23.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 690
   type: Wire
   components:
@@ -5273,6 +6203,12 @@ entities:
     pos: 24.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 691
   type: Wire
   components:
@@ -5280,6 +6216,12 @@ entities:
     pos: 25.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 692
   type: Wire
   components:
@@ -5287,6 +6229,12 @@ entities:
     pos: 26.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 693
   type: Wire
   components:
@@ -5294,6 +6242,12 @@ entities:
     pos: 27.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 694
   type: Wire
   components:
@@ -5301,6 +6255,12 @@ entities:
     pos: 28.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 695
   type: Wire
   components:
@@ -5308,6 +6268,12 @@ entities:
     pos: 29.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 696
   type: Wire
   components:
@@ -5315,6 +6281,12 @@ entities:
     pos: 30.5,-3.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 697
   type: Wire
   components:
@@ -5322,6 +6294,12 @@ entities:
     pos: 30.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 698
   type: Wire
   components:
@@ -5329,6 +6307,12 @@ entities:
     pos: 30.5,-5.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 699
   type: Wire
   components:
@@ -5336,6 +6320,12 @@ entities:
     pos: 30.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 700
   type: APC
   components:
@@ -5343,6 +6333,12 @@ entities:
     pos: 30.5,-6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 701
   type: Poweredlight
   components:
@@ -5358,8 +6354,6 @@ entities:
         - 702
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 702
   type: LightTube
   components:
@@ -5380,8 +6374,6 @@ entities:
         - 704
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 704
   type: LightTube
   components:
@@ -5394,6 +6386,12 @@ entities:
     pos: 26.5,2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 706
   type: Wire
   components:
@@ -5401,6 +6399,12 @@ entities:
     pos: 27.5,2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 707
   type: Wire
   components:
@@ -5408,6 +6412,12 @@ entities:
     pos: 28.5,2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 708
   type: Wire
   components:
@@ -5415,6 +6425,12 @@ entities:
     pos: 28.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 709
   type: Wire
   components:
@@ -5422,6 +6438,12 @@ entities:
     pos: 25.5,5.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 710
   type: Wire
   components:
@@ -5429,6 +6451,12 @@ entities:
     pos: 25.5,6.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 711
   type: Wire
   components:
@@ -5436,6 +6464,12 @@ entities:
     pos: 25.5,7.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 712
   type: Wire
   components:
@@ -5443,6 +6477,12 @@ entities:
     pos: 25.5,8.5
     rot: 3.141592653589793 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 713
   type: Poweredlight
   components:
@@ -5458,8 +6498,6 @@ entities:
         - 714
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 714
   type: LightTube
   components:
@@ -5472,7 +6510,7 @@ entities:
     pos: 29.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 716
   type: VendingMachineMedical
@@ -5481,7 +6519,7 @@ entities:
     pos: 27.5,-5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 717
   type: VendingMachineMedical
@@ -5490,7 +6528,7 @@ entities:
     pos: 25.5,-5.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/medical.rsi
+  - sprite: Constructible/Power/VendingMachines/medical.rsi
     type: Sprite
 - uid: 718
   type: VendingMachineWallMedical
@@ -5499,7 +6537,7 @@ entities:
     pos: 1.5,-3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - sprite: Buildings/VendingMachines/wallmed.rsi
+  - sprite: Constructible/Power/VendingMachines/wallmed.rsi
     type: Sprite
 - uid: 719
   type: MedkitFilled
@@ -5510,7 +6548,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 720
@@ -5522,7 +6559,6 @@ entities:
     type: Transform
   - containers:
       storagebase:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 721
@@ -5547,8 +6583,6 @@ entities:
         - 723
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 723
   type: LightTube
   components:
@@ -5696,7 +6730,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -5710,7 +6743,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -5724,7 +6756,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -5738,7 +6769,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -5752,7 +6782,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -5766,7 +6795,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -6457,6 +7485,12 @@ entities:
     pos: 2.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 847
   type: Wire
   components:
@@ -6464,6 +7498,12 @@ entities:
     pos: 2.5,12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 848
   type: Wire
   components:
@@ -6471,6 +7511,12 @@ entities:
     pos: 2.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 849
   type: Wire
   components:
@@ -6478,6 +7524,12 @@ entities:
     pos: 3.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 850
   type: Wire
   components:
@@ -6485,6 +7537,12 @@ entities:
     pos: 4.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 851
   type: Wire
   components:
@@ -6492,6 +7550,12 @@ entities:
     pos: 6.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 852
   type: Wire
   components:
@@ -6499,6 +7563,12 @@ entities:
     pos: 6.5,28.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 853
   type: Wire
   components:
@@ -6506,6 +7576,12 @@ entities:
     pos: 5.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 854
   type: Wire
   components:
@@ -6513,6 +7589,12 @@ entities:
     pos: 5.5,15.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 855
   type: Wire
   components:
@@ -6520,6 +7602,12 @@ entities:
     pos: 5.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 856
   type: Wire
   components:
@@ -6527,6 +7615,12 @@ entities:
     pos: 6.5,16.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 857
   type: Wire
   components:
@@ -6534,6 +7628,12 @@ entities:
     pos: 6.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 858
   type: Wire
   components:
@@ -6541,6 +7641,12 @@ entities:
     pos: 6.5,18.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 859
   type: Wire
   components:
@@ -6548,6 +7654,12 @@ entities:
     pos: 6.5,19.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 860
   type: Wire
   components:
@@ -6555,6 +7667,12 @@ entities:
     pos: 6.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 861
   type: Wire
   components:
@@ -6562,6 +7680,12 @@ entities:
     pos: 6.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 862
   type: Wire
   components:
@@ -6569,6 +7693,12 @@ entities:
     pos: 6.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 863
   type: Wire
   components:
@@ -6576,6 +7706,12 @@ entities:
     pos: 6.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 864
   type: Wire
   components:
@@ -6583,6 +7719,12 @@ entities:
     pos: 6.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 865
   type: Wire
   components:
@@ -6590,6 +7732,12 @@ entities:
     pos: 6.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 866
   type: Wire
   components:
@@ -6597,6 +7745,12 @@ entities:
     pos: 6.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 867
   type: Wire
   components:
@@ -6604,6 +7758,12 @@ entities:
     pos: 5.5,13.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 868
   type: AirlockScienceGlass
   components:
@@ -6668,8 +7828,6 @@ entities:
         - 876
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 876
   type: LightTube
   components:
@@ -6690,8 +7848,6 @@ entities:
         - 878
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 878
   type: LightTube
   components:
@@ -6717,8 +7873,6 @@ entities:
         - 879
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 881
   type: Wire
   components:
@@ -6726,6 +7880,12 @@ entities:
     pos: 3.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 882
   type: Wire
   components:
@@ -6733,6 +7893,12 @@ entities:
     pos: 2.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 883
   type: Poweredlight
   components:
@@ -6748,8 +7914,6 @@ entities:
         - 884
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 884
   type: LightTube
   components:
@@ -6770,8 +7934,6 @@ entities:
         - 886
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 886
   type: LightTube
   components:
@@ -6791,8 +7953,6 @@ entities:
         - 888
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 888
   type: LightBulb
   components:
@@ -6812,8 +7972,6 @@ entities:
         - 890
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 890
   type: LightTube
   components:
@@ -6838,8 +7996,6 @@ entities:
         - 891
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 893
   type: PoweredSmallLight
   components:
@@ -6855,8 +8011,6 @@ entities:
         - 894
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 894
   type: LightBulb
   components:
@@ -6884,8 +8038,6 @@ entities:
         - 897
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 897
   type: LightBulb
   components:
@@ -6972,6 +8124,12 @@ entities:
     pos: 2.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 910
   type: Wire
   components:
@@ -6979,6 +8137,12 @@ entities:
     pos: 1.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 911
   type: APC
   components:
@@ -6986,6 +8150,12 @@ entities:
     pos: 1.5,14.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 912
   type: APC
   components:
@@ -6993,6 +8163,12 @@ entities:
     pos: 14.5,19.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 913
   type: APC
   components:
@@ -7000,6 +8176,12 @@ entities:
     pos: 18.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 914
   type: Wire
   components:
@@ -7007,6 +8189,12 @@ entities:
     pos: 7.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 915
   type: Wire
   components:
@@ -7014,6 +8202,12 @@ entities:
     pos: 8.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 916
   type: Wire
   components:
@@ -7021,6 +8215,12 @@ entities:
     pos: 9.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 917
   type: Wire
   components:
@@ -7028,6 +8228,12 @@ entities:
     pos: 10.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 918
   type: Wire
   components:
@@ -7035,6 +8241,12 @@ entities:
     pos: 11.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 919
   type: Wire
   components:
@@ -7042,6 +8254,12 @@ entities:
     pos: 12.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 920
   type: Wire
   components:
@@ -7049,6 +8267,12 @@ entities:
     pos: 13.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 921
   type: Wire
   components:
@@ -7056,6 +8280,12 @@ entities:
     pos: 14.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 922
   type: Wire
   components:
@@ -7063,6 +8293,12 @@ entities:
     pos: 14.5,19.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 923
   type: Wire
   components:
@@ -7070,6 +8306,12 @@ entities:
     pos: 15.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 924
   type: Wire
   components:
@@ -7077,6 +8319,12 @@ entities:
     pos: 16.5,20.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 925
   type: Wire
   components:
@@ -7084,6 +8332,12 @@ entities:
     pos: 16.5,21.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 926
   type: Wire
   components:
@@ -7091,6 +8345,12 @@ entities:
     pos: 16.5,22.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 927
   type: Wire
   components:
@@ -7098,6 +8358,12 @@ entities:
     pos: 16.5,23.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 928
   type: Wire
   components:
@@ -7105,6 +8371,12 @@ entities:
     pos: 16.5,24.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 929
   type: Wire
   components:
@@ -7112,6 +8384,12 @@ entities:
     pos: 16.5,25.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 930
   type: Wire
   components:
@@ -7119,6 +8397,12 @@ entities:
     pos: 16.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 931
   type: Wire
   components:
@@ -7126,6 +8410,12 @@ entities:
     pos: 16.5,27.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 932
   type: Wire
   components:
@@ -7133,6 +8423,12 @@ entities:
     pos: 17.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 933
   type: Wire
   components:
@@ -7140,6 +8436,12 @@ entities:
     pos: 18.5,26.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 934
   type: Generator
   components:
@@ -7147,6 +8449,10 @@ entities:
     pos: 3.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 935
   type: Generator
   components:
@@ -7154,6 +8460,10 @@ entities:
     pos: 2.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 936
   type: Generator
   components:
@@ -7161,6 +8471,10 @@ entities:
     pos: 1.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 937
   type: Generator
   components:
@@ -7168,6 +8482,10 @@ entities:
     pos: 0.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 938
   type: Wire
   components:
@@ -7175,6 +8493,12 @@ entities:
     pos: 0.5,-12.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 939
   type: Poweredlight
   components:
@@ -7189,8 +8513,6 @@ entities:
         - 940
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 940
   type: LightTube
   components:
@@ -7202,12 +8524,24 @@ entities:
   - parent: 0
     pos: 7.5,18.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 942
   type: Wire
   components:
   - parent: 0
     pos: 7.5,18.5
     type: Transform
+  - nodeTypes:
+      HVPower:
+      - AdjacentNode
+      Apc:
+      - AdjacentNode
+    type: NodeContainer
 - uid: 943
   type: GlassStack
   components:
@@ -7273,7 +8607,6 @@ entities:
     type: Transform
   - containers:
       EntityStorageComponent:
-        entities: []
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
   - IsPlaceable: False
@@ -7384,8 +8717,6 @@ entities:
         - 967
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
-  - load: 40
-    type: PowerDevice
 - uid: 967
   type: LightTube
   components:

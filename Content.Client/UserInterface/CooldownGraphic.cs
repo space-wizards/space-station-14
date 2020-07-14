@@ -6,6 +6,9 @@ using System;
 using Robust.Client.Graphics.Shaders;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Robust.Client.UserInterface.Controls
 {
@@ -33,7 +36,7 @@ namespace Robust.Client.UserInterface.Controls
         {
             Color color;
 
-            var lerp = 1f - Math.Abs(Progress); // for future bikeshedding purposes
+            var lerp = 1f - MathF.Abs(Progress); // for future bikeshedding purposes
 
             if (Progress >= 0f)
             {
@@ -42,7 +45,7 @@ namespace Robust.Client.UserInterface.Controls
             }
             else
             {
-                var alpha = Math.Clamp(0.5f * lerp, 0f, 0.5f);
+                var alpha = MathF.Clamp(0.5f * lerp, 0f, 0.5f);
                 color = new Color(1f, 1f, 1f, alpha);
             }
 

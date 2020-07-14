@@ -10,7 +10,6 @@ namespace Content.Client.GameObjects.Components.Construction
         public override string Name => "ConstructionGhost";
 
         [ViewVariables] public ConstructionPrototype Prototype { get; set; }
-        [ViewVariables] public ConstructorComponent Master { get; set; }
         [ViewVariables] public int GhostID { get; set; }
     }
 }

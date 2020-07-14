@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0M));
+            serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5.0));
         }
 
         /// <summary>

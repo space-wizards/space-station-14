@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects;
 using Robust.Server.Console;
@@ -61,6 +62,10 @@ namespace Content.Server.GlobalVerbs
             if (target.TryGetComponent(out ThirstComponent thirst))
             {
                 thirst.ResetThirst();
+            }
+            if (target.TryGetComponent(out StunnableComponent stun))
+            {
+                stun.ResetStuns();
             }
         }
     }

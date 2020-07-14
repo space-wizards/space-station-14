@@ -66,6 +66,7 @@ namespace Content.Shared
             public bool YouAreReady { get; set; }
             // UTC.
             public DateTime StartTime { get; set; }
+            public bool Paused { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -78,6 +79,7 @@ namespace Content.Shared
 
                 YouAreReady = buffer.ReadBoolean();
                 StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
+                Paused = buffer.ReadBoolean();
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -91,6 +93,7 @@ namespace Content.Shared
 
                 buffer.Write(YouAreReady);
                 buffer.Write(StartTime.Ticks);
+                buffer.Write(Paused);
             }
         }
 
@@ -116,6 +119,40 @@ namespace Content.Shared
                 buffer.Write(TextBlob);
             }
         }
+
+        protected class MsgTickerLobbyCountdown : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerLobbyCountdown);
+            public MsgTickerLobbyCountdown(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            /// <summary>
+            /// The total amount of seconds to go until the countdown finishes
+            /// </summary>
+            public DateTime StartTime { get; set; }
+
+            /// <summary>
+            /// Whether or not the countdown is paused
+            /// </summary>
+            public bool Paused { get; set; }
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                StartTime = new DateTime(buffer.ReadInt64(), DateTimeKind.Utc);
+                Paused = buffer.ReadBoolean();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(StartTime.Ticks);
+                buffer.Write(Paused);
+            }
+        }
+
         public struct RoundEndPlayerInfo
         {
             public string PlayerOOCName;

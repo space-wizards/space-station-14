@@ -1,12 +1,12 @@
-- type: entity
+﻿- type: entity
   id: Mirror
   name: mirror
   components:
   - type: Sprite
-    sprite: Buildings/mirror.rsi
+    sprite: Constructible/Misc/mirror.rsi
     state: mirror
   - type: Icon
-    sprite: Buildings/mirror.rsi
+    sprite: Constructible/Misc/mirror.rsi
     state: mirror
   - type: Collidable
     shapes:

@@ -1,0 +1,49 @@
+- type: entity
+  id: BulletPistol
+  name: bullet (.35 auto)
+  parent: BulletBase
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 24
+
+- type: entity
+  id: BulletPistolFlash
+  name: bullet (.35 auto flash)
+  parent: BulletBaseFlash
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 24
+
+- type: entity
+  id: BulletPistolHV
+  name: bullet (.35 auto high-velocity)
+  parent: BulletBaseHV
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 28
+
+- type: entity
+  id: BulletPistolPractice
+  name: bullet (.35 auto practice)
+  parent: BulletBasePractice
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 2
+
+- type: entity
+  id: BulletPistolRubber
+  name: bullet (.35 auto rubber)
+  parent: BulletBaseRubber
+  abstract: true
+  components:
+  - type: Projectile
+    damages:
+      Brute: 3

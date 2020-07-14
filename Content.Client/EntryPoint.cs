@@ -24,6 +24,7 @@ using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.State;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
+using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -41,6 +42,7 @@ namespace Content.Client
         [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner;
         [Dependency] private readonly IGameController _gameController;
         [Dependency] private readonly IStateManager _stateManager;
+        [Dependency] private readonly IConfigurationManager _configurationManager;
 #pragma warning restore 649
 
         public override void Init()
@@ -50,126 +52,7 @@ namespace Content.Client
 
             factory.DoAutoRegistrations();
 
-            var registerIgnore = new[]
-            {
-                "Anchorable",
-                "AmmoBox",
-                "Breakable",
-                "Pickaxe",
-                "Interactable",
-                "Destructible",
-                "Temperature",
-                "PowerTransfer",
-                "PowerNode",
-                "PowerProvider",
-                "PowerDevice",
-                "PowerStorage",
-                "PowerGenerator",
-                "Explosive",
-                "OnUseTimerTrigger",
-                "ToolboxElectricalFill",
-                "ToolboxEmergencyFill",
-                "WarpPoint",
-                "ToolboxGoldFill",
-                "ToolLockerFill",
-                "EmitSoundOnUse",
-                "FootstepModifier",
-                "HeatResistance",
-                "Teleportable",
-                "ItemTeleporter",
-                "Portal",
-                "EntityStorage",
-                "PlaceableSurface",
-                "Wirecutter",
-                "Screwdriver",
-                "Multitool",
-                "Wrench",
-                "Crowbar",
-                "HitscanWeapon",
-                "ProjectileWeapon",
-                "Projectile",
-                "MeleeWeapon",
-                "Storeable",
-                "Dice",
-                "Construction",
-                "Apc",
-                "Door",
-                "PoweredLight",
-                "Smes",
-                "Powercell",
-                "LightBulb",
-                "Healing",
-                "Catwalk",
-                "BallisticMagazine",
-                "BallisticBullet",
-                "HitscanWeaponCapacitor",
-                "PowerCell",
-                "WeaponCapacitorCharger",
-                "PowerCellCharger",
-                "AiController",
-                "PlayerInputMover",
-                "Computer",
-                "AsteroidRock",
-                "ResearchServer",
-                "ResearchPointSource",
-                "ResearchClient",
-                "IdCard",
-                "Access",
-                "AccessReader",
-                "IdCardConsole",
-                "Airlock",
-                "MedicalScanner",
-                "WirePlacer",
-                "Species",
-                "Drink",
-                "Food",
-                "FoodContainer",
-                "Stomach",
-                "Hunger",
-                "Thirst",
-                "Rotatable",
-                "MagicMirror",
-                "MedkitFill",
-                "FloorTile",
-                "FootstepSound",
-                "UtilityBeltClothingFill",
-                "ShuttleController",
-                "HumanInventoryController",
-                "UseDelay",
-                "Pourable",
-                "Paper",
-                "Write",
-                "Bloodstream",
-                "TransformableContainer",
-                "Mind",
-                "MovementSpeedModifier",
-                "StorageFill",
-                "Mop",
-                "Bucket",
-                "Puddle",
-                "CanSpill",
-                "RandomPottedPlant",
-                "CommunicationsConsole",
-                "BarSign",
-                "DroppedBodyPart",
-                "DroppedMechanism",
-                "BodyManager",
-                "Stunnable",
-                "SolarPanel",
-                "BodyScanner",
-                "Stunbaton",
-                "EmergencyClosetFill",
-                "Tool",
-                "TilePrying",
-                "RandomToolColor",
-                "ConditionalSpawner",
-                "PottedPlantHide",
-                "SecureEntityStorage",
-                "PresetIdCard",
-                "SolarControlConsole",
-            };
-
-            foreach (var ignoreName in registerIgnore)
+            foreach (var ignoreName in IgnoredComponents.List)
             {
                 factory.RegisterIgnore(ignoreName);
             }
@@ -214,6 +97,8 @@ namespace Content.Client
             {
                 IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
             };
+
+             _configurationManager.RegisterCVar("outline.enabled", true);
         }
 
         /// <summary>
@@ -240,7 +125,10 @@ namespace Content.Client
         /// </summary>
         public static void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
         {
-            eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            if (!eventArgs.OldEntity.Deleted)
+            {
+                eventArgs.OldEntity.RemoveComponent<CharacterInterface>();
+            }
         }
 
         public override void PostInit()

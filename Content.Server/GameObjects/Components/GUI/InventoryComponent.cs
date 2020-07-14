@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks.Dataflow;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -22,7 +24,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -43,6 +45,18 @@ namespace Content.Server.GameObjects
                     AddSlot(slotName);
                 }
             }
+        }
+
+        bool IEffectBlocker.CanSlip()
+        {
+            if(Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
+                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
+            )
+            {
+                return EffectBlockerSystem.CanSlip(shoes.Owner);
+            }
+
+            return true;
         }
 
         public override void OnRemove()
@@ -77,7 +91,14 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            return SlotContainers[slot].ContainedEntity?.GetComponent<T>();
+            var containedEntity = SlotContainers[slot].ContainedEntity;
+            if (containedEntity?.Deleted == true)
+            {
+                SlotContainers[slot] = null;
+                containedEntity = null;
+                Dirty();
+            }
+            return containedEntity?.GetComponent<T>();
         }
 
         public bool TryGetSlotItem<T>(Slots slot, out T itemComponent) where T : ItemComponent
@@ -118,6 +139,7 @@ namespace Content.Server.GameObjects
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
+
             return true;
         }
 
@@ -196,6 +218,7 @@ namespace Content.Server.GameObjects
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
             Dirty();
+
             return true;
         }
 
@@ -270,7 +293,7 @@ namespace Content.Server.GameObjects
 
         /// <summary>
         /// The underlying Container System just notified us that an entity was removed from it.
-        /// We need to make sure we process that removed entity as being unequpped from the slot.
+        /// We need to make sure we process that removed entity as being unequipped from the slot.
         /// </summary>
         private void ForceUnequip(IContainer container, IEntity entity)
         {
@@ -281,7 +304,9 @@ namespace Content.Server.GameObjects
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
+            {
                 itemComp.RemovedFromSlot();
+            }
 
             Dirty();
         }
@@ -391,6 +416,26 @@ namespace Content.Server.GameObjects
                 }
             }
             return new InventoryComponentState(list);
+        }
+
+        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        {
+            if (eventArgs.Severity < ExplosionSeverity.Heavy)
+            {
+                return;
+            }
+
+            foreach (var slot in SlotContainers.Values.ToList())
+            {
+                foreach (var entity in slot.ContainedEntities)
+                {
+                    var exActs = entity.GetAllComponents<IExAct>().ToList();
+                    foreach (var exAct in exActs)
+                    {
+                        exAct.OnExplosion(eventArgs);
+                    }
+                }
+            }
         }
     }
 }

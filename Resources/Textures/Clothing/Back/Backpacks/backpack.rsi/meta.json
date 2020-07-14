@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "backpack",
+            "directions": 1
+        },
+        {
+            "name": "backpack-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "backpack-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "backpack-inhand-right",
+            "directions": 4
+        }
+    ]
+}

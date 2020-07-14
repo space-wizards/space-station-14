@@ -18,6 +18,8 @@ namespace Content.Shared.BodySystem
             { DamageClass.Toxin, new List<DamageType>{ DamageType.Cellular, DamageType.DNA}},
             { DamageClass.Airloss, new List<DamageType>{ DamageType.Airloss }}
         };
+
+        //TODO: autogenerate this lol
         public static readonly Dictionary<DamageType, DamageClass> DamageTypeToClass = new Dictionary<DamageType, DamageClass>
         {
             { DamageType.Blunt, DamageClass.Brute },

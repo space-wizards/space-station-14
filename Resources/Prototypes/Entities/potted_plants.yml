@@ -6,10 +6,10 @@
   - type: InteractionOutline
   - type: Collidable
   - type: Sprite
-    sprite: Objects/potted_plants.rsi
+    sprite: Constructible/Misc/potted_plants.rsi
 
   - type: Icon
-    sprite: Objects/potted_plants.rsi
+    sprite: Constructible/Misc/potted_plants.rsi
 
   - type: PottedPlantHide
 

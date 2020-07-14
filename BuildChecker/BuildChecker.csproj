@@ -18,6 +18,7 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild
     <Python Condition="'$(OS)'=='Windows_NT' Or '$(OS)'=='Windows'">py -3</Python>
     <ProjectGuid>{C899FCA4-7037-4E49-ABC2-44DE72487110}</ProjectGuid>
     <TargetFrameworkMoniker>.NETFramework, Version=v4.7.2</TargetFrameworkMoniker>
+    <RestorePackages>false</RestorePackages>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>

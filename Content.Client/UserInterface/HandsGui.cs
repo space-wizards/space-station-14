@@ -40,10 +40,10 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            var textureHandLeft = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
-            var textureHandRight = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
-            var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
-            var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
+            var textureHandLeft = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
+            var textureHandRight = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
+            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
 
             _rightStatusPanel = new ItemStatusPanel(true);
             _leftStatusPanel = new ItemStatusPanel(false);

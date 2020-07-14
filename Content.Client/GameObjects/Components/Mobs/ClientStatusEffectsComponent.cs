@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
@@ -10,6 +11,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
@@ -83,6 +85,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             _ui?.Dispose();
             _ui = null;
+            _cooldown.Clear();
         }
 
         public void UpdateStatusEffects()
@@ -94,29 +97,32 @@ namespace Content.Client.GameObjects.Components.Mobs
             _cooldown.Clear();
             _ui.VBox.DisposeAllChildren();
 
-            foreach (var (key, statusEffect) in _status.OrderBy(x => (int) x.Key))
+            foreach (var (key, effect) in _status.OrderBy(x => (int) x.Key))
             {
-                var status = new Control()
-                {
-                    Children =
-                    {
-                        new TextureRect
-                        {
-                            TextureScale = (2, 2),
-                            Texture = _resourceCache.GetTexture(statusEffect.Icon)
-                        },
-                    }
-                };
+                var texture = _resourceCache.GetTexture(effect.Icon);
+                var status = new StatusControl(key, texture);
 
-                if (statusEffect.Cooldown.HasValue)
+                if (effect.Cooldown.HasValue)
                 {
                     var cooldown = new CooldownGraphic();
                     status.Children.Add(cooldown);
                     _cooldown[key] = cooldown;
                 }
 
+                status.OnPressed += args => StatusPressed(args, status);
+
                 _ui.VBox.AddChild(status);
             }
+        }
+
+        private void StatusPressed(BaseButton.ButtonEventArgs args, StatusControl status)
+        {
+            if (args.Event.Function != EngineKeyFunctions.UIClick)
+            {
+                return;
+            }
+
+            SendNetworkMessage(new ClickStatusMessage(status.Effect));
         }
 
         public void RemoveStatusEffect(StatusEffect name)

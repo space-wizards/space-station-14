@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects;
+using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.UserInterface;
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.Components.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
-    public class ClientStorageComponent : SharedStorageComponent
+    public class ClientStorageComponent : SharedStorageComponent, IClientDraggable
     {
         private Dictionary<EntityUid, int> StoredEntities { get; set; } = new Dictionary<EntityUid, int>();
         private int StorageSizeUsed;
@@ -33,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Storage
             base.OnAdd();
 
             Window = new StorageWindow()
-                {StorageEntity = this};
+                {StorageEntity = this, Title = Owner.Name};
         }
 
         public override void OnRemove()
@@ -315,6 +316,18 @@ namespace Content.Client.GameObjects.Components.Storage
                 hBoxContainer.AddChild(EntityControl);
                 AddChild(hBoxContainer);
             }
+        }
+
+        public bool ClientCanDropOn(CanDropEventArgs eventArgs)
+        {
+            //can only drop on placeable surfaces to empty out contents
+            return eventArgs.Target.HasComponent<PlaceableSurfaceComponent>();
+        }
+
+        public bool ClientCanDrag(CanDragEventArgs eventArgs)
+        {
+            //always draggable, at least for now
+            return true;
         }
     }
 }

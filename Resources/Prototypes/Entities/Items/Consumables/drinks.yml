@@ -15,6 +15,7 @@
     state: icon
   - type: Icon
     state: icon
+  - type: CanSpill
 
 - type: entity
   parent: DrinkBase
@@ -31,9 +32,9 @@
   id: DrinkGlass
   components:
   - type: Sprite
-    sprite: Objects/Drinks/glass_clear.rsi
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_clear.rsi
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: Solution
     fillingState: glass
     maxVol: 50
@@ -55,9 +56,9 @@
       - ReagentId: chem.Ale
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/aleglass.rsi
+    sprite: Objects/Consumable/Drinks/aleglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/aleglass.rsi
+    sprite: Objects/Consumable/Drinks/aleglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -73,9 +74,9 @@
         Quantity: 20
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/antifreeze.rsi
+    sprite: Objects/Consumable/Drinks/antifreeze.rsi
   - type: Icon
-    sprite: Objects/Drinks/antifreeze.rsi
+    sprite: Objects/Consumable/Drinks/antifreeze.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -91,9 +92,9 @@
         Quantity: 20
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/atomicbombglass.rsi
+    sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/atomicbombglass.rsi
+    sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -109,9 +110,9 @@
         Quantity: 20
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/b52glass.rsi
+    sprite: Objects/Consumable/Drinks/b52glass.rsi
   - type: Icon
-    sprite: Objects/Drinks/b52glass.rsi
+    sprite: Objects/Consumable/Drinks/b52glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -121,9 +122,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/bananahonkglass.rsi
+    sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/bananahonkglass.rsi
+    sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -133,9 +134,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/beepskysmashglass.rsi
+    sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/beepskysmashglass.rsi
+    sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -150,9 +151,9 @@
       - ReagentId: chem.Beer
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/beer.rsi
+    sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Icon
-    sprite: Objects/Drinks/beer.rsi
+    sprite: Objects/Consumable/Drinks/beer.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -167,9 +168,9 @@
       - ReagentId: chem.Beer
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/beerglass.rsi
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/beerglass.rsi
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -179,9 +180,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/berryjuice.rsi
+    sprite: Objects/Consumable/Drinks/berryjuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/berryjuice.rsi
+    sprite: Objects/Consumable/Drinks/berryjuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -191,9 +192,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/blackrussianglass.rsi
+    sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/blackrussianglass.rsi
+    sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -203,9 +204,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/bloodymaryglass.rsi
+    sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/bloodymaryglass.rsi
+    sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -215,9 +216,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/booger.rsi
+    sprite: Objects/Consumable/Drinks/booger.rsi
   - type: Icon
-    sprite: Objects/Drinks/booger.rsi
+    sprite: Objects/Consumable/Drinks/booger.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -227,9 +228,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/bravebullglass.rsi
+    sprite: Objects/Consumable/Drinks/bravebullglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/bravebullglass.rsi
+    sprite: Objects/Consumable/Drinks/bravebullglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -239,9 +240,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/brownstar.rsi
+    sprite: Objects/Consumable/Drinks/brownstar.rsi
   - type: Icon
-    sprite: Objects/Drinks/brownstar.rsi
+    sprite: Objects/Consumable/Drinks/brownstar.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -251,10 +252,10 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/carafe.rsi
+    sprite: Objects/Consumable/Drinks/carafe.rsi
     state: icon-10
   - type: Icon
-    sprite: Objects/Drinks/carafe.rsi
+    sprite: Objects/Consumable/Drinks/carafe.rsi
     state: icon-10
   - type: Appearance
     visuals:
@@ -269,9 +270,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/carrotjuice.rsi
+    sprite: Objects/Consumable/Drinks/carrotjuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/carrotjuice.rsi
+    sprite: Objects/Consumable/Drinks/carrotjuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -281,9 +282,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/chocolateglass.rsi
+    sprite: Objects/Consumable/Drinks/chocolateglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/chocolateglass.rsi
+    sprite: Objects/Consumable/Drinks/chocolateglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -293,9 +294,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/cafe_latte.rsi
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
   - type: Icon
-    sprite: Objects/Drinks/cafe_latte.rsi
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
 
 
 - type: entity
@@ -311,9 +312,9 @@
       - ReagentId: chem.Coffee
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/coffee.rsi
+    sprite: Objects/Consumable/Drinks/coffee.rsi
   - type: Icon
-    sprite: Objects/Drinks/coffee.rsi
+    sprite: Objects/Consumable/Drinks/coffee.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -328,9 +329,9 @@
       - ReagentId: chem.Cognac
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/cognacglass.rsi
+    sprite: Objects/Consumable/Drinks/cognacglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/cognacglass.rsi
+    sprite: Objects/Consumable/Drinks/cognacglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -345,9 +346,9 @@
       - ReagentId: chem.Cola
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/colabottle.rsi
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/colabottle.rsi
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -362,9 +363,9 @@
       - ReagentId: chem.Cream
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/cream.rsi
+    sprite: Objects/Consumable/Drinks/cream.rsi
   - type: Icon
-    sprite: Objects/Drinks/cream.rsi
+    sprite: Objects/Consumable/Drinks/cream.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -379,9 +380,9 @@
       - ReagentId: chem.CubaLibre
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/cubalibreglass.rsi
+    sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/cubalibreglass.rsi
+    sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -391,9 +392,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/curacaoglass.rsi
+    sprite: Objects/Consumable/Drinks/curacaoglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/curacaoglass.rsi
+    sprite: Objects/Consumable/Drinks/curacaoglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -403,9 +404,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/demonsblood.rsi
+    sprite: Objects/Consumable/Drinks/demonsblood.rsi
   - type: Icon
-    sprite: Objects/Drinks/demonsblood.rsi
+    sprite: Objects/Consumable/Drinks/demonsblood.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -415,9 +416,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/detflask.rsi
+    sprite: Objects/Consumable/Drinks/detflask.rsi
   - type: Icon
-    sprite: Objects/Drinks/detflask.rsi
+    sprite: Objects/Consumable/Drinks/detflask.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -427,9 +428,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/devilskiss.rsi
+    sprite: Objects/Consumable/Drinks/devilskiss.rsi
   - type: Icon
-    sprite: Objects/Drinks/devilskiss.rsi
+    sprite: Objects/Consumable/Drinks/devilskiss.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -439,9 +440,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/doctorsdelightglass.rsi
+    sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/doctorsdelightglass.rsi
+    sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -451,9 +452,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/driestmartiniglass.rsi
+    sprite: Objects/Consumable/Drinks/driestmartiniglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/driestmartiniglass.rsi
+    sprite: Objects/Consumable/Drinks/driestmartiniglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -463,9 +464,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/dr_gibb_glass.rsi
+    sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
   - type: Icon
-    sprite: Objects/Drinks/dr_gibb_glass.rsi
+    sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -475,9 +476,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/emeraldglass.rsi
+    sprite: Objects/Consumable/Drinks/emeraldglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/emeraldglass.rsi
+    sprite: Objects/Consumable/Drinks/emeraldglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -487,9 +488,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/erikasurprise.rsi
+    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
   - type: Icon
-    sprite: Objects/Drinks/erikasurprise.rsi
+    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -499,9 +500,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/flask.rsi
+    sprite: Objects/Consumable/Drinks/flask.rsi
   - type: Icon
-    sprite: Objects/Drinks/flask.rsi
+    sprite: Objects/Consumable/Drinks/flask.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -511,9 +512,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/flask_old.rsi
+    sprite: Objects/Consumable/Drinks/flask_old.rsi
   - type: Icon
-    sprite: Objects/Drinks/flask_old.rsi
+    sprite: Objects/Consumable/Drinks/flask_old.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -523,9 +524,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/gargleblasterglass.rsi
+    sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/gargleblasterglass.rsi
+    sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -535,9 +536,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/ginfizzglass.rsi
+    sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/ginfizzglass.rsi
+    sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -547,9 +548,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/gintonicglass.rsi
+    sprite: Objects/Consumable/Drinks/gintonicglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/gintonicglass.rsi
+    sprite: Objects/Consumable/Drinks/gintonicglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -559,9 +560,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/ginvodkaglass.rsi
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/ginvodkaglass.rsi
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -571,9 +572,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_brown.rsi
+    sprite: Objects/Consumable/Drinks/glass_brown.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_brown.rsi
+    sprite: Objects/Consumable/Drinks/glass_brown.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -583,9 +584,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_brown2.rsi
+    sprite: Objects/Consumable/Drinks/glass_brown2.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_brown2.rsi
+    sprite: Objects/Consumable/Drinks/glass_brown2.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -595,9 +596,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_clear.rsi
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_clear.rsi
+    sprite: Objects/Consumable/Drinks/glass_clear.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -607,9 +608,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_green.rsi
+    sprite: Objects/Consumable/Drinks/glass_green.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_green.rsi
+    sprite: Objects/Consumable/Drinks/glass_green.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -619,9 +620,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_orange.rsi
+    sprite: Objects/Consumable/Drinks/glass_orange.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_orange.rsi
+    sprite: Objects/Consumable/Drinks/glass_orange.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -631,9 +632,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_red.rsi
+    sprite: Objects/Consumable/Drinks/glass_red.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_red.rsi
+    sprite: Objects/Consumable/Drinks/glass_red.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -648,9 +649,9 @@
       - ReagentId: chem.Milk
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/glass_white.rsi
+    sprite: Objects/Consumable/Drinks/glass_white.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_white.rsi
+    sprite: Objects/Consumable/Drinks/glass_white.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -660,9 +661,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/glass_yellow.rsi
+    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
   - type: Icon
-    sprite: Objects/Drinks/glass_yellow.rsi
+    sprite: Objects/Consumable/Drinks/glass_yellow.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -672,9 +673,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/goldschlagerglass.rsi
+    sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/goldschlagerglass.rsi
+    sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -684,9 +685,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/grapejuice.rsi
+    sprite: Objects/Consumable/Drinks/grapejuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/grapejuice.rsi
+    sprite: Objects/Consumable/Drinks/grapejuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -697,9 +698,9 @@
   - type: Drink
     isOpen: true
   - type: Sprite
-    sprite: Objects/Drinks/grenadinebottle.rsi
+    sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/grenadinebottle.rsi
+    sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -709,9 +710,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/grenadineglass.rsi
+    sprite: Objects/Consumable/Drinks/grenadineglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/grenadineglass.rsi
+    sprite: Objects/Consumable/Drinks/grenadineglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -721,9 +722,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/grogglass.rsi
+    sprite: Objects/Consumable/Drinks/grogglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/grogglass.rsi
+    sprite: Objects/Consumable/Drinks/grogglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -733,9 +734,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/gsodaglass.rsi
+    sprite: Objects/Consumable/Drinks/gsodaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/gsodaglass.rsi
+    sprite: Objects/Consumable/Drinks/gsodaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -745,9 +746,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/hell.rsi
+    sprite: Objects/Consumable/Drinks/hell.rsi
   - type: Icon
-    sprite: Objects/Drinks/hell.rsi
+    sprite: Objects/Consumable/Drinks/hell.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -757,9 +758,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/hippiesdelightglass.rsi
+    sprite: Objects/Consumable/Drinks/hippiesdelightglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/hippiesdelightglass.rsi
+    sprite: Objects/Consumable/Drinks/hippiesdelightglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -769,9 +770,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/icedcoffeeglass.rsi
+    sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/icedcoffeeglass.rsi
+    sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -781,9 +782,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/icedteaglass.rsi
+    sprite: Objects/Consumable/Drinks/icedteaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/icedteaglass.rsi
+    sprite: Objects/Consumable/Drinks/icedteaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -793,9 +794,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/iced_beerglass.rsi
+    sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/iced_beerglass.rsi
+    sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -810,9 +811,9 @@
       - ReagentId: chem.Ice
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/iceglass.rsi
+    sprite: Objects/Consumable/Drinks/iceglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/iceglass.rsi
+    sprite: Objects/Consumable/Drinks/iceglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -827,9 +828,9 @@
       - ReagentId: chem.IrishCarBomb
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/irishcarbomb.rsi
+    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
   - type: Icon
-    sprite: Objects/Drinks/irishcarbomb.rsi
+    sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -844,9 +845,9 @@
       - ReagentId: chem.IrishCoffee
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/irishcoffeeglass.rsi
+    sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/irishcoffeeglass.rsi
+    sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -861,9 +862,9 @@
       - ReagentId: chem.IrishCream
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/irishcreamglass.rsi
+    sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/irishcreamglass.rsi
+    sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -873,9 +874,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/jar.rsi
+    sprite: Objects/Consumable/Drinks/jar.rsi
   - type: Icon
-    sprite: Objects/Drinks/jar.rsi
+    sprite: Objects/Consumable/Drinks/jar.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -885,9 +886,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/jar_metroid.rsi
+    sprite: Objects/Consumable/Drinks/jar_metroid.rsi
   - type: Icon
-    sprite: Objects/Drinks/jar_metroid.rsi
+    sprite: Objects/Consumable/Drinks/jar_metroid.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -897,9 +898,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/jar_what.rsi
+    sprite: Objects/Consumable/Drinks/jar_what.rsi
   - type: Icon
-    sprite: Objects/Drinks/jar_what.rsi
+    sprite: Objects/Consumable/Drinks/jar_what.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -914,9 +915,9 @@
       - ReagentId: chem.Kahlua
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/kahluaglass.rsi
+    sprite: Objects/Consumable/Drinks/kahluaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/kahluaglass.rsi
+    sprite: Objects/Consumable/Drinks/kahluaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -926,9 +927,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/kiraspecial.rsi
+    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
   - type: Icon
-    sprite: Objects/Drinks/kiraspecial.rsi
+    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -938,9 +939,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/lemonade.rsi
+    sprite: Objects/Consumable/Drinks/lemonade.rsi
   - type: Icon
-    sprite: Objects/Drinks/lemonade.rsi
+    sprite: Objects/Consumable/Drinks/lemonade.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -950,9 +951,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/lemonadeglass.rsi
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/lemonadeglass.rsi
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -962,9 +963,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/lemonglass.rsi
+    sprite: Objects/Consumable/Drinks/lemonglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/lemonglass.rsi
+    sprite: Objects/Consumable/Drinks/lemonglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -974,9 +975,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/lemonjuice.rsi
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/lemonjuice.rsi
+    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -986,9 +987,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/lemonlime.rsi
+    sprite: Objects/Consumable/Drinks/lemonlime.rsi
   - type: Icon
-    sprite: Objects/Drinks/lemonlime.rsi
+    sprite: Objects/Consumable/Drinks/lemonlime.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -998,9 +999,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/limejuice.rsi
+    sprite: Objects/Consumable/Drinks/limejuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/limejuice.rsi
+    sprite: Objects/Consumable/Drinks/limejuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1010,9 +1011,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/lithiumflask.rsi
+    sprite: Objects/Consumable/Drinks/lithiumflask.rsi
   - type: Icon
-    sprite: Objects/Drinks/lithiumflask.rsi
+    sprite: Objects/Consumable/Drinks/lithiumflask.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1022,9 +1023,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/longislandicedteaglass.rsi
+    sprite: Objects/Consumable/Drinks/longislandicedteaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/longislandicedteaglass.rsi
+    sprite: Objects/Consumable/Drinks/longislandicedteaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1034,9 +1035,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/manhattanglass.rsi
+    sprite: Objects/Consumable/Drinks/manhattanglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/manhattanglass.rsi
+    sprite: Objects/Consumable/Drinks/manhattanglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1051,9 +1052,9 @@
       - ReagentId: chem.ManlyDorf
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/manlydorfglass.rsi
+    sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/manlydorfglass.rsi
+    sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1063,9 +1064,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/margaritaglass.rsi
+    sprite: Objects/Consumable/Drinks/margaritaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/margaritaglass.rsi
+    sprite: Objects/Consumable/Drinks/margaritaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1075,9 +1076,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/martiniglass.rsi
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/martiniglass.rsi
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1087,9 +1088,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/meadglass.rsi
+    sprite: Objects/Consumable/Drinks/meadglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/meadglass.rsi
+    sprite: Objects/Consumable/Drinks/meadglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1104,9 +1105,9 @@
       - ReagentId: chem.Milk
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/milk.rsi
+    sprite: Objects/Consumable/Drinks/milk.rsi
   - type: Icon
-    sprite: Objects/Drinks/milk.rsi
+    sprite: Objects/Consumable/Drinks/milk.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1116,9 +1117,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/milkshake.rsi
+    sprite: Objects/Consumable/Drinks/milkshake.rsi
   - type: Icon
-    sprite: Objects/Drinks/milkshake.rsi
+    sprite: Objects/Consumable/Drinks/milkshake.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1128,9 +1129,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/mojito.rsi
+    sprite: Objects/Consumable/Drinks/mojito.rsi
   - type: Icon
-    sprite: Objects/Drinks/mojito.rsi
+    sprite: Objects/Consumable/Drinks/mojito.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1140,9 +1141,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/neurotoxinglass.rsi
+    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/neurotoxinglass.rsi
+    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1152,9 +1153,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/nothing.rsi
+    sprite: Objects/Consumable/Drinks/nothing.rsi
   - type: Icon
-    sprite: Objects/Drinks/nothing.rsi
+    sprite: Objects/Consumable/Drinks/nothing.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1164,9 +1165,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/ntcahors.rsi
+    sprite: Objects/Consumable/Drinks/ntcahors.rsi
   - type: Icon
-    sprite: Objects/Drinks/ntcahors.rsi
+    sprite: Objects/Consumable/Drinks/ntcahors.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1176,9 +1177,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/nuka_colaglass.rsi
+    sprite: Objects/Consumable/Drinks/nuka_colaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/nuka_colaglass.rsi
+    sprite: Objects/Consumable/Drinks/nuka_colaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1188,9 +1189,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/orangejuice.rsi
+    sprite: Objects/Consumable/Drinks/orangejuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/orangejuice.rsi
+    sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1200,9 +1201,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/patronglass.rsi
+    sprite: Objects/Consumable/Drinks/patronglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/patronglass.rsi
+    sprite: Objects/Consumable/Drinks/patronglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1212,9 +1213,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/poisonberryjuice.rsi
+    sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/poisonberryjuice.rsi
+    sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1224,9 +1225,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/proj_manhattanglass.rsi
+    sprite: Objects/Consumable/Drinks/proj_manhattanglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/proj_manhattanglass.rsi
+    sprite: Objects/Consumable/Drinks/proj_manhattanglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1236,9 +1237,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/pwineglass.rsi
+    sprite: Objects/Consumable/Drinks/pwineglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/pwineglass.rsi
+    sprite: Objects/Consumable/Drinks/pwineglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1248,9 +1249,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rag.rsi
+    sprite: Objects/Consumable/Drinks/rag.rsi
   - type: Icon
-    sprite: Objects/Drinks/rag.rsi
+    sprite: Objects/Consumable/Drinks/rag.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1260,9 +1261,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rag_lit.rsi
+    sprite: Objects/Consumable/Drinks/rag_lit.rsi
   - type: Icon
-    sprite: Objects/Drinks/rag_lit.rsi
+    sprite: Objects/Consumable/Drinks/rag_lit.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1272,9 +1273,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rag_small.rsi
+    sprite: Objects/Consumable/Drinks/rag_small.rsi
   - type: Icon
-    sprite: Objects/Drinks/rag_small.rsi
+    sprite: Objects/Consumable/Drinks/rag_small.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1284,9 +1285,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rag_small_lit.rsi
+    sprite: Objects/Consumable/Drinks/rag_small_lit.rsi
   - type: Icon
-    sprite: Objects/Drinks/rag_small_lit.rsi
+    sprite: Objects/Consumable/Drinks/rag_small_lit.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1296,9 +1297,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/ramen.rsi
+    sprite: Objects/Consumable/Drinks/ramen.rsi
   - type: Icon
-    sprite: Objects/Drinks/ramen.rsi
+    sprite: Objects/Consumable/Drinks/ramen.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1308,9 +1309,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/red_meadglass.rsi
+    sprite: Objects/Consumable/Drinks/red_meadglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/red_meadglass.rsi
+    sprite: Objects/Consumable/Drinks/red_meadglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1320,9 +1321,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rewriter.rsi
+    sprite: Objects/Consumable/Drinks/rewriter.rsi
   - type: Icon
-    sprite: Objects/Drinks/rewriter.rsi
+    sprite: Objects/Consumable/Drinks/rewriter.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1332,9 +1333,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/rumglass.rsi
+    sprite: Objects/Consumable/Drinks/rumglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/rumglass.rsi
+    sprite: Objects/Consumable/Drinks/rumglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1344,9 +1345,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/sbitenglass.rsi
+    sprite: Objects/Consumable/Drinks/sbitenglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/sbitenglass.rsi
+    sprite: Objects/Consumable/Drinks/sbitenglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1356,9 +1357,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/screwdriverglass.rsi
+    sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/screwdriverglass.rsi
+    sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1368,9 +1369,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/sdreamglass.rsi
+    sprite: Objects/Consumable/Drinks/sdreamglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/sdreamglass.rsi
+    sprite: Objects/Consumable/Drinks/sdreamglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1380,9 +1381,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shake-blue.rsi
+    sprite: Objects/Consumable/Drinks/shake-blue.rsi
   - type: Icon
-    sprite: Objects/Drinks/shake-blue.rsi
+    sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
 # TODO: MOVE
 - type: entity
@@ -1393,9 +1394,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shake-empty.rsi
+    sprite: Objects/Consumable/Drinks/shake-empty.rsi
   - type: Icon
-    sprite: Objects/Drinks/shake-empty.rsi
+    sprite: Objects/Consumable/Drinks/shake-empty.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1405,9 +1406,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shake-meat.rsi
+    sprite: Objects/Consumable/Drinks/shake-meat.rsi
   - type: Icon
-    sprite: Objects/Drinks/shake-meat.rsi
+    sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1417,9 +1418,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shake-robo.rsi
+    sprite: Objects/Consumable/Drinks/shake-robo.rsi
   - type: Icon
-    sprite: Objects/Drinks/shake-robo.rsi
+    sprite: Objects/Consumable/Drinks/shake-robo.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1429,9 +1430,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shake-white.rsi
+    sprite: Objects/Consumable/Drinks/shake-white.rsi
   - type: Icon
-    sprite: Objects/Drinks/shake-white.rsi
+    sprite: Objects/Consumable/Drinks/shake-white.rsi
 
 # TODO: Move to containers
 - type: entity
@@ -1442,9 +1443,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shaker.rsi
+    sprite: Objects/Consumable/Drinks/shaker.rsi
   - type: Icon
-    sprite: Objects/Drinks/shaker.rsi
+    sprite: Objects/Consumable/Drinks/shaker.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1454,9 +1455,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shinyflask.rsi
+    sprite: Objects/Consumable/Drinks/shinyflask.rsi
   - type: Icon
-    sprite: Objects/Drinks/shinyflask.rsi
+    sprite: Objects/Consumable/Drinks/shinyflask.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1466,9 +1467,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/shotglass.rsi
+    sprite: Objects/Consumable/Drinks/shotglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/shotglass.rsi
+    sprite: Objects/Consumable/Drinks/shotglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1478,9 +1479,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/silencerglass.rsi
+    sprite: Objects/Consumable/Drinks/silencerglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/silencerglass.rsi
+    sprite: Objects/Consumable/Drinks/silencerglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1490,9 +1491,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/singulo.rsi
+    sprite: Objects/Consumable/Drinks/singulo.rsi
   - type: Icon
-    sprite: Objects/Drinks/singulo.rsi
+    sprite: Objects/Consumable/Drinks/singulo.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1502,9 +1503,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/snowwhite.rsi
+    sprite: Objects/Consumable/Drinks/snowwhite.rsi
   - type: Icon
-    sprite: Objects/Drinks/snowwhite.rsi
+    sprite: Objects/Consumable/Drinks/snowwhite.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1514,9 +1515,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/sodawater.rsi
+    sprite: Objects/Consumable/Drinks/sodawater.rsi
   - type: Icon
-    sprite: Objects/Drinks/sodawater.rsi
+    sprite: Objects/Consumable/Drinks/sodawater.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1526,9 +1527,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/soymilk.rsi
+    sprite: Objects/Consumable/Drinks/soymilk.rsi
   - type: Icon
-    sprite: Objects/Drinks/soymilk.rsi
+    sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1538,9 +1539,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/soy_latte.rsi
+    sprite: Objects/Consumable/Drinks/soy_latte.rsi
   - type: Icon
-    sprite: Objects/Drinks/soy_latte.rsi
+    sprite: Objects/Consumable/Drinks/soy_latte.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1550,9 +1551,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/space-up_bottle.rsi
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/space-up_bottle.rsi
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1562,9 +1563,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/space-up_glass.rsi
+    sprite: Objects/Consumable/Drinks/space-up_glass.rsi
   - type: Icon
-    sprite: Objects/Drinks/space-up_glass.rsi
+    sprite: Objects/Consumable/Drinks/space-up_glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1574,9 +1575,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/space_mountain_wind_bottle.rsi
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/space_mountain_wind_bottle.rsi
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1586,9 +1587,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/space_mountain_wind_glass.rsi
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
   - type: Icon
-    sprite: Objects/Drinks/space_mountain_wind_glass.rsi
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1603,9 +1604,9 @@
       - ReagentId: chem.SyndicateBomb
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/syndicatebomb.rsi
+    sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
   - type: Icon
-    sprite: Objects/Drinks/syndicatebomb.rsi
+    sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1620,9 +1621,9 @@
       - ReagentId: chem.Tea
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/teaglass.rsi
+    sprite: Objects/Consumable/Drinks/teaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/teaglass.rsi
+    sprite: Objects/Consumable/Drinks/teaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1637,9 +1638,9 @@
       - ReagentId: chem.Tea
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/teapot.rsi
+    sprite: Objects/Consumable/Drinks/teapot.rsi
   - type: Icon
-    sprite: Objects/Drinks/teapot.rsi
+    sprite: Objects/Consumable/Drinks/teapot.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1649,9 +1650,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/tequillaglass.rsi
+    sprite: Objects/Consumable/Drinks/tequillaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/tequillaglass.rsi
+    sprite: Objects/Consumable/Drinks/tequillaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1661,9 +1662,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/tequillasunriseglass.rsi
+    sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/tequillasunriseglass.rsi
+    sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1673,9 +1674,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/thirteen_loko_glass.rsi
+    sprite: Objects/Consumable/Drinks/thirteen_loko_glass.rsi
   - type: Icon
-    sprite: Objects/Drinks/thirteen_loko_glass.rsi
+    sprite: Objects/Consumable/Drinks/thirteen_loko_glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1685,9 +1686,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/threemileislandglass.rsi
+    sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/threemileislandglass.rsi
+    sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1697,9 +1698,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/tomatojuice.rsi
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
   - type: Icon
-    sprite: Objects/Drinks/tomatojuice.rsi
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1709,9 +1710,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/tonic.rsi
+    sprite: Objects/Consumable/Drinks/tonic.rsi
   - type: Icon
-    sprite: Objects/Drinks/tonic.rsi
+    sprite: Objects/Consumable/Drinks/tonic.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1721,9 +1722,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/toxinsspecialglass.rsi
+    sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/toxinsspecialglass.rsi
+    sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1733,9 +1734,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/vacuumflask.rsi
+    sprite: Objects/Consumable/Drinks/vacuumflask.rsi
   - type: Icon
-    sprite: Objects/Drinks/vacuumflask.rsi
+    sprite: Objects/Consumable/Drinks/vacuumflask.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1745,9 +1746,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/vermouthglass.rsi
+    sprite: Objects/Consumable/Drinks/vermouthglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/vermouthglass.rsi
+    sprite: Objects/Consumable/Drinks/vermouthglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1757,9 +1758,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/vodkatonicglass.rsi
+    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/vodkatonicglass.rsi
+    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1769,9 +1770,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/water.rsi
+    sprite: Objects/Consumable/Drinks/water.rsi
   - type: Icon
-    sprite: Objects/Drinks/water.rsi
+    sprite: Objects/Consumable/Drinks/water.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1781,9 +1782,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/waterbottle.rsi
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
   - type: Icon
-    sprite: Objects/Drinks/waterbottle.rsi
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1793,9 +1794,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/watermelon.rsi
+    sprite: Objects/Consumable/Drinks/watermelon.rsi
   - type: Icon
-    sprite: Objects/Drinks/watermelon.rsi
+    sprite: Objects/Consumable/Drinks/watermelon.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1805,10 +1806,10 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/water_cup.rsi
+    sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
   - type: Icon
-    sprite: Objects/Drinks/water_cup.rsi
+    sprite: Objects/Consumable/Drinks/water_cup.rsi
     state: icon-1
   - type: Appearance
     visuals:
@@ -1828,9 +1829,9 @@
       - ReagentId: chem.WhiskeyCola
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/whiskeycolaglass.rsi
+    sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/whiskeycolaglass.rsi
+    sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1845,9 +1846,9 @@
       - ReagentId: chem.Whiskey
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/whiskeyglass.rsi
+    sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/whiskeyglass.rsi
+    sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1857,9 +1858,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/whiskeysodaglass.rsi
+    sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/whiskeysodaglass.rsi
+    sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1869,9 +1870,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/whiskeysodaglass2.rsi
+    sprite: Objects/Consumable/Drinks/whiskeysodaglass2.rsi
   - type: Icon
-    sprite: Objects/Drinks/whiskeysodaglass2.rsi
+    sprite: Objects/Consumable/Drinks/whiskeysodaglass2.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1881,9 +1882,9 @@
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Drinks/whiterussianglass.rsi
+    sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/whiterussianglass.rsi
+    sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1898,6 +1899,6 @@
       - ReagentId: chem.Wine
         Quantity: 20
   - type: Sprite
-    sprite: Objects/Drinks/wineglass.rsi
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
   - type: Icon
-    sprite: Objects/Drinks/wineglass.rsi
+    sprite: Objects/Consumable/Drinks/wineglass.rsi

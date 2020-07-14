@@ -1,0 +1,60 @@
+# Hacky for the stress test so don't even consider adding to this
+- type: entity
+  save: false
+  name: Xeno
+  id: XenoMob_Content
+  description: They mostly come at night. Mostly.
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Xeno
+  - type: Hands
+    hands:
+    - left
+    - right
+  - type: MovementSpeedModifier
+  # Organs
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Species/xeno.rsi
+    state: running
+  - type: Icon
+    sprite: Mobs/Species/xeno.rsi
+    state: running
+  - type: Clickable
+  - type: Physics
+    mass: 85
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.35,0.35,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Species
+    Template: Human
+    HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+  - type: HeatResistance
+  - type: Damageable
+  - type: CombatMode
+  - type: Teleportable
+  - type: CharacterInfo
+  - type: FootstepSound
+  - type: HumanoidAppearance
+  - type: Stunnable
+  - type: AnimationPlayer
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: claw
+    damage: 90

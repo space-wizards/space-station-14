@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: ComputerBase
   name: computer
   abstract: true
@@ -18,16 +18,19 @@
       - MobImpassable
       - VaultImpassable
       - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
   - type: Icon
-    sprite: Buildings/computer.rsi
+    sprite: Constructible/Power/computers.rsi
     state: computer
   - type: Computer
-  - type: PowerDevice
-    priority: High
+  - type: PowerReceiver
   - type: Anchorable
 
   - type: Sprite
-    sprite: Buildings/computer.rsi
+    sprite: Constructible/Power/computers.rsi
     layers:
     - state: computer
       map: ["enum.ComputerVisualizer2D+Layers.Body"]
@@ -147,8 +150,7 @@
       type: ResearchConsoleBoundUserInterface
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
-  - type: PowerDevice
-    drawtype: Both
+  - type: PowerReceiver
     load: 200
     priority: Low
 

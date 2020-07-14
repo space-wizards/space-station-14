@@ -12,6 +12,9 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
 using Color = Robust.Shared.Maths.Color;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.Parallax
 {
@@ -28,7 +31,7 @@ namespace Content.Client.Parallax
             sawmill.Debug("Timing start!");
             var sw = new Stopwatch();
             sw.Start();
-            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0,0,0,0));
+            var image = new Image<Rgba32>(Configuration.Default, size.Width, size.Height, new Rgba32(0,0,0,255));
             var count = 0;
             foreach (var layer in generator.Layers)
             {
@@ -78,7 +81,7 @@ namespace Content.Client.Parallax
             private readonly NoiseGenerator.NoiseType NoiseType = NoiseGenerator.NoiseType.Fbm;
             private readonly uint Seed = 1234;
             private readonly float Persistence = 0.5f;
-            private readonly float Lacunarity = (float) (Math.PI * 2 / 3);
+            private readonly float Lacunarity = (float) (Math.TAU / 3);
             private readonly float Frequency = 1;
             private readonly uint Octaves = 3;
             private readonly float Threshold;
@@ -179,12 +182,12 @@ namespace Content.Client.Parallax
                     for (var x = 0; x < bitmap.Width; x++)
                     {
                         // Do noise calculations.
-                        var noiseVal = Math.Min(1, Math.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
+                        var noiseVal = MathF.Min(1, MathF.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
 
                         // Threshold
-                        noiseVal = Math.Max(0, noiseVal - Threshold);
+                        noiseVal = MathF.Max(0, noiseVal - Threshold);
                         noiseVal *= threshVal;
-                        noiseVal = (float) Math.Pow(noiseVal, powFactor);
+                        noiseVal = (float) MathF.Pow(noiseVal, powFactor);
 
                         // Get colors based on noise values.
                         var srcColor = Color.InterpolateBetween(OuterColor, InnerColor, noiseVal)
@@ -215,7 +218,7 @@ namespace Content.Client.Parallax
             private readonly NoiseGenerator.NoiseType MaskNoiseType = NoiseGenerator.NoiseType.Fbm;
             private readonly uint MaskSeed = 1234;
             private readonly float MaskPersistence = 0.5f;
-            private readonly float MaskLacunarity = (float) Math.PI * 2 / 3;
+            private readonly float MaskLacunarity = (float) (Math.PI * 2 / 3);
             private readonly float MaskFrequency = 1;
             private readonly uint MaskOctaves = 3;
             private readonly float MaskThreshold;
@@ -406,11 +409,11 @@ namespace Content.Client.Parallax
                     var y = random.Next(0, buffer.Height);
 
                     // Grab noise at this point.
-                    var noiseVal = Math.Min(1, Math.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
+                    var noiseVal = MathF.Min(1, MathF.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
                     // Threshold
-                    noiseVal = Math.Max(0, noiseVal - MaskThreshold);
+                    noiseVal = MathF.Max(0, noiseVal - MaskThreshold);
                     noiseVal *= threshVal;
-                    noiseVal = (float) Math.Pow(noiseVal, powFactor);
+                    noiseVal = (float) MathF.Pow(noiseVal, powFactor);
 
                     var randomThresh = random.NextFloat();
                     if (randomThresh > noiseVal)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
@@ -15,6 +15,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using CannyFastMath;
+using Math = CannyFastMath.Math;
+using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -35,7 +38,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         private float _arcWidth;
         private string _arc;
         private string _hitSound;
-        private float _cooldownTime;
+        public float CooldownTime => _cooldownTime;
+        private float _cooldownTime = 1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string Arc
@@ -73,13 +77,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             serializer.DataField(ref _range, "range", 1);
             serializer.DataField(ref _arcWidth, "arcwidth", 90);
             serializer.DataField(ref _arc, "arc", "default");
-            serializer.DataField(ref _hitSound, "hitSound", "/Audio/weapons/genhit1.ogg");
+            serializer.DataField(ref _hitSound, "hitSound", "/Audio/Weapons/genhit1.ogg");
             serializer.DataField(ref _cooldownTime, "cooldownTime", 1f);
         }
 
-        public virtual bool OnHitEntities(IReadOnlyList<IEntity> entities)
+        protected virtual bool OnHitEntities(IReadOnlyList<IEntity> entities, AttackEventArgs eventArgs)
         {
-            return false;
+            return true;
         }
 
         void IAttack.Attack(AttackEventArgs eventArgs)
@@ -108,11 +112,11 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 }
             }
 
-            if(OnHitEntities(hitEntities)) return;
+            if(!OnHitEntities(hitEntities, eventArgs)) return;
 
             var audioSystem = EntitySystem.Get<AudioSystem>();
             var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
-            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/weapons/punchmiss.ogg", emitter);
+            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/Weapons/punchmiss.ogg", emitter);
 
             if (Arc != null)
             {

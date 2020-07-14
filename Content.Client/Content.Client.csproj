@@ -11,10 +11,8 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
-    <PackageReference Include="Nett" Version="0.13.0" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-rc0002" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0009" />
-    <PackageReference Include="YamlDotNet" Version="8.1.0" />
+    <PackageReference Include="Nett" Version="0.15.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj" />

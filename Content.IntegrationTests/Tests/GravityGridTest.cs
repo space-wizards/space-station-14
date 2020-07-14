@@ -1,6 +1,7 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Client.GameObjects.Components.Gravity;
 using Content.Server.GameObjects.Components.Gravity;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
 using NUnit.Framework;
 using Robust.Shared.Interfaces.GameObjects;
@@ -40,11 +41,11 @@ namespace Content.IntegrationTests.Tests
 
                 generator = entityMan.SpawnEntity("GravityGenerator", new GridCoordinates(new Vector2(0, 0), grid2.Index));
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
-                Assert.That(generator.HasComponent<PowerDeviceComponent>());
+                Assert.That(generator.HasComponent<PowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
-                var powerComponent = generator.GetComponent<PowerDeviceComponent>();
+                var powerComponent = generator.GetComponent<PowerReceiverComponent>();
                 Assert.AreEqual(generatorComponent.Status, GravityGeneratorStatus.Unpowered);
-                powerComponent.ExternalPowered = true;
+                powerComponent.NeedsPower = false;
             });
             server.RunTicks(1);
 

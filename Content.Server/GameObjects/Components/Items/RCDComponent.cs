@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.Maps;
@@ -32,7 +34,6 @@ namespace Content.Server.GameObjects.Components.Items
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerEntityManager _serverEntityManager;
         [Dependency] private IServerNotifyManager _serverNotifyManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
 #pragma warning restore 649
         public override string Name => "RCD";
         private string _outputTile = "floor_steel";
@@ -72,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/genhit.ogg", Owner);
+            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/items/genhit.ogg", Owner);
             int mode = (int) this._mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             this._mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
@@ -88,18 +89,17 @@ namespace Content.Server.GameObjects.Components.Items
                     _outputTile = "space";
                     break;
             }
-            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, "The RCD is now set to "+this._mode+" mode."); //Prints an overhead message above the RCD
+            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is now set to {this._mode} mode."); //Prints an overhead message above the RCD
         }
 
-        /**
-         *<summary>
-         * Method called when the user examines this object, it'll simply add the mode that it's in to the object's description
-         * @params message = The original message from examining, like ..() in BYOND's examine
-         *</summary>
-         */
+        ///<summary>
+        ///Method called when the user examines this object, it'll simply add the mode that it's in to the object's description
+        ///@params message = The original message from examining, like ..() in BYOND's examine
+        ///</summary>
+
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It's currently placing {0}, and holds {1} charges.",_mode.ToString(), this._ammo));
+            message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), this._ammo));
         }
 
         ///<summary>
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.Components.Items
             if (canPlaceTile) //If desiredTile is null by this point, something has gone horribly wrong and you need to fix it.
             {
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
-                _entitySystemManager.GetEntitySystem<AudioSystem>().Play("/Audio/items/deconstruct.ogg", Owner);
+                _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", Owner);
                 _ammo--;
             }
         }

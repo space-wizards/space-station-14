@@ -1,7 +1,8 @@
-using Content.Server.GameObjects.Components.Damage;
+﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Gravity
     {
         private BoundUserInterface _userInterface;
 
-        private PowerDeviceComponent _powerDevice;
+        private PowerReceiverComponent _powerReceiver;
 
         private SpriteComponent _sprite;
 
@@ -37,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         private GravityGeneratorStatus _status;
 
-        public bool Powered => _powerDevice.Powered;
+        public bool Powered => _powerReceiver.Powered;
 
         public bool SwitchedOn => _switchedOn;
 
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Gravity
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(GravityGeneratorUiKey.Key);
             _userInterface.OnReceiveMessage += HandleUIMessage;
-            _powerDevice = Owner.GetComponent<PowerDeviceComponent>();
+            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
             _sprite = Owner.GetComponent<SpriteComponent>();
             _switchedOn = true;
             _intact = true;

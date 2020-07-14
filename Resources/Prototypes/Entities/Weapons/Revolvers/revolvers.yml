@@ -1,0 +1,105 @@
+- type: entity
+  name: RevolverBase
+  parent: BaseItem
+  id: RevolverBase
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    state: icon
+  - type: Icon
+    state: icon
+
+- type: entity
+  name: Deckard
+  parent: RevolverBase
+  id: RevolverDeckard
+  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: bolt-closed
+      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+    - state: mag-unshaded-3
+      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+  - type: Item
+    Size: 24
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgeMagnum
+    caliber: Magnum
+    capacity: 5
+    autoCycle: true
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer2D
+    - type: MagVisualizer2D
+      magState: mag
+      steps: 4
+      zeroVisible: true
+
+- type: entity
+  name: Inspector
+  parent: RevolverBase
+  id: RevolverInspector
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+  - type: Item
+    Size: 24
+    sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
+  - type: RangedWeapon
+  - type: RevolverBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgeMagnum
+    caliber: Magnum
+    capacity: 7
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: entity
+  name: Mateba
+  parent: RevolverBase
+  id: RevolverMateba
+  description: A rooty tooty point and shooty.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: Item
+    Size: 24
+    sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
+  - type: RangedWeapon
+  - type: RevolverBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgeMagnum
+    caliber: Magnum
+    capacity: 7
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg

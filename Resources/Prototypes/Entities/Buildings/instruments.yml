@@ -35,12 +35,19 @@
    - type: Instrument
      program: 1
    - type: Sprite
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: piano
    - type: Icon
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: piano
    - type: Anchorable
+   - type: Collidable
+     shapes:
+       - !type:PhysShapeAabb
+         mask:
+           - Impassable
+           - MobImpassable
+           - VaultImpassable
 
  - type: entity
    name: minimoog
@@ -50,10 +57,10 @@
    - type: Instrument
      program: 81
    - type: Sprite
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: minimoog
    - type: Icon
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: minimoog
 
  - type: entity
@@ -65,10 +72,10 @@
    - type: Instrument
      program: 20
    - type: Sprite
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: church_organ
    - type: Icon
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: church_organ
 
  - type: entity
@@ -79,8 +86,8 @@
    - type: Instrument
      program: 13
    - type: Sprite
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: xylophone
    - type: Icon
-     sprite: Objects/Instruments/otherinstruments.rsi
+     sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: xylophone
