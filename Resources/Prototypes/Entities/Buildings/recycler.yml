@@ -20,7 +20,7 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    netsync: true
+    netsync: false
     sprite: Constructible/Power/recycling.rsi
     layers:
     - state: grinder-o1

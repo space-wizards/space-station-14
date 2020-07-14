@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Conveyor;
+﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.GameObjects.Components.Conveyor;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -71,9 +72,56 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return new Angle(Owner.Transform.LocalRotation.Theta + _angle + adjustment);
         }
 
+        private bool CanRun()
+        {
+            if (State == ConveyorState.Off)
+            {
+                return false;
+            }
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+                !receiver.Powered)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanMove(IEntity entity)
+        {
+            if (entity == Owner)
+            {
+                return false;
+            }
+
+            if (entity.TryGetComponent(out PhysicsComponent physics) &&
+                physics.Anchored)
+            {
+                return false;
+            }
+
+            if (entity.HasComponent<ConveyorComponent>())
+            {
+                return false;
+            }
+
+            if (entity.HasComponent<IMapGridComponent>())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void ChangeState(ConveyorState state)
+        {
+            State = state;
+        }
+
         public void Update(float frameTime)
         {
-            if (State == ConveyorState.Stopped)
+            if (!CanRun())
             {
                 return;
             }
@@ -82,18 +130,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             foreach (var entity in intersecting)
             {
-                if (entity == Owner)
-                {
-                    continue;
-                }
-
-                if (entity.TryGetComponent(out PhysicsComponent physics) &&
-                    physics.Anchored)
-                {
-                    continue;
-                }
-
-                if (entity.HasComponent<IMapGridComponent>())
+                if (!CanMove(entity))
                 {
                     continue;
                 }

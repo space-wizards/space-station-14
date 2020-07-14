@@ -141,6 +141,7 @@
             "DisposalBend",
             "Recycler",
             "Conveyor",
+            "ConveyorSwitch"
         };
     }
 }

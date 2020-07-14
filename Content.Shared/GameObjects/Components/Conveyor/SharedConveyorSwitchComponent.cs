@@ -4,16 +4,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.GameObjects.Components.Conveyor
 {
     [Serializable, NetSerializable]
-    public enum ConveyorVisuals
+    public enum ConveyorSwitchVisuals
     {
         State
-    }
-
-    [Serializable, NetSerializable]
-    public enum ConveyorState
-    {
-        Off = 0,
-        Forward,
-        Reversed
     }
 }

@@ -11,10 +11,10 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Conveyor
 {
     [UsedImplicitly]
-    public class ConveyorVisualizer : AppearanceVisualizer
+    public class ConveyorSwitchVisualizer : AppearanceVisualizer
     {
-        private string _stateRunning;
-        private string _stateStopped;
+        private string _stateForward;
+        private string _stateOff;
         private string _stateReversed;
 
         private void ChangeState(AppearanceComponent appearance)
@@ -24,12 +24,12 @@ namespace Content.Client.GameObjects.Components.Conveyor
                 return;
             }
 
-            appearance.TryGetData(ConveyorVisuals.State, out ConveyorState state);
+            appearance.TryGetData(ConveyorSwitchVisuals.State, out ConveyorState state);
 
             var texture = state switch
             {
-                ConveyorState.Off => _stateStopped,
-                ConveyorState.Forward => _stateRunning,
+                ConveyorState.Off => _stateOff,
+                ConveyorState.Forward => _stateForward,
                 ConveyorState.Reversed => _stateReversed,
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -41,14 +41,14 @@ namespace Content.Client.GameObjects.Components.Conveyor
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("state_running", out var child))
+            if (node.TryGetNode("state_forward", out var child))
             {
-                _stateRunning = child.AsString();
+                _stateForward = child.AsString();
             }
 
-            if (node.TryGetNode("state_stopped", out child))
+            if (node.TryGetNode("state_off", out child))
             {
-                _stateStopped = child.AsString();
+                _stateOff = child.AsString();
             }
 
             if (node.TryGetNode("state_reversed", out child))
