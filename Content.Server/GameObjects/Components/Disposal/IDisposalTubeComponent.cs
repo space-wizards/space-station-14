@@ -10,6 +10,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         Container Contents { get; }
 
         Direction NextDirection(DisposableComponent disposable);
+        Vector2 ExitVector(DisposableComponent disposable);
         IDisposalTubeComponent? NextTube(DisposableComponent disposable);
         bool Remove(DisposableComponent disposable);
         bool TransferTo(DisposableComponent disposable, IDisposalTubeComponent to);

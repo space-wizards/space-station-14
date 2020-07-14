@@ -1,8 +1,11 @@
 ﻿#nullable enable
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -23,10 +26,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent? PreviousTube { get; private set; }
 
         [ViewVariables]
-        private IDisposalTubeComponent? CurrentTube { get; set; }
+        public IDisposalTubeComponent? CurrentTube { get; set; }
 
         [ViewVariables]
-        private IDisposalTubeComponent? NextTube { get; set; }
+        public IDisposalTubeComponent? NextTube { get; set; }
 
         /// <summary>
         ///     The total amount of time that it will take for this entity to
@@ -66,8 +69,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             StartingTime = 0;
             TimeLeft = 0;
             Owner.Transform.DetachParent();
-
-            _componentManager.RemoveComponent(Owner.Uid, this);
         }
 
         public void Update(float frameTime)

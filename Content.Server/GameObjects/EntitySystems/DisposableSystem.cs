@@ -6,9 +6,9 @@ using Robust.Shared.GameObjects.Systems;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class DisposalSystem : EntitySystem
+    public class DisposableSystem : EntitySystem
     {
-        public DisposalSystem()
+        public DisposableSystem()
         {
             EntityQuery = new TypeEntityQuery(typeof(DisposableComponent));
         }

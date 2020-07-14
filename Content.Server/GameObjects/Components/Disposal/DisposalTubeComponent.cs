@@ -47,6 +47,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public abstract Direction NextDirection(DisposableComponent disposable);
 
+        public virtual Vector2 ExitVector(DisposableComponent disposable)
+        {
+            return NextDirection(disposable).ToVec();
+        }
+
         public IDisposalTubeComponent NextTube(DisposableComponent disposable)
         {
             var nextDirection = NextDirection(disposable);
@@ -138,7 +143,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AnchoredChanged()
         {
-            var physics = Owner.GetComponent<PhysicsComponent>();
+            if (!Owner.TryGetComponent(out PhysicsComponent physics))
+            {
+                return;
+            }
 
             if (physics.Anchored)
             {
@@ -208,6 +216,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void OnRemove()
         {
             base.OnRemove();
+
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
+            physics.AnchoredChanged -= AnchoredChanged;
+
             Disconnect();
         }
 
