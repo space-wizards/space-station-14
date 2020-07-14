@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
@@ -14,8 +15,9 @@ namespace Content.Server.Atmos
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
         private readonly IMapGrid _grid;
-        private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>();
+        private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>();
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>();
+        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>();
 
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
@@ -36,7 +38,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in _grid.GetAllTiles())
             {
-                _tiles.Add(tile.GridIndices, new TileAtmosphere(tile, GetVolumeForCells(1)));
+                _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile, GetVolumeForCells(1)));
             }
         }
 
@@ -71,67 +73,33 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
-        public ExcitedGroup GetZone(MapIndices indices)
+        public void AddActiveTile(MapIndices indices)
         {
-            return !_tiles.TryGetValue(indices, out var tile) ? null : tile.ExcitedGroup;
+            _activeTiles.Add(_tiles[indices]);
+        }
+
+        /// <inheritdoc />
+        public void RemoveActiveTile(MapIndices indices)
+        {
+            _activeTiles.Remove(_tiles[indices]);
+        }
+
+        /// <inheritdoc />
+        public void AddExcitedGroup(WeakReference<ExcitedGroup> excitedGroup)
+        {
+            _excitedGroups.Add(excitedGroup);
+        }
+
+        /// <inheritdoc />
+        public void RemoveExcitedGroup(WeakReference<ExcitedGroup> excitedGroup)
+        {
+            _excitedGroups.Remove(excitedGroup);
         }
 
         /// <inheritdoc />
         public TileAtmosphere GetTile(MapIndices indices)
         {
             return !_tiles.TryGetValue(indices, out var tile) ? null : tile;
-        }
-
-        /// <summary>
-        /// Get the collection of grid cells connected to a given cell.
-        /// </summary>
-        /// <param name="start">The cell to start building the collection from.</param>
-        /// <returns>
-        /// <c>null</c>, if the cell is somehow connected to space. Otherwise, the
-        /// collection of all cells connected to the starting cell (inclusive).
-        /// </returns>
-        private ISet<MapIndices> FindConnectedTiles(MapIndices start)
-        {
-            var inner = new HashSet<MapIndices>();
-            var edge = new HashSet<MapIndices> {start};
-
-            void Check(MapIndices pos, Direction dir)
-            {
-                pos = pos.Offset(dir);
-                if (IsZoneBlocked(pos))
-                    return;
-
-                if (inner.Contains(pos))
-                    return;
-
-                edge.Add(pos);
-            }
-
-            // Basic inner/edge finder
-            // The inner list is all the positions we know are empty, and take no further actions.
-            // The edge list is all the positions for whom we have not searched their neighbours.
-            // Move stuff from edge to inner, while adding adjacent empty locations to edge
-            // When edge is empty, we have filled the entire room.
-
-            while (edge.Count > 0)
-            {
-                var temp = new HashSet<MapIndices>(edge);
-                edge.Clear();
-                foreach (var pos in temp)
-                {
-                    inner.Add(pos);
-
-                    if (IsSpace(pos))
-                        return null;
-
-                    foreach (var dir in Cardinal())
-                    {
-                        Check(pos, dir);
-                    }
-                }
-            }
-
-            return inner;
         }
 
         /// <inheritdoc />
@@ -153,22 +121,6 @@ namespace Content.Server.Atmos
         {
             // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
             return _grid.GetTileRef(indices).Tile.IsEmpty;
-        }
-
-        /// <inheritdoc />
-        public Dictionary<Direction, ExcitedGroup> GetAdjacentZones(MapIndices indices)
-        {
-            var sides = new Dictionary<Direction, ExcitedGroup>();
-            foreach (var dir in Cardinal())
-            {
-                var side = indices.Offset(dir);
-                if (IsZoneBlocked(side))
-                    continue;
-
-                sides[dir] = GetZone(side);
-            }
-
-            return sides;
         }
 
         /// <inheritdoc />

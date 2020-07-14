@@ -116,6 +116,14 @@ namespace Content.Server.Atmos
             throw new System.NotImplementedException();
         }
 
+        public void UpdateAdjacent()
+        {
+            foreach (var direction in Cardinal())
+            {
+                _adjacentTiles[direction] = _gridAtmosphereManager.GetTile(GridIndices.Offset(direction));
+            }
+        }
+
         private void LastShareCheck()
         {
             var lastShare = Air.LastShare;
@@ -129,5 +137,11 @@ namespace Content.Server.Atmos
                 AtmosCooldown = 0;
             }
         }
+
+        private static IEnumerable<Direction> Cardinal() =>
+            new[]
+            {
+                Direction.North, Direction.East, Direction.South, Direction.West
+            };
     }
 }
