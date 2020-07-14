@@ -24,14 +24,25 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         public bool UseAdjacentAtmosphere;
-        private bool _airtight = true;
+        private bool _zoneBlocked = true;
+        private bool _airBlocked = true;
 
-        public bool Airtight
+        public bool ZoneBlocked
         {
-            get => _airtight;
+            get => _zoneBlocked;
             set
             {
-                _airtight = value;
+                _zoneBlocked = value;
+                _atmosphereMap.GetGridAtmosphereManager(Owner.Transform.GridID).Invalidate(_snapGrid.Position);
+            }
+        }
+
+        public bool AirBlocked
+        {
+            get => _airBlocked;
+            set
+            {
+                _airBlocked = value;
                 _atmosphereMap.GetGridAtmosphereManager(Owner.Transform.GridID).Invalidate(_snapGrid.Position);
             }
         }

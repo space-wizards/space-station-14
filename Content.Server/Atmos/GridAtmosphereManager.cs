@@ -93,7 +93,7 @@ namespace Content.Server.Atmos
             void Check(MapIndices pos, Direction dir)
             {
                 pos = pos.Offset(dir);
-                if (IsObstructed(pos))
+                if (IsZoneBlocked(pos))
                     return;
 
                 if (inner.Contains(pos))
@@ -129,10 +129,16 @@ namespace Content.Server.Atmos
             return inner;
         }
 
-        private bool IsObstructed(MapIndices indices)
+        public bool IsZoneBlocked(MapIndices indices)
         {
             var ac = GetObstructingComponent(indices);
-            return ac != null && ac.Airtight;
+            return ac != null && ac.ZoneBlocked;
+        }
+
+        public bool IsAirBlocked(MapIndices indices)
+        {
+            var ac = GetObstructingComponent(indices);
+            return ac != null && ac.AirBlocked;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
@@ -146,7 +152,7 @@ namespace Content.Server.Atmos
             return null;
         }
 
-        private bool IsSpace(MapIndices indices)
+        public bool IsSpace(MapIndices indices)
         {
             // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
             return _grid.GetTileRef(indices).Tile.IsEmpty;
@@ -166,9 +172,12 @@ namespace Content.Server.Atmos
                 {
                     ClearAtmospheres(indices);
                 }
-                else if (IsObstructed(indices))
+                else if (IsZoneBlocked(indices))
                 {
                     SplitAtmospheres(indices);
+                } else if (IsAirBlocked(indices))
+                {
+                    // connect zones?
                 }
                 else
                 {
@@ -181,7 +190,7 @@ namespace Content.Server.Atmos
 
         private void SplitAtmospheres(MapIndices indices)
         {
-            Debug.Assert(IsObstructed(indices));
+            Debug.Assert(IsZoneBlocked(indices));
 
             // Remove the now-covered atmosphere (if there was one)
             if (_atmospheres.TryGetValue(indices, out var coveredAtmos))
@@ -203,7 +212,7 @@ namespace Content.Server.Atmos
                     continue;
 
                 // If this is true, the edge has no atmosphere to split anyways
-                if (IsObstructed(edgeCoordinate))
+                if (IsZoneBlocked(edgeCoordinate))
                     continue;
 
                 // Otherwise, this is a new connected area (now that zones are split)
@@ -246,7 +255,7 @@ namespace Content.Server.Atmos
 
         private void MergeAtmospheres(MapIndices indices)
         {
-            Debug.Assert(!IsObstructed(indices));
+            Debug.Assert(!IsZoneBlocked(indices));
 
             var adjacent = new HashSet<ZoneAtmosphere>(GetAdjacentAtmospheres(indices).Values);
 
@@ -333,7 +342,7 @@ namespace Content.Server.Atmos
             foreach (var dir in Cardinal())
             {
                 var side = coords.Offset(dir);
-                if (IsObstructed(side))
+                if (IsZoneBlocked(side))
                     continue;
 
                 sides[dir] = GetZoneAtmosphere(side);

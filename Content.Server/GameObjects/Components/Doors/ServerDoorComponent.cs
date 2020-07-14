@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                airtightComponent.Airtight = false;
+                airtightComponent.AirBlocked = false;
                 collidableComponent.Hard = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -213,7 +213,7 @@ namespace Content.Server.GameObjects
             {
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
-                airtightComponent.Airtight = true;
+                airtightComponent.AirBlocked = true;
                 if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
                 {
                     occluder.Enabled = true;
