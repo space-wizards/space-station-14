@@ -10,11 +10,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     /// </summary>
     public class AdjacentNode : Node
     {
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-        }
-
         protected override IEnumerable<Node> GetReachableNodes()
         {
             return Owner.GetComponent<SnapGridComponent>()

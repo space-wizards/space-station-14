@@ -46,23 +46,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool _deleting = false;
 
-
-#pragma warning disable 649
-        [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
-#pragma warning restore 649
+        private INodeGroupFactory _nodeGroupFactory;
 
         public virtual void ExposeData(ObjectSerializer serializer)
         {
-
+            serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
         }
 
-        public void Initialize(NodeGroupID nodeGroupID, IEntity owner)
+        public void Initialize(IEntity owner)
         {
-            NodeGroupID = nodeGroupID;
             Owner = owner;
+            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
         }
 
-        public void OnContainerInitialize()
+        public void OnContainerStartup()
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();

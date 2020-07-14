@@ -24,12 +24,21 @@ namespace Content.Server.GameObjects.Components.NodeContainer
             serializer.DataField(ref _nodes, "nodes", new List<Node>());
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            foreach (var node in _nodes)
+            {
+                node.Initialize(Owner);
+            }
+        }
+
         protected override void Startup()
         {
             base.Startup();
             foreach (var node in _nodes)
             {
-                node.OnContainerInitialize();
+                node.OnContainerStartup();
             }
         }
 
