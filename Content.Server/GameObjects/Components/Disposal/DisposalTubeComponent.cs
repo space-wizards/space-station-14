@@ -26,6 +26,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         private TimeSpan _lastClang;
 
+        private bool _connected;
+
         private string _clangSound;
 
         /// <summary>
@@ -83,9 +85,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
+        // TODO: Make disposal pipes extend the grid
         private void Connect()
         {
-            // TODO: Make disposal pipes extend the grid
+            _connected = true;
+
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
 
             foreach (var direction in ConnectableDirections())
@@ -124,6 +128,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void Disconnect()
         {
+            _connected = false;
+
             foreach (var entity in Contents.ContainedEntities)
             {
                 if (!entity.TryGetComponent(out DisposableComponent disposable))
@@ -144,7 +150,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void AdjacentDisconnected(IDisposalTubeComponent adjacent)
         {
-            foreach (var tube in Connected)
+            foreach (var pair in Connected)
             {
                 foreach (var entity in Contents.ContainedEntities)
                 {
@@ -164,10 +170,32 @@ namespace Content.Server.GameObjects.Components.Disposal
                     }
                 }
 
-                if (tube.Value == adjacent)
+                if (pair.Value == adjacent)
                 {
-                    Connected.Remove(tube.Key);
+                    Connected.Remove(pair.Key);
                 }
+            }
+        }
+
+        public void MoveEvent(MoveEvent moveEvent)
+        {
+            if (!_connected)
+            {
+                return;
+            }
+
+            foreach (var tube in Connected.Values)
+            {
+                var distance = (tube.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length;
+
+                // Disconnect distance threshold
+                if (distance < 1.25)
+                {
+                    continue;
+                }
+
+                AdjacentDisconnected(tube);
+                tube.AdjacentDisconnected(this);
             }
         }
 

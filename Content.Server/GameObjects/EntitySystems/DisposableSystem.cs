@@ -8,8 +8,10 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class DisposableSystem : EntitySystem
     {
-        public DisposableSystem()
+        public override void Initialize()
         {
+            base.Initialize();
+
             EntityQuery = new TypeEntityQuery(typeof(DisposableComponent));
         }
 

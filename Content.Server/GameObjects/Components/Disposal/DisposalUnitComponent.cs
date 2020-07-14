@@ -64,9 +64,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             return CanInsert(entity) && _container.Insert(entity);
         }
 
-        private bool Remove(IEntity entity)
+        private void Remove(IEntity entity)
         {
-            return _container.Remove(entity);
+            _container.Remove(entity);
         }
 
         private bool CanFlush()

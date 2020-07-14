@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
@@ -16,5 +17,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         bool TransferTo(DisposableComponent disposable, IDisposalTubeComponent to);
         bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
         void AdjacentDisconnected(IDisposalTubeComponent adjacent);
+        void MoveEvent(MoveEvent moveEvent);
     }
 }
