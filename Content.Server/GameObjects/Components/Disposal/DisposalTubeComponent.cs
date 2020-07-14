@@ -123,6 +123,16 @@ namespace Content.Server.GameObjects.Components.Disposal
         // TODO: Remove from DisposableComponent NextTube/PreviousTube/CurrentTube
         private void Disconnect()
         {
+            foreach (var entity in Contents.ContainedEntities)
+            {
+                if (!entity.TryGetComponent(out DisposableComponent disposable))
+                {
+                    continue;
+                }
+
+                disposable.ExitDisposals();
+            }
+
             foreach (var connected in Connected.Values)
             {
                 connected.AdjacentDisconnected(this);
@@ -133,11 +143,30 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void AdjacentDisconnected(IDisposalTubeComponent adjacent)
         {
-            var outdated = Connected.Where(pair => pair.Value == adjacent).ToArray();
-
-            foreach (var pair in outdated)
+            foreach (var tube in Connected)
             {
-                Connected.Remove(pair.Key);
+                foreach (var entity in Contents.ContainedEntities)
+                {
+                    if (!entity.TryGetComponent(out DisposableComponent disposable))
+                    {
+                        continue;
+                    }
+
+                    if (disposable.PreviousTube == adjacent)
+                    {
+                        disposable.PreviousTube = null;
+                    }
+
+                    if (disposable.NextTube == adjacent)
+                    {
+                        disposable.NextTube = null;
+                    }
+                }
+
+                if (tube.Value == adjacent)
+                {
+                    Connected.Remove(tube.Key);
+                }
             }
         }
 

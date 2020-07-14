@@ -16,14 +16,10 @@ namespace Content.Server.GameObjects.Components.Disposal
     [RegisterComponent]
     public class DisposableComponent : SharedDisposableComponent, IActionBlocker, IDragDrop
     {
-#pragma warning disable 649
-        [Dependency] private readonly IComponentManager _componentManager = default!;
-#pragma warning restore 649
-
         private bool _inDisposals;
 
         [ViewVariables]
-        public IDisposalTubeComponent? PreviousTube { get; private set; }
+        public IDisposalTubeComponent? PreviousTube { get; set; }
 
         [ViewVariables]
         public IDisposalTubeComponent? CurrentTube { get; set; }
