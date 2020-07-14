@@ -36,7 +36,6 @@ namespace Content.Server
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<INodeGroupManager, NodeGroupManager>();
-            IoCManager.Register<INodeFactory, NodeFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
         }
