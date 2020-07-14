@@ -15,9 +15,9 @@ namespace Content.Server.Atmos
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
         private readonly IMapGrid _grid;
-        private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>();
+        private readonly List<WeakReference<ExcitedGroup>> _excitedGroups = new List<WeakReference<ExcitedGroup>>();
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>();
-        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>();
+        private readonly List<TileAtmosphere> _activeTiles = new List<TileAtmosphere>();
 
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
@@ -46,6 +46,7 @@ namespace Content.Server.Atmos
         public void Invalidate(MapIndices indices)
         {
             _invalidatedCoords.Add(indices);
+            AddActiveTile(indices);
         }
 
         private void Revalidate()
@@ -146,6 +147,45 @@ namespace Content.Server.Atmos
         {
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
+
+            ProcessActiveTurfs();
+
+            ProcessExcitedGroups();
+        }
+
+        public void ProcessActiveTurfs()
+        {
+            while (_activeTiles.Count != 0)
+            {
+                var tile = _activeTiles.Last();
+                _activeTiles.Remove(tile);
+
+                // TODO ATMOS figure out what to do about fire count...
+
+                tile.ProcessCell(1);
+            }
+        }
+
+        public void ProcessExcitedGroups()
+        {
+            while(_excitedGroups.Count != 0)
+            {
+                var weak = _excitedGroups.Last();
+                if (!weak.TryGetTarget(out var excitedGroup))
+                {
+                    _excitedGroups.Remove(weak);
+                    continue;
+                }
+
+                excitedGroup.BreakdownCooldown++;
+                excitedGroup.DismantleCooldown++;
+
+                if(excitedGroup.BreakdownCooldown > Atmospherics.ExcitedGroupBreakdownCycles)
+                    excitedGroup.SelfBreakdown();
+
+                else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
+                    excitedGroup.Dismantle();
+            }
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)

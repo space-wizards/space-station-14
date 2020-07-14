@@ -23,7 +23,7 @@ namespace Content.Server.Atmos
         public ExcitedGroup ExcitedGroup { get; set; }
         public GasMixture Air { get; set; }
 
-        public TileAtmosphere(IGridAtmosphereManager atmosphereManager, TileRef tile, float volume=0f)
+        public TileAtmosphere(IGridAtmosphereManager atmosphereManager, TileRef tile, float volume)
         {
             _gridAtmosphereManager = atmosphereManager;
             MapIndex = tile.MapIndex;
@@ -32,7 +32,11 @@ namespace Content.Server.Atmos
             Tile = tile.Tile;
 
             // TODO ATMOS Load default gases from tile here or something
-            Air = null;
+            Air = new GasMixture(volume);
+            Air.Add("chem.o2", Atmospherics.MolesCellStandard * 0.2f);
+            Air.Add("chem.n2", Atmospherics.MolesCellStandard * 0.8f);
+
+            UpdateAdjacent();
         }
 
         private void Archive(int fireCount)

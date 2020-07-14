@@ -5,6 +5,7 @@
     /// </summary>
     public static class Atmospherics
     {
+        #region ATMOS
         /// <summary>
         ///     The universal gas constant, in kPa*L/(K*mol)
         /// </summary>
@@ -39,6 +40,8 @@
         ///     Moles in a 2.5 m^3 cell at 101.325 Pa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        #endregion
 
         /// <summary>
         ///     Minimum number of moles a gas can have.
@@ -80,5 +83,19 @@
         ///     Minimum heat capacity.
         /// </summary>
         public const float MinimumHeatCapacity = 0.0003f;
+
+        #region Excited Groups
+
+        /// <summary>
+        ///     Number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
+        /// </summary>
+        public const int ExcitedGroupBreakdownCycles = 4;
+
+        /// <summary>
+        ///     Number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
+        /// </summary>
+        public const int ExcitedGroupsDismantleCycles = 16;
+
+        #endregion
     }
 }
