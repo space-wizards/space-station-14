@@ -22,8 +22,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            var inDisposals = entity.EnsureComponent<InDisposalsComponent>();
-            inDisposals.EnterTube(this);
+            var disposable = entity.EnsureComponent<DisposableComponent>();
+            disposable.EnterTube(this);
 
             return true;
         }
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }
 
-        public override Direction NextDirection(InDisposalsComponent inDisposals)
+        public override Direction NextDirection(DisposableComponent disposable)
         {
             return ConnectableDirections()[0];
         }

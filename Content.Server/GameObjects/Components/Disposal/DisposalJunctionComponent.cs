@@ -32,13 +32,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _angles.Select(radian => new Angle(direction.Theta + radian).GetDir()).ToArray();
         }
 
-        public override Direction NextDirection(InDisposalsComponent inDisposals)
+        public override Direction NextDirection(DisposableComponent disposable)
         {
             var next = Owner.Transform.LocalRotation;
             var directions = ConnectableDirections().Skip(1).ToArray();
 
             if (Connected.TryGetValue(next.GetDir(), out var forwardTube) &&
-                inDisposals.PreviousTube == forwardTube)
+                disposable.PreviousTube == forwardTube)
             {
                 return _random.Pick(directions);
             }

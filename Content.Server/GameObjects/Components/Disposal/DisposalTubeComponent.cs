@@ -45,33 +45,33 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <returns>a new array of the directions</returns>
         protected abstract Direction[] ConnectableDirections();
 
-        public abstract Direction NextDirection(InDisposalsComponent inDisposals);
+        public abstract Direction NextDirection(DisposableComponent disposable);
 
-        public IDisposalTubeComponent NextTube(InDisposalsComponent inDisposals)
+        public IDisposalTubeComponent NextTube(DisposableComponent disposable)
         {
-            var nextDirection = NextDirection(inDisposals);
+            var nextDirection = NextDirection(disposable);
             return Connected.GetValueOrDefault(nextDirection);
         }
 
-        public bool Remove(InDisposalsComponent inDisposals)
+        public bool Remove(DisposableComponent disposable)
         {
-            var removed = Contents.Remove(inDisposals.Owner);
-            inDisposals.ExitDisposals();
+            var removed = Contents.Remove(disposable.Owner);
+            disposable.ExitDisposals();
             return removed;
         }
 
-        public bool TransferTo(InDisposalsComponent inDisposals, IDisposalTubeComponent to)
+        public bool TransferTo(DisposableComponent disposable, IDisposalTubeComponent to)
         {
-            var position = inDisposals.Owner.Transform.LocalPosition;
-            if (!to.Contents.Insert(inDisposals.Owner))
+            var position = disposable.Owner.Transform.LocalPosition;
+            if (!to.Contents.Insert(disposable.Owner))
             {
                 return false;
             }
 
-            inDisposals.Owner.Transform.LocalPosition = position;
+            disposable.Owner.Transform.LocalPosition = position;
 
-            Contents.Remove(inDisposals.Owner);
-            inDisposals.EnterTube(to);
+            Contents.Remove(disposable.Owner);
+            disposable.EnterTube(to);
 
             return true;
         }
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        // TODO: Remove from InDisposalsComponent NextTube/PreviousTube/CurrentTube
+        // TODO: Remove from DisposableComponent NextTube/PreviousTube/CurrentTube
         private void Disconnect()
         {
             foreach (var connected in Connected.Values)

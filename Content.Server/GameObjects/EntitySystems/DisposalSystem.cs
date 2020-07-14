@@ -10,14 +10,14 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public DisposalSystem()
         {
-            EntityQuery = new TypeEntityQuery(typeof(InDisposalsComponent));
+            EntityQuery = new TypeEntityQuery(typeof(DisposableComponent));
         }
 
         public override void Update(float frameTime)
         {
             foreach (var disposable in RelevantEntities)
             {
-                disposable.GetComponent<InDisposalsComponent>().Update(frameTime);
+                disposable.GetComponent<DisposableComponent>().Update(frameTime);
             }
         }
     }

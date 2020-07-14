@@ -20,10 +20,10 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {rotation.GetDir(), opposite.GetDir()};
         }
 
-        public override Direction NextDirection(InDisposalsComponent inDisposals)
+        public override Direction NextDirection(DisposableComponent disposable)
         {
             var directions = ConnectableDirections();
-            var previousTube = inDisposals.PreviousTube;
+            var previousTube = disposable.PreviousTube;
             var forward = directions[0];
             if (previousTube == null || !Connected.ContainsValue(previousTube))
             {
