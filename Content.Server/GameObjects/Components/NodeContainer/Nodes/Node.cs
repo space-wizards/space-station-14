@@ -113,6 +113,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _needsGroup = true;
         }
 
+        public void CombineGroupWithReachable()
+        {
+            Debug.Assert(!_needsGroup);
+            foreach (var group in GetReachableCompatibleGroups())
+            {
+                NodeGroup.CombineGroup(group);
+            }
+        }
+
         /// <summary>
         ///     How this node will attempt to find other reachable <see cref="Node"/>s to group with.
         ///     Returns a set of <see cref="Node"/>s to consider grouping with. Should not return this current <see cref="Node"/>.
@@ -130,15 +139,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             return GetReachableCompatibleNodes().Where(node => !node._needsGroup)
                 .Select(node => node.NodeGroup)
                 .Where(group => group != NodeGroup);
-        }
-
-        private void CombineGroupWithReachable()
-        {
-            Debug.Assert(!_needsGroup);
-            foreach (var group in GetReachableCompatibleGroups())
-            {
-                NodeGroup.CombineGroup(group);
-            }
         }
 
         private void SetNodeGroup(INodeGroup newGroup)

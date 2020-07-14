@@ -13,7 +13,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private void SetConduitLayer(ConduitLayer conduitLayer)
         {
-            _conduitLayer = conduitLayer; //todo - make work
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
+            _conduitLayer = conduitLayer;
+            TryAssignGroupIfNeeded();
+            CombineGroupWithReachable();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -55,5 +59,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         First    = 1 << 0,
         Second   = 1 << 1,
         Third    = 1 << 2,
+
+        All = First | Second | Third,
     }
 }
