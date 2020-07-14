@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects
             set => _state = value;
         }
 
-        private float OpenTimeCounter;
+        protected float OpenTimeCounter;
 
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;

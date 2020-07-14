@@ -49,7 +49,6 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _powerWiresPulsed = value;
-                UpdateWiresStatus();
                 UpdatePowerCutStatus();
             }
         }
@@ -62,7 +61,6 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _boltsDown = value;
-                UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
         }
@@ -75,9 +73,19 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _boltLightsWirePulsed = value;
-                UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
+        }
+
+        private bool _autoClose = true;
+        private const float AUTO_CLOSE_DELAY = 5;
+        private const float AUTO_CLOSE_DELAY_FAST = 1;
+        private float _closeSpeed = AUTO_CLOSE_DELAY;
+        // True => AUTO_CLOSE_DELAY; False => AUTO_CLOSE_DELAY_FAST
+        private bool NormalCloseSpeed
+        {
+            get => _closeSpeed == AUTO_CLOSE_DELAY;
+            set => _closeSpeed = value ? AUTO_CLOSE_DELAY : AUTO_CLOSE_DELAY_FAST;
         }
 
         private void UpdateWiresStatus()
@@ -98,11 +106,17 @@ namespace Content.Server.GameObjects.Components.Doors
             var boltLightsStatus = new StatusLightData(Color.Lime,
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
+            var timingStatus =
+                new StatusLightData(Color.Orange,   !_autoClose ? StatusLightState.Off :
+                                                    !NormalCloseSpeed ? StatusLightState.BlinkingFast :
+                                                    StatusLightState.On,
+                                                    "TIME"); 
+
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
             _wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            _wires.SetStatus(3, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
-            _wires.SetStatus(4, new StatusLightData(Color.Orange, StatusLightState.Off, "TIME"));
+            _wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            _wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
             _wires.SetStatus(5, new StatusLightData(Color.Red, StatusLightState.Off, "SAFE"));
             /*
             _wires.SetStatus(6, powerLight);
@@ -210,6 +224,13 @@ namespace Content.Server.GameObjects.Components.Doors
             /// Mending causes them to go on again
             /// </summary>
             BoltLight,
+
+            /// <summary>
+            /// Pulsing causes door to close faster
+            /// Cutting disables door timer, causing door to stop closing automatically
+            /// Mending restores door timer
+            /// </summary>
+            Timing,
         }
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
@@ -218,7 +239,7 @@ namespace Content.Server.GameObjects.Components.Doors
             builder.CreateWire(Wires.BackupPower);
             builder.CreateWire(Wires.Bolts);
             builder.CreateWire(Wires.BoltLight);
-            builder.CreateWire(4);
+            builder.CreateWire(Wires.Timing);
             builder.CreateWire(5);
             /*
             builder.CreateWire(6);
@@ -263,6 +284,9 @@ namespace Content.Server.GameObjects.Components.Doors
                         // we need to change the property here to set the appearance again
                         BoltLightsVisible = !_boltLightsWirePulsed;
                         break;
+                    case Wires.Timing:
+                        NormalCloseSpeed = !NormalCloseSpeed;
+                        break;
                 }
             }
 
@@ -279,6 +303,9 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.BoltLight:
                         BoltLightsVisible = true;
                         break;
+                    case Wires.Timing:
+                        _autoClose = true;
+                        break;
                 }
             }
 
@@ -291,6 +318,9 @@ namespace Content.Server.GameObjects.Components.Doors
                         break;
                     case Wires.BoltLight:
                         BoltLightsVisible = false;
+                        break;
+                    case Wires.Timing:
+                        _autoClose = false;
                         break;
                 }
             }
@@ -370,6 +400,28 @@ namespace Content.Server.GameObjects.Components.Doors
                 Close();
 
             return true;
+        }
+
+        public override void OnUpdate(float frameTime)
+        {
+            if (State != DoorState.Open)
+            {
+                return;
+            }
+
+            if (_autoClose)
+            {
+                OpenTimeCounter += frameTime;
+            }
+
+            if (OpenTimeCounter > _closeSpeed)
+            {
+                if (!CanClose() || !Close())
+                {
+                    // Try again in 2 seconds if it's jammed or something.
+                    OpenTimeCounter -= 2;
+                }
+            }
         }
 
         public void SetBoltsWithAudio(bool newBolts)
