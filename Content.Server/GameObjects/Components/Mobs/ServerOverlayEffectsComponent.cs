@@ -2,7 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Players;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
@@ -12,50 +17,83 @@ namespace Content.Server.GameObjects.Components.Mobs
     [ComponentReference(typeof(SharedOverlayEffectsComponent))]
     public sealed class ServerOverlayEffectsComponent : SharedOverlayEffectsComponent
     {
-        private readonly List<OverlayContainer> _currentOverlays = new List<OverlayContainer>();
+        public ServerOverlayEffectsComponent()
+        {
+            NetSyncEnabled = false;
+        }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private List<OverlayContainer> ActiveOverlays => _currentOverlays;
+        public List<OverlayContainer> ActiveOverlays { get; } = new List<OverlayContainer>();
 
-        public override ComponentState GetComponentState()
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
-            return new OverlayEffectComponentState(_currentOverlays);
+            if (Owner.TryGetComponent(out IActorComponent actor) && message is ResendOverlaysMessage)
+            {
+                if (actor.playerSession.ConnectedClient == netChannel)
+                {
+                    SyncClient();
+                }
+            }
         }
+
+        public void AddOverlay(string id) => AddOverlay(new OverlayContainer(id));
+
+        public void AddOverlay(SharedOverlayID id) => AddOverlay(new OverlayContainer(id));
 
         public void AddOverlay(OverlayContainer container)
         {
             if (!ActiveOverlays.Contains(container))
             {
                 ActiveOverlays.Add(container);
-                Dirty();
+                SyncClient();
             }
         }
 
-        public void AddOverlay(string id) => AddOverlay(new OverlayContainer(id));
-        public void AddOverlay(OverlayType type) => AddOverlay(new OverlayContainer(type));
+        public void RemoveOverlay(SharedOverlayID id) => RemoveOverlay(id.ToString());
+
+        public void RemoveOverlay(string id) => RemoveOverlay(new OverlayContainer(id));
 
         public void RemoveOverlay(OverlayContainer container)
         {
-            if (ActiveOverlays.RemoveAll(c => c.Equals(container)) > 0)
+            if (ActiveOverlays.Remove(container))
             {
-                Dirty();
+                SyncClient();
             }
         }
 
-        public void RemoveOverlay(string id)
+        public bool TryModifyOverlay(string id, Action<OverlayContainer> modifications)
         {
-            if (ActiveOverlays.RemoveAll(container => container.ID == id) > 0)
+            var overlay = ActiveOverlays.Find(c => c.ID == id);
+            if (overlay == null)
             {
-                Dirty();
+                return false;
             }
-        }
 
-        public void RemoveOverlay(OverlayType type) => RemoveOverlay(type.ToString());
+            modifications(overlay);
+            SyncClient();
+            return true;
+        }
 
         public void ClearOverlays()
         {
+            if (ActiveOverlays.Count == 0)
+            {
+                return;
+            }
+
             ActiveOverlays.Clear();
-            Dirty();
+            SyncClient();
+        }
+
+        private void SyncClient()
+        {
+            if (Owner.TryGetComponent(out IActorComponent actor))
+            {
+                if (actor.playerSession.ConnectedClient.IsConnected)
+                {
+                    SendNetworkMessage(new OverlayEffectComponentMessage(ActiveOverlays), actor.playerSession.ConnectedClient);
+                }
+            }
         }
     }
 }
