@@ -72,7 +72,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool CanInsert(IEntity entity)
         {
-            return entity.HasComponent<DisposableComponent>() &&
+            return Powered &&
+                   entity.HasComponent<DisposableComponent>() &&
                    _container.CanInsert(entity);
         }
 
