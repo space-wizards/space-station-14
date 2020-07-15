@@ -43,6 +43,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         protected Dictionary<Direction, IDisposalTubeComponent> Connected { get; } =
             new Dictionary<Direction, IDisposalTubeComponent>();
 
+        [ViewVariables]
+        private bool Anchored =>
+            !Owner.TryGetComponent(out PhysicsComponent physics) ||
+            physics.Anchored;
+
         /// <summary>
         ///     The directions that this tube can connect to others from
         /// </summary>
@@ -208,15 +213,15 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (physics.Anchored)
             {
-                Anchored();
+                OnAnchor();
             }
             else
             {
-                UnAnchored();
+                OnUnAnchor();
             }
         }
 
-        private void Anchored()
+        private void OnAnchor()
         {
             Connect();
 
@@ -226,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private void UnAnchored()
+        private void OnUnAnchor()
         {
             Disconnect();
 

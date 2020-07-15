@@ -27,6 +27,15 @@ namespace Content.Client.GameObjects.Components.Disposal
             sprite.LayerSetState(0, anchored
                 ? _stateAnchored
                 : _stateUnAnchored);
+
+            if (anchored)
+            {
+                appearance.Owner.EnsureComponent<SubFloorHideComponent>();
+            }
+            else if (appearance.Owner.HasComponent<SubFloorHideComponent>())
+            {
+                appearance.Owner.RemoveComponent<SubFloorHideComponent>();
+            }
         }
 
         public override void LoadData(YamlMappingNode node)

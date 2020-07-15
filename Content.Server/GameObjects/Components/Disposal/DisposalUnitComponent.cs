@@ -68,6 +68,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private BoundUserInterface _userInterface;
 
+        [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent receiver) || !receiver.PowerDisabled;
 
         private bool CanInsert(IEntity entity)

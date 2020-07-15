@@ -12,7 +12,6 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: SubFloorHide
   - type: Destructible
     thresholdvalue: 100
   - type: Rotatable
