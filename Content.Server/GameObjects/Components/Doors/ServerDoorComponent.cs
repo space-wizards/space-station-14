@@ -35,8 +35,8 @@ namespace Content.Server.GameObjects
 
         protected float OpenTimeCounter;
         protected bool AutoClose = true;
-        protected const float AUTO_CLOSE_DELAY = 5;
-        protected float CloseSpeed = AUTO_CLOSE_DELAY;
+        protected const float AutoCloseDelay = 5;
+        protected float CloseSpeed = AutoCloseDelay;
         
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;
@@ -48,8 +48,8 @@ namespace Content.Server.GameObjects
         private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
         private static readonly TimeSpan DenyTime = TimeSpan.FromSeconds(0.45f);
 
-        private static readonly int DoorCrushDamage = 15;
-        private static readonly float DoorStunTime = 5f;
+        private const int DoorCrushDamage = 15;
+        private const float DoorStunTime = 5f;
         protected bool Safety = true;
 
         [ViewVariables]

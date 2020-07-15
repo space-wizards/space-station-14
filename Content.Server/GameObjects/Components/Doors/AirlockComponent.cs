@@ -78,12 +78,12 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private const float AUTO_CLOSE_DELAY_FAST = 1;
-        // True => AUTO_CLOSE_DELAY; False => AUTO_CLOSE_DELAY_FAST
+        private const float AutoCloseDelayFast = 1;
+        // True => AutoCloseDelay; False => AutoCloseDelayFast
         private bool NormalCloseSpeed
         {
-            get => CloseSpeed == AUTO_CLOSE_DELAY;
-            set => CloseSpeed = value ? AUTO_CLOSE_DELAY : AUTO_CLOSE_DELAY_FAST;
+            get => CloseSpeed == AutoCloseDelay;
+            set => CloseSpeed = value ? AutoCloseDelay : AutoCloseDelayFast;
         }
 
         private void UpdateWiresStatus()
