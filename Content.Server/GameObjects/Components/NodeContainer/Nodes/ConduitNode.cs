@@ -11,15 +11,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         public ConduitLayer ConduitLayer { get => _conduitLayer; set => SetConduitLayer(value); }
         private ConduitLayer _conduitLayer;
 
-        private void SetConduitLayer(ConduitLayer conduitLayer)
-        {
-            NodeGroup.RemoveNode(this);
-            ClearNodeGroup();
-            _conduitLayer = conduitLayer;
-            TryAssignGroupIfNeeded();
-            CombineGroupWithReachable();
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -52,6 +43,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         ///     further in <see cref="ConduitNode.GetReachableNodes"/>.
         /// </summary>
         protected abstract IEnumerable<Node> GetNodesToConsider();
+
+        private void SetConduitLayer(ConduitLayer conduitLayer)
+        {
+            NodeGroup.RemoveNode(this);
+            ClearNodeGroup();
+            _conduitLayer = conduitLayer;
+            TryAssignGroupIfNeeded();
+            CombineGroupWithReachable();
+        }
     }
 
     public enum ConduitLayer
