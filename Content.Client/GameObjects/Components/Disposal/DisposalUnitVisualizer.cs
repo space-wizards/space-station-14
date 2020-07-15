@@ -59,20 +59,9 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("state_anchored", out var child))
-            {
-                _stateAnchored = child.AsString();
-            }
-
-            if (node.TryGetNode("state_unanchored", out child))
-            {
-                _stateUnAnchored = child.AsString();
-            }
-
-            if (node.TryGetNode("state_flush", out child))
-            {
-                _stateFlush = child.AsString();
-            }
+            _stateAnchored = node.GetNode("state_anchored").AsString();
+            _stateUnAnchored = node.GetNode("state_unanchored").AsString();
+            _stateFlush = node.GetNode("state_flush").AsString();
 
             var flushSound = node.GetNode("flush_sound").AsString();
             var flushTime = node.GetNode("flush_time").AsFloat();

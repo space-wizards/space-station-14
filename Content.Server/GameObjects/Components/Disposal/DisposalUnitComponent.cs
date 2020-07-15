@@ -123,8 +123,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Flushing);
-
-                Timer.Spawn(_flushTime, AnchoredChanged, _cancellationTokenSource.Token);
+                Timer.Spawn(_flushTime, UpdateVisualState, _cancellationTokenSource.Token);
             }
 
             UpdateInterface();
@@ -152,36 +151,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             receiver.PowerDisabled = !receiver.PowerDisabled;
             UpdateInterface();
-        }
-
-        private void AnchoredChanged()
-        {
-            var physics = Owner.GetComponent<PhysicsComponent>();
-
-            if (physics.Anchored)
-            {
-                Anchored();
-            }
-            else
-            {
-                UnAnchored();
-            }
-        }
-
-        private void Anchored()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
-            }
-        }
-
-        private void UnAnchored()
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
-            }
         }
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
@@ -241,6 +210,23 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        private void UpdateVisualState()
+        {
+            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                return;
+            }
+
+            if (!Owner.TryGetComponent(out PhysicsComponent physics) ||
+                physics.Anchored)
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
+                return;
+            }
+
+            appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -271,12 +257,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             Owner.EnsureComponent<AnchorableComponent>();
             var physics = Owner.EnsureComponent<PhysicsComponent>();
 
-            physics.AnchoredChanged += AnchoredChanged;
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                var anchored = Owner.GetComponent<PhysicsComponent>().Anchored;
-                appearance.SetData(DisposalVisuals.Anchored, anchored);
-            }
+            physics.AnchoredChanged += UpdateVisualState;
+            UpdateVisualState();
         }
 
         public override void OnRemove()

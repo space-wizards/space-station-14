@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -19,7 +20,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     // TODO: Make unanchored pipes pullable
-    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -27,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private TimeSpan _lastClang;
 
         private bool _connected;
-
+        private bool _broken;
         private string _clangSound;
 
         /// <summary>
@@ -93,6 +94,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         // TODO: Make disposal pipes extend the grid
         private void Connect()
         {
+            if (_connected || _broken)
+            {
+                return;
+            }
+
             _connected = true;
 
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
@@ -121,6 +127,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube)
         {
+            if (_broken)
+            {
+                return false;
+            }
+
             if (Connected.ContainsKey(direction) ||
                 !ConnectableDirections().Contains(direction))
             {
@@ -133,6 +144,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void Disconnect()
         {
+            if (!_connected)
+            {
+                return;
+            }
+
             _connected = false;
 
             foreach (var entity in Contents.ContainedEntities)
@@ -204,6 +220,22 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        private void UpdateVisualState()
+        {
+            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                return;
+            }
+
+            var state = _broken
+                ? DisposalTubeVisualState.Broken
+                : Anchored
+                    ? DisposalTubeVisualState.Anchored
+                    : DisposalTubeVisualState.Free;
+
+            appearance.SetData(DisposalTubeVisuals.VisualState, state);
+        }
+
         private void AnchoredChanged()
         {
             if (!Owner.TryGetComponent(out PhysicsComponent physics))
@@ -224,21 +256,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void OnAnchor()
         {
             Connect();
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, true);
-            }
+            UpdateVisualState();
         }
 
         private void OnUnAnchor()
         {
             Disconnect();
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, false);
-            }
+            UpdateVisualState();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -269,11 +293,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             Connect();
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(DisposalVisuals.Anchored, true);
-            }
+            UpdateVisualState();
         }
 
         public override void OnRemove()
@@ -302,6 +322,13 @@ namespace Content.Server.GameObjects.Components.Disposal
                     EntitySystem.Get<AudioSystem>().PlayAtCoords(_clangSound, Owner.Transform.GridPosition);
                     break;
             }
+        }
+
+        void IBreakAct.OnBreak(BreakageEventArgs eventArgs)
+        {
+            _broken = true; // TODO: Repair
+            Disconnect();
+            UpdateVisualState();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Disposal;
+﻿using System;
+using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -12,8 +13,9 @@ namespace Content.Client.GameObjects.Components.Disposal
     [UsedImplicitly]
     public class DisposalVisualizer : AppearanceVisualizer
     {
+        private string _stateFree;
         private string _stateAnchored;
-        private string _stateUnAnchored;
+        private string _stateBroken;
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -22,13 +24,22 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
-            appearance.TryGetData(DisposalVisuals.Anchored, out bool anchored);
+            if (!appearance.TryGetData(DisposalTubeVisuals.VisualState, out DisposalTubeVisualState state))
+            {
+                return;
+            }
 
-            sprite.LayerSetState(0, anchored
-                ? _stateAnchored
-                : _stateUnAnchored);
+            var texture = state switch
+            {
+                DisposalTubeVisualState.Free => _stateFree,
+                DisposalTubeVisualState.Anchored => _stateAnchored,
+                DisposalTubeVisualState.Broken => _stateBroken,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-            if (anchored)
+            sprite.LayerSetState(0, texture);
+
+            if (state == DisposalTubeVisualState.Anchored)
             {
                 appearance.Owner.EnsureComponent<SubFloorHideComponent>();
             }
@@ -42,15 +53,9 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("state_anchored", out var child))
-            {
-                _stateAnchored = child.AsString();
-            }
-
-            if (node.TryGetNode("state_unanchored", out child))
-            {
-                _stateUnAnchored = child.AsString();
-            }
+            _stateFree = node.GetNode("state_free").AsString();
+            _stateAnchored = node.GetNode("state_anchored").AsString();
+            _stateBroken = node.GetNode("state_broken").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)

@@ -12,8 +12,8 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Destructible
-    thresholdvalue: 100
+  - type: Damageable
+  - type: Breakable
   - type: Rotatable
   - type: Flippable
 
@@ -34,8 +34,9 @@
   - type: Appearance
     visuals:
     - type: DisposalVisualizer
+      state_free: conpipe-s
       state_anchored: pipe-s
-      state_unanchored: conpipe-s
+      state_broken: pipe-b
 
 - type: entity
   id: DisposalTrunk
@@ -54,8 +55,9 @@
   - type: Appearance
     visuals:
     - type: DisposalVisualizer
+      state_free: conpipe-t
       state_anchored: pipe-t
-      state_unanchored: conpipe-t
+      state_broken: pipe-b
 
 - type: entity
   id: DisposalUnit
@@ -95,8 +97,8 @@
   - type: Appearance
     visuals:
     - type: DisposalUnitVisualizer
-      state_anchored: disposal
       state_unanchored: condisposal
+      state_anchored: disposal
       state_flush: disposal-flush
       flush_sound: /Audio/machines/disposalflush.ogg
       flush_time: 2
@@ -126,8 +128,9 @@
   - type: Appearance
     visuals:
     - type: DisposalVisualizer
+      state_free: conpipe-j1
       state_anchored: pipe-j1
-      state_unanchored: conpipe-j1
+      state_broken: pipe-b
 
 - type: entity
   id: DisposalYJunction
@@ -150,8 +153,9 @@
   - type: Appearance
     visuals:
     - type: DisposalVisualizer
+      state_free: conpipe-y
       state_anchored: pipe-y
-      state_unanchored: conpipe-y
+      state_broken: pipe-b
 
 - type: entity
   id: DisposalBend
@@ -170,5 +174,6 @@
   - type: Appearance
     visuals:
     - type: DisposalVisualizer
+      state_free: conpipe-c
       state_anchored: pipe-c
-      state_unanchored: conpipe-c
+      state_broken: pipe-b
