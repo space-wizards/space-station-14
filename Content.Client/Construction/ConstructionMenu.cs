@@ -34,7 +34,12 @@ namespace Content.Client.Construction
         private readonly Tree RecipeList;
         private readonly TextureRect InfoIcon;
         private readonly Label InfoLabel;
+        private readonly Label StepNumber;
+        private readonly TextureRect StepIcon;
+        private readonly Label StepLabel;
         private readonly ItemList StepList;
+
+        public VBoxContainer StepListPanel { get; set; }
 
         private CategoryNode RootCategory;
 
@@ -74,19 +79,36 @@ namespace Content.Client.Construction
             info.AddChild(InfoLabel);
             guide.AddChild(info);
 
-            var stepsLabel = new Label
+            StepListPanel = new VBoxContainer();
+            StepIcon = new TextureRect();
+            StepNumber = new Label
             {
                 SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
                 SizeFlagsVertical = SizeFlags.ShrinkCenter,
                 Text = "Steps"
             };
-            guide.AddChild(stepsLabel);
+            StepLabel = new Label
+            {
+                SizeFlagsHorizontal = SizeFlags.ShrinkCenter,
+                SizeFlagsVertical = SizeFlags.ShrinkCenter,
+                Text = "Steps"
+            };
+
+            StepListPanel.AddChild(StepNumber);
+            StepListPanel.AddChild(StepIcon);
+            StepListPanel.AddChild(StepLabel);
+            guide.AddChild(StepListPanel);
 
             StepList = new ItemList
             {
                 SizeFlagsVertical = SizeFlags.FillExpand, SelectMode = ItemList.ItemListSelectMode.None
             };
+            // StepList.AddChild(StepListPanel);
+
             guide.AddChild(StepList);
+
+
+
 
             var buttonsContainer = new HBoxContainer();
             BuildButton = new Button
@@ -136,7 +158,12 @@ namespace Content.Client.Construction
             {
                 InfoLabel.Text = "";
                 InfoIcon.Texture = null;
+                StepLabel.Text = "";
+                StepNumber.Text = "";
+                StepIcon.Texture = null;
+
                 StepList.Clear();
+                StepListPanel.DisposeAllChildren();
                 BuildButton.Disabled = true;
             }
             else
@@ -145,7 +172,13 @@ namespace Content.Client.Construction
                 InfoLabel.Text = prototype.Description;
                 InfoIcon.Texture = prototype.Icon.Frame0();
 
+                StepListPanel.DisposeAllChildren();
                 StepList.Clear();
+                StepLabel.Text = "";
+                StepNumber.Text = "";
+                StepIcon.Texture = null;
+
+                var itemCounter = 0;
 
                 foreach (var forward in prototype.Stages.Select(a => a.Forward))
                 {
@@ -154,6 +187,7 @@ namespace Content.Client.Construction
                         continue;
                     }
 
+                    itemCounter += 1;
                     Texture icon;
                     string text;
                     switch (forward)
@@ -216,9 +250,36 @@ namespace Content.Client.Construction
                             throw new NotImplementedException();
                     }
 
-                    StepList.AddItem(text, icon, false);
+                    StepNumber.Text = itemCounter.ToString();
+                    StepIcon.Texture = icon;
+                    StepLabel.Text = text;
+
+                    HBoxContainer stepLines = new HBoxContainer();
+                    Label stepNumber = new Label
+                    {
+                        Text = itemCounter.ToString()
+                    };
+
+                    TextureRect stepIcon = new TextureRect
+                    {
+                        Texture = icon
+                    };
+
+                    Label stepLabel = new Label
+                    {
+                        Text = text
+                    };
+                    stepLines.AddChild(stepNumber);
+                    stepLines.AddChild(stepIcon);
+                    stepLines.AddChild(stepLabel);
+                    StepListPanel.AddChild(stepLines);
                 }
             }
+        }
+
+        private void AddStep(Label itemNum, TextureRect itemIcon, Label itemLabel)
+        {
+
         }
 
         private void OnTextEntered(LineEdit.LineEditEventArgs args)
