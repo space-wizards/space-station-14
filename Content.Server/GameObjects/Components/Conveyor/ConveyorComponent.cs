@@ -1,4 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -6,14 +8,16 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component
+    public class ConveyorComponent : Component, IExamine, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
@@ -56,6 +60,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 appearance.SetData(ConveyorVisuals.State, value);
             }
         }
+
+        [ViewVariables]
+        public uint? Id { get; set; }
 
         /// <summary>
         ///     Calculates the angle in which entities on top of this conveyor belt
@@ -138,6 +145,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
+        // TODO: Load id from the map
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -148,6 +156,26 @@ namespace Content.Server.GameObjects.Components.Conveyor
             _angle = MathHelper.DegreesToRadians(degrees);
 
             serializer.DataField(ref _speed, "speed", 2);
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var tooltip = Id.HasValue
+                ? Loc.GetString("It's switch has an id of {0}.", Id.Value)
+                : Loc.GetString("It doesn't have an associated switch.");
+
+            message.AddMarkup(tooltip);
+        }
+
+        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+            if (!eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent conveyorSwitch))
+            {
+                return false;
+            }
+
+            conveyorSwitch.Connect(eventArgs.User, this);
+            return false;
         }
     }
 }

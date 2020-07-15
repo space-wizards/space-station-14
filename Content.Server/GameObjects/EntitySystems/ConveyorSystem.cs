@@ -8,6 +8,13 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class ConveyorSystem : EntitySystem
     {
+        private uint _nextId;
+
+        public uint NextId()
+        {
+            return ++_nextId;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
