@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -42,6 +43,8 @@ namespace Content.Client.Sandbox
         {
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
                 message => SetAllowed(message.SandboxAllowed));
+
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 

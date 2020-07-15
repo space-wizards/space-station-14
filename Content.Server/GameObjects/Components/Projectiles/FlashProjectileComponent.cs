@@ -17,16 +17,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
     {
         public override string Name => "FlashProjectile";
 
-        private double _range;
-        private double _duration;
+        private float _range;
+        private float _duration;
 
         private bool _flashed;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _range, "range", 1.0);
-            serializer.DataField(ref _duration, "duration", 8.0);
+            serializer.DataField(ref _range, "range", 1.0f);
+            serializer.DataField(ref _duration, "duration", 8.0f);
         }
 
         public override void Initialize()
@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             {
                 return;
             }
-            ServerFlashableComponent.FlashAreaHelper(Owner, _range, _duration);
+            FlashableComponent.FlashAreaHelper(Owner, _range, _duration);
             _flashed = true;
         }
 

@@ -5,9 +5,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    texture: Buildings/wall_girder.png
+    texture: Constructible/Structures/Walls/wall_girder.png
   - type: Icon
-    texture: Buildings/wall_girder.png
+    texture: Constructible/Structures/Walls/wall_girder.png
 
   - type: Collidable
     shapes:

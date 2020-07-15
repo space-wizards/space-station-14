@@ -6,10 +6,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Buildings/Walls/asteroid_rock.rsi
+    sprite: Constructible/Structures/Walls/asteroid_rock.rsi
     state: 0
   - type: Icon
-    sprite: Buildings/Walls/asteroid_rock.rsi
+    sprite: Constructible/Structures/Walls/asteroid_rock.rsi
     state: 0
   - type: Collidable
     shapes:

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
@@ -324,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private void ClickSound()
         {
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
 
         }
 

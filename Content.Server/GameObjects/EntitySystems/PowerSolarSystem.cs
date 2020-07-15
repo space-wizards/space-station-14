@@ -16,7 +16,7 @@ using CannyFastMath;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     /// <summary>
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.

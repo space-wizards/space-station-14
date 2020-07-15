@@ -6,10 +6,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: cross_blue
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: cross_blue
     - type: Marker
     - type: Clickable
@@ -27,10 +27,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_ai
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_ai
     - type: TimedSpawner
       prototypes:
@@ -49,10 +49,10 @@
     - type: Sprite
       netsync: false
       visible: false
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_xenoai
     - type: Icon
-      sprite: Objects/markers.rsi
+      sprite: Interface/Misc/markers.rsi
       state: spawner_xenoai
     - type: TimedSpawner
       prototypes:

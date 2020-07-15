@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 return;
             }
 
-            if (!component.TryGetData<int>(SharedStrapComponent.StrapVisuals.RotationAngle, out var angle))
+            if (!component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle))
             {
                 return;
             }

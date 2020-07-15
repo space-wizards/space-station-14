@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chat;
+using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -26,6 +27,7 @@ namespace Content.Client.Chat
         public Button AllButton { get; }
         public Button LocalButton { get; }
         public Button OOCButton { get; }
+        public Button AdminButton { get; }
 
         /// <summary>
         ///     Default formatting string for the ClientChatConsole.
@@ -58,6 +60,7 @@ namespace Content.Client.Chat
 
             outerVBox.AddChild(panelContainer);
             outerVBox.AddChild(hBox);
+
 
             var contentMargin = new MarginContainer
             {
@@ -95,6 +98,17 @@ namespace Content.Client.Chat
                 ToggleMode = true,
             };
 
+            var groupController = IoCManager.Resolve<IClientConGroupController>();
+            if(groupController.CanCommand("asay"))
+            {
+                AdminButton = new Button
+                {
+                    Text = _localize.GetString("Admin"),
+                    Name = "Admin",
+                    ToggleMode = true,
+                };
+            }
+
             AllButton.OnToggled += OnFilterToggled;
             LocalButton.OnToggled += OnFilterToggled;
             OOCButton.OnToggled += OnFilterToggled;
@@ -102,6 +116,11 @@ namespace Content.Client.Chat
             hBox.AddChild(AllButton);
             hBox.AddChild(LocalButton);
             hBox.AddChild(OOCButton);
+            if(AdminButton != null)
+            {
+                AdminButton.OnToggled += OnFilterToggled;
+                hBox.AddChild(AdminButton);
+            }
 
             AddChild(outerVBox);
         }

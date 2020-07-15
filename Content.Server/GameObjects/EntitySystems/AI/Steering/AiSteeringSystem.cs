@@ -10,6 +10,7 @@ using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <summary>
         /// Pathfinding request jobs we're waiting on
         /// </summary>
-        private readonly Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)> _pathfindingRequests = 
+        private readonly Dictionary<IEntity, (CancellationTokenSource CancelToken, Job<Queue<TileRef>> Job)> _pathfindingRequests = 
             new Dictionary<IEntity, (CancellationTokenSource, Job<Queue<TileRef>>)>();
         
         /// <summary>
@@ -135,7 +136,25 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             
             if (_pathfindingRequests.TryGetValue(entity, out var request))
             {
-                request.Item1.Cancel();
+                switch (request.Job.Status)
+                {
+                    case JobStatus.Pending:
+                    case JobStatus.Finished:
+                        break;
+                    case JobStatus.Running:
+                    case JobStatus.Paused:
+                    case JobStatus.Waiting:
+                        request.CancelToken.Cancel();
+                        break;
+                }
+
+                switch (request.Job.Exception)
+                {
+                    case null:
+                        break;
+                    default:
+                        throw request.Job.Exception;
+                }
                 _pathfindingRequests.Remove(entity);
             }
             
@@ -246,7 +265,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             }
             
             // Check if we have arrived
-            if ((entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length <= steeringRequest.ArrivalDistance)
+            var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
+            if (targetDistance <= steeringRequest.ArrivalDistance)
             {
                 // TODO: If we need LOS and are moving to an entity then we may not be in range yet
                 // Chuck out a ray every half second or so and keep moving until we are?
@@ -257,9 +277,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             
             // Handle pathfinding job
             // If we still have an existing path then keep following that until the new path arrives
-            if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Item2.Status == JobStatus.Finished)
+            if (_pathfindingRequests.TryGetValue(entity, out var pathRequest) && pathRequest.Job.Status == JobStatus.Finished)
             {
-                switch (pathRequest.Item2.Exception)
+                switch (pathRequest.Job.Exception)
                 {
                     case null:
                         break;
@@ -268,10 +288,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                         controller.VelocityDir = Vector2.Zero;
                         return SteeringStatus.NoPath;
                     default:
-                        throw pathRequest.Item2.Exception;
+                        throw pathRequest.Job.Exception;
                 }
                 // No actual path
-                var path = _pathfindingRequests[entity].Item2.Result;
+                var path = _pathfindingRequests[entity].Job.Result;
                 if (path == null || path.Count == 0)
                 {
                     controller.VelocityDir = Vector2.Zero;
@@ -293,13 +313,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             // Check if we even have a path to follow
             // If the route's empty we could be close and may not need a re-path so we won't check if it is
-            if (!_paths.ContainsKey(entity) && !_pathfindingRequests.ContainsKey(entity))
+            if (!_paths.ContainsKey(entity) && !_pathfindingRequests.ContainsKey(entity) && targetDistance > 1.5f)
             {
+                controller.VelocityDir = Vector2.Zero;
                 RequestPath(entity, steeringRequest);
                 return SteeringStatus.Pending;
             }
             
-            var ignoredCollision = new List<IEntity>();
+            var ignoredCollision = new List<EntityUid>();
             // Check if the target entity has moved - If so then re-path
             // TODO: Patch the path from the target's position back towards us, stopping if it ever intersects the current path
             // Probably need a separate "PatchPath" job
@@ -318,7 +339,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     RequestPath(entity, steeringRequest);
                 }
                 
-                ignoredCollision.Add(entitySteer.Target);
+                ignoredCollision.Add(entitySteer.Target.Uid);
             }
 
             HandleStuck(entity);
@@ -441,7 +462,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // If no tiles left just move towards the target (if we're close)
             if (!_paths.ContainsKey(entity) || _paths[entity].Count == 0)
             {
-                if ((steeringRequest.TargetGrid.Position - entity.Transform.GridPosition.Position).Length <= 1.5f)
+                if ((steeringRequest.TargetGrid.Position - entity.Transform.GridPosition.Position).Length <= 2.0f)
                 {
                     return steeringRequest.TargetGrid;   
                 }
@@ -576,9 +597,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="direction">entity's travel direction</param>
         /// <param name="ignoredTargets"></param>
         /// <returns></returns>
-        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
+        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<EntityUid> ignoredTargets)
         {
-            if (direction == Vector2.Zero || !entity.HasComponent<CollidableComponent>())
+            if (direction == Vector2.Zero || !entity.TryGetComponent(out CollidableComponent collidableComponent))
             {
                 return Vector2.Zero;
             }
@@ -586,6 +607,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             // We'll check tile-by-tile
             // Rewriting this frequently so not many comments as they'll go stale
             // I realise this is bad so please rewrite it ;-;
+            var entityCollisionMask = collidableComponent.CollisionMask;
             var avoidanceVector = Vector2.Zero;
             var checkTiles = new HashSet<TileRef>();
             var avoidTiles = new HashSet<TileRef>();
@@ -605,10 +627,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 var node = _pathfindingSystem.GetNode(tile);
                 // Assume the immovables have already been checked
-                foreach (var uid in node.PhysicsUids)
+                foreach (var (uid, layer) in node.PhysicsLayers)
                 {
-                    // Ignore myself / my target if applicable
-                    if (uid == entity.Uid || ignoredTargets.Contains(entity)) continue;
+                    // Ignore myself / my target if applicable / if my mask doesn't collide
+                    if (uid == entity.Uid || ignoredTargets.Contains(uid) || (entityCollisionMask & layer) == 0) continue;
                     // God there's so many ways to do this
                     // err for now we'll just assume the first entity is the center and just add a vector for it
                     var collisionEntity = _entityManager.GetEntity(uid);

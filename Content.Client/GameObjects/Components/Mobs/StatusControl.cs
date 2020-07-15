@@ -1,5 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
-using JetBrains.Annotations;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
@@ -9,7 +9,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     {
         public readonly StatusEffect Effect;
 
-        public StatusControl(StatusEffect effect, [CanBeNull] Texture texture)
+        public StatusControl(StatusEffect effect, Texture? texture)
         {
             Effect = effect;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
@@ -54,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _useSound, "useSound", "/Audio/items/drink.ogg");
+            serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
             serializer.DataField(ref _defaultToOpened, "isOpen", false); //For things like cups of coffee.
             serializer.DataField(ref _soundCollection, "openSounds","canOpenSounds");
         }

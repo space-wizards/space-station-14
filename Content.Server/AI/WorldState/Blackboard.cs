@@ -56,6 +56,11 @@ namespace Content.Server.AI.WorldState
             }
         }
 
+        public void GetStoredState<T>(Type type, out StoredStateData<T> state)
+        {
+            state = (StoredStateData<T>) _states[type];
+        }
+
         /// <summary>
         /// Get the AI state class
         /// </summary>

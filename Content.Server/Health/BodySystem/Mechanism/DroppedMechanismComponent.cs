@@ -16,13 +16,14 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Diagnostics;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.Localization;
 
 namespace Content.Server.BodySystem {
 
     /// <summary>
     ///    Component representing a dropped, tangible <see cref="Mechanism"/> entity.
-    /// </summary>	
+    /// </summary>
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
@@ -130,7 +131,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible BodyParts that can be operated on. 
+        ///     Called after the client chooses from a list of possible BodyParts that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {

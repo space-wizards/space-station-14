@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
@@ -6,8 +7,6 @@ using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.IoC;
-
-#nullable enable
 
 namespace Content.Client.GameObjects.EntitySystems
 {

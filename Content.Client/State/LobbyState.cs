@@ -9,9 +9,11 @@ using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -86,7 +88,8 @@ namespace Content.Client.State
                     return;
                 }
 
-                _console.ProcessCommand("joingame");
+                new LateJoinGui().OpenCentered();
+                return;
             };
 
             _lobby.ReadyButton.OnToggled += args =>

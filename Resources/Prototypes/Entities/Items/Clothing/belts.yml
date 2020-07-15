@@ -13,15 +13,15 @@
   description: Belt for holding all your usual tools
   components:
   - type: Sprite
-    sprite: Clothing/Belts/belt_utility.rsi
+    sprite: Clothing/Belt/belt_utility.rsi
     state: utilitybelt
   - type: Icon
-    sprite: Clothing/Belts/belt_utility.rsi
+    sprite: Clothing/Belt/belt_utility.rsi
     state: utilitybelt
   - type: Clothing
     Size: 50
     QuickEquip: false
-    sprite: Clothing/Belts/belt_utility.rsi
+    sprite: Clothing/Belt/belt_utility.rsi
   - type: Storage
     Capacity: 40 # Full tool loadout is 35, plus an extra
 
@@ -39,12 +39,12 @@
   description: For holding your pants up.
   components:
   - type: Sprite
-    sprite: Clothing/Belts/suspenders.rsi
+    sprite: Clothing/Belt/suspenders.rsi
     state: icon
   - type: Icon
-    sprite: Clothing/Belts/suspenders.rsi
+    sprite: Clothing/Belt/suspenders.rsi
     state: icon
   - type: Clothing
     Size: 50
     QuickEquip: false
-    sprite: Clothing/Belts/suspenders.rsi
+    sprite: Clothing/Belt/suspenders.rsi

@@ -25,7 +25,6 @@
             "ItemTeleporter",
             "Portal",
             "EntityStorage",
-            "PlaceableSurface",
             "Wirecutter",
             "Screwdriver",
             "Multitool",
@@ -116,7 +115,6 @@
             "Utensil",
             "UnarmedCombat",
             "TimedSpawner",
-            "Strap",
             "NodeContainer",
             "PowerSupplier",
             "PowerConsumer",
@@ -129,7 +127,14 @@
             "Wire",
             "StressTestMovement",
             "Toys",
-            "SurgeryTool"
+            "SurgeryTool",
+            "Slippery",
+            "EmitSoundOnThrow",
+            "Flash",
+            "DamageOnToolInteract",
+            "CustodialClosetFill",
+            "NoSlip",
+            "TrashSpawner",
         };
     }
 }

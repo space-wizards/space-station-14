@@ -26,8 +26,8 @@ namespace Content.Server.Database
         {
             return await _prefsCtx
                 .Preferences
-                .Include(p => p.HumanoidProfiles)
-                .ThenInclude(h => h.Jobs)
+                .Include(p => p.HumanoidProfiles).ThenInclude(h => h.Jobs)
+                .Include(p => p.HumanoidProfiles).ThenInclude(h => h.Antags)
                 .SingleOrDefaultAsync(p => p.Username == username);
         }
 
@@ -72,6 +72,7 @@ namespace Content.Server.Database
         {
             return await _prefsCtx.HumanoidProfile
                 .Include(p => p.Jobs)
+                .Include(a => a.Antags)
                 .Join(_prefsCtx.Preferences,
                     profile => new {profile.Slot, profile.PrefsId},
                     prefs => new {Slot = prefs.SelectedCharacterSlot, prefs.PrefsId},

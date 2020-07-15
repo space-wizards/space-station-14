@@ -6,9 +6,9 @@
   description: "A water tank. It is used to store high amounts of water."
   components:
   - type: Sprite
-    texture: Buildings/watertank.png
+    texture: Constructible/Misc/watertank.png
   - type: Icon
-    texture: Buildings/watertank.png
+    texture: Constructible/Misc/watertank.png
 
 - type: entity
   parent: WaterTank

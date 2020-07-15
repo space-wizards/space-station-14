@@ -15,6 +15,7 @@ using Robust.Server.Interfaces.Player;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.Random;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.Localization;
 
 namespace Content.Server.BodySystem
@@ -22,7 +23,7 @@ namespace Content.Server.BodySystem
 
     /// <summary>
     ///    Component representing a dropped, tangible <see cref="BodyPart"/> entity.
-    /// </summary>	
+    /// </summary>
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {

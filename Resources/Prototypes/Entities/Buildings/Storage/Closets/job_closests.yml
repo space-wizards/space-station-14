@@ -18,6 +18,8 @@
   parent: WardrobeMixed
   name: "custodial closet"
   description: "It's a storage unit for janitorial clothes and gear."
+  components:
+  - type: CustodialClosetFill
 
 # Legal
 - type: entity

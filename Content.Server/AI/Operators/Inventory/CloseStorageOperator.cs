@@ -1,7 +1,8 @@
 using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -27,7 +28,7 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 return true;
             }
-            
+
             var blackboard = UtilityAiHelpers.GetBlackboard(_owner);
 
             if (blackboard == null)
@@ -36,7 +37,7 @@ namespace Content.Server.AI.Operators.Inventory
             }
 
             _target = blackboard.GetState<LastOpenedStorageState>().GetValue();
-            
+
             return _target != null;
         }
 
@@ -55,12 +56,12 @@ namespace Content.Server.AI.Operators.Inventory
                 return Outcome.Failed;
             }
 
-            if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) || 
+            if (!_target.TryGetComponent(out EntityStorageComponent storageComponent) ||
                 storageComponent.IsWeldedShut)
             {
                 return Outcome.Failed;
             }
-            
+
             if (storageComponent.Open)
             {
                 var activateArgs = new ActivateEventArgs {User = _owner, Target = _target};

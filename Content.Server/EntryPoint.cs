@@ -1,4 +1,5 @@
-﻿﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+﻿﻿using Content.Server.AI.Utility.Considerations;
+ using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 ﻿using Content.Server.AI.WorldState;
@@ -61,6 +62,7 @@ namespace Content.Server
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
             IoCManager.Resolve<INodeFactory>().Initialize();
+            IoCManager.Resolve<ISandboxManager>().Initialize();
         }
 
         public override void PostInit()
@@ -69,9 +71,9 @@ namespace Content.Server
 
             IoCManager.Resolve<IServerPreferencesManager>().FinishInit();
             _gameTicker.Initialize();
-            IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
+            IoCManager.Resolve<ConsiderationsManager>().Initialize();
             IoCManager.Resolve<IPDAUplinkManager>().Initialize();
         }
 

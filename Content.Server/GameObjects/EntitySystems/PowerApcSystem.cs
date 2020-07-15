@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Server.Interfaces.Timing;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     public sealed class ApcSystem : EntitySystem
     {

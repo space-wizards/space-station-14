@@ -33,9 +33,9 @@
     capacity: 60
     fillPrototype: CartridgePistol
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box.rsi
 
 - type: entity
   id: BoxPistolBoxFlash
@@ -46,9 +46,9 @@
     capacity: 60
     fillPrototype: CartridgePistolFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_flash.rsi
 
 - type: entity
   id: BoxPistolBoxHV
@@ -59,9 +59,9 @@
     capacity: 60
     fillPrototype: CartridgePistolHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_hv.rsi
 
 - type: entity
   id: BoxPistolBoxPractice
@@ -72,9 +72,9 @@
     capacity: 60
     fillPrototype: CartridgePistolPractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_practice.rsi
 
 - type: entity
   id: BoxPistolBoxRubber
@@ -85,6 +85,6 @@
     capacity: 60
     fillPrototype: CartridgePistolRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/Pistol/pistol_box_rubber.rsi

@@ -35,8 +35,8 @@ namespace Content.Client.UserInterface
             var panel = new StyleBoxTexture
             {
                 Texture = ResC.GetTexture(isRightHand
-                    ? "/Nano/item_status_right.svg.96dpi.png"
-                    : "/Nano/item_status_left.svg.96dpi.png")
+                    ? "/Textures/Interface/Nano/item_status_right.svg.96dpi.png"
+                    : "/Textures/Interface/Nano/item_status_left.svg.96dpi.png")
             };
             panel.SetContentMarginOverride(StyleBox.Margin.Vertical, 4);
             panel.SetContentMarginOverride(StyleBox.Margin.Horizontal, 6);

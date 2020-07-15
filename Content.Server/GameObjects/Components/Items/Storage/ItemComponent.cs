@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Throw;
 using Content.Server.Utility;
@@ -17,11 +18,12 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(StoreableComponent))]
-    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped
+    [ComponentReference(typeof(IItemComponent))]
+    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -89,7 +91,7 @@ namespace Content.Server.GameObjects
             var userPos = user.Transform.MapPosition;
             var itemPos = Owner.Transform.MapPosition;
 
-            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, insideBlockerValid:true);
+            return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)

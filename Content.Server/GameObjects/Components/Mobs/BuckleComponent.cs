@@ -1,17 +1,21 @@
-﻿using Content.Server.GameObjects.Components.Strap;
-using Content.Server.GameObjects.EntitySystems;
+﻿#nullable enable
+using System;
+using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -21,29 +25,54 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
-    public class BuckleComponent : SharedBuckleComponent, IInteractHand
+    public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        [CanBeNull] private StrapComponent _buckledTo;
+        /// <summary>
+        ///     The amount of space that this entity occupies in a <see cref="StrapComponent"/>.
+        /// </summary>
         private int _size;
 
-        [ViewVariables, CanBeNull]
-        public StrapComponent BuckledTo
+        /// <summary>
+        ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
+        /// </summary>
+        private float _range;
+
+        /// <summary>
+        ///     The amount of time that must pass for this entity to
+        ///     be able to unbuckle after recently buckling.
+        /// </summary>
+        private TimeSpan _unbuckleDelay;
+
+        /// <summary>
+        ///     The time that this entity buckled at.
+        /// </summary>
+        private TimeSpan _buckleTime;
+
+        private StrapComponent? _buckledTo;
+
+        [ViewVariables]
+        public StrapComponent? BuckledTo
         {
             get => _buckledTo;
             private set
             {
                 _buckledTo = value;
+                _buckleTime = _gameTiming.CurTime;
                 Dirty();
             }
         }
 
         [ViewVariables]
         protected override bool Buckled => BuckledTo != null;
+
+        public bool ContainerChanged { get; private set; }
 
         [ViewVariables]
         public int Size => _size;
@@ -54,8 +83,32 @@ namespace Content.Server.GameObjects.Components.Mobs
             {
                 status.ChangeStatusEffectIcon(StatusEffect.Buckled,
                     Buckled
-                        ? "/Textures/Mob/UI/Buckle/buckled.png"
-                        : "/Textures/Mob/UI/Buckle/unbuckled.png");
+                        ? BuckledTo!.BuckledIcon
+                        : "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+            }
+        }
+
+        private void ReAttach(StrapComponent strap)
+        {
+            var ownTransform = Owner.Transform;
+            var strapTransform = strap.Owner.Transform;
+
+            ownTransform.GridPosition = strapTransform.GridPosition;
+            ownTransform.AttachParent(strapTransform);
+
+            switch (strap.Position)
+            {
+                case StrapPosition.None:
+                    ownTransform.WorldRotation = strapTransform.WorldRotation;
+                    break;
+                case StrapPosition.Stand:
+                    StandingStateHelper.Standing(Owner);
+                    ownTransform.WorldRotation = strapTransform.WorldRotation;
+                    break;
+                case StrapPosition.Down:
+                    StandingStateHelper.Down(Owner);
+                    ownTransform.WorldRotation = Angle.South;
+                    break;
             }
         }
 
@@ -73,27 +126,37 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            var strapPosition = Owner.Transform.MapPosition;
-            var range = SharedInteractionSystem.InteractionRange / 2;
-
-            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+            if (!to.TryGetComponent(out StrapComponent strap))
             {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("You can't reach there!"));
+                _notifyManager.PopupMessage(Owner, user,
+                    Loc.GetString(Owner == user
+                        ? "You can't buckle yourself there!"
+                        : "You can't buckle {0:them} there!", Owner));
                 return false;
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            var strapPosition = strap.Owner.Transform.MapPosition;
+
+            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
+            {
+                return false;
+            }
+
+            if (ContainerHelpers.TryGetContainer(Owner, out var ownerContainer))
+            {
+                if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
+                    ownerContainer != strapContainer)
+                {
+                    _notifyManager.PopupMessage(strap.Owner, user,
+                        Loc.GetString("You can't reach there!"));
+                    return false;
+                }
+            }
+
+            if (!user.HasComponent<HandsComponent>())
             {
                 _notifyManager.PopupMessage(user, user,
                     Loc.GetString("You don't have hands!"));
-                return false;
-            }
-
-            if (hands.GetActiveHand != null)
-            {
-                _notifyManager.PopupMessage(user, user,
-                    Loc.GetString("Your hand isn't free!"));
                 return false;
             }
 
@@ -103,15 +166,6 @@ namespace Content.Server.GameObjects.Components.Mobs
                     Loc.GetString(Owner == user
                         ? "You are already buckled in!"
                         : "{0:They} are already buckled in!", Owner));
-                return false;
-            }
-
-            if (!to.TryGetComponent(out StrapComponent strap))
-            {
-                _notifyManager.PopupMessage(Owner, user,
-                    Loc.GetString(Owner == user
-                        ? "You can't buckle yourself there!"
-                        : "You can't buckle {0:them} there!", Owner));
                 return false;
             }
 
@@ -151,34 +205,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
-            BuckledTo = strap;
-
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(BuckleVisuals.Buckled, true);
             }
 
-            var ownTransform = Owner.Transform;
-            var strapTransform = strap.Owner.Transform;
+            ReAttach(strap);
 
-            ownTransform.GridPosition = strapTransform.GridPosition;
-            ownTransform.AttachParent(strapTransform);
-
-            switch (strap.Position)
-            {
-                case StrapPosition.None:
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
-                    break;
-                case StrapPosition.Stand:
-                    StandingStateHelper.Standing(Owner);
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
-                    break;
-                case StrapPosition.Down:
-                    StandingStateHelper.Down(Owner);
-                    ownTransform.WorldRotation = Angle.South;
-                    break;
-            }
-
+            BuckledTo = strap;
             BuckleStatus();
 
             return true;
@@ -193,6 +227,11 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (!force)
             {
+                if (_gameTiming.CurTime < _buckleTime + _unbuckleDelay)
+                {
+                    return false;
+                }
+
                 if (!ActionBlockerSystem.CanInteract(user))
                 {
                     _notifyManager.PopupMessage(user, user,
@@ -201,11 +240,10 @@ namespace Content.Server.GameObjects.Components.Mobs
                 }
 
                 var strapPosition = Owner.Transform.MapPosition;
-                var range = SharedInteractionSystem.InteractionRange / 2;
 
-                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, range))
+                if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
                 {
-                    _notifyManager.PopupMessage(user, user,
+                    _notifyManager.PopupMessage(Owner, user,
                         Loc.GetString("You can't reach there!"));
                     return false;
                 }
@@ -218,8 +256,12 @@ namespace Content.Server.GameObjects.Components.Mobs
                     .PlayFromEntity(strap.UnbuckleSound, Owner);
             }
 
-            Owner.Transform.DetachParent();
-            Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+            if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
+            {
+                Owner.Transform.DetachParent();
+                Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+            }
+
             BuckledTo = null;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -248,18 +290,46 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public bool ToggleBuckle(IEntity user, IEntity to)
         {
-            if (BuckledTo == null)
-            {
-                return TryBuckle(user, to);
-            }
-            else if (BuckledTo.Owner == to)
+            if (BuckledTo?.Owner == to)
             {
                 return TryUnbuckle(user);
             }
-            else
+
+            return TryBuckle(user, to);
+        }
+
+        private void InsertIntoContainer(ContainerModifiedMessage message)
+        {
+            if (message.Entity != Owner)
             {
-                return false;
+                return;
             }
+
+            ContainerChanged = true;
+        }
+
+        public void Update()
+        {
+            if (!ContainerChanged || BuckledTo == null)
+            {
+                return;
+            }
+
+            var contained = ContainerHelpers.TryGetContainer(Owner, out var ownContainer);
+            var strapContained = ContainerHelpers.TryGetContainer(BuckledTo.Owner, out var strapContainer);
+
+            if (contained != strapContained || ownContainer != strapContainer)
+            {
+                TryUnbuckle(Owner, true);
+                return;
+            }
+
+            if (!contained && !strapContained)
+            {
+                ReAttach(BuckledTo);
+            }
+
+            ContainerChanged = false;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -267,6 +337,20 @@ namespace Content.Server.GameObjects.Components.Mobs
             base.ExposeData(serializer);
 
             serializer.DataField(ref _size, "size", 100);
+            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 2);
+
+            var seconds = 0.25f;
+            serializer.DataField(ref seconds, "cooldown", 0.25f);
+
+            _unbuckleDelay = TimeSpan.FromSeconds(seconds);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _entityManager.EventBus.SubscribeEvent<EntInsertedIntoContainerMessage>(EventSource.Local, this, InsertIntoContainer);
+            _entityManager.EventBus.SubscribeEvent<EntRemovedFromContainerMessage>(EventSource.Local, this, InsertIntoContainer);
         }
 
         protected override void Startup()
@@ -279,23 +363,42 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             base.OnRemove();
 
-            if (BuckledTo != null && BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
+            _entityManager.EventBus.UnsubscribeEvents(this);
+
+            if (BuckledTo != null &&
+                BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
             {
                 strap.Remove(this);
             }
 
-            BuckledTo = null;
+            TryUnbuckle(Owner, true);
+
+            _buckleTime = default;
             BuckleStatus();
         }
 
         public override ComponentState GetComponentState()
         {
-            return new BuckleComponentState(Buckled);
+            int? drawDepth = null;
+
+            if (BuckledTo != null &&
+                Owner.Transform.WorldRotation.GetCardinalDir() == Direction.North &&
+                BuckledTo.Owner.TryGetComponent(out SpriteComponent strapSprite))
+            {
+                drawDepth = strapSprite.DrawDepth - 1;
+            }
+
+            return new BuckleComponentState(Buckled, drawDepth);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
+        }
+
+        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
+        {
+            return TryBuckle(eventArgs.User, eventArgs.Target);
         }
 
         [Verb]

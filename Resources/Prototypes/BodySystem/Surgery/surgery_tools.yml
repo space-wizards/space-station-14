@@ -25,10 +25,10 @@
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: scalpel
 
   - type: ItemCooldown
@@ -47,10 +47,10 @@
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: retractor
 
   - type: ItemCooldown
@@ -69,10 +69,10 @@
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: cautery
 
   - type: ItemCooldown
@@ -91,10 +91,10 @@
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: drill
 
   - type: ItemCooldown
@@ -113,10 +113,10 @@
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: bone_saw
 
   - type: ItemCooldown
@@ -135,10 +135,10 @@
     baseOperateTime: 3
 
   - type: Sprite
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
   - type: Icon
-    sprite: Objects/Surgery/surgery_tools.rsi
+    sprite: Objects/Specific/Medical/surgery_tools.rsi
     state: hemostat
 
   - type: ItemCooldown

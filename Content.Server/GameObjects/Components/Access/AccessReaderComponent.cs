@@ -1,6 +1,8 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -9,8 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.Access
 {
@@ -68,7 +68,6 @@ namespace Content.Server.GameObjects.Components.Access
             return _accessLists.Count == 0 || _accessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
-        [CanBeNull]
         public static ICollection<string> FindAccessTags(IEntity entity)
         {
             if (entity.TryGetComponent(out IAccess accessComponent))

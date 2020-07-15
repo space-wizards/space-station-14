@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "courier-medical-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "courier-medical",
+            "directions": 1
+        }
+    ]
+}

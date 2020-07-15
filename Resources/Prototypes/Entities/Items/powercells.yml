@@ -103,13 +103,13 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Power/PowerCells/cell_recharger.rsi
+    sprite: Constructible/Power/cell_recharger.rsi
     drawdepth: Items
   - type: PowerCellCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
   - type: Icon
-    sprite: Objects/Power/PowerCells/cell_recharger.rsi
+    sprite: Constructible/Power/cell_recharger.rsi
     state: empty
   - type: Appearance
     visuals:
@@ -133,13 +133,13 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Power/PowerCells/recharger.rsi
+    sprite: Constructible/Power/recharger.rsi
     drawdepth: Items
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.85
   - type: PowerReceiver
   - type: Icon
-    sprite: Objects/Power/PowerCells/recharger.rsi
+    sprite: Constructible/Power/recharger.rsi
     state: empty
   - type: Appearance
     visuals:
@@ -163,13 +163,13 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Power/PowerCells/wall_recharger.rsi
+    sprite: Constructible/Power/wall_recharger.rsi
     drawdepth: Items
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.95
   - type: PowerReceiver
   - type: Icon
-    sprite: Objects/Power/PowerCells/wall_recharger.rsi
+    sprite: Constructible/Power/wall_recharger.rsi
     state: empty
   - type: Appearance
     visuals:

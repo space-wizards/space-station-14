@@ -1,6 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Metabolism;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;

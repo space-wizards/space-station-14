@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
@@ -112,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _soundRack, "soundRack", null);
             serializer.DataField(ref _soundMagInsert, "soundMagInsert", null);
             serializer.DataField(ref _soundMagEject, "soundMagEject", null);
-            serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Guns/EmptyAlarm/smg_empty_alarm.ogg");
+            serializer.DataField(ref _soundAutoEject, "soundAutoEject", "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
         }
 
         public override ComponentState GetComponentState()
@@ -182,7 +184,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return BoltOpen ? null : _chamberContainer.ContainedEntity;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             if (BoltOpen)
             {
@@ -191,7 +193,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             var entity = _chamberContainer.ContainedEntity;
 
             Cycle();
-            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAt);
+            return entity?.GetComponent<AmmoComponent>().TakeBullet(spawnAtGrid, spawnAtMap);
         }
 
         private void Cycle(bool manual = false)

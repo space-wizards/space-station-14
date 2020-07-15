@@ -9,11 +9,11 @@
   - type: Sprite
     netsync: false
     directional: true
-    sprite: Objects/Trash/ash.rsi
+    sprite: Objects/Consumable/Trash/ash.rsi
     state: icon
     drawdepth: FloorObjects
   - type: Icon
-    sprite: Objects/Trash/ash.rsi
+    sprite: Objects/Consumable/Trash/ash.rsi
     state: icon
 
 - type: entity

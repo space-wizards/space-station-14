@@ -1,4 +1,3 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.GameObjects.Components.Weapon.Melee;
@@ -7,9 +6,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
 {
     public sealed class MeleeWeaponDamageCon : Consideration
     {
-        public MeleeWeaponDamageCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             var target = context.GetState<WeaponEntityState>().GetValue();
 

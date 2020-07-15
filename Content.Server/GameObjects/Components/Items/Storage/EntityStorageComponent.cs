@@ -2,8 +2,7 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
@@ -30,7 +29,7 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker
     {
         public override string Name => "EntityStorage";
 
@@ -40,13 +39,13 @@ namespace Content.Server.GameObjects.Components
         private TimeSpan _lastInternalOpenAttempt;
 
         [ViewVariables]
-        private int StorageCapacityMax;
+        private int _storageCapacityMax;
         [ViewVariables]
-        private bool IsCollidableWhenOpen;
+        private bool _isCollidableWhenOpen;
         [ViewVariables]
-        private Container Contents;
+        private Container _contents;
         [ViewVariables]
-        private IEntityQuery entityQuery;
+        private IEntityQuery _entityQuery;
         private bool _showContents;
         private bool _open;
         private bool _isWeldedShut;
@@ -63,7 +62,7 @@ namespace Content.Server.GameObjects.Components
             set
             {
                 _showContents = value;
-                Contents.ShowContents = _showContents;
+                _contents.ShowContents = _showContents;
             }
         }
 
@@ -96,10 +95,10 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
-            entityQuery = new IntersectingEntityQuery(Owner);
+            _contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
+            _entityQuery = new IntersectingEntityQuery(Owner);
 
-            Contents.ShowContents = _showContents;
+            _contents.ShowContents = _showContents;
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
@@ -112,8 +111,8 @@ namespace Content.Server.GameObjects.Components
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref StorageCapacityMax, "Capacity", 30);
-            serializer.DataField(ref IsCollidableWhenOpen, "IsCollidableWhenOpen", false);
+            serializer.DataField(ref _storageCapacityMax, "Capacity", 30);
+            serializer.DataField(ref _isCollidableWhenOpen, "IsCollidableWhenOpen", false);
             serializer.DataField(ref _showContents, "showContents", false);
             serializer.DataField(ref _open, "open", false);
             serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
@@ -146,7 +145,7 @@ namespace Content.Server.GameObjects.Components
         private void CloseStorage()
         {
             Open = false;
-            var entities = Owner.EntityManager.GetEntities(entityQuery);
+            var entities = Owner.EntityManager.GetEntities(_entityQuery);
             var count = 0;
             foreach (var entity in entities)
             {
@@ -163,14 +162,14 @@ namespace Content.Server.GameObjects.Components
                     continue;
                 }
                 count++;
-                if (count >= StorageCapacityMax)
+                if (count >= _storageCapacityMax)
                 {
                     break;
                 }
             }
 
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetclose.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetclose.ogg", Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -179,13 +178,12 @@ namespace Content.Server.GameObjects.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/closetopen.ogg", Owner);
-
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/closetopen.ogg", Owner);
         }
 
         private void ModifyComponents()
         {
-            if (!IsCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
+            if (!_isCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
                 var physShape = collidableComponent.PhysicsShapes[0];
                 if (Open)
@@ -242,7 +240,7 @@ namespace Content.Server.GameObjects.Components
                     entity.Transform.WorldPosition += new Vector2(0, collidableComponent.WorldAABB.Top - entityCollidableComponent.WorldAABB.Top);
                 }
             }
-            if (Contents.CanInsert(entity))
+            if (_contents.CanInsert(entity))
             {
                 // Because Insert sets the local position to (0,0), and we want to keep the contents spread out,
                 // we re-apply the world position after inserting.
@@ -255,7 +253,7 @@ namespace Content.Server.GameObjects.Components
                 {
                     worldPos = entity.Transform.WorldPosition;
                 }
-                Contents.Insert(entity);
+                _contents.Insert(entity);
                 entity.Transform.WorldPosition = worldPos;
                 if (entityCollidableComponent != null)
                 {
@@ -268,9 +266,9 @@ namespace Content.Server.GameObjects.Components
 
         private void EmptyContents()
         {
-            foreach (var contained in Contents.ContainedEntities.ToArray())
+            foreach (var contained in _contents.ContainedEntities.ToArray())
             {
-                if(Contents.Remove(contained))
+                if(_contents.Remove(contained))
                 {
                     if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
                     {
@@ -317,7 +315,7 @@ namespace Content.Server.GameObjects.Components
         /// <inheritdoc />
         public bool Remove(IEntity entity)
         {
-            return Contents.CanRemove(entity);
+            return _contents.CanRemove(entity);
         }
 
         /// <inheritdoc />
@@ -330,7 +328,7 @@ namespace Content.Server.GameObjects.Components
                 return true;
             }
 
-            return Contents.Insert(entity);
+            return _contents.Insert(entity);
         }
 
         /// <inheritdoc />
@@ -341,12 +339,37 @@ namespace Content.Server.GameObjects.Components
                 return true;
             }
 
-            if (Contents.ContainedEntities.Count >= StorageCapacityMax)
+            if (_contents.ContainedEntities.Count >= _storageCapacityMax)
             {
                 return false;
             }
 
-            return Contents.CanInsert(entity);
+            return _contents.CanInsert(entity);
+        }
+
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        {
+
+            if (Open)
+                return false;
+
+            if (!CanWeldShut)
+                return false;
+
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
+                return false;
+
+            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
+                return false;
+
+            IsWeldedShut ^= true;
+            return true;
+        }
+
+        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
+        {
+            Open = true;
+            EmptyContents();
         }
 
         [Verb]
@@ -387,30 +410,6 @@ namespace Content.Server.GameObjects.Components
             }
 
             data.Text = component.Open ? "Close" : "Open";
-        }
-
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-
-            if (Open)
-                return false;
-
-            if (!CanWeldShut)
-                return false;
-
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
-                return false;
-
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
-                return false;
-
-            IsWeldedShut ^= true;
-            return true;
-        }
-
-        public void OnDestroy(DestructionEventArgs eventArgs)
-        {
-            EmptyContents();
         }
     }
 }

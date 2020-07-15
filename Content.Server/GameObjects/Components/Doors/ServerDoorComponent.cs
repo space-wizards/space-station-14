@@ -1,6 +1,8 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
@@ -154,7 +156,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                collidableComponent.CanCollide = false;
+                collidableComponent.Hard = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
@@ -192,14 +194,14 @@ namespace Content.Server.GameObjects
 
         public bool Close()
         {
-            if (collidableComponent.IsColliding(Vector2.Zero))
+            if (collidableComponent.IsColliding(Vector2.Zero, false))
             {
                 // Do nothing, somebody's in the door.
                 return false;
             }
 
             State = DoorState.Closing;
-            collidableComponent.CanCollide = true;
+            collidableComponent.Hard = true;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
 
@@ -218,6 +220,11 @@ namespace Content.Server.GameObjects
 
         public virtual void Deny()
         {
+            if (State == DoorState.Open)
+            {
+                return;
+            }
+
             SetAppearance(DoorVisualState.Deny);
             Timer.Spawn(DenyTime, () =>
             {

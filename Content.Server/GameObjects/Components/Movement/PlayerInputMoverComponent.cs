@@ -1,11 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
-using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.Movement
 {

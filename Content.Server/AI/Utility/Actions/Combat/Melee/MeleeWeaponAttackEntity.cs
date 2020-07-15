@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat;
@@ -6,8 +7,8 @@ using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Movement;
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
@@ -15,6 +16,7 @@ using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
@@ -30,16 +32,15 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
         public override void SetupOperators(Blackboard context)
         {
-            var equipped = context.GetState<EquippedEntityState>().GetValue();
             MoveToEntityOperator moveOperator;
+            var equipped = context.GetState<EquippedEntityState>().GetValue();
             if (equipped != null && equipped.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent))
             {
                 moveOperator = new MoveToEntityOperator(Owner, _entity, meleeWeaponComponent.Range - 0.01f);
             }
-            // I think it's possible for this to happen given planning is time-sliced?
-            // TODO: At this point we should abort
             else
             {
+                // TODO: Abort
                 moveOperator = new MoveToEntityOperator(Owner, _entity);
             }
 
@@ -58,27 +59,30 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             var equipped = context.GetState<EquippedEntityState>().GetValue();
             context.GetState<WeaponEntityState>().SetValue(equipped);
         }
+        
+        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
 
-        protected override Consideration[] Considerations { get; } = {
-            // Check if we have a weapon; easy-out
-            new MeleeWeaponEquippedCon(
-                new BoolCurve()),
-            // Don't attack a dead target
-            new TargetIsDeadCon(
-                new InverseBoolCurve()),
-            // Deprioritise a target in crit
-            new TargetIsCritCon(
-                new QuadraticCurve(-0.8f, 1.0f, 1.0f, 0.0f)),
-            // Somewhat prioritise distance
-            new DistanceCon(
-                new QuadraticCurve(-1.0f, 1.0f, 1.02f, 0.0f)),
-            // Prefer weaker targets
-            new TargetHealthCon(
-                new QuadraticCurve(1.0f, 0.4f, 0.0f, -0.02f)),
-            new MeleeWeaponSpeedCon(
-                new QuadraticCurve(1.0f, 0.5f, 0.0f, 0.0f)),
-            new MeleeWeaponDamageCon(
-                new QuadraticCurve(1.0f, 0.25f, 0.0f, 0.0f)),
-        };
+            return new[]
+            {
+                considerationsManager.Get<MeleeWeaponEquippedCon>()
+                    .BoolCurve(context),
+                considerationsManager.Get<TargetIsDeadCon>()
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<TargetIsCritCon>()
+                    .QuadraticCurve(context, -0.8f, 1.0f, 1.0f, 0.0f),
+                considerationsManager.Get<DistanceCon>()
+                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
+                considerationsManager.Get<TargetHealthCon>()
+                    .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, -0.02f),
+                considerationsManager.Get<MeleeWeaponSpeedCon>()
+                    .QuadraticCurve(context, 1.0f, 0.5f, 0.0f, 0.0f),
+                considerationsManager.Get<MeleeWeaponDamageCon>()
+                    .QuadraticCurve(context, 1.0f, 0.25f, 0.0f, 0.0f),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
+            };
+        }
     }
 }

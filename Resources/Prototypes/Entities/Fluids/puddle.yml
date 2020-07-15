@@ -10,7 +10,7 @@
   - type: Solution
     caps: 1
   - type: Puddle
-    spill_sound: /Audio/effects/Fluids/splat.ogg
+    spill_sound: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: LoopingSound
   - type: InteractionOutline
@@ -30,7 +30,7 @@
   name: gibblets
   id: PuddleGibblet
   parent: PuddleBase
-  description: Holds spilt milk
+  description: Gross.
   components:
   - type: Sprite
     sprite: Fluids/gibblet.rsi # Placeholder
@@ -42,10 +42,10 @@
     variants: 5
 
 - type: entity
-  name: smear
+  name: puddle
   id: PuddleSmear
   parent: PuddleBase
-  description: Holds spilt milk
+  description: A puddle of liquid.
   components:
   - type: Sprite
     sprite: Fluids/smear.rsi # Placeholder
@@ -57,10 +57,10 @@
     variants: 7
 
 - type: entity
-  name: splatter
+  name: puddle
   id: PuddleSplatter
   parent: PuddleBase
-  description: Holds spilt milk
+  description: A puddle of liquid.
   components:
   - type: Sprite
     sprite: Fluids/splatter.rsi # Placeholder
@@ -75,7 +75,7 @@
   name: vomit
   id: PuddleVomit
   parent: PuddleBase
-  description:
+  description: Gross.
   components:
   - type: Sprite
     sprite: Fluids/vomit.rsi
@@ -86,12 +86,13 @@
   - type: Puddle
     variants: 4
     recolor: false
+    evaporate_threshold: -1
 
 - type: entity
   name: toxins vomit
   id: PuddleVomitToxin
-  parent: PuddleBase
-  description: You probably don't want to get too close to this
+  parent: PuddleVomit
+  description: You probably don't want to get too close to this.
   components:
   - type: Sprite
     sprite: Fluids/vomit_toxin.rsi
@@ -107,7 +108,7 @@
   name: writing
   id: PuddleWriting
   parent: PuddleBase
-  description: Holds spilt milk
+  description: A bit of liquid.
   components:
   - type: Sprite
     sprite: Fluids/writing.rsi # Placeholder

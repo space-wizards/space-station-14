@@ -27,8 +27,8 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         public int BlockedCollisionMask { get; private set; }
         private readonly Dictionary<EntityUid, int> _blockedCollidables = new Dictionary<EntityUid, int>(0);
 
-        public IReadOnlyCollection<EntityUid> PhysicsUids => _physicsUids;
-        private readonly HashSet<EntityUid> _physicsUids = new HashSet<EntityUid>(0);
+        public IReadOnlyDictionary<EntityUid, int> PhysicsLayers => _physicsLayers;
+        private readonly Dictionary<EntityUid, int> _physicsLayers = new Dictionary<EntityUid, int>(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
@@ -88,9 +88,159 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             }
         }
 
+        public PathfindingNode GetNeighbor(Direction direction)
+        {
+            var chunkXOffset = TileRef.X - ParentChunk.Indices.X;
+            var chunkYOffset = TileRef.Y - ParentChunk.Indices.Y;
+            MapIndices neighborMapIndices;
+
+            switch (direction)
+            {
+                case Direction.East:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.NorthEast:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset + 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y + 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.North:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset, chunkYOffset + 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y + 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.NorthWest:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset + 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y + 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.West:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.SouthWest:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset - 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y - 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.South:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset, chunkYOffset - 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y - 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                case Direction.SouthEast:
+                    if (!ParentChunk.OnEdge(this))
+                    {
+                        return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset - 1];
+                    }
+                    
+                    neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y - 1);
+                    foreach (var neighbor in ParentChunk.GetNeighbors())
+                    {
+                        if (neighbor.InBounds(neighborMapIndices))
+                        {
+                            return neighbor.Nodes[neighborMapIndices.X - neighbor.Indices.X,
+                                neighborMapIndices.Y - neighbor.Indices.Y];
+                        }
+                    }
+
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+            }
+        }
+
         public void UpdateTile(TileRef newTile)
         {
             TileRef = newTile;
+            ParentChunk.Dirty();
         }
 
         /// <summary>
@@ -98,6 +248,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         /// </summary>
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
+        /// TODO: Could probably optimise this slightly more.
         public void AddEntity(IEntity entity)
         {
             // If we're a door
@@ -110,43 +261,51 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 if (entity.TryGetComponent(out AccessReader accessReader) && !_accessReaders.ContainsKey(entity.Uid))
                 {
                     _accessReaders.Add(entity.Uid, accessReader);
+                    ParentChunk.Dirty();
                 }
                 return;
             }
             
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out CollidableComponent collidableComponent) && 
+                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0)
             {
                 if (entity.TryGetComponent(out PhysicsComponent physicsComponent) && !physicsComponent.Anchored)
                 {
-                    _physicsUids.Add(entity.Uid);
+                    _physicsLayers.Add(entity.Uid, collidableComponent.CollisionLayer);
                 }
                 else
                 {
                     _blockedCollidables.TryAdd(entity.Uid, collidableComponent.CollisionLayer);
                     GenerateMask();
+                    ParentChunk.Dirty();
                 }
             }
         }
 
+        /// <summary>
+        /// Remove the entity from this node.
+        /// Will check each category and remove it from the applicable one
+        /// </summary>
+        /// <param name="entity"></param>
         public void RemoveEntity(IEntity entity)
         {
-            if (_accessReaders.ContainsKey(entity.Uid))
+            // There's no guarantee that the entity isn't deleted
+            // 90% of updates are probably entities moving around
+            // Entity can't be under multiple categories so just checking each once is fine.
+            if (_physicsLayers.ContainsKey(entity.Uid))
+            {
+                _physicsLayers.Remove(entity.Uid);
+            } 
+            else if (_accessReaders.ContainsKey(entity.Uid))
             {
                 _accessReaders.Remove(entity.Uid);
-                return;
-            }
-
-            if (entity.HasComponent<CollidableComponent>())
+                ParentChunk.Dirty();
+            } 
+            else if (_blockedCollidables.ContainsKey(entity.Uid))
             {
-                if (entity.TryGetComponent(out PhysicsComponent physicsComponent) && physicsComponent.Anchored)
-                {
-                    _blockedCollidables.Remove(entity.Uid);
-                    GenerateMask();
-                }
-                else
-                {
-                    _physicsUids.Remove(entity.Uid);
-                }
+                _blockedCollidables.Remove(entity.Uid);
+                GenerateMask();
+                ParentChunk.Dirty();
             }
         }
 

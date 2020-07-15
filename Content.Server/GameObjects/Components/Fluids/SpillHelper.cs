@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Shared.Chemistry;
 using Robust.Server.Interfaces.GameObjects;
 
@@ -31,11 +32,11 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="gridCoordinates"></param>
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
-        internal static void SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype)
+        internal static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype)
         {
             if (solution.TotalVolume == 0)
             {
-                return;
+                return null;
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             var tileRef = mapGrid.GetTileRef(gridCoordinates);
             if (tileRef.Tile.IsEmpty)
             {
-                return;
+                return null;
             }
 
             // Get normalized co-ordinate for spill location and spill it in the centre
@@ -78,11 +79,13 @@ namespace Content.Server.GameObjects.Components.Fluids
             // Did we add to an existing puddle
             if (spilt)
             {
-                return;
+                return null;
             }
 
             var puddle = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
-            puddle.GetComponent<PuddleComponent>().TryAddSolution(solution);
+            var newPuddleComponent = puddle.GetComponent<PuddleComponent>();
+            newPuddleComponent.TryAddSolution(solution);
+            return newPuddleComponent;
         }
 
     }

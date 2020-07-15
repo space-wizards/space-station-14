@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components;
@@ -6,6 +6,7 @@ using Content.Client.Interfaces;
 using Content.Client.Utility;
 using Content.Shared;
 using Content.Shared.Jobs;
+using Content.Shared.Antags;
 using Content.Shared.Preferences;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -42,6 +43,7 @@ namespace Content.Client.UserInterface
         private readonly FacialHairStylePicker _facialHairPicker;
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
+        private readonly List<AntagPreferenceSelector> _antagPreferences;
 
         private bool _isDirty;
         public int CharacterSlot;
@@ -320,6 +322,52 @@ namespace Content.Client.UserInterface
 
             #endregion
 
+            #region Antags
+
+            {
+                var antagList = new VBoxContainer();
+
+                var antagVBox = new VBoxContainer
+                {
+                    Children =
+                    {
+                        new ScrollContainer
+                        {
+                            SizeFlagsVertical = SizeFlags.FillExpand,
+                            Children =
+                            {
+                                antagList
+                            }
+                        }
+                    }
+                };
+
+                tabContainer.AddChild(antagVBox);
+
+                tabContainer.SetTabTitle(2, Loc.GetString("Antags"));
+
+                _antagPreferences = new List<AntagPreferenceSelector>();
+
+                foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
+                {
+                    if(!antag.SetPreference)
+                    {
+                        continue;
+                    }
+                    var selector = new AntagPreferenceSelector(antag);
+                    antagList.AddChild(selector);
+                    _antagPreferences.Add(selector);
+
+                    selector.PreferenceChanged += preference =>
+                    {
+                        Profile = Profile.WithAntagPreference(antag.ID, preference);
+                        IsDirty = true;
+                    };
+                }
+            }
+
+            #endregion
+
             var rightColumn = new VBoxContainer();
             middleContainer.AddChild(rightColumn);
 
@@ -466,6 +514,7 @@ namespace Content.Client.UserInterface
             UpdateHairPickers();
             UpdateSaveButton();
             UpdateJobPriorities();
+            UpdateAntagPreferences();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
@@ -518,7 +567,7 @@ namespace Content.Client.UserInterface
 
                 if (job.Icon != null)
                 {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/job_icons.rsi"), job.Icon);
+                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"), job.Icon);
                     icon.Texture = specifier.Frame0();
                 }
 
@@ -531,6 +580,52 @@ namespace Content.Client.UserInterface
                         _optionButton
                     }
                 });
+            }
+        }
+
+        private void UpdateAntagPreferences()
+        {
+            foreach (var preferenceSelector in _antagPreferences)
+            {
+                var antagId = preferenceSelector.Antag.ID;
+
+                var preference = Profile.AntagPreferences.Contains(antagId);
+
+                preferenceSelector.Preference = preference;
+            }
+        }
+
+        private class AntagPreferenceSelector : Control
+        {
+            public AntagPrototype Antag { get; }
+            private readonly CheckBox _checkBox;
+
+            public bool Preference
+            {
+                get => _checkBox.Pressed;
+                set => _checkBox.Pressed = value;
+            }
+
+            public event Action<bool> PreferenceChanged;
+
+            public AntagPreferenceSelector(AntagPrototype antag)
+            {
+                Antag = antag;
+
+                _checkBox = new CheckBox {Text = $"{antag.Name}"};
+                _checkBox.OnToggled += OnCheckBoxToggled;
+
+                AddChild(new HBoxContainer
+                {
+                    Children =
+                    {
+                        _checkBox
+                    }
+                });
+            }
+            private void OnCheckBoxToggled(BaseButton.ButtonToggledEventArgs args)
+            {
+                PreferenceChanged?.Invoke(Preference);
             }
         }
     }

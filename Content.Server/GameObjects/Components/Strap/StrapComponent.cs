@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -20,6 +20,7 @@ namespace Content.Server.GameObjects.Components.Strap
         private StrapPosition _position;
         private string _buckleSound;
         private string _unbuckleSound;
+        private string _buckledIcon;
         private int _rotation;
         private int _size;
 
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Strap
         public override StrapPosition Position
         {
             get => _position;
-            set
+            protected set
             {
                 _position = value;
                 Dirty();
@@ -52,6 +53,12 @@ namespace Content.Server.GameObjects.Components.Strap
         /// </summary>
         [ViewVariables]
         public string UnbuckleSound => _unbuckleSound;
+
+        /// <summary>
+        /// The icon to be displayed as a status when buckled
+        /// </summary>
+        [ViewVariables]
+        public string BuckledIcon => _buckledIcon;
 
         /// <summary>
         /// The angle in degrees to rotate the player by when they get strapped
@@ -121,8 +128,9 @@ namespace Content.Server.GameObjects.Components.Strap
             base.ExposeData(serializer);
 
             serializer.DataField(ref _position, "position", StrapPosition.None);
-            serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/effects/buckle.ogg");
-            serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/effects/unbuckle.ogg");
+            serializer.DataField(ref _buckleSound, "buckleSound", "/Audio/Effects/buckle.ogg");
+            serializer.DataField(ref _unbuckleSound, "unbuckleSound", "/Audio/Effects/unbuckle.ogg");
+            serializer.DataField(ref _buckledIcon, "buckledIcon", "/Textures/Interface/StatusEffects/Buckle/buckled.png");
             serializer.DataField(ref _rotation, "rotation", 0);
 
             var defaultSize = 100;
@@ -147,6 +155,21 @@ namespace Content.Server.GameObjects.Components.Strap
 
             BuckledEntities.Clear();
             OccupiedSize = 0;
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new StrapComponentState(Position);
+        }
+
+        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out BuckleComponent buckle))
+            {
+                return false;
+            }
+
+            return buckle.ToggleBuckle(eventArgs.User, Owner);
         }
 
         [Verb]
@@ -200,16 +223,6 @@ namespace Content.Server.GameObjects.Components.Strap
 
                 buckle.ToggleBuckle(user, component.Owner);
             }
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out BuckleComponent buckle))
-            {
-                return false;
-            }
-
-            return buckle.ToggleBuckle(eventArgs.User, Owner);
         }
     }
 }

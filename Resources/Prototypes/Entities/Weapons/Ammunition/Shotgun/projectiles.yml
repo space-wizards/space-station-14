@@ -5,7 +5,7 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Objects/Guns/Projectiles/slug.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/slug.rsi
     state: base
   - type: Projectile
     damages:
@@ -18,7 +18,7 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
     damages:
@@ -32,7 +32,7 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
     damages:
@@ -45,7 +45,7 @@
   parent: BulletBaseFlash
   components:
   - type: Sprite
-    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
     damages:
@@ -58,7 +58,7 @@
   parent: BulletBase
   components:
   - type: Sprite
-    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
     damages:
@@ -71,7 +71,7 @@
   parent: BulletBasePractice
   components:
   - type: Sprite
-    sprite: Objects/Guns/Projectiles/buckshot.rsi
+    sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
     damages:

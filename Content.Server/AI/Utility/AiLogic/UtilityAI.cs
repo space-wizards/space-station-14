@@ -13,6 +13,7 @@ using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Robust.Server.AI;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Utility;
 
 namespace Content.Server.AI.Utility.AiLogic
@@ -147,6 +148,14 @@ namespace Content.Server.AI.Utility.AiLogic
         
         private void ReceivedAction()
         {
+            switch (_actionRequest.Exception)
+            {
+                case null:
+                    break;
+                default:
+                    Logger.FatalS("ai", _actionRequest.Exception.ToString());
+                    throw _actionRequest.Exception;
+            }
             var action = _actionRequest.Result;
             _actionRequest = null;
             // Actions with lower scores should be implicitly dumped by GetAction

@@ -1,0 +1,17 @@
+- type: latheRecipe
+  id: Brutepack
+  icon: Objects/Specific/Medical/brutepack.png
+  result: Brutepack
+  completetime: 500
+  materials:
+    steel: 400
+    glass: 125
+
+- type: latheRecipe
+  id: Ointment
+  icon: Objects/Specific/Medical/ointment.png
+  result: Ointment
+  completetime: 500
+  materials:
+    steel: 400
+    glass: 125
