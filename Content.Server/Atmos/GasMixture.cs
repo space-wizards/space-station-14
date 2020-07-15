@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Math = CannyFastMath.Math;
@@ -17,8 +18,8 @@ namespace Content.Server.Atmos
     /// </summary>
     public class GasMixture
     {
-        private static GasPrototype GetGas(string gasId) =>
-            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(gasId);
+        private static ReagentPrototype GetReagent(string gasId) =>
+            IoCManager.Resolve<IPrototypeManager>().Index<ReagentPrototype>(gasId);
 
         private static Dictionary<string, ValueTuple<float, float>> GetCombinedContents(GasMixture a, GasMixture b)
         {
@@ -55,7 +56,7 @@ namespace Content.Server.Atmos
 
                 foreach (var gas in _contents)
                 {
-                    capacity += GetGas(gas.Key).SpecificHeat * gas.Value;
+                    capacity += GetReagent(gas.Key).SpecificHeat * gas.Value;
                 }
 
                 return MathF.Min(capacity, MinimumHeatCapacity);
@@ -71,7 +72,7 @@ namespace Content.Server.Atmos
 
                 foreach (var gas in _contentsArchived)
                 {
-                    capacity += GetGas(gas.Key).SpecificHeat * gas.Value;
+                    capacity += GetReagent(gas.Key).SpecificHeat * gas.Value;
                 }
 
                 return MathF.Min(capacity, MinimumHeatCapacity);
@@ -231,7 +232,7 @@ namespace Content.Server.Atmos
                 {
                     if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                     {
-                        var gasHeatCapacity = delta * GetGas(gas).SpecificHeat;
+                        var gasHeatCapacity = delta * GetReagent(gas).SpecificHeat;
                         if (delta > 0)
                         {
                             heatCapacityToSharer += gasHeatCapacity;

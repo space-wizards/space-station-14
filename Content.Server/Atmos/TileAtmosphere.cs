@@ -33,8 +33,8 @@ namespace Content.Server.Atmos
 
             // TODO ATMOS Load default gases from tile here or something
             Air = new GasMixture(volume);
-            Air.Add("chem.o2", Atmospherics.MolesCellStandard * 0.2f);
-            Air.Add("chem.n2", Atmospherics.MolesCellStandard * 0.8f);
+            Air.Add("chem.O", Atmospherics.MolesCellStandard * 0.2f);
+            Air.Add("chem.N", Atmospherics.MolesCellStandard * 0.8f);
 
             UpdateAdjacent();
         }
@@ -110,14 +110,14 @@ namespace Content.Server.Atmos
 
         private void React()
         {
-            // TODO ATMOS
-            throw new System.NotImplementedException();
+            // TODO ATMOS React
+            //throw new System.NotImplementedException();
         }
 
         public void UpdateVisuals()
         {
-            // TODO ATMOS
-            throw new System.NotImplementedException();
+            // TODO ATMOS Updating visuals
+            //throw new System.NotImplementedException();
         }
 
         public void UpdateAdjacent()

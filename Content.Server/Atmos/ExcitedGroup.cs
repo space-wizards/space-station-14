@@ -59,6 +59,11 @@ namespace Content.Server.Atmos
             _weakReference = new WeakReference<ExcitedGroup>(this);
         }
 
+        ~ExcitedGroup()
+        {
+            Dispose();
+        }
+
         public void Initialize(IGridAtmosphereManager gridAtmosphereManager)
         {
             _gridAtmosphereManager = gridAtmosphereManager;
