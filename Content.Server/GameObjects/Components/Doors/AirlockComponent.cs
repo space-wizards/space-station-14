@@ -78,15 +78,12 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private bool _autoClose = true;
-        private const float AUTO_CLOSE_DELAY = 5;
         private const float AUTO_CLOSE_DELAY_FAST = 1;
-        private float _closeSpeed = AUTO_CLOSE_DELAY;
         // True => AUTO_CLOSE_DELAY; False => AUTO_CLOSE_DELAY_FAST
         private bool NormalCloseSpeed
         {
-            get => _closeSpeed == AUTO_CLOSE_DELAY;
-            set => _closeSpeed = value ? AUTO_CLOSE_DELAY : AUTO_CLOSE_DELAY_FAST;
+            get => CloseSpeed == AUTO_CLOSE_DELAY;
+            set => CloseSpeed = value ? AUTO_CLOSE_DELAY : AUTO_CLOSE_DELAY_FAST;
         }
 
         private void UpdateWiresStatus()
@@ -108,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
             var timingStatus =
-                new StatusLightData(Color.Orange,   !_autoClose ? StatusLightState.Off :
+                new StatusLightData(Color.Orange,   !AutoClose ? StatusLightState.Off :
                                                     !NormalCloseSpeed ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
@@ -321,7 +318,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         BoltLightsVisible = true;
                         break;
                     case Wires.Timing:
-                        _autoClose = true;
+                        AutoClose = true;
                         break;
                     case Wires.Safety:
                         Safety = true;
@@ -340,7 +337,7 @@ namespace Content.Server.GameObjects.Components.Doors
                         BoltLightsVisible = false;
                         break;
                     case Wires.Timing:
-                        _autoClose = false;
+                        AutoClose = false;
                         break;
                     case Wires.Safety:
                         Safety = false;
@@ -423,28 +420,6 @@ namespace Content.Server.GameObjects.Components.Doors
                 Close();
 
             return true;
-        }
-
-        public override void OnUpdate(float frameTime)
-        {
-            if (State != DoorState.Open)
-            {
-                return;
-            }
-
-            if (_autoClose)
-            {
-                OpenTimeCounter += frameTime;
-            }
-
-            if (OpenTimeCounter > _closeSpeed)
-            {
-                if (!CanClose() || !Close())
-                {
-                    // Try again in 2 seconds if it's jammed or something.
-                    OpenTimeCounter -= 2;
-                }
-            }
         }
 
         public void SetBoltsWithAudio(bool newBolts)

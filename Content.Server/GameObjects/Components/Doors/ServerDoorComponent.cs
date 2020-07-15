@@ -34,7 +34,10 @@ namespace Content.Server.GameObjects
         }
 
         protected float OpenTimeCounter;
-
+        protected bool AutoClose = true;
+        protected const float AUTO_CLOSE_DELAY = 5;
+        protected float CloseSpeed = AUTO_CLOSE_DELAY;
+        
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
@@ -284,7 +287,6 @@ namespace Content.Server.GameObjects
             }, _cancellationTokenSource.Token);
         }
 
-        private const float AUTO_CLOSE_DELAY = 5;
         public virtual void OnUpdate(float frameTime)
         {
             if (State != DoorState.Open)
@@ -292,8 +294,12 @@ namespace Content.Server.GameObjects
                 return;
             }
 
-            OpenTimeCounter += frameTime;
-            if (OpenTimeCounter > AUTO_CLOSE_DELAY)
+            if (AutoClose)
+            {
+                OpenTimeCounter += frameTime;
+            }
+            
+            if (OpenTimeCounter > CloseSpeed)
             {
                 if (!CanClose() || !Close())
                 {
