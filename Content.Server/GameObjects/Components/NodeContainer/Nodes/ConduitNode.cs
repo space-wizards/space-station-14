@@ -48,7 +48,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         }
 
         /// <summary>
-        ///     Gets a set of <see cref="Node"/>s that this should consider connecting to.
+        ///     Gets a set of <see cref="Node"/>s that this should consider connecting to, which will be filtered
+        ///     further in <see cref="ConduitNode.GetReachableNodes"/>.
         /// </summary>
         protected abstract IEnumerable<Node> GetNodesToConsider();
     }
