@@ -133,6 +133,30 @@
       state_broken: pipe-b
 
 - type: entity
+  id: DisposalJunctionFlipped
+  parent: DisposalJunction
+  name: flipped disposal junction
+  components:
+  - type: Sprite
+    drawdepth: BelowFloor
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j2
+  - type: Icon
+    sprite: Constructible/Power/disposal.rsi
+    state: conpipe-j2
+  - type: DisposalJunction
+    angles:
+    - 0
+    - 90
+    - 180
+  - type: Appearance
+    visuals:
+    - type: DisposalVisualizer
+      state_free: conpipe-j2
+      state_anchored: pipe-j2
+      state_broken: pipe-b
+
+- type: entity
   id: DisposalYJunction
   parent: DisposalPipeBase
   name: disposal y-junction
