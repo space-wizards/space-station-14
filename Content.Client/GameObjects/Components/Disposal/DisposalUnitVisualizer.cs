@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -9,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using static Content.Shared.GameObjects.Components.Disposal.SharedDisposalUnitComponent;
 
 namespace Content.Client.GameObjects.Components.Disposal
 {
@@ -25,7 +25,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         private void ChangeState(AppearanceComponent appearance)
         {
-            if (!appearance.TryGetData(DisposalUnitVisuals.VisualState, out DisposalUnitVisualState state))
+            if (!appearance.TryGetData(Visuals.VisualState, out VisualState state))
             {
                 return;
             }
@@ -39,17 +39,17 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             switch (state)
             {
-                case DisposalUnitVisualState.Flushing:
+                case VisualState.Flushing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(_flushAnimation, AnimationKey);
                     }
 
                     break;
-                case DisposalUnitVisualState.UnAnchored:
+                case VisualState.UnAnchored:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateUnAnchored);
                     break;
-                case DisposalUnitVisualState.Anchored:
+                case VisualState.Anchored:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
                     break;
             }

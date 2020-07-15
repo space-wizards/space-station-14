@@ -2,15 +2,22 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -22,8 +29,13 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing
     {
+#pragma warning disable 649
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
+#pragma warning restore 649
+
         public override string Name => "DisposalUnit";
 
         /// <summary>
@@ -53,6 +65,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private Container _container;
 
+        [ViewVariables]
+        private BoundUserInterface _userInterface;
+
+        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent receiver) || !receiver.PowerDisabled;
+
         private bool CanInsert(IEntity entity)
         {
             return entity.HasComponent<DisposableComponent>() &&
@@ -77,11 +94,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                     physics.Anchored);
         }
 
-        private bool TryFlush()
+        private void TryFlush()
         {
             if (!CanFlush())
             {
-                return false;
+                return;
             }
 
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
@@ -91,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (entry == null)
             {
-                return false;
+                return;
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
@@ -103,12 +120,36 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DisposalUnitVisuals.VisualState, DisposalUnitVisualState.Flushing);
+                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
 
                 Timer.Spawn(_flushTime, AnchoredChanged, _cancellationTokenSource.Token);
             }
 
-            return true;
+            UpdateInterface();
+        }
+
+        private void TryEject(IEntity entity)
+        {
+            _container.Remove(entity);
+        }
+
+        private void TryEjectContents()
+        {
+            foreach (var entity in _container.ContainedEntities.ToArray())
+            {
+                TryEject(entity);
+            }
+        }
+
+        private void TogglePower()
+        {
+            if (!Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                return;
+            }
+
+            receiver.PowerDisabled = !receiver.PowerDisabled;
+            UpdateInterface();
         }
 
         private void AnchoredChanged()
@@ -129,7 +170,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DisposalUnitVisuals.VisualState, DisposalUnitVisualState.Anchored);
+                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
             }
         }
 
@@ -137,7 +178,64 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(DisposalUnitVisuals.VisualState, DisposalUnitVisualState.UnAnchored);
+                appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
+            }
+        }
+
+        private DisposalUnitBoundUserInterfaceState GetInterfaceState()
+        {
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, 1, Powered);
+        }
+
+        private void UpdateInterface()
+        {
+            var state = GetInterfaceState();
+            _userInterface.SetState(state);
+        }
+
+        private bool PlayerCanUse(IEntity player)
+        {
+            if (player == null)
+            {
+                return false;
+            }
+
+            if (!ActionBlockerSystem.CanInteract(player) ||
+                !ActionBlockerSystem.CanUse(player))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!PlayerCanUse(obj.Session.AttachedEntity))
+            {
+                return;
+            }
+
+            if (!(obj.Message is UiButtonPressedMessage message))
+            {
+                return;
+            }
+
+            switch (message.Button)
+            {
+                case UiButton.Eject:
+                    TryEjectContents();
+                    break;
+                case UiButton.Engage:
+                    TryFlush();
+                    break;
+                case UiButton.Power:
+                    TogglePower();
+
+                    EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -155,8 +253,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             _cancellationTokenSource = new CancellationTokenSource();
+            _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
+                .GetBoundUserInterface(DisposalUnitUiKey.Key);
+            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            UpdateInterface();
         }
 
         protected override void Startup()
@@ -204,7 +307,20 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            return TryFlush();
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                return false;
+            }
+
+            if (!eventArgs.User.HasComponent<IHandsComponent>())
+            {
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
+                    Loc.GetString("You have no hands!"));
+                return false;
+            }
+
+            _userInterface.Open(actor.playerSession);
+            return true;
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)

@@ -101,6 +101,10 @@
       state_flush: disposal-flush
       flush_sound: /Audio/machines/disposalflush.ogg
       flush_time: 2
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
 
 - type: entity
   id: DisposalJunction
