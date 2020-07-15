@@ -9,18 +9,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    public class DisposableComponent : SharedDisposableComponent, IActionBlocker, IDragDrop
+    public class DisposableComponent : SharedDisposableComponent, IDragDrop
     {
         private bool _inDisposals;
-
-        [ViewVariables]
-        public IDisposalTubeComponent? PreviousTube { get; set; }
-
-        [ViewVariables]
-        private IDisposalTubeComponent? CurrentTube { get; set; }
-
-        [ViewVariables]
-        public IDisposalTubeComponent? NextTube { get; set; }
 
         /// <summary>
         ///     The total amount of time that it will take for this entity to
@@ -35,9 +26,32 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private float TimeLeft { get; set; }
 
+        /// <summary>
+        ///     Whether or not this entity is currently inside a disposal tube
+        /// </summary>
+        [ViewVariables]
+        protected override bool InDisposals
+        {
+            get => _inDisposals;
+            set
+            {
+                _inDisposals = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables]
+        public IDisposalTubeComponent? PreviousTube { get; set; }
+
+        [ViewVariables]
+        private IDisposalTubeComponent? CurrentTube { get; set; }
+
+        [ViewVariables]
+        public IDisposalTubeComponent? NextTube { get; set; }
+
         public void EnterTube(IDisposalTubeComponent tube)
         {
-            _inDisposals = true;
+            InDisposals = true;
 
             if (CurrentTube != null)
             {
@@ -53,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void ExitDisposals()
         {
-            _inDisposals = false;
+            InDisposals = false;
             PreviousTube = null;
             CurrentTube = null;
             NextTube = null;
@@ -64,7 +78,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void Update(float frameTime)
         {
-            if (!_inDisposals)
+            if (!InDisposals)
             {
                 return;
             }
@@ -112,24 +126,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             ExitDisposals();
         }
 
-        bool IActionBlocker.CanInteract()
+        public override ComponentState GetComponentState()
         {
-            return !_inDisposals;
-        }
-
-        bool IActionBlocker.CanThrow()
-        {
-            return !_inDisposals;
-        }
-
-        bool IActionBlocker.CanDrop()
-        {
-            return !_inDisposals;
-        }
-
-        bool IActionBlocker.CanPickup()
-        {
-            return !_inDisposals;
+            return new DisposableComponentState(InDisposals);
         }
 
         bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)

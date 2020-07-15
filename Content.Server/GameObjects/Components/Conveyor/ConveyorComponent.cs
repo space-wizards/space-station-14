@@ -12,7 +12,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Conveyor
 {
-    // TODO: Start/stop, directional textures
     [RegisterComponent]
     public class ConveyorComponent : Component
     {
