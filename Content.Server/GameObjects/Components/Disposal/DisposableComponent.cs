@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;

@@ -1,6 +1,5 @@
 ﻿using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {

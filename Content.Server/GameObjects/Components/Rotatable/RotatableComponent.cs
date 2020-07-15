@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Rotatable
 {
     [RegisterComponent]
     public class RotatableComponent : Component
