@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
@@ -105,8 +106,15 @@ namespace Content.Server.Atmos
                 React();
                 UpdateVisuals();
             }
-
         }
+
+        public void ExplosivelyDepressurize(int cycleNum)
+        {
+            // TODO ATMOS Explosive depressurization? Woo!
+            throw new NotImplementedException();
+        }
+
+        
 
         private void React()
         {
