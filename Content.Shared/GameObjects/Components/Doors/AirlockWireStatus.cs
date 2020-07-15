@@ -11,5 +11,6 @@ namespace Content.Shared.GameObjects.Components.Doors
         BoltLightIndicator,
         AIControlIndicator,
         TimingIndicator,
+        SafetyIndicator,
     }
 }

@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Doors
             _wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
             _wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
             _wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
-            _wires.SetStatus(5, safetyStatus);
+            _wires.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
             /*
             _wires.SetStatus(6, powerLight);
             _wires.SetStatus(7, powerLight);
