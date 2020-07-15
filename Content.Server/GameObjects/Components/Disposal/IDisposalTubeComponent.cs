@@ -18,5 +18,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
         void AdjacentDisconnected(IDisposalTubeComponent adjacent);
         void MoveEvent(MoveEvent moveEvent);
+        void PopupDirections(IEntity entity);
     }
 }

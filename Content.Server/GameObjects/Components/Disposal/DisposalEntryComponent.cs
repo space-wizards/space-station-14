@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        protected override Direction[] ConnectableDirections()
+        public override Direction[] ConnectableDirections()
         {
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }

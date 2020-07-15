@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalJunction";
 
-        protected override Direction[] ConnectableDirections()
+        public override Direction[] ConnectableDirections()
         {
             var direction = Owner.Transform.LocalRotation;
 

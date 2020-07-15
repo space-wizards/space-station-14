@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Nutrition;
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
+using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -13,6 +18,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -53,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     The directions that this tube can connect to others from
         /// </summary>
         /// <returns>a new array of the directions</returns>
-        protected abstract Direction[] ConnectableDirections();
+        public abstract Direction[] ConnectableDirections();
 
         public abstract Direction NextDirection(DisposableComponent disposable);
 
@@ -220,6 +226,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
+        public void PopupDirections(IEntity entity)
+        {
+            var directions = string.Join(", ", ConnectableDirections());
+
+            IoCManager.Resolve<IServerNotifyManager>().PopupMessage(Owner, entity, Loc.GetString("{0}", directions));
+        }
+
         private void UpdateVisualState()
         {
             if (!Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -329,6 +342,39 @@ namespace Content.Server.GameObjects.Components.Disposal
             _broken = true; // TODO: Repair
             Disconnect();
             UpdateVisualState();
+        }
+
+        private sealed class TubeDirectionsVerb : Verb<IDisposalTubeComponent>
+        {
+            protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
+            {
+                data.Text = "Tube Directions";
+                data.CategoryData = VerbCategories.Debug;
+                data.Visibility = VerbVisibility.Invisible;
+
+                var groupController = IoCManager.Resolve<IConGroupController>();
+
+                if (user.TryGetComponent<IActorComponent>(out var player))
+                {
+                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    {
+                        data.Visibility = VerbVisibility.Visible;
+                    }
+                }
+            }
+
+            protected override void Activate(IEntity user, IDisposalTubeComponent component)
+            {
+                var groupController = IoCManager.Resolve<IConGroupController>();
+
+                if (user.TryGetComponent<IActorComponent>(out var player))
+                {
+                    if (groupController.CanCommand(player.playerSession, "tubeconnections"))
+                    {
+                        component.PopupDirections(user);
+                    }
+                }
+            }
         }
     }
 }

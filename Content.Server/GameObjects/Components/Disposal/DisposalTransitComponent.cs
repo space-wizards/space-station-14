@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         public override string Name => "DisposalTransit";
 
-        protected override Direction[] ConnectableDirections()
+        public override Direction[] ConnectableDirections()
         {
             var rotation = Owner.Transform.LocalRotation;
             var opposite = new Angle(rotation.Theta + Math.PI);

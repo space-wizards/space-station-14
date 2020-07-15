@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalBend";
 
-        protected override Direction[] ConnectableDirections()
+        public override Direction[] ConnectableDirections()
         {
             var direction = Owner.Transform.LocalRotation;
             var side = new Angle(MathHelper.DegreesToRadians(direction.Degrees + _sideDegrees));
