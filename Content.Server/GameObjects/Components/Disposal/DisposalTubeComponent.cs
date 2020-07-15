@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
@@ -344,6 +343,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateVisualState();
         }
 
+        [Verb]
         private sealed class TubeDirectionsVerb : Verb<IDisposalTubeComponent>
         {
             protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
