@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Content.Server.Interfaces;
+﻿using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;

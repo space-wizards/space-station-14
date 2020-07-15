@@ -125,7 +125,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return;
             }
 
-            var intersecting = _entityManager.GetEntitiesIntersecting(Owner);
+            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
 
             foreach (var entity in intersecting)
             {
