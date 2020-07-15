@@ -79,7 +79,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        public float Moles
+        public float TotalMoles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -100,7 +100,7 @@ namespace Content.Server.Atmos
             get
             {
                 if (Volume <= 0) return 0f;
-                return Moles * Atmospherics.R * Temperature / Volume;
+                return TotalMoles * Atmospherics.R * Temperature / Volume;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Content.Server.Atmos
 
         public GasMixture Remove(float amount)
         {
-            return RemoveRatio(amount / Moles);
+            return RemoveRatio(amount / TotalMoles);
         }
 
         public GasMixture RemoveRatio(float ratio)
@@ -281,8 +281,8 @@ namespace Content.Server.Atmos
 
             if (temperatureDelta > Atmospherics.MinimumTemperatureToMove || MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)
             {
-                var moles = Moles;
-                var theirMoles = sharer.Moles;
+                var moles = TotalMoles;
+                var theirMoles = sharer.TotalMoles;
 
                 return (TemperatureArchived * (moles + movedMoles)) - (sharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / Volume;
             }
@@ -334,6 +334,64 @@ namespace Content.Server.Atmos
             }
 
             return -2;
+        }
+
+        /// <summary>
+        ///     Pump gas from this mixture to the output mixture.
+        ///     Amount depends on target pressure.
+        /// </summary>
+        /// <param name="outputAir">The mixture to pump the gas to</param>
+        /// <param name="targetPressure">The target pressure to reach</param>
+        /// <returns>Whether we could pump air to the output or not</returns>
+        public bool PumpGasTo(GasMixture outputAir, float targetPressure)
+        {
+            var outputStartingPressure = outputAir.Pressure;
+            var pressureDelta = targetPressure - outputStartingPressure;
+
+            if (pressureDelta < 0.01)
+                // No need to pump gas, we've reached the target.
+                return false;
+
+            if (!(TotalMoles > 0) || !(Temperature > 0)) return false;
+
+            // We calculate the necessary moles to transfer with the ideal gas law.
+            var transferMoles = pressureDelta * outputAir.Volume / (Temperature * Atmospherics.R);
+
+            // And now we transfer the gas.
+            var removed = Remove(transferMoles);
+            outputAir.Merge(removed);
+            return true;
+        }
+
+        /// <summary>
+        ///     Releases gas from this mixture to the output mixture.
+        ///     It can't transfer air to a mixture with higher pressure.
+        /// </summary>
+        /// <param name="outputAir"></param>
+        /// <param name="targetPressure"></param>
+        /// <returns></returns>
+        public bool ReleaseGasTo(GasMixture outputAir, float targetPressure)
+        {
+            var outputStartingPressure = outputAir.Pressure;
+            var inputStartingPressure = Pressure;
+
+            if (outputStartingPressure >= MathF.Min(targetPressure, inputStartingPressure - 10))
+                // No need to pump gas if the target is already reached or input pressure is too low.
+                // Need at least 10 kPa difference to overcome friction in the mechanism.
+                return false;
+
+            if (!(TotalMoles > 0) || !(Temperature > 0)) return false;
+
+            // We calculate the necessary moles to transfer with the ideal gas law.
+            var pressureDelta = MathF.Min(targetPressure - outputStartingPressure, (inputStartingPressure - outputStartingPressure) / 2f);
+            var transferMoles = pressureDelta * outputAir.Volume / (Temperature * Atmospherics.R);
+
+            // And now we transfer the gas.
+            var removed = Remove(transferMoles);
+            outputAir.Merge(removed);
+
+            return true;
+
         }
 
         public void Clear()
