@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Conveyor;
+using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
@@ -19,7 +21,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing
+    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerEntityManager _entityManager;
@@ -87,9 +89,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// <summary>
         ///     Cycles this conveyor switch to its next valid state
         /// </summary>
-        /// <returns>true if the state was changed, false otherwise</returns>
+        /// <returns>
+        ///     true if the switch can be operated and the state could be cycled,
+        ///     false otherwise
+        /// </returns>
         private bool NextState()
         {
+            if (Owner.HasComponent<ItemComponent>())
+            {
+                State = 0;
+                return false;
+            }
+
             var last = Enum.GetValues(typeof(ConveyorState)).Cast<ConveyorState>().Max();
 
             State = State == last ? 0 : _state + 1;
@@ -128,6 +139,15 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (!Owner.HasComponent<ItemComponent>() &&
+                eventArgs.Using.TryGetComponent(out ToolComponent tool) &&
+                tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying))
+            {
+                Owner.AddComponent<ItemComponent>();
+                NextState();
+                return false;
+            }
+
             if (!eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
             {
                 return false;
@@ -135,6 +155,25 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             Connect(eventArgs.User, conveyor);
             return true;
+        }
+
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (!Owner.HasComponent<ItemComponent>() ||
+                !eventArgs.CanReach ||
+                eventArgs.Target != null)
+            {
+                return;
+            }
+
+            var newSwitch = Owner.EntityManager
+                .SpawnEntity(Owner.Prototype!.ID, eventArgs.ClickLocation)
+                .EnsureComponent<ConveyorSwitchComponent>();
+
+            newSwitch._id = _id;
+            newSwitch._connections = _connections;
+
+            Owner.Delete();
         }
     }
 }
