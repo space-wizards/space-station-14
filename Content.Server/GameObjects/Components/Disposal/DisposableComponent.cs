@@ -72,7 +72,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             NextTube = null;
             StartingTime = 0;
             TimeLeft = 0;
-            Owner.Transform.DetachParent();
+
+            if (!Owner.Transform.IsMapTransform)
+            {
+                Owner.Transform.DetachParent();
+            }
         }
 
         public void Update(float frameTime)
