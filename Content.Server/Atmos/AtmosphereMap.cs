@@ -30,8 +30,8 @@ namespace Content.Server.Atmos
         public void PostInject()
         {
             _mapManager.OnGridCreated += OnGridCreated;
-            _mapManager.OnGridDeserialized += OnGridDeserialized;
             _mapManager.OnGridRemoved += OnGridRemoved;
+            _pauseManager.OnGridInitialize += OnGridInitialize;
             _mapManager.TileChanged += AtmosphereMapOnTileChanged;
         }
 
@@ -65,8 +65,7 @@ namespace Content.Server.Atmos
             _gridAtmosphereManagers[gridId] = gam;
         }
 
-
-        private void OnGridDeserialized(GridId gridId)
+        private void OnGridInitialize(GridId gridId)
         {
             if (!_gridAtmosphereManagers.TryGetValue(gridId, out var gam)) return;
             gam.Initialize();

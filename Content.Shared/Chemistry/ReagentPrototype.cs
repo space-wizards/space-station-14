@@ -5,6 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Chemistry
@@ -41,7 +42,34 @@ namespace Content.Shared.Chemistry
         /// <summary>
         ///     If this reagent is in gas form, this is the path to the overlay that will be used to make the gas visible.
         /// </summary>
-        public string GasOverlayPath { get; private set; }
+        public string GasOverlayTexture { get; private set; }
+
+        /// <summary>
+        ///     If this reagent is in gas form, this will be the path to the RSI sprite that will be used to make the gas visible.
+        /// </summary>
+        public string GasOverlayState { get; set; }
+
+        /// <summary>
+        ///     State for the gas RSI overlay.
+        /// </summary>
+        public string GasOverlaySprite { get; set; }
+
+        /// <summary>
+        ///     Sprite specifier for the gas overlay.
+        /// </summary>
+        public SpriteSpecifier GasOverlay
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(GasOverlaySprite) && !string.IsNullOrEmpty(GasOverlayTexture))
+                    return new SpriteSpecifier.Texture(new ResourcePath(GasOverlayTexture));
+
+                if(!string.IsNullOrEmpty(GasOverlaySprite) && !string.IsNullOrEmpty(GasOverlayState))
+                    return new SpriteSpecifier.Rsi(new ResourcePath(GasOverlaySprite), GasOverlayState);
+
+                return null;
+            }
+        }
 
         /// <summary>
         ///     Boiling point in Cº for this chemical.
@@ -79,7 +107,9 @@ namespace Content.Shared.Chemistry
             serializer.DataField(ref _spritePath, "spritePath", string.Empty);
             serializer.DataField(this, x => BoilingPoint, "boilingPoint", 0);
             serializer.DataField(this, x => MeltingPoint, "meltingPoint", 0);
-            serializer.DataField(this, x => GasOverlayPath, "gasOverlayPath", string.Empty);
+            serializer.DataField(this, x => GasOverlayTexture, "gasOverlayTexture", string.Empty);
+            serializer.DataField(this, x => GasOverlaySprite, "gasOverlaySprite", string.Empty);
+            serializer.DataField(this, x => GasOverlayState, "gasOverlayState", string.Empty);
             serializer.DataField(this, x => SpecificHeat, "specificHeat", 0);
 
             if (_moduleManager.IsServerModule)

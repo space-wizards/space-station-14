@@ -14,7 +14,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class TileOverlaySystem : SharedTileOverlaySystem
     {
-        private Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>>();
+        private Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>> _overlay =
+            new Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>>();
 
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private INetManager _netManager = default!;
@@ -28,20 +29,41 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public void SetTileOverlay(GridId gridIndex, MapIndices indices, SpriteSpecifier specifier)
         {
+            EnsureListExists(gridIndex, indices);
+            _overlay[gridIndex][indices].Add(specifier);
+
+            // TODO: Not send this to everyone.
+            RaiseNetworkEvent(new TileOverlayMessage(new[]
+            {
+                GetData(gridIndex, indices)
+            }));
+        }
+
+        public void SetTileOverlay(GridId gridIndex, MapIndices indices, SpriteSpecifier[] specifiers, bool clearList = true)
+        {
+            EnsureListExists(gridIndex, indices);
+            var list = _overlay[gridIndex][indices];
+
+            if(clearList)
+                list.Clear();
+
+            list.AddRange(specifiers);
+
+            // TODO: Not send this to everyone.
+            RaiseNetworkEvent(new TileOverlayMessage(new[]
+            {
+                GetData(gridIndex, indices)
+            }));
+        }
+
+        private void EnsureListExists(GridId gridIndex, MapIndices indices)
+        {
             if (!_overlay.ContainsKey(gridIndex))
                 _overlay[gridIndex] = new Dictionary<MapIndices, List<SpriteSpecifier>>();
 
             if (!_overlay[gridIndex].ContainsKey(indices))
                 _overlay[gridIndex][indices] = new List<SpriteSpecifier>();
-
-            _overlay[gridIndex][indices].Add(specifier);
-
-            // TODO: Not send this to everyone.
-            RaiseNetworkEvent(new TileOverlayMessage(new []
-            {
-                GetData(gridIndex, indices)
-            }));
-    }
+        }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {

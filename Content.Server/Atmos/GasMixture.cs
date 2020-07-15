@@ -44,6 +44,9 @@ namespace Content.Server.Atmos
         private Dictionary<string, float> _contents = new Dictionary<string, float>();
         private Dictionary<string, float> _contentsArchived = new Dictionary<string, float>();
 
+        public Dictionary<ReagentPrototype, float> Gasses =>
+            _contents.ToDictionary(x => GetReagent(x.Key), x => x.Value);
+
         public bool Immutable { get; private set; }
         public float LastShare { get; private set; } = 0;
 

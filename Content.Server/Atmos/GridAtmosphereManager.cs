@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -29,6 +30,7 @@ namespace Content.Server.Atmos
 
         public void Initialize()
         {
+            // TODO ATMOS Not repopulate tiles here
             RepopulateTiles();
         }
 
@@ -53,6 +55,7 @@ namespace Content.Server.Atmos
         {
             foreach (var indices in _invalidatedCoords)
             {
+                AddActiveTile(indices);
                 /*if (IsSpace(indices))
                 {
                     ClearAtmospheres(indices);
@@ -76,6 +79,7 @@ namespace Content.Server.Atmos
         /// <inheritdoc />
         public void AddActiveTile(MapIndices indices)
         {
+            if (!_tiles.ContainsKey(indices)) return;
             _activeTiles.Add(_tiles[indices]);
         }
 

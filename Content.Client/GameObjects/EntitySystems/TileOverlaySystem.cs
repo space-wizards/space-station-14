@@ -69,6 +69,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             foreach (var data in ev.OverlayData)
             {
+                EnsureListExists(data.GridIndex, data.GridIndices);
+
                 foreach (var overlay in data.Overlays)
                 {
                     var specifier = new SpriteSpecifier.Texture(new ResourcePath(overlay));
@@ -83,6 +85,15 @@ namespace Content.Client.GameObjects.EntitySystems
                     _overlay[data.GridIndex][data.GridIndices].Add(specifier);
                 }
             }
+        }
+
+        private void EnsureListExists(GridId gridIndex, MapIndices indices)
+        {
+            if (!_overlay.ContainsKey(gridIndex))
+                _overlay[gridIndex] = new Dictionary<MapIndices, List<SpriteSpecifier>>();
+
+            if (!_overlay[gridIndex].ContainsKey(indices))
+                _overlay[gridIndex][indices] = new List<SpriteSpecifier>();
         }
 
         public override void FrameUpdate(float frameTime)

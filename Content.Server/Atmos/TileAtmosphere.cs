@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos
 {
@@ -32,11 +35,15 @@ namespace Content.Server.Atmos
             GridIndices = tile.GridIndices;
             Tile = tile.Tile;
 
+            if(_gridAtmosphereManager.IsSpace(GridIndices) ||
+               _gridAtmosphereManager.IsAirBlocked(GridIndices)) return;
+
             // TODO ATMOS Load default gases from tile here or something
             Air = new GasMixture(volume);
             Air.Add("chem.O", Atmospherics.MolesCellStandard * 0.2f);
             Air.Add("chem.N", Atmospherics.MolesCellStandard * 0.8f);
 
+            UpdateVisuals();
             UpdateAdjacent();
         }
 
@@ -114,7 +121,7 @@ namespace Content.Server.Atmos
             throw new NotImplementedException();
         }
 
-        
+
 
         private void React()
         {
@@ -125,7 +132,18 @@ namespace Content.Server.Atmos
         public void UpdateVisuals()
         {
             // TODO ATMOS Updating visuals
-            //throw new System.NotImplementedException();
+            var list = new List<SpriteSpecifier>();
+
+            foreach (var (reagent, _) in Air.Gasses)
+            {
+                var overlay = reagent.GasOverlay;
+                if(overlay == null) continue;
+                list.Add(overlay);
+            }
+
+            if (list.Count == 0) return;
+
+            EntitySystem.Get<TileOverlaySystem>().SetTileOverlay(GridIndex, GridIndices, list.ToArray());
         }
 
         public void UpdateAdjacent()

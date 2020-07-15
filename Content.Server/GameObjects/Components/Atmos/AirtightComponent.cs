@@ -8,6 +8,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -23,10 +24,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override string Name => "Airtight";
 
-        public bool UseAdjacentAtmosphere;
         private bool _zoneBlocked = true;
         private bool _airBlocked = true;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool ZoneBlocked
         {
             get => _zoneBlocked;
@@ -37,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
         {
             get => _airBlocked;
@@ -51,7 +53,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref UseAdjacentAtmosphere, "adjacentAtmosphere", false);
+            serializer.DataField(ref _airBlocked, "airBlocked", true);
+            serializer.DataField(ref _zoneBlocked, "zoneBlocked", true);
         }
 
         public override void Initialize()
