@@ -16,13 +16,13 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "Anchorable";
 
         /// <summary>
-        ///
+        ///     Checks if a tool can change the anchored status.
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="utilizing"></param>
-        /// <param name="physics"></param>
-        /// <param name="force"></param>
-        /// <returns></returns>
+        /// <param name="user">The user doing the action</param>
+        /// <param name="utilizing">The tool being used, can be null if forcing it</param>
+        /// <param name="physics">The physics component of the owning entity</param>
+        /// <param name="force">Whether or not to check if the tool is valid</param>
+        /// <returns>true if it is valid, false otherwise</returns>
         private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out PhysicsComponent physics, bool force = false)
         {
             if (!Owner.TryGetComponent(out physics))

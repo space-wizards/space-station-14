@@ -11,6 +11,7 @@ using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -48,16 +49,28 @@ namespace Content.Server.GameObjects.Components.Conveyor
             get => _state;
             set
             {
+                var oldValue = _state;
                 _state = value;
 
-                if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+                if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
-                    return;
+                    appearance.SetData(ConveyorSwitchVisuals.State, value);
                 }
 
-                appearance.SetData(ConveyorSwitchVisuals.State, value);
+                if (oldValue != value)
+                {
+                    foreach (var conveyor in _connections)
+                    {
+                        conveyor.ChangeState(State);
+                    }
+                }
+
             }
         }
+
+        [ViewVariables]
+        private bool Anchored => !Owner.TryGetComponent(out PhysicsComponent physics) ||
+                                 physics.Anchored;
 
         /// <summary>
         ///     Finds all conveyors connected to this switch
@@ -95,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// </returns>
         private bool NextState()
         {
-            if (Owner.HasComponent<ItemComponent>())
+            if (!Anchored)
             {
                 State = 0;
                 return false;
@@ -105,19 +118,40 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             State = State == last ? 0 : _state + 1;
 
-            foreach (var conveyor in _connections)
+            return true;
+        }
+
+        private bool ToolUsed(IEntity user, ToolComponent tool)
+        {
+            if (!Owner.HasComponent<ItemComponent>() &&
+                tool.UseTool(user, Owner, ToolQuality.Prying))
             {
-                conveyor.ChangeState(State);
+                Owner.AddComponent<ItemComponent>();
+                NextState();
+                return true;
             }
 
-            return true;
+            return false;
+        }
+
+        private void AnchoredChanged()
+        {
+            if (!Anchored)
+            {
+                NextState();
+            }
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
+            Owner.EnsureComponent<ItemComponent>();
+            Owner.EnsureComponent<AnchorableComponent>();
             _id = EntitySystem.Get<ConveyorSystem>().NextId();
+
+            var physics = Owner.EnsureComponent<PhysicsComponent>();
+            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
@@ -139,13 +173,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.HasComponent<ItemComponent>() &&
-                eventArgs.Using.TryGetComponent(out ToolComponent tool) &&
-                tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying))
+            if (eventArgs.Using.TryGetComponent(out ToolComponent tool))
             {
-                Owner.AddComponent<ItemComponent>();
-                NextState();
-                return false;
+                return ToolUsed(eventArgs.User, tool);
             }
 
             if (!eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
@@ -159,6 +189,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
+            {
+                return;
+            }
+
             if (!Owner.HasComponent<ItemComponent>() ||
                 !eventArgs.CanReach ||
                 eventArgs.Target != null)
@@ -166,14 +201,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return;
             }
 
-            var newSwitch = Owner.EntityManager
-                .SpawnEntity(Owner.Prototype!.ID, eventArgs.ClickLocation)
-                .EnsureComponent<ConveyorSwitchComponent>();
+            if (!hands.Drop(Owner))
+            {
+                return;
+            }
 
-            newSwitch._id = _id;
-            newSwitch._connections = _connections;
-
-            Owner.Delete();
+            Owner.Transform.GridPosition = eventArgs.ClickLocation;
         }
     }
 }

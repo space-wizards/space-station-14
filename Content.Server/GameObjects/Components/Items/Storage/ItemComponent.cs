@@ -83,12 +83,22 @@ namespace Content.Server.GameObjects.Components
 
         public bool CanPickup(IEntity user)
         {
-            if (!ActionBlockerSystem.CanPickup(user)) return false;
+            if (!ActionBlockerSystem.CanPickup(user))
+            {
+                return false;
+            }
 
             if (user.Transform.MapID != Owner.Transform.MapID)
+            {
                 return false;
+            }
 
-            var userPos = user.Transform.MapPosition;
+            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
+                physics.Anchored)
+            {
+                return false;
+            }
+
             var itemPos = Owner.Transform.MapPosition;
 
             return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);

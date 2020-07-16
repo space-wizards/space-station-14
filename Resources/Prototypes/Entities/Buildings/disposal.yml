@@ -76,7 +76,7 @@
       map: ["enum.DisposalUnitVisualLayers.Base"]
   - type: Icon
     sprite: Constructible/Power/disposal.rsi
-    state: condisposal
+    state: disposal
   - type: PowerReceiver
   - type: DisposalUnit
     flushTime: 2
