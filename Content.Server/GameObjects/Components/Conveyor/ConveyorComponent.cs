@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// <summary>
         ///     The amount of units to move the entity by.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _speed;
 
         private ConveyorState _state;
