@@ -49,7 +49,7 @@ namespace Content.Server.Atmos
             Air = new GasMixture(volume);
 
             if (_gridAtmosphereManager.IsSpace(GridIndices))
-                Air.Immutable = true;
+                Air.MarkImmutable();
         }
 
         private void Archive(int fireCount)

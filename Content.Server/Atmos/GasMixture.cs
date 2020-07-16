@@ -47,7 +47,7 @@ namespace Content.Server.Atmos
         public Dictionary<ReagentPrototype, float> Gasses =>
             _contents.ToDictionary(x => GetReagent(x.Key), x => x.Value);
 
-        public bool Immutable { get; set; }
+        public bool Immutable { get; private set; }
         public float LastShare { get; private set; } = 0;
 
         public float HeatCapacity

@@ -67,6 +67,18 @@ namespace Content.Server.GameObjects.Components.Atmos
             // is missing.
             if (!Owner.TryGetComponent(out _snapGrid))
                 throw new Exception("Airtight entities must have a SnapGrid component");
+
+            UpdatePosition();
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            _airBlocked = false;
+            _zoneBlocked = false;
+
+            UpdatePosition();
         }
 
         public void MapInit()

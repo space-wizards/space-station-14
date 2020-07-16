@@ -54,7 +54,6 @@ namespace Content.Server.Atmos
         public void Invalidate(MapIndices indices)
         {
             _invalidatedCoords.Add(indices);
-            AddActiveTile(indices);
         }
 
         private void Revalidate()
@@ -62,21 +61,26 @@ namespace Content.Server.Atmos
             foreach (var indices in _invalidatedCoords)
             {
                 AddActiveTile(indices);
-                /*if (IsSpace(indices))
+                var tile = GetTile(indices);
+
+                if (tile == null)
+                    continue;
+
+                if (IsSpace(indices))
                 {
-                    ClearAtmospheres(indices);
-                }
-                else if (IsZoneBlocked(indices))
-                {
-                    SplitAtmospheres(indices);
+                    tile.Air = new GasMixture(Atmospherics.CellVolume);
+                    tile.Air.MarkImmutable();
                 } else if (IsAirBlocked(indices))
                 {
-                    // connect zones?
+                    tile.Air = null;
                 }
                 else
                 {
-                    MergeAtmospheres(indices);
-                }*/
+                    tile.Air ??= new GasMixture(Atmospherics.CellVolume);
+                }
+
+                tile.UpdateAdjacent();
+                tile.UpdateVisuals();
             }
 
             _invalidatedCoords.Clear();
