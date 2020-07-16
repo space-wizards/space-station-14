@@ -1,5 +1,7 @@
-﻿using Content.Shared.GameObjects.EntitySystems;
+﻿using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
@@ -32,6 +34,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
     }
 
+    [Serializable, NetSerializable]
     public sealed class DisposableComponentState : ComponentState
     {
         public readonly bool InDisposals;
