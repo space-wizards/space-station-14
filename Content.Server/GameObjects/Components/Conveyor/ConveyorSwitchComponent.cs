@@ -11,14 +11,14 @@ using Content.Shared.Interfaces;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.GameObjects.Components.Conveyor
 {
@@ -27,18 +27,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerEntityManager _entityManager;
+        [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         public override string Name => "ConveyorSwitch";
 
         private uint _id;
-
-        /// <summary>
-        ///     The set of conveyors connected to this lever
-        /// </summary>
-        [ViewVariables]
-        private HashSet<ConveyorComponent> _connections;
-
         private ConveyorState _state;
 
         /// <summary>
@@ -60,13 +54,20 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 if (oldValue != value)
                 {
-                    foreach (var conveyor in _connections)
+                    foreach (var conveyor in Connections())
                     {
                         conveyor.ChangeState(State);
                     }
                 }
-
             }
+        }
+
+        /// <summary>
+        ///     The set of conveyors connected to this switch
+        /// </summary>
+        private IReadOnlyCollection<ConveyorComponent> Connections()
+        {
+            return EntitySystem.Get<ConveyorSystem>().GetOrCreateConnections(_id);
         }
 
         /// <summary>
@@ -90,8 +91,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         public void Connect(IEntity user, ConveyorComponent conveyor)
         {
-            conveyor.Id = _id;
-            _connections.Add(conveyor);
+            EntitySystem.Get<ConveyorSystem>().AddConnections(_id, conveyor);
 
             user.PopupMessage(user, Loc.GetString("Conveyor linked with id {0}.", _id));
         }
@@ -125,10 +125,17 @@ namespace Content.Server.GameObjects.Components.Conveyor
             {
                 Owner.AddComponent<ItemComponent>();
                 NextState();
+                Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
                 return true;
             }
 
             return false;
+        }
+
+        private void SyncWith(IEntity user, ConveyorSwitchComponent other)
+        {
+            _id = other._id;
+            Owner.PopupMessage(user, Loc.GetString("Switch changed to id {0}.", _id));
         }
 
         public override void Initialize()
@@ -136,13 +143,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             base.Initialize();
 
             _id = EntitySystem.Get<ConveyorSystem>().NextId();
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            _connections = FindConveyors().ToHashSet();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
@@ -162,12 +162,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return ToolUsed(eventArgs.User, tool);
             }
 
-            if (!eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
+            if (eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
             {
-                return false;
+                Connect(eventArgs.User, conveyor);
+                return true;
             }
 
-            Connect(eventArgs.User, conveyor);
+            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent otherSwitch))
+            {
+                SyncWith(eventArgs.User, otherSwitch);
+                return true;
+            }
+
             return true;
         }
 
