@@ -76,7 +76,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
                     amount = _amount.GetValueOrDefault();
                     if (_id == null)
                     {
-                        id = "";
+                        id = "null";
                     }
                     else
                     {
