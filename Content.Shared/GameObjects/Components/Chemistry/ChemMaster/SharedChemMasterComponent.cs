@@ -63,7 +63,7 @@ namespace Content.Shared.GameObjects.Components.Chemistry
         {
             public readonly UiAction action;
             public readonly ReagentUnit amount;
-            public readonly string id;
+            public readonly string id = "";
             public readonly bool isBuffer;
             public readonly int pillAmount;
             public readonly int bottleAmount;
