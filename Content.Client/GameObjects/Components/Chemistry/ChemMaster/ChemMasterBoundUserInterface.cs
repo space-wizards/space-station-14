@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
     public class ChemMasterBoundUserInterface : BoundUserInterface
     {
 #pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager? _localizationManager;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 #pragma warning restore 649
 
         private ChemMasterWindow? _window;
