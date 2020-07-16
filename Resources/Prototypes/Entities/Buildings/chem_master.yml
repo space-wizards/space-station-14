@@ -1,7 +1,7 @@
 - type: entity
   id: chem_master
-  name: ChemMaster 3000
-  description: An industrial grade chemical manipulator with pill, patch, and bottle production included.
+  name: ChemMaster 4000
+  description: An industrial grade chemical manipulator with pill and bottle production included.
   components:
   - type: Sprite
     texture: Constructible/Power/mixer.rsi/mixer_loaded.png

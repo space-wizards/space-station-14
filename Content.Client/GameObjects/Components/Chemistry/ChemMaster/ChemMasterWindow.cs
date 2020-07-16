@@ -17,7 +17,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.GameObjects.Components.Chemistry.SharedChemMasterComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedChemMasterComponent"/>
@@ -31,16 +31,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
         private readonly VBoxContainer PackagingInfo;
 
-        public Button DispenseButton1 { get; }
-
-        public Button DispenseButton5 { get; }
-
-        public Button DispenseButton10 { get; }
-
-        public Button DispenseButton25 { get; }
-
-        public Button TransferButtonAll { get; }
-
         /// <summary>Ejects the reagent container from the dispenser.</summary>
         public Button EjectButton { get; }
 
@@ -51,6 +41,13 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
         public event Action<BaseButton.ButtonEventArgs, ChemButton> OnChemButtonPressed;
 
+        public HBoxContainer PillInfo { get; set; }
+        public HBoxContainer BottleInfo { get; set; }
+        public SpinBox PillAmount { get; set; }
+        public SpinBox BottleAmount { get; set; }
+        public Button CreatePills { get; }
+        public Button CreateBottles { get; }
+
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -59,14 +56,12 @@ namespace Content.Client.GameObjects.Components.Chemistry
         protected override Vector2? CustomSize => (400, 200);
 
         /// <summary>
-        /// Create and initialize the dispenser UI client-side. Creates the basic layout,
-        /// actual data isn't filled in until the server sends data about the dispenser.
+        /// Create and initialize the chem master UI client-side. Creates the basic layout,
+        /// actual data isn't filled in until the server sends data about the chem master.
         /// </summary>
         public ChemMasterWindow()
         {
             IoCManager.InjectDependencies(this);
-
-            //var dispenseAmountGroup = new ButtonGroup();
 
             Contents.AddChild(new VBoxContainer
             {
@@ -177,18 +172,86 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             (PackagingInfo = new VBoxContainer
                             {
                                 SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                Children =
-                                {
-                                    new Label
-                                    {
-                                        Text = _localizationManager.GetString("WIP.")
-                                    }
-                                }
                             }),
+
                         }
                     },
                 }
             });
+
+            //Pills
+            PillInfo = new HBoxContainer
+            {
+                Children =
+                {
+                    new Label
+                    {
+                        Text = _localizationManager.GetString("Pills:")
+                    },
+
+                },
+
+            };
+            PackagingInfo.AddChild(PillInfo);
+
+            var pillPadding = new Control {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            PillInfo.AddChild(pillPadding);
+
+            PillAmount = new SpinBox
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                Value = 1
+            };
+            PillAmount.SetButtons(new List<int>() { -1 }, new List<int>() { +1 });
+            PillAmount.IsValid = (n) => (n > 0 && n <= 10);
+            PillInfo.AddChild(PillAmount);
+
+            var pillVolume = new Label
+            {
+                Text = " max 50u/each ",
+                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+            };
+            PillInfo.AddChild((pillVolume));
+
+            CreatePills = new Button {Text = _localizationManager.GetString("Create")};
+            PillInfo.AddChild(CreatePills);
+
+            //Bottles
+            BottleInfo = new HBoxContainer
+            {
+                Children =
+                {
+                    new Label
+                    {
+                        Text = _localizationManager.GetString("Bottles:")
+                    },
+
+                },
+
+            };
+            PackagingInfo.AddChild(BottleInfo);
+
+            var bottlePadding = new Control {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            BottleInfo.AddChild(bottlePadding);
+
+            BottleAmount = new SpinBox
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                Value = 1
+            };
+            BottleAmount.SetButtons(new List<int>() { -1 }, new List<int>() { +1 });
+            BottleAmount.IsValid = (n) => (n > 0 && n <= 10);
+            BottleInfo.AddChild(BottleAmount);
+
+            var bottleVolume = new Label
+            {
+                Text = " max 30u/each ",
+                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+            };
+            BottleInfo.AddChild((bottleVolume));
+
+            CreateBottles = new Button {Text = _localizationManager.GetString("Create")};
+            BottleInfo.AddChild(CreateBottles);
         }
 
         private ChemButton MakeChemButton(string text, ReagentUnit amount, string id, bool isBuffer)
@@ -200,31 +263,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
         }
 
         /// <summary>
-        /// Update the button grid of reagents which can be dispensed.
-        /// <para>The actions for these buttons are set in <see cref="ReagentDispenserBoundUserInterface.UpdateReagentsList"/>.</para>
-        /// </summary>
-        /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List</*ReagentDispenserInventoryEntry*/string> inventory)
-        {
-            //if (ChemicalList == null) return;
-            if (inventory == null) return;
-
-            //ChemicalList.Children.Clear();
-
-            foreach (var entry in inventory)
-            {
-                /*if (_prototypeManager.TryIndex(entry.ID, out ReagentPrototype proto))
-                {
-                    ChemicalList.AddChild(new Button {Text = proto.Name});
-                }
-                else
-                {
-                    ChemicalList.AddChild(new Button {Text = _localizationManager.GetString("Reagent name not found")});
-                }*/
-            }
-        }
-
-        /// <summary>
         /// Update the UI state when new state data is received from the server.
         /// </summary>
         /// <param name="state">State data sent by the server.</param>
@@ -233,39 +271,18 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var castState = (ChemMasterBoundUserInterfaceState) state;
             Title = castState.DispenserName;
             UpdatePanelInfo(castState);
-
-            /*switch (castState.SelectedDispenseAmount.Int())
-            {
-                case 1:
-                    DispenseButton1.Pressed = true;
-                    break;
-                case 5:
-                    DispenseButton5.Pressed = true;
-                    break;
-                case 10:
-                    DispenseButton10.Pressed = true;
-                    break;
-                case 25:
-                    DispenseButton25.Pressed = true;
-                    break;
-                case 50:
-                    DispenseButton50.Pressed = true;
-                    break;
-                case 100:
-                    DispenseButton100.Pressed = true;
-                    break;
-            }*/
         }
 
         /// <summary>
-        /// Update the fill state and list of reagents held by the current reagent container, if applicable.
-        /// <para>Also highlights a reagent if it's dispense button is being mouse hovered.</para>
+        /// Update the container, buffer, and packaging panels.
         /// </summary>
         /// <param name="state">State data for the dispenser.</param>
-        /// <param name="highlightedReagentId">Prototype id of the reagent whose dispense button is currently being mouse hovered.</param>
-        public void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state,
-            string highlightedReagentId = null)
+        private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
         {
+            BufferModeTransfer = state.BufferModeTransfer;
+            BufferTransferButton.Pressed = BufferModeTransfer;
+            BufferDiscardButton.Pressed = !BufferModeTransfer;
+
             ContainerInfo.Children.Clear();
 
             if (!state.HasBeaker)
@@ -300,7 +317,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 {
                     ContainerInfo.Children.Add(new HBoxContainer
                     {
-                        //SizeFlagsHorizontal = SizeFlags.ShrinkEnd,
                         Children =
                         {
                             new Label {Text = $"{name}: "},
@@ -309,19 +325,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
                                 Text = $"{reagent.Quantity}u",
                                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             },
-                            //Padding
-                            //new Control {CustomMinimumSize = (20, 0)},
-                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
 
-                            /*(new ChemButton
-                            {
-                                Text = "1", Amount = ReagentUnit.New(1), Id = reagent.ReagentId, isBuffer = false,
-                                OnPressed += args => OnChemButtonPressed?.Invoke(ChemButton.All),
-                            }),
-                            (new ChemButton {Text = "5", Amount = ReagentUnit.New(5), Id = reagent.ReagentId, isBuffer = false}),
-                            (new ChemButton {Text = "10", Amount = ReagentUnit.New(10), Id = reagent.ReagentId, isBuffer = false}),
-                            (new ChemButton {Text = "25", Amount = ReagentUnit.New(25), Id = reagent.ReagentId, isBuffer = false}),
-                            (new ChemButton {Text = "All", Amount = ReagentUnit.New(-1), Id = reagent.ReagentId, isBuffer = false}),*/
+                            //Padding
+                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
 
                             MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, false),
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, false),
@@ -341,7 +347,17 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 return;
             }
 
-            BufferInfo.Children.Add(new HBoxContainer());
+            var bufferHBox = new HBoxContainer();
+            BufferInfo.AddChild(bufferHBox);
+
+            var bufferLabel = new Label {Text = "buffer: "};
+            bufferHBox.AddChild(bufferLabel);
+            var bufferVol = new Label
+            {
+                Text = $"{state.BufferCurrentVolume}/{state.BufferMaxVolume}",
+                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+            };
+            bufferHBox.AddChild(bufferVol);
 
             foreach (var reagent in state.BufferReagents)
             {
@@ -365,19 +381,9 @@ namespace Content.Client.GameObjects.Components.Chemistry
                                 Text = $"{reagent.Quantity}u",
                                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
                             },
-                            //Padding
-                            //new Control {CustomMinimumSize = (20, 0)},
-                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
 
-                            /*(new ChemButton
-                            {
-                                Text = "1", Amount = ReagentUnit.New(1), Id = reagent.ReagentId, isBuffer = false,
-                                OnPressed += args => OnChemButtonPressed?.Invoke(ChemButton.All),
-                            }),
-                            (new ChemButton {Text = "5", Amount = ReagentUnit.New(5), Id = reagent.ReagentId, isBuffer = false}),
-                            (new ChemButton {Text = "10", Amount = ReagentUnit.New(10), Id = reagent.ReagentId, isBuffer = false}),
-                            (new ChemButton {Text = "25", Amount = ReagentUnit.New(25), Id = reagent.ReagentId, isBuffer = false}),
-                            (new ChemButton {Text = "All", Amount = ReagentUnit.New(-1), Id = reagent.ReagentId, isBuffer = false}),*/
+                            //Padding
+                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
 
                             MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, true),
                             MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, true),
