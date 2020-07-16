@@ -24,7 +24,10 @@ using Robust.Shared.ViewVariables;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -86,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.Solution = new Solution();
-            BufferSolution.MaxVolume = ReagentUnit.New(5000);
+            BufferSolution.MaxVolume = ReagentUnit.New(1000);
 
             UpdateUserInterface();
         }
@@ -120,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     break;
                 case UiAction.CreatePills:
                 case UiAction.CreateBottles:
-                    TryCreatePackage(msg.action, msg.pillAmount, msg.bottleAmount);
+                    TryCreatePackage(obj.Session.AttachedEntity, msg.action, msg.pillAmount, msg.bottleAmount);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -242,6 +245,81 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         BufferSolution.Solution.AddReagent(id, actualAmount);
                         break;
                     }
+                }
+            }
+
+            UpdateUserInterface();
+        }
+
+        private void TryCreatePackage(IEntity user, UiAction action, int pillAmount, int bottleAmount)
+        {
+            var random = IoCManager.Resolve<IRobustRandom>();
+
+            if (action == UiAction.CreateBottles)
+            {
+                var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(bottleAmount);
+                var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
+                for (int i = 0; i < bottleAmount; i++)
+                {
+                    var bottle = Owner.EntityManager.SpawnEntity("bottle", Owner.Transform.GridPosition);
+
+                    var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
+
+                    bottle.TryGetComponent<SolutionComponent>(out var bottleSolution);
+                    bottleSolution?.Solution.AddSolution(bufferSolution);
+
+                    //Try to give them the bottle
+                    if (user.TryGetComponent<HandsComponent>(out var hands) &&
+                        bottle.TryGetComponent<ItemComponent>(out var item))
+                    {
+                        if (hands.CanPutInHand(item))
+                        {
+                            hands.PutInHand(item);
+                            continue;
+                        }
+
+                    }
+
+                    //Put it on the floor
+                    bottle.Transform.GridPosition = user.Transform.GridPosition;
+                    //Give it an offset
+                    var x_negative = random.Prob(0.5f) ? -1 : 1;
+                    var y_negative = random.Prob(0.5f) ? -1 : 1;
+                    bottle.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
+                }
+
+            }
+            else //Pills
+            {
+                var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(pillAmount);
+                var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(50));
+                for (int i = 0; i < pillAmount; i++)
+                {
+                    var pill = Owner.EntityManager.SpawnEntity("pill", Owner.Transform.GridPosition);
+
+                    var bufferSolution = BufferSolution.Solution.SplitSolution(actualVolume);
+
+                    pill.TryGetComponent<SolutionComponent>(out var pillSolution);
+                    pillSolution?.Solution.AddSolution(bufferSolution);
+
+                    //Try to give them the bottle
+                    if (user.TryGetComponent<HandsComponent>(out var hands) &&
+                        pill.TryGetComponent<ItemComponent>(out var item))
+                    {
+                        if (hands.CanPutInHand(item))
+                        {
+                            hands.PutInHand(item);
+                            continue;
+                        }
+
+                    }
+
+                    //Put it on the floor
+                    pill.Transform.GridPosition = user.Transform.GridPosition;
+                    //Give it an offset
+                    var x_negative = random.Prob(0.5f) ? -1 : 1;
+                    var y_negative = random.Prob(0.5f) ? -1 : 1;
+                    pill.Transform.LocalPosition += new Vector2(random.NextFloat() * 0.2f * x_negative, random.NextFloat() * 0.2f * y_negative);
                 }
             }
 
