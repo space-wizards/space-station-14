@@ -95,7 +95,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
 
             if (disposing)
             {
-                _window.Dispose();
+                _window?.Dispose();
             }
         }
     }
