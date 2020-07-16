@@ -68,7 +68,6 @@ namespace Content.Server.Atmos
         private void OnGridInitialize(GridId gridId)
         {
             if (!_gridAtmosphereManagers.TryGetValue(gridId, out var gam)) return;
-            gam.Initialize();
         }
 
         private void OnGridRemoved(GridId gridId)

@@ -1,11 +1,16 @@
+using System;
+using Content.Server.Atmos;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.Interfaces.Atmos;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -27,6 +32,17 @@ namespace Content.Server.Observer
                 shell.SendText((IPlayerSession) null, "Nah");
                 return;
             }
+
+            var gam = IoCManager.Resolve<IAtmosphereMap>()
+                .GetGridAtmosphereManager(player.AttachedEntity.Transform.GridID);
+
+            ((GridAtmosphereManager)gam).Initialize();
+
+            var gridPos = player.AttachedEntity.Transform.GridPosition;
+
+            var indices = new MapIndices((int)gridPos.X, (int)gridPos.Y);
+            gam.GetTile(indices)?.Air?.Add("chem.O", Atmospherics.MolesCellStandard*1000);
+            gam.AddActiveTile(indices);
 
             var mind = player.ContentData().Mind;
             var canReturn = player.AttachedEntity != null;

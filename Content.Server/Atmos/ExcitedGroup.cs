@@ -10,6 +10,7 @@ namespace Content.Server.Atmos
 {
     public class ExcitedGroup : IDisposable
     {
+        private bool _disposed = false;
         private WeakReference<ExcitedGroup> _weakReference;
         private readonly List<TileAtmosphere> _tile = new List<TileAtmosphere>();
         private IGridAtmosphereManager _gridAtmosphereManager;
@@ -81,7 +82,15 @@ namespace Content.Server.Atmos
             var combined = new GasMixture(Atmospherics.CellVolume);
 
             var tileSize = _tile.Count;
-            if (tileSize == 0) return;
+
+            if (_disposed) return;
+
+            if (tileSize == 0)
+            {
+                Dispose();
+                return;
+            }
+
             foreach (var tile in _tile)
             {
                 combined.Merge(tile.Air);
@@ -117,6 +126,8 @@ namespace Content.Server.Atmos
 
         public void Dispose()
         {
+            if (_disposed) return;
+            _disposed = true;
             _gridAtmosphereManager.RemoveExcitedGroup(_weakReference);
             _gridAtmosphereManager = null;
         }

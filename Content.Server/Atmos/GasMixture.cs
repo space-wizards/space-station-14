@@ -187,7 +187,7 @@ namespace Content.Server.Atmos
             removed.Volume = Volume;
             removed.Temperature = Temperature;
 
-            foreach (var (gas, moles) in _contents)
+            foreach (var (gas, moles) in _contents.ToArray())
             {
                 if (moles < Atmospherics.GasMinMoles)
                     removed._contents[gas] = 0f;
@@ -406,7 +406,7 @@ namespace Content.Server.Atmos
         public void Multiply(float multiplier)
         {
             if (Immutable) return;
-            foreach (var (gas, _) in _contents)
+            foreach (var (gas, _) in _contents.ToArray())
             {
                 _contents[gas] *= multiplier;
             }

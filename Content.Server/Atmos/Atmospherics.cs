@@ -96,6 +96,16 @@
         /// </summary>
         public const int ExcitedGroupsDismantleCycles = 16;
 
+        /// <summary>
+        ///     Hard limit for tile equalization.
+        /// </summary>
+        public const int ZumosHardTileLimit = 2000;
+
+        /// <summary>
+        ///     Hard limit for tile equalization.
+        /// </summary>
+        public const int ZumosTileLimit = 2000;
+
         #endregion
     }
 }

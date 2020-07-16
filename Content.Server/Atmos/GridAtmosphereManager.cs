@@ -15,11 +15,11 @@ namespace Content.Server.Atmos
     /// <inheritdoc cref="IGridAtmosphereManager"/>
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
+        private int _updateCounter = 0;
         private readonly IMapGrid _grid;
-        private readonly List<WeakReference<ExcitedGroup>> _excitedGroups = new List<WeakReference<ExcitedGroup>>();
+        private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>();
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>();
-        private readonly List<TileAtmosphere> _activeTiles = new List<TileAtmosphere>();
-
+        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>();
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
         public GridAtmosphereManager(IMapGrid grid)
@@ -41,6 +41,12 @@ namespace Content.Server.Atmos
             foreach (var tile in _grid.GetAllTiles())
             {
                 _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile, GetVolumeForCells(1)));
+            }
+
+            foreach (var (_, tile) in _tiles)
+            {
+                tile.UpdateAdjacent();
+                tile.UpdateVisuals();
             }
         }
 
@@ -152,29 +158,33 @@ namespace Content.Server.Atmos
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
 
+            ProcessTileEqualize();
             ProcessActiveTurfs();
-
             ProcessExcitedGroups();
+
+            _updateCounter++;
+        }
+
+        public void ProcessTileEqualize()
+        {
+            foreach (var tile in _activeTiles.ToArray())
+            {
+                tile.EqualizePressureInZone(_updateCounter);
+            }
         }
 
         public void ProcessActiveTurfs()
         {
-            while (_activeTiles.Count != 0)
+            foreach (var tile in _activeTiles.ToArray())
             {
-                var tile = _activeTiles.Last();
-                _activeTiles.Remove(tile);
-
-                // TODO ATMOS figure out what to do about fire count...
-
-                tile.ProcessCell(1);
+                tile.ProcessCell(_updateCounter);
             }
         }
 
         public void ProcessExcitedGroups()
         {
-            while(_excitedGroups.Count != 0)
+            foreach (var weak in _excitedGroups.ToArray())
             {
-                var weak = _excitedGroups.Last();
                 if (!weak.TryGetTarget(out var excitedGroup))
                 {
                     _excitedGroups.Remove(weak);

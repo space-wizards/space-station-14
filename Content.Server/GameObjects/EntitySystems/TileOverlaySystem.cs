@@ -14,8 +14,8 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class TileOverlaySystem : SharedTileOverlaySystem
     {
-        private Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>> _overlay =
-            new Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>>();
+        private Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>> _overlay =
+            new Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>>();
 
         [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] private INetManager _netManager = default!;
@@ -47,7 +47,10 @@ namespace Content.Server.GameObjects.EntitySystems
             if(clearList)
                 list.Clear();
 
-            list.AddRange(specifiers);
+            foreach (var specifier in specifiers)
+            {
+                list.Add(specifier);
+            }
 
             // TODO: Not send this to everyone.
             RaiseNetworkEvent(new TileOverlayMessage(new[]
@@ -59,10 +62,10 @@ namespace Content.Server.GameObjects.EntitySystems
         private void EnsureListExists(GridId gridIndex, MapIndices indices)
         {
             if (!_overlay.ContainsKey(gridIndex))
-                _overlay[gridIndex] = new Dictionary<MapIndices, List<SpriteSpecifier>>();
+                _overlay[gridIndex] = new Dictionary<MapIndices, HashSet<SpriteSpecifier>>();
 
             if (!_overlay[gridIndex].ContainsKey(indices))
-                _overlay[gridIndex][indices] = new List<SpriteSpecifier>();
+                _overlay[gridIndex][indices] = new HashSet<SpriteSpecifier>();
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)

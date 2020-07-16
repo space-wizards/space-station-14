@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Atmos;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.EntitySystems;
@@ -10,6 +11,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -23,7 +25,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private float _timer = 0f;
 
-        private Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, List<SpriteSpecifier>>>();
+        private Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>>();
 
         public override void Initialize()
         {
@@ -90,10 +92,10 @@ namespace Content.Client.GameObjects.EntitySystems
         private void EnsureListExists(GridId gridIndex, MapIndices indices)
         {
             if (!_overlay.ContainsKey(gridIndex))
-                _overlay[gridIndex] = new Dictionary<MapIndices, List<SpriteSpecifier>>();
+                _overlay[gridIndex] = new Dictionary<MapIndices, HashSet<SpriteSpecifier>>();
 
             if (!_overlay[gridIndex].ContainsKey(indices))
-                _overlay[gridIndex][indices] = new List<SpriteSpecifier>();
+                _overlay[gridIndex][indices] = new HashSet<SpriteSpecifier>();
         }
 
         public override void FrameUpdate(float frameTime)
