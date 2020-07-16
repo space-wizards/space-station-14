@@ -16,6 +16,7 @@ namespace Content.Client.GameObjects.Components.Conveyor
         private string _stateForward;
         private string _stateOff;
         private string _stateReversed;
+        private string _stateLoose;
 
         private void ChangeState(AppearanceComponent appearance)
         {
@@ -24,13 +25,14 @@ namespace Content.Client.GameObjects.Components.Conveyor
                 return;
             }
 
-            appearance.TryGetData(ConveyorSwitchVisuals.State, out ConveyorState state);
+            appearance.TryGetData(ConveyorVisuals.State, out ConveyorState state);
 
             var texture = state switch
             {
                 ConveyorState.Off => _stateOff,
                 ConveyorState.Forward => _stateForward,
                 ConveyorState.Reversed => _stateReversed,
+                ConveyorState.Loose => _stateLoose,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -41,20 +43,10 @@ namespace Content.Client.GameObjects.Components.Conveyor
         {
             base.LoadData(node);
 
-            if (node.TryGetNode("state_forward", out var child))
-            {
-                _stateForward = child.AsString();
-            }
-
-            if (node.TryGetNode("state_off", out child))
-            {
-                _stateOff = child.AsString();
-            }
-
-            if (node.TryGetNode("state_reversed", out child))
-            {
-                _stateReversed = child.AsString();
-            }
+            _stateForward = node.GetNode("state_forward").AsString();
+            _stateOff = node.GetNode("state_off").AsString();
+            _stateReversed = node.GetNode("state_reversed").AsString();
+            _stateLoose = node.GetNode("state_loose").AsString();
         }
 
         public override void InitializeEntity(IEntity entity)

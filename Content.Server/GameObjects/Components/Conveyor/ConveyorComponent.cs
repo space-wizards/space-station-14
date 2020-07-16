@@ -1,16 +1,23 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+﻿using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Conveyor;
+using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -18,10 +25,11 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, IExamine, IInteractUsing
+    public class ConveyorComponent : Component, IExamine, IInteractUsing, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
         public override string Name => "Conveyor";
@@ -92,6 +100,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
+            if (Owner.HasComponent<ItemComponent>())
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -126,11 +139,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return true;
         }
 
-        public void ChangeState(ConveyorState state)
-        {
-            State = state;
-        }
-
         public void Update(float frameTime)
         {
             if (!CanRun())
@@ -151,6 +159,42 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
+        private bool ToolUsed(IEntity user, ToolComponent tool)
+        {
+            if (!Owner.HasComponent<ItemComponent>() &&
+                tool.UseTool(user, Owner, ToolQuality.Prying))
+            {
+                State = ConveyorState.Loose;
+
+                Owner.AddComponent<ItemComponent>();
+                EntitySystem.Get<ConveyorSystem>().RemoveConnection(this);
+                Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void SyncState(ConveyorSwitchComponent conveyorSwitch)
+        {
+            State = conveyorSwitch.State == ConveyorState.Loose
+                ? ConveyorState.Off
+                : conveyorSwitch.State;
+        }
+
+        private void DeItemize(GridCoordinates coordinates)
+        {
+            if (!Owner.HasComponent<ItemComponent>())
+            {
+                return;
+            }
+
+            Owner.Transform.GridPosition = coordinates;
+            Owner.RemoveComponent<ItemComponent>();
+            State = ConveyorState.Off; // TODO
+        }
+
         // TODO: Load id from the map
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -164,6 +208,13 @@ namespace Content.Server.GameObjects.Components.Conveyor
             serializer.DataField(ref _speed, "speed", 2);
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            EntitySystem.Get<ConveyorSystem>().RemoveConnection(this);
+        }
+
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             var tooltip = Id.HasValue
@@ -173,15 +224,42 @@ namespace Content.Server.GameObjects.Components.Conveyor
             message.AddMarkup(tooltip);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent conveyorSwitch))
+            if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent conveyorSwitch))
             {
-                return false;
+                conveyorSwitch.Connect(eventArgs.User, this);
+                return true;
             }
 
-            conveyorSwitch.Connect(eventArgs.User, this);
+            if (eventArgs.Using.TryGetComponent(out ToolComponent tool))
+            {
+                return ToolUsed(eventArgs.User, tool);
+            }
+
             return false;
+        }
+
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
+            {
+                return;
+            }
+
+            if (!Owner.HasComponent<ItemComponent>() ||
+                !eventArgs.CanReach ||
+                eventArgs.Target != null)
+            {
+                return;
+            }
+
+            if (!hands.Drop(Owner))
+            {
+                return;
+            }
+
+            DeItemize(eventArgs.ClickLocation);
         }
     }
 }

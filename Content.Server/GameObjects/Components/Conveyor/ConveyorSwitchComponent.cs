@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -16,6 +15,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -39,25 +39,16 @@ namespace Content.Server.GameObjects.Components.Conveyor
         ///     The current state of this switch
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        private ConveyorState State
+        public ConveyorState State
         {
             get => _state;
-            set
+            private set
             {
-                var oldValue = _state;
                 _state = value;
 
                 if (Owner.TryGetComponent(out AppearanceComponent appearance))
                 {
-                    appearance.SetData(ConveyorSwitchVisuals.State, value);
-                }
-
-                if (oldValue != value)
-                {
-                    foreach (var conveyor in Connections())
-                    {
-                        conveyor.ChangeState(State);
-                    }
+                    appearance.SetData(ConveyorVisuals.State, value);
                 }
             }
         }
@@ -68,6 +59,14 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private IReadOnlyCollection<ConveyorComponent> Connections()
         {
             return EntitySystem.Get<ConveyorSystem>().GetOrCreateConnections(_id);
+        }
+
+        private void SyncState()
+        {
+            foreach (var conveyor in Connections())
+            {
+                conveyor.SyncState(this);
+            }
         }
 
         /// <summary>
@@ -107,13 +106,23 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             if (Owner.HasComponent<ItemComponent>())
             {
-                State = 0;
+                // TODO: More than one switch
+                State = ConveyorState.Loose;
+                SyncState();
+
                 return false;
             }
 
-            var last = Enum.GetValues(typeof(ConveyorState)).Cast<ConveyorState>().Max();
+            State = State switch
+            {
+                ConveyorState.Off => ConveyorState.Forward,
+                ConveyorState.Forward => ConveyorState.Reversed,
+                ConveyorState.Reversed => ConveyorState.Off,
+                ConveyorState.Loose => ConveyorState.Off,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-            State = State == last ? 0 : _state + 1;
+            SyncState();
 
             return true;
         }
@@ -123,10 +132,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             if (!Owner.HasComponent<ItemComponent>() &&
                 tool.UseTool(user, Owner, ToolQuality.Prying))
             {
-                Owner.AddComponent<ItemComponent>();
-                NextState();
-                Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
-                return true;
+                return Itemize();
             }
 
             return false;
@@ -136,6 +142,32 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             _id = other._id;
             Owner.PopupMessage(user, Loc.GetString("Switch changed to id {0}.", _id));
+        }
+
+        private bool Itemize()
+        {
+            if (Owner.HasComponent<ItemComponent>())
+            {
+                return false;
+            }
+
+            Owner.AddComponent<ItemComponent>();
+            NextState();
+            Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
+
+            return true;
+        }
+
+        private void DeItemize(GridCoordinates coordinates)
+        {
+            if (!Owner.HasComponent<ItemComponent>())
+            {
+                return;
+            }
+
+            Owner.Transform.GridPosition = coordinates;
+            Owner.RemoveComponent<ItemComponent>();
+            NextState();
         }
 
         public override void Initialize()
@@ -196,8 +228,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return;
             }
 
-            Owner.Transform.GridPosition = eventArgs.ClickLocation;
-            Owner.RemoveComponent<ItemComponent>();
+            DeItemize(eventArgs.ClickLocation);
         }
     }
 }

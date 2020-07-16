@@ -43,6 +43,17 @@ namespace Content.Server.GameObjects.EntitySystems
             return set;
         }
 
+        public void RemoveConnection(ConveyorComponent conveyor)
+        {
+            if (!conveyor.Id.HasValue ||
+                !_connections.TryGetValue(conveyor.Id.Value, out var set))
+            {
+                return;
+            }
+
+            set.Remove(conveyor);
+        }
+
         public override void Initialize()
         {
             base.Initialize();
