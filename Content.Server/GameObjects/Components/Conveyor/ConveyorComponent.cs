@@ -3,6 +3,7 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
@@ -113,6 +114,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             if (entity.HasComponent<IMapGridComponent>())
+            {
+                return false;
+            }
+
+            if (ContainerHelpers.IsInContainer(entity))
             {
                 return false;
             }
