@@ -10,7 +10,7 @@ namespace Content.Client.Sandbox
         public Button SpawnEntitiesButton { get; }
         public Button SpawnTilesButton { get; }
 
-        public Button GiveFullAccessButton {get;}//A button that just puts a captain's ID in your hands.
+        public Button GiveFullAccessButton { get; } //A button that just puts a captain's ID in your hands.
 
         public SandboxWindow(ILocalizationManager loc)
         {

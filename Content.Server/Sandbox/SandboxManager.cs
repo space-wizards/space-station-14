@@ -43,7 +43,7 @@ namespace Content.Server.Sandbox
         {
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus));
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn), SandboxRespawnReceived);
-            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessRecieved);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _gameTicker.OnRunLevelChanged += GameTickerOnOnRunLevelChanged;
@@ -99,7 +99,7 @@ namespace Content.Server.Sandbox
             _gameTicker.Respawn(player);
         }
 
-        private void SandboxGiveAccessRecieved(MsgSandboxGiveAccess message)
+        private void SandboxGiveAccessReceived(MsgSandboxGiveAccess message)
         {
             if(!IsSandboxEnabled)
             {
