@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.GameObjects.Components.Conveyor
 {
@@ -68,10 +69,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        [ViewVariables]
-        private bool Anchored => !Owner.TryGetComponent(out PhysicsComponent physics) ||
-                                 physics.Anchored;
-
         /// <summary>
         ///     Finds all conveyors connected to this switch
         /// </summary>
@@ -108,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// </returns>
         private bool NextState()
         {
-            if (!Anchored)
+            if (Owner.HasComponent<ItemComponent>())
             {
                 State = 0;
                 return false;
@@ -134,24 +131,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return false;
         }
 
-        private void AnchoredChanged()
-        {
-            if (!Anchored)
-            {
-                NextState();
-            }
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
-            Owner.EnsureComponent<ItemComponent>();
-            Owner.EnsureComponent<AnchorableComponent>();
             _id = EntitySystem.Get<ConveyorSystem>().NextId();
-
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
-            physics.AnchoredChanged += AnchoredChanged;
         }
 
         protected override void Startup()
@@ -207,6 +191,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             Owner.Transform.GridPosition = eventArgs.ClickLocation;
+            Owner.RemoveComponent<ItemComponent>();
         }
     }
 }
