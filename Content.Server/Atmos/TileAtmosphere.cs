@@ -5,10 +5,12 @@ using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using NFluidsynth;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using Logger = Robust.Shared.Log.Logger;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
@@ -41,11 +43,13 @@ namespace Content.Server.Atmos
             GridIndices = tile.GridIndices;
             Tile = tile.Tile;
 
-            if(_gridAtmosphereManager.IsSpace(GridIndices) ||
-               _gridAtmosphereManager.IsAirBlocked(GridIndices)) return;
+            if(_gridAtmosphereManager.IsAirBlocked(GridIndices)) return;
 
             // TODO ATMOS Load default gases from tile here or something
             Air = new GasMixture(volume);
+
+            if (_gridAtmosphereManager.IsSpace(GridIndices))
+                Air.Immutable = true;
         }
 
         private void Archive(int fireCount)
@@ -246,7 +250,7 @@ namespace Content.Server.Atmos
                                 if (giver._tileAtmosInfo.MoleDelta <= 0)
                                     break; // We're done here now. Let's not do more work than needed.
 
-                                if (tile2._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
+                                if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
                                     continue;
 
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
@@ -317,7 +321,7 @@ namespace Content.Server.Atmos
                                 if (taker._tileAtmosInfo.MoleDelta >= 0)
                                     break; // We're done here now. Let's not do more work than needed.
 
-                                if (tile2._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                                if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                                 queue.Add(tile2);
                                 queueCount++;
@@ -346,7 +350,7 @@ namespace Content.Server.Atmos
                             }
                         }
 
-                        for (var i = (int)MathF.Max(queue.Count - 1, 0); i >= 0; i++)
+                        for (var i = queue.Count - 1; i >= 0; i--)
                         {
                             var tile = queue[i];
                             if (tile._tileAtmosInfo.CurrentTransferAmount != 0 &&
@@ -397,7 +401,7 @@ namespace Content.Server.Atmos
             {
                 if (!transferDirections.TryGetValue(direction, out var amount)) continue;
                 var tile = _adjacentTiles[direction];
-                if (tile.Air == null) continue;
+                if (tile?.Air == null) continue;
                 if (amount > 0)
                 {
                     if (Air.TotalMoles < amount)
@@ -419,6 +423,8 @@ namespace Content.Server.Atmos
 
         private void FinalizeEqNeighbors(ref Dictionary<Direction,float> transferDirections)
         {
+            // TODO ATMOS infinite recursion here for some reason
+            return;
             foreach (var direction in Cardinal())
             {
                 if (!transferDirections.TryGetValue(direction, out var amount)) continue;

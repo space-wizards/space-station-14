@@ -38,7 +38,7 @@ namespace Content.Server.Atmos
         {
             _tiles.Clear();
 
-            foreach (var tile in _grid.GetAllTiles())
+            foreach (var tile in _grid.GetAllTiles(false))
             {
                 _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile, GetVolumeForCells(1)));
             }
