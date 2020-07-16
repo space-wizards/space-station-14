@@ -23,11 +23,10 @@ namespace Content.Client.GameObjects.Components.Chemistry
     public class ChemMasterBoundUserInterface : BoundUserInterface
     {
 #pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly ILocalizationManager? _localizationManager;
 #pragma warning restore 649
 
-        private ChemMasterWindow _window;
-        private ChemMasterBoundUserInterfaceState _lastState;
+        private ChemMasterWindow? _window;
 
         public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -73,7 +72,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
             base.UpdateState(state);
 
             var castState = (ChemMasterBoundUserInterfaceState)state;
-            _lastState = castState;
 
             _window?.UpdateState(castState); //Update window state
         }
