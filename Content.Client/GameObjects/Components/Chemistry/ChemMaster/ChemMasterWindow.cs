@@ -72,7 +72,8 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Container: ")},
+                            new Label {Text = _localizationManager.GetString("Container")},
+                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
                             (EjectButton = new Button {Text = _localizationManager.GetString("Eject")})
                         }
                     },
@@ -111,9 +112,10 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                     {
                         Children =
                         {
-                            new Label {Text = _localizationManager.GetString("Buffer Mode: ")},
-                            (BufferTransferButton = new Button {Text = _localizationManager.GetString("Transfer"), Pressed = BufferModeTransfer}),
-                            (BufferDiscardButton = new Button {Text = _localizationManager.GetString("Discard"), Pressed = !BufferModeTransfer})
+                            new Label {Text = _localizationManager.GetString("Buffer")},
+                            new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                            (BufferTransferButton = new Button {Text = _localizationManager.GetString("Transfer"), Pressed = BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenRight }}),
+                            (BufferDiscardButton = new Button {Text = _localizationManager.GetString("Discard"), Pressed = !BufferModeTransfer, StyleClasses = { StyleBase.ButtonOpenLeft }})
                         }
                     },
 
@@ -202,7 +204,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 Value = 1
             };
-            PillAmount.SetButtons(new List<int>() { -1 }, new List<int>() { +1 });
+            PillAmount.InitDefaultButtons();
             PillAmount.IsValid = (n) => (n > 0 && n <= 10);
             PillInfo.AddChild(PillAmount);
 
@@ -239,7 +241,7 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 Value = 1
             };
-            BottleAmount.SetButtons(new List<int>() { -1 }, new List<int>() { +1 });
+            BottleAmount.InitDefaultButtons();
             BottleAmount.IsValid = (n) => (n > 0 && n <= 10);
             BottleInfo.AddChild(BottleAmount);
 
@@ -254,9 +256,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             BottleInfo.AddChild(CreateBottles);
         }
 
-        private ChemButton MakeChemButton(string text, ReagentUnit amount, string id, bool isBuffer)
+        private ChemButton MakeChemButton(string text, ReagentUnit amount, string id, bool isBuffer, string styleClass)
         {
-            var button = new ChemButton(text, amount, id, isBuffer);
+            var button = new ChemButton(text, amount, id, isBuffer, styleClass);
             button.OnPressed += args
                 => OnChemButtonPressed?.Invoke(args, button);
             return button;
@@ -329,11 +331,11 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             //Padding
                             new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
 
-                            MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, false),
-                            MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, false),
-                            MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, false),
-                            MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, false),
-                            MakeChemButton("All", ReagentUnit.New(-1), reagent.ReagentId, false),
+                            MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, false, StyleBase.ButtonOpenRight),
+                            MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
+                            MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
+                            MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, false, StyleBase.ButtonOpenBoth),
+                            MakeChemButton("All", ReagentUnit.New(-1), reagent.ReagentId, false, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }
@@ -385,11 +387,11 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
                             //Padding
                             new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
 
-                            MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, true),
-                            MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, true),
-                            MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, true),
-                            MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, true),
-                            MakeChemButton("All", ReagentUnit.New(-1), reagent.ReagentId, true),
+                            MakeChemButton("1", ReagentUnit.New(1), reagent.ReagentId, true, StyleBase.ButtonOpenRight),
+                            MakeChemButton("5", ReagentUnit.New(5), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
+                            MakeChemButton("10", ReagentUnit.New(10), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
+                            MakeChemButton("25", ReagentUnit.New(25), reagent.ReagentId, true, StyleBase.ButtonOpenBoth),
+                            MakeChemButton("All", ReagentUnit.New(-1), reagent.ReagentId, true, StyleBase.ButtonOpenLeft),
                         }
                     });
                 }
@@ -402,9 +404,9 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
         public ReagentUnit Amount { get; set; }
         public bool isBuffer = true;
         public string Id { get; set; }
-        public ChemButton(string _text, ReagentUnit _amount, string _id, bool _isBuffer)
+        public ChemButton(string _text, ReagentUnit _amount, string _id, bool _isBuffer, string _styleClass)
         {
-            AddStyleClass(StyleClassButton);
+            AddStyleClass(_styleClass);
             Text = _text;
             Amount = _amount;
             Id = _id;
