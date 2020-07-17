@@ -127,7 +127,7 @@
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer2D
-    - type: BuckleVisualizer2D
+    - type: BuckleVisualizer
   - type: CombatMode
   - type: Teleportable
   - type: CharacterInfo
@@ -139,6 +139,8 @@
     range: 0.8
     arcwidth: 30
     arc: fist
+  - type: Grammar
+    proper: true
   - type: Disposable
 
 - type: entity
@@ -255,3 +257,6 @@
         - type: SpeciesVisualizer2D
 
     - type: HumanoidAppearance
+
+    - type: Grammar
+      proper: true

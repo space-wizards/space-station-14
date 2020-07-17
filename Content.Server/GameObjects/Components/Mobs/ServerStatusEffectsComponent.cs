@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

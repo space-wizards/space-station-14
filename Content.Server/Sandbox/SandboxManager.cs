@@ -1,3 +1,5 @@
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Sandbox;
@@ -6,6 +8,7 @@ using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -20,6 +23,7 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly IGameTicker _gameTicker;
         [Dependency] private readonly IPlacementManager _placementManager;
         [Dependency] private readonly IConGroupController _conGroupController;
+        [Dependency] private readonly IEntityManager _entityManager;
 #pragma warning restore 649
 
         private bool _isSandboxEnabled;
@@ -39,6 +43,7 @@ namespace Content.Server.Sandbox
         {
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus));
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn), SandboxRespawnReceived);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _gameTicker.OnRunLevelChanged += GameTickerOnOnRunLevelChanged;
@@ -92,6 +97,23 @@ namespace Content.Server.Sandbox
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
             _gameTicker.Respawn(player);
+        }
+
+        private void SandboxGiveAccessReceived(MsgSandboxGiveAccess message)
+        {
+            if(!IsSandboxEnabled)
+            {
+                return;
+            }
+
+            var player = _playerManager.GetSessionByChannel(message.MsgChannel);
+            if(player.AttachedEntity.TryGetComponent<HandsComponent>(out var hands))
+            {
+                ;
+                hands.PutInHandOrDrop(
+                    _entityManager.SpawnEntity("CaptainIDCard",
+                    player.AttachedEntity.Transform.GridPosition).GetComponent<ItemComponent>());
+            }
         }
 
         private void UpdateSandboxStatusForAll()

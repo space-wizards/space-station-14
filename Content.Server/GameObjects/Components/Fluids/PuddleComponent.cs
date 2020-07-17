@@ -9,6 +9,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    public class PuddleComponent : Component, IExamine
+    public class PuddleComponent : Component, IExamine, IMapInit
     {
         // Current design: Something calls the SpillHelper.Spill, that will either
         // A) Add to an existing puddle at the location (normalised to tile-center) or
@@ -137,10 +138,15 @@ namespace Content.Server.GameObjects.Components.Fluids
             var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
 
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
-            _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
 
             UpdateStatus();
+        }
+
+        void IMapInit.MapInit()
+        {
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
