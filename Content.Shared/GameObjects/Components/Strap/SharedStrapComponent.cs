@@ -28,11 +28,6 @@ namespace Content.Shared.GameObjects.Components.Strap
         public sealed override string Name => "Strap";
 
         public sealed override uint? NetID => ContentNetIDs.STRAP;
-
-        /// <summary>
-        /// The change in position that this strap makes to the strapped mob
-        /// </summary>
-        public abstract StrapPosition Position { get; protected set; }
     }
 
     [Serializable, NetSerializable]
