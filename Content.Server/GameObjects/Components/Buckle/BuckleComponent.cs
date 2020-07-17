@@ -248,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         ///     true if the owner was buckled, otherwise false even if the owner was
         ///     previously already buckled.
         /// </returns>
-        private bool TryBuckle(IEntity user, IEntity to)
+        public bool TryBuckle(IEntity user, IEntity to)
         {
             if (!CanBuckle(user, to, out var strap, out var popup))
             {
