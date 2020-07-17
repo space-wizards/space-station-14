@@ -1,0 +1,264 @@
+- type: entity
+  name: wirecutter
+  parent: BaseItem
+  id: Wirecutter
+  description: This kills the wire.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/wirecutters.rsi
+    layers:
+    - state: cutters-map
+    - state: cutters-cutty-thingy
+  - type: Icon
+    sprite: Objects/Tools/wirecutters.rsi
+    state: cutters-map
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Cutting
+    useSound: /Audio/Items/wirecutter.ogg
+  - type: RandomToolColor
+    state: cutters
+    colors:
+      blue: "#1861d5"
+      red: "#951710"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#d58c18"
+  - type: Item
+    sprite: Objects/Tools/wirecutters.rsi
+
+- type: entity
+  name: screwdriver
+  parent: BaseItem
+  id: Screwdriver
+  description: Industrial grade torque in a small screwdriving package
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/screwdriver.rsi
+    layers:
+      - state: screwdriver-map
+      - state: screwdriver-screwybits
+
+  - type: Icon
+    sprite: Objects/Tools/screwdriver.rsi
+    state: screwdriver-map
+
+  - type: Item
+    sprite: Objects/Tools/screwdriver.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Screwing
+    useSoundCollection: Screwdriver
+  - type: RandomToolColor
+    state: screwdriver
+    colors:
+      blue: "#1861d5"
+      red: "#ff0000"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#ffa500"
+
+- type: entity
+  name: welding tool
+  parent: BaseItem
+  id: Welder
+  description: Melts anything as long as it's fueled, don't forget your eye protection!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/welder.rsi
+    layers:
+    - state: welder
+    - state: welder_flame
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: Objects/Tools/welder.rsi
+    state: welder
+  - type: Item
+    Size: 10
+    sprite: Objects/Tools/welder.rsi
+    HeldPrefix: off
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: ItemStatus
+  - type: Solution
+    maxVol: 100
+    caps: 9
+    contents:
+      reagents:
+        - ReagentId: chem.WeldingFuel
+          Quantity: 100
+  - type: Welder
+    useSoundCollection: Welder
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: orange
+
+- type: entity
+  name: wrench
+  parent: BaseItem
+  id: Wrench
+  description: A common tool for assembly and disassembly, righty tighty lefty loosey
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Tools/wrench.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/wrench.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Anchoring
+    useSound: /Audio/Items/ratchet.ogg
+
+- type: entity
+  name: crowbar
+  parent: BaseItem
+  id: Crowbar
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/crowbar.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/Items/crowbar.ogg
+  - type: TilePrying
+
+- type: entity
+  name: emergency crowbar
+  parent: BaseItem
+  id: CrowbarRed
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/crowbar_red.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Tools/crowbar_red.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/crowbar_red.rsi
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/Items/crowbar.ogg
+  - type: TilePrying
+
+- type: entity
+  name: multitool
+  parent: BaseItem
+  id: Multitool
+  description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+  - type: Icon
+    sprite: Objects/Tools/multitool.rsi
+    state: multitool
+  - type: Item
+    sprite: Objects/Tools/multitool.rsi
+  - type: Tool
+    qualities:
+      - Multitool
+
+- type: entity
+  name: jaws of life
+  parent: BaseItem
+  id: JawsOfLife
+  description: A set of jaws of life, compressed through the magic of science.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/jaws_of_life.rsi
+      state: jaws_pry
+    - type: Icon
+      sprite: Objects/Tools/jaws_of_life.rsi
+      state: jaws_pry
+    - type: Item
+      sprite: Objects/Tools/jaws_of_life.rsi
+    - type: TilePrying
+    - type: Tool
+      qualities:
+        - Prying
+      statusShowBehavior: true
+    - type: MultiTool
+      tools:
+        - behavior: Prying
+          state: jaws_pry
+          useSound: /Audio/Items/jaws_pry.ogg
+          changeSound: /Audio/Items/change_jaws.ogg
+        - behavior: Cutting
+          state: jaws_cutter
+          useSound: /Audio/Items/jaws_cut.ogg
+          changeSound: /Audio/Items/change_jaws.ogg
+
+- type: entity
+  name: power drill
+  parent: BaseItem
+  id: PowerDrill
+  description: A simple powered hand drill.
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/drill.rsi
+      state: drill_screw
+    - type: Icon
+      sprite: Objects/Tools/drill.rsi
+      state: drill_screw
+    - type: Item
+      sprite: Objects/Tools/drill.rsi
+    - type: Tool
+      qualities:
+        - Screwing
+      statusShowBehavior: true
+    - type: MultiTool
+      tools:
+        - behavior: Screwing
+          state: drill_screw
+          useSound: /Audio/Items/drill_use.ogg
+          changeSound: /Audio/Items/change_drill.ogg
+        - behavior: Anchoring
+          state: drill_bolt
+          useSound: /Audio/Items/drill_use.ogg
+          changeSound: /Audio/Items/change_drill.ogg
+
+- type: entity
+  name: RCD
+  parent: BaseItem
+  id: RCD
+  description: An advanced construction device which can place floors / walls down quickly.
+  components:
+  - type: RCD
+  - type: UseDelay
+    delay: 1.0
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+  - type: Icon
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi
