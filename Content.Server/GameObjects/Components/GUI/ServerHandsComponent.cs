@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Physics;
 using Content.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -36,6 +38,8 @@ namespace Content.Server.GameObjects
 
         private string _activeIndex;
 
+        private PhysicsComponent _pulledObject = null;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public string ActiveIndex
         {
@@ -51,6 +55,8 @@ namespace Content.Server.GameObjects
                 Dirty();
             }
         }
+
+        [ViewVariables] public bool isPulling => _pulledObject != null;
 
         [ViewVariables] private readonly Dictionary<string, ContainerSlot> _hands = new Dictionary<string, ContainerSlot>();
         [ViewVariables] private List<string> _orderedHands = new List<string>();
@@ -152,6 +158,11 @@ namespace Content.Server.GameObjects
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
+
+            if (item.Owner.Uid == _pulledObject.Owner.Uid)
+            {
+                StopPulling();
+            }
 
             return success;
         }
@@ -474,6 +485,28 @@ namespace Content.Server.GameObjects
             }
 
             return false;
+        }
+
+        public void StartPulling(PullableComponent pullable)
+        {
+            if (isPulling)
+            {
+                (_pulledObject.Controller as PullController).StopPull();
+            }
+            _pulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
+            (_pulledObject.Controller as PullController).StartPull(Owner.GetComponent<PhysicsComponent>());
+        }
+
+        public void StopPulling()
+        {
+            (_pulledObject.Controller as PullController).StopPull();
+            _pulledObject = null;
+        }
+
+        public void MovePulledObject(GridCoordinates coords)
+        {
+            if (_pulledObject == null) return;
+            (_pulledObject.Controller as PullController).MoveTo(coords);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

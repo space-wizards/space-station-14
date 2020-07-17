@@ -103,6 +103,15 @@ binds:
   key: MouseLeft
   canFocus: true
   mod1: Control
+- function: TryPullObject
+  type: state
+  canFocus: true
+  key: MouseLeft
+  mod1: Alt
+- function: MovePulledObject
+  type: state
+  key: MouseRight
+  mod1: Alt
 - function: OpenContextMenu
   type: state
   key: MouseRight

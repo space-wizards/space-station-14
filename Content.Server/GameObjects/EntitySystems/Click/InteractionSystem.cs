@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Physics;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystemMessages;
@@ -14,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -48,6 +51,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
+                .Bind(ContentKeyFunctions.TryPullObject, new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
         }
 
@@ -219,6 +223,49 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             UserInteraction(userEntity, coords, uid);
 
             return true;
+        }
+
+        private bool HandleTryPullObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!_mapManager.GridExists(coords.GridID))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            var player = (session as IPlayerSession).AttachedEntity;
+
+            if (!EntityManager.TryGetEntity(uid, out var pulledObject)) return false;
+            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull)) return false;
+            if (!player.TryGetComponent<HandsComponent>(out var hands)) return false;
+            var dist = player.Transform.GridPosition.Position - pulledObject.Transform.GridPosition.Position;
+            if (dist.LengthSquared > InteractionRangeSquared)
+            {
+                return false;
+            }
+
+            var physics = pull.Owner.GetComponent<PhysicsComponent>();
+
+            physics.SetController<PullController>();
+
+            if (!((PullController)physics.Controller).GettingPulled)
+            {
+                hands.StartPulling(pull);
+            }
+            else
+            {
+                hands.StopPulling();
+            }
+
+            return false;
         }
 
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)

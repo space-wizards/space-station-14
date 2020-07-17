@@ -48,6 +48,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
+                .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Register<HandsSystem>();
         }
 
@@ -190,13 +191,16 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             if (plyEnt == null || !plyEnt.IsValid())
                 return;
 
-            if (!plyEnt.TryGetComponent(out HandsComponent handsComp) || !plyEnt.TryGetComponent(out InventoryComponent inventoryComp))
+            if (!plyEnt.TryGetComponent(out HandsComponent handsComp) ||
+                !plyEnt.TryGetComponent(out InventoryComponent inventoryComp))
                 return;
 
             if (!inventoryComp.TryGetSlotItem(equipementSlot, out ItemComponent equipmentItem)
                 || !equipmentItem.Owner.TryGetComponent<ServerStorageComponent>(out var storageComponent))
             {
-                _notifyManager.PopupMessage(plyEnt, plyEnt, Loc.GetString("You have no {0} to take something out of!", EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                _notifyManager.PopupMessage(plyEnt, plyEnt,
+                    Loc.GetString("You have no {0} to take something out of!",
+                        EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
                 return;
             }
 
@@ -210,7 +214,9 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    _notifyManager.PopupMessage(plyEnt, plyEnt, Loc.GetString("There's nothing in your {0} to take out!", EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
+                    _notifyManager.PopupMessage(plyEnt, plyEnt,
+                        Loc.GetString("There's nothing in your {0} to take out!",
+                            EquipmentSlotDefines.SlotNames[equipementSlot].ToLower()));
                 }
                 else
                 {
@@ -219,6 +225,16 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                         handsComp.PutInHandOrDrop(lastStoredEntity.GetComponent<ItemComponent>());
                 }
             }
+        }
+
+        private bool HandleMovePulledObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            var plyEnt = (session as IPlayerSession).AttachedEntity;
+            if (!plyEnt.TryGetComponent<HandsComponent>(out var hands)) return false;
+
+            hands.MovePulledObject(coords);
+
+            return false;
         }
     }
 }
