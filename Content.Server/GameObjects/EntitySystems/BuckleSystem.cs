@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Buckle;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;

@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
             var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
 
             return true;
         }

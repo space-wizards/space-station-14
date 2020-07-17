@@ -244,3 +244,20 @@
           state: drill_bolt
           useSound: /Audio/Items/drill_use.ogg
           changeSound: /Audio/Items/change_drill.ogg
+- type: entity
+  name: RCD
+  parent: BaseItem
+  id: RCD
+  description: An advanced construction device which can place floors / walls down quickly.
+  components:
+  - type: RCD
+  - type: UseDelay
+    delay: 1.0
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+  - type: Icon
+    sprite: Objects/Tools/rcd.rsi
+    state: rcd
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi

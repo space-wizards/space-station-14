@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private List<OverlayContainer> _currentEffects = new List<OverlayContainer>();
 
         [ViewVariables(VVAccess.ReadOnly)]
-        private List<OverlayContainer> ActiveOverlays
+        public List<OverlayContainer> ActiveOverlays
         {
             get => _currentEffects;
             set => SetEffects(value);
@@ -61,11 +61,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                     UpdateOverlays();
                     break;
                 case PlayerDetachedMsg _:
-                    foreach (var overlay in ActiveOverlays)
-                    {
-                        _overlayManager.RemoveOverlay(overlay.ID);
-                    }
-
+                    ActiveOverlays.ForEach(o => _overlayManager.RemoveOverlay(o.ID));
                     break;
             }
         }

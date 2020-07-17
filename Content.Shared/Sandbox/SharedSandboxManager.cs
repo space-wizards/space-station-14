@@ -47,5 +47,24 @@ namespace Content.Shared.Sandbox
             {
             }
         }
+
+        protected sealed class MsgSandboxGiveAccess : NetMessage
+        {
+             #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgSandboxGiveAccess);
+            public MsgSandboxGiveAccess(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+            }
+
+        }
     }
 }

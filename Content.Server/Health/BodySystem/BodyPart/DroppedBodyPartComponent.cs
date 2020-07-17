@@ -109,7 +109,7 @@ namespace Content.Server.BodySystem
             }
             else //If surgery cannot be performed, show message saying so.
             {
-                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, Loc.GetString("You see no way to install the {0}.", Owner.Name));
+                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, Loc.GetString("You see no way to install {0:theName}.", Owner));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Content.Server.BodySystem
             //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to attach the {0} anymore.", Owner.Name));
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
             }
             string target = targetObject as string;
             if (!_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
@@ -131,7 +131,7 @@ namespace Content.Server.BodySystem
             }
             else
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You attach the {0}.", ContainedBodyPart.Name));
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You attach {0:theName}.", ContainedBodyPart));
             }
         }
 

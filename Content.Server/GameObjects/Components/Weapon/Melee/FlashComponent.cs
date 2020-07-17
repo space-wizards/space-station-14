@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
@@ -37,7 +36,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration = 5000 / 3;
         [ViewVariables(VVAccess.ReadWrite)] private float _slowTo = 0.75f;
         private bool _flashing;
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private int Uses
         {
@@ -106,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    _notifyManager.PopupMessage(Owner, user, "The flash burns out!");
+                    _notifyManager.PopupMessage(Owner, user, Loc.GetString("The flash burns out!"));
                 }
                 else if (!_flashing)
                 {
@@ -160,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                _notifyManager.PopupMessage(user, entity, $"{user.Name} blinds you with the {Owner.Name}");
+                _notifyManager.PopupMessage(user, entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
             }
         }
 
@@ -174,8 +172,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (inDetailsRange)
             {
-                message.AddMarkup(_localizationManager.GetString(
-                    $"The flash has [color=green]{Uses}[/color] {_localizationManager.GetPluralString("use", "uses", Uses)} remaining."));
+                message.AddMarkup(
+                    _localizationManager.GetString(
+                        "The flash has [color=green]{0}[/color] {1} remaining.",
+                        Uses,
+                        _localizationManager.GetPluralString("use", "uses", Uses)
+                    )
+                );
             }
         }
     }
