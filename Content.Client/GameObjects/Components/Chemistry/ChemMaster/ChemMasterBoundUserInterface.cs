@@ -1,17 +1,10 @@
 #nullable enable
-using System.Collections.Generic;
-using System.Linq;
 using Content.Client.GameObjects.Components.Chemistry.ChemMaster;
-using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Chemistry.SharedChemMasterComponent;
 
 namespace Content.Client.GameObjects.Components.Chemistry
@@ -22,10 +15,6 @@ namespace Content.Client.GameObjects.Components.Chemistry
     [UsedImplicitly]
     public class ChemMasterBoundUserInterface : BoundUserInterface
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-#pragma warning restore 649
-
         private ChemMasterWindow? _window;
 
         public ChemMasterBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -44,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
             //Setup window layout/elements
             _window = new ChemMasterWindow
             {
-                Title = _localizationManager.GetString("ChemMaster 4000"),
+                Title = Loc.GetString("ChemMaster 4000"),
             };
 
             _window.OpenCentered();
