@@ -30369,8 +30369,7 @@ entities:
     pos: -23.5,-10.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -31112,8 +31111,7 @@ entities:
     pos: -22.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -31204,8 +31202,7 @@ entities:
     pos: -12.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -31244,8 +31241,7 @@ entities:
   - parent: 0
     pos: -27.5,-10.5
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -31311,8 +31307,7 @@ entities:
     pos: 0.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -31768,8 +31763,7 @@ entities:
     pos: 12.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -32082,8 +32076,7 @@ entities:
     pos: 3.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -32170,8 +32163,7 @@ entities:
     pos: 2.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -32769,8 +32761,7 @@ entities:
     pos: 34.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -32797,8 +32788,7 @@ entities:
     pos: 12.5,-1.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -32926,8 +32916,7 @@ entities:
     pos: 24.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -32993,8 +32982,7 @@ entities:
     pos: 2.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -33105,8 +33093,7 @@ entities:
     pos: 2.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -33224,8 +33211,7 @@ entities:
     pos: -28.5,3.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -33579,8 +33565,7 @@ entities:
     pos: -17.5,-15.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container
@@ -33684,8 +33669,7 @@ entities:
     pos: -10.5,-15.5
     rot: 3.141592653589793 rad
     type: Transform
-  - angles: []
-    type: DisposalJunction
+  - type: DisposalJunction
   - containers:
       DisposalJunction:
         type: Robust.Server.GameObjects.Components.Container.Container

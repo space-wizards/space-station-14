@@ -50,10 +50,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.ExposeData(serializer);
 
-            var degrees = new List<double>();
-            serializer.DataField(ref degrees, "angles", null);
-
-            _angles = degrees.Select(MathHelper.DegreesToRadians).ToArray();
+            if (serializer.Reading)
+            {
+                var degrees = new List<double>();
+                serializer.DataField(ref degrees, "angles", null);
+                _angles = degrees.Select(MathHelper.DegreesToRadians).ToArray();
+            }
         }
     }
 }

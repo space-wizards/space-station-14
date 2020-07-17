@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -229,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var directions = string.Join(", ", ConnectableDirections());
 
-            IoCManager.Resolve<IServerNotifyManager>().PopupMessage(Owner, entity, Loc.GetString("{0}", directions));
+            Owner.PopupMessage(entity, Loc.GetString("{0}", directions));
         }
 
         private void UpdateVisualState()
