@@ -92,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        public bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
+        public virtual bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
         {
             if (user == null)
             {
