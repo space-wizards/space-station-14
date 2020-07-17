@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    _notifyManager.PopupMessage(Owner, user, "The flash burns out!");
+                    _notifyManager.PopupMessage(Owner, user, Loc.GetString("The flash burns out!"));
                 }
                 else if (!_flashing)
                 {
@@ -151,7 +151,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                _notifyManager.PopupMessage(user, entity, $"{user.Name} blinds you with the {Owner.Name}");
+                _notifyManager.PopupMessage(user, entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
             }
         }
 
@@ -166,7 +166,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             if (inDetailsRange)
             {
                 message.AddMarkup(_localizationManager.GetString(
-                    $"The flash has [color=green]{Uses}[/color] uses remaining."));
+                    "The flash has [color=green]{0}[/color] uses remaining.", Uses));
             }
         }
     }
