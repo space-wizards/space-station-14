@@ -85,6 +85,9 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
             if (!_entityManager.TryGetEntity(req.EntityUid, out var entity))
             {
+                var emptyResponse = new VerbsResponseMessage(new VerbsResponseMessage.NetVerbData[] {}, req.EntityUid);
+                RaiseNetworkEvent(emptyResponse, player.ConnectedClient);
+
                 return;
             }
 
