@@ -28,6 +28,12 @@ namespace Content.Server.Interfaces.Atmos
         TileAtmosphere GetTile(MapIndices indices);
 
         /// <summary>
+        ///     Pries the tile at the specified position.
+        /// </summary>
+        /// <param name="indices"></param>
+        void PryTile(MapIndices indices);
+
+        /// <summary>
         /// Notify the atmosphere system that something at a given position may have changed.
         /// </summary>
         /// <param name="indices">Position</param>
@@ -68,9 +74,13 @@ namespace Content.Server.Interfaces.Atmos
         /// <returns></returns>
         Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices);
 
+        int HighPressureDeltaCount { get; }
+
         void Update(float frameTime);
         void AddActiveTile(MapIndices indices);
         void RemoveActiveTile(MapIndices indices);
+        void AddHighPressureDelta(MapIndices indices);
+        bool HasHighPressureDelta(MapIndices indices);
         void AddExcitedGroup(WeakReference<ExcitedGroup> excitedGroup);
         void RemoveExcitedGroup(WeakReference<ExcitedGroup> excitedGroup);
     }

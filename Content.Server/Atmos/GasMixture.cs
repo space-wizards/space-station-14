@@ -44,7 +44,7 @@ namespace Content.Server.Atmos
         private Dictionary<string, float> _contents = new Dictionary<string, float>();
         private Dictionary<string, float> _contentsArchived = new Dictionary<string, float>();
 
-        public Dictionary<ReagentPrototype, float> Gasses =>
+        public Dictionary<ReagentPrototype, float> Gases =>
             _contents.ToDictionary(x => GetReagent(x.Key), x => x.Value);
 
         public bool Immutable { get; private set; }
@@ -326,7 +326,7 @@ namespace Content.Server.Atmos
                     return 1;
 
                 // This actually returned the index of the gas in the original implementation,
-                // but since we don't index gasses numerically anymore... Whoops.
+                // but since we don't index gases numerically anymore... Whoops.
             }
 
             if (moles > Atmospherics.MinimumMolesDeltaToMove)

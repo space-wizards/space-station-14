@@ -5,8 +5,11 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.Maps;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -22,11 +25,29 @@ namespace Content.Server.Atmos
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>();
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
+        private List<TileAtmosphere> _highPressureDelta = new List<TileAtmosphere>();
+
         public GridAtmosphereManager(IMapGrid grid)
         {
             _grid = grid;
         }
 
+        public void PryTile(MapIndices indices)
+        {
+            if (IsSpace(indices) || IsAirBlocked(indices)) return;
+
+            var tile = GetTile(indices).Tile;
+
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+
+            var underplating = tileDefinitionManager["underplating"];
+            _grid.SetTile(indices, new Tile(underplating.TileId));
+
+            //Actually spawn the relevant tile item at the right position and give it some offset to the corner.
+            var tileItem = IoCManager.Resolve<IServerEntityManager>().SpawnEntity(tileDef.ItemDropPrototypeName, new GridCoordinates(indices.X, indices.Y, _grid));
+            tileItem.Transform.WorldPosition += (0.2f, 0.2f);
+        }
 
         public void Initialize()
         {
@@ -81,6 +102,14 @@ namespace Content.Server.Atmos
 
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
+
+                foreach (var direction in Cardinal())
+                {
+                    var otherIndices = indices.Offset(direction);
+                    var otherTile = GetTile(otherIndices);
+                    AddActiveTile(otherIndices);
+                    otherTile?.UpdateAdjacent(direction.GetOpposite());
+                }
             }
 
             _invalidatedCoords.Clear();
@@ -97,6 +126,20 @@ namespace Content.Server.Atmos
         public void RemoveActiveTile(MapIndices indices)
         {
             _activeTiles.Remove(_tiles[indices]);
+        }
+
+        /// <inheritdoc />
+        public void AddHighPressureDelta(MapIndices indices)
+        {
+            var tile = GetTile(indices);
+            if (tile == null) return;
+            _highPressureDelta.Add(tile);
+        }
+
+        /// <inheritdoc />
+        public bool HasHighPressureDelta(MapIndices indices)
+        {
+            return _highPressureDelta.Contains(GetTile(indices));
         }
 
         /// <inheritdoc />
@@ -152,6 +195,9 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
+        public int HighPressureDeltaCount => _highPressureDelta.Count;
+
+        /// <inheritdoc />
         public float GetVolumeForCells(int cellCount)
         {
             return _grid.TileSize * cellCount * Atmospherics.CellVolume;
@@ -167,6 +213,17 @@ namespace Content.Server.Atmos
             ProcessExcitedGroups();
 
             _updateCounter++;
+        }
+
+        public void ProcessHighPressureDelta()
+        {
+            foreach (var tile in _highPressureDelta.ToArray())
+            {
+                tile.HighPressureMovements();
+                tile.PressureDifference = 0f;
+                tile.PressureSpecificTarget = null;
+                _highPressureDelta.Remove(tile);
+            }
         }
 
         public void ProcessTileEqualize()

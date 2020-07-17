@@ -30,13 +30,14 @@ namespace Content.Server.GameObjects.EntitySystems
         public void SetTileOverlay(GridId gridIndex, MapIndices indices, SpriteSpecifier specifier)
         {
             EnsureListExists(gridIndex, indices);
-            _overlay[gridIndex][indices].Add(specifier);
+            var needsUpdate = _overlay[gridIndex][indices].Add(specifier);
 
             // TODO: Not send this to everyone.
-            RaiseNetworkEvent(new TileOverlayMessage(new[]
-            {
-                GetData(gridIndex, indices)
-            }));
+            if(needsUpdate)
+                RaiseNetworkEvent(new TileOverlayMessage(new[]
+                {
+                    GetData(gridIndex, indices)
+                }));
         }
 
         public void SetTileOverlay(GridId gridIndex, MapIndices indices, SpriteSpecifier[] specifiers, bool clearList = true)
@@ -47,16 +48,20 @@ namespace Content.Server.GameObjects.EntitySystems
             if(clearList)
                 list.Clear();
 
+            var needsUpdate = false;
+
             foreach (var specifier in specifiers)
             {
-                list.Add(specifier);
+                needsUpdate |= list.Add(specifier);
             }
 
+            return;
             // TODO: Not send this to everyone.
-            RaiseNetworkEvent(new TileOverlayMessage(new[]
-            {
-                GetData(gridIndex, indices)
-            }));
+            if(needsUpdate)
+                RaiseNetworkEvent(new TileOverlayMessage(new[]
+                {
+                    GetData(gridIndex, indices)
+                }));
         }
 
         private void EnsureListExists(GridId gridIndex, MapIndices indices)
