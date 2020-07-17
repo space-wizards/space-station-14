@@ -1,7 +1,7 @@
 using System;
 using Content.Server.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects;
+using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -12,20 +12,20 @@ namespace Content.Server.Physics
     {
         private const float DistBeforePull = 1.0f;
 
-        private const float DistBeforeStopPull = InteractionSystem.InteractionRange;
+        private const float DistBeforeStopPull = SharedInteractionSystem.InteractionRange;
 
         private PhysicsComponent _controlledComponent;
 
-        private PhysicsComponent _puller = null;
+        private PhysicsComponent _puller;
 
         public bool GettingPulled => _puller != null;
 
-        public override SharedPhysicsComponent ControlledComponent
+        public override PhysicsComponent ControlledComponent
         {
             set => _controlledComponent = value as PhysicsComponent;
         }
 
-        public void StartPull(SharedPhysicsComponent pull)
+        public void StartPull(PhysicsComponent pull)
         {
             _puller = (PhysicsComponent) pull;
         }

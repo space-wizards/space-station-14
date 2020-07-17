@@ -491,22 +491,22 @@ namespace Content.Server.GameObjects
         {
             if (isPulling)
             {
-                (_pulledObject.Controller as PullController).StopPull();
+                ((PullController) _pulledObject.Controller).StopPull();
             }
             _pulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
-            (_pulledObject.Controller as PullController).StartPull(Owner.GetComponent<PhysicsComponent>());
+            ((PullController) _pulledObject.Controller).StartPull(Owner.GetComponent<PhysicsComponent>());
         }
 
         public void StopPulling()
         {
-            (_pulledObject.Controller as PullController).StopPull();
+            ((PullController) _pulledObject.Controller).StopPull();
             _pulledObject = null;
         }
 
         public void MovePulledObject(GridCoordinates coords)
         {
             if (_pulledObject == null) return;
-            (_pulledObject.Controller as PullController).MoveTo(coords);
+            ((PullController) _pulledObject.Controller).MoveTo(coords);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
