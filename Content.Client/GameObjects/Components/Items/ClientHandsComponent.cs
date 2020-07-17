@@ -123,7 +123,7 @@ namespace Content.Client.GameObjects.Components.Items
                 if (cast.Hands.All(newHand => newHand.Name != currentHand.Name))
                 {
                     _hands.Remove(currentHand);
-                    _gui?.Remove(currentHand);
+                    _gui?.RemoveHand(currentHand);
                     HideHand(currentHand);
                 }
             }

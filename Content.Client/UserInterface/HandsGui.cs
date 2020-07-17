@@ -124,29 +124,43 @@ namespace Content.Client.UserInterface
             // hand.Panel = panel; // TODO
         }
 
-        // TODO: Call when hands are removed
-        private void RemoveHand(Hand hand)
+        public void RemoveHand(Hand hand)
         {
+            var hBox = GetHandsContainer();
+
             var button = hand.Button;
-            if (button == null)
+            if (button != null)
             {
-                throw new InvalidOperationException($"Hand {hand.Name} has no button");
+                if (button.Children.Contains(_activeHandRect))
+                {
+                    button.RemoveChild(_activeHandRect);
+                }
+
+                hBox.RemoveChild(button);
             }
 
             var panel = hand.Panel;
-            if (panel == null)
+            if (panel != null)
             {
-                throw new InvalidOperationException($"Hand {hand.Name} has no panel");
+                hBox.RemoveChild(panel);
             }
 
-            if (button.Children.Contains(_activeHandRect))
+            if (hand.Location == HandLocation.Middle ||
+                !TryGetHands(out var hands))
             {
-                button.RemoveChild(_activeHandRect);
+                return;
             }
 
-            var hBox = GetHandsContainer();
-            hBox.RemoveChild(button);
-            hBox.RemoveChild(panel);
+            foreach (var handsHand in hands.Hands)
+            {
+                if (handsHand.Location != HandLocation.Middle)
+                {
+                    continue;
+                }
+
+                handsHand.Location = hand.Location;
+                break;
+            }
         }
 
         /// <summary>
@@ -160,27 +174,6 @@ namespace Content.Client.UserInterface
 
             var entity = _playerManager?.LocalPlayer?.ControlledEntity;
             return entity != null && entity.TryGetComponent(out hands);
-        }
-
-        public void Remove(Hand hand)
-        {
-            GetHandsContainer().RemoveChild(hand.Button);
-            if (hand.Location != HandLocation.Middle)
-            {
-                if (TryGetHands(out var hands))
-                {
-                    foreach (var handsHand in hands.Hands)
-                    {
-                        if (handsHand.Location != HandLocation.Middle)
-                        {
-                            continue;
-                        }
-
-                        handsHand.Location = hand.Location;
-                        break;
-                    }
-                }
-            }
         }
 
         public void UpdateHandIcons()
