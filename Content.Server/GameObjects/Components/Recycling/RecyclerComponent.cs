@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Recycling;
 using Robust.Server.GameObjects;
@@ -29,6 +31,10 @@ namespace Content.Server.GameObjects.Components.Recycling
         [ViewVariables]
         private int _efficiency; // TODO
 
+        private bool Powered =>
+            !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            receiver.Powered;
+
         private void Bloodstain()
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -45,22 +51,40 @@ namespace Content.Server.GameObjects.Components.Recycling
             }
         }
 
+        private bool CanGib(IEntity entity)
+        {
+            return entity.HasComponent<SpeciesComponent>() &&
+                   !_safe &&
+                   Powered;
+        }
+
+        private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)
+        {
+            prototype = null;
+
+            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
+            var entityId = entity.MetaData.EntityPrototype?.ID;
+
+            if (entityId == null ||
+                !constructionSystem.CraftRecipes.TryGetValue(entityId, out prototype))
+            {
+                return false;
+            }
+
+            return Powered;
+        }
+
         private void Recycle(IEntity entity)
         {
             // TODO: Prevent collision with recycled items
-            var species = entity.HasComponent<SpeciesComponent>();
-            if (species && !_safe)
+            if (CanGib(entity))
             {
                 entity.Delete(); // TODO: Gib
                 Bloodstain();
                 return;
             }
 
-            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
-            var entityId = entity.MetaData.EntityPrototype?.ID;
-
-            if (entityId == null ||
-                !constructionSystem.CraftRecipes.TryGetValue(entityId, out var prototype))
+            if (!CanRecycle(entity, out var prototype))
             {
                 return;
             }
@@ -68,7 +92,9 @@ namespace Content.Server.GameObjects.Components.Recycling
             var recyclerPosition = Owner.Transform.MapPosition;
             var lastStep = prototype.Stages[^2].Forward as ConstructionStepMaterial;
 
+            var constructionSystem = EntitySystem.Get<ConstructionSystem>();
             constructionSystem.SpawnIngredient(recyclerPosition, lastStep);
+
             entity.Delete();
         }
 

@@ -36,3 +36,4 @@
   - type: Recycler
   - type: Conveyor
     angle: 90
+  - type: PowerReceiver
