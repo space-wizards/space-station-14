@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
@@ -43,7 +42,6 @@ namespace Content.Shared.Physics
 
         public void MoveTo(GridCoordinates puller, GridCoordinates to)
         {
-
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             if (!puller.InRange(mapManager, to, SharedInteractionSystem.InteractionRange))
@@ -55,14 +53,17 @@ namespace Content.Shared.Physics
             var ray = new CollisionRay(puller.Position, dir.Normalized, (int) CollisionGroup.Impassable);
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
             var rayResults = physicsManager.IntersectRayWithPredicate(puller.ToMap(mapManager).MapId, ray, dir.Length).ToList();
-
             var position = rayResults.Count > 0
                 ? new GridCoordinates(rayResults[0].HitPos, to.GridID)
-                : new GridCoordinates((float) (Math.Floor(to.X) + 0.5), (float) (Math.Floor(to.Y) + 0.5), to.GridID);
+                : to;
 
             var dist = _puller.Owner.Transform.GridPosition.Position - position.Position;
-            if (Math.Sqrt(dist.LengthSquared) > DistBeforeStopPull) return;
-            if (Math.Sqrt(dist.LengthSquared) < 0.25f) return;
+
+            if (Math.Sqrt(dist.LengthSquared) > DistBeforeStopPull ||
+                Math.Sqrt(dist.LengthSquared) < 0.25f)
+            {
+                return;
+            }
 
             _controlledComponent.Owner.Transform.GridPosition = position;
         }
@@ -75,6 +76,7 @@ namespace Content.Shared.Physics
 
             // Are we outside of pulling range?
             var dist = _puller.Owner.Transform.WorldPosition - _controlledComponent.Owner.Transform.WorldPosition;
+
             if (dist.Length > DistBeforeStopPull)
             {
                 _puller.Owner.GetComponent<ISharedHandsComponent>().StopPulling();
