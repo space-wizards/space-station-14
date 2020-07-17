@@ -8,7 +8,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Physics
 {
-    public class PullController: VirtualController
+    public class PullController : VirtualController
     {
         private const float DistBeforePull = 1.0f;
 
@@ -27,7 +27,7 @@ namespace Content.Server.Physics
 
         public void StartPull(PhysicsComponent pull)
         {
-            _puller = (PhysicsComponent) pull;
+            _puller = pull;
         }
 
         public void StopPull()
