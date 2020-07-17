@@ -24,10 +24,13 @@ using Robust.Shared.Audio;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.Health.BodySystem;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -212,9 +215,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return false;
             }
 
-            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
+            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand?.Owner;
 
-            if(itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            if (itemEntity == null)
+            {
+                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You have no active hand!"));
+                return false;
+            }
+
+            if (itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
             {
                 if (!itemEntity.TryGetComponent<SolutionComponent>(out var attackSolution)
                     || !attackSolution.CanPourOut)

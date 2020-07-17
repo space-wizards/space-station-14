@@ -16,6 +16,9 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Diagnostics;
+using Content.Server.Health.BodySystem;
+using Content.Server.Health.BodySystem.BodyParts;
+using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.Localization;
 

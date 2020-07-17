@@ -4,10 +4,12 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.BodySystem;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -32,13 +34,13 @@ namespace Content.Server.GameObjects.Components.GUI
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 #pragma warning restore 649
 
-        private string _activeIndex;
+        private string? _activeIndex;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ActiveIndex
+        public string? ActiveIndex
         {
             get => _activeIndex;
             set
@@ -59,7 +61,7 @@ namespace Content.Server.GameObjects.Components.GUI
         public const float PickupRange = 2;
 
         [CanBeNull]
-        public Hand this[string slotName] => _hands.FirstOrDefault(hand => hand.Name == slotName);
+        public Hand this[string? slotName] => _hands.FirstOrDefault(hand => hand.Name == slotName);
 
         // TODO: This does not serialize what objects are held.
         protected override void Startup()
@@ -96,14 +98,19 @@ namespace Content.Server.GameObjects.Components.GUI
             return this[index]?.Entity?.GetComponent<ItemComponent>();
         }
 
-        public ItemComponent GetActiveHand => GetHand(ActiveIndex);
+        public ItemComponent? GetActiveHand => ActiveIndex == null
+            ? null
+            : GetHand(ActiveIndex);
 
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
         /// </summary>
         public IEnumerable<string> ActivePriorityEnumerable()
         {
-            yield return ActiveIndex;
+            if (ActiveIndex != null)
+            {
+                yield return ActiveIndex;
+            }
 
             foreach (var hand in _hands)
             {
@@ -175,17 +182,20 @@ namespace Content.Server.GameObjects.Components.GUI
             return this[index]?.Container.CanInsert(item.Owner) == true;
         }
 
-        public string FindHand(IEntity entity)
+        public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
         {
+            handName = null;
+
             foreach (var hand in _hands)
             {
                 if (hand.Entity == entity)
                 {
-                    return hand.Name;
+                    handName = hand.Name;
+                    return true;
                 }
             }
 
-            return null;
+            return false;
         }
 
         public bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true)
@@ -229,8 +239,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var slot = FindHand(entity);
-            if (slot == null)
+            if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
@@ -284,8 +293,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var slot = FindHand(entity);
-            if (slot == null)
+            if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
@@ -351,8 +359,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var slot = FindHand(entity);
-            if (slot == null)
+            if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
@@ -452,11 +459,6 @@ namespace Content.Server.GameObjects.Components.GUI
             return this[index] != null;
         }
 
-        /// <summary>
-        ///     Get the name of the slot passed to the inventory component.
-        /// </summary>
-        private string HandSlotName(string index) => $"_hand_{index}";
-
         public override ComponentState GetComponentState()
         {
             var hands = _hands.Select(x => x.ToShared()).ToList();
@@ -503,7 +505,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 

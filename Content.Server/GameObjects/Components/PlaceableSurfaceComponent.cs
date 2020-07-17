@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects;

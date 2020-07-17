@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Health.BodySystem;
+using Content.Server.Health.BodySystem.BodyParts;
+using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.BodySystem;
 using Content.Shared.GameObjects;

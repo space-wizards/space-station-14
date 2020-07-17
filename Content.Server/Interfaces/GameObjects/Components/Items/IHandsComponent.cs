@@ -69,13 +69,15 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Finds the hand slot holding the specified entity, if any.
         /// </summary>
-        /// <param name="entity">
-        ///     The entity to look for in our hands.
+        /// <param name="entity">The entity to look for in our hands.</param>
+        /// <param name="handName">
+        ///     The index of the hand slot if the entity is indeed held,
+        ///     <see langword="null" /> otherwise.
         /// </param>
         /// <returns>
-        ///     The index of the hand slot if the entity is indeed held, <see langword="null" /> otherwise.
+        ///     true if the entity is held, false otherwise
         /// </returns>
-        string FindHand(IEntity entity);
+        bool TryHand(IEntity entity, out string handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
