@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameTicking;
+using System.Linq;
+using Content.Server.Health.BodySystem;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Shared.BodySystem;
 using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Log;
 
 namespace Content.Server.GameTicking
 {
@@ -291,6 +292,34 @@ namespace Content.Server.GameTicking
 
             ticker.SetStartPreset(type, true);
             shell.SendText(player, $"Forced the game to start with preset {name}.");
+        }
+    }
+
+    class AddHandCommand : IClientCommand
+    {
+        public string Command => "addhand";
+        public string Description => "Forces a specific game preset to start for the current lobby.";
+        public string Help => $"Usage: {Command} <preset>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
+            var hand = manager.PartDictionary.First(x => x.Key == string.Join(" ", args));
+            manager.InstallBodyPart(hand.Value, hand.Key + new Random());
+        }
+    }
+
+    class RemoveHandCommand : IClientCommand
+    {
+        public string Command => "removehand";
+        public string Description => "Forces a specific game preset to start for the current lobby.";
+        public string Help => $"Usage: {Command} <preset>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
+            var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
+            manager.DisconnectBodyPart(hand.Value, true);
         }
     }
 }
