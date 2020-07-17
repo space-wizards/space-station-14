@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.GUI
             get => _activeIndex;
             set
             {
-                if (this[value] == null)
+                if (value != null && GetHand(value) == null)
                 {
                     throw new ArgumentException($"No hand '{value}'");
                 }
@@ -59,9 +59,6 @@ namespace Content.Server.GameObjects.Components.GUI
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
-
-        [CanBeNull]
-        public Hand this[string? slotName] => _hands.FirstOrDefault(hand => hand.Name == slotName);
 
         // TODO: This does not serialize what objects are held.
         protected override void Startup()
@@ -93,14 +90,19 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public ItemComponent? GetHand(string index)
+        private Hand? GetHand(string slotName)
         {
-            return this[index]?.Entity?.GetComponent<ItemComponent>();
+            return _hands.FirstOrDefault(hand => hand.Name == slotName);
+        }
+
+        public ItemComponent? GetItem(string index)
+        {
+            return GetHand(index)?.Entity?.GetComponent<ItemComponent>();
         }
 
         public ItemComponent? GetActiveHand => ActiveIndex == null
             ? null
-            : GetHand(ActiveIndex);
+            : GetItem(ActiveIndex);
 
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
@@ -138,7 +140,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool PutInHand(ItemComponent item, string index, bool fallback = true)
         {
-            var hand = this[index];
+            var hand = GetHand(index);
             if (!CanPutInHand(item, index) || hand == null)
             {
                 return fallback && PutInHand(item);
@@ -179,7 +181,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool CanPutInHand(ItemComponent item, string index)
         {
-            return this[index]?.Container.CanInsert(item.Owner) == true;
+            return GetHand(index)?.Container.CanInsert(item.Owner) == true;
         }
 
         public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
@@ -200,7 +202,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true)
         {
-            var hand = this[slot];
+            var hand = GetHand(slot);
             if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
@@ -249,7 +251,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool Drop(string slot, bool doMobChecks = true)
         {
-            var hand = this[slot];
+            var hand = GetHand(slot);
             if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
@@ -313,7 +315,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentNullException(nameof(targetContainer));
             }
 
-            var hand = this[slot];
+            var hand = GetHand(slot);
             if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
@@ -376,7 +378,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </returns>
         public bool CanDrop(string slot)
         {
-            var hand = this[slot];
+            var hand = GetHand(slot);
             if (hand?.Entity == null)
             {
                 return false;
@@ -442,7 +444,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Hand '{index}' does not exist.");
             }
 
-            var hand = this[index];
+            var hand = GetHand(index);
             hand!.Dispose();
             _hands.Remove(hand);
 
@@ -456,7 +458,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool HasHand(string index)
         {
-            return this[index] != null;
+            return GetHand(index) != null;
         }
 
         public override ComponentState GetComponentState()
@@ -467,7 +469,12 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public void SwapHands()
         {
-            var hand = this[ActiveIndex];
+            if (ActiveIndex == null)
+            {
+                return;
+            }
+
+            var hand = GetHand(ActiveIndex);
             if (hand == null)
             {
                 throw new InvalidOperationException($"No hand found with index {ActiveIndex}");
@@ -530,7 +537,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 case ClientAttackByInHandMsg msg:
                 {
-                    var hand = this[msg.Index];
+                    var hand = GetHand(msg.Index);
                     if (hand == null)
                     {
                         Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand index '{0}'",
@@ -581,7 +588,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 case ActivateInHandMsg msg:
                 {
                     var playerEntity = session.AttachedEntity;
-                    var used = GetHand(msg.Index)?.Owner;
+                    var used = GetItem(msg.Index)?.Owner;
 
                     if (playerEntity == Owner && used != null)
                     {

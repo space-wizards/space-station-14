@@ -20,7 +20,7 @@ namespace Content.Server.AI.WorldState.States.Hands
 
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                var item = handsComponent.GetHand(hand);
+                var item = handsComponent.GetItem(hand);
 
                 if (item != null)
                 {

@@ -41,7 +41,7 @@ namespace Content.Server.AI.Operators.Inventory
 
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                if (handsComponent.GetHand(hand) == null)
+                if (handsComponent.GetItem(hand) == null)
                 {
                     if (handsComponent.ActiveIndex != hand)
                     {

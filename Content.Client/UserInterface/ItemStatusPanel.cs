@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using Content.Client.UserInterface.Stylesheets;
@@ -27,7 +28,7 @@ namespace Content.Client.UserInterface
         private readonly PanelContainer _panel;
 
         [ViewVariables]
-        private IEntity _entity;
+        private IEntity? _entity;
 
         public ItemStatusPanel(Texture texture, StyleBox.Margin margin)
         {
@@ -85,7 +86,7 @@ namespace Content.Client.UserInterface
             return new ItemStatusPanel(texture, margin);
         }
 
-        public void Update(IEntity entity)
+        public void Update(IEntity? entity)
         {
             if (entity == null)
             {
@@ -123,7 +124,7 @@ namespace Content.Client.UserInterface
 
             ClearOldStatus();
 
-            foreach (var statusComponent in _entity.GetAllComponents<IItemStatus>())
+            foreach (var statusComponent in _entity!.GetAllComponents<IItemStatus>())
             {
                 var control = statusComponent.MakeControl();
                 _statusContents.AddChild(control);

@@ -26,7 +26,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="index">The index of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        ItemComponent GetHand(string index);
+        ItemComponent GetItem(string index);
 
         /// <summary>
         /// Gets item held by the current active hand

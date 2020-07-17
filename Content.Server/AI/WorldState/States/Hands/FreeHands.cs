@@ -21,7 +21,7 @@ namespace Content.Server.AI.WorldState.States.Hands
 
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                if (handsComponent.GetHand(hand) == null)
+                if (handsComponent.GetItem(hand) == null)
                 {
                     result.Add(hand);
                 }

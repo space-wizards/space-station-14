@@ -1,4 +1,5 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+﻿#nullable enable
+// Only unused on .NET Core due to KeyValuePair.Deconstruct
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.Utility;
 using System.Collections.Generic;
@@ -19,21 +20,21 @@ namespace Content.Client.GameObjects.Components.Items
     [RegisterComponent]
     public class HandsComponent : SharedHandsComponent
     {
-        private HandsGui _gui;
+        private HandsGui? _gui;
 
 #pragma warning disable 649
-        [Dependency] private readonly IGameHud _gameHud;
+        [Dependency] private readonly IGameHud _gameHud = default!;
 #pragma warning restore 649
 
         private readonly List<Hand> _hands = new List<Hand>();
 
         [ViewVariables] public IReadOnlyList<Hand> Hands => _hands;
 
-        [ViewVariables] public string ActiveIndex { get; private set; }
+        [ViewVariables] public string? ActiveIndex { get; private set; }
 
-        [ViewVariables] private ISpriteComponent _sprite;
+        [ViewVariables] private ISpriteComponent? _sprite;
 
-        [ViewVariables] public IEntity ActiveHand => GetEntity(ActiveIndex);
+        [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
 
         [CanBeNull]
         public Hand this[string slotName] => Hands.FirstOrDefault(hand => hand.Name == slotName);
@@ -59,9 +60,13 @@ namespace Content.Client.GameObjects.Components.Items
             return (hand = this[slotName]) != null;
         }
 
-        [CanBeNull]
-        public IEntity GetEntity(string index)
+        public IEntity? GetEntity(string? index)
         {
+            if (index == null)
+            {
+                return null;
+            }
+
             return this[index]?.Entity;
         }
 
@@ -86,7 +91,7 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             if (curState == null)
             {
@@ -131,7 +136,7 @@ namespace Content.Client.GameObjects.Components.Items
 
         private void HideHand(Hand hand)
         {
-            _sprite.LayerSetVisible($"hand-{hand.Name}", false);
+            _sprite?.LayerSetVisible($"hand-{hand.Name}", false);
         }
 
         private void UpdateHandSprites(Hand hand)
@@ -181,7 +186,7 @@ namespace Content.Client.GameObjects.Components.Items
             ActiveIndex = _hands.LastOrDefault()?.Name;
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
@@ -202,7 +207,7 @@ namespace Content.Client.GameObjects.Components.Items
                     break;
 
                 case PlayerDetachedMsg _:
-                    _gui.Parent?.RemoveChild(_gui);
+                    _gui?.Parent?.RemoveChild(_gui);
                     break;
             }
         }
@@ -240,7 +245,7 @@ namespace Content.Client.GameObjects.Components.Items
     {
         public readonly string Name;
 
-        public Hand(SharedHand hand, IEntityManager manager, HandButton button = null, ItemStatusPanel panel = null)
+        public Hand(SharedHand hand, IEntityManager manager, HandButton? button = null, ItemStatusPanel? panel = null)
         {
             Name = hand.Name;
             Location = hand.Location;
@@ -257,8 +262,8 @@ namespace Content.Client.GameObjects.Components.Items
         }
 
         public HandLocation Location { get; set; }
-        public IEntity Entity { get; set; }
-        [CanBeNull] public HandButton Button { get; set; }
-        [CanBeNull] public ItemStatusPanel Panel { get; set; }
+        public IEntity? Entity { get; set; }
+        public HandButton? Button { get; set; }
+        public ItemStatusPanel? Panel { get; set; }
     }
 }

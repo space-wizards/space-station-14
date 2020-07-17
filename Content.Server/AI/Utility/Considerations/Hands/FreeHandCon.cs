@@ -22,7 +22,7 @@ namespace Content.Server.AI.Utility.Considerations.Hands
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
                 handCount++;
-                if (handsComponent.GetHand(hand) == null)
+                if (handsComponent.GetItem(hand) == null)
                 {
                     freeCount += 1;
                 }

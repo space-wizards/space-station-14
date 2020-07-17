@@ -156,7 +156,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             if (!handsComp.CanDrop(handsComp.ActiveIndex))
                 return false;
 
-            var throwEnt = handsComp.GetHand(handsComp.ActiveIndex).Owner;
+            var throwEnt = handsComp.GetItem(handsComp.ActiveIndex).Owner;
 
             if (!handsComp.ThrowItem())
                 return false;
@@ -208,7 +208,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 return;
             }
 
-            var heldItem = handsComp.GetHand(handsComp.ActiveIndex)?.Owner;
+            var heldItem = handsComp.GetItem(handsComp.ActiveIndex)?.Owner;
 
             if (heldItem != null)
             {
