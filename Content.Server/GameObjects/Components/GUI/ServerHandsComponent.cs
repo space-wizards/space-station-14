@@ -3,6 +3,7 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Movement;
@@ -489,22 +490,30 @@ namespace Content.Server.GameObjects
 
         public void StartPulling(PullableComponent pullable)
         {
+            DebugTools.AssertNotNull(_pulledObject.Controller);
+
             if (isPulling)
             {
                 ((PullController) _pulledObject.Controller).StopPull();
             }
+
             _pulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
+
             ((PullController) _pulledObject.Controller).StartPull(Owner.GetComponent<PhysicsComponent>());
         }
 
         public void StopPulling()
         {
+            DebugTools.AssertNotNull(_pulledObject.Controller);
+
             ((PullController) _pulledObject.Controller).StopPull();
             _pulledObject = null;
         }
 
         public void MovePulledObject(GridCoordinates coords)
         {
+            DebugTools.AssertNotNull(_pulledObject.Controller);
+
             if (_pulledObject == null) return;
             ((PullController) _pulledObject.Controller).MoveTo(coords);
         }
