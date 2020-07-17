@@ -503,9 +503,9 @@ namespace Content.Server.GameObjects
             controller!.StartPull(Owner.GetComponent<PhysicsComponent>());
         }
 
-        public void MovePulledObject(GridCoordinates coords)
+        public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
         {
-            (PulledObject?.Controller as PullController)?.MoveTo(coords);
+            (PulledObject?.Controller as PullController)?.MoveTo(puller, to);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

@@ -237,7 +237,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 return false;
             }
 
-            hands.MovePulledObject(coords);
+            hands.MovePulledObject(playerEntity.Transform.GridPosition, coords);
 
             return false;
         }
