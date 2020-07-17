@@ -226,7 +226,11 @@ namespace Content.Client.UserInterface
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
             component[component.ActiveIndex]?.Button?.AddChild(_activeHandRect);
-            _activeHandRect.SetPositionInParent(1);
+
+            if (hands.Length > 0)
+            {
+                _activeHandRect.SetPositionInParent(1);
+            }
         }
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string slotName)
