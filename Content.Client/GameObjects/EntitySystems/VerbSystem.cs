@@ -576,7 +576,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         new TextureRect
                         {
                             Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/UserInterface/VerbIcons/group.svg.96dpi.png"),
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.96dpi.png"),
                             Stretch = TextureRect.StretchMode.KeepCentered,
                         }
                     }

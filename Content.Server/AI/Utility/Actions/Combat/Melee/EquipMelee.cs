@@ -1,14 +1,15 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.Utility.Considerations.Inventory;
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
@@ -37,15 +38,21 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             context.GetState<TargetEntityState>().SetValue(_entity);
         }
 
-        protected override Consideration[] Considerations { get; } = {
-            new MeleeWeaponEquippedCon(
-                new InverseBoolCurve()),
-            new CanPutTargetInHandsCon(
-                new BoolCurve()),
-            new MeleeWeaponSpeedCon(
-                new QuadraticCurve(1.0f, 0.5f, 0.0f, 0.0f)),
-            new MeleeWeaponDamageCon(
-                new QuadraticCurve(1.0f, 0.25f, 0.0f, 0.0f)),
-        };
+        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+
+            return new[]
+            {
+                considerationsManager.Get<MeleeWeaponEquippedCon>()
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<CanPutTargetInHandsCon>()
+                    .BoolCurve(context),
+                considerationsManager.Get<MeleeWeaponSpeedCon>()
+                    .QuadraticCurve(context, 1.0f, 0.5f, 0.0f, 0.0f),
+                considerationsManager.Get<MeleeWeaponDamageCon>()
+                    .QuadraticCurve(context, 1.0f, 0.25f, 0.0f, 0.0f),
+            };
+        }
     }
 }

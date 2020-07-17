@@ -1,20 +1,15 @@
 - type: entity
   parent: Clothing
   id: CloakClothing
-  abstract: true
   name: cloak
+  abstract: true
   description:
   components:
-  - type: Sprite
-    sprite: Clothing/cloak.rsi
-  - type: Icon
-    sprite: Clothing/cloak.rsi
   - type: Clothing
     Size: 10
     QuickEquip: true
     Slots:
     - neck
-    sprite: Clothing/cloak.rsi
 
 - type: entity
   parent: CloakClothing
@@ -23,10 +18,13 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/cap_cloak.rsi
     state: capcloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/cap_cloak.rsi
     state: capcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/cap_cloak.rsi
     HeldPrefix: capcloak
 
 - type: entity
@@ -36,10 +34,13 @@
   description:
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/hos_cloak.rsi
     state: hoscloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/hos_cloak.rsi
     state: hoscloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/hos_cloak.rsi
     HeldPrefix: hoscloak
 
 - type: entity
@@ -48,10 +49,13 @@
   name: CE's cloak
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/ce_cloak.rsi
     state: cecloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/ce_cloak.rsi
     state: cecloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/ce_cloak.rsi
     HeldPrefix: cecloak
 
 - type: entity
@@ -60,10 +64,13 @@
   name: CMO's cloak
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/cmo_cloak.rsi
     state: cmocloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/cmo_cloak.rsi
     state: cmocloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/cmo_cloak.rsi
     HeldPrefix: cmocloak
 
 - type: entity
@@ -72,10 +79,13 @@
   name: RD's cloak
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/rd_cloak.rsi
     state: rdcloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/rd_cloak.rsi
     state: rdcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/rd_cloak.rsi
     HeldPrefix: rdcloak
 
 - type: entity
@@ -84,10 +94,13 @@
   name: QM's cloak
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/qm_cloak.rsi
     state: qmcloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/qm_cloak.rsi
     state: qmcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/qm_cloak.rsi
     HeldPrefix: qmcloak
 
 - type: entity
@@ -96,10 +109,13 @@
   name: HoP's cloak
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
     state: hopcloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
     state: hopcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/hop_cloak.rsi
     HeldPrefix: hopcloak
 
 - type: entity
@@ -108,8 +124,11 @@
   name: Herald's cloak
   components:
   - type: Sprite
+    sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
     state: heraldcloak
   - type: Icon
+    sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
     state: heraldcloak
   - type: Clothing
+    sprite: Clothing/Neck/Cloaks/herald_cloak.rsi
     HeldPrefix: heraldcloak

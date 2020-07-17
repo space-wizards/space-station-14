@@ -1,5 +1,5 @@
 ﻿using Content.Server.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Chemistry;
@@ -20,6 +20,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.EntitySystems.Click;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
@@ -46,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         private SolutionCaps _capabilities;
         private string _fillInitState;
         private int _fillInitSteps;
-        private string _fillPathString = "Objects/Chemistry/fillings.rsi";
+        private string _fillPathString = "Objects/Specific/Chemistry/fillings.rsi";
         private ResourcePath _fillPath;
         private SpriteSpecifier _fillSprite;
 
@@ -224,6 +225,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (!ActionBlockerSystem.CanInteract(user) ||
                     !user.TryGetComponent<HandsComponent>(out var hands) ||
                     hands.GetActiveHand == null ||
+                    hands.GetActiveHand.Owner == component.Owner ||
                     !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -323,6 +325,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 if (!ActionBlockerSystem.CanInteract(user) ||
                     !user.TryGetComponent<HandsComponent>(out var hands) ||
                     hands.GetActiveHand == null ||
+                    hands.GetActiveHand.Owner == component.Owner ||
                     !hands.GetActiveHand.Owner.TryGetComponent<SolutionComponent>(out var solution))
                 {
                     data.Visibility = VerbVisibility.Invisible;
@@ -494,7 +497,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Play reaction sound client-side
-            _audioSystem.PlayAtCoords("/Audio/effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+            _audioSystem.PlayAtCoords("/Audio/Effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
 
         /// <summary>

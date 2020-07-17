@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -24,11 +24,10 @@ using Robust.Shared.Audio;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Content.Server.BodySystem;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Health.BodySystem;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -85,8 +84,8 @@ namespace Content.Server.GameObjects.Components.Kitchen
             serializer.DataField(ref _badRecipeName, "failureResult", "FoodBadRecipe");
             serializer.DataField(ref _cookTimeDefault, "cookTime", 5);
             serializer.DataField(ref _cookTimeMultiplier, "cookTimeMultiplier", 1000);
-            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/machines/microwave_start_beep.ogg" );
-            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/machines/microwave_done_beep.ogg" );
+            serializer.DataField(ref _startCookingSound, "beginCookingSound","/Audio/Machines/microwave_start_beep.ogg" );
+            serializer.DataField(ref _cookingCompleteSound, "foodDoneSound","/Audio/Machines/microwave_done_beep.ogg" );
         }
 
         public override void Initialize()
@@ -443,7 +442,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         private void ClickSound()
         {
-            _audioSystem.PlayFromEntity("/Audio/machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayFromEntity("/Audio/Machines/machine_switch.ogg",Owner,AudioParams.Default.WithVolume(-2f));
         }
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)

@@ -2,7 +2,7 @@
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
             var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
 
-            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair the gravity generator with the welder"));
+            notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("You repair {0:theName} with {1:theName}", Owner, eventArgs.Using));
 
             return true;
         }

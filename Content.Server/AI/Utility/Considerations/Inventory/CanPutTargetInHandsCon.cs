@@ -1,17 +1,14 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Hands;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {
     public class CanPutTargetInHandsCon : Consideration
     {
-        public CanPutTargetInHandsCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             // First check if target in inventory already
             // If not then check if we have a free hand
@@ -22,9 +19,7 @@ namespace Content.Server.AI.Utility.Considerations.Inventory
                 return 0.0f;
             }
 
-            var inventory = context.GetState<InventoryState>().GetValue();
-
-            foreach (var item in inventory)
+            foreach (var item in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (item == target)
                 {

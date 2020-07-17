@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
@@ -10,11 +9,22 @@ namespace Content.Server.GameObjects
 {
     public class ContainerSlot : BaseContainer
     {
-        [CanBeNull, ViewVariables]
-        public IEntity ContainedEntity { get; private set; } = null;
+        [ViewVariables]
+        public IEntity? ContainedEntity
+        {
+            get => _containedEntity;
+            private set
+            {
+                _containedEntity = value;
+                _containedArray[0] = value;
+            }
+        }
+
+        private readonly IEntity[] _containedArray = new IEntity[1];
+        private IEntity _containedEntity;
 
         /// <inheritdoc />
-        public override IReadOnlyCollection<IEntity> ContainedEntities
+        public override IReadOnlyList<IEntity> ContainedEntities
         {
             get
             {
@@ -23,7 +33,7 @@ namespace Content.Server.GameObjects
                     return Array.Empty<IEntity>();
                 }
 
-                return new List<IEntity> {ContainedEntity}.AsReadOnly();
+                return _containedArray;
             }
         }
 

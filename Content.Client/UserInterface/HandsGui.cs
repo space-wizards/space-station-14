@@ -36,7 +36,10 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            var textureHandActive = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_active.png");
+            var textureHandLeft = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
+            var textureHandRight = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
+            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
 
             var hands = new VBoxContainer();
 

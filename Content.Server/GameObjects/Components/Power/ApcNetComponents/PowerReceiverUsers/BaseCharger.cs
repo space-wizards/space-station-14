@@ -2,7 +2,7 @@
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.EntitySystems;
@@ -105,7 +105,7 @@ namespace Content.Server.GameObjects.Components.Power.Chargers
             {
                 batteryBarrelComponent.UpdateAppearance();
             }
-            
+
             UpdateStatus();
         }
 

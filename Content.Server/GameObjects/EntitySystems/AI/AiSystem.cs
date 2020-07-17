@@ -40,17 +40,15 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             foreach (var processor in processors)
             {
                 var att = (AiLogicProcessorAttribute)Attribute.GetCustomAttribute(processor, typeof(AiLogicProcessorAttribute));
-                if (att != null)
-                {
-                    _processorTypes.Add(att.SerializeName, processor);
-                }
+                // Tests should pick this up
+                DebugTools.AssertNotNull(att);
+                _processorTypes.Add(att.SerializeName, processor);
             }
         }
 
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-
             var entities = EntityManager.GetEntities(EntityQuery);
             foreach (var entity in entities)
             {
@@ -77,15 +75,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             if (controller.Processor != null) return;
             controller.Processor = CreateProcessor(controller.LogicName);
             controller.Processor.SelfEntity = controller.Owner;
-            controller.Processor.VisionRadius = controller.VisionRadius;
             controller.Processor.Setup();
         }
 
-        private UtilityAi CreateProcessor(string name)
+        private AiLogicProcessor CreateProcessor(string name)
         {
             if (_processorTypes.TryGetValue(name, out var type))
             {
-                return (UtilityAi)_typeFactory.CreateInstance(type);
+                return (AiLogicProcessor)_typeFactory.CreateInstance(type);
             }
 
             // processor needs to inherit AiLogicProcessor, and needs an AiLogicProcessorAttribute to define the YAML name

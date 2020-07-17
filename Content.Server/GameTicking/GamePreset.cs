@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Robust.Server.Interfaces.Player;
+using Content.Shared.Preferences;
 
 namespace Content.Server.GameTicking
 {
@@ -11,5 +12,6 @@ namespace Content.Server.GameTicking
         public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
+        public Dictionary<string, HumanoidCharacterProfile> readyProfiles;
     }
 }

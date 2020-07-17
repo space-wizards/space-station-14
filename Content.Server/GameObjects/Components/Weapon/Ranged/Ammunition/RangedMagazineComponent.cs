@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
@@ -33,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
         public int ShotsLeft => _spawnedAmmo.Count + _unspawnedCount;
         public int Capacity => _capacity;
         private int _capacity;
-        
+
         public MagazineType MagazineType => _magazineType;
         private MagazineType _magazineType;
         public BallisticCaliber Caliber => _caliber;
@@ -88,7 +89,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             {
                 _appearanceComponent = appearanceComponent;
             }
-            
+
             _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, true);
         }
 
@@ -97,7 +98,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
-        
+
         public bool TryInsertAmmo(IEntity user, IEntity ammo)
         {
             if (!ammo.TryGetComponent(out AmmoComponent ammoComponent))
@@ -137,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
                 _unspawnedCount--;
                 ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.GridPosition);
             }
-            
+
             UpdateAppearance();
             return ammo;
         }

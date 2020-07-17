@@ -158,11 +158,13 @@ namespace Content.Client.GameObjects.EntitySystems
             comp.Prototype = prototype;
             comp.GhostID = _nextId++;
             ghost.Transform.LocalRotation = dir.ToAngle();
-            var sprite = ghost.GetComponent<SpriteComponent>();
-            sprite.LayerSetSprite(0, prototype.Icon);
-            sprite.LayerSetVisible(0, true);
-
             _ghosts.Add(comp.GhostID, comp);
+            var sprite = ghost.GetComponent<SpriteComponent>();
+            sprite.Color = new Color(48, 255, 48, 128);
+            sprite.AddBlankLayer(0); // There is no way to actually check if this already exists, so we blindly insert a new one
+            sprite.LayerSetSprite(0, prototype.Icon);
+            sprite.LayerSetShader(0, "unshaded");
+            sprite.LayerSetVisible(0, true);
         }
 
         private void TryStartConstruction(int ghostId)

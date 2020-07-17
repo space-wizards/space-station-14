@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using System.Collections.Generic;
 using Content.Server.BodySystem;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Health.BodySystem.BodyParts;
 using Content.Shared.BodySystem;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -47,22 +47,18 @@ namespace Content.Server.Health.BodySystem.BodyScanner
         /// <summary>
         ///    Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState PrepareBodyScannerInterfaceState(BodyTemplate template, IReadOnlyDictionary<string, BodyPart> bodyParts)
+        private BodyScannerInterfaceState PrepareBodyScannerInterfaceState(BodyTemplate template, Dictionary<string, BodyPart> bodyParts)
         {
-            var partsData = new Dictionary<string, BodyScannerBodyPartData>();
-
-            foreach (var(slotName, part) in bodyParts) {
-                var mechanismData = new List<BodyScannerMechanismData>();
-
-                foreach (var mech in part.Mechanisms)
+            Dictionary<string, BodyScannerBodyPartData> partsData = new Dictionary<string, BodyScannerBodyPartData>();
+            foreach (var(slotname, bpart) in bodyParts) {
+                List<BodyScannerMechanismData> mechanismData = new List<BodyScannerMechanismData>();
+                foreach (var mech in bpart.Mechanisms)
                 {
                     mechanismData.Add(new BodyScannerMechanismData(mech.Name, mech.Description, mech.RSIPath, mech.RSIState, mech.MaxDurability, mech.CurrentDurability));
                 }
-                partsData.Add(slotName, new BodyScannerBodyPartData(part.Name, part.RSIPath, part.RSIState, part.MaxDurability, part.CurrentDurability, mechanismData));
+                partsData.Add(slotname, new BodyScannerBodyPartData(bpart.Name, bpart.RSIPath, bpart.RSIState, bpart.MaxDurability, bpart.CurrentDurability, mechanismData));
             }
-
-            var templateData = new BodyScannerTemplateData(template.Name, template.Slots);
-
+            BodyScannerTemplateData templateData = new BodyScannerTemplateData(template.Name, template.Slots);
             return new BodyScannerInterfaceState(partsData, templateData);
         }
 

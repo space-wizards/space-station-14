@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects.Components.PDA;
@@ -57,7 +57,7 @@ namespace Content.Server.PDA
             var entity = _entityManager.GetEntity(acc.AccountHolder);
             if (entity.TryGetComponent(out MindComponent mindComponent))
             {
-                if (mindComponent.Mind.AllRoles.Any(role => !role.Antag))
+                if (mindComponent.Mind.AllRoles.Any(role => !role.Antagonist))
                 {
                     return false;
                 }

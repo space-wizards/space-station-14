@@ -8,7 +8,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     public class VerbSystem : EntitySystem
     {

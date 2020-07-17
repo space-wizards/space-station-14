@@ -32,13 +32,13 @@
     angleIncrease: 10
     angleDecay: 60
     magFillPrototype: MagazinePistol
-    soundGunshot: /Audio/Guns/Gunshots/pistol.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundRack: /Audio/Guns/Cock/pistol_cock.ogg
-    soundBoltOpen: /Audio/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Guns/MagIn/pistol_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/pistol_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
@@ -54,12 +54,12 @@
   description: 
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: Icon
-    sprite: Objects/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/clarissa.rsi
+    sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -79,17 +79,17 @@
   description: 
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/colt.rsi
+    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/colt.rsi
+    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/colt.rsi
+    sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -111,12 +111,12 @@
   description: A popular "Frozen Star" brand pocket pistol chambered for the ubiquitous .35 auto round. Uses standard capacity magazines.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/giskard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: Icon
-    sprite: Objects/Guns/Pistols/giskard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/giskard.rsi
+    sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -136,18 +136,18 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Guns/Pistols/hm_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
       - state: bolt-closed
         map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/hm_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
     state: icon
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/hm_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
     caliber: Pistol
@@ -160,13 +160,13 @@
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
-    soundGunshot: /Audio/Guns/Gunshots/pistol.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundRack: /Audio/Guns/Cock/pistol_cock.ogg
-    soundBoltOpen: /Audio/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Guns/MagIn/pistol_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/pistol_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D
@@ -178,17 +178,17 @@
   description: A heavy pistol of Ironhammer enforcers.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/gyro_pistol.rsi
+    sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Magnum
@@ -201,11 +201,11 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 60
-    soundGunshot: /Audio/Guns/Gunshots/hpistol.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundRack: /Audio/Guns/Cock/hpistol_cock.ogg
-    soundMagInsert: /Audio/Guns/MagIn/hpistol_magin.ogg
-    soundMagEject: /Audio/Guns/MagOut/hpistol_magout.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/hpistol.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/hpistol_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -220,7 +220,7 @@
   description: A rugged, robust operator handgun with inbuilt silencer. Chambered in caseless rifle ammunition, this time-tested handgun is your absolute choice if you need to take someone down silently, as it's deadly, produces no sound, and leaves no trace.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -229,10 +229,10 @@
     - state: mag-0
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/mandella.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: ClRifle
@@ -245,7 +245,7 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 60
-    soundGunshot: /Audio/Guns/Gunshots/silenced.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/silenced.ogg
 
 - type: entity
   name: mk 58
@@ -254,17 +254,17 @@
   description: The NT Mk58 is a cheap, ubiquitous sidearm, that was produced by a NanoTrasen subsidiary.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/mk58.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/mk58.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/mk58.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -286,17 +286,17 @@
   description: The NT Mk58 is a cheap, ubiquitous sidearm, that was produced by a NanoTrasen subsidiary.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/mk58_wood.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/mk58_wood.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/mk58_wood.rsi
+    sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -318,12 +318,12 @@
   description: An experimental fully automatic pistol, designed as a middle ground between SMGs and Pistols. Primarily employed in CQC scenarios or as a civilian self defence tool. Takes both highcap pistol and smg mags.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/molly.rsi
+    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: Icon
-    sprite: Objects/Guns/Pistols/molly.rsi
+    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/molly.rsi
+    sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -348,17 +348,17 @@
   description: A popular "Frozen Star" machine pistol. This one has a two-round burst-fire mode and is chambered for .35 auto. It can use normal and high capacity magazines.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/olivaw_civil.rsi
+    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Guns/Pistols/olivaw_civil.rsi
+    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/olivaw_civil.rsi
+    sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
@@ -381,12 +381,12 @@
   description: A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Ironhammer Operatives.
   components:
   - type: Sprite
-    sprite: Objects/Guns/Pistols/paco.rsi
+    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: Icon
-    sprite: Objects/Guns/Pistols/paco.rsi
+    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: Item
     Size: 24
-    sprite: Objects/Guns/Pistols/paco.rsi
+    sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol

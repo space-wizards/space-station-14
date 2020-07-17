@@ -126,7 +126,7 @@
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/rattle.ogg
+    sound: /Audio/Items/Toys/rattle.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -145,7 +145,7 @@
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/mousesqueek.ogg
+    sound: /Audio/Items/Toys/mousesqueek.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -157,18 +157,18 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: help_me
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: help_me
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/items/toys/helpme.ogg
+    sound: /Audio/Items/Toys/helpme.ogg
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/helpme.ogg
+    sound: /Audio/Items/Toys/helpme.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -182,18 +182,18 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: hello
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: hello
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/items/toys/hellothere.ogg
+    sound: /Audio/Items/Toys/hellothere.ogg
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/hellothere.ogg
+    sound: /Audio/Items/Toys/hellothere.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -205,18 +205,18 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: thank_you
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: thank_you
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/items/toys/thankyou.ogg
+    sound: /Audio/Items/Toys/thankyou.ogg
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/thankyou.ogg
+    sound: /Audio/Items/Toys/thankyou.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -228,18 +228,18 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: very_good
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: very_good
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/items/toys/verygood.ogg
+    sound: /Audio/Items/Toys/verygood.ogg
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/verygood.ogg
+    sound: /Audio/Items/Toys/verygood.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -251,18 +251,18 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: im_sorry
   - type: Icon
     sprite: Objects/Misc/carvings.rsi
-    state: helpme
+    state: im_sorry
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/items/toys/imsorry.ogg
+    sound: /Audio/Items/Toys/imsorry.ogg
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/imsorry.ogg
+    sound: /Audio/Items/Toys/imsorry.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -351,7 +351,7 @@
   - type: ItemCooldown
   - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/items/toys/ian.ogg
+    sound: /Audio/Items/Toys/ian.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -567,9 +567,9 @@
     - Single
     fireRate: 0.5
     capacity: 1
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Guns/Gunshots/click.ogg
-    soundInsert: /Audio/Guns/MagIn/drawbow2.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/click.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
 
 - type: entity
   name: ToyGunBase
@@ -589,18 +589,18 @@
   description: Looks almost like the real thing! Ages 8 and up.
   components:
   - type: Sprite
-    sprite: Objects/Fun/Toys.rsi
+    sprite: Objects/Fun/toys.rsi
     layers:
     - state: base
       map: ["enum.RangedBarrelVisualLayers.Base"]
     - state: bolt-closed
       map: ["enum.RangedBarrelVisualLayers.Bolt"]
   - type: Icon
-    sprite: Objects/Fun/Toys.rsi
+    sprite: Objects/Fun/toys.rsi
     state: base
   - type: Item
     Size: 24
-    sprite: Objects/Fun/Toys.rsi
+    sprite: Objects/Fun/toys.rsi
     state: base
   - type: RangedWeapon
   - type: BoltActionBarrel
@@ -610,9 +610,9 @@
     caliber: Cap
     capacity: 6
     autoCycle: true
-    soundGunshot: /Audio/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Guns/MagIn/revolver_magin.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer2D

@@ -1,4 +1,3 @@
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 
@@ -6,9 +5,7 @@ namespace Content.Server.AI.Utility.Considerations.Movement
 {
     public sealed class DistanceCon : Consideration
     {
-        public DistanceCon(IResponseCurve curve) : base(curve) {}
-
-        public override float GetScore(Blackboard context)
+        protected override float GetScore(Blackboard context)
         {
             var self = context.GetState<SelfState>().GetValue();
             var target = context.GetState<TargetEntityState>().GetValue();

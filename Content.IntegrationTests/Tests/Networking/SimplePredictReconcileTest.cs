@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,6 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
-
-#nullable enable
 
 namespace Content.IntegrationTests.Tests.Networking
 {
@@ -38,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Networking
         {
             // Initialize client & server with text component and system registered.
             // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerClientPair(
+            var (client, server) = await StartConnectedServerDummyTickerClientPair(
                 new ClientContentIntegrationOption
                 {
                     // This test is designed around specific timing values and when I wrote it interpolation was off.

@@ -1,10 +1,11 @@
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
@@ -22,8 +23,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-
-#nullable enable
 
 namespace Content.Server.GameObjects.Components.PDA
 {
@@ -200,7 +199,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Guns/MagIn/batrifle_magin.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg", Owner);
         }
 
         /// <summary>
@@ -224,7 +223,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             _lightOn = !_lightOn;
             _pdaLight.Enabled = _lightOn;
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/items/flashlight_toggle.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
             UpdatePDAUserInterface();
         }
 
@@ -243,7 +242,7 @@ namespace Content.Server.GameObjects.Components.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/machines/id_swipe.ogg", Owner);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/id_swipe.ogg", Owner);
             UpdatePDAUserInterface();
         }
 

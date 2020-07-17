@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Utensil;
 using Robust.Server.GameObjects.EntitySystems;
@@ -93,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Utensil
             }
 
             serializer.DataField(ref _breakChance, "breakChance", 0);
-            serializer.DataField(ref _breakSound, "breakSound", "/Audio/items/snap.ogg");
+            serializer.DataField(ref _breakSound, "breakSound", "/Audio/Items/snap.ogg");
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)

@@ -9,7 +9,7 @@
     Size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
-    hitSound: "/Audio/weapons/smash.ogg"
+    hitSound: "/Audio/Weapons/smash.ogg"
 
 - type: entity
   name: emergency toolbox

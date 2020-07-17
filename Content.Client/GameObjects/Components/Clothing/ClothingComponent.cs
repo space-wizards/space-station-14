@@ -11,6 +11,7 @@ namespace Content.Client.GameObjects.Components.Clothing
 {
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
+    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent
     {
         private FemaleClothingMask _femaleMask;

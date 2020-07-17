@@ -1,7 +1,6 @@
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.Container;
@@ -47,7 +46,7 @@ namespace Content.Server.GameObjects.Components
             if (size > MaxItemSize)
             {
                 Owner.PopupMessage(eventArgs.User,
-                    Loc.GetString("The {0} is too big to fit in the plant!", eventArgs.Using.Name));
+                    Loc.GetString("{0:TheName} is too big to fit in the plant!", eventArgs.Using));
                 return false;
             }
 
@@ -58,7 +57,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("You hide the {0} in the plant.", eventArgs.Using.Name));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("You hide {0:theName} in the plant.", eventArgs.Using));
             Rustle();
             return true;
         }
@@ -89,7 +88,7 @@ namespace Content.Server.GameObjects.Components
         private void Rustle()
         {
             EntitySystem.Get<AudioSystem>()
-                .PlayFromEntity("/Audio/effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+                .PlayFromEntity("/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

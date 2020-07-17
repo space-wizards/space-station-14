@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Combat.Melee;
@@ -5,14 +6,15 @@ using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
 using Content.Server.AI.Utility.Considerations.Combat.Melee;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Movement;
-using Content.Server.AI.Utility.Curves;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Combat;
 using Content.Server.AI.WorldState.States.Movement;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.Utility.Actions.Combat.Melee
 {
@@ -56,23 +58,27 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
             context.GetState<WeaponEntityState>().SetValue(Owner);
         }
 
-        protected override Consideration[] Considerations { get; } = {
-            new CanUnarmedCombatCon(
-                new BoolCurve()),
-            // Don't attack a dead target
-            new TargetIsDeadCon(
-                new InverseBoolCurve()),
-            // Deprioritise a target in crit
-            new TargetIsCritCon(
-                new QuadraticCurve(-0.8f, 1.0f, 1.0f, 0.0f)),
-            // Somewhat prioritise distance
-            new DistanceCon(
-                new QuadraticCurve(-1.0f, 1.0f, 1.02f, 0.0f)),
-            // Prefer weaker targets
-            new TargetHealthCon(
-                new QuadraticCurve(1.0f, 0.4f, 0.0f, -0.02f)),
-            // TODO: Consider our Speed and Damage to compare this to using a weapon
-            // Also need to unequip our weapon if we have one (xenos can't hold one so no issue for now)
-        };
+        protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
+        {
+            var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
+            
+            return new[]
+            {
+                considerationsManager.Get<CanUnarmedCombatCon>()
+                    .BoolCurve(context),
+                considerationsManager.Get<TargetIsDeadCon>()
+                    .InverseBoolCurve(context),
+                considerationsManager.Get<TargetIsCritCon>()
+                    .QuadraticCurve(context, -0.8f, 1.0f, 1.0f, 0.0f),
+                considerationsManager.Get<DistanceCon>()
+                    .QuadraticCurve(context, -1.0f, 1.0f, 1.02f, 0.0f),
+                considerationsManager.Get<TargetHealthCon>()
+                    .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, -0.02f),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
+                // TODO: Consider our Speed and Damage to compare this to using a weapon
+                // Also need to unequip our weapon if we have one (xenos can't hold one so no issue for now)
+            };
+        }
     }
 }

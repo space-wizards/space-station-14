@@ -1,17 +1,19 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
+﻿#nullable enable
+// Only unused on .NET Core due to KeyValuePair.Deconstruct
 // ReSharper disable once RedundantUsingDirective
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.BodySystem;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.BodySystem;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -54,7 +56,7 @@ namespace Content.Server.GameObjects.Components.GUI
         [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
 
         // Mostly arbitrary.
-        public const float PICKUP_RANGE = 2;
+        public const float PickupRange = 2;
 
         [CanBeNull]
         public Hand this[string slotName] => _hands.FirstOrDefault(hand => hand.Name == slotName);
@@ -89,8 +91,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        [CanBeNull]
-        public ItemComponent GetHand(string index)
+        public ItemComponent? GetHand(string index)
         {
             return this[index]?.Entity?.GetComponent<ItemComponent>();
         }
@@ -208,9 +209,13 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            item.RemovedFromSlot();
+            if (ContainerHelpers.TryGetContainer(Owner, out var container) &&
+                !container.Insert(item.Owner))
+            {
+                return false;
+            }
 
-            // TODO: The item should be dropped to the container our owner is in, if any.
+            item.RemovedFromSlot();
             item.Owner.Transform.GridPosition = coords;
 
             Dirty();
@@ -254,10 +259,15 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            item.RemovedFromSlot();
+            if (ContainerHelpers.TryGetContainer(Owner, out var container) &&
+                !container.Insert(item.Owner))
+            {
+                return false;
+            }
 
-            // TODO: The item should be dropped to the container our owner is in, if any.
+            item.RemovedFromSlot();
             item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+
             if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
                 spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
@@ -361,6 +371,12 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var hand = this[slot];
             if (hand?.Entity == null)
+            {
+                return false;
+            }
+
+            if (ContainerHelpers.TryGetContainer(Owner, out var container) &&
+                !container.CanInsert(hand.Entity))
             {
                 return false;
             }
@@ -629,7 +645,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public string Name { get; }
         public HandLocation Location { get; }
-        public IEntity Entity => Container.ContainedEntity;
+        public IEntity? Entity => Container.ContainedEntity;
         public ContainerSlot Container { get; }
 
         public void Dispose()

@@ -18,10 +18,10 @@
   - type: Sprite
     netsync: false
     drawdepth: Mobs
-    sprite: Buildings/VendingMachines/cola.rsi
+    sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
   - type: Icon
-    sprite: Buildings/VendingMachines/cola.rsi
+    sprite: Constructible/Power/VendingMachines/cola.rsi
     state: normal
   - type: Physics
     mass: 85

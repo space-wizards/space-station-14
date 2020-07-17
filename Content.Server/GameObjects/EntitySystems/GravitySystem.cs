@@ -16,7 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     [UsedImplicitly]
     public class GravitySystem: EntitySystem
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId) continue;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/effects/alert.ogg", player.AttachedEntity);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/alert.ogg", player.AttachedEntity);
             }
         }
 

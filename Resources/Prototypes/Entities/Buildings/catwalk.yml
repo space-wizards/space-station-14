@@ -7,10 +7,10 @@
   - type: Collidable
   - type: Sprite
     netsync: false
-    sprite: Buildings/catwalk.rsi
+    sprite: Constructible/Tiles/catwalk.rsi
     drawdepth: FloorTiles
   - type: Icon
-    sprite: Buildings/catwalk.rsi
+    sprite: Constructible/Tiles/catwalk.rsi
     state: catwalk_preview
   - type: SnapGrid
     offset: Center

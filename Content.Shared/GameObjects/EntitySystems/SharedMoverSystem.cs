@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 using Robust.Shared.Configuration;
@@ -14,8 +16,6 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-
-#nullable enable
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
@@ -53,7 +53,6 @@ namespace Content.Shared.GameObjects.EntitySystems
             CommandBinds.Unregister<SharedMoverSystem>();
             base.Shutdown();
         }
-
 
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
             CollidableComponent? collider = null)
@@ -131,7 +130,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 // TODO: Item check.
                 var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
                                 || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision
-                               && true; // !entity.HasComponent<ItemComponent>(); // This can't be an item
+                               && !entity.HasComponent<IItemComponent>(); // This can't be an item
 
                 if (touching)
                 {

@@ -3,6 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
@@ -15,8 +20,14 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
+    public interface IToolComponent
+    {
+        ToolQuality Qualities { get; set; }
+    }
+
     [RegisterComponent]
-    public class ToolComponent : SharedToolComponent
+    [ComponentReference(typeof(IToolComponent))]
+    public class ToolComponent : SharedToolComponent, IToolComponent
     {
         protected ToolQuality _qualities = ToolQuality.None;
 

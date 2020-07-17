@@ -18,6 +18,28 @@ namespace Content.Server.Database.Migrations.Postgres
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("Content.Server.Database.Antag", b =>
+                {
+                    b.Property<int>("AntagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("AntagName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("HumanoidProfileId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AntagId");
+
+                    b.HasIndex("HumanoidProfileId", "AntagName")
+                        .IsUnique();
+
+                    b.ToTable("Antag");
+                });
+
             modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>
                 {
                     b.Property<int>("HumanoidProfileId")
@@ -127,6 +149,15 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsUnique();
 
                     b.ToTable("Preferences");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Antag", b =>
+                {
+                    b.HasOne("Content.Server.Database.HumanoidProfile", "Profile")
+                        .WithMany("Antags")
+                        .HasForeignKey("HumanoidProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Content.Server.Database.HumanoidProfile", b =>

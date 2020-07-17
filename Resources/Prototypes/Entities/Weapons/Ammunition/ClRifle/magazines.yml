@@ -35,9 +35,9 @@
     fillPrototype: CartridgeClRifle
     capacity: 99
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/10x24.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/10x24.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/10x24.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/10x24.rsi
 
 - type: entity
   id: MagazineClRiflePistol
@@ -49,9 +49,9 @@
     magazineType: Pistol
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -71,9 +71,9 @@
     magazineType: Pistol
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_hv.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -91,9 +91,9 @@
     magazineType: Pistol
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_practice.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -111,9 +111,9 @@
     magazineType: Pistol
     capacity: 10
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_rubber.rsi
   - type: Appearance
     visuals:
     - type: MagVisualizer2D
@@ -129,9 +129,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeClRifle
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag.rsi
 
 - type: entity
   id: MagazineClRifleHV
@@ -141,9 +141,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeClRifleHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_hv.rsi
 
 - type: entity
   id: MagazineClRiflePractice
@@ -153,9 +153,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeClRiflePractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_practice.rsi
 
 - type: entity
   id: MagazineClRifleRubber
@@ -165,9 +165,9 @@
   - type: RangedMagazine
     fillPrototype: CartridgeClRifleRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_rubber.rsi
 
 - type: entity
   id: MagazineClRifleShort
@@ -178,9 +178,9 @@
     fillPrototype: CartridgeClRifle
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short.rsi
 
 - type: entity
   id: MagazineClRifleShortFlash
@@ -191,9 +191,9 @@
     fillPrototype: CartridgeClRifleFlash
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_flash.rsi
 
 - type: entity
   id: MagazineClRifleShortHV
@@ -204,9 +204,9 @@
     fillPrototype: CartridgeClRifleHV
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_hv.rsi
 
 - type: entity
   id: MagazineClRifleShortPractice
@@ -217,9 +217,9 @@
     fillPrototype: CartridgeClRiflePractice
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_practice.rsi
 
 - type: entity
   id: MagazineClRifleShortRubber
@@ -230,6 +230,6 @@
     fillPrototype: CartridgeClRifleRubber
     capacity: 20
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_rifle_mag_short_rubber.rsi

@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "courier-black",
+            "directions": 1
+        },
+        {
+            "name": "courier-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "courier",
+            "directions": 1
+        }
+    ]
+}

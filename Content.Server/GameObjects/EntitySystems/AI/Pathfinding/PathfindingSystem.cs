@@ -7,6 +7,7 @@ using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.Physics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
@@ -40,13 +41,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         private readonly PathfindingJobQueue _pathfindingQueue = new PathfindingJobQueue();
         
         // Queued pathfinding graph updates
-        private readonly Queue<CollisionChangeEvent> _collidableUpdateQueue = new Queue<CollisionChangeEvent>();
+        private readonly Queue<CollisionChangeMessage> _collidableUpdateQueue = new Queue<CollisionChangeMessage>();
         private readonly Queue<MoveEvent> _moveUpdateQueue = new Queue<MoveEvent>();
         private readonly Queue<AccessReaderChangeMessage> _accessReaderUpdateQueue = new Queue<AccessReaderChangeMessage>();
         private readonly Queue<TileRef> _tileUpdateQueue = new Queue<TileRef>();
 
         // Need to store previously known entity positions for collidables for when they move
-        private readonly Dictionary<IEntity, TileRef> _lastKnownPositions = new Dictionary<IEntity, TileRef>();
+        private readonly Dictionary<EntityUid, PathfindingNode> _lastKnownPositions = new Dictionary<EntityUid, PathfindingNode>();
 
         public const int TrackedCollisionLayers = (int)
             (CollisionGroup.Impassable | 
@@ -88,11 +89,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 var entity = _entitymanager.GetEntity(update.Owner);
                 if (update.CanCollide)
                 {
-                    HandleCollidableAdd(entity);
+                    HandleEntityAdd(entity);
                 }
                 else
                 {
-                    HandleAccessRemove(entity);
+                    HandleEntityRemove(entity);
                 }
 
                 totalUpdates++;
@@ -105,11 +106,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 var entity = _entitymanager.GetEntity(update.Uid);
                 if (update.Enabled)
                 {
-                    HandleAccessAdd(entity);
+                    HandleEntityAdd(entity);
                 }
                 else
                 {
-                    HandleAccessRemove(entity);
+                    HandleEntityRemove(entity);
                 }
 
                 totalUpdates++;
@@ -166,15 +167,33 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         private PathfindingChunk CreateChunk(GridId gridId, MapIndices indices)
         {
             var newChunk = new PathfindingChunk(gridId, indices);
-            newChunk.Initialize();
             if (!_graph.ContainsKey(gridId))
             {
                 _graph.Add(gridId, new Dictionary<MapIndices, PathfindingChunk>());
             }
+            
             _graph[gridId].Add(indices, newChunk);
+            newChunk.Initialize(_mapManager.GetGrid(gridId));
+            
             return newChunk;
         }
 
+        /// <summary>
+        /// Get the entity's tile position, then get the corresponding node
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public PathfindingNode GetNode(IEntity entity)
+        {
+            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            return GetNode(tile);
+        }
+
+        /// <summary>
+        /// Return the corresponding PathfindingNode for this tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
         public PathfindingNode GetNode(TileRef tile)
         {
             var chunk = GetChunk(tile);
@@ -185,9 +204,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<CollisionChangeEvent>(QueueCollisionEnabledEvent);
-            SubscribeLocalEvent<MoveEvent>(QueueCollidableMove);
-            SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeEvent);
+            SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
+            SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
+            SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeMessage);
 
             // Handle all the base grid changes
             // Anything that affects traversal (i.e. collision layer) is handled separately.
@@ -199,7 +218,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         public override void Shutdown()
         {
             base.Shutdown();
-            UnsubscribeLocalEvent<CollisionChangeEvent>();
+            UnsubscribeLocalEvent<CollisionChangeMessage>();
             UnsubscribeLocalEvent<MoveEvent>();
             UnsubscribeLocalEvent<AccessReaderChangeMessage>();
             
@@ -245,14 +264,19 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             _tileUpdateQueue.Enqueue(eventArgs.NewTile);
         }
 
-        private void QueueAccessChangeEvent(AccessReaderChangeMessage message)
+        private void QueueAccessChangeMessage(AccessReaderChangeMessage message)
         {
             _accessReaderUpdateQueue.Enqueue(message);
         }
 
-        private void HandleAccessAdd(IEntity entity)
+        /// <summary>
+        /// Tries to add the entity to the relevant pathfinding node
+        /// </summary>
+        /// The node will filter it to the correct category (if possible)
+        /// <param name="entity"></param>
+        private void HandleEntityAdd(IEntity entity)
         {
-            if (entity.Deleted || !entity.HasComponent<AccessReader>())
+            if (entity.Deleted || _lastKnownPositions.ContainsKey(entity.Uid))
             {
                 return;
             }
@@ -263,82 +287,34 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
             node.AddEntity(entity);
+            _lastKnownPositions.Add(entity.Uid, node);
         }
 
-        private void HandleAccessRemove(IEntity entity)
+        private void HandleEntityRemove(IEntity entity)
         {
-            if (entity.Deleted || !entity.HasComponent<AccessReader>())
+            if (!_lastKnownPositions.TryGetValue(entity.Uid, out var node))
             {
                 return;
             }
-            
-            var grid = _mapManager.GetGrid(entity.Transform.GridID);
-            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
-
-            var chunk = GetChunk(tileRef);
-            var node = chunk.GetNode(tileRef);
-            node.RemoveEntity(entity);
-        }
-
-        #region collidable
-        /// <summary>
-        /// If an entity's collision gets turned on then we need to update its current position
-        /// </summary>
-        /// <param name="entity"></param>
-        private void HandleCollidableAdd(IEntity entity)
-        {
-            if (entity.Prototype == null ||
-                entity.Deleted ||
-                _lastKnownPositions.ContainsKey(entity) || 
-                !entity.TryGetComponent(out CollidableComponent collidableComponent) || 
-                !collidableComponent.CanCollide || 
-                (TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
-            {
-                return;
-            }
-
-            var grid = _mapManager.GetGrid(entity.Transform.GridID);
-            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
-            var chunk = GetChunk(tileRef);
-            var node = chunk.GetNode(tileRef);
-
-            node.AddEntity(entity);
-            _lastKnownPositions.Add(entity, tileRef);
-        }
-
-        /// <summary>
-        /// If an entity's collision is removed then stop tracking it from the graph
-        /// </summary>
-        /// <param name="entity"></param>
-        private void HandleCollidableRemove(IEntity entity)
-        {
-            if (entity.Prototype == null ||
-                entity.Deleted ||
-                !_lastKnownPositions.ContainsKey(entity) || 
-                !entity.TryGetComponent(out CollidableComponent collidableComponent) || 
-                !collidableComponent.CanCollide || 
-                (TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
-            {
-                return;
-            }
-
-            var grid = _mapManager.GetGrid(entity.Transform.GridID);
-            var tileRef = grid.GetTileRef(entity.Transform.GridPosition);
-            var chunk = GetChunk(tileRef);
-            var node = chunk.GetNode(tileRef);
 
             node.RemoveEntity(entity);
-            _lastKnownPositions.Remove(entity);
+            _lastKnownPositions.Remove(entity.Uid);
         }
 
-        private void QueueCollidableMove(MoveEvent moveEvent)
+        private void QueueMoveEvent(MoveEvent moveEvent)
         {
             _moveUpdateQueue.Enqueue(moveEvent);
         }
 
+        /// <summary>
+        /// When an entity moves around we'll remove it from its old node and add it to its new node (if applicable)
+        /// </summary>
+        /// <param name="moveEvent"></param>
         private void HandleCollidableMove(MoveEvent moveEvent)
         {
-            if (!_lastKnownPositions.ContainsKey(moveEvent.Sender))
+            var entityUid = moveEvent.Sender.Uid;
+            
+            if (!_lastKnownPositions.TryGetValue(entityUid, out var oldNode))
             {
                 return;
             }
@@ -347,51 +323,28 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
             if (moveEvent.Sender.Deleted)
             {
-                HandleCollidableRemove(moveEvent.Sender);
+                HandleEntityRemove(moveEvent.Sender);
                 return;
             }
-
-            _lastKnownPositions.TryGetValue(moveEvent.Sender, out var oldTile);
+            
             var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GridID).GetTileRef(moveEvent.NewPosition);
 
-            if (oldTile == newTile)
+            if (oldNode == null || oldNode.TileRef == newTile)
             {
                 return;
             }
 
-            _lastKnownPositions[moveEvent.Sender] = newTile;
+            var newNode = GetNode(newTile);
+            _lastKnownPositions[entityUid] = newNode;
 
-            if (!moveEvent.Sender.HasComponent<CollidableComponent>())
-            {
-                HandleCollidableRemove(moveEvent.Sender);
-                return;
-            }
-
-            var gridIds = new HashSet<GridId>(2) {oldTile.GridIndex, newTile.GridIndex};
-
-            foreach (var gridId in gridIds)
-            {
-                if (oldTile.GridIndex == gridId)
-                {
-                    var oldChunk = GetChunk(oldTile);
-                    var oldNode = oldChunk.GetNode(oldTile);
-                    oldNode.RemoveEntity(moveEvent.Sender);
-                }
-
-                if (newTile.GridIndex == gridId)
-                {
-                    var newChunk = GetChunk(newTile);
-                    var newNode = newChunk.GetNode(newTile);
-                    newNode.AddEntity(moveEvent.Sender);
-                }
-            }
+            oldNode.RemoveEntity(moveEvent.Sender);
+            newNode.AddEntity(moveEvent.Sender);
         }
 
-        private void QueueCollisionEnabledEvent(CollisionChangeEvent collisionEvent)
+        private void QueueCollisionChangeMessage(CollisionChangeMessage collisionMessage)
         {
-            _collidableUpdateQueue.Enqueue(collisionEvent);
+            _collidableUpdateQueue.Enqueue(collisionMessage);
         }
-        #endregion
 
         // TODO: Need to rethink the pathfinder utils (traversable etc.). Maybe just chuck them all in PathfindingSystem
         // Otherwise you get the steerer using this and the pathfinders using a different traversable.

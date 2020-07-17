@@ -1,30 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Health.BodySystem.BodyParts;
-using Content.Shared.BodySystem;
-using Content.Shared.Interfaces;
-using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using System;
+using System.Collections.Generic;
+using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
+using System.Globalization;
+using Robust.Server.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Robust.Shared.Log;
+using Content.Shared.Interfaces;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.Random;
+using Robust.Shared.Interfaces.GameObjects;
+using System.Diagnostics;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Robust.Shared.Localization;
 
-namespace Content.Server.Health.BodySystem.Mechanisms
-{
+namespace Content.Server.BodySystem {
+
     /// <summary>
     ///    Component representing a dropped, tangible <see cref="Mechanism"/> entity.
     /// </summary>
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
+
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
         [Dependency] private IPrototypeManager _prototypeManager;

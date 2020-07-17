@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Markers
             }
         }
 
-        private void Spawn()
+        public virtual void Spawn()
         {
             if (Chance != 1.0f && !_robustRandom.Prob(Chance))
                 return;
@@ -92,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Markers
                 _entityManager.SpawnEntity(_robustRandom.Pick(Prototypes), Owner.Transform.GridPosition);
         }
 
-        public void MapInit()
+        public virtual void MapInit()
         {
             _gameTicker.OnRuleAdded += RuleAdded;
 

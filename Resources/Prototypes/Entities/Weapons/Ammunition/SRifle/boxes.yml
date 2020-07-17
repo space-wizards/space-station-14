@@ -33,9 +33,9 @@
     capacity: 200
     fillPrototype: CartridgeSRifle
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box.rsi
 
 - type: entity
   id: BoxSRifleBigBoxRubber
@@ -46,9 +46,9 @@
     capacity: 200
     fillPrototype: CartridgeSRifleRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_big_box_rubber.rsi
 
 - type: entity
   id: BoxSRifleBox
@@ -59,9 +59,9 @@
     capacity: 60
     fillPrototype: CartridgeSRifle
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box.rsi
 
 - type: entity
   id: BoxSRifleBoxFlash
@@ -72,9 +72,9 @@
     capacity: 60
     fillPrototype: CartridgeSRifleFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_flash.rsi
 
 - type: entity
   id: BoxSRifleBoxHV
@@ -85,9 +85,9 @@
     capacity: 60
     fillPrototype: CartridgeSRifleHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_hv.rsi
 
 - type: entity
   id: BoxSRifleBoxPractice
@@ -98,9 +98,9 @@
     capacity: 60
     fillPrototype: CartridgeSRiflePractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_practice.rsi
 
 - type: entity
   id: BoxSRifleBoxRubber
@@ -111,6 +111,6 @@
     capacity: 60
     fillPrototype: CartridgeSRifleRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/Boxes/SRifle/s_rifle_box_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/SRifle/s_rifle_box_rubber.rsi

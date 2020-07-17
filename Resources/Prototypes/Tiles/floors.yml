@@ -135,7 +135,7 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds: 
   friction: 0.35
   item_drop: FloorTileItemShowroom
 
@@ -194,7 +194,7 @@
 - type: tile
   name: floor_asteroid_sand
   display_name: Asteroid Floor
-  texture: asteroid_sand
+  texture: Asteroid/asteroid_sand
   base_turfs:
   - space
   is_subfloor: false
@@ -205,7 +205,7 @@
 - type: tile
   name: floor_asteroid_tile
   display_name: Asteroid Tile
-  texture: asteroid_tile
+  texture: Asteroid/asteroid_tile
   base_turfs:
   - space
   - underplating
@@ -218,7 +218,7 @@
 - type: tile
   name: floor_asteroid_coarse_sand0
   display_name: Asteroid Coarse Sand 0
-  texture: asteroid_coarse_sand0
+  texture: Asteroid/asteroid_coarse_sand0
   base_turfs:
   - space
   is_subfloor: false
@@ -229,7 +229,7 @@
 - type: tile
   name: floor_asteroid_coarse_sand1
   display_name: Asteroid Coarse Sand 1
-  texture: asteroid_coarse_sand1
+  texture: Asteroid/asteroid_coarse_sand1
   base_turfs:
   - space
   is_subfloor: false
@@ -240,7 +240,7 @@
 - type: tile
   name: floor_asteroid_coarse_sand2
   display_name: Asteroid Coarse Sand 2
-  texture: asteroid_coarse_sand2
+  texture: Asteroid/asteroid_coarse_sand2
   base_turfs:
   - space
   is_subfloor: false
@@ -251,7 +251,7 @@
 - type: tile
   name: floor_asteroid_coarse_sand_dug
   display_name: Asteroid Dug Coarse Sand
-  texture: asteroid_coarse_sand_dug
+  texture: Asteroid/asteroid_coarse_sand_dug
   base_turfs:
   - space
   is_subfloor: false

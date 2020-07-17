@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
@@ -29,7 +30,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
             {
                 return true;
             }
-            
+
             if (!_owner.TryGetComponent(out CombatModeComponent combatModeComponent))
             {
                 return false;
@@ -42,7 +43,7 @@ namespace Content.Server.AI.Operators.Combat.Melee
 
             return true;
         }
-        
+
         public override void Shutdown(Outcome outcome)
         {
             base.Shutdown(outcome);

@@ -33,7 +33,7 @@
     IsScrapingFloor: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Kitchen/microwave.rsi
+    sprite: Constructible/Power/microwave.rsi
     drawdepth: Items
     layers:
     - state: mw0
@@ -43,5 +43,5 @@
       map: ["enum.MicrowaveVisualizerLayers.BaseUnlit"]
   - type: PowerReceiver
   - type: Icon
-    sprite: Objects/Kitchen/microwave.rsi
+    sprite: Constructible/Power/microwave.rsi
     state: mw0

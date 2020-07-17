@@ -1,8 +1,7 @@
+#nullable enable
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
-
-#nullable enable
 
 namespace Content.Client.GameObjects.Components.Mobs
 {

@@ -8,6 +8,7 @@ using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Input;
+using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -36,12 +37,16 @@ namespace Content.Client.Sandbox
         private SandboxWindow _window;
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
-        private bool _sandboxWindowToggled = false;
+        private bool _sandboxWindowToggled;
 
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
                 message => SetAllowed(message.SandboxAllowed));
+
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess));
+
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 
@@ -106,14 +111,18 @@ namespace Content.Client.Sandbox
             _window.RespawnButton.OnPressed += OnRespawnButtonOnOnPressed;
             _window.SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
+            _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
 
             _window.OpenCentered();
         }
+
+
 
         private void WindowOnOnClose()
         {
             _window = null;
             _gameHud.SandboxButtonDown = false;
+            _sandboxWindowToggled = false;
         }
 
         private void OnRespawnButtonOnOnPressed(BaseButton.ButtonEventArgs args)
@@ -131,6 +140,10 @@ namespace Content.Client.Sandbox
             ToggleTilesWindow();
         }
 
+        private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
+        }
         private void ToggleEntitySpawnWindow()
         {
             if(_spawnWindow == null)

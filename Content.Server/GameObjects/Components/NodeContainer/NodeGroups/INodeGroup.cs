@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     /// </summary>
     public interface INodeGroup
     {
-        public IReadOnlyList<Node> Nodes { get; }
+        IReadOnlyList<Node> Nodes { get; }
 
         void AddNode(Node node);
 
@@ -25,6 +26,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void BeforeRemakeSpread();
 
         void AfterRemakeSpread();
+
+        void RemakeGroup();
     }
 
     [NodeGroup(NodeGroupID.Default)]
@@ -49,7 +52,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             _nodes.Remove(node);
             OnRemoveNode(node);
-            RemakeGroup();
+            IoCManager.Resolve<INodeGroupManager>().AddDirtyNodeGroup(this);
         }
 
         public void CombineGroup(INodeGroup newGroup)
@@ -73,7 +76,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         ///     Causes all <see cref="Node"/>s to remake their groups. Called when a <see cref="Node"/> is removed
         ///     and may have split a group in two, so multiple new groups may need to be formed.
         /// </summary>
-        private void RemakeGroup()
+        public void RemakeGroup()
         {
             BeforeRemake();
             foreach (var node in Nodes)
@@ -116,6 +119,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void AfterCombine() { }
             public void BeforeRemakeSpread() { }
             public void AfterRemakeSpread() { }
+            public void RemakeGroup() { }
         }
     }
 }

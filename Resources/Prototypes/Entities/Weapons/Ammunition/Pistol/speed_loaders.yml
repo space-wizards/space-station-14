@@ -31,9 +31,9 @@
   - type: SpeedLoader
     fillPrototype: CartridgePistol
   - type: Icon
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl.rsi
 
 - type: entity
   id: SLPistolFlash
@@ -43,9 +43,9 @@
   - type: SpeedLoader
     fillPrototype: CartridgePistolFlash
   - type: Icon
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_flash.rsi
 
 - type: entity
   id: SLPistolHV
@@ -55,9 +55,9 @@
   - type: SpeedLoader
     fillPrototype: CartridgePistolHV
   - type: Icon
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_hv.rsi
 
 - type: entity
   id: SLPistolPractice
@@ -67,9 +67,9 @@
   - type: SpeedLoader
     fillPrototype: CartridgePistolPractice
   - type: Icon
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_practice.rsi
 
 - type: entity
   id: SLPistolRubber
@@ -79,6 +79,6 @@
   - type: SpeedLoader
     fillPrototype: CartridgePistolRubber
   - type: Icon
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi
   - type: Sprite
-    sprite: Objects/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Pistol/pistol_sl_rubber.rsi

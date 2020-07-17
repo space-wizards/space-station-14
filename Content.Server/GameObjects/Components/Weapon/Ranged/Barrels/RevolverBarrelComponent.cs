@@ -2,6 +2,7 @@ using System;
 using Content.Server.GameObjects.Components.Sound;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
@@ -57,9 +58,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataField(ref _fillPrototype, "fillPrototype", null);
 
             // Sounds
-            serializer.DataField(ref _soundEject, "soundEject", "/Audio/Guns/MagOut/revolver_magout.ogg");
-            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Guns/MagIn/revolver_magin.ogg");
-            serializer.DataField(ref _soundSpin, "soundSpin", "/Audio/Guns/Misc/revolver_spin.ogg");
+            serializer.DataField(ref _soundEject, "soundEject", "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
+            serializer.DataField(ref _soundInsert, "soundInsert", "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
+            serializer.DataField(ref _soundSpin, "soundSpin", "/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
         }
 
         public override void Initialize()
@@ -171,17 +172,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         /// Takes a projectile out if possible
         /// IEnumerable just to make supporting shotguns saner
         /// </summary>
-        /// <param name="spawnAt"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var ammo = _ammoSlots[_currentSlot];
             IEntity bullet = null;
             if (ammo != null)
             {
                 var ammoComponent = ammo.GetComponent<AmmoComponent>();
-                bullet = ammoComponent.TakeBullet(spawnAt);
+                bullet = ammoComponent.TakeBullet(spawnAtGrid, spawnAtMap);
                 if (ammoComponent.Caseless)
                 {
                     _ammoSlots[_currentSlot] = null;

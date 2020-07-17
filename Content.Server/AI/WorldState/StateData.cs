@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Interfaces.GameTicking;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 
 namespace Content.Server.AI.WorldState
 {
@@ -21,6 +24,8 @@ namespace Content.Server.AI.WorldState
     {
         void CheckCache();
     }
+
+    public interface IStoredState {}
 
     /// <summary>
     /// The default class for state values. Also see CachedStateData and PlanningStateData
@@ -44,7 +49,7 @@ namespace Content.Server.AI.WorldState
     /// Useful for group blackboard sharing or to avoid repeating the same action (e.g. bark phrases).
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class StoredStateData<T> : IAiState
+    public abstract class StoredStateData<T> : IAiState, IStoredState
     {
         // Probably not the best class name but couldn't think of anything better
         public abstract string Name { get; }
@@ -108,11 +113,11 @@ namespace Content.Server.AI.WorldState
         protected IEntity Owner { get; private set; }
         private bool _cached;
         protected T Value;
-        private DateTime _lastCache = DateTime.Now;
+        private TimeSpan _lastCache = TimeSpan.Zero;
         /// <summary>
         /// How long something stays in the cache before new values are retrieved
         /// </summary>
-        protected float CacheTime { get; set; } = 2.0f;
+        protected double CacheTime { get; set; } = 2.0f;
 
         public void Setup(IEntity owner)
         {
@@ -121,7 +126,9 @@ namespace Content.Server.AI.WorldState
 
         public void CheckCache()
         {
-            if (!_cached || (DateTime.Now - _lastCache).TotalSeconds >= CacheTime)
+            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            
+            if (!_cached || (curTime - _lastCache).TotalSeconds >= CacheTime)
             {
                 _cached = false;
                 return;
@@ -142,7 +149,7 @@ namespace Content.Server.AI.WorldState
             {
                 Value = GetTrueValue();
                 _cached = true;
-                _lastCache = DateTime.Now;
+                _lastCache = IoCManager.Resolve<IGameTiming>().CurTime;
             }
 
             return Value;

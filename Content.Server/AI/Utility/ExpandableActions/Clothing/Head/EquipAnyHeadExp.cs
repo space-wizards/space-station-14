@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Clothing.Head;
@@ -6,7 +5,6 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
@@ -22,7 +20,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Clothing.Head
         {
             var owner = context.GetState<SelfState>().GetValue();
 
-            foreach (var entity in context.GetState<InventoryState>().GetValue())
+            foreach (var entity in context.GetState<EnumerableInventoryState>().GetValue())
             {
                 if (entity.TryGetComponent(out ClothingComponent clothing) &&
                     (clothing.SlotFlags & EquipmentSlotDefines.SlotFlags.HEAD) != 0)

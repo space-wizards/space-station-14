@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -58,8 +58,8 @@ namespace Content.Server.GameObjects.Components.Movement
             serializer.DataField(ref _chargeTime, "charge_time", 0.2f);
             serializer.DataField(ref _cooldown, "cooldown", 2.0f);
             serializer.DataField(ref _avoidCollidable, "avoid_walls", true);
-            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/effects/teleport_departure.ogg");
-            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/effects/teleport_arrival.ogg");
+            serializer.DataField(ref _departureSound, "departure_sound", "/Audio/Effects/teleport_departure.ogg");
+            serializer.DataField(ref _arrivalSound, "arrival_sound", "/Audio/Effects/teleport_arrival.ogg");
             serializer.DataField(ref _cooldownSound, "cooldown_sound", null);
             serializer.DataField(ref _portalAliveTime, "portal_alive_time", 5.0f);  // TODO: Change this to 0 before PR?
         }

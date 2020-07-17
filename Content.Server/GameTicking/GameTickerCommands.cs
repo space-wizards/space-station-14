@@ -1,11 +1,15 @@
 using System;
-using Content.Server.GameTicking.GamePresets;
+using System.Collections.Generic;
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Log;
 
 namespace Content.Server.GameTicking
 {
@@ -175,12 +179,20 @@ namespace Content.Server.GameTicking
 
     class JoinGameCommand : IClientCommand
     {
+#pragma warning disable 649
+        [Dependency] private IPrototypeManager _prototypeManager;
+#pragma warning restore 649
         public string Command => "joingame";
         public string Description => "";
         public string Help => "";
 
+        public JoinGameCommand()
+        {
+            IoCManager.InjectDependencies(this);
+        }
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            var output = string.Join(".", args);
             if (player == null)
             {
                 return;
@@ -192,8 +204,22 @@ namespace Content.Server.GameTicking
                 shell.SendText(player, "Round has not started.");
                 return;
             }
+            else if(ticker.RunLevel == GameRunLevel.InRound)
+            {
+                string ID = args[0];
+                var positions = ticker.GetAvailablePositions();
 
-            ticker.MakeJoinGame(player);
+                if(positions.GetValueOrDefault(ID, 0) == 0) //n < 0 is treated as infinite
+                {
+                    var jobPrototype = _prototypeManager.Index<JobPrototype>(ID);
+                    shell.SendText(player, $"{jobPrototype.Name} has no available slots.");
+                    return;
+                }
+                ticker.MakeJoinGame(player, args[0].ToString());
+                return;
+            }
+
+            ticker.MakeJoinGame(player, null);
         }
     }
 

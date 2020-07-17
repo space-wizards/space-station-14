@@ -55,19 +55,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
                 gScores.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position, score);
             }
 
-            var closedTiles = new List<Vector2>();
-            foreach (var tile in routeDebug.ClosedTiles)
-            {
-                var tileGrid = mapManager.GetGrid(tile.GridIndex).GridTileToLocal(tile.GridIndices);
-                closedTiles.Add(mapManager.GetGrid(tile.GridIndex).LocalToWorld(tileGrid).Position);
-            }
-
             var systemMessage = new SharedAiDebug.AStarRouteMessage(
                 routeDebug.EntityUid,
                 route,
                 cameFrom,
                 gScores,
-                closedTiles,
                 routeDebug.TimeTaken
                 );
 

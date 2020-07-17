@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;

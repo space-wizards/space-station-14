@@ -3,8 +3,9 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -18,7 +19,8 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
-    [ComponentReference(typeof(StoreableComponent))]
+    [ComponentReference(typeof(StorableComponent))]
+    [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {
 #pragma warning disable 649
