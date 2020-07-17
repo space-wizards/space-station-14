@@ -57,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.AreEqual(unit.ContainedEntities.Count, entities.Length);
 
-            Assert.True(unit.TryFlush());
+            Assert.AreEqual(unit.TryFlush(), entry != null);
             Assert.AreEqual(unit.ContainedEntities.Count == 0, entry != null || entities.Length == 0);
 
             foreach (var entity in entities)
@@ -91,8 +91,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", MapCoordinates.Nullspace);
 
                 // Test for components existing
-                Assert.True(human.TryGetComponent(out DisposableComponent mobDisposable));
-                Assert.True(wrench.TryGetComponent(out DisposableComponent itemDisposable));
+                Assert.True(human.HasComponent<DisposableComponent>());
+                Assert.True(wrench.HasComponent<DisposableComponent>());
                 Assert.True(disposalUnit.TryGetComponent(out DisposalUnitComponent unit));
                 Assert.True(disposalTrunk.TryGetComponent(out DisposalEntryComponent entry));
 
@@ -122,6 +122,15 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Can insert mobs and items
                 UnitInsertContains(unit, true, human, wrench);
+
+                // Move the disposal trunk away
+                disposalTrunk.Transform.WorldPosition += (1, 0);
+
+                // Fail to flush with a mob and an item
+                Flush(unit, null, null, human, wrench);
+
+                // Move the disposal trunk back
+                disposalTrunk.Transform.WorldPosition -= (1, 0);
 
                 // Flush with a mob and an item
                 Flush(unit, entry, null, human, wrench);
