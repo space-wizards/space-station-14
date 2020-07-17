@@ -40,7 +40,7 @@ namespace Content.Client.UserInterface
 
             var hands = new VBoxContainer();
 
-            var panelTexture = ResC.GetTexture("/Nano/item_status_left.svg.96dpi.png");
+            var panelTexture = ResC.GetTexture("/Textures/Interface/Nano/item_status_left.svg.96dpi.png");
             var panel = new ItemStatusPanel(panelTexture, StyleBox.Margin.None);
             hands.AddChild(panel);
             hands.AddChild(new HBoxContainer
@@ -107,7 +107,7 @@ namespace Content.Client.UserInterface
 
             var hBox = GetHandsContainer();
 
-            var panelTexture = ResC.GetTexture("/Nano/item_status_right.svg.96dpi.png");
+            var panelTexture = ResC.GetTexture("/Textures/Interface/Nano/item_status_right.svg.96dpi.png");
             // var panel = new ItemStatusPanel(texture, StyleBox.Margin.None);
 
             hBox.AddChild(button);

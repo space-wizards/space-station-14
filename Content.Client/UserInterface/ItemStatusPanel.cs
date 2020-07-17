@@ -77,8 +77,8 @@ namespace Content.Client.UserInterface
         public static ItemStatusPanel FromSide(bool isRightHand)
         {
             var texture = ResC.GetTexture(isRightHand
-                ? "/Nano/item_status_right.svg.96dpi.png"
-                : "/Nano/item_status_left.svg.96dpi.png");
+                ? "/Textures/Interface/Nano/item_status_right.svg.96dpi.png"
+                : "/Textures/Interface/Nano/item_status_left.svg.96dpi.png");
             var margin = (isRightHand
                 ? StyleBox.Margin.Left
                 : StyleBox.Margin.Right) | StyleBox.Margin.Top;
