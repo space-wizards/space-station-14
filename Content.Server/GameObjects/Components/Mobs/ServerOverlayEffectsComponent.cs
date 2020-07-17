@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables(VVAccess.ReadWrite)]
         public List<OverlayContainer> ActiveOverlays { get; } = new List<OverlayContainer>();
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
             if (Owner.TryGetComponent(out IActorComponent actor) && message is ResendOverlaysMessage)
             {

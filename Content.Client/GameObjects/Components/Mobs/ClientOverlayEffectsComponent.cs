@@ -66,7 +66,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
             if (message is OverlayEffectComponentMessage overlayMessage)
