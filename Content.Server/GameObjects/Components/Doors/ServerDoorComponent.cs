@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
@@ -120,11 +121,13 @@ namespace Content.Server.GameObjects
             }
         }
 
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedwith)
+        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
-            // don't collide if door is open
-            if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder) && !occluder.Enabled)
+            // don't block thrown items if the door is open
+            if (!collidableComponent.Hard && collidedWith.Owner.TryGetComponent(out ThrownItemComponent item))
+            {
                 return true;
+            }
 
             return false;
         }
