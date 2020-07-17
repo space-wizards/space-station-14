@@ -121,7 +121,7 @@
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j1
   - type: DisposalJunction
-    angles:
+    degrees:
     - 0
     - -90
     - 180
@@ -145,7 +145,7 @@
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-j2
   - type: DisposalJunction
-    angles:
+    degrees:
     - 0
     - 90
     - 180
@@ -170,7 +170,7 @@
     sprite: Constructible/Power/disposal.rsi
     state: conpipe-y
   - type: DisposalJunction
-    angles:
+    degrees:
     - 0
     - 90
     - -90

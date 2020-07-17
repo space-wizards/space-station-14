@@ -6,6 +6,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
@@ -21,7 +23,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     The angles to connect to in radians.
         ///     Parsed from YAML files as degrees.
         /// </summary>
-        private double[] _angles;
+        [ViewVariables]
+        private List<int> _degrees;
 
         public override string Name => "DisposalJunction";
 
@@ -29,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var direction = Owner.Transform.LocalRotation;
 
-            return _angles.Select(radian => new Angle(direction.Theta + radian).GetDir()).ToArray();
+            return _degrees.Select(degree => new Angle(direction.Theta + MathHelper.DegreesToRadians(degree)).GetDir()).ToArray();
         }
 
         public override Direction NextDirection(DisposableComponent disposable)
@@ -50,12 +53,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var degrees = new List<double>();
-                serializer.DataField(ref degrees, "angles", null);
-                _angles = degrees.Select(MathHelper.DegreesToRadians).ToArray();
-            }
+            serializer.DataField(ref _degrees, "degrees", null);
         }
     }
 }

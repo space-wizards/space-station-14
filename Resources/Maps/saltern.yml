@@ -33456,4 +33456,236 @@ entities:
     type: ContainerContainer
   - Anchored: True
     type: Physics
+- uid: 3456
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: 3.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3457
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: 2.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3458
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: 0.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3459
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: -12.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3460
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: -22.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3461
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: -28.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3462
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: -27.5,-10.5
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3463
+  type: DisposalYJunction
+  components:
+  - parent: 15
+    pos: -23.5,-10.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3464
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: -17.5,-15.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3465
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: -10.5,-15.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3466
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: 2.5,11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3467
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: 2.5,17.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3468
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: 12.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3469
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: 12.5,-1.5
+    rot: 1.5707963267948966 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3470
+  type: DisposalJunction
+  components:
+  - parent: 15
+    pos: 24.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3471
+  type: DisposalJunctionFlipped
+  components:
+  - parent: 15
+    pos: 34.5,3.5
+    rot: 3.141592653589793 rad
+    type: Transform
+  - containers:
+      DisposalJunction:
+        type: Robust.Server.GameObjects.Components.Container.Container
+    type: ContainerContainer
+  - Anchored: True
+    type: Physics
+- uid: 3472
+  type: ConveyorSwitch
+  components:
+  - parent: 15
+    pos: -23.467268,-14.347846
+    rot: 3.141592653589793 rad
+    type: Transform
+- uid: 3473
+  type: ConveyorBelt
+  components:
+  - parent: 15
+    pos: -23.5,-13.5
+    type: Transform
+- uid: 3474
+  type: ConveyorBelt
+  components:
+  - parent: 15
+    pos: -22.5,-13.5
+    type: Transform
+- uid: 3475
+  type: Recycler
+  components:
+  - parent: 15
+    pos: -21.5,-13.5
+    type: Transform
 ...
