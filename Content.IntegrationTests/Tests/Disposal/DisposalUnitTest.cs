@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿#nullable enable
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Disposal;
@@ -51,6 +52,25 @@ namespace Content.IntegrationTests.Tests.Disposal
             UnitContains(unit, result, entities);
         }
 
+        private void Flush(DisposalUnitComponent unit, DisposalEntryComponent? entry = null, IDisposalTubeComponent? next = null, params IEntity[] entities)
+        {
+            Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
+            Assert.AreEqual(unit.ContainedEntities.Count, entities.Length);
+
+            Assert.True(unit.TryFlush());
+            Assert.AreEqual(unit.ContainedEntities.Count == 0, entry != null || entities.Length == 0);
+
+            foreach (var entity in entities)
+            {
+                Assert.True(entity.TryGetComponent(out DisposableComponent disposable));
+                Assert.AreEqual(disposable.InTube, entry != null);
+
+                Assert.Null(disposable.PreviousTube);
+                Assert.AreEqual(disposable.CurrentTube, entry);
+                Assert.AreEqual(disposable.NextTube, next);
+            }
+        }
+
         [Test]
         public async Task Test()
         {
@@ -71,10 +91,10 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", MapCoordinates.Nullspace);
 
                 // Test for components existing
-                Assert.True(human.TryGetComponent(out DisposableComponent _));
-                Assert.True(wrench.TryGetComponent(out DisposableComponent _));
+                Assert.True(human.TryGetComponent(out DisposableComponent mobDisposable));
+                Assert.True(wrench.TryGetComponent(out DisposableComponent itemDisposable));
                 Assert.True(disposalUnit.TryGetComponent(out DisposalUnitComponent unit));
-                Assert.True(disposalTrunk.TryGetComponent(out DisposalEntryComponent _));
+                Assert.True(disposalTrunk.TryGetComponent(out DisposalEntryComponent entry));
 
                 // Can't insert, unanchored and unpowered
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
@@ -87,20 +107,24 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Can't insert, unpowered
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
-
                 Assert.False(unit.Powered);
 
+                // Remove power need
                 Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent power));
-
                 power.NeedsPower = false;
-
                 Assert.True(unit.Powered);
 
                 // Can't insert the trunk or the unit into itself
                 UnitInsertContains(unit, false, disposalUnit, disposalTrunk);
 
+                // Flush with no contents
+                Flush(unit, entry);
+
                 // Can insert mobs and items
                 UnitInsertContains(unit, true, human, wrench);
+
+                // Flush with a mob and an item
+                Flush(unit, entry, null, human, wrench);
             });
 
             await server.WaitIdleAsync();

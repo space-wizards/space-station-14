@@ -107,11 +107,11 @@ namespace Content.Server.GameObjects.Components.Disposal
                     physics.Anchored);
         }
 
-        private void TryFlush()
+        public bool TryFlush()
         {
             if (!CanFlush())
             {
-                return;
+                return false;
             }
 
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (entry == null)
             {
-                return;
+                return false;
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
@@ -138,6 +138,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             UpdateInterface();
+
+            return true;
         }
 
         private void TryEject(IEntity entity)
