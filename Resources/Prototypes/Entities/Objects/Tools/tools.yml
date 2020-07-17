@@ -244,6 +244,7 @@
           state: drill_bolt
           useSound: /Audio/Items/drill_use.ogg
           changeSound: /Audio/Items/change_drill.ogg
+
 - type: entity
   name: RCD
   parent: BaseItem
