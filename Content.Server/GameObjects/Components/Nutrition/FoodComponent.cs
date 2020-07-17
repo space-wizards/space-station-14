@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(user, Loc.GetString($"The {Owner.Name} is empty!"));
+                user.PopupMessage(user, Loc.GetString("{0:TheName} is empty!", Owner));
                 return false;
             }
 
