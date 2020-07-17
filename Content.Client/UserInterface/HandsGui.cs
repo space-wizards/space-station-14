@@ -36,10 +36,7 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            var textureHandLeft = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
-            var textureHandRight = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
             var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
-            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
 
             var hands = new VBoxContainer();
 
@@ -60,9 +57,9 @@ namespace Content.Client.UserInterface
                 TextureScale = (2, 2)
             };
 
-            _leftHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_l.png");
-            _middleHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_middle.png");
-            _rightHandTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/hand_r.png");
+            _leftHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_l.png");
+            _middleHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_middle.png");
+            _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
         private Control GetHandsContainer()
@@ -101,7 +98,7 @@ namespace Content.Client.UserInterface
         private void AddHand(Hand hand, HandLocation buttonLocation)
         {
             var buttonTexture = LocationTexture(buttonLocation);
-            var storageTexture = _resourceCache.GetTexture("/Textures/UserInterface/Inventory/back.png");
+            var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             var button = new HandButton(buttonTexture, storageTexture, buttonLocation);
             var slot = hand.Name;
 
