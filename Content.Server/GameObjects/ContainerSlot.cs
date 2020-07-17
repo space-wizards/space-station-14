@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects
     public class ContainerSlot : BaseContainer
     {
         [ViewVariables]
-        public IEntity? ContainedEntity
+        public IEntity ContainedEntity
         {
             get => _containedEntity;
             private set
