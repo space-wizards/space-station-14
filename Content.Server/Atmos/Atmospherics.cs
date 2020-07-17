@@ -87,24 +87,24 @@
         #region Excited Groups
 
         /// <summary>
-        ///     Number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
+        ///     Number of full atmos updates ticks before an excited group breaks down (averages gas contents across turfs)
         /// </summary>
         public const int ExcitedGroupBreakdownCycles = 4;
 
         /// <summary>
-        ///     Number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
+        ///     Number of full atmos updates before an excited group dismantles and removes its turfs from active
         /// </summary>
         public const int ExcitedGroupsDismantleCycles = 16;
 
         /// <summary>
         ///     Hard limit for tile equalization.
         /// </summary>
-        public const int ZumosHardTileLimit = 2000;
+        public const int ZumosHardTileLimit = 10000;
 
         /// <summary>
-        ///     Hard limit for tile equalization.
+        ///     Limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosTileLimit = 2000;
+        public const int ZumosTileLimit = 1000;
 
         #endregion
     }

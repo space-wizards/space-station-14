@@ -141,7 +141,7 @@ namespace Content.Server.Atmos
 
         public void Merge(GasMixture giver)
         {
-            if (Immutable) return;
+            if (Immutable || giver == null) return;
 
             if (MathF.Abs(Temperature - giver.Temperature) > Atmospherics.MinimumTemperatureDeltaToConsider)
             {

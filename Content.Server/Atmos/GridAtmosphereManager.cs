@@ -18,6 +18,7 @@ namespace Content.Server.Atmos
     /// <inheritdoc cref="IGridAtmosphereManager"/>
     internal class GridAtmosphereManager : IGridAtmosphereManager
     {
+        private int _timer = 0;
         private int _updateCounter = 0;
         private readonly IMapGrid _grid;
         private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>();
@@ -25,7 +26,17 @@ namespace Content.Server.Atmos
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>();
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
 
+        private ProcessState _state = ProcessState.TileEqualize;
+
         private List<TileAtmosphere> _highPressureDelta = new List<TileAtmosphere>();
+
+        private enum ProcessState
+        {
+            TileEqualize,
+            ActiveTiles,
+            ExcitedGroups,
+            HighPressureDelta,
+        }
 
         public GridAtmosphereManager(IMapGrid grid)
         {
@@ -205,12 +216,35 @@ namespace Content.Server.Atmos
 
         public void Update(float frameTime)
         {
+            _timer += 1;
+
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
 
-            ProcessTileEqualize();
-            ProcessActiveTurfs();
-            ProcessExcitedGroups();
+            if (_timer < 2)
+                return;
+
+            _timer = 0;
+
+            switch (_state)
+            {
+                case ProcessState.TileEqualize:
+                    ProcessTileEqualize();
+                    _state = ProcessState.ActiveTiles;
+                    return;
+                case ProcessState.ActiveTiles:
+                    ProcessActiveTiles();
+                    _state = ProcessState.ExcitedGroups;
+                    return;
+                case ProcessState.ExcitedGroups:
+                    ProcessExcitedGroups();
+                    _state = ProcessState.HighPressureDelta;
+                    return;
+                case ProcessState.HighPressureDelta:
+                    ProcessHighPressureDelta();
+                    _state = ProcessState.TileEqualize;
+                    break;
+            }
 
             _updateCounter++;
         }
@@ -234,7 +268,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        public void ProcessActiveTurfs()
+        public void ProcessActiveTiles()
         {
             foreach (var tile in _activeTiles.ToArray())
             {

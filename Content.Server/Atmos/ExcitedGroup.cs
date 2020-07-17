@@ -93,6 +93,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in _tile)
             {
+                if (tile == null) continue;
                 combined.Merge(tile.Air);
                 if (!spaceIsAllConsuming || !tile.Air.Immutable) continue;
                 combined.Clear();

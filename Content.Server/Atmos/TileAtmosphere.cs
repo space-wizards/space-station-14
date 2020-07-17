@@ -101,8 +101,7 @@ namespace Content.Server.Atmos
 
             var queueCycle = ++_eqQueueCycleCtr;
             var totalMoles = 0f;
-            var tiles = new List<TileAtmosphere>();
-            tiles.Add(this);
+            var tiles = new List<TileAtmosphere> {this};
             _tileAtmosInfo.LastQueueCycle = queueCycle;
             var tileCount = 1;
             for (var i = 0; i < tileCount; i++)
@@ -553,7 +552,7 @@ namespace Content.Server.Atmos
                         if (!_adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         if (tile2?.Air == null) continue;
                         if (tile2._tileAtmosInfo != null && tile2._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
-                        tile.ConsiderFirelocks();
+                        tile.ConsiderFirelocks(tile2);
                         if (tile._adjacentTiles[direction]?.Air != null)
                         {
                             tile2._tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
@@ -625,7 +624,7 @@ namespace Content.Server.Atmos
                 _gridAtmosphereManager.PryTile(GridIndices);
         }
 
-        private void ConsiderFirelocks()
+        private void ConsiderFirelocks(TileAtmosphere other)
         {
             // TODO ATMOS firelocks!
             //throw new NotImplementedException();

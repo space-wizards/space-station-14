@@ -55,7 +55,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 needsUpdate |= list.Add(specifier);
             }
 
-            return;
             // TODO: Not send this to everyone.
             if(needsUpdate)
                 RaiseNetworkEvent(new TileOverlayMessage(new[]
