@@ -60,7 +60,7 @@ namespace Content.Shared.Physics
             }
             else if (dist.Length > DistBeforePull)
             {
-                _controlledComponent.LinearVelocity = dist.Normalized * _puller.LinearVelocity.Length;
+                _controlledComponent.LinearVelocity = dist.Normalized * _puller.LinearVelocity.Length * 1.1f;
             }
             else
             {
