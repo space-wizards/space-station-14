@@ -11,26 +11,26 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
         public override uint? NetID => ContentNetIDs.DISPOSABLE;
 
-        protected abstract bool InDisposals { get; set; }
+        public abstract bool InTube { get; protected set; }
 
         bool IActionBlocker.CanInteract()
         {
-            return !InDisposals;
+            return !InTube;
         }
 
         bool IActionBlocker.CanThrow()
         {
-            return !InDisposals;
+            return !InTube;
         }
 
         bool IActionBlocker.CanDrop()
         {
-            return !InDisposals;
+            return !InTube;
         }
 
         bool IActionBlocker.CanPickup()
         {
-            return !InDisposals;
+            return !InTube;
         }
     }
 

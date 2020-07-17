@@ -8,7 +8,7 @@ namespace Content.Client.GameObjects.Components.Disposal
     [RegisterComponent]
     public class DisposableComponent : SharedDisposableComponent, IClientDraggable
     {
-        protected override bool InDisposals { get; set; }
+        public override bool InTube { get; protected set; }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
-            InDisposals = disposableState.InDisposals;
+            InTube = disposableState.InDisposals;
         }
 
         bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)

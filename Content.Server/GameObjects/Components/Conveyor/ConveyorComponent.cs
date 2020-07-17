@@ -155,6 +155,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
+                // TODO: Push instead of teleporting
                 entity.Transform.WorldPosition += GetAngle().ToVec() * _speed * frameTime;
             }
         }

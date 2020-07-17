@@ -29,10 +29,10 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Whether or not this entity is currently inside a disposal tube
         /// </summary>
         [ViewVariables]
-        protected override bool InDisposals
+        public override bool InTube
         {
             get => _inDisposals;
-            set
+            protected set
             {
                 _inDisposals = value;
                 Dirty();
@@ -43,14 +43,14 @@ namespace Content.Server.GameObjects.Components.Disposal
         public IDisposalTubeComponent? PreviousTube { get; set; }
 
         [ViewVariables]
-        private IDisposalTubeComponent? CurrentTube { get; set; }
+        public IDisposalTubeComponent? CurrentTube { get; private set; }
 
         [ViewVariables]
         public IDisposalTubeComponent? NextTube { get; set; }
 
         public void EnterTube(IDisposalTubeComponent tube)
         {
-            InDisposals = true;
+            InTube = true;
 
             if (CurrentTube != null)
             {
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void ExitDisposals()
         {
-            InDisposals = false;
+            InTube = false;
             PreviousTube = null;
             CurrentTube = null;
             NextTube = null;
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void Update(float frameTime)
         {
-            if (!InDisposals)
+            if (!InTube)
             {
                 return;
             }
@@ -131,7 +131,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override ComponentState GetComponentState()
         {
-            return new DisposableComponentState(InDisposals);
+            return new DisposableComponentState(InTube);
         }
 
         bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -65,15 +66,25 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private Container _container;
 
+        [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
+
         [ViewVariables]
         private BoundUserInterface _userInterface;
 
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent receiver) || !receiver.PowerDisabled;
+        public bool Powered =>
+            !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            receiver.Powered;
 
-        private bool CanInsert(IEntity entity)
+        [ViewVariables]
+        public bool Anchored =>
+            !Owner.TryGetComponent(out PhysicsComponent physics) ||
+            physics.Anchored;
+
+        public bool CanInsert(IEntity entity)
         {
             return Powered &&
+                   Anchored &&
                    entity.HasComponent<DisposableComponent>() &&
                    _container.CanInsert(entity);
         }
