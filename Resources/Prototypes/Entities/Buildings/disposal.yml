@@ -100,7 +100,7 @@
       state_unanchored: condisposal
       state_anchored: disposal
       state_flush: disposal-flush
-      flush_sound: /Audio/machines/disposalflush.ogg
+      flush_sound: /Audio/Machines/disposalflush.ogg
       flush_time: 2
   - type: UserInterface
     interfaces:
