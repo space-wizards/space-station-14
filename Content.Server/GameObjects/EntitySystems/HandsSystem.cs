@@ -229,8 +229,13 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
         private bool HandleMovePulledObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
-            var plyEnt = (session as IPlayerSession).AttachedEntity;
-            if (!plyEnt.TryGetComponent<HandsComponent>(out var hands)) return false;
+            var playerEntity = session.AttachedEntity;
+
+            if (playerEntity == null ||
+                !playerEntity.TryGetComponent<HandsComponent>(out var hands))
+            {
+                return false;
+            }
 
             hands.MovePulledObject(coords);
 

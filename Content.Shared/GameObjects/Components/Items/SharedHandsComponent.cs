@@ -1,14 +1,31 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects
 {
-    public abstract class SharedHandsComponent : Component
+    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
+
+        [ViewVariables]
+        protected PhysicsComponent? PulledObject;
+
+        [ViewVariables]
+        protected bool IsPulling => PulledObject != null;
+
+        public void StopPulling()
+        {
+            (PulledObject?.Controller as PullController)?.StopPull();
+            PulledObject = null;
+        }
     }
 
     // The IDs of the items get synced over the network.

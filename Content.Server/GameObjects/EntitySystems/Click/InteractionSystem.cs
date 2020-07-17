@@ -5,12 +5,12 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Physics;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -230,22 +230,41 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // client sanitization
             if (!_mapManager.GridExists(coords.GridID))
             {
-                Logger.InfoS("system.interaction", $"Invalid Coordinates: client={session}, coords={coords}");
+                Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
                 return false;
             }
 
             if (uid.IsClientSide())
             {
                 Logger.WarningS("system.interaction",
-                    $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");
+                    $"Client sent pull interaction with client-side entity. Session={session}, Uid={uid}");
                 return false;
             }
 
-            var player = (session as IPlayerSession).AttachedEntity;
+            var player = session.AttachedEntity;
 
-            if (!EntityManager.TryGetEntity(uid, out var pulledObject)) return false;
-            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull)) return false;
-            if (!player.TryGetComponent<HandsComponent>(out var hands)) return false;
+            if (player == null)
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent pulling interaction with no attached entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            if (!EntityManager.TryGetEntity(uid, out var pulledObject))
+            {
+                return false;
+            }
+
+            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull))
+            {
+                return false;
+            }
+
+            if (!player.TryGetComponent<HandsComponent>(out var hands))
+            {
+                return false;
+            }
+
             var dist = player.Transform.GridPosition.Position - pulledObject.Transform.GridPosition.Position;
             if (dist.LengthSquared > InteractionRangeSquared)
             {

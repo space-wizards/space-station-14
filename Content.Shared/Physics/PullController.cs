@@ -1,12 +1,13 @@
 using System;
-using Content.Server.GameObjects;
+using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 
-namespace Content.Server.Physics
+namespace Content.Shared.Physics
 {
     public class PullController : VirtualController
     {
@@ -22,7 +23,7 @@ namespace Content.Server.Physics
 
         public override PhysicsComponent ControlledComponent
         {
-            set => _controlledComponent = value as PhysicsComponent;
+            set => _controlledComponent = value;
         }
 
         public void StartPull(PhysicsComponent pull)
@@ -55,7 +56,7 @@ namespace Content.Server.Physics
             var dist = _puller.Owner.Transform.WorldPosition - _controlledComponent.Owner.Transform.WorldPosition;
             if (dist.Length > DistBeforeStopPull)
             {
-                _puller.Owner.GetComponent<HandsComponent>().StopPulling();
+                _puller.Owner.GetComponent<ISharedHandsComponent>().StopPulling();
             }
             else if (dist.Length > DistBeforePull)
             {

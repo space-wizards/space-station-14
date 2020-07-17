@@ -6,13 +6,12 @@ using System.Linq;
 using Content.Client.Interfaces.GameObjects;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -20,6 +19,7 @@ namespace Content.Client.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
+    [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
         private HandsGui _gui;

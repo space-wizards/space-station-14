@@ -3,14 +3,14 @@
 using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Physics;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -31,6 +31,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
+    [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent
     {
 #pragma warning disable 649
@@ -38,8 +39,6 @@ namespace Content.Server.GameObjects
 #pragma warning restore 649
 
         private string _activeIndex;
-
-        private PhysicsComponent _pulledObject = null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string ActiveIndex
@@ -56,8 +55,6 @@ namespace Content.Server.GameObjects
                 Dirty();
             }
         }
-
-        [ViewVariables] public bool isPulling => _pulledObject != null;
 
         [ViewVariables] private readonly Dictionary<string, ContainerSlot> _hands = new Dictionary<string, ContainerSlot>();
         [ViewVariables] private List<string> _orderedHands = new List<string>();
@@ -160,7 +157,7 @@ namespace Content.Server.GameObjects
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
 
-            if (item.Owner.Uid == _pulledObject.Owner.Uid)
+            if (item.Owner.Uid == PulledObject.Owner.Uid)
             {
                 StopPulling();
             }
@@ -490,32 +487,25 @@ namespace Content.Server.GameObjects
 
         public void StartPulling(PullableComponent pullable)
         {
-            DebugTools.AssertNotNull(_pulledObject.Controller);
-
-            if (isPulling)
+            if (IsPulling)
             {
-                ((PullController) _pulledObject.Controller).StopPull();
+                (PulledObject!.Controller as PullController)?.StopPull();
             }
 
-            _pulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
+            PulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
 
-            ((PullController) _pulledObject.Controller).StartPull(Owner.GetComponent<PhysicsComponent>());
-        }
+            if (!(PulledObject?.Controller is PullController controller))
+            {
+                PulledObject!.SetController<PullController>();
+                controller = (PullController) PulledObject.Controller;
+            }
 
-        public void StopPulling()
-        {
-            DebugTools.AssertNotNull(_pulledObject.Controller);
-
-            ((PullController) _pulledObject.Controller).StopPull();
-            _pulledObject = null;
+            controller!.StartPull(Owner.GetComponent<PhysicsComponent>());
         }
 
         public void MovePulledObject(GridCoordinates coords)
         {
-            DebugTools.AssertNotNull(_pulledObject.Controller);
-
-            if (_pulledObject == null) return;
-            ((PullController) _pulledObject.Controller).MoveTo(coords);
+            (PulledObject?.Controller as PullController)?.MoveTo(coords);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

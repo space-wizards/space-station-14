@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -9,7 +10,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Interfaces.GameObjects
 {
-    public interface IHandsComponent : IComponent
+    public interface IHandsComponent : ISharedHandsComponent
     {
         /// <summary>
         ///     The hand index of the currently active hand.
