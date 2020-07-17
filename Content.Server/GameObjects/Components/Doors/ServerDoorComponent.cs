@@ -319,11 +319,6 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public bool PreventCollide(IPhysBody collidedwith)
-        {
-            throw new NotImplementedException();
-        }
-
         protected enum DoorState
         {
             Closed,
