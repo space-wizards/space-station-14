@@ -3,6 +3,7 @@ using System.Timers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Throw;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
@@ -88,6 +89,9 @@ namespace Content.Server.GameObjects.Components.Movement
             var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
 
             if (percentage < IntersectPercentage)
+                return;
+
+            if(!EffectBlockerSystem.CanSlip(collidedWith))
                 return;
 
             stun.Paralyze(5f);

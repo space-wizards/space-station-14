@@ -77,8 +77,26 @@ namespace Content.IntegrationTests
         protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)> StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null, ServerIntegrationOptions serverOptions = null)
         {
             var client = StartClient(clientOptions);
+            var server = StartServer(serverOptions);
+
+            await StartConnectedPairShared(client, server);
+
+            return (client, server);
+        }
+
+
+        protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)> StartConnectedServerDummyTickerClientPair(ClientIntegrationOptions clientOptions = null, ServerIntegrationOptions serverOptions = null)
+        {
+            var client = StartClient(clientOptions);
             var server = StartServerDummyTicker(serverOptions);
 
+            await StartConnectedPairShared(client, server);
+
+            return (client, server);
+        }
+
+        private static async Task StartConnectedPairShared(ClientIntegrationInstance client, ServerIntegrationInstance server)
+        {
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             client.SetConnectTarget(server);
@@ -86,8 +104,6 @@ namespace Content.IntegrationTests
             client.Post(() => IoCManager.Resolve<IClientNetManager>().ClientConnect(null, 0, null));
 
             await RunTicksSync(client, server, 10);
-
-            return (client, server);
         }
 
         /// <summary>

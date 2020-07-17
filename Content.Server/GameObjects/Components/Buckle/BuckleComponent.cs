@@ -1,11 +1,13 @@
 ﻿#nullable enable
 using System;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
@@ -22,7 +24,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Mobs
+namespace Content.Server.GameObjects.Components.Buckle
 {
     [RegisterComponent]
     public class BuckleComponent : SharedBuckleComponent, IInteractHand, IDragDrop
@@ -34,29 +36,32 @@ namespace Content.Server.GameObjects.Components.Mobs
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        /// <summary>
-        ///     The amount of space that this entity occupies in a <see cref="StrapComponent"/>.
-        /// </summary>
         private int _size;
 
         /// <summary>
         ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
         /// </summary>
+        [ViewVariables]
         private float _range;
 
         /// <summary>
         ///     The amount of time that must pass for this entity to
         ///     be able to unbuckle after recently buckling.
         /// </summary>
+        [ViewVariables]
         private TimeSpan _unbuckleDelay;
 
         /// <summary>
         ///     The time that this entity buckled at.
         /// </summary>
+        [ViewVariables]
         private TimeSpan _buckleTime;
 
         private StrapComponent? _buckledTo;
 
+        /// <summary>
+        ///     The strap that this component is buckled to.
+        /// </summary>
         [ViewVariables]
         public StrapComponent? BuckledTo
         {
@@ -70,14 +75,26 @@ namespace Content.Server.GameObjects.Components.Mobs
         }
 
         [ViewVariables]
-        protected override bool Buckled => BuckledTo != null;
+        public override bool Buckled => BuckledTo != null;
 
+        /// <summary>
+        ///     True if the entity was inserted or removed from a container
+        ///     before updating, false otherwise.
+        /// </summary>
+        [ViewVariables]
         private bool ContainerChanged { get; set; }
 
+        /// <summary>
+        ///     The amount of space that this entity occupies in a <see cref="StrapComponent"/>.
+        /// </summary>
         [ViewVariables]
         public int Size => _size;
 
-        private void UpdateStatus()
+        /// <summary>
+        ///     Shows or hides the buckled status effect depending on if the
+        ///     entity is buckled or not.
+        /// </summary>
+        private void BuckleStatus()
         {
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
             {
@@ -88,6 +105,10 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
+        /// <summary>
+        ///     Reattaches this entity to the strap, modifying its position and rotation
+        /// </summary>
+        /// <param name="strap">The strap to reattach to</param>
         private void ReAttach(StrapComponent strap)
         {
             var ownTransform = Owner.Transform;
@@ -112,7 +133,18 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
         }
 
-        private bool TryBuckle(IEntity user, IEntity to)
+        /// <summary>
+        ///     Tries to make an entity buckle the owner of this component to another.
+        /// </summary>
+        /// <param name="user">
+        ///     The entity buckling the owner of this component, can be the owner itself.
+        /// </param>
+        /// <param name="to">The entity to buckle the owner of this component to.</param>
+        /// <returns>
+        ///     true if the owner was buckled, otherwise false even if the owner was
+        ///     previously already buckled.
+        /// </returns>
+        public bool TryBuckle(IEntity user, IEntity to)
         {
             if (user == null || user == to)
             {
@@ -142,8 +174,10 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return false;
             }
 
+            // If in a container
             if (ContainerHelpers.TryGetContainer(Owner, out var ownerContainer))
             {
+                // And not in the same container as the strap
                 if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
@@ -213,13 +247,25 @@ namespace Content.Server.GameObjects.Components.Mobs
             ReAttach(strap);
 
             BuckledTo = strap;
-            UpdateStatus();
+            BuckleStatus();
 
             SendMessage(new BuckleMessage(Owner, to));
 
             return true;
         }
 
+        /// <summary>
+        ///     Tries to unbuckle the Owner of this component from its current strap.
+        /// </summary>
+        /// <param name="user">The entity doing the unbuckling.</param>
+        /// <param name="force">
+        ///     Whether to force the unbuckling or not. Does not guarantee true to
+        ///     be returned, but guarantees the owner to be unbuckled afterwards.
+        /// </param>
+        /// <returns>
+        ///     true if the owner was unbuckled, otherwise false even if the owner
+        ///     was previously already unbuckled.
+        /// </returns>
         public bool TryUnbuckle(IEntity user, bool force = false)
         {
             if (BuckledTo == null)
@@ -279,7 +325,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 species.CurrentDamageState.EnterState(Owner);
             }
 
-            UpdateStatus();
+            BuckleStatus();
 
             if (oldBuckledTo.Owner.TryGetComponent(out StrapComponent strap))
             {
@@ -293,16 +339,35 @@ namespace Content.Server.GameObjects.Components.Mobs
             return true;
         }
 
-        public bool ToggleBuckle(IEntity user, IEntity to)
+        /// <summary>
+        ///     Makes an entity toggle the buckling status of the owner to a
+        ///     specific entity.
+        /// </summary>
+        /// <param name="user">The entity doing the buckling/unbuckling.</param>
+        /// <param name="to">
+        ///     The entity to toggle the buckle status of the owner to.
+        /// </param>
+        /// <param name="force">
+        ///     Whether to force the unbuckling or not, if it happens. Does not
+        ///     guarantee true to be returned, but guarantees the owner to be
+        ///     unbuckled afterwards.
+        /// </param>
+        /// <returns>true if the buckling status was changed, false otherwise.</returns>
+        public bool ToggleBuckle(IEntity user, IEntity to, bool force = false)
         {
             if (BuckledTo?.Owner == to)
             {
-                return TryUnbuckle(user);
+                return TryUnbuckle(user, force);
             }
 
             return TryBuckle(user, to);
         }
 
+        /// <summary>
+        ///     Called when the owner is inserted or removed from a container,
+        ///     to synchronize the state of buckling.
+        /// </summary>
+        /// <param name="message">The message received</param>
         private void InsertIntoContainer(ContainerModifiedMessage message)
         {
             if (message.Entity != Owner)
@@ -313,6 +378,12 @@ namespace Content.Server.GameObjects.Components.Mobs
             ContainerChanged = true;
         }
 
+        /// <summary>
+        ///     Synchronizes the state of buckling depending on whether the entity
+        ///     was inserted or removed from a container, and whether or not
+        ///     its current strap (if there is one) has also been put into or removed
+        ///     from the same container as well.
+        /// </summary>
         public void Update()
         {
             if (!ContainerChanged || BuckledTo == null)
@@ -361,7 +432,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         protected override void Startup()
         {
             base.Startup();
-            UpdateStatus();
+            BuckleStatus();
         }
 
         public override void OnRemove()
@@ -379,7 +450,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             TryUnbuckle(Owner, true);
 
             _buckleTime = default;
-            UpdateStatus();
+            BuckleStatus();
         }
 
         public override ComponentState GetComponentState()
@@ -406,6 +477,10 @@ namespace Content.Server.GameObjects.Components.Mobs
             return TryBuckle(eventArgs.User, eventArgs.Target);
         }
 
+        /// <summary>
+        ///     Allows the unbuckling of the owning entity through a verb if
+        ///     anyone right clicks them.
+        /// </summary>
         [Verb]
         private sealed class BuckleVerb : Verb<BuckleComponent>
         {

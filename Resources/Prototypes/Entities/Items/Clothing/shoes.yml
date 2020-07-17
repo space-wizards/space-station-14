@@ -387,6 +387,7 @@
     sprite: Clothing/Shoes/galoshes.rsi
   - type: Clothing
     sprite: Clothing/Shoes/galoshes.rsi
+  - type: NoSlip
 
 - type: entity
   parent: ShoesBase

@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.GameObjects.Components.Buckle
 {
     public abstract class SharedBuckleComponent : Component, IActionBlocker, IEffectBlocker
     {
@@ -12,7 +12,10 @@ namespace Content.Shared.GameObjects.Components.Mobs
 
         public sealed override uint? NetID => ContentNetIDs.BUCKLE;
 
-        protected abstract bool Buckled { get; }
+        /// <summary>
+        ///     True if the entity is buckled, false otherwise.
+        /// </summary>
+        public abstract bool Buckled { get; }
 
         bool IActionBlocker.CanMove()
         {
@@ -31,7 +34,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     }
 
     [Serializable, NetSerializable]
-    public class BuckleComponentState : ComponentState
+    public sealed class BuckleComponentState : ComponentState
     {
         public BuckleComponentState(bool buckled, int? drawDepth) : base(ContentNetIDs.BUCKLE)
         {

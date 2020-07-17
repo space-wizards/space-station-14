@@ -80,12 +80,12 @@ namespace Content.Client.GameObjects.Components.Chemistry
                             new Label {Text = _localizationManager.GetString("Amount")},
                             //Padding
                             new Control {CustomMinimumSize = (20, 0)},
-                            (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup}),
-                            (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup}),
-                            (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup}),
-                            (DispenseButton25 = new Button {Text = "25", Group = dispenseAmountGroup}),
-                            (DispenseButton50 = new Button {Text = "50", Group = dispenseAmountGroup}),
-                            (DispenseButton100 = new Button {Text = "100", Group = dispenseAmountGroup}),
+                            (DispenseButton1 = new Button {Text = "1", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenRight }}),
+                            (DispenseButton5 = new Button {Text = "5", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton10 = new Button {Text = "10", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton25 = new Button {Text = "25", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton50 = new Button {Text = "50", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenBoth }}),
+                            (DispenseButton100 = new Button {Text = "100", Group = dispenseAmountGroup, StyleClasses = { StyleBase.ButtonOpenLeft }}),
                         }
                     },
                     //Padding
@@ -102,8 +102,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
                         Children =
                         {
                             new Label {Text = _localizationManager.GetString("Container: ")},
-                            (ClearButton = new Button {Text = _localizationManager.GetString("Clear")}),
-                            (EjectButton = new Button {Text = _localizationManager.GetString("Eject")})
+                            (ClearButton = new Button {Text = _localizationManager.GetString("Clear"), StyleClasses = {StyleBase.ButtonOpenRight}}),
+                            (EjectButton = new Button {Text = _localizationManager.GetString("Eject"), StyleClasses = {StyleBase.ButtonOpenLeft}})
                         }
                     },
                     //Wrap the container info in a PanelContainer so we can color it's background differently.

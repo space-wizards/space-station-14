@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components
             if (size > MaxItemSize)
             {
                 Owner.PopupMessage(eventArgs.User,
-                    Loc.GetString("The {0} is too big to fit in the plant!", eventArgs.Using.Name));
+                    Loc.GetString("{0:TheName} is too big to fit in the plant!", eventArgs.Using));
                 return false;
             }
 
@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            Owner.PopupMessage(eventArgs.User, Loc.GetString("You hide the {0} in the plant.", eventArgs.Using.Name));
+            Owner.PopupMessage(eventArgs.User, Loc.GetString("You hide {0:theName} in the plant.", eventArgs.Using));
             Rustle();
             return true;
         }

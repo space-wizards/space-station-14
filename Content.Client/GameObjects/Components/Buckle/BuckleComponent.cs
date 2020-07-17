@@ -1,10 +1,10 @@
 using Content.Client.GameObjects.Components.Strap;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Buckle;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.GameObjects.Components.Buckle
 {
     [RegisterComponent]
     public class BuckleComponent : SharedBuckleComponent, IClientDraggable
@@ -12,7 +12,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private bool _buckled;
         private int? _originalDrawDepth;
 
-        protected override bool Buckled => _buckled;
+        public override bool Buckled => _buckled;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {

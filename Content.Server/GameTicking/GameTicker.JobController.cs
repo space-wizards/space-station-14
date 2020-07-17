@@ -124,7 +124,7 @@ namespace Content.Server.GameTicking
         /// <summary>
         ///     Gets the remaining available job positions in the current round.
         /// </summary>
-        private Dictionary<string, int> GetAvailablePositions()
+        public Dictionary<string, int> GetAvailablePositions()
         {
             var basePositions = GetBasePositions(false);
 

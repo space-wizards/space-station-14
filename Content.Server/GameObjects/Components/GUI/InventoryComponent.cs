@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
@@ -23,7 +25,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent, IExAct
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -44,6 +46,18 @@ namespace Content.Server.GameObjects
                     AddSlot(slotName);
                 }
             }
+        }
+
+        bool IEffectBlocker.CanSlip()
+        {
+            if(Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
+                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
+            )
+            {
+                return EffectBlockerSystem.CanSlip(shoes.Owner);
+            }
+
+            return true;
         }
 
         public override void OnRemove()
