@@ -157,7 +157,7 @@ namespace Content.Server.GameObjects
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
 
-            if (item.Owner.Uid == PulledObject.Owner.Uid)
+            if (item.Owner.Uid == PulledObject?.Owner.Uid)
             {
                 StopPulling();
             }
