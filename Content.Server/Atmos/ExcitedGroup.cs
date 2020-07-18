@@ -94,7 +94,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in _tile)
             {
-                if (tile == null) continue;
+                if (tile?.Air == null) continue;
                 combined.Merge(tile.Air);
                 if (!spaceIsAllConsuming || !tile.Air.Immutable) continue;
                 combined.Clear();
@@ -105,6 +105,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in _tile)
             {
+                if (tile?.Air == null) continue;
                 tile.Air.CopyFromMutable(combined);
                 tile.AtmosCooldown = 0;
                 tile.UpdateVisuals();
@@ -117,6 +118,7 @@ namespace Content.Server.Atmos
         {
             foreach (var tile in _tile)
             {
+                if (tile == null) continue;
                 tile.ExcitedGroup = null;
                 if (!unexcite) continue;
                 tile.Excited = false;

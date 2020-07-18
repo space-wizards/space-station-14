@@ -90,7 +90,7 @@ namespace Content.Server.Atmos
 
         public float TemperatureArchived { get; private set; }
 
-        public virtual float Volume { get; private set; }
+        public float Volume { get; set; }
 
         public float MinimumHeatCapacity { get; set; }
 
