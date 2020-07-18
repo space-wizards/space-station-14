@@ -370,7 +370,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         break;
                     }
 
-                    if (hands.CanPutInHand(item))
+                    if (!hands.CanPutInHand(item))
                     {
                         break;
                     }
