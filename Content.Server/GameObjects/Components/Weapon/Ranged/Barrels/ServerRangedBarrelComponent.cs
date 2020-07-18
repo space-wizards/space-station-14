@@ -4,9 +4,9 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -25,6 +25,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
+using Content.Server.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -39,6 +41,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
@@ -204,6 +207,29 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             if (shooter.TryGetComponent(out CameraRecoilComponent recoilComponent))
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
+            }
+
+            //Explode in the face of the clown!! ;^)
+            if(shooter.HasComponent<ClumsyComponent>())
+            {
+
+                soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
+                Owner.Transform.GridPosition, AudioParams.Default, 5);
+
+                soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                Owner.Transform.GridPosition, AudioParams.Default, 5);
+
+                var health = shooter.GetComponent<DamageableComponent>();
+                health.TakeDamage(DamageType.Brute, 10);
+                health.TakeDamage(DamageType.Heat, 5);
+
+                var stun = shooter.GetComponent<StunnableComponent>();
+                stun.Paralyze(3f);
+                //I think maybe this should probably eject the magazine
+                ///if the gun is one that uses mags.
+                _notifyManager.PopupMessage(shooter,shooter, Loc.GetString("The gun blows up in your face!"));
+                Owner.Delete();
+                return;
             }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
