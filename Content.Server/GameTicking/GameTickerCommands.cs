@@ -293,4 +293,33 @@ namespace Content.Server.GameTicking
             shell.SendText(player, $"Forced the game to start with preset {name}.");
         }
     }
+
+    class MappingCommand : IClientCommand
+    {
+        public string Command => "mapping";
+        public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
+        public string Help => $"Usage: {Command} <id> <mapname>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                shell.SendText(player, "Only players can use this command");
+                return;
+            }
+
+            if (args.Length != 2)
+            {
+                shell.SendText(player, Help);
+                return;
+            }
+
+            shell.ExecuteCommand(player, $"addmap {args[0]} false");
+            shell.ExecuteCommand(player, $"loadbp {args[0]} {args[1]}");
+            shell.ExecuteCommand(player, $"aghost");
+            shell.ExecuteCommand(player, $"tp 0 0 {args[0]}");
+
+            shell.SendText(player, $"Created unloaded map from file {args[1]} with id {args[0]}. Use \"savebp 4 foo.yml\" to save it.");
+        }
+    }
 }
