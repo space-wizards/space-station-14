@@ -14,11 +14,10 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class TileOverlaySystem : SharedTileOverlaySystem
     {
-        private Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>> _overlay =
-            new Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>>();
+        private Dictionary<GridId, Dictionary<MapIndices, float[]>> _overlay =
+            new Dictionary<GridId, Dictionary<MapIndices, float[]>>();
 
         [Dependency] private IPlayerManager _playerManager = default!;
-        [Dependency] private INetManager _netManager = default!;
 
         public override void Initialize()
         {
@@ -72,7 +71,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 _overlay[gridIndex][indices] = new HashSet<SpriteSpecifier>();
         }
 
-        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
+        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.InGame) return;
 
@@ -96,29 +95,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private TileOverlayData GetData(GridId gridIndex, MapIndices indices)
         {
-            var overlay = new List<string>();
-            var animated = new List<string>();
-            var animatedState = new List<string>();
-
-            if (_overlay.TryGetValue(gridIndex, out var tiles) && tiles.TryGetValue(indices, out var overlays))
-            {
-                foreach (var specifier in overlays)
-                {
-                    switch (specifier)
-                    {
-                        case SpriteSpecifier.Rsi rsi:
-                            animated.Add(rsi.RsiPath.ToString());
-                            animatedState.Add(rsi.RsiState);
-                            break;
-                        case SpriteSpecifier.Texture texture:
-                            overlay.Add(texture.TexturePath.ToString());
-                            break;
-                    }
-                }
-            }
-
-            return new TileOverlayData(gridIndex, indices, overlay.ToArray(),
-                animated.ToArray(), animatedState.ToArray());
+            var gases = new List<int>();
+            var opacities = new List<float>();
         }
     }
 }

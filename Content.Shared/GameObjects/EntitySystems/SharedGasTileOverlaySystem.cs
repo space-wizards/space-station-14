@@ -13,23 +13,21 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             public readonly GridId GridIndex;
             public readonly MapIndices GridIndices;
-            public readonly string[] Overlays;
-            public readonly string[] AnimatedOverlays;
-            public readonly string[] AnimatedOverlayStates;
+            public readonly int[] GasIndices;
+            public readonly float[] Opacities;
 
-            public TileOverlayData(GridId gridIndex, MapIndices gridIndices, string[] overlays, string[] animatedOverlays, string[] animatedOverlayStates)
+            public TileOverlayData(GridId gridIndex, MapIndices gridIndices, int[] gasIndices, float[] opacities)
             {
                 GridIndex = gridIndex;
                 GridIndices = gridIndices;
-                Overlays = overlays;
-                AnimatedOverlays = animatedOverlays;
-                AnimatedOverlayStates = animatedOverlayStates;
+                GasIndices = gasIndices;
+                Opacities = opacities;
             }
 
             public override int GetHashCode()
             {
-                return GridIndex.GetHashCode() ^ GridIndices.GetHashCode() ^ Overlays.GetHashCode()
-                       ^ AnimatedOverlays.GetHashCode() ^ AnimatedOverlayStates.GetHashCode();
+                return GridIndex.GetHashCode() ^ GridIndices.GetHashCode() ^ GasIndices.GetHashCode()
+                       ^ Opacities.GetHashCode();
             }
         }
 

@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class TileOverlaySystem : SharedTileOverlaySystem
+    public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
