@@ -23,7 +23,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos
 {
-    public class TileOverlay : Overlay
+    public class GasTileOverlay : Overlay
     {
         private GasTileOverlaySystem _gasTileOverlaySystem;
 
@@ -33,7 +33,7 @@ namespace Content.Client.Atmos
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public TileOverlay() : base(nameof(TileOverlay))
+        public GasTileOverlay() : base(nameof(GasTileOverlay))
         {
             IoCManager.InjectDependencies(this);
 
@@ -54,9 +54,9 @@ namespace Content.Client.Atmos
             {
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
-                    foreach (var texture in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
+                    foreach (var (texture, opacity) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
                     {
-                        drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y));
+                        drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y), Color.White.WithAlpha(opacity));
                     }
                 }
             }

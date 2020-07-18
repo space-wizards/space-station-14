@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Atmos;
 using Content.Client.Utility;
@@ -36,17 +37,17 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            _overlayManager.AddOverlay(new TileOverlay());
+            _overlayManager.AddOverlay(new GasTileOverlay());
 
             SubscribeNetworkEvent(new EntityEventHandler<GasTileOverlayMessage>(OnTileOverlayMessage));
         }
 
-        public Texture[] GetOverlays(GridId gridIndex, MapIndices indices)
+        public ValueTuple<Texture, float>[] GetOverlays(GridId gridIndex, MapIndices indices)
         {
             if (!_overlay.TryGetValue(gridIndex, out var tiles) || !tiles.TryGetValue(indices, out var overlays))
-                return new Texture[0];
+                return new (Texture, float)[0];
 
-            var list = new List<Texture>();
+            var list = new List<ValueTuple<Texture, float>>();
 
             foreach (var gasData in overlays)
             {
@@ -59,13 +60,13 @@ namespace Content.Client.GameObjects.EntitySystems
 
                     if(!rsi.TryGetState(stateId, out var state)) continue;
 
-                    list.Add(state.GetFrameAtSecond(RSI.State.Direction.South, _timer));
+                    list.Add((state.GetFrameAtSecond(RSI.State.Direction.South, _timer), gasData.Opacity));
 
                     continue;
                 }
 
                 var texture = gas.GasOverlay.Frame0();
-                list.Add(texture);
+                list.Add((texture, gasData.Opacity));
             }
 
             return list.ToArray();

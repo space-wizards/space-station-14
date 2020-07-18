@@ -96,11 +96,14 @@ namespace Content.Server.Atmos
                 var tile = GetTile(indices);
 
                 if (tile == null)
-                    continue;
+                {
+                    tile = new TileAtmosphere(this, _grid.GetTileRef(indices), GetVolumeForCells(1));
+                    _tiles.Add(indices, tile);
+                }
 
                 if (IsSpace(indices))
                 {
-                    tile.Air = new GasMixture(Atmospherics.CellVolume);
+                    tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
                 } else if (IsAirBlocked(indices))
                 {
@@ -108,7 +111,7 @@ namespace Content.Server.Atmos
                 }
                 else
                 {
-                    tile.Air ??= new GasMixture(Atmospherics.CellVolume);
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1));
                 }
 
                 tile.UpdateAdjacent();

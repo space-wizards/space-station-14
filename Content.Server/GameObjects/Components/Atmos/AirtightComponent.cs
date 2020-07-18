@@ -91,6 +91,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         protected override void Shutdown()
         {
             base.Shutdown();
+
+            _airBlocked = false;
+            _zoneBlocked = false;
+
             _snapGrid.OnPositionChanged -= OnTransformMove;
             UpdatePosition();
         }

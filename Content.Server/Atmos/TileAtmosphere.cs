@@ -7,6 +7,7 @@ using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using NFluidsynth;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -71,8 +72,12 @@ namespace Content.Server.Atmos
 
         public void HighPressureMovements()
         {
-            // TODO ATMOS actually move things here!
-            //throw new NotImplementedException();
+            // TODO ATMOS finish this
+
+            if (PressureDifference > 100)
+            {
+                // Do space wind graphics here!
+            }
         }
 
         public void EqualizePressureInZone(int cycleNum)
@@ -621,6 +626,7 @@ namespace Content.Server.Atmos
 
         private void FloorRip(float sum)
         {
+            Logger.Info($"Floor rip! SUM: {sum} CHANCE: {MathF.Clamp(sum / 100, 0, 1)}");
             if (sum > 20 && IoCManager.Resolve<IRobustRandom>().Prob(MathF.Clamp(sum / 100, 0, 1)))
                 _gridAtmosphereManager.PryTile(GridIndices);
         }
@@ -652,7 +658,7 @@ namespace Content.Server.Atmos
                 var moles = gases[i];
                 var overlay = gas.GasOverlay;
                 if(moles == 0f || overlay == null || moles < gas.GasMolesVisible) continue;
-                list.Add(new SharedGasTileOverlaySystem.GasData(i, MathF.Max(MathF.Max(1, moles / Atmospherics.GasMolesVisibleMax), 0f)));
+                list.Add(new SharedGasTileOverlaySystem.GasData(i, MathF.Max(MathF.Min(1, moles / Atmospherics.GasMolesVisibleMax), 0f)));
             }
 
             if (list.Count == 0) return;
