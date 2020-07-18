@@ -1,26 +1,25 @@
 ﻿ - type: entity
    name: baseinstrument
-   id: BaseInstrument
+   id: BasePlaceableInstrument
    abstract: true
    components:
    - type: Instrument
      handheld: false
-
    - type: Clickable
    - type: InteractionOutline
-
+   - type: Anchorable
    - type: Collidable
      shapes:
-     - !type:PhysShapeAabb
-       layer: [MobMask, Impassable]
-
+       - !type:PhysShapeAabb
+         mask:
+           - Impassable
+           - MobImpassable
+           - VaultImpassable
    - type: SnapGrid
      offset: Center
-
    - type: Damageable
    - type: Destructible
      thresholdvalue: 50
-
    - type: UserInterface
      interfaces:
      - key: enum.InstrumentUiKey.Key
@@ -28,7 +27,7 @@
 
  - type: entity
    name: piano
-   parent: BaseInstrument
+   parent: BasePlaceableInstrument
    id: PianoInstrument
    description: Play Needles Piano Now.
    components:
@@ -40,18 +39,10 @@
    - type: Icon
      sprite: Objects/Fun/Instruments/otherinstruments.rsi
      state: piano
-   - type: Anchorable
-   - type: Collidable
-     shapes:
-       - !type:PhysShapeAabb
-         mask:
-           - Impassable
-           - MobImpassable
-           - VaultImpassable
 
  - type: entity
    name: minimoog
-   parent: BaseInstrument
+   parent: BasePlaceableInstrument
    id: MinimoogInstrument
    components:
    - type: Instrument
@@ -65,7 +56,7 @@
 
  - type: entity
    name: church organ
-   parent: BaseInstrument
+   parent: BasePlaceableInstrument
    id: ChurchOrganInstrument
    description: This thing really blows!
    components:
@@ -80,7 +71,7 @@
 
  - type: entity
    name: xylophone
-   parent: BaseInstrument
+   parent: BasePlaceableInstrument
    id: XylophoneInstrument
    components:
    - type: Instrument
