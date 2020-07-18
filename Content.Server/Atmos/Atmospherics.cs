@@ -1,10 +1,19 @@
-﻿namespace Content.Shared.Atmos
+﻿using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Atmos
 {
     /// <summary>
     ///     Class to store atmos constants.
     /// </summary>
     public static class Atmospherics
     {
+        public static GasPrototype GetGas(int gasId) =>
+            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(gasId.ToString());
+
+        public static GasPrototype GetGas(Gas gasId) =>
+            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(((int)gasId).ToString());
+
         #region ATMOS
         /// <summary>
         ///     The universal gas constant, in kPa*L/(K*mol)
@@ -42,6 +51,16 @@
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
 
         #endregion
+
+        /// <summary>
+        ///     Minimum amount of moles for a gas to be visible.
+        /// </summary>
+        public static float GasMolesVisible = 0.25f;
+
+        /// <summary>
+        ///     Gas opacity will be max at this value.
+        /// </summary>
+        public static float GasMolesVisibleMax = MolesCellStandard * 0.5f;
 
         /// <summary>
         ///     Minimum number of moles a gas can have.
@@ -99,13 +118,29 @@
         /// <summary>
         ///     Hard limit for tile equalization.
         /// </summary>
-        public const int ZumosHardTileLimit = 10000;
+        public const int ZumosHardTileLimit = 2000;
 
         /// <summary>
         ///     Limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosTileLimit = 1000;
+        public const int ZumosTileLimit = 200;
+
+        /// <summary>
+        ///     Total number of gases. Increase this if you want to add more!
+        /// </summary>
+        public const int TotalNumberOfGases = 4;
 
         #endregion
+    }
+
+    /// <summary>
+    ///     Gases to Ids. Keep these updated with the prototypes!
+    /// </summary>
+    public enum Gas
+    {
+        Oxygen = 0,
+        Nitrogen = 1,
+        CarbonDioxide = 2,
+        Phoron = 3,
     }
 }

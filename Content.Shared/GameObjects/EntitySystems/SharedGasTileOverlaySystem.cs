@@ -6,38 +6,48 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public abstract class SharedTileOverlaySystem : EntitySystem
+    public abstract class SharedGasTileOverlaySystem : EntitySystem
     {
         [Serializable, NetSerializable]
-        public readonly struct TileOverlayData
+        public struct GasData
         {
-            public readonly GridId GridIndex;
-            public readonly MapIndices GridIndices;
-            public readonly int[] GasIndices;
-            public readonly float[] Opacities;
+            public int Index { get; set; }
+            public float Opacity { get; set; }
 
-            public TileOverlayData(GridId gridIndex, MapIndices gridIndices, int[] gasIndices, float[] opacities)
+            public GasData(int gasId, float opacity)
             {
-                GridIndex = gridIndex;
-                GridIndices = gridIndices;
-                GasIndices = gasIndices;
-                Opacities = opacities;
-            }
-
-            public override int GetHashCode()
-            {
-                return GridIndex.GetHashCode() ^ GridIndices.GetHashCode() ^ GasIndices.GetHashCode()
-                       ^ Opacities.GetHashCode();
+                Index = gasId;
+                Opacity = opacity;
             }
         }
 
         [Serializable, NetSerializable]
-        public class TileOverlayMessage : EntitySystemMessage
+        public readonly struct GasTileOverlayData
         {
-            public TileOverlayData[] OverlayData { get; }
+            public readonly GridId GridIndex;
+            public readonly MapIndices GridIndices;
+            public readonly GasData[] GasData;
+
+            public GasTileOverlayData(GridId gridIndex, MapIndices gridIndices, GasData[] gasData)
+            {
+                GridIndex = gridIndex;
+                GridIndices = gridIndices;
+                GasData = gasData;
+            }
+
+            public override int GetHashCode()
+            {
+                return GridIndex.GetHashCode() ^ GridIndices.GetHashCode() ^ GasData.GetHashCode();
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class GasTileOverlayMessage : EntitySystemMessage
+        {
+            public GasTileOverlayData[] OverlayData { get; }
             public bool ClearAllOtherOverlays { get; }
 
-            public TileOverlayMessage(TileOverlayData[] overlayData, bool clearAllOtherOverlays = false)
+            public GasTileOverlayMessage(GasTileOverlayData[] overlayData, bool clearAllOtherOverlays = false)
             {
                 OverlayData = overlayData;
                 ClearAllOtherOverlays = clearAllOtherOverlays;

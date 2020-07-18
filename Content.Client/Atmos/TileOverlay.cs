@@ -25,7 +25,7 @@ namespace Content.Client.Atmos
 {
     public class TileOverlay : Overlay
     {
-        private TileOverlaySystem _tileOverlaySystem;
+        private GasTileOverlaySystem _gasTileOverlaySystem;
 
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -37,7 +37,7 @@ namespace Content.Client.Atmos
         {
             IoCManager.InjectDependencies(this);
 
-            _tileOverlaySystem = EntitySystem.Get<TileOverlaySystem>();
+            _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
         }
 
         protected override void Draw(DrawingHandleBase handle)
@@ -54,7 +54,7 @@ namespace Content.Client.Atmos
             {
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
-                    foreach (var texture in _tileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
+                    foreach (var texture in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
                     {
                         drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y));
                     }

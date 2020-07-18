@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Client.Atmos;
 using Content.Client.Utility;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
@@ -13,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
@@ -25,7 +27,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private float _timer = 0f;
 
-        private Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, HashSet<SpriteSpecifier>>>();
+        public static GasPrototype GetGas(int gasId) =>
+            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(gasId.ToString());
+
+        private Dictionary<GridId, Dictionary<MapIndices, GasData[]>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, GasData[]>>();
 
         public override void Initialize()
         {
@@ -33,7 +38,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _overlayManager.AddOverlay(new TileOverlay());
 
-            SubscribeNetworkEvent(new EntityEventHandler<TileOverlayMessage>(OnTileOverlayMessage));
+            SubscribeNetworkEvent(new EntityEventHandler<GasTileOverlayMessage>(OnTileOverlayMessage));
         }
 
         public Texture[] GetOverlays(GridId gridIndex, MapIndices indices)
@@ -43,9 +48,11 @@ namespace Content.Client.GameObjects.EntitySystems
 
             var list = new List<Texture>();
 
-            foreach (var overlay in overlays)
+            foreach (var gasData in overlays)
             {
-                if (overlay is SpriteSpecifier.Rsi animated)
+                var gas = GetGas(gasData.Index);
+
+                if (gas.GasOverlay is SpriteSpecifier.Rsi animated)
                 {
                     var rsi = _resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;
                     var stateId = animated.RsiState;
@@ -57,45 +64,25 @@ namespace Content.Client.GameObjects.EntitySystems
                     continue;
                 }
 
-                var texture = overlay.Frame0();
+                var texture = gas.GasOverlay.Frame0();
                 list.Add(texture);
             }
 
             return list.ToArray();
         }
 
-        private void OnTileOverlayMessage(TileOverlayMessage ev)
+        private void OnTileOverlayMessage(GasTileOverlayMessage ev)
         {
             if(ev.ClearAllOtherOverlays)
                 _overlay.Clear();
 
             foreach (var data in ev.OverlayData)
             {
-                EnsureListExists(data.GridIndex, data.GridIndices);
+                if(!_overlay.ContainsKey(data.GridIndex))
+                    _overlay[data.GridIndex] = new Dictionary<MapIndices, GasData[]>();
 
-                foreach (var overlay in data.Overlays)
-                {
-                    var specifier = new SpriteSpecifier.Texture(new ResourcePath(overlay));
-                    _overlay[data.GridIndex][data.GridIndices].Add(specifier);
-                }
-
-                for (var i = 0; i < data.AnimatedOverlays.Length; i++)
-                {
-                    var animated = data.AnimatedOverlays[i];
-                    var state = data.AnimatedOverlayStates[i];
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath(animated), state);
-                    _overlay[data.GridIndex][data.GridIndices].Add(specifier);
-                }
+                _overlay[data.GridIndex][data.GridIndices] = data.GasData;
             }
-        }
-
-        private void EnsureListExists(GridId gridIndex, MapIndices indices)
-        {
-            if (!_overlay.ContainsKey(gridIndex))
-                _overlay[gridIndex] = new Dictionary<MapIndices, HashSet<SpriteSpecifier>>();
-
-            if (!_overlay[gridIndex].ContainsKey(indices))
-                _overlay[gridIndex][indices] = new HashSet<SpriteSpecifier>();
         }
 
         public override void FrameUpdate(float frameTime)

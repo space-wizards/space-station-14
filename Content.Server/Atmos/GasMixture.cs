@@ -18,34 +18,9 @@ namespace Content.Server.Atmos
     /// </summary>
     public class GasMixture
     {
-        private static ReagentPrototype GetReagent(string gasId) =>
-            IoCManager.Resolve<IPrototypeManager>().Index<ReagentPrototype>(gasId);
-
-        private static Dictionary<string, ValueTuple<float, float>> GetCombinedContents(GasMixture a, GasMixture b)
-        {
-            var dictionary = new Dictionary<string, ValueTuple<float, float>>();
-
-            foreach (var (gas, value) in a._contents)
-            {
-                dictionary[gas] = (value, 0f);
-            }
-
-            foreach (var (gas, value) in b._contents)
-            {
-                if (dictionary.ContainsKey(gas))
-                    dictionary[gas] = (dictionary[gas].Item1, value);
-                else
-                    dictionary[gas] = (0f, value);
-            }
-
-            return dictionary;
-        }
-
-        private Dictionary<string, float> _contents = new Dictionary<string, float>();
-        private Dictionary<string, float> _contentsArchived = new Dictionary<string, float>();
-
-        public Dictionary<ReagentPrototype, float> Gases =>
-            _contents.ToDictionary(x => GetReagent(x.Key), x => x.Value);
+        private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
+        private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
+        public IReadOnlyList<float> Gases => _moles;
 
         public bool Immutable { get; private set; }
         public float LastShare { get; private set; } = 0;
@@ -57,9 +32,10 @@ namespace Content.Server.Atmos
             {
                 var capacity = 0f;
 
-                foreach (var gas in _contents)
+                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    capacity += GetReagent(gas.Key).SpecificHeat * gas.Value;
+                    var moles = _moles[i];
+                    capacity += Atmospherics.GetGas(i).SpecificHeat * moles;
                 }
 
                 return MathF.Min(capacity, MinimumHeatCapacity);
@@ -73,9 +49,10 @@ namespace Content.Server.Atmos
             {
                 var capacity = 0f;
 
-                foreach (var gas in _contentsArchived)
+                for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    capacity += GetReagent(gas.Key).SpecificHeat * gas.Value;
+                    var moles = _molesArchived[i];
+                    capacity += Atmospherics.GetGas(i).SpecificHeat * moles;
                 }
 
                 return MathF.Min(capacity, MinimumHeatCapacity);
@@ -87,14 +64,14 @@ namespace Content.Server.Atmos
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                var capacity = 0f;
+                var moles = 0f;
 
-                foreach (var gas in _contents)
+                foreach (var gas in _moles)
                 {
-                    capacity += gas.Value;
+                    moles += gas;
                 }
 
-                return capacity;
+                return moles;
             }
         }
 
@@ -111,9 +88,9 @@ namespace Content.Server.Atmos
 
         public float Temperature { get; set; }
 
-        public float TemperatureArchived { get; set; }
+        public float TemperatureArchived { get; private set; }
 
-        public virtual float Volume { get; protected set; }
+        public virtual float Volume { get; private set; }
 
         public float MinimumHeatCapacity { get; set; }
 
@@ -135,7 +112,7 @@ namespace Content.Server.Atmos
 
         public void Archive()
         {
-            _contentsArchived = new Dictionary<string, float>(_contents);
+            _moles.AsSpan().CopyTo(_molesArchived.AsSpan());
             TemperatureArchived = Temperature;
         }
 
@@ -153,21 +130,20 @@ namespace Content.Server.Atmos
                 }
             }
 
-            foreach (var (gas, moles) in giver._contents)
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                if (_contents.ContainsKey(gas))
-                    _contents[gas] += moles;
-                else
-                    _contents[gas] = moles;
+                _moles[i] += giver._moles[i];
             }
         }
 
-        public void Add(string gasId, float quantity)
+        public void Add(int gasId, float quantity)
         {
-            if (_contents.ContainsKey(gasId))
-                _contents[gasId] += quantity;
-            else
-                _contents[gasId] = quantity;
+            _moles[gasId] += quantity;
+        }
+
+        public void Add(Gas gasId, float moles)
+        {
+            Add((int)gasId, moles);
         }
 
         public GasMixture Remove(float amount)
@@ -187,16 +163,17 @@ namespace Content.Server.Atmos
             removed.Volume = Volume;
             removed.Temperature = Temperature;
 
-            foreach (var (gas, moles) in _contents.ToArray())
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
+                var moles = _moles[i];
                 if (moles < Atmospherics.GasMinMoles)
-                    removed._contents[gas] = 0f;
+                    removed._moles[i] = 0f;
                 else
                 {
                     var removedMoles = moles * ratio;
-                    removed._contents[gas] = removedMoles;
-                    if(!Immutable)
-                        _contents[gas] -= removedMoles;
+                    removed._moles[i] = removedMoles;
+                    if (!Immutable)
+                        _moles[i] -= removedMoles;
                 }
             }
 
@@ -206,7 +183,7 @@ namespace Content.Server.Atmos
         public void CopyFromMutable(GasMixture sample)
         {
             if (Immutable) return;
-            _contents = new Dictionary<string, float>(sample._contents);
+            sample._moles.AsSpan().CopyTo(_moles.AsSpan());
             Temperature = sample.Temperature;
         }
 
@@ -228,14 +205,16 @@ namespace Content.Server.Atmos
             var movedMoles = 0f;
             var absMovedMoles = 0f;
 
-            foreach (var (gas, (thisValue, sharerValue)) in GetCombinedContents(this, sharer))
+            for(int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
+                var thisValue = _moles[i];
+                var sharerValue = sharer._moles[i];
                 var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
                 if (MathF.Abs(delta) >= Atmospherics.GasMinMoles)
                 {
                     if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                     {
-                        var gasHeatCapacity = delta * GetReagent(gas).SpecificHeat;
+                        var gasHeatCapacity = delta * Atmospherics.GetGas(i).SpecificHeat;
                         if (delta > 0)
                         {
                             heatCapacityToSharer += gasHeatCapacity;
@@ -246,8 +225,8 @@ namespace Content.Server.Atmos
                         }
                     }
 
-                    if (!Immutable) _contents[gas] -= delta;
-                    if (!sharer.Immutable) sharer._contents[gas] += delta;
+                    if (!Immutable) _moles[i] -= delta;
+                    if (!sharer.Immutable) sharer._moles[i] += delta;
                     movedMoles += delta;
                     absMovedMoles += MathF.Abs(delta);
                 }
@@ -316,17 +295,15 @@ namespace Content.Server.Atmos
 
         public int Compare(GasMixture sample)
         {
-            var moles = 0;
-            var combined = GetCombinedContents(this, sample);
+            var moles = 0f;
 
-            foreach (var (gas, (quantity, sampleQuantity)) in combined)
+            for(int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var delta = MathF.Abs(quantity - sampleQuantity);
-                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > quantity * Atmospherics.MinimumAirRatioToMove))
-                    return 1;
-
-                // This actually returned the index of the gas in the original implementation,
-                // but since we don't index gases numerically anymore... Whoops.
+                var gasMoles = _moles[i];
+                var delta = MathF.Abs(gasMoles - sample._moles[i]);
+                if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > gasMoles * Atmospherics.MinimumAirRatioToMove))
+                    return i;
+                moles += gasMoles;
             }
 
             if (moles > Atmospherics.MinimumMolesDeltaToMove)
@@ -400,15 +377,15 @@ namespace Content.Server.Atmos
         public void Clear()
         {
             if (Immutable) return;
-            _contents.Clear();
+            Array.Clear(_moles, 0, Atmospherics.TotalNumberOfGases);
         }
 
         public void Multiply(float multiplier)
         {
             if (Immutable) return;
-            foreach (var (gas, _) in _contents.ToArray())
+            for(int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                _contents[gas] *= multiplier;
+                _moles[i] *= multiplier;
             }
         }
     }

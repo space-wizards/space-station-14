@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.EntitySystems;
 using NFluidsynth;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -620,7 +621,7 @@ namespace Content.Server.Atmos
 
         private void FloorRip(float sum)
         {
-            if (sum > 20 && IoCManager.Resolve<IRobustRandom>().Prob(MathF.Clamp(sum / 100, 0, 1)));
+            if (sum > 20 && IoCManager.Resolve<IRobustRandom>().Prob(MathF.Clamp(sum / 100, 0, 1)))
                 _gridAtmosphereManager.PryTile(GridIndices);
         }
 
@@ -642,18 +643,21 @@ namespace Content.Server.Atmos
             if (Air == null) return;
 
             // TODO ATMOS Updating visuals
-            var list = new List<SpriteSpecifier>();
+            var list = new List<SharedGasTileOverlaySystem.GasData>();
+            var gases = Air.Gases;
 
-            foreach (var (reagent, _) in Air.Gases)
+            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var overlay = reagent.GasOverlay;
-                if(overlay == null) continue;
-                list.Add(overlay);
+                var gas = Atmospherics.GetGas(i);
+                var moles = gases[i];
+                var overlay = gas.GasOverlay;
+                if(moles == 0f || overlay == null || moles < gas.GasMolesVisible) continue;
+                list.Add(new SharedGasTileOverlaySystem.GasData(i, MathF.Max(MathF.Max(1, moles / Atmospherics.GasMolesVisibleMax), 0f)));
             }
 
             if (list.Count == 0) return;
 
-            EntitySystem.Get<TileOverlaySystem>().SetTileOverlay(GridIndex, GridIndices, list.ToArray());
+            EntitySystem.Get<GasTileOverlaySystem>().SetTileOverlay(GridIndex, GridIndices, list.ToArray());
         }
 
         public void UpdateAdjacent()

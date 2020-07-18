@@ -10,6 +10,8 @@ namespace Content.Shared.Atmos
     [Prototype("gas")]
     public class GasPrototype : IPrototype, IIndexedPrototype
     {
+        public const float MinimumGasMolesVisible = 0.25f;
+
         public string Name { get; private set; }
 
         // TODO: Control gas amount necessary for overlay to appear
@@ -72,7 +74,7 @@ namespace Content.Shared.Atmos
             serializer.DataField(this, x => Name, "name", string.Empty);
             serializer.DataField(this, x => OverlayPath, "overlayPath", string.Empty);
             serializer.DataField(this, x => SpecificHeat, "specificHeat", 0f);
-            serializer.DataField(this, x => GasMolesVisible, "gasMolesVisible", Atmospherics.GasMolesVisible);
+            serializer.DataField(this, x => GasMolesVisible, "gasMolesVisible", MinimumGasMolesVisible);
             serializer.DataField(this, x => GasOverlayTexture, "gasOverlayTexture", string.Empty);
             serializer.DataField(this, x => GasOverlaySprite, "gasOverlaySprite", string.Empty);
             serializer.DataField(this, x => GasOverlayState, "gasOverlayState", string.Empty);

@@ -1,0 +1,22 @@
+﻿- type: gas
+  id: 0
+  name: Oxygen
+  specificHeat: 20
+
+- type: gas
+  id: 1
+  name: Nitrogen
+  specificHeat: 30
+
+- type: gas
+  id: 2
+  name: Carbon Dioxide
+  specificHeat: 30
+
+
+- type: gas
+  id: 3
+  name: Phoron
+  specificHeat: 200
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: phoron_old

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.Server.Atmos
