@@ -10,7 +10,7 @@
     capacity: 10
   - type: Icon
     state: icon
-  - type: Sprite 
+  - type: Sprite
     netsync: false
     layers:
     - state: base
@@ -36,7 +36,7 @@
     capacity: 16
   - type: Icon
     state: icon
-  - type: Sprite 
+  - type: Sprite
     netsync: false
     layers:
     - state: base
@@ -83,6 +83,8 @@
   parent: MagazinePistolSmgBase
   components:
   - type: RangedMagazine
+    caliber: Pistol
+    magazineType: SmgTopMounted
     fillPrototype: CartridgePistol
   - type: Icon
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag_top_mounted.rsi
