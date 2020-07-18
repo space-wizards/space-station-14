@@ -16,6 +16,7 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -167,10 +168,16 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
+            var ownerPosition = Owner.Transform.MapPosition;
             var strapPosition = strap.Owner.Transform.MapPosition;
+            var interaction = EntitySystem.Get<SharedInteractionSystem>();
+            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == strap.Owner;
 
-            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
+            if (!interaction.InRangeUnobstructed(ownerPosition, strapPosition, _range, predicate: Ignored))
             {
+                _notifyManager.PopupMessage(strap.Owner, user,
+                    Loc.GetString("You can't reach there!"));
+
                 return false;
             }
 
