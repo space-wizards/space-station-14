@@ -415,7 +415,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             base.ExposeData(serializer);
 
             serializer.DataField(ref _size, "size", 100);
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 2);
+            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
 
             var seconds = 0.25f;
             serializer.DataField(ref seconds, "cooldown", 0.25f);
