@@ -86,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         private bool ContainerChanged { get; set; }
 
         /// <summary>
-        ///     The amount of space that this entity occupies in a <see cref="StrapComponent"/>.
+        ///     The amount of space that this entity occupies in a
+        ///     <see cref="StrapComponent"/>.
         /// </summary>
         [ViewVariables]
         public int Size => _size;
@@ -107,9 +108,9 @@ namespace Content.Server.GameObjects.Components.Buckle
         }
 
         /// <summary>
-        ///     Reattaches this entity to the strap, modifying its position and rotation
+        ///     Reattaches this entity to the strap, modifying its position and rotation.
         /// </summary>
-        /// <param name="strap">The strap to reattach to</param>
+        /// <param name="strap">The strap to reattach to.</param>
         private void ReAttach(StrapComponent strap)
         {
             var ownTransform = Owner.Transform;
@@ -131,6 +132,11 @@ namespace Content.Server.GameObjects.Components.Buckle
                     StandingStateHelper.Down(Owner);
                     ownTransform.WorldRotation = Angle.South;
                     break;
+            }
+
+            if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
+            {
+                ownTransform.WorldPosition += (0, 0.15f);
             }
         }
 
