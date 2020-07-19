@@ -302,8 +302,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
                 if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
                 {
-                    _notifyManager.PopupMessage(Owner, user,
-                        Loc.GetString("You can't reach there!"));
                     return false;
                 }
             }
