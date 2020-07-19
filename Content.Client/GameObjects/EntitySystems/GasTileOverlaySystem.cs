@@ -47,7 +47,7 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!_overlay.TryGetValue(gridIndex, out var tiles) || !tiles.TryGetValue(indices, out var overlays))
                 return new (Texture, float)[0];
 
-            var list = new List<ValueTuple<Texture, float>>();
+            var list = new List<(Texture, float)>();
 
             foreach (var gasData in overlays)
             {
