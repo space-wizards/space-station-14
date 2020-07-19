@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Interfaces.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
@@ -15,7 +19,8 @@ namespace Content.Server.GameObjects.EntitySystems
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
         private int _tickTimer = 0;
-        private List<GasTileOverlayData> _queue = new List<GasTileOverlayData>();
+        private HashSet<GasTileOverlayData> _queue = new HashSet<GasTileOverlayData>();
+        private Dictionary<GridId, HashSet<MapIndices>> _invalid = new Dictionary<GridId, HashSet<MapIndices>>();
 
         private Dictionary<GridId, Dictionary<MapIndices, GasData[]>> _overlay =
             new Dictionary<GridId, Dictionary<MapIndices, GasData[]>>();
@@ -27,6 +32,14 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+        }
+
+        public void Invalidate(GridId gridIndex, MapIndices indices)
+        {
+            if(!_invalid.TryGetValue(gridIndex, out var set) || set == null)
+                _invalid.Add(gridIndex, new HashSet<MapIndices>());
+
+            _invalid[gridIndex].Add(indices);
         }
 
         public void SetTileOverlay(GridId gridIndex, MapIndices indices, GasData[] gasData)
@@ -67,14 +80,53 @@ namespace Content.Server.GameObjects.EntitySystems
             return new GasTileOverlayData(gridIndex, indices, _overlay[gridIndex][indices] ?? new GasData[0]);
         }
 
+        private void Revalidate()
+        {
+            var atmosMan = IoCManager.Resolve<IAtmosphereMap>();
+            var list = new List<GasData>();
+
+            foreach (var (gridId, indices) in _invalid)
+            {
+                var gam = atmosMan.GetGridAtmosphereManager(gridId);
+
+                foreach (var index in indices)
+                {
+                    var tile = gam.GetTile(index);
+
+                    if (tile?.Air == null) continue;
+
+                    list.Clear();
+
+                    for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+                    {
+                        var gas = Atmospherics.GetGas(i);
+                        var overlay = gas.GasOverlay;
+                        if (overlay == null) continue;
+                        var moles = tile.Air.Gases[i];
+                        if(moles == 0f || moles < gas.GasMolesVisible) continue;
+                        list.Add(new GasData(i, MathF.Max(MathF.Min(1, moles / Atmospherics.GasMolesVisibleMax), 0f)));
+                    }
+
+                    if (list.Count == 0) continue;
+
+                    SetTileOverlay(gridId, index, list.ToArray());
+                }
+
+                indices.Clear();
+            }
+        }
+
         public override void Update(float frameTime)
         {
             _tickTimer++;
 
+            Revalidate();
+
             if (_tickTimer < 10) return;
 
             _tickTimer = 0;
-            RaiseNetworkEvent(new GasTileOverlayMessage(_queue.ToArray()));
+            if(_queue.Count > 0)
+                RaiseNetworkEvent(new GasTileOverlayMessage(_queue.ToArray()));
             _queue.Clear();
         }
     }

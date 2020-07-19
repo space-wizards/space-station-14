@@ -4,7 +4,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
-    public class TileAtmosInfo : IDisposable
+    public class TileAtmosInfo
     {
         public int LastCycle { get; set; } = 0;
         public long LastQueueCycle { get; set; } = 0;
@@ -19,11 +19,23 @@ namespace Content.Server.Atmos
         };
         public float CurrentTransferAmount { get; set; } = 0;
         public float DistanceScore { get; set; } = 0;
-        public Direction CurrentTransferDirection { get; set; } = 0;
+        public Direction CurrentTransferDirection { get; set; } = (Direction) (-1);
         public bool FastDone { get; set; } = false;
 
-        public void Dispose()
+        public void Reset()
         {
+            LastCycle = 0;
+            LastQueueCycle = 0;
+            LastSlowQueueCycle = 0;
+            MoleDelta = 0;
+            CurrentTransferAmount = 0;
+            CurrentTransferDirection = (Direction) (-1);
+            FastDone = false;
+
+            TransferDirections[Direction.East] = 0;
+            TransferDirections[Direction.North] = 0;
+            TransferDirections[Direction.West] = 0;
+            TransferDirections[Direction.South] = 0;
         }
     }
 }

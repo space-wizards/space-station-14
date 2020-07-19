@@ -37,7 +37,7 @@ namespace Content.Server.Atmos
 
         private readonly Dictionary<Direction, TileAtmosphere> _adjacentTiles = new Dictionary<Direction, TileAtmosphere>();
 
-        private TileAtmosInfo _tileAtmosInfo = new TileAtmosInfo();
+        private readonly TileAtmosInfo _tileAtmosInfo = new TileAtmosInfo();
         private Direction _pressureDirection;
 
         public MapId MapIndex { get; }
@@ -89,7 +89,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null || (_tileAtmosInfo != null && _tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
 
-            _tileAtmosInfo = new TileAtmosInfo();
+            _tileAtmosInfo.Reset();
 
             var startingMoles = Air.TotalMoles;
             var runAtmos = false;
@@ -130,15 +130,8 @@ namespace Content.Server.Atmos
                 foreach (var (direction, adj) in exploring._adjacentTiles)
                 {
                     if (adj?.Air == null) continue;
-                    if (adj._tileAtmosInfo != null)
-                    {
-                        if(adj._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
-                        adj._tileAtmosInfo = new TileAtmosInfo();
-                    }
-                    else
-                    {
-                        adj._tileAtmosInfo = new TileAtmosInfo();
-                    }
+                    if(adj._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
+                    adj._tileAtmosInfo.Reset();
 
                     adj._tileAtmosInfo.LastQueueCycle = queueCycle;
                     tiles.Add(adj);
@@ -211,7 +204,7 @@ namespace Content.Server.Atmos
                     {
                         Direction eligibleAdjBits = 0;
                         int amtEligibleAdj = 0;
-                        foreach (var direction in Cardinal())
+                        foreach (var direction in Cardinal)
                         {
                             if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
 
@@ -225,7 +218,7 @@ namespace Content.Server.Atmos
 
                         if (amtEligibleAdj <= 0) continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
                         var molesToMove = tile._tileAtmosInfo.MoleDelta / amtEligibleAdj;
-                        foreach (var direction in Cardinal())
+                        foreach (var direction in Cardinal)
                         {
                             if((eligibleAdjBits & direction) == 0 || !tile._adjacentTiles.TryGetValue(direction, out var tile2) || tile2?._tileAtmosInfo == null) continue;
                             tile.AdjustEqMovement(direction, molesToMove);
@@ -270,7 +263,7 @@ namespace Content.Server.Atmos
                                 break; // We're done here now. Let's not do more work than needed.
 
                             var tile = queue[i];
-                            foreach (var direction in Cardinal())
+                            foreach (var direction in Cardinal)
                             {
                                 if(!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                                 if (giver._tileAtmosInfo.MoleDelta <= 0)
@@ -339,7 +332,7 @@ namespace Content.Server.Atmos
                                 break; // We're done here now. Let's not do more work than needed.
 
                             var tile = queue[i];
-                            foreach (var direction in Cardinal())
+                            foreach (var direction in Cardinal)
                             {
                                 if(!tile._adjacentTiles.ContainsKey(direction)) continue;
                                 var tile2 = tile._adjacentTiles[direction];
@@ -398,7 +391,7 @@ namespace Content.Server.Atmos
 
                 foreach (var tile in tiles)
                 {
-                    foreach (var direction in Cardinal())
+                    foreach (var direction in Cardinal)
                     {
                         if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         if(tile2?.Air == null) continue;
@@ -414,31 +407,44 @@ namespace Content.Server.Atmos
 
         private void FinalizeEq()
         {
-            var transferDirections = new Dictionary<Direction, float>(_tileAtmosInfo.TransferDirections);
             var hasTransferDirs = false;
-            foreach (var (direction, amount) in transferDirections)
+            foreach (var (direction, amount) in _tileAtmosInfo.TransferDirections)
             {
                 if (amount == 0) continue;
                 hasTransferDirs = true;
                 break;
             }
 
-            foreach (var direction in Cardinal())
+            if (!hasTransferDirs) return;
+
+            foreach (var direction in Cardinal)
             {
-                if (!transferDirections.TryGetValue(direction, out var amount)) continue;
+                if (!_tileAtmosInfo.TransferDirections.TryGetValue(direction, out var amount)) continue;
                 var tile = _adjacentTiles[direction];
                 if (tile?.Air == null) continue;
                 if (amount > 0)
                 {
-                    if (Air.TotalMoles < amount)
-                        FinalizeEqNeighbors(ref transferDirections);
-
+                    // Prevent infinite recursion.
                     tile._tileAtmosInfo.TransferDirections[direction.GetOpposite()] = 0;
+
+                    if (Air.TotalMoles < amount)
+                        FinalizeEqNeighbors();
+
                     tile.Air.Merge(Air.Remove(amount));
                     UpdateVisuals();
                     tile.UpdateVisuals();
                     ConsiderPressureDifference(tile, amount);
                 }
+            }
+        }
+
+        private void FinalizeEqNeighbors()
+        {
+            foreach (var direction in Cardinal)
+            {
+                if (!_tileAtmosInfo.TransferDirections.TryGetValue(direction, out var amount)) continue;
+                if(amount < 0 && _adjacentTiles.TryGetValue(direction, out var adjacent))
+                    adjacent.FinalizeEq();
             }
         }
 
@@ -449,18 +455,6 @@ namespace Content.Server.Atmos
             {
                 PressureDifference = difference;
                 _pressureDirection = ((Vector2i) (tile.GridIndices - GridIndices)).GetDir();
-            }
-        }
-
-        private void FinalizeEqNeighbors(ref Dictionary<Direction,float> transferDirections)
-        {
-            // TODO ATMOS infinite recursion here for some reason
-            return;
-            foreach (var direction in Cardinal())
-            {
-                if (!transferDirections.TryGetValue(direction, out var amount)) continue;
-                if(amount < 0 && _adjacentTiles.TryGetValue(direction, out var adjacent))
-                    adjacent.FinalizeEq();
             }
         }
 
@@ -555,7 +549,7 @@ namespace Content.Server.Atmos
             var tiles = new List<TileAtmosphere>();
             var spaceTiles = new List<TileAtmosphere>();
             tiles.Add(this);
-            _tileAtmosInfo = new TileAtmosInfo();
+            _tileAtmosInfo.Reset();
             _tileAtmosInfo.LastQueueCycle = queueCycle;
             _tileAtmosInfo.CurrentTransferDirection = (Direction) (-1);
             var tileCount = 1;
@@ -572,15 +566,16 @@ namespace Content.Server.Atmos
                 else
                 {
                     if (i > Atmospherics.ZumosHardTileLimit) continue;
-                    foreach (var direction in Cardinal())
+                    foreach (var direction in Cardinal)
                     {
                         if (!_adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         if (tile2?.Air == null) continue;
-                        if (tile2._tileAtmosInfo != null && tile2._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
+                        if (tile2._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
                         tile.ConsiderFirelocks(tile2);
                         if (tile._adjacentTiles[direction]?.Air != null)
                         {
-                            tile2._tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
+                            tile2._tileAtmosInfo.Reset();
+                            tile2._tileAtmosInfo.LastQueueCycle = queueCycle;
                             tiles.Add(tile2);
                             tileCount++;
                         }
@@ -601,7 +596,7 @@ namespace Content.Server.Atmos
             for (int i = 0; i < progressionCount; i++)
             {
                 var tile = progressionOrder[i];
-                foreach (var direction in Cardinal())
+                foreach (var direction in Cardinal)
                 {
                     if (!_adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                     if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
@@ -667,27 +662,12 @@ namespace Content.Server.Atmos
         {
             if (Air == null) return;
 
-            // TODO ATMOS Updating visuals
-            var list = new List<SharedGasTileOverlaySystem.GasData>();
-            var gases = Air.Gases;
-
-            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gas = Atmospherics.GetGas(i);
-                var moles = gases[i];
-                var overlay = gas.GasOverlay;
-                if(moles == 0f || overlay == null || moles < gas.GasMolesVisible) continue;
-                list.Add(new SharedGasTileOverlaySystem.GasData(i, MathF.Max(MathF.Min(1, moles / Atmospherics.GasMolesVisibleMax), 0f)));
-            }
-
-            if (list.Count == 0) return;
-
-            EntitySystem.Get<GasTileOverlaySystem>().SetTileOverlay(GridIndex, GridIndices, list.ToArray());
+            EntitySystem.Get<GasTileOverlaySystem>().Invalidate(GridIndex, GridIndices);
         }
 
         public void UpdateAdjacent()
         {
-            foreach (var direction in Cardinal())
+            foreach (var direction in Cardinal)
             {
                 _adjacentTiles[direction] = _gridAtmosphereManager.GetTile(GridIndices.Offset(direction));
             }
@@ -712,8 +692,8 @@ namespace Content.Server.Atmos
             }
         }
 
-        private static IEnumerable<Direction> Cardinal() =>
-            new[]
+        private static readonly Direction[] Cardinal =
+            new Direction[]
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };

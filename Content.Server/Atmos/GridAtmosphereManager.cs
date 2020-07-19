@@ -21,10 +21,10 @@ namespace Content.Server.Atmos
         private int _timer = 0;
         private int _updateCounter = 0;
         private readonly IMapGrid _grid;
-        private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>();
-        private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>();
-        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>();
-        private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>();
+        private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>(1000);
+        private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
+        private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
+        private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
         private ProcessState _state = ProcessState.TileEqualize;
 
