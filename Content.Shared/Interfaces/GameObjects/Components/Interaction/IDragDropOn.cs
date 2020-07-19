@@ -1,4 +1,4 @@
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     ///     This interface allows the component's entity to be dragged and dropped

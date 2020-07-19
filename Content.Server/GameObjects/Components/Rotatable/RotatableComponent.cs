@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryRotate(IEntity user, Angle angle)
         {
-            if (Owner.TryGetComponent(out PhysicsComponent physics))
+            if (Owner.TryGetComponent(out IPhysicsComponent physics))
             {
                 if (physics.Anchored)
                 {

@@ -1,8 +1,6 @@
-using System;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -10,7 +8,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Utility
 {

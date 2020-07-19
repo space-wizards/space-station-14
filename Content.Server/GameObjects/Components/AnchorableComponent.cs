@@ -1,9 +1,9 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components
         /// <param name="physics">The physics component of the owning entity</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out PhysicsComponent physics, bool force = false)
+        private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out IPhysicsComponent physics, bool force = false)
         {
             if (!Owner.TryGetComponent(out physics))
             {
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private bool TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent physics))
+            if (!Owner.TryGetComponent(out IPhysicsComponent physics))
             {
                 return false;
             }

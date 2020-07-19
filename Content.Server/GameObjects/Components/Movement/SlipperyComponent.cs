@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Timers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Throw;
@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 ||  _slipped.Contains(collidedWith.Uid)
                 ||  !collidedWith.TryGetComponent(out StunnableComponent stun)
                 ||  !collidedWith.TryGetComponent(out ICollidableComponent otherBody)
-                ||  !collidedWith.TryGetComponent(out PhysicsComponent otherPhysics)
+                ||  !collidedWith.TryGetComponent(out IPhysicsComponent otherPhysics)
                 ||  !Owner.TryGetComponent(out ICollidableComponent body))
                 return;
 
