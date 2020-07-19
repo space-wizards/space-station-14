@@ -11,7 +11,6 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.BodySystem;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -408,31 +407,21 @@ namespace Content.Server.GameObjects.Components.GUI
             return HandLocation.Middle;
         }
 
-        public void AddHand(string index)
+        public void AddHand(string name)
         {
-            if (HasHand(index))
+            if (HasHand(name))
             {
-                throw new InvalidOperationException($"Hand '{index}' already exists.");
+                throw new InvalidOperationException($"Hand '{name}' already exists.");
             }
 
-            var container = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + index, Owner);
-            var location = GetLocation(index);
-            var hand = new Hand(index, location, container);
+            var container = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + name, Owner);
+            var location = GetLocation(name);
+            var hand = new Hand(name, location, container);
 
-            if (_hands.Count == 0 || hand.Location == HandLocation.Left)
-            {
-                _hands.Add(hand);
-            }
-            else if (hand.Location == HandLocation.Right)
-            {
-                _hands.Insert(0, hand);
-            }
-            else
-            {
-                _hands.Insert(1, hand);
-            }
+            _hands.Add(hand);
+            _hands.Sort((a, b) => b.Location.CompareTo(a.Location));
 
-            ActiveIndex ??= index;
+            ActiveIndex ??= name;
 
             Dirty();
         }
@@ -463,7 +452,14 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override ComponentState GetComponentState()
         {
-            var hands = _hands.Select(x => x.ToShared()).ToList();
+            var hands = new List<SharedHand>();
+
+            for (var i = 0; i < _hands.Count; i++)
+            {
+                var hand = _hands[i].ToShared(i);
+                hands.Add(hand);
+            }
+
             return new HandsComponentState(hands, ActiveIndex);
         }
 
@@ -477,14 +473,14 @@ namespace Content.Server.GameObjects.Components.GUI
             var hand = GetHand(ActiveIndex);
             if (hand == null)
             {
-                throw new InvalidOperationException($"No hand found with index {ActiveIndex}");
+                throw new InvalidOperationException($"No hand found with name {ActiveIndex}");
             }
 
             var index = _hands.IndexOf(hand);
-            index--;
-            if (index < 0)
+            index++;
+            if (index == _hands.Count)
             {
-                index = _hands.Count - 1;
+                index = 0;
             }
 
             ActiveIndex = _hands[index].Name;
@@ -540,7 +536,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     var hand = GetHand(msg.Index);
                     if (hand == null)
                     {
-                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand index '{0}'",
+                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand name '{0}'",
                             msg.Index);
                         return;
                     }
@@ -662,9 +658,9 @@ namespace Content.Server.GameObjects.Components.GUI
             Container.Shutdown(); // TODO verify this
         }
 
-        public SharedHand ToShared()
+        public SharedHand ToShared(int index)
         {
-            return new SharedHand(Name, Entity?.Uid, Location);
+            return new SharedHand(index, Name, Entity?.Uid, Location);
         }
     }
 }

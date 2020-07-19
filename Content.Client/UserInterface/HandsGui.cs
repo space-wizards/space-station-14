@@ -43,8 +43,6 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            var topPanelTexture = _resourceCache.GetTexture("/Textures/Interface/Nano/item_status_left.svg.96dpi.png");
-
             AddChild(new HBoxContainer
             {
                 SeparationOverride = 0,
@@ -135,6 +133,7 @@ namespace Content.Client.UserInterface
         public void RemoveHand(Hand hand)
         {
             var button = hand.Button;
+
             if (button != null)
             {
                 if (button.Children.Contains(_activeHandRect))
@@ -143,23 +142,6 @@ namespace Content.Client.UserInterface
                 }
 
                 _handsContainer.RemoveChild(button);
-            }
-
-            if (hand.Location == HandLocation.Middle ||
-                !TryGetHands(out var hands))
-            {
-                return;
-            }
-
-            foreach (var handsHand in hands.Hands)
-            {
-                if (handsHand.Location != HandLocation.Middle)
-                {
-                    continue;
-                }
-
-                handsHand.Location = hand.Location;
-                break;
             }
         }
 
@@ -191,16 +173,6 @@ namespace Content.Client.UserInterface
             }
 
             // TODO: Remove button on remove hand
-            var locationsOccupied = new HashSet<HandLocation>();
-            foreach (var hand in component.Hands)
-            {
-                var location = locationsOccupied.Contains(hand.Location)
-                    ? HandLocation.Middle
-                    : hand.Location;
-
-                hand.Location = location;
-                locationsOccupied.Add(location);
-            }
 
             var hands = component.Hands.OrderByDescending(x => x.Location).ToArray();
             for (var i = 0; i < hands.Length; i++)
@@ -218,7 +190,7 @@ namespace Content.Client.UserInterface
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            component[component.ActiveIndex].Button?.AddChild(_activeHandRect);
+            component.GetHand(component.ActiveIndex)?.Button?.AddChild(_activeHandRect);
 
             if (hands.Length > 0)
             {

@@ -16,12 +16,14 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public sealed class SharedHand
     {
+        public readonly int Index;
         public readonly string Name;
         public readonly EntityUid? EntityUid;
         public readonly HandLocation Location;
 
-        public SharedHand(string name, EntityUid? entityUid, HandLocation location)
+        public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location)
         {
+            Index = index;
             Name = name;
             EntityUid = entityUid;
             Location = location;

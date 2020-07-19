@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Shared.GameObjects.Components.Items;
-using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -36,38 +35,29 @@ namespace Content.Client.GameObjects.Components.Items
 
         [ViewVariables] public IEntity? ActiveHand => GetEntity(ActiveIndex);
 
-        [CanBeNull]
-        public Hand this[string slotName] => Hands.FirstOrDefault(hand => hand.Name == slotName);
-
         private void AddHand(Hand hand)
         {
-            if (_hands.Count == 0 || hand.Location == HandLocation.Left)
-            {
-                _hands.Add(hand);
-            }
-            else if (hand.Location == HandLocation.Right)
-            {
-                _hands.Insert(0, hand);
-            }
-            else
-            {
-                _hands.Insert(1, hand);
-            }
+            _hands.Insert(hand.Index, hand);
         }
 
-        private bool TryHand(string slotName, [MaybeNullWhen(false)] out Hand hand)
+        public Hand? GetHand(string? name)
         {
-            return (hand = this[slotName]) != null;
+            return Hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        public IEntity? GetEntity(string? index)
+        private bool TryHand(string name, [MaybeNullWhen(false)] out Hand hand)
         {
-            if (index == null)
+            return (hand = GetHand(name)) != null;
+        }
+
+        public IEntity? GetEntity(string? handName)
+        {
+            if (handName == null)
             {
                 return null;
             }
 
-            return this[index]?.Entity;
+            return GetHand(handName)?.Entity;
         }
 
         public override void OnRemove()
@@ -243,11 +233,10 @@ namespace Content.Client.GameObjects.Components.Items
 
     public class Hand
     {
-        public readonly string Name;
-
         // TODO: Separate into server hand and client hand
         public Hand(SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
+            Index = hand.Index;
             Name = hand.Name;
             Location = hand.Location;
             Button = button;
@@ -261,7 +250,9 @@ namespace Content.Client.GameObjects.Components.Items
             Entity = entity;
         }
 
-        public HandLocation Location { get; set; }
+        public int Index { get; }
+        public string Name { get; }
+        public HandLocation Location { get; }
         public IEntity? Entity { get; set; }
         public HandButton? Button { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
     public interface IHandsComponent : IComponent
     {
         /// <summary>
-        ///     The hand index of the currently active hand.
+        ///     The hand name of the currently active hand.
         /// </summary>
         string ActiveIndex { get; set; }
 
@@ -24,7 +24,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Gets the item held by a hand.
         /// </summary>
-        /// <param name="index">The index of the hand to get.</param>
+        /// <param name="index">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
         ItemComponent GetItem(string index);
 
@@ -44,7 +44,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         ///     Puts an item into a specific hand.
         /// </summary>
         /// <param name="item">The item to put in the hand.</param>
-        /// <param name="index">The index of the hand to put the item into.</param>
+        /// <param name="index">The name of the hand to put the item into.</param>
         /// <param name="fallback">
         ///     If true and the provided hand is full, the method will fall back to <see cref="PutInHand(ItemComponent)" />
         /// </param>
@@ -62,7 +62,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         ///     Checks to see if an item can be put in the specified hand.
         /// </summary>
         /// <param name="item">The item to check for.</param>
-        /// <param name="index">The index for the hand to check for.</param>
+        /// <param name="index">The name for the hand to check for.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
         bool CanPutInHand(ItemComponent item, string index);
 
@@ -71,7 +71,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="entity">The entity to look for in our hands.</param>
         /// <param name="handName">
-        ///     The index of the hand slot if the entity is indeed held,
+        ///     The name of the hand slot if the entity is indeed held,
         ///     <see langword="null" /> otherwise.
         /// </param>
         /// <returns>
@@ -178,11 +178,11 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Adds a new hand to this hands component.
         /// </summary>
-        /// <param name="index">The name of the hand to add.</param>
+        /// <param name="name">The name of the hand to add.</param>
         /// <exception cref="InvalidOperationException">
         ///     Thrown if a hand with specified name already exists.
         /// </exception>
-        void AddHand(string index);
+        void AddHand(string name);
 
         /// <summary>
         ///     Removes a hand from this hands component.
