@@ -315,7 +315,7 @@ namespace Content.Server.GameTicking
             }
 
             shell.ExecuteCommand(player, $"addmap {args[0]} false");
-            shell.ExecuteCommand(player, $"loadbp {args[0]} {args[1]}");
+            shell.ExecuteCommand(player, $"loadbp {args[0]} \"{CommandParsing.Escape(args[1])}\"");
             shell.ExecuteCommand(player, $"aghost");
             shell.ExecuteCommand(player, $"tp 0 0 {args[0]}");
 
