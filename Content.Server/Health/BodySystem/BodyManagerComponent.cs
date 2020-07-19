@@ -9,7 +9,6 @@ using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Linq;
 using Content.Server.BodySystem;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Health.BodySystem.BodyParts;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Health.BodySystem.BodyPart;

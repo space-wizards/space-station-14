@@ -611,7 +611,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
+                if (!message.Entity.TryGetComponent(out IPhysicsComponent physics))
                 {
                     return;
                 }

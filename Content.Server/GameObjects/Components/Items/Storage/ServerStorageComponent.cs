@@ -9,6 +9,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -372,7 +373,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                         break;
                     }
 
-                    if (hands.CanPutInHand(item))
+                    if (!hands.CanPutInHand(item))
                     {
                         break;
                     }

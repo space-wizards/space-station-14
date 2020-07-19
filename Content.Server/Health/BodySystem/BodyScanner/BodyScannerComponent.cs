@@ -1,13 +1,11 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using System.Collections.Generic;
-using Content.Server.BodySystem;
-using Content.Server.Health.BodySystem.BodyParts;
-using Content.Shared.BodySystem;
-using Robust.Server.GameObjects.Components.UserInterface;
+﻿using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using System.Collections.Generic;
+using Content.Shared.BodySystem;
+using Content.Shared.Interfaces.GameObjects.Components;
 
-namespace Content.Server.Health.BodySystem.BodyScanner
+namespace Content.Server.BodySystem
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

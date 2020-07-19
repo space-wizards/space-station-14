@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -397,7 +397,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             var startTile = gridManager.GetTileRef(entity.Transform.GridPosition);
             var endTile = gridManager.GetTileRef(steeringRequest.TargetGrid);
             var collisionMask = 0;
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
             {
                 collisionMask = collidableComponent.CollisionMask;
             }
@@ -581,7 +581,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 return Vector2.Zero;
             }
             
-            if (target.TryGetComponent(out PhysicsComponent physicsComponent))
+            if (target.TryGetComponent(out IPhysicsComponent physicsComponent))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
                 targetPos = targetPos.Offset(physicsComponent.LinearVelocity * targetDistance);
@@ -599,7 +599,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <returns></returns>
         private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<EntityUid> ignoredTargets)
         {
-            if (direction == Vector2.Zero || !entity.TryGetComponent(out CollidableComponent collidableComponent))
+            if (direction == Vector2.Zero || !entity.TryGetComponent(out ICollidableComponent collidableComponent))
             {
                 return Vector2.Zero;
             }
@@ -637,7 +637,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (collisionEntity.TryGetComponent(out PhysicsComponent physicsComponent) &&
+                    if (collisionEntity.TryGetComponent(out IPhysicsComponent physicsComponent) &&
                         Vector2.Dot(physicsComponent.LinearVelocity, direction) > 0)
                     {
                         continue;

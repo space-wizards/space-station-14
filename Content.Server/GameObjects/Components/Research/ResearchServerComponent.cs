@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Research;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 
 namespace Content.Server.GameObjects.Components.Research

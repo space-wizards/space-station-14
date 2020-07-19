@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Chemistry;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,7 +16,6 @@ using Robust.Server.GameObjects;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
-using Content.Server.GameObjects.Components.Power;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Localization;
@@ -23,14 +23,12 @@ using Content.Server.Interfaces;
 using Robust.Shared.Audio;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
-using Content.Server.BodySystem;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Health.BodySystem;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {

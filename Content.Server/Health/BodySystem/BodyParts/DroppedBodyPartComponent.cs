@@ -1,23 +1,16 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System;
 using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using System.Globalization;
 using Robust.Server.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
 using Content.Shared.Interfaces;
-using Robust.Shared.Interfaces.Random;
 using System.Linq;
-using Content.Server.Health.BodySystem;
-using Content.Server.Health.BodySystem.BodyParts;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Localization;
 
 namespace Content.Server.BodySystem

@@ -54,8 +54,8 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
-            CollidableComponent? collider = null)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics,
+            ICollidableComponent? collider = null)
         {
             if (physics.Controller == null)
             {
@@ -110,10 +110,10 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         }
 
-        protected abstract void SetController(PhysicsComponent physics);
+        protected abstract void SetController(IPhysicsComponent physics);
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
-            CollidableComponent collider)
+            ICollidableComponent collider)
         {
             foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
@@ -122,7 +122,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue; // Don't try to push off of yourself!
                 }
 
-                if (!entity.TryGetComponent<CollidableComponent>(out var otherCollider))
+                if (!entity.TryGetComponent<ICollidableComponent>(out var otherCollider))
                 {
                     continue;
                 }

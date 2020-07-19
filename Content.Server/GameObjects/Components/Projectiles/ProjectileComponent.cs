@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
+                                && Owner.TryGetComponent(out IPhysicsComponent physicsComponent))
             {
                 var direction = physicsComponent.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
