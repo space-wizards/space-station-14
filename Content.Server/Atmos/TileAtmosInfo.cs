@@ -32,6 +32,7 @@ namespace Content.Server.Atmos
             CurrentTransferDirection = (Direction) (-1);
             FastDone = false;
 
+            TransferDirections.Clear();
             TransferDirections[Direction.East] = 0;
             TransferDirections[Direction.North] = 0;
             TransferDirections[Direction.West] = 0;

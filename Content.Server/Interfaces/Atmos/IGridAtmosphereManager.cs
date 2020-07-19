@@ -77,10 +77,10 @@ namespace Content.Server.Interfaces.Atmos
         int HighPressureDeltaCount { get; }
 
         void Update(float frameTime);
-        void AddActiveTile(MapIndices indices);
-        void RemoveActiveTile(MapIndices indices);
-        void AddHighPressureDelta(MapIndices indices);
-        bool HasHighPressureDelta(MapIndices indices);
+        void AddActiveTile(TileAtmosphere tile);
+        void RemoveActiveTile(TileAtmosphere tile);
+        void AddHighPressureDelta(TileAtmosphere tile);
+        bool HasHighPressureDelta(TileAtmosphere tile);
         void AddExcitedGroup(WeakReference<ExcitedGroup> excitedGroup);
         void RemoveExcitedGroup(WeakReference<ExcitedGroup> excitedGroup);
     }

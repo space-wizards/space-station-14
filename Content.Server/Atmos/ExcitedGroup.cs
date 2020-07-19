@@ -122,7 +122,7 @@ namespace Content.Server.Atmos
                 tile.ExcitedGroup = null;
                 if (!unexcite) continue;
                 tile.Excited = false;
-                _gridAtmosphereManager.RemoveActiveTile(tile.GridIndices);
+                _gridAtmosphereManager.RemoveActiveTile(tile);
             }
 
             _tile.Clear();

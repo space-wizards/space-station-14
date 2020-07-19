@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.EntitySystems
         private Dictionary<GridId, Dictionary<MapIndices, GasData[]>> _overlay =
             new Dictionary<GridId, Dictionary<MapIndices, GasData[]>>();
 
-        [Dependency] private IPlayerManager _playerManager = default!;
+        [Robust.Shared.IoC.Dependency] private IPlayerManager _playerManager = default!;
 
         public override void Initialize()
         {
@@ -34,6 +35,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(GridId gridIndex, MapIndices indices)
         {
             if(!_invalid.TryGetValue(gridIndex, out var set) || set == null)

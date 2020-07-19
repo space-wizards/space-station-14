@@ -111,17 +111,20 @@ namespace Content.Server.Atmos
             Volume = volume;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void MarkImmutable()
         {
             Immutable = true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Archive()
         {
             _moles.AsSpan().CopyTo(_molesArchived.AsSpan());
             TemperatureArchived = Temperature;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Merge(GasMixture giver)
         {
             if (Immutable || giver == null) return;
@@ -142,21 +145,25 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(int gasId, float quantity)
         {
             _moles[gasId] += quantity;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(Gas gasId, float moles)
         {
             Add((int)gasId, moles);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasMixture Remove(float amount)
         {
             return RemoveRatio(amount / TotalMoles);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasMixture RemoveRatio(float ratio)
         {
             if(ratio <= 0)
@@ -186,6 +193,7 @@ namespace Content.Server.Atmos
             return removed;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void CopyFromMutable(GasMixture sample)
         {
             if (Immutable) return;
@@ -193,6 +201,7 @@ namespace Content.Server.Atmos
             Temperature = sample.Temperature;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float Share(GasMixture sharer, int atmosAdjacentTurfs)
         {
             var temperatureDelta = TemperatureArchived - sharer.TemperatureArchived;
@@ -278,6 +287,7 @@ namespace Content.Server.Atmos
             return 0f;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void TemperatureShare(GasMixture sharer, float conductionCoefficient)
         {
             var temperatureDelta = TemperatureArchived - sharer.TemperatureArchived;
@@ -299,6 +309,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Compare(GasMixture sample)
         {
             var moles = 0f;
@@ -329,6 +340,7 @@ namespace Content.Server.Atmos
         /// <param name="outputAir">The mixture to pump the gas to</param>
         /// <param name="targetPressure">The target pressure to reach</param>
         /// <returns>Whether we could pump air to the output or not</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool PumpGasTo(GasMixture outputAir, float targetPressure)
         {
             var outputStartingPressure = outputAir.Pressure;
@@ -356,6 +368,7 @@ namespace Content.Server.Atmos
         /// <param name="outputAir"></param>
         /// <param name="targetPressure"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ReleaseGasTo(GasMixture outputAir, float targetPressure)
         {
             var outputStartingPressure = outputAir.Pressure;
@@ -380,12 +393,14 @@ namespace Content.Server.Atmos
 
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Clear()
         {
             if (Immutable) return;
             Array.Clear(_moles, 0, Atmospherics.TotalNumberOfGases);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Multiply(float multiplier)
         {
             if (Immutable) return;

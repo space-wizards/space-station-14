@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using NFluidsynth;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -69,12 +72,14 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Archive(int fireCount)
         {
             _archivedCycle = fireCount;
             Air?.Archive();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void HighPressureMovements()
         {
             // TODO ATMOS finish this
@@ -85,6 +90,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo != null && _tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
@@ -95,7 +101,7 @@ namespace Content.Server.Atmos
             var runAtmos = false;
 
             // We need to figure if this is necessary
-            foreach (var (direction, other) in _adjacentTiles.ToArray())
+            foreach (var (direction, other) in _adjacentTiles)
             {
                 if (other?.Air == null) continue;
                 var comparisonMoles = other.Air.TotalMoles;
@@ -112,7 +118,7 @@ namespace Content.Server.Atmos
 
             var queueCycle = ++_eqQueueCycleCtr;
             var totalMoles = 0f;
-            var tiles = new List<TileAtmosphere> {this};
+            var tiles = new List<TileAtmosphere>(Atmospherics.ZumosHardTileLimit) {this};
             _tileAtmosInfo.LastQueueCycle = queueCycle;
             var tileCount = 1;
             for (var i = 0; i < tileCount; i++)
@@ -397,7 +403,7 @@ namespace Content.Server.Atmos
                         if(tile2?.Air == null) continue;
                         if (tile2.Air.Compare(Air) != -2)
                         {
-                            _gridAtmosphereManager.AddActiveTile(tile2.GridIndices);
+                            _gridAtmosphereManager.AddActiveTile(tile2);
                             break;
                         }
                     }
@@ -405,10 +411,11 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEq()
         {
             var hasTransferDirs = false;
-            foreach (var (direction, amount) in _tileAtmosInfo.TransferDirections)
+            foreach (var (_, amount) in _tileAtmosInfo.TransferDirections)
             {
                 if (amount == 0) continue;
                 hasTransferDirs = true;
@@ -438,6 +445,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEqNeighbors()
         {
             foreach (var direction in Cardinal)
@@ -448,9 +456,10 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void ConsiderPressureDifference(TileAtmosphere tile, float difference)
         {
-            _gridAtmosphereManager.AddHighPressureDelta(GridIndices);
+            _gridAtmosphereManager.AddHighPressureDelta(this);
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
@@ -458,6 +467,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void AdjustEqMovement(Direction direction, float molesToMove)
         {
             _tileAtmosInfo.TransferDirections[direction] += molesToMove;
@@ -465,6 +475,7 @@ namespace Content.Server.Atmos
                 _adjacentTiles[direction]._tileAtmosInfo.TransferDirections[direction.GetOpposite()] -= molesToMove;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ProcessCell(int fireCount)
         {
             // Can't process a tile without air
@@ -498,7 +509,7 @@ namespace Content.Server.Atmos
                 {
                     if (!enemyTile.Excited)
                     {
-                        _gridAtmosphereManager.AddActiveTile(enemyTile.GridIndices);
+                        _gridAtmosphereManager.AddActiveTile(enemyTile);
                     }
 
                     var excitedGroup = ExcitedGroup;
@@ -541,6 +552,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ExplosivelyDepressurize(int cycleNum)
         {
             if (Air == null) return;
@@ -616,9 +628,9 @@ namespace Content.Server.Atmos
                 var tile = progressionOrder[i];
                 if (tile._tileAtmosInfo.CurrentTransferDirection == (Direction) (-1)) continue;
                 var hpdLength = _gridAtmosphereManager.HighPressureDeltaCount;
-                var inHdp = _gridAtmosphereManager.HasHighPressureDelta(tile.GridIndices);
+                var inHdp = _gridAtmosphereManager.HasHighPressureDelta(tile);
                 if(!inHdp)
-                    _gridAtmosphereManager.AddHighPressureDelta(tile.GridIndices);
+                    _gridAtmosphereManager.AddHighPressureDelta(tile);
                 var tile2 = tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection];
                 if (tile2?.Air == null) continue;
                 var sum = tile2.Air.TotalMoles;
@@ -658,13 +670,16 @@ namespace Content.Server.Atmos
             //throw new System.NotImplementedException();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateVisuals()
         {
             if (Air == null) return;
 
-            EntitySystem.Get<GasTileOverlaySystem>().Invalidate(GridIndex, GridIndices);
+            _gasTileOverlaySystem ??= EntitySystem.Get<GasTileOverlaySystem>();
+            _gasTileOverlaySystem.Invalidate(GridIndex, GridIndices);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateAdjacent()
         {
             foreach (var direction in Cardinal)
@@ -697,5 +712,7 @@ namespace Content.Server.Atmos
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
+
+        private static GasTileOverlaySystem _gasTileOverlaySystem;
     }
 }

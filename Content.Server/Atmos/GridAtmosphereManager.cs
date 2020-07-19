@@ -28,7 +28,7 @@ namespace Content.Server.Atmos
 
         private ProcessState _state = ProcessState.TileEqualize;
 
-        private List<TileAtmosphere> _highPressureDelta = new List<TileAtmosphere>();
+        private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
 
         private enum ProcessState
         {
@@ -92,8 +92,8 @@ namespace Content.Server.Atmos
         {
             foreach (var indices in _invalidatedCoords)
             {
-                AddActiveTile(indices);
                 var tile = GetTile(indices);
+                AddActiveTile(tile);
 
                 if (tile == null)
                 {
@@ -121,7 +121,7 @@ namespace Content.Server.Atmos
                 {
                     var otherIndices = indices.Offset(direction);
                     var otherTile = GetTile(otherIndices);
-                    AddActiveTile(otherIndices);
+                    AddActiveTile(otherTile);
                     otherTile?.UpdateAdjacent(direction.GetOpposite());
                 }
             }
@@ -130,30 +130,29 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
-        public void AddActiveTile(MapIndices indices)
+        public void AddActiveTile(TileAtmosphere tile)
         {
-            if (!_tiles.ContainsKey(indices)) return;
-            _activeTiles.Add(_tiles[indices]);
+            if (tile?.GridIndex != _grid.Index) return;
+            _activeTiles.Add(tile);
         }
 
         /// <inheritdoc />
-        public void RemoveActiveTile(MapIndices indices)
+        public void RemoveActiveTile(TileAtmosphere tile)
         {
-            _activeTiles.Remove(_tiles[indices]);
+            _activeTiles.Remove(tile);
         }
 
         /// <inheritdoc />
-        public void AddHighPressureDelta(MapIndices indices)
+        public void AddHighPressureDelta(TileAtmosphere tile)
         {
-            var tile = GetTile(indices);
-            if (tile == null) return;
+            if (tile?.GridIndex == _grid.Index) return;
             _highPressureDelta.Add(tile);
         }
 
         /// <inheritdoc />
-        public bool HasHighPressureDelta(MapIndices indices)
+        public bool HasHighPressureDelta(TileAtmosphere tile)
         {
-            return _highPressureDelta.Contains(GetTile(indices));
+            return _highPressureDelta.Contains(tile);
         }
 
         /// <inheritdoc />

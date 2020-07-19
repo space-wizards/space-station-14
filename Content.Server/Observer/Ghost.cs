@@ -41,8 +41,9 @@ namespace Content.Server.Observer
             var gridPos = player.AttachedEntity.Transform.GridPosition;
 
             var indices = new MapIndices((int)gridPos.X, (int)gridPos.Y);
-            gam.GetTile(indices)?.Air?.Add(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
-            gam.AddActiveTile(indices);
+            var tile = gam.GetTile(indices);
+            tile?.Air?.Add(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
+            gam.AddActiveTile(tile);
 
             var mind = player.ContentData().Mind;
             var canReturn = player.AttachedEntity != null;
