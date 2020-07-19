@@ -19,7 +19,7 @@
     sprite: Clothing/Belt/belt_utility.rsi
     state: utilitybelt
   - type: Clothing
-    Size: 50
+    size: 50
     QuickEquip: false
     sprite: Clothing/Belt/belt_utility.rsi
   - type: Storage
@@ -45,6 +45,6 @@
     sprite: Clothing/Belt/suspenders.rsi
     state: icon
   - type: Clothing
-    Size: 50
+    size: 50
     QuickEquip: false
     sprite: Clothing/Belt/suspenders.rsi

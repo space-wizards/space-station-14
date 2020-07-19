@@ -13,7 +13,7 @@
     sprite: Objects/Weapons/Grenades/grenade.rsi
     state: icon
   - type: Item
-    Size: 5
+    size: 5
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: Explosive
@@ -44,7 +44,7 @@
     sprite: Objects/Weapons/Grenades/flashbang.rsi
     state: icon
   - type: Item
-    Size: 5
+    size: 5
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: FlashExplosive
@@ -71,7 +71,7 @@
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     state: icon
   - type: Item
-    Size: 5
+    size: 5
   - type: OnUseTimerTrigger
     delay: 5
   - type: Explosive

@@ -6,7 +6,7 @@
   description:
   components:
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck

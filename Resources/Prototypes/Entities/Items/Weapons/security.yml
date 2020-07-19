@@ -18,7 +18,7 @@
       arc: default
 
     - type: Item
-      Size: 10
+      size: 10
       sprite: Objects/Weapons/Melee/stunbaton.rsi
       HeldPrefix: off
 
@@ -45,7 +45,7 @@
       slowTo: 0.7
 
     - type: Item
-      Size: 2
+      size: 2
       sprite: Objects/Weapons/Melee/flash.rsi
 
     - type: ItemCooldown

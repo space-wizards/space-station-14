@@ -5,7 +5,7 @@
   abstract: true
   components:
   - type: Clothing
-    Size: 5
+    size: 5
 
 
 

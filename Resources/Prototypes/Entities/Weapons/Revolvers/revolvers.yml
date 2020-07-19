@@ -30,7 +30,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
@@ -63,7 +63,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: RangedWeapon
   - type: RevolverBarrel
@@ -89,7 +89,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: RangedWeapon
   - type: RevolverBarrel

@@ -29,7 +29,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
@@ -63,7 +63,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
   - type: RangedWeapon
   - type: RevolverBarrel

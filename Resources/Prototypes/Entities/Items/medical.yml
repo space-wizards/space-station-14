@@ -11,7 +11,7 @@
   - type: Storage
     Capacity: 60
   - type: Item
-    Size: 9999
+    size: 9999
 
 - type: entity
   id: MedkitFilled

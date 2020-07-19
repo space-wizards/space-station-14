@@ -556,7 +556,7 @@
     sprite: Objects/Fun/toys.rsi
     state: foamcrossbow
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: foamcrossbow
   - type: RangedWeapon
@@ -599,7 +599,7 @@
     sprite: Objects/Fun/toys.rsi
     state: base
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Fun/toys.rsi
     state: base
   - type: RangedWeapon
@@ -634,7 +634,7 @@
     arcwidth: 0
     arc: spear
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: foamblade
   - type: ItemCooldown
@@ -654,7 +654,7 @@
     sprite: Objects/Fun/toys.rsi
     state: basketball
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: bask
 
@@ -671,7 +671,7 @@
     sprite: Objects/Fun/toys.rsi
     state: synb
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: synb
 
@@ -688,6 +688,6 @@
     sprite: Objects/Fun/toys.rsi
     state: corgib
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: corgib
