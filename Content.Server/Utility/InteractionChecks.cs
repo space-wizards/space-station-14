@@ -105,19 +105,15 @@ namespace Content.Server.Utility
         /// </summary>
         public static bool InRangeUnobstructed(IEntity user, MapCoordinates otherCoords,
             float range = SharedInteractionSystem.InteractionRange,
-            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null,
-            bool ignoreInsideBlocker = false, bool showPopup = true)
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool ignoreInsideBlocker = false)
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
             if (!interactionSystem.InRangeUnobstructed(user.Transform.MapPosition, otherCoords, range, collisionMask,
                 ignoredEnt, ignoreInsideBlocker))
             {
-                if (showPopup)
-                {
-                    var localizationManager = IoCManager.Resolve<ILocalizationManager>();
-                    user.PopupMessage(user, localizationManager.GetString("You can't reach there!"));
-                }
+                var localizationManager = IoCManager.Resolve<ILocalizationManager>();
+                user.PopupMessage(user, localizationManager.GetString("You can't reach there!"));
 
                 return false;
             }
