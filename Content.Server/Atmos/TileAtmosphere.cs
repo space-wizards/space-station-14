@@ -43,31 +43,27 @@ namespace Content.Server.Atmos
         private readonly TileAtmosInfo _tileAtmosInfo = new TileAtmosInfo()!;
         private Direction _pressureDirection;
 
-        public MapId MapIndex { get; }
         public GridId GridIndex { get; }
         public MapIndices GridIndices { get; }
         public Tile Tile { get; }
         public ExcitedGroup ExcitedGroup { get; set; }
         public GasMixture Air { get; set; }
 
-        public TileAtmosphere(IGridAtmosphereManager atmosphereManager, TileRef tile, float volume)
+        public TileAtmosphere(IGridAtmosphereManager atmosphereManager, GridId gridIndex, MapIndices gridIndices, float volume)
         {
             _gridAtmosphereManager = atmosphereManager;
-            MapIndex = tile.MapIndex;
-            GridIndex = tile.GridIndex;
-            GridIndices = tile.GridIndices;
-            Tile = tile.Tile;
+            GridIndex = gridIndex;
+            GridIndices = gridIndices;
 
             if(_gridAtmosphereManager.IsAirBlocked(GridIndices)) return;
 
             // TODO ATMOS Load default gases from tile here or something
-            Air = new GasMixture(volume);
+            Air = new GasMixture(volume) {Temperature = Atmospherics.T20C};
 
-            Air.Temperature = Atmospherics.T20C;
 
             if (_gridAtmosphereManager.IsSpace(GridIndices))
             {
-                Air.Temperature = 0f;
+                Air.Temperature = Atmospherics.TCMB;
                 Air.MarkImmutable();
             }
         }
@@ -152,13 +148,14 @@ namespace Content.Server.Atmos
                 }
             }
 
-            if (tiles.Length > Atmospherics.ZumosTileLimit)
+            if (tileCount > Atmospherics.ZumosTileLimit)
             {
                 for (var i = Atmospherics.ZumosTileLimit; i < tileCount; i++)
                 {
                     //We unmark them. We shouldn't be pushing/pulling gases to/from them.
                     tiles[i]._tileAtmosInfo.LastQueueCycle = 0;
                 }
+
                 Array.Resize(ref tiles, Atmospherics.ZumosTileLimit);
             }
 

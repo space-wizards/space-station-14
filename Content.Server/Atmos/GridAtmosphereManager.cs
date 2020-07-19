@@ -72,7 +72,7 @@ namespace Content.Server.Atmos
 
             foreach (var tile in _grid.GetAllTiles(false))
             {
-                _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile, GetVolumeForCells(1)));
+                _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, GetVolumeForCells(1)));
             }
 
             foreach (var (_, tile) in _tiles)
@@ -97,7 +97,7 @@ namespace Content.Server.Atmos
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(this, _grid.GetTileRef(indices), GetVolumeForCells(1));
+                    tile = new TileAtmosphere(this, _grid.Index, indices, GetVolumeForCells(1));
                     _tiles.Add(indices, tile);
                 }
 

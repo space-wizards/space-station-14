@@ -15,7 +15,7 @@ namespace Content.Server.Atmos
     {
         private readonly float[] _moles = new float[Atmospherics.TotalNumberOfGases];
         private readonly float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
-        private float _temperature;
+        private float _temperature = Atmospherics.TCMB;
         public IReadOnlyList<float> Gases => _moles;
 
         public bool Immutable { get; private set; }
@@ -80,21 +80,17 @@ namespace Content.Server.Atmos
             }
         }
 
-        public float ThermalEnergy => Temperature * HeatCapacity;
-
         public float Temperature
         {
             get => _temperature;
             set
             {
-                if (value == 0f)
-                {
-                    Logger.Info("FUCK FUCK FUCK!");
-                }
                 if (Immutable) return;
                 _temperature = value;
             }
         }
+
+        public float ThermalEnergy => Temperature * HeatCapacity;
 
         public float TemperatureArchived { get; private set; }
 

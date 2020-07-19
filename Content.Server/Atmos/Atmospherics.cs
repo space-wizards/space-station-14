@@ -55,12 +55,12 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum amount of moles for a gas to be visible.
         /// </summary>
-        public static float GasMolesVisible = 0.25f;
+        public const float GasMolesVisible = 0.25f;
 
         /// <summary>
         ///     Gas opacity will be max at this value.
         /// </summary>
-        public static float GasMolesVisibleMax = MolesCellStandard * 0.75f;
+        public const float GasMolesVisibleMax = MolesCellStandard * 0.75f;
 
         /// <summary>
         ///     Minimum number of moles a gas can have.
