@@ -1,6 +1,6 @@
-using Robust.Shared.Interfaces.GameObjects;
+﻿using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.Interfaces.GameObjects.Components
 {
     public interface ITargetedInteractEventArgs
     {
