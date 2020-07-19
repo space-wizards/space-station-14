@@ -1,13 +1,18 @@
 ﻿using System;
-using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.Maths;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
+    public interface ITemperatureComponent : IComponent
+    {
+        float CurrentTemperature { get; }
+    }
+
     /// <summary>
     /// Handles changing temperature,
     /// informing others of the current temperature,
@@ -20,8 +25,7 @@ namespace Content.Server.GameObjects
         public override string Name => "Temperature";
 
         //TODO: should be programmatic instead of how it currently is
-        [ViewVariables]
-        public float CurrentTemperature { get; private set; } = PhysicalConstants.ZERO_CELCIUS;
+        [ViewVariables] public float CurrentTemperature { get; private set; } = PhysicalConstants.ZERO_CELCIUS;
 
         float _fireDamageThreshold = 0;
         float _fireDamageCoefficient = 1;
@@ -39,7 +43,8 @@ namespace Content.Server.GameObjects
         /// <inheritdoc />
         public void OnUpdate(float frameTime)
         {
-            int fireDamage = (int)Math.Floor(Math.Max(0, CurrentTemperature - _fireDamageThreshold) / _fireDamageCoefficient);
+            int fireDamage =
+                (int) Math.Floor(Math.Max(0, CurrentTemperature - _fireDamageThreshold) / _fireDamageCoefficient);
 
             _secondsSinceLastDamageUpdate += frameTime;
 

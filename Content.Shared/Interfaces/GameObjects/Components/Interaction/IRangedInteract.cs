@@ -1,36 +1,37 @@
-using System;
+﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    /// This interface gives components behavior when being clicked on by a user with an object in their hand
-    /// who is in range and has unobstructed reach of the target entity (allows inside blockers).
+    /// This interface gives components behavior when being clicked on by a user with an object
+    /// outside the range of direct use
     /// </summary>
-    public interface IInteractUsing
+    public interface IRangedInteract
     {
         /// <summary>
-        /// Called when using one object on another when user is in range of the target entity.
+        /// Called when we try to interact with an entity out of range
         /// </summary>
-        bool InteractUsing(InteractUsingEventArgs eventArgs);
+        /// <returns></returns>
+        bool RangedInteract(RangedInteractEventArgs eventArgs);
     }
 
-    public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs
+    [PublicAPI]
+    public class RangedInteractEventArgs : EventArgs
     {
         public IEntity User { get; set; }
-        public GridCoordinates ClickLocation { get; set; }
         public IEntity Using { get; set; }
-        public IEntity Target { get; set; }
+        public GridCoordinates ClickLocation { get; set; }
     }
 
     /// <summary>
-    ///     Raised when being clicked on or "attacked" by a user with an object in their hand
+    ///     Raised when being clicked by objects outside the range of direct use.
     /// </summary>
     [PublicAPI]
-    public class InteractUsingMessage : EntitySystemMessage
+    public class RangedInteractMessage : EntitySystemMessage
     {
         /// <summary>
         ///     If this message has already been "handled" by a previous system.
@@ -45,7 +46,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         /// <summary>
         ///     Entity that the User attacked with.
         /// </summary>
-        public IEntity ItemInHand { get; }
+        public IEntity ItemInHand { get; set; }
 
         /// <summary>
         ///     Entity that was attacked.
@@ -53,16 +54,16 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public IEntity Attacked { get; }
 
         /// <summary>
-        ///     The original location that was clicked by the user.
+        ///     Location that the user clicked outside of their interaction range.
         /// </summary>
         public GridCoordinates ClickLocation { get; }
 
-        public InteractUsingMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
+        public RangedInteractMessage(IEntity user, IEntity itemInHand, IEntity attacked, GridCoordinates clickLocation)
         {
             User = user;
             ItemInHand = itemInHand;
-            Attacked = attacked;
             ClickLocation = clickLocation;
+            Attacked = attacked;
         }
     }
 }

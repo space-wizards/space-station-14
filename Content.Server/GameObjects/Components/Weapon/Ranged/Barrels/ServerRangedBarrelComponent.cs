@@ -5,9 +5,9 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
@@ -349,13 +349,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physicsComponent = projectile.GetComponent<PhysicsComponent>();
+                var physicsComponent = projectile.GetComponent<IPhysicsComponent>();
                 physicsComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
-                projectile.GetComponent<PhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
+                projectile.GetComponent<IPhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
         }

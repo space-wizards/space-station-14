@@ -1,11 +1,10 @@
 ﻿using System;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -13,7 +12,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Power
 {

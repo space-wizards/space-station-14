@@ -1,10 +1,9 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using System.Collections.Generic;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
