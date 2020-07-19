@@ -492,7 +492,7 @@ namespace Content.Server.GameObjects
                 (PulledObject!.Controller as PullController)?.StopPull();
             }
 
-            PulledObject = pullable.Owner.GetComponent<PhysicsComponent>();
+            PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
 
             if (!(PulledObject?.Controller is PullController controller))
             {
@@ -500,7 +500,7 @@ namespace Content.Server.GameObjects
                 controller = (PullController) PulledObject.Controller;
             }
 
-            controller!.StartPull(Owner.GetComponent<PhysicsComponent>());
+            controller!.StartPull(Owner.GetComponent<IPhysicsComponent>());
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)

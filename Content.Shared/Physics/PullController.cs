@@ -18,18 +18,18 @@ namespace Content.Shared.Physics
 
         private const float DistBeforeStopPull = SharedInteractionSystem.InteractionRange;
 
-        private PhysicsComponent _controlledComponent;
+        private IPhysicsComponent _controlledComponent;
 
-        private PhysicsComponent _puller;
+        private IPhysicsComponent _puller;
 
         public bool GettingPulled => _puller != null;
 
-        public override PhysicsComponent ControlledComponent
+        public override IPhysicsComponent ControlledComponent
         {
             set => _controlledComponent = value;
         }
 
-        public void StartPull(PhysicsComponent pull)
+        public void StartPull(IPhysicsComponent pull)
         {
             _puller = pull;
         }

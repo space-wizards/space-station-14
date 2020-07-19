@@ -16,7 +16,7 @@ namespace Content.Shared.GameObjects
         public sealed override uint? NetID => ContentNetIDs.HANDS;
 
         [ViewVariables]
-        protected PhysicsComponent? PulledObject;
+        protected IPhysicsComponent? PulledObject;
 
         [ViewVariables]
         protected bool IsPulling => PulledObject != null;
