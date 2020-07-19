@@ -480,11 +480,13 @@ namespace Content.Server.Atmos
                 Archive(fireCount);
 
             _currentCycle = fireCount;
+            var adjacentTileLength = 0;
             AtmosCooldown++;
             foreach (var (direction, enemyTile) in _adjacentTiles)
             {
                 // If the tile is null or has no air, we don't do anything
                 if(enemyTile?.Air == null) continue;
+                adjacentTileLength++;
                 if (fireCount <= enemyTile._currentCycle) continue;
                 enemyTile.Archive(fireCount);
 
@@ -525,6 +527,18 @@ namespace Content.Server.Atmos
 
                 if (shouldShareAir)
                 {
+                    var difference = Air.Share(enemyTile.Air, adjacentTileLength);
+
+                    // Space wind!
+                    if (difference > 0)
+                    {
+                        ConsiderPressureDifference(enemyTile, difference);
+                    }
+                    else
+                    {
+                        enemyTile.ConsiderPressureDifference(this, -difference);
+                    }
+
                     LastShareCheck();
                 }
 

@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
-using Content.Shared.Chemistry;
-using NFluidsynth;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Logger = Robust.Shared.Log.Logger;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
@@ -16,12 +9,12 @@ using MathF = CannyFastMath.MathF;
 namespace Content.Server.Atmos
 {
     /// <summary>
-    /// A general-purposes, variable volume gas mixture.
+    ///     A general-purposes, variable volume gas mixture.
     /// </summary>
     public class GasMixture
     {
-        private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
-        private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
+        private readonly float[] _moles = new float[Atmospherics.TotalNumberOfGases];
+        private readonly float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
         private float _temperature;
         public IReadOnlyList<float> Gases => _moles;
 
