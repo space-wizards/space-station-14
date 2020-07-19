@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
-                    if (entity.HasComponent<CollidableComponent>() || entity.HasComponent<ServerTeleporterComponent>())
+                    if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<ServerTeleporterComponent>())
                     {
                         return;
                     }
@@ -159,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Movement
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
             {
-                if (entity.HasComponent<CollidableComponent>() || entity.HasComponent<ServerPortalComponent>())
+                if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<ServerPortalComponent>())
                 {
                     return false;
                 }

@@ -187,7 +187,7 @@ namespace Content.Server.GameObjects
 
             StandingStateHelper.Down(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out ICollidableComponent collidable))
             {
                 collidable.CanCollide = false;
             }
@@ -197,7 +197,7 @@ namespace Content.Server.GameObjects
         {
             StandingStateHelper.Standing(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out ICollidableComponent collidable))
             {
                 collidable.CanCollide = true;
             }

@@ -347,13 +347,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physicsComponent = projectile.GetComponent<PhysicsComponent>();
+                var physicsComponent = projectile.GetComponent<IPhysicsComponent>();
                 physicsComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
-                projectile.GetComponent<PhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
+                projectile.GetComponent<IPhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
         }

@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out PhysicsComponent physics)
+            if (!Owner.TryGetComponent(out IPhysicsComponent physics)
                 || !eventArgs.Using.TryGetComponent(out ToolComponent tool))
                 return false;
 
