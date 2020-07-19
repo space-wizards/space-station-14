@@ -1,13 +1,9 @@
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Weapon;
-using Content.Server.GameObjects.EntitySystems;
+﻿using Content.Server.GameObjects.Components.Weapon;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Explosion

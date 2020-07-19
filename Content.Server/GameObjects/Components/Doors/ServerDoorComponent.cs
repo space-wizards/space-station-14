@@ -2,11 +2,9 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -38,7 +36,7 @@ namespace Content.Server.GameObjects
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
         
-        private CollidableComponent collidableComponent;
+        private ICollidableComponent _collidableComponent;
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -66,7 +64,7 @@ namespace Content.Server.GameObjects
         {
             base.Initialize();
 
-            collidableComponent = Owner.GetComponent<CollidableComponent>();
+            _collidableComponent = Owner.GetComponent<ICollidableComponent>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _cancellationTokenSource = new CancellationTokenSource();
         }
@@ -74,7 +72,7 @@ namespace Content.Server.GameObjects
         public override void OnRemove()
         {
             _cancellationTokenSource.Cancel();
-            collidableComponent = null;
+            _collidableComponent = null;
             _appearance = null;
 
             base.OnRemove();
@@ -166,7 +164,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
-                collidableComponent.Hard = false;
+                _collidableComponent.Hard = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
 
@@ -205,7 +203,7 @@ namespace Content.Server.GameObjects
         private void CheckCrush()
         {
             // Check if collides with something
-            var collidesWith = collidableComponent.GetCollidingEntities(Vector2.Zero, false);
+            var collidesWith = _collidableComponent.GetCollidingEntities(Vector2.Zero, false);
             if (collidesWith.Count() != 0)
             {
                 // Crush
@@ -238,7 +236,7 @@ namespace Content.Server.GameObjects
         public bool Close()
         {
             bool shouldCheckCrush = false;
-            if (collidableComponent.IsColliding(Vector2.Zero, false))
+            if (_collidableComponent.IsColliding(Vector2.Zero, false))
             {
                 if (Safety)
                     return false;
@@ -262,7 +260,7 @@ namespace Content.Server.GameObjects
                     CheckCrush();
                 }
 
-                collidableComponent.Hard = true;
+                _collidableComponent.Hard = true;
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
 

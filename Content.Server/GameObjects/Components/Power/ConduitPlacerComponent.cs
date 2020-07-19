@@ -1,7 +1,6 @@
-﻿using Content.Server.GameObjects.Components.NodeContainer;
+﻿﻿using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -11,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Power
 {

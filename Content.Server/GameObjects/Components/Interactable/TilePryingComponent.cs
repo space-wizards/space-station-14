@@ -1,14 +1,12 @@
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Interactable

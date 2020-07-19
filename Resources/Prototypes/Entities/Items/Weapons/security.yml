@@ -42,7 +42,6 @@
       cooldownTime: 1
       arc: smash
       hitSound: /Audio/Weapons/flash.ogg
-      slowTo: 0.7
 
     - type: Item
       Size: 2

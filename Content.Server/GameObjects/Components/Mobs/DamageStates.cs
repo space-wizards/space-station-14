@@ -1,15 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
-using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects
 {
@@ -194,7 +187,7 @@ namespace Content.Server.GameObjects
 
             StandingStateHelper.Down(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out ICollidableComponent collidable))
             {
                 collidable.CanCollide = false;
             }
@@ -204,7 +197,7 @@ namespace Content.Server.GameObjects
         {
             StandingStateHelper.Standing(entity);
 
-            if (entity.TryGetComponent(out CollidableComponent collidable))
+            if (entity.TryGetComponent(out ICollidableComponent collidable))
             {
                 collidable.CanCollide = true;
             }

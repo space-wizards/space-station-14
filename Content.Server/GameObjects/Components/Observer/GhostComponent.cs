@@ -1,7 +1,5 @@
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Players;
+﻿using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Observer;
-using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
@@ -10,8 +8,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
-using Timer = Robust.Shared.Timers.Timer;
-
 
 namespace Content.Server.GameObjects.Components.Observer
 {
