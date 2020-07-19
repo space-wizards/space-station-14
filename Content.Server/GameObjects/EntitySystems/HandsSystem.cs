@@ -130,7 +130,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             var newCoords = new GridCoordinates((entToDesiredDropCoords.Normalized * targetLength) + entCoords, coords.GridID);
             var rayLength = Get<SharedInteractionSystem>().UnobstructedRayLength(ent.Transform.MapPosition, newCoords.ToMap(_mapManager), ignoredEnt: ent);
 
-            handsComp.Drop(handsComp.ActiveIndex, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
+            handsComp.Drop(handsComp.ActiveHand, new GridCoordinates(entCoords + (entToDesiredDropCoords.Normalized * rayLength), coords.GridID));
 
             return true;
         }
@@ -153,10 +153,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             if (!plyEnt.TryGetComponent(out HandsComponent handsComp))
                 return false;
 
-            if (!handsComp.CanDrop(handsComp.ActiveIndex))
+            if (!handsComp.CanDrop(handsComp.ActiveHand))
                 return false;
 
-            var throwEnt = handsComp.GetItem(handsComp.ActiveIndex).Owner;
+            var throwEnt = handsComp.GetItem(handsComp.ActiveHand).Owner;
 
             if (!handsComp.ThrowItem())
                 return false;
@@ -164,7 +164,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             // throw the item, split off from a stack if it's meant to be thrown individually
             if (!throwEnt.TryGetComponent(out StackComponent stackComp) || stackComp.Count < 2 || !stackComp.ThrowIndividually)
             {
-                handsComp.Drop(handsComp.ActiveIndex);
+                handsComp.Drop(handsComp.ActiveHand);
             }
             else
             {
@@ -208,7 +208,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 return;
             }
 
-            var heldItem = handsComp.GetItem(handsComp.ActiveIndex)?.Owner;
+            var heldItem = handsComp.GetItem(handsComp.ActiveHand)?.Owner;
 
             if (heldItem != null)
             {

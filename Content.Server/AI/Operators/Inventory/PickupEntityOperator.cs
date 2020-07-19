@@ -43,9 +43,9 @@ namespace Content.Server.AI.Operators.Inventory
             {
                 if (handsComponent.GetItem(hand) == null)
                 {
-                    if (handsComponent.ActiveIndex != hand)
+                    if (handsComponent.ActiveHand != hand)
                     {
-                        handsComponent.ActiveIndex = hand;
+                        handsComponent.ActiveHand = hand;
                     }
 
                     emptyHands = true;

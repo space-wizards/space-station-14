@@ -14,7 +14,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
-        string ActiveIndex { get; set; }
+        string ActiveHand { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.
@@ -24,9 +24,9 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Gets the item held by a hand.
         /// </summary>
-        /// <param name="index">The name of the hand to get.</param>
+        /// <param name="handName">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        ItemComponent GetItem(string index);
+        ItemComponent GetItem(string handName);
 
         /// <summary>
         /// Gets item held by the current active hand
@@ -137,7 +137,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="slot">The slot of which to drop the entity.</param>
         /// <param name="targetContainer">The container to drop into.</param>
-        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
+        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop(IEntity)"/> for the mob or not.</param>
         /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
         /// <exception cref="InvalidOperationException">
         ///     Thrown if dry-run checks reported OK to remove and insert,
@@ -169,11 +169,11 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Checks whether the item in the specified hand can be dropped.
         /// </summary>
-        /// <param name="index">The hand to check for.</param>
+        /// <param name="name">The hand to check for.</param>
         /// <returns>
         ///     True if the item can be dropped, false if the hand is empty or the item in the hand cannot be dropped.
         /// </returns>
-        bool CanDrop(string index);
+        bool CanDrop(string name);
 
         /// <summary>
         ///     Adds a new hand to this hands component.
@@ -190,15 +190,15 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <remarks>
         ///     If the hand contains an item, the item is dropped.
         /// </remarks>
-        /// <param name="index">The name of the hand to remove.</param>
-        void RemoveHand(string index);
+        /// <param name="name">The name of the hand to remove.</param>
+        void RemoveHand(string name);
 
         /// <summary>
         ///     Checks whether a hand with the specified name exists.
         /// </summary>
-        /// <param name="index">The hand name to check.</param>
+        /// <param name="name">The hand name to check.</param>
         /// <returns>True if the hand exists, false otherwise.</returns>
-        bool HasHand(string index);
+        bool HasHand(string name);
 
         void HandleSlotModifiedMaybe(ContainerModifiedMessage message);
     }

@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, hands.ActiveIndex, false);
+            hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
 
