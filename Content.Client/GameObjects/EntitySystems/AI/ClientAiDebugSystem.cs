@@ -17,8 +17,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
     {
 #pragma warning disable 649
         [Dependency] private IEyeManager _eyeManager;
-#pragma restore disable 649
-        
+#pragma warning restore 649
+
         private AiDebugMode _tooltips = AiDebugMode.None;
         private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity,PanelContainer>();
 
@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                     {
                         panel.Dispose();
                     }
-                    
+
                     _aiBoxes.Clear();
                 }
                 return;
