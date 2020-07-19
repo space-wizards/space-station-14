@@ -46,7 +46,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -85,7 +85,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -126,7 +126,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -167,7 +167,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -209,7 +209,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/sts.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/sts.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -251,7 +251,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -290,7 +290,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
   - type: RangedWeapon
   - type: MagazineBarrel

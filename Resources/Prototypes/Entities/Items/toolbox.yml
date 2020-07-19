@@ -4,9 +4,9 @@
   abstract: true
   components:
   - type: Storage
-    Capacity: 60
+    capacity: 60
   - type: Item
-    Size: 9999
+    size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
     hitSound: "/Audio/Weapons/smash.ogg"

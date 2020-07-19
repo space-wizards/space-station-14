@@ -16,6 +16,6 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: Item
-    Size: 10
+    size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
     prefix: inhand

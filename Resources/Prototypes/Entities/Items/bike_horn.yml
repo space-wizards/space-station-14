@@ -13,7 +13,7 @@
     state: icon
 
   - type: Item
-    Size: 5
+    size: 5
     sprite: Objects/Fun/bikehorn.rsi
   - type: ItemCooldown
 

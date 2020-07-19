@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -68,9 +68,9 @@ namespace Content.Shared.Research
             serializer.DataField(ref _id, "id", string.Empty);
             serializer.DataField(ref _description, "description", string.Empty);
             serializer.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            serializer.DataField(ref _requiredPoints, "requiredpoints", 0);
-            serializer.DataField(ref _requiredTechnologies, "requiredtechnologies", new List<string>());
-            serializer.DataField(ref _unlockedRecipes, "unlockedrecipes", new List<string>());
+            serializer.DataField(ref _requiredPoints, "requiredPoints", 0);
+            serializer.DataField(ref _requiredTechnologies, "requiredTechnologies", new List<string>());
+            serializer.DataField(ref _unlockedRecipes, "unlockedRecipes", new List<string>());
         }
     }
 }

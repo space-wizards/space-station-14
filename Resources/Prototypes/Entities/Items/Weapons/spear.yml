@@ -17,7 +17,7 @@
     arc: spear
 
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
     prefix: inhand
 

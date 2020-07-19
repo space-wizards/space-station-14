@@ -1,11 +1,11 @@
-- type: construction
+﻿- type: construction
   name: wall light
   id: WallLight
   keywords: [fixture, lamp]
   category: Machines
   description: A simple wall-mounted light fixture.
-  placementmode: SnapgridBorder
-  canbuildinimpassable: true
+  placementMode: SnapgridBorder
+  canBuildInImpassable: true
   icon:
     sprite: Constructible/Lighting/lighting.rsi
     state: on
