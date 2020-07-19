@@ -298,8 +298,8 @@ namespace Content.Server.GameTicking
     class AddHandCommand : IClientCommand
     {
         public string Command => "addhand";
-        public string Description => "Forces a specific game preset to start for the current lobby.";
-        public string Help => $"Usage: {Command} <preset>";
+        public string Description => "Adds a hand to your entity.";
+        public string Help => $"Usage: {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -312,8 +312,8 @@ namespace Content.Server.GameTicking
     class RemoveHandCommand : IClientCommand
     {
         public string Command => "removehand";
-        public string Description => "Forces a specific game preset to start for the current lobby.";
-        public string Help => $"Usage: {Command} <preset>";
+        public string Description => "Removes a hand from your entity.";
+        public string Help => $"Usage: {Command}";
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
