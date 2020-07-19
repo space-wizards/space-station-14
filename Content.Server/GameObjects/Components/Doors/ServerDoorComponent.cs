@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
@@ -31,16 +33,24 @@ namespace Content.Server.GameObjects
             set => _state = value;
         }
 
-        private float OpenTimeCounter;
-
+        protected float OpenTimeCounter;
+        protected bool AutoClose = true;
+        protected const float AutoCloseDelay = 5;
+        protected float CloseSpeed = AutoCloseDelay;
+        
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
 
-        private static readonly TimeSpan CloseTime = TimeSpan.FromSeconds(1.2f);
+        private static readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.3f);
+        private static readonly TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.9f);
         private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
         private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
         private static readonly TimeSpan DenyTime = TimeSpan.FromSeconds(0.45f);
+
+        private const int DoorCrushDamage = 15;
+        private const float DoorStunTime = 5f;
+        protected bool Safety = true;
 
         [ViewVariables]
         private bool _occludes;
@@ -192,27 +202,72 @@ namespace Content.Server.GameObjects
             Close();
         }
 
+        private void CheckCrush()
+        {
+            // Check if collides with something
+            var collidesWith = collidableComponent.GetCollidingEntities(Vector2.Zero, false);
+            if (collidesWith.Count() != 0)
+            {
+                // Crush
+                bool hitSomeone = false;
+                foreach (var e in collidesWith)
+                {
+                    if (!e.TryGetComponent(out StunnableComponent stun)
+                        || !e.TryGetComponent(out DamageableComponent damage)
+                        || !e.TryGetComponent(out ICollidableComponent otherBody)
+                        || !Owner.TryGetComponent(out ICollidableComponent body))
+                        continue;
+
+                    var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
+
+                    if (percentage < 0.1f)
+                        continue;
+
+                    damage.TakeDamage(Shared.GameObjects.DamageType.Brute, DoorCrushDamage);
+                    stun.Paralyze(DoorStunTime);
+                    hitSomeone = true;
+                }
+                // If we hit someone, open up after stun (opens right when stun ends)
+                if (hitSomeone)
+                {
+                    Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, () => Open());
+                }
+            }
+        }
+
         public bool Close()
         {
+            bool shouldCheckCrush = false;
             if (collidableComponent.IsColliding(Vector2.Zero, false))
             {
-                // Do nothing, somebody's in the door.
-                return false;
+                if (Safety)
+                    return false;
+
+                // check if we crush someone while closing
+                shouldCheckCrush = true;
             }
 
             State = DoorState.Closing;
-            collidableComponent.Hard = true;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
-
-            Timer.Spawn(CloseTime, () =>
+            if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
             {
+                occluder.Enabled = true;
+            }
+
+            Timer.Spawn(CloseTimeOne, async () =>
+            {
+                if (shouldCheckCrush)
+                {
+                    CheckCrush();
+                }
+
+                collidableComponent.Hard = true;
+
+                await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);
+
                 State = DoorState.Closed;
                 SetAppearance(DoorVisualState.Closed);
-                if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
-                {
-                    occluder.Enabled = true;
-                }
             }, _cancellationTokenSource.Token);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new AccessReaderChangeMessage(Owner.Uid, true));
             return true;
@@ -232,7 +287,6 @@ namespace Content.Server.GameObjects
             }, _cancellationTokenSource.Token);
         }
 
-        private const float AUTO_CLOSE_DELAY = 5;
         public virtual void OnUpdate(float frameTime)
         {
             if (State != DoorState.Open)
@@ -240,8 +294,12 @@ namespace Content.Server.GameObjects
                 return;
             }
 
-            OpenTimeCounter += frameTime;
-            if (OpenTimeCounter > AUTO_CLOSE_DELAY)
+            if (AutoClose)
+            {
+                OpenTimeCounter += frameTime;
+            }
+            
+            if (OpenTimeCounter > CloseSpeed)
             {
                 if (!CanClose() || !Close())
                 {

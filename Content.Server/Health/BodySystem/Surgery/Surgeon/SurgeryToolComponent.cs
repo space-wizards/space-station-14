@@ -12,6 +12,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
@@ -81,7 +82,7 @@ namespace Content.Server.BodySystem
                 }
                 else //If surgery cannot be performed, show message saying so.
                 {
-                    _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, "You see no useful way to use the " + Owner.Name + ".");
+                    SendNoUsefulWayToUsePopup();
                 }
             }
             else if (eventArgs.Target.TryGetComponent<DroppedBodyPartComponent>(out DroppedBodyPartComponent droppedBodyPart)) //Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
@@ -102,7 +103,7 @@ namespace Content.Server.BodySystem
                 }
                 else //If surgery cannot be performed, show message saying so.
                 {
-                    _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,"You see no useful way to use the " + Owner.Name + ".");
+                    SendNoUsefulWayToUsePopup();
                 }
             }
         }
@@ -180,12 +181,12 @@ namespace Content.Server.BodySystem
             //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
+                SendNoUsefulWayToUseAnymorePopup();
             }
             BodyPart target = targetObject as BodyPart;
             if (!target.AttemptSurgery(_surgeryType, _bodyManagerComponentCache, this, _performerCache))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
+                SendNoUsefulWayToUseAnymorePopup();
             }
 
         }
@@ -197,14 +198,22 @@ namespace Content.Server.BodySystem
             //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, "You see no useful way to use the " + Owner.Name + " anymore.");
+                SendNoUsefulWayToUseAnymorePopup();
             }
             Mechanism target = targetObject as Mechanism;
             CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
             _callbackCache(target, _bodyManagerComponentCache, this, _performerCache);
         }
 
+        private void SendNoUsefulWayToUsePopup()
+        {
+            _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to use {0:theName}.", Owner));
+        }
 
+        private void SendNoUsefulWayToUseAnymorePopup()
+        {
+            _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
+        }
 
         public override void ExposeData(ObjectSerializer serializer)
         {

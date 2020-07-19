@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]
-    [ComponentReference(typeof(StoreableComponent))]
+    [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
     public class ClothingComponent : ItemComponent, IUse
     {

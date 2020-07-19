@@ -10,6 +10,8 @@ namespace Content.Client.Sandbox
         public Button SpawnEntitiesButton { get; }
         public Button SpawnTilesButton { get; }
 
+        public Button GiveFullAccessButton { get; } //A button that just puts a captain's ID in your hands.
+
         public SandboxWindow(ILocalizationManager loc)
         {
             Title = loc.GetString("Sandbox Panel");
@@ -29,13 +31,19 @@ namespace Content.Client.Sandbox
                 Text = loc.GetString("Spawn Tiles")
             };
 
+            GiveFullAccessButton = new Button
+            {
+                Text = loc.GetString("Give Full Access ID")
+            };
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =
                 {
                     RespawnButton,
                     SpawnEntitiesButton,
-                    SpawnTilesButton
+                    SpawnTilesButton,
+                    GiveFullAccessButton
                 }
             });
         }

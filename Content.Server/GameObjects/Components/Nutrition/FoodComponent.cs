@@ -92,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        public bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
+        public virtual bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
         {
             if (user == null)
             {
@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             if (UsesRemaining <= 0)
             {
-                user.PopupMessage(user, Loc.GetString($"The {Owner.Name} is empty!"));
+                user.PopupMessage(user, Loc.GetString("{0:TheName} is empty!", Owner));
                 return false;
             }
 
