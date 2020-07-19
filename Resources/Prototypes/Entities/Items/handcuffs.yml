@@ -4,6 +4,7 @@
   id: Handcuffs
   parent: BaseItem
   components:
+  - type: Handcuff
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
@@ -22,6 +23,7 @@
   id: Cablecuffs
   parent: Handcuffs
   components:
+  - type: Handcuff
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
