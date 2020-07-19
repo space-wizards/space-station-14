@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
@@ -358,7 +358,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent) &&
+            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) &&
                 (collidableComponent.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;

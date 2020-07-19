@@ -4,12 +4,12 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -271,11 +271,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var physics = pull.Owner.GetComponent<PhysicsComponent>();
+            var physics = pull.Owner.GetComponent<IPhysicsComponent>();
 
             physics.SetController<PullController>();
 
-            if (!((PullController)physics.Controller).GettingPulled)
+            if (!((PullController)physics.Controller)!.GettingPulled)
             {
                 hands.StartPulling(pull);
             }

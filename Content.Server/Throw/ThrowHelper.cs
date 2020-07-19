@@ -41,7 +41,7 @@ namespace Content.Server.Throw
         /// </param>
         public static void Throw(IEntity thrownEnt, float throwForce, GridCoordinates targetLoc, GridCoordinates sourceLoc, bool spread = false, IEntity throwSourceEnt = null)
         {
-            if (!thrownEnt.TryGetComponent(out CollidableComponent colComp))
+            if (!thrownEnt.TryGetComponent(out ICollidableComponent colComp))
                 return;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
@@ -75,7 +75,7 @@ namespace Content.Server.Throw
                 throwSourceEnt.Transform.LocalRotation = angle.GetCardinalDir().ToAngle();
             }
 
-            if (!thrownEnt.TryGetComponent(out PhysicsComponent physComp))
+            if (!thrownEnt.TryGetComponent(out IPhysicsComponent physComp))
                 physComp = thrownEnt.AddComponent<PhysicsComponent>();
 
             var timing = IoCManager.Resolve<IGameTiming>();
@@ -85,7 +85,7 @@ namespace Content.Server.Throw
 
             projComp.StartThrow(angle.ToVec() * spd);
 
-            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<PhysicsComponent>(out var physics)
+            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics)
                                        && physics.Controller is MoverController mover)
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
@@ -136,7 +136,7 @@ namespace Content.Server.Throw
             var distance = (targetLoc.ToMapPos(mapManager) - sourceLoc.ToMapPos(mapManager)).Length;
             var throwDuration = ThrownItemComponent.DefaultThrowTime;
             var mass = 1f;
-            if (thrownEnt.TryGetComponent(out PhysicsComponent physicsComponent))
+            if (thrownEnt.TryGetComponent(out IPhysicsComponent physicsComponent))
             {
                 mass = physicsComponent.Mass;
             }

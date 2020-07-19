@@ -1,21 +1,21 @@
-using System;
+﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when they're held on a deselected hand.
+    ///     This interface gives components behavior when they're held on the selected hand.
     /// </summary>
-    public interface IHandDeselected
+    public interface IHandSelected
     {
-        void HandDeselected(HandDeselectedEventArgs eventArgs);
+        void HandSelected(HandSelectedEventArgs eventArgs);
     }
 
-    public class HandDeselectedEventArgs : EventArgs
+    public class HandSelectedEventArgs : EventArgs
     {
-        public HandDeselectedEventArgs(IEntity user)
+        public HandSelectedEventArgs(IEntity user)
         {
             User = user;
         }
@@ -24,10 +24,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
     }
 
     /// <summary>
-    ///     Raised when an entity item in a hand is deselected.
+    ///     Raised when an entity item in a hand is selected.
     /// </summary>
     [PublicAPI]
-    public class HandDeselectedMessage : EntitySystemMessage
+    public class HandSelectedMessage : EntitySystemMessage
     {
         /// <summary>
         ///     If this message has already been "handled" by a previous system.
@@ -35,7 +35,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public bool Handled { get; set; }
 
         /// <summary>
-        ///     Entity that owns the deselected hand.
+        ///     Entity that owns the selected hand.
         /// </summary>
         public IEntity User { get; }
 
@@ -44,7 +44,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         /// </summary>
         public IEntity Item { get; }
 
-        public HandDeselectedMessage(IEntity user, IEntity item)
+        public HandSelectedMessage(IEntity user, IEntity item)
         {
             User = user;
             Item = item;

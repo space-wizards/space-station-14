@@ -1,9 +1,5 @@
-using System;
+﻿using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Mobs;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
@@ -16,6 +12,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 

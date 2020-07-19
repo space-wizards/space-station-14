@@ -67,6 +67,7 @@ namespace Content.Client
             factory.Register<SharedWiresComponent>();
             factory.Register<SharedCargoConsoleComponent>();
             factory.Register<SharedReagentDispenserComponent>();
+            factory.Register<SharedChemMasterComponent>();
             factory.Register<SharedMicrowaveComponent>();
             factory.Register<SharedGravityGeneratorComponent>();
 
