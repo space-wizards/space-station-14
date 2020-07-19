@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Content.Shared.GameObjects;
+using NFluidsynth;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -85,9 +87,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
             if (!_entityManager.TryGetEntity(req.EntityUid, out var entity))
             {
-                var emptyResponse = new VerbsResponseMessage(new VerbsResponseMessage.NetVerbData[] {}, req.EntityUid);
-                RaiseNetworkEvent(emptyResponse, player.ConnectedClient);
-
+                Logger.Warning($"{nameof(RequestVerbs)} called on a client-side entity with id {req.EntityUid} by player {player}.");
                 return;
             }
 
