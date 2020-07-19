@@ -85,6 +85,7 @@
   - hostlogin
   - deleteewc
   - asay
+  - mapping
   - addhand
   - removehand
   CanViewVar: true
@@ -158,9 +159,10 @@
   - warp
   - deleteewc
   - sudo
+  - asay
+  - mapping
   - addhand
   - removehand
-  - asay
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
