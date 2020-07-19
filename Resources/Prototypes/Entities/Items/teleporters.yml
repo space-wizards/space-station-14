@@ -14,7 +14,7 @@
   - type: ItemTeleporter
     teleporter_type: Random
   - type: Item
-    Size: 12
+    size: 12
     sprite: Objects/Misc/hand_tele.rsi
   - type: LoopingSound
   - type: Appearance

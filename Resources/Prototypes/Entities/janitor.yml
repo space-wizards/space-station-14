@@ -13,7 +13,7 @@
     state: mop
 
   - type: Item
-    Size: 10
+    size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
 
   - type: Mop

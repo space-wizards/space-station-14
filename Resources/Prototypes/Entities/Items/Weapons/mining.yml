@@ -15,7 +15,7 @@
   - type: MeleeWeapon
     damage: 25
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     prefix: inhand
   - type: LoopingSound

@@ -11,7 +11,7 @@
   - type: Icon
     state: icon
   - type: Item
-    Size: 24
+    size: 24
   - type: PumpBarrel
     currentSelector: Single
     allSelectors:

@@ -19,11 +19,11 @@
     sprite: Clothing/Belt/belt_utility.rsi
     state: utilitybelt
   - type: Clothing
-    Size: 50
+    size: 50
     QuickEquip: false
     sprite: Clothing/Belt/belt_utility.rsi
   - type: Storage
-    Capacity: 40 # Full tool loadout is 35, plus an extra
+    capacity: 40 # Full tool loadout is 35, plus an extra
 
 - type: entity
   id: UtilityBeltClothingFilled
@@ -45,6 +45,6 @@
     sprite: Clothing/Belt/suspenders.rsi
     state: icon
   - type: Clothing
-    Size: 50
+    size: 50
     QuickEquip: false
     sprite: Clothing/Belt/suspenders.rsi

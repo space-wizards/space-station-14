@@ -13,7 +13,7 @@
   - type: Icon
     sprite: Objects/Misc/bedsheets.rsi
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - back
@@ -30,7 +30,7 @@
   - type: Icon
     state: sheetblack
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -47,7 +47,7 @@
   - type: Icon
     state: sheetblue
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -64,7 +64,7 @@
   - type: Icon
     state: sheetbrown
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -81,7 +81,7 @@
   - type: Icon
     state: sheetcaptain
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -98,7 +98,7 @@
   - type: Icon
     state: sheetce
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -115,7 +115,7 @@
   - type: Icon
     state: sheetcentcom
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -132,7 +132,7 @@
   - type: Icon
     state: sheetclown
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -149,7 +149,7 @@
   - type: Icon
     state: sheetcmo
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -166,7 +166,7 @@
   - type: Icon
     state: sheetcosmos
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -183,7 +183,7 @@
   - type: Icon
     state: sheetcult
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -200,7 +200,7 @@
   - type: Icon
     state: sheetgreen
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -217,7 +217,7 @@
   - type: Icon
     state: sheetgrey
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -234,7 +234,7 @@
   - type: Icon
     state: sheethop
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -251,7 +251,7 @@
   - type: Icon
     state: sheethos
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -268,7 +268,7 @@
   - type: Icon
     state: sheetian
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -285,7 +285,7 @@
   - type: Icon
     state: sheetmedical
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -302,7 +302,7 @@
   - type: Icon
     state: sheetmime
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -319,7 +319,7 @@
   - type: Icon
     state: sheetNT
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -336,7 +336,7 @@
   - type: Icon
     state: sheetorange
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -353,7 +353,7 @@
   - type: Icon
     state: sheetpurple
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -370,7 +370,7 @@
   - type: Icon
     state: sheetqm
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -387,7 +387,7 @@
   - type: Icon
     state: sheetrainbow
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -404,7 +404,7 @@
   - type: Icon
     state: sheetrd
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -421,7 +421,7 @@
   - type: Icon
     state: sheetred
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -438,7 +438,7 @@
   - type: Icon
     state: sheetsyndie
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -455,7 +455,7 @@
   - type: Icon
     state: sheetUSA
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -472,7 +472,7 @@
   - type: Icon
     state: sheetwhite
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -489,7 +489,7 @@
   - type: Icon
     state: sheetwiz
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
@@ -506,7 +506,7 @@
   - type: Icon
     state: sheetyellow
   - type: Clothing
-    Size: 10
+    size: 10
     QuickEquip: true
     Slots:
     - neck
