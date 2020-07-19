@@ -40,7 +40,7 @@ namespace Content.Server.Atmos
 
         private readonly Dictionary<Direction, TileAtmosphere> _adjacentTiles = new Dictionary<Direction, TileAtmosphere>();
 
-        private readonly TileAtmosInfo _tileAtmosInfo = new TileAtmosInfo();
+        private readonly TileAtmosInfo _tileAtmosInfo = new TileAtmosInfo()!;
         private Direction _pressureDirection;
 
         public MapId MapIndex { get; }
@@ -93,7 +93,7 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
-            if (Air == null || (_tileAtmosInfo != null && _tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
+            if (Air == null || (_tileAtmosInfo?.LastCycle >= cycleNum)) return; // Already done.
 
             _tileAtmosInfo.Reset();
 
@@ -118,7 +118,8 @@ namespace Content.Server.Atmos
 
             var queueCycle = ++_eqQueueCycleCtr;
             var totalMoles = 0f;
-            var tiles = new List<TileAtmosphere>(Atmospherics.ZumosHardTileLimit) {this};
+            var tiles = new TileAtmosphere[Atmospherics.ZumosHardTileLimit];
+            tiles[0] = this;
             _tileAtmosInfo.LastQueueCycle = queueCycle;
             var tileCount = 1;
             for (var i = 0; i < tileCount; i++)
@@ -140,8 +141,8 @@ namespace Content.Server.Atmos
                     adj._tileAtmosInfo.Reset();
 
                     adj._tileAtmosInfo.LastQueueCycle = queueCycle;
-                    tiles.Add(adj);
-                    tileCount++;
+                    if(tileCount < Atmospherics.ZumosHardTileLimit)
+                        tiles[tileCount++] = adj;
                     if (adj.Air.Immutable)
                     {
                         // Looks like someone opened an airlock to space!
@@ -151,24 +152,23 @@ namespace Content.Server.Atmos
                 }
             }
 
-            if (tiles.Count > Atmospherics.ZumosTileLimit)
+            if (tiles.Length > Atmospherics.ZumosTileLimit)
             {
-                var count = 0;
-                for (var i = Atmospherics.ZumosTileLimit; i < tiles.Count; i++)
+                for (var i = Atmospherics.ZumosTileLimit; i < tileCount; i++)
                 {
                     //We unmark them. We shouldn't be pushing/pulling gases to/from them.
                     tiles[i]._tileAtmosInfo.LastQueueCycle = 0;
-                    count++;
                 }
-                tiles.RemoveRange(Atmospherics.ZumosTileLimit, count);
+                Array.Resize(ref tiles, Atmospherics.ZumosTileLimit);
             }
 
-            var averageMoles = totalMoles / (tiles.Count);
+            var averageMoles = totalMoles / (tiles.Length);
             var giverTiles = new List<TileAtmosphere>();
             var takerTiles = new List<TileAtmosphere>();
 
-            foreach (var tile in tiles)
+            for (var i = 0; i < tiles.Length; i++)
             {
+                var tile = tiles[i];
                 tile._tileAtmosInfo.LastCycle = cycleNum;
                 tile._tileAtmosInfo.MoleDelta -= averageMoles;
                 if (tile._tileAtmosInfo.MoleDelta > 0)
@@ -181,13 +181,13 @@ namespace Content.Server.Atmos
                 }
             }
 
-            var logN = MathF.Log2(tiles.Count);
+            var logN = MathF.Log2(tiles.Length);
 
             // Optimization - try to spread gases using an O(nlogn) algorithm that has a chance of not working first to avoid O(n^2)
             if (giverTiles.Count > logN && takerTiles.Count > logN)
             {
                 // Even if it fails, it will speed up the next part.
-                tiles.Sort((a, b) =>
+                Array.Sort(tiles, (a, b) =>
                 {
                     var aMoleDelta = a._tileAtmosInfo.MoleDelta;
                     var bMoleDelta = b._tileAtmosInfo.MoleDelta;
@@ -263,7 +263,7 @@ namespace Content.Server.Atmos
                         queue.Add(giver);
                         giver._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
                         var queueCount = queue.Count;
-                        for (int i = 0; i < queueCount; i++)
+                        for (var i = 0; i < queueCount; i++)
                         {
                             if (giver._tileAtmosInfo.MoleDelta <= 0)
                                 break; // We're done here now. Let's not do more work than needed.
