@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Jobs;
@@ -9,7 +8,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Log;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
 {
