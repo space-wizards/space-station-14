@@ -1,4 +1,4 @@
-- type: construction
+﻿- type: construction
   name: crude spear
   id: spear
   category: Items/Weapons
@@ -6,7 +6,7 @@
   description: A crude spear for when you need to put holes in somebody.
   icon: Objects/Weapons/Melee/spear.rsi/spear.png
   result: Spear
-  objecttype: Item
+  objectType: Item
   steps:
   - material: Metal
     amount: 1

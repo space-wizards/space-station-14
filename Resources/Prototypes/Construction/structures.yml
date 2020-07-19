@@ -1,4 +1,4 @@
-- type: construction
+﻿- type: construction
   name: wall
   id: wall
   category: Structures
@@ -6,9 +6,9 @@
   icon:
     sprite: Constructible/Structures/Walls/solid.rsi
     state: full
-  objecttype: Structure
+  objectType: Structure
   result: solid_wall
-  placementmode: SnapgridCenter
+  placementMode: SnapgridCenter
   steps:
   - material: Metal
     amount: 2
@@ -29,7 +29,7 @@
     sprite: Constructible/Structures/Tables/generic.rsi
     state: plain_preview
   result: Table
-  placementmode: SnapgridCenter
+  placementMode: SnapgridCenter
   steps:
   - material: Metal
     amount: 2
@@ -42,9 +42,9 @@
   icon:
     sprite: Constructible/Structures/Windows/window.rsi
     state: full
-  objecttype: Structure
+  objectType: Structure
   result: Window
-  placementmode: SnapgridCenter
+  placementMode: SnapgridCenter
   steps:
   - material: Glass
     amount: 2
@@ -59,9 +59,9 @@
   icon:
     sprite: Constructible/Structures/Walls/low_wall.rsi
     state: metal
-  objecttype: Structure
+  objectType: Structure
   result: LowWall
-  placementmode: SnapgridCenter
+  placementMode: SnapgridCenter
   steps:
   - material: Metal
     amount: 2
@@ -82,9 +82,9 @@
   icon:
     sprite: Constructible/Structures/Windows/reinforced_window.rsi
     state: full
-  objecttype: Structure
+  objectType: Structure
   result: ReinforcedWindow
-  placementmode: SnapgridCenter
+  placementMode: SnapgridCenter
   steps:
   - material: Glass
     amount: 2
