@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
@@ -38,7 +37,6 @@ namespace Content.Server.GameObjects.EntitySystems
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
