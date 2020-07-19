@@ -1,9 +1,8 @@
-using System;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using System;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
     /// This interface allows the component's entity to be dragged and dropped by mouse onto another entity and gives it

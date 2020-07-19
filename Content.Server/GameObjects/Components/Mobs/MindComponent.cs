@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Robust.Shared.GameObjects;

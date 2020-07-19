@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Movement
             if (_mapManager.TryGetGrid(gridId, out var grid) && _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out PhysicsComponent physComp))
+                if (!gridEntity.TryGetComponent(out IPhysicsComponent physComp))
                 {
                     physComp = gridEntity.AddComponent<PhysicsComponent>();
                     physComp.Mass = 1;

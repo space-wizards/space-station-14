@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 

@@ -1,21 +1,21 @@
-using System;
+﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.Interfaces.GameObjects.Components
 {
     /// <summary>
-    ///     This interface gives components behavior when thrown.
+    ///     This interface gives components behavior when they're dropped by a mob.
     /// </summary>
-    public interface IThrown
+    public interface IDropped
     {
-        void Thrown(ThrownEventArgs eventArgs);
+        void Dropped(DroppedEventArgs eventArgs);
     }
 
-    public class ThrownEventArgs : EventArgs
+    public class DroppedEventArgs : EventArgs
     {
-        public ThrownEventArgs(IEntity user)
+        public DroppedEventArgs(IEntity user)
         {
             User = user;
         }
@@ -24,10 +24,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
     }
 
     /// <summary>
-    ///     Raised when throwing the entity in your hands.
+    ///     Raised when an entity is dropped
     /// </summary>
     [PublicAPI]
-    public class ThrownMessage : EntitySystemMessage
+    public class DroppedMessage : EntitySystemMessage
     {
         /// <summary>
         ///     If this message has already been "handled" by a previous system.
@@ -35,19 +35,19 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public bool Handled { get; set; }
 
         /// <summary>
-        ///     Entity that threw the item.
+        ///     Entity that dropped the item.
         /// </summary>
         public IEntity User { get; }
 
         /// <summary>
-        ///     Item that was thrown.
+        ///     Item that was dropped.
         /// </summary>
-        public IEntity Thrown { get; }
+        public IEntity Dropped { get; }
 
-        public ThrownMessage(IEntity user, IEntity thrown)
+        public DroppedMessage(IEntity user, IEntity dropped)
         {
             User = user;
-            Thrown = thrown;
+            Dropped = dropped;
         }
     }
 }
