@@ -10,6 +10,11 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using Content.Server.GameObjects.Components;
+using System.Collections.Generic;
 
 namespace Content.Server.Chat
 {
@@ -67,6 +72,19 @@ namespace Content.Server.Chat
             msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
+
+            var entities = source.EntityManager.GetEntitiesInRange(pos, VoiceRange);
+            if (entities.Count() > 0)
+            {
+                foreach (var entity in entities)
+                {
+                    if (entity.TryGetComponent<ListeningComponent>(out ListeningComponent listener))
+                    {
+                        listener.HeardSpeech(message);
+                    }
+                        
+                }
+            }
         }
 
         public void EntityMe(IEntity source, string action)
