@@ -8,15 +8,12 @@ using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using System.Globalization;
 using Robust.Server.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Log;
 using Content.Shared.Interfaces;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.GameObjects;
-using System.Diagnostics;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Localization;
 
 namespace Content.Server.BodySystem {

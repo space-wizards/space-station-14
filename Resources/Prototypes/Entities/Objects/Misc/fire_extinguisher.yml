@@ -9,4 +9,4 @@
   - type: Icon
     texture: Objects/Misc/fire_extinguisher.png
   - type: Item
-    Size: 10
+    size: 10

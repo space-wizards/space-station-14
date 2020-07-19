@@ -58,7 +58,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -88,7 +88,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -115,7 +115,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/giskard.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -146,7 +146,7 @@
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
     state: icon
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/hm_pistol.rsi
   - type: RangedWeapon
   - type: BoltActionBarrel
@@ -187,7 +187,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/gyro_pistol.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -231,7 +231,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/mandella.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -263,7 +263,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -295,7 +295,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/mk58_wood.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -322,7 +322,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/molly.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -357,7 +357,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/olivaw_civil.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -385,7 +385,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Pistols/paco.rsi
   - type: RangedWeapon
   - type: MagazineBarrel

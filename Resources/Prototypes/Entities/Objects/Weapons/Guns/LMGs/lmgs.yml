@@ -52,7 +52,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
   - type: RangedWeapon
   - type: MagazineBarrel
@@ -88,7 +88,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/LMGs/pk.rsi
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/LMGs/pk.rsi
   - type: RangedWeapon
   - type: MagazineBarrel

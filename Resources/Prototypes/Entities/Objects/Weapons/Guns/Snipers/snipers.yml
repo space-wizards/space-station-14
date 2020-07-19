@@ -15,7 +15,7 @@
   - type: Icon
     state: icon
   - type: Item
-    Size: 24
+    size: 24
   - type: BoltActionBarrel
     currentSelector: Single
     allSelectors:

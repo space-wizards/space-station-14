@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
-using Content.Shared.Construction;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
-using Microsoft.EntityFrameworkCore.Internal;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -18,7 +13,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 

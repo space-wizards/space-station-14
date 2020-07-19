@@ -13,7 +13,7 @@
     sprite: Clothing/Back/Satchels/satchel.rsi
     ClothingPrefix: satchel
   - type: Storage
-    Capacity: 300
+    capacity: 300
 
 - type: entity
   parent: BackpackClothing

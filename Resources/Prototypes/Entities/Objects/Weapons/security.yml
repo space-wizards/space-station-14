@@ -18,7 +18,7 @@
       arc: default
 
     - type: Item
-      Size: 10
+      size: 10
       sprite: Objects/Weapons/Melee/stunbaton.rsi
       HeldPrefix: off
 
@@ -42,10 +42,9 @@
       cooldownTime: 1
       arc: smash
       hitSound: /Audio/Weapons/flash.ogg
-      slowTo: 0.7
 
     - type: Item
-      Size: 2
+      size: 2
       sprite: Objects/Weapons/Melee/flash.rsi
 
     - type: ItemCooldown

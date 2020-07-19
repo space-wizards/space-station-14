@@ -35,7 +35,7 @@
     mass: 25
     Anchored: false
   - type: EntityStorage
-    Capacity: 60
+    capacity: 60
     CanWeldShut: false
   - type: PlaceableSurface
   - type: Damageable

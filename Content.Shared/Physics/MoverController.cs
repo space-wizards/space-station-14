@@ -10,7 +10,7 @@ namespace Content.Shared.Physics
     public class MoverController : VirtualController
     {
         private Vector2 _velocity;
-        private PhysicsComponent _component = null;
+        private IPhysicsComponent _component = null;
 
         public Vector2 Velocity
         {
@@ -18,7 +18,7 @@ namespace Content.Shared.Physics
             set => _velocity = value;
         }
 
-        public override PhysicsComponent ControlledComponent
+        public override IPhysicsComponent ControlledComponent
         {
             set => _component = value;
         }

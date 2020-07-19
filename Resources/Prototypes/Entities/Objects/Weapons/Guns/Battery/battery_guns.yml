@@ -17,7 +17,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
     state: icon
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
@@ -58,7 +58,7 @@
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     state: icon
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
@@ -99,7 +99,7 @@
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     state: icon
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
@@ -141,7 +141,7 @@
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     state: icon
   - type: Item
-    Size: 24
+    size: 24
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
     prefix: icon
   - type: RangedWeapon

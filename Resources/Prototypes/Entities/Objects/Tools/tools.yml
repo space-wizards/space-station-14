@@ -83,7 +83,7 @@
     sprite: Objects/Tools/welder.rsi
     state: welder
   - type: Item
-    Size: 10
+    size: 10
     sprite: Objects/Tools/welder.rsi
     HeldPrefix: off
   - type: ItemCooldown

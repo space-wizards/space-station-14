@@ -1,4 +1,4 @@
-# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
+﻿# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
 # The technology tree is using this layout - https://tgstation13.org/wiki//images/thumb/f/f4/ResearchTree.png/800px-ResearchTree.png
 
 # Base Technology
@@ -8,7 +8,7 @@
   id: BasicResearch
   description: Nanotransen basic research technologies.
   icon: Constructible/Power/server.rsi/server-on.png
-  requiredpoints: 250
+  requiredPoints: 250
 
 # Biological Technology Tree
 
@@ -17,8 +17,8 @@
   id: BiologicalTechnology
   description: Investigations into the natural world.
   icon: Constructible/Misc/potted_plants.rsi/applebush.png
-  requiredpoints: 1000
-  requiredtechnologies:
+  requiredPoints: 1000
+  requiredTechnologies:
     - BasicResearch
 
 # Data Theory Technology Tree
@@ -28,8 +28,8 @@
   id: DataTheory
   description: Just like regular data, but in space!
   icon: Constructible/Power/computers.rsi/computer-datatheory.png
-  requiredpoints: 1000
-  requiredtechnologies:
+  requiredPoints: 1000
+  requiredTechnologies:
     - BasicResearch
 
 # Industrial Engineering Technology Tree
@@ -39,8 +39,8 @@
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
   icon: Constructible/Power/protolathe.rsi/protolathe.png
-  requiredpoints: 1000
-  requiredtechnologies:
+  requiredPoints: 1000
+  requiredTechnologies:
     - BasicResearch
 
 - type: technology
@@ -48,10 +48,10 @@
   id: Sheets
   description: Print those sheets!
   icon: Objects/Materials/sheet_metal.png
-  requiredpoints: 250
-  requiredtechnologies:
+  requiredPoints: 250
+  requiredTechnologies:
     - IndustrialEngineering
-  unlockedrecipes:
+  unlockedRecipes:
     - MetalStack
     - GlassStack
 
@@ -62,8 +62,8 @@
   id: ElectromagneticTheory
   description: Try not to fry yourself.
   icon: Constructible/Power/apc.rsi/apcewires.png
-  requiredpoints: 1000
-  requiredtechnologies:
+  requiredPoints: 1000
+  requiredTechnologies:
     - BasicResearch
 
 # Bluespace Theory Technology Tree
@@ -73,6 +73,6 @@
   id: BluespaceTheory
   description: An experimental course on the mysterious technology known as bluespace.
   icon: Objects/Misc/hand_tele.png
-  requiredpoints: 1000
-  requiredtechnologies:
+  requiredPoints: 1000
+  requiredTechnologies:
     - BasicResearch

@@ -27,6 +27,7 @@
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
 
 
@@ -44,6 +45,7 @@
     sprite: Objects/Fun/Instruments/guitar.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/guitar.rsi
 
 - type: entity
@@ -60,6 +62,7 @@
     sprite: Objects/Fun/Instruments/violin.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/violin.rsi
 
 - type: entity
@@ -88,6 +91,7 @@
     sprite: Objects/Fun/Instruments/eguitar.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/eguitar.rsi
 
 - type: entity
@@ -104,6 +108,7 @@
     sprite: Objects/Fun/Instruments/accordion.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/accordion.rsi
 
 - type: entity
@@ -120,6 +125,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/harmonica.rsi
 
 - type: entity
@@ -136,6 +142,7 @@
     sprite: Objects/Fun/Instruments/recorder.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/recorder.rsi
 
 - type: entity
@@ -152,6 +159,7 @@
     sprite: Objects/Fun/Instruments/trombone.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/trombone.rsi
 
 - type: entity
@@ -168,6 +176,7 @@
     sprite: Objects/Fun/Instruments/saxophone.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/saxophone.rsi
 
 - type: entity
@@ -184,6 +193,7 @@
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/glockenspiel.rsi
 
 - type: entity
@@ -200,6 +210,7 @@
     sprite: Objects/Fun/Instruments/banjo.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/banjo.rsi
     
 - type: entity
@@ -218,4 +229,5 @@
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     state: icon
   - type: Item
+    size: 24
     sprite: Objects/Fun/Instruments/bike_horn.rsi

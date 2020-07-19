@@ -69,24 +69,24 @@ namespace Content.Server.GameObjects
                     statusEffectsComponent?.ChangeStatusEffectIcon(StatusEffect.Health,
                             "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
 
-                    overlayComponent?.RemoveOverlay(OverlayType.GradientCircleMaskOverlay);
-                    overlayComponent?.RemoveOverlay(OverlayType.CircleMaskOverlay);
+                    overlayComponent?.RemoveOverlay(SharedOverlayID.GradientCircleMaskOverlay);
+                    overlayComponent?.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
 
                     return;
                 case ThresholdType.Critical:
                     statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/humancrit-0.png");
-                    overlayComponent?.ClearOverlays();
-                    overlayComponent?.AddOverlay(OverlayType.GradientCircleMaskOverlay);
+                    overlayComponent?.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
+                    overlayComponent?.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
 
                     return;
                 case ThresholdType.Death:
                     statusEffectsComponent?.ChangeStatusEffectIcon(
                         StatusEffect.Health,
                         "/Textures/Interface/StatusEffects/Human/humandead.png");
-                    overlayComponent?.ClearOverlays();
-                    overlayComponent?.AddOverlay(OverlayType.CircleMaskOverlay);
+                    overlayComponent?.RemoveOverlay(SharedOverlayID.GradientCircleMaskOverlay);
+                    overlayComponent?.AddOverlay(SharedOverlayID.CircleMaskOverlay);
 
                     return;
                 default:
