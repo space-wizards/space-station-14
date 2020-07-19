@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate);
 
         void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority);
+
+        void UpdateConsumerReceivedPower();
     }
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
@@ -38,55 +41,25 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         private readonly Dictionary<Priority, int> _drawByPriority = new Dictionary<Priority, int>();
 
-        [ViewVariables]
-        private bool _supressPowerRecalculation = false;
-
         public static readonly IPowerNet NullNet = new NullPowerNet();
+
+#pragma warning disable 649
+        [Dependency] private readonly IPowerNetManager _powerNetManager;
+#pragma warning restore 649
 
         public PowerNetNodeGroup()
         {
-            foreach(Priority priority in Enum.GetValues(typeof(Priority)))
+            foreach (Priority priority in Enum.GetValues(typeof(Priority)))
             {
                 _consumersByPriority.Add(priority, new List<PowerConsumerComponent>());
                 _drawByPriority.Add(priority, 0);
             }
         }
 
-        #region BaseNodeGroup Overrides
-
         protected override void SetNetConnectorNet(BasePowerNetComponent netConnectorComponent)
         {
             netConnectorComponent.Net = this;
         }
-
-        public override void BeforeCombine()
-        {
-            _supressPowerRecalculation = true;
-        }
-
-        public override void AfterCombine()
-        {
-            _supressPowerRecalculation = false;
-            UpdateConsumerReceivedPower();
-        }
-
-        protected override void BeforeRemake()
-        {
-            _supressPowerRecalculation = true;
-        }
-
-        public override void BeforeRemakeSpread()
-        {
-            _supressPowerRecalculation = true;
-        }
-
-        public override void AfterRemakeSpread()
-        {
-            _supressPowerRecalculation = false;
-            UpdateConsumerReceivedPower();
-        }
-
-        #endregion
 
         #region IPowerNet Methods
 
@@ -94,7 +67,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             _suppliers.Add(supplier);
             _totalSupply += supplier.SupplyRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
         public void RemoveSupplier(PowerSupplierComponent supplier)
@@ -102,7 +75,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             Debug.Assert(_suppliers.Contains(supplier));
             _suppliers.Remove(supplier);
             _totalSupply -= supplier.SupplyRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
         public void UpdateSupplierSupply(PowerSupplierComponent supplier, int oldSupplyRate, int newSupplyRate)
@@ -110,14 +83,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             Debug.Assert(_suppliers.Contains(supplier));
             _totalSupply -= oldSupplyRate;
             _totalSupply += newSupplyRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
         public void AddConsumer(PowerConsumerComponent consumer)
         {
             _consumersByPriority[consumer.Priority].Add(consumer);
             _drawByPriority[consumer.Priority] += consumer.DrawRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
         public void RemoveConsumer(PowerConsumerComponent consumer)
@@ -126,7 +99,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             consumer.ReceivedPower = 0;
             _consumersByPriority[consumer.Priority].Remove(consumer);
             _drawByPriority[consumer.Priority] -= consumer.DrawRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
         public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate)
@@ -134,7 +107,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             Debug.Assert(_consumersByPriority[consumer.Priority].Contains(consumer));
             _drawByPriority[consumer.Priority] -= oldDrawRate;
             _drawByPriority[consumer.Priority] += newDrawRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
         public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority)
@@ -144,20 +117,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _drawByPriority[oldPriority] -= consumer.DrawRate;
             _consumersByPriority[newPriority].Add(consumer);
             _drawByPriority[newPriority] += consumer.DrawRate;
-            UpdateConsumerReceivedPower();
+            _powerNetManager.AddDirtyPowerNet(this);
         }
 
-        private void UpdateConsumerReceivedPower()
+        public void UpdateConsumerReceivedPower()
         {
-            if (_supressPowerRecalculation)
-            {
-                return;
-            }
             var remainingSupply = _totalSupply;
             foreach (Priority priority in Enum.GetValues(typeof(Priority)))
             {
                 var categoryPowerDemand = _drawByPriority[priority];
-                if (remainingSupply - categoryPowerDemand >= 0) //can fully power all in category
+                if (remainingSupply >= categoryPowerDemand) //can fully power all in category
                 {
                     remainingSupply -= categoryPowerDemand;
                     foreach (var consumer in _consumersByPriority[priority])
@@ -165,7 +134,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                         consumer.ReceivedPower = consumer.DrawRate;
                     }
                 }
-                else if (remainingSupply - categoryPowerDemand < 0) //cannot fully power all, split power
+                else if (remainingSupply < categoryPowerDemand) //cannot fully power all, split power
                 {
                     var availiablePowerFraction = (float) remainingSupply / categoryPowerDemand;
                     remainingSupply = 0;
@@ -188,6 +157,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void RemoveSupplier(PowerSupplierComponent supplier) { }
             public void UpdateConsumerDraw(PowerConsumerComponent consumer, int oldDrawRate, int newDrawRate) { }
             public void UpdateConsumerPriority(PowerConsumerComponent consumer, Priority oldPriority, Priority newPriority) { }
+            public void UpdateConsumerReceivedPower() { }
         }
     }
 }

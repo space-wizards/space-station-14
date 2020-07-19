@@ -87,13 +87,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             return true;
         }
 
-        public void StartSpreadingGroup()
-        {
-            NodeGroup.BeforeRemakeSpread();
-            SpreadGroup();
-            NodeGroup.AfterRemakeSpread();
-        }
-
         public void SpreadGroup()
         {
             Debug.Assert(!_needsGroup);
