@@ -45,7 +45,6 @@ namespace Content.Server.Atmos
 
         public GridId GridIndex { get; }
         public MapIndices GridIndices { get; }
-        public Tile Tile { get; }
         public ExcitedGroup ExcitedGroup { get; set; }
         public GasMixture Air { get; set; }
 
