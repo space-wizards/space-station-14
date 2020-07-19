@@ -1,8 +1,7 @@
-﻿using Content.Server.Health.BodySystem.BodyParts;
-using Content.Shared.BodySystem;
+﻿using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Health.BodySystem.Mechanisms
+namespace Content.Server.BodySystem
 {
     /// <summary>
     ///     Data class representing a persistent item inside a <see cref="BodyPart"/>. This includes livers, eyes, cameras, brains, explosive implants, binary communicators, and other things.

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.BodySystem;
-using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Server.Health.BodySystem.Surgery.Data;
 using Content.Shared.BodySystem;
 using Content.Shared.Health.BodySystem.BodyPart;
@@ -11,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Health.BodySystem.BodyParts
+namespace Content.Server.BodySystem
 {
     /// <summary>
     ///     Data class representing a singular limb such as an arm or a leg. Typically held within either a <see cref="BodyManagerComponent"/>,

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.BodySystem;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

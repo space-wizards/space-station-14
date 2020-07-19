@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.BodySystem;
-using Content.Server.Health.BodySystem.BodyParts;
-using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Shared.BodySystem;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;

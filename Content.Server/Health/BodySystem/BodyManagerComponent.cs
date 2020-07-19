@@ -8,12 +8,10 @@ using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Linq;
-using Content.Server.BodySystem;
-using Content.Server.Health.BodySystem.BodyParts;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Health.BodySystem.BodyPart;
 
-namespace Content.Server.Health.BodySystem {
+namespace Content.Server.BodySystem {
     /// <summary>
     ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
     /// </summary>

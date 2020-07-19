@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.Health.BodySystem.BodyParts;
+using Content.Server.BodySystem;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {

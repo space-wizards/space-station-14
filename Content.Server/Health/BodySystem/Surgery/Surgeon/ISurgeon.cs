@@ -1,8 +1,5 @@
-﻿using Content.Shared.BodySystem;
-using Robust.Shared.Interfaces.GameObjects;
-using System;
+﻿using Robust.Shared.Interfaces.GameObjects;
 using System.Collections.Generic;
-using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Server.Health.BodySystem.Surgery.Data;
 
 namespace Content.Server.BodySystem

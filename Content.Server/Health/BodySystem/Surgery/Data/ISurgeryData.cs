@@ -1,6 +1,4 @@
 ﻿using Content.Server.BodySystem;
-using Content.Server.Health.BodySystem.BodyParts;
-using Content.Server.Health.BodySystem.Mechanisms;
 using Content.Shared.BodySystem;
 using Robust.Shared.Interfaces.GameObjects;
 
