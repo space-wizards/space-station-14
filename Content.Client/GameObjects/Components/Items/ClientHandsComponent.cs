@@ -245,12 +245,12 @@ namespace Content.Client.GameObjects.Components.Items
     {
         public readonly string Name;
 
-        public Hand(SharedHand hand, IEntityManager manager, HandButton? button = null, ItemStatusPanel? panel = null)
+        // TODO: Separate into server hand and client hand
+        public Hand(SharedHand hand, IEntityManager manager, HandButton? button = null)
         {
             Name = hand.Name;
             Location = hand.Location;
             Button = button;
-            Panel = panel;
 
             if (!hand.EntityUid.HasValue)
             {
@@ -264,6 +264,5 @@ namespace Content.Client.GameObjects.Components.Items
         public HandLocation Location { get; set; }
         public IEntity? Entity { get; set; }
         public HandButton? Button { get; set; }
-        public ItemStatusPanel? Panel { get; set; }
     }
 }

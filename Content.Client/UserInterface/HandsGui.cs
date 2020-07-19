@@ -6,7 +6,6 @@ using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.Graphics;
-using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
@@ -14,7 +13,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using static Content.Client.StaticIoC;
 
 namespace Content.Client.UserInterface
 {
@@ -32,23 +30,40 @@ namespace Content.Client.UserInterface
         private readonly Texture _middleHandTexture;
         private readonly Texture _rightHandTexture;
 
+        private readonly ItemStatusPanel _leftPanel;
+        private readonly ItemStatusPanel _topPanel;
+        private readonly ItemStatusPanel _rightPanel;
+
+        private readonly VBoxContainer _handsColumn;
+        private readonly HBoxContainer _handsContainer;
+
+        private int _lastHands;
+
         public HandsGui()
         {
             IoCManager.InjectDependencies(this);
 
-            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
+            var topPanelTexture = _resourceCache.GetTexture("/Textures/Interface/Nano/item_status_left.svg.96dpi.png");
 
-            var hands = new VBoxContainer();
-
-            var panelTexture = ResC.GetTexture("/Textures/Interface/Nano/item_status_left.svg.96dpi.png");
-            var panel = new ItemStatusPanel(panelTexture, StyleBox.Margin.None);
-            hands.AddChild(panel);
-            hands.AddChild(new HBoxContainer
+            AddChild(new HBoxContainer
             {
                 SeparationOverride = 0,
+                Children =
+                {
+                    (_rightPanel = ItemStatusPanel.FromSide(HandLocation.Right)),
+                    (_handsColumn = new VBoxContainer
+                    {
+                        Children =
+                        {
+                            (_topPanel = ItemStatusPanel.FromSide(HandLocation.Middle)),
+                            (_handsContainer = new HBoxContainer {SeparationOverride = 0})
+                        }
+                    }),
+                    (_leftPanel = ItemStatusPanel.FromSide(HandLocation.Left))
+                }
             });
 
-            AddChild(hands);
+            var textureHandActive = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_active.png");
 
             // Active hand
             _activeHandRect = new TextureRect
@@ -62,14 +77,15 @@ namespace Content.Client.UserInterface
             _rightHandTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/hand_r.png");
         }
 
-        private Control GetHandsContainer()
+        private ItemStatusPanel GetItemPanel(Hand hand)
         {
-            return GetChild(0).GetChild(1);
-        }
-
-        private ItemStatusPanel GetItemTooltip(Hand hand)
-        {
-            return (ItemStatusPanel) GetChild(0).GetChild(0);
+            return hand.Location switch
+            {
+                HandLocation.Left => _rightPanel,
+                HandLocation.Middle => _topPanel,
+                HandLocation.Right => _leftPanel,
+                _ => throw new IndexOutOfRangeException()
+            };
         }
 
         private Texture LocationTexture(HandLocation location)
@@ -105,14 +121,7 @@ namespace Content.Client.UserInterface
             button.OnPressed += args => HandKeyBindDown(args, slot);
             button.OnStoragePressed += args => _OnStoragePressed(args, slot);
 
-            var hBox = GetHandsContainer();
-
-            var panelTexture = ResC.GetTexture("/Textures/Interface/Nano/item_status_right.svg.96dpi.png");
-            // var panel = new ItemStatusPanel(texture, StyleBox.Margin.None);
-
-            hBox.AddChild(button);
-
-            // hBox.AddChild(panel);
+            _handsContainer.AddChild(button);
 
             if (_activeHandRect.Parent == null)
             {
@@ -121,13 +130,10 @@ namespace Content.Client.UserInterface
             }
 
             hand.Button = button;
-            // hand.Panel = panel; // TODO
         }
 
         public void RemoveHand(Hand hand)
         {
-            var hBox = GetHandsContainer();
-
             var button = hand.Button;
             if (button != null)
             {
@@ -136,13 +142,7 @@ namespace Content.Client.UserInterface
                     button.RemoveChild(_activeHandRect);
                 }
 
-                hBox.RemoveChild(button);
-            }
-
-            var panel = hand.Panel;
-            if (panel != null)
-            {
-                hBox.RemoveChild(panel);
+                _handsContainer.RemoveChild(button);
             }
 
             if (hand.Location == HandLocation.Middle ||
@@ -218,12 +218,15 @@ namespace Content.Client.UserInterface
             }
 
             _activeHandRect.Parent?.RemoveChild(_activeHandRect);
-            component[component.ActiveIndex]?.Button?.AddChild(_activeHandRect);
+            component[component.ActiveIndex].Button?.AddChild(_activeHandRect);
 
             if (hands.Length > 0)
             {
                 _activeHandRect.SetPositionInParent(1);
             }
+
+            _leftPanel.SetPositionFirst();
+            _rightPanel.SetPositionLast();
         }
 
         private void HandKeyBindDown(GUIBoundKeyEventArgs args, string slotName)
@@ -283,10 +286,8 @@ namespace Content.Client.UserInterface
             hands.ActivateItemInHand(handIndex);
         }
 
-        protected override void FrameUpdate(FrameEventArgs args)
+        private void UpdatePanels()
         {
-            base.FrameUpdate(args);
-
             if (!TryGetHands(out var component))
             {
                 return;
@@ -294,17 +295,50 @@ namespace Content.Client.UserInterface
 
             foreach (var hand in component.Hands)
             {
-                if (hand.Button == null)
-                {
-                    continue;
-                }
-
                 _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
-                // hand.Panel?.Update(hand.Entity); // TODO: For 2 hands
             }
 
-            var tooltip = GetItemTooltip(null); // TODO: Move inside loop, remove null
-            tooltip.Update(component.ActiveHand);
+            if (component.Hands.Count == 2)
+            {
+                if (_lastHands != 2)
+                {
+                    _topPanel.Update(null);
+
+                    if (_handsColumn.Children.Contains(_topPanel))
+                    {
+                        _handsColumn.RemoveChild(_topPanel);
+                    }
+                }
+
+                _leftPanel.Update(component.Hands[0].Entity);
+                _rightPanel.Update(component.Hands[1].Entity);
+
+                // Order is left, right
+                foreach (var hand in component.Hands)
+                {
+                    var tooltip = GetItemPanel(hand);
+                    tooltip.Update(hand.Entity);
+                }
+            }
+            else
+            {
+                if (_lastHands == 2 && !_handsColumn.Children.Contains(_topPanel))
+                {
+                    _handsColumn.AddChild(_topPanel);
+                }
+
+                _topPanel.Update(component.ActiveHand);
+                _leftPanel.Update(null);
+                _rightPanel.Update(null);
+            }
+
+            _lastHands = component.Hands.Count;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+            UpdatePanels();
         }
     }
 }

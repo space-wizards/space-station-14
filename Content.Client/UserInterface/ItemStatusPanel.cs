@@ -1,8 +1,10 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
+using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -69,21 +71,34 @@ namespace Content.Client.UserInterface
         ///     based on whether or not it is being created for the right
         ///     or left hand.
         /// </summary>
-        /// <param name="isRightHand">
-        ///     true if this is the right hand, which is drawn on the
-        ///     LEFT side of the screen
+        /// <param name="location">
+        ///     The location of the hand that this panel is for
         /// </param>
         /// <returns>the new <see cref="ItemStatusPanel"/> instance</returns>
-        public static ItemStatusPanel FromSide(bool isRightHand)
+        public static ItemStatusPanel FromSide(HandLocation location)
         {
-            var texture = ResC.GetTexture(isRightHand
-                ? "/Textures/Interface/Nano/item_status_right.svg.96dpi.png"
-                : "/Textures/Interface/Nano/item_status_left.svg.96dpi.png");
-            var margin = (isRightHand
-                ? StyleBox.Margin.Left
-                : StyleBox.Margin.Right) | StyleBox.Margin.Top;
+            string texture;
+            StyleBox.Margin margin;
 
-            return new ItemStatusPanel(texture, margin);
+            switch (location)
+            {
+                case HandLocation.Left:
+                    texture = "/Textures/Interface/Nano/item_status_right.svg.96dpi.png";
+                    margin = StyleBox.Margin.Left | StyleBox.Margin.Top;
+                    break;
+                case HandLocation.Middle:
+                    texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
+                    margin = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    break;
+                case HandLocation.Right:
+                    texture = "/Textures/Interface/Nano/item_status_left.svg.96dpi.png";
+                    margin = StyleBox.Margin.Right | StyleBox.Margin.Top;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(location), location, null);
+            }
+
+            return new ItemStatusPanel(ResC.GetTexture(texture), margin);
         }
 
         public void Update(IEntity? entity)
@@ -136,7 +151,7 @@ namespace Content.Client.UserInterface
         // TODO: Depending on if its a two-hand panel or not
         protected override Vector2 CalculateMinimumSize()
         {
-            return Vector2.ComponentMax(base.CalculateMinimumSize(), (150, 15));
+            return Vector2.ComponentMax(base.CalculateMinimumSize(), (150, 0));
         }
     }
 }
