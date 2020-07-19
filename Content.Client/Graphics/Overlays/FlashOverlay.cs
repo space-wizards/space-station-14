@@ -18,7 +18,7 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Client.Graphics.Overlays
 {
-    public class FlashOverlay : Overlay, IConfigurable<TimedOverlayContainer>
+    public class FlashOverlay : Overlay, IConfigurable<TimedOverlayParameter>
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -31,7 +31,7 @@ namespace Content.Client.Graphics.Overlays
         private int lastsFor = 5000;
         private Texture _screenshotTexture;
 
-        public FlashOverlay() : base(nameof(OverlayType.FlashOverlay))
+        public FlashOverlay() : base(nameof(SharedOverlayID.FlashOverlay))
         {
             IoCManager.InjectDependencies(this);
             Shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
@@ -65,7 +65,7 @@ namespace Content.Client.Graphics.Overlays
             _screenshotTexture = null;
         }
 
-        public void Configure(TimedOverlayContainer parameters)
+        public void Configure(TimedOverlayParameter parameters)
         {
             lastsFor = parameters.Length;
         }

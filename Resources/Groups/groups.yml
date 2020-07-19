@@ -85,6 +85,7 @@
   - hostlogin
   - deleteewc
   - asay
+  - mapping
   - tilepry
   - anchor
   - unanchor
@@ -161,6 +162,7 @@
   - deleteewc
   - sudo
   - asay
+  - mapping
   - tilepry
   - anchor
   - unanchor
