@@ -4,6 +4,8 @@ using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Atmos;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Atmos;
@@ -13,9 +15,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
-using Robust.Shared.Timers;
 
 namespace Content.Server.Observer
 {

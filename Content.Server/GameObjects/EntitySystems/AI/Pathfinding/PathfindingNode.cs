@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
@@ -266,10 +266,10 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 return;
             }
             
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent) && 
+            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) && 
                 (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0)
             {
-                if (entity.TryGetComponent(out PhysicsComponent physicsComponent) && !physicsComponent.Anchored)
+                if (entity.TryGetComponent(out IPhysicsComponent physicsComponent) && !physicsComponent.Anchored)
                 {
                     _physicsLayers.Add(entity.Uid, collidableComponent.CollisionLayer);
                 }
