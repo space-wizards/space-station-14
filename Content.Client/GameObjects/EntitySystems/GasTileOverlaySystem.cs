@@ -79,10 +79,13 @@ namespace Content.Client.GameObjects.EntitySystems
 
             foreach (var data in ev.OverlayData)
             {
-                if(!_overlay.ContainsKey(data.GridIndex))
-                    _overlay[data.GridIndex] = new Dictionary<MapIndices, GasData[]>();
-
-                _overlay[data.GridIndex][data.GridIndices] = data.GasData;
+                if (!_overlay.TryGetValue(data.GridIndex, out var gridOverlays))
+                {
+                	gridOverlays = new Dictionary<MapIndices, GasData[]>();
+                    _overlay.Add(data.GridIndex, gridOverlays)
+                }
+                
+                gridOverlays[data.GridIndices] = data.GasData;
             }
         }
 
