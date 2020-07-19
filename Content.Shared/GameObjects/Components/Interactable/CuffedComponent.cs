@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Robust.Shared.GameObjects;
@@ -8,7 +9,8 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Timers;
+using Robust.Shared.Map;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Shared.GameObjects.Components.Interactable
 {
@@ -16,18 +18,20 @@ namespace Content.Shared.GameObjects.Components.Interactable
     public class CuffedComponent : Component, IActionBlocker
     {
 #pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
+        [Dependency] private readonly SharedNotifyManager _notifyManager;
 #pragma warning restore 649
+
         public override string Name => "Cuffed";
 
         public string HandcuffId = "Handcuffs";
 
         public float uncuffTime = 10.0f;
         public float breakoutTime = 60.0f;
-
-        private IContainer cuffContainer;
+        private CancellationTokenSource _cancellationTokenSource;
 
         private float interactRange;
+
+        private GridCoordinates startPosition;
 
         #region ActionBlockers
         bool IActionBlocker.CanInteract() => false;
@@ -50,12 +54,18 @@ namespace Content.Shared.GameObjects.Components.Interactable
         {
             //IoCManager.InjectDependencies(this);
             interactRange = SharedInteractionSystem.InteractionRange / 2;
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         public void TryUncuff(IEntity user, bool isOwner, bool force = false)
         {
+            _cancellationTokenSource.Cancel();
             if (!force)
             {
+                if (!isOwner && !ActionBlockerSystem.CanInteract(user))
+                {
+                    return;
+                }
                 if (!isOwner && !EntitySystem.Get<SharedInteractionSystem>()
                         .InRangeUnobstructed(user.Transform.MapPosition,
                             Owner.Transform.MapPosition, interactRange, ignoredEnt: Owner))
@@ -65,30 +75,54 @@ namespace Content.Shared.GameObjects.Components.Interactable
                     return;
                 }
 
-                if (isOwner)
+                startPosition = Owner.Transform.GridPosition;
+
+                _notifyManager.PopupMessage(user, user, "You start removing the cuffs.");
+                if (isOwner) // TODO: do_after() once it exists
                 {
-                    Timer.Spawn(TimeSpan.FromSeconds(breakoutTime), () => Uncuff(user, true));
+                    Timer.Spawn(TimeSpan.FromSeconds(breakoutTime), () => Uncuff(user, true), _cancellationTokenSource.Token);
                 }
                 else
                 {
-                    Timer.Spawn(TimeSpan.FromSeconds(uncuffTime), () => Uncuff(user, false));
+                    _notifyManager.PopupMessage(user, Owner, $"{user.Name} starts removing the cuffs.");
+                    Timer.Spawn(TimeSpan.FromSeconds(uncuffTime), () => Uncuff(user, false), _cancellationTokenSource.Token);
                 }
 
                 return;
             }
 
-            Uncuff(user, isOwner);
+            Uncuff(user, isOwner, true);
         }
 
-        public void Uncuff(IEntity user, bool isOwner)
+        public void Uncuff(IEntity user, bool isOwner, bool force = false)
         {
-            if (!isOwner && !EntitySystem.Get<SharedInteractionSystem>()
-                .InRangeUnobstructed(user.Transform.MapPosition,
-                    Owner.Transform.MapPosition, interactRange, ignoredEnt: Owner))
+            if (!force && !isOwner)
             {
-                _notifyManager.PopupMessage(user, user,
-                    "You are too far away to remove the cuffs.");
-                return;
+                if (!EntitySystem.Get<SharedInteractionSystem>()
+                    .InRangeUnobstructed(user.Transform.MapPosition,
+                        Owner.Transform.MapPosition, interactRange, ignoredEnt: Owner))
+                {
+                    _notifyManager.PopupMessage(user, user, "You are too far away to remove the cuffs.");
+                    return;
+                }
+
+                if (Owner.Transform.GridPosition != startPosition)
+                {
+                    _notifyManager.PopupMessage(user, user, "You failed to remove the cuffs, stand still next time.");
+                    return;
+                }
+
+                if (!ActionBlockerSystem.CanInteract(user))
+                {
+                    _notifyManager.PopupMessage(user, user, "You fail to remove the cuffs.");
+                    return;
+                }
+            }
+
+            _notifyManager.PopupMessage(user, user, "You successfully remove the cuffs.");
+            if (!isOwner)
+            {
+                _notifyManager.PopupMessage(user, Owner, $"{user.Name} successfully removes your cuffs.");
             }
 
             Owner.EntityManager.SpawnEntity(HandcuffId, Owner.Transform.GridPosition);

@@ -1,45 +1,140 @@
 ﻿#nullable enable
-using Content.Shared.Interfaces.GameObjects.Components.Interaction;
+using System;
+using System.Threading;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Shared.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    public class HandcuffComponent : Component, IInteractHand
+    public class HandcuffComponent : Component, IAfterInteract
     {
-        public override string Name => "Handcuff";
+#pragma warning disable 649
+        [Dependency] private readonly ISharedNotifyManager _notifyManager;
+#pragma warning restore 649
 
-        /// <summary>
-        ///     The entity currently subdued by a <see cref="CuffedComponent"/>.
-        /// </summary>
-        public IEntity? CuffedEntity;
+        public override string Name => "Handcuff";
 
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
-        [ViewVariables] public float cuffTime = 5.0f;
+        [ViewVariables] private float cuffTime;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
-        [ViewVariables] public float uncuffTime = 10.0f;
+        [ViewVariables] private float uncuffTime;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
         /// </summary>
-        [ViewVariables] public float breakoutTime = 60.0f;
+        [ViewVariables] private float breakoutTime;
 
-        public bool InteractHand(InteractHandEventArgs eventArgs)
+        private readonly CancellationTokenSource _cancellationTokenSource;
+
+        private readonly float interactRange;
+
+        private GridCoordinates startPosition;
+
+        //private readonly SharedNotifyManager _notifyManager;
+
+        public HandcuffComponent()
         {
-            /*if (!CanPickup(eventArgs.User)) return false;
+            interactRange = SharedInteractionSystem.InteractionRange / 2;
+            _cancellationTokenSource = new CancellationTokenSource();
+            //IoCManager.InjectDependencies(this);
+        }
 
-            var hands = eventArgs.User.GetComponent<Han>();
-            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
-            return true;*/
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref cuffTime, "cuffTime", 5.0f);
+            serializer.DataField(ref breakoutTime, "breakoutTime", 60.0f);
+            serializer.DataField(ref uncuffTime, "uncuffTime", 10.0f);
+        }
 
-            if (eventArgs.Target.TryGetComponent<SharedHandsComponent>(out var hands))
+        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
+        {
+            if (eventArgs.Target == null || !ActionBlockerSystem.CanUse(eventArgs.User))
+            {
+                return;
+            }
+
+            //HandsComponent isn't accessible in Shared
+            /*if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var sharedHands))
+            {
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User,
+                    "The target has no hands!");
+            }*/
+
+            if (eventArgs.Target == eventArgs.User)
+            {
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User,
+                    "Cuffing yourself is a bad idea.");
+            }
+
+            if (!EntitySystem.Get<SharedInteractionSystem>()
+                .InRangeUnobstructed(eventArgs.User.Transform.MapPosition,
+                    eventArgs.Target.Transform.MapPosition, interactRange, ignoredEnt: Owner))
+            {
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User,
+                    "You are too far away to use the cuffs.");
+                return;
+            }
+
+            _notifyManager.PopupMessage(eventArgs.User, eventArgs.User,
+                $"You start cuffing {eventArgs.Target.Name}.");
+            _notifyManager.PopupMessage(eventArgs.User, eventArgs.Target,
+                $"{eventArgs.User.Name} starts cuffing you!");
+
+            startPosition = eventArgs.Target.Transform.GridPosition;
+            // TODO: do_after() once it exists
+            Timer.Spawn(TimeSpan.FromSeconds(breakoutTime), () => Cuff(eventArgs.User, eventArgs.Target), _cancellationTokenSource.Token);
+        }
+
+        private void Cuff(IEntity user, IEntity target)
+        {
+            if (!EntitySystem.Get<SharedInteractionSystem>()
+                .InRangeUnobstructed(user.Transform.MapPosition,
+                    Owner.Transform.MapPosition, interactRange, ignoredEnt: Owner))
+            {
+                _notifyManager.PopupMessage(user, user, "You are too far away to use the cuffs.");
+                return;
+            }
+
+            if (Owner.Transform.GridPosition != startPosition)
+            {
+                _notifyManager.PopupMessage(user, user, "You failed to use the cuffs, stand still next time.");
+                return;
+            }
+
+            if (!ActionBlockerSystem.CanInteract(user))
+            {
+                _notifyManager.PopupMessage(user, user, "You fail to use the cuffs.");
+                return;
+            }
+
+            _notifyManager.PopupMessage(user, user, $"You successfully cuff {target.Name}.");
+            _notifyManager.PopupMessage(target, target, $"You have been cuffed by {user.Name}.");
+
+            var cuffs = target.AddComponent<CuffedComponent>();
+            cuffs.breakoutTime = breakoutTime;
+            cuffs.uncuffTime = uncuffTime;
+            if (Owner.Prototype != null)
+            {
+                cuffs.HandcuffId = Owner.Prototype.ID;
+            }
+
+            Owner.Delete();
         }
 
     }
