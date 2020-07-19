@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   parent: BaseItem
   id: TrashBase
   description: This is rubbish.
@@ -180,7 +180,7 @@
   - type: Icon
     sprite: Objects/Consumable/Trash/trashbag.rsi
   - type: Storage
-    Capacity: 125
+    capacity: 125
 
 - type: entity
   name: tray (trash)

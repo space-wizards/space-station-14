@@ -9,7 +9,7 @@
   - type: Icon
     texture: Objects/Specific/Medical/medkit_r.png
   - type: Storage
-    Capacity: 60
+    capacity: 60
   - type: Item
     size: 9999
 

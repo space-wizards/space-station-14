@@ -23,7 +23,7 @@
     QuickEquip: false
     sprite: Clothing/Belt/belt_utility.rsi
   - type: Storage
-    Capacity: 40 # Full tool loadout is 35, plus an extra
+    capacity: 40 # Full tool loadout is 35, plus an extra
 
 - type: entity
   id: UtilityBeltClothingFilled
