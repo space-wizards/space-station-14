@@ -1,158 +1,140 @@
 - type: entity
   parent: BackpackClothing
-  id: Satchel
-  name: satchel
+  id: MessengerBag
+  name: messenger bag
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel.rsi
-    state: satchel
+    sprite: Clothing/Back/Couriers/courier.rsi
+    state: courier
   - type: Icon
-    sprite: Clothing/Back/Satchels/satchel.rsi
-    state: satchel
+    sprite: Clothing/Back/Couriers/courier.rsi
+    state: courier
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel.rsi
-    ClothingPrefix: satchel
-  - type: Storage
-    capacity: 300
+    sprite: Clothing/Back/Couriers/courier.rsi
+    ClothingPrefix: courier
 
 - type: entity
   parent: BackpackClothing
-  id: SatchelEngineering
-  name: engineering satchel
+  id: MessengerBagChemistry
+  name: chemistry messenger bag
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
-    state: satchel-engineering
+    sprite: Clothing/Back/Couriers/courier_chemistry.rsi
+    state: courier-chemistry
   - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
-    state: satchel-engineering
+    sprite: Clothing/Back/Couriers/courier_chemistry.rsi
+    state: courier-chemistry
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_engineering.rsi
+    sprite: Clothing/Back/Couriers/courier_chemistry.rsi
+    HeldPrefix: medical
+    ClothingPrefix: courier-chemistry
+
+- type: entity
+  parent: BackpackClothing
+  id: MessengerBagMedical
+  name: medical messenger bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_medical.rsi
+    state: courier-medical
+  - type: Icon
+    sprite: Clothing/Back/Couriers/courier_medical.rsi
+    state: courier-medical
+  - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_medical.rsi
+    HeldPrefix: medical
+    ClothingPrefix: courier-medical
+
+- type: entity
+  parent: BackpackClothing
+  id: MessengerBagVirology
+  name: virology messenger bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_virology.rsi
+    state: courier-virology
+  - type: Icon
+    sprite: Clothing/Back/Couriers/courier_virology.rsi
+    state: courier-virology
+  - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_virology.rsi
+    HeldPrefix: medical
+    ClothingPrefix: courier-virology
+
+- type: entity
+  parent: BackpackClothing
+  id: MessengerBagEngineering
+  name: engineering messenger bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_engineering.rsi
+    state: courier-engineering
+  - type: Icon
+    sprite: Clothing/Back/Couriers/courier_engineering.rsi
+    state: courier-engineering
+  - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_engineering.rsi
     HeldPrefix: engineering
-    ClothingPrefix: satchel-engineering
+    ClothingPrefix: courier-engineering
 
 - type: entity
   parent: BackpackClothing
-  id: SatchelMedical
-  name: medical satchel
+  id: MessengerBagScience
+  name: science messenger bag
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
-    state: satchel-medical
+    sprite: Clothing/Back/Couriers/courier_science.rsi
+    state: courier-science
   - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
-    state: satchel-medical
+    sprite: Clothing/Back/Couriers/courier_science.rsi
+    state: courier-science
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_medical.rsi
-    HeldPrefix: medical
-    ClothingPrefix: satchel-medical
+    sprite: Clothing/Back/Couriers/courier_science.rsi
+    ClothingPrefix: courier-science
 
 - type: entity
   parent: BackpackClothing
-  id: SatchelChemistry
-  name: chemistry satchel
+  id: MessengerBagCaptain
+  name: captain's messenger bag
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
-    state: satchel-chemistry
+    sprite: Clothing/Back/Couriers/courier_captain.rsi
+    state: courier-captain
   - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
-    state: satchel-chemistry
+    sprite: Clothing/Back/Couriers/courier_captain.rsi
+    state: courier-captain
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_chemistry.rsi
-    HeldPrefix: medical
-    ClothingPrefix: satchel-chemistry
-
-- type: entity
-  parent: BackpackClothing
-  id: SatchelGenetics
-  name: genetics satchel
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
-    state: satchel-genetics
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
-    state: satchel-genetics
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_genetics.rsi
-    HeldPrefix: medical
-    ClothingPrefix: satchel-genetics
-
-- type: entity
-  parent: BackpackClothing
-  id: SatchelVirology
-  name: virology satchel
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_virology.rsi
-    state: satchel-virology
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_virology.rsi
-    state: satchel-virology
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_virology.rsi
-    HeldPrefix: medical
-    ClothingPrefix: satchel-virology
-
-- type: entity
-  parent: BackpackClothing
-  id: SatchelScience
-  name: science satchel
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
-    state: satchel-science
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
-    state: satchel-science
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_science.rsi
-    ClothingPrefix: satchel-science
-
-- type: entity
-  parent: BackpackClothing
-  id: SatchelSecurity
-  name: security satchel
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
-    state: satchel-security
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
-    state: satchel-security
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_security.rsi
-    HeldPrefix: security
-    ClothingPrefix: satchel-security
-
-- type: entity
-  parent: BackpackClothing
-  id: SatchelCaptain
-  name: captain's satchel
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
-    state: satchel-captain
-  - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
-    state: satchel-captain
-  - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_captain.rsi
+    sprite: Clothing/Back/Couriers/courier_captain.rsi
     HeldPrefix: captain
-    ClothingPrefix: satchel-captain
+    ClothingPrefix: courier-captain
 
 - type: entity
   parent: BackpackClothing
-  id: SatchelHydroponics
-  name: hydroponics satchel
+  id: MessengerBagHydroponics
+  name: hydroponics messenger bag
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
-    state: satchel-hydroponics
+    sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
+    state: courier-hydroponics
   - type: Icon
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
-    state: satchel-hydroponics
+    sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
+    state: courier-hydroponics
   - type: Clothing
-    sprite: Clothing/Back/Satchels/satchel_hydroponics.rsi
-    ClothingPrefix: satchel-hydroponics
+    sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
+    ClothingPrefix: courier-hydroponics
+
+- type: entity
+  parent: BackpackClothing
+  id: MessengerBagSecurity
+  name: security messenger bag
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Couriers/courier_security.rsi
+    state: courier-security
+  - type: Icon
+    sprite: Clothing/Back/Couriers/courier_security.rsi
+    state: courier-security
+  - type: Clothing
+    sprite: Clothing/Back/Couriers/courier_security.rsi
+    HeldPrefix: security
+    ClothingPrefix: courier-security
