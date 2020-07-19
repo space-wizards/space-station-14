@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                         consumer.ReceivedPower = consumer.DrawRate;
                     }
                 }
-                else if (remainingSupply < categoryPowerDemand) //cannot fully power all, split power
+                else //cannot fully power all, split power
                 {
                     var availiablePowerFraction = (float) remainingSupply / categoryPowerDemand;
                     remainingSupply = 0;
