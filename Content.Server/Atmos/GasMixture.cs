@@ -6,8 +6,10 @@ using System.Text;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
+using NFluidsynth;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Logger = Robust.Shared.Log.Logger;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
@@ -20,6 +22,7 @@ namespace Content.Server.Atmos
     {
         private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
         private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
+        private float _temperature;
         public IReadOnlyList<float> Gases => _moles;
 
         public bool Immutable { get; private set; }
@@ -38,7 +41,7 @@ namespace Content.Server.Atmos
                     capacity += Atmospherics.GetGas(i).SpecificHeat * moles;
                 }
 
-                return MathF.Min(capacity, MinimumHeatCapacity);
+                return MathF.Min(capacity, Atmospherics.MinimumHeatCapacity);
             }
         }
 
@@ -55,7 +58,7 @@ namespace Content.Server.Atmos
                     capacity += Atmospherics.GetGas(i).SpecificHeat * moles;
                 }
 
-                return MathF.Min(capacity, MinimumHeatCapacity);
+                return MathF.Min(capacity, Atmospherics.MinimumHeatCapacity);
             }
         }
 
@@ -86,13 +89,23 @@ namespace Content.Server.Atmos
 
         public float ThermalEnergy => Temperature * HeatCapacity;
 
-        public float Temperature { get; set; }
+        public float Temperature
+        {
+            get => _temperature;
+            set
+            {
+                if (value == 0f)
+                {
+                    Logger.Info("FUCK FUCK FUCK!");
+                }
+                if (Immutable) return;
+                _temperature = value;
+            }
+        }
 
         public float TemperatureArchived { get; private set; }
 
         public float Volume { get; set; }
-
-        public float MinimumHeatCapacity { get; set; }
 
         public GasMixture()
         {

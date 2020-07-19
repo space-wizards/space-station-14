@@ -15,6 +15,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Observer
 {

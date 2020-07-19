@@ -27,6 +27,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (tile == null) return;
 
             message.AddText($"Pressure: {tile.Pressure}\n");
+            message.AddText($"Temperature: {tile.Temperature}\n");
 
             for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {

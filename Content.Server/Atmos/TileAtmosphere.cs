@@ -60,8 +60,13 @@ namespace Content.Server.Atmos
             // TODO ATMOS Load default gases from tile here or something
             Air = new GasMixture(volume);
 
+            Air.Temperature = Atmospherics.T20C;
+
             if (_gridAtmosphereManager.IsSpace(GridIndices))
+            {
+                Air.Temperature = 0f;
                 Air.MarkImmutable();
+            }
         }
 
         private void Archive(int fireCount)

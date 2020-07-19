@@ -29,9 +29,9 @@ namespace Content.Server.Atmos
 
         public void PostInject()
         {
-            _mapManager.OnGridCreated += OnGridCreated;
-            _mapManager.OnGridRemoved += OnGridRemoved;
-            _pauseManager.OnGridInitialize += OnGridInitialize;
+            //_mapManager.OnGridCreated += OnGridCreated;
+            //_mapManager.OnGridRemoved += OnGridRemoved;
+            //_pauseManager.OnGridInitialize += OnGridInitialize;
             _mapManager.TileChanged += AtmosphereMapOnTileChanged;
         }
 
@@ -87,10 +87,6 @@ namespace Content.Server.Atmos
             {
                 return;
             }
-
-            // If the grid itself has no atmosphere simulation, there's no need
-            // create one - since the atmospheres will be built correctly as
-            // necessary later. That's why we *don't* use GetGridAtmosphereManager()
 
             if (!_gridAtmosphereManagers.TryGetValue(eventArgs.NewTile.GridIndex, out var gridManager))
             {
