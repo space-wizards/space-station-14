@@ -384,21 +384,6 @@ namespace Content.Server.GameObjects.Components.GUI
             return hand.Container.CanRemove(hand.Entity);
         }
 
-        // TODO: This but better
-        private HandLocation GetLocation(string index)
-        {
-            if (index.Contains("left") && _hands.All(x => x.Location != HandLocation.Left))
-            {
-                return HandLocation.Left;
-            }
-            else if (index.Contains("right") && _hands.All(x => x.Location != HandLocation.Right))
-            {
-                return HandLocation.Right;
-            }
-
-            return HandLocation.Middle;
-        }
-
         public void AddHand(string name)
         {
             if (HasHand(name))
@@ -407,11 +392,9 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             var container = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + name, Owner);
-            var location = GetLocation(name);
-            var hand = new Hand(name, location, container);
+            var hand = new Hand(name, container);
 
             _hands.Add(hand);
-            _hands.Sort((a, b) => b.Location.CompareTo(a.Location));
 
             ActiveHand ??= name;
 
@@ -449,7 +432,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
             for (var i = 0; i < _hands.Count; i++)
             {
-                var hand = _hands[i].ToShared(i);
+                var location = i == 0
+                    ? HandLocation.Right
+                    : i == _hands.Count - 1
+                        ? HandLocation.Left
+                        : HandLocation.Middle;
+
+                var hand = _hands[i].ToShared(i, location);
                 hands.Add(hand);
             }
 
@@ -634,15 +623,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
     public class Hand : IDisposable
     {
-        public Hand(string name, HandLocation location, ContainerSlot container)
+        public Hand(string name, ContainerSlot container)
         {
             Name = name;
-            Location = location;
             Container = container;
         }
 
         public string Name { get; }
-        public HandLocation Location { get; }
         public IEntity? Entity => Container.ContainedEntity;
         public ContainerSlot Container { get; }
 
@@ -651,9 +638,9 @@ namespace Content.Server.GameObjects.Components.GUI
             Container.Shutdown(); // TODO verify this
         }
 
-        public SharedHand ToShared(int index)
+        public SharedHand ToShared(int index, HandLocation location)
         {
-            return new SharedHand(index, Name, Entity?.Uid, Location);
+            return new SharedHand(index, Name, Entity?.Uid, location);
         }
     }
 }

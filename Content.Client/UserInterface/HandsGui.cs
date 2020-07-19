@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Items;
 using Content.Client.Utility;
@@ -86,7 +85,7 @@ namespace Content.Client.UserInterface
             };
         }
 
-        private Texture LocationTexture(HandLocation location)
+        private Texture HandTexture(HandLocation location)
         {
             switch (location)
             {
@@ -111,7 +110,7 @@ namespace Content.Client.UserInterface
         /// </param>
         private void AddHand(Hand hand, HandLocation buttonLocation)
         {
-            var buttonTexture = LocationTexture(buttonLocation);
+            var buttonTexture = HandTexture(buttonLocation);
             var storageTexture = _resourceCache.GetTexture("/Textures/Interface/Inventory/back.png");
             var button = new HandButton(buttonTexture, storageTexture, buttonLocation);
             var slot = hand.Name;
@@ -184,7 +183,7 @@ namespace Content.Client.UserInterface
                     AddHand(hand, hand.Location);
                 }
 
-                hand.Button!.Button.Texture = LocationTexture(hand.Location);
+                hand.Button!.Button.Texture = HandTexture(hand.Location);
                 hand.Button!.SetPositionInParent(i);
                 _itemSlotManager.SetItemSlot(hand.Button, hand.Entity);
             }
