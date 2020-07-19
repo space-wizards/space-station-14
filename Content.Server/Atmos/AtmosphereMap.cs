@@ -40,10 +40,10 @@ namespace Content.Server.Atmos
             if (_gridAtmosphereManagers.TryGetValue(grid, out var manager))
                 return manager;
 
-            if (!_mapManager.GridExists(grid))
+            if (!_mapManager.TryGetGrid(grid, out var gridInstance))
                 throw new ArgumentException("Cannot get atmosphere of missing grid", nameof(grid));
 
-            manager = new GridAtmosphereManager(_mapManager.GetGrid(grid));
+            manager = new GridAtmosphereManager(gridInstance);
             _gridAtmosphereManagers[grid] = manager;
             return manager;
         }
