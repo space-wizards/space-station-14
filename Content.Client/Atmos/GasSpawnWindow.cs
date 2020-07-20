@@ -4,6 +4,6 @@ namespace Content.Server.Atmos
 {
     public class GasSpawnWindow : SS14Window
     {
-        
+
     }
 }
