@@ -1,27 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.EntitySystems;
-using NFluidsynth;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Logger = Robust.Shared.Log.Logger;
-using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
@@ -36,7 +24,7 @@ namespace Content.Server.Atmos
         public float PressureDifference { get; set; } = 0;
         public int AtmosCooldown { get; set; } = 0;
         public bool Excited { get; set; } = false;
-        private IGridAtmosphereManager _gridAtmosphereManager;
+        private GridAtmosphereManager _gridAtmosphereManager;
 
         private readonly Dictionary<Direction, TileAtmosphere> _adjacentTiles = new Dictionary<Direction, TileAtmosphere>();
 
@@ -48,7 +36,7 @@ namespace Content.Server.Atmos
         public ExcitedGroup ExcitedGroup { get; set; }
         public GasMixture Air { get; set; }
 
-        public TileAtmosphere(IGridAtmosphereManager atmosphereManager, GridId gridIndex, MapIndices gridIndices, float volume)
+        public TileAtmosphere(GridAtmosphereManager atmosphereManager, GridId gridIndex, MapIndices gridIndices, float volume)
         {
             _gridAtmosphereManager = atmosphereManager;
             GridIndex = gridIndex;
@@ -152,17 +140,21 @@ namespace Content.Server.Atmos
                 for (var i = Atmospherics.ZumosTileLimit; i < tileCount; i++)
                 {
                     //We unmark them. We shouldn't be pushing/pulling gases to/from them.
+                    var tile = tiles[i];
+                    if (tile == null) continue;
                     tiles[i]._tileAtmosInfo.LastQueueCycle = 0;
                 }
 
-                Array.Resize(ref tiles, Atmospherics.ZumosTileLimit);
+                tileCount = Atmospherics.ZumosTileLimit;
             }
+
+            Array.Resize(ref tiles, tileCount);
 
             var averageMoles = totalMoles / (tiles.Length);
             var giverTiles = new List<TileAtmosphere>();
             var takerTiles = new List<TileAtmosphere>();
 
-            for (var i = 0; i < tiles.Length; i++)
+            for (var i = 0; i < tileCount; i++)
             {
                 var tile = tiles[i];
                 tile._tileAtmosInfo.LastCycle = cycleNum;
@@ -475,7 +467,11 @@ namespace Content.Server.Atmos
         public void ProcessCell(int fireCount)
         {
             // Can't process a tile without air
-            if (Air == null) return;
+            if (Air == null)
+            {
+                _gridAtmosphereManager.RemoveActiveTile(this);
+                return;
+            }
 
             if (_archivedCycle < fireCount)
                 Archive(fireCount);
@@ -545,7 +541,16 @@ namespace Content.Server.Atmos
 
                 React();
                 UpdateVisuals();
+
+                if((ExcitedGroup == null && !(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true)))
+                    || (AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2)))
+                    _gridAtmosphereManager.RemoveActiveTile(this);
             }
+        }
+
+        private bool ConsiderSuperconductivity(bool starting)
+        {
+            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

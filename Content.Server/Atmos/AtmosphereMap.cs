@@ -35,7 +35,7 @@ namespace Content.Server.Atmos
             _mapManager.TileChanged += AtmosphereMapOnTileChanged;
         }
 
-        public IGridAtmosphereManager GetGridAtmosphereManager(GridId grid)
+        public GridAtmosphereManager GetGridAtmosphereManager(GridId grid)
         {
             if (_gridAtmosphereManagers.TryGetValue(grid, out var manager))
                 return manager;

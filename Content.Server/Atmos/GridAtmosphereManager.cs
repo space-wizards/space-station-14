@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.Interfaces.Atmos;
 using Content.Shared.Atmos;
@@ -15,13 +16,12 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
-    /// <inheritdoc cref="IGridAtmosphereManager"/>
-    internal class GridAtmosphereManager : IGridAtmosphereManager
+    public class GridAtmosphereManager
     {
         private int _timer = 0;
         private int _updateCounter = 0;
         private readonly IMapGrid _grid;
-        private readonly HashSet<WeakReference<ExcitedGroup>> _excitedGroups = new HashSet<WeakReference<ExcitedGroup>>(1000);
+        private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
@@ -82,7 +82,6 @@ namespace Content.Server.Atmos
             }
         }
 
-        /// <inheritdoc />
         public void Invalidate(MapIndices indices)
         {
             _invalidatedCoords.Add(indices);
@@ -130,6 +129,7 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddActiveTile(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _grid.Index) return;
@@ -137,6 +137,7 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveActiveTile(TileAtmosphere tile)
         {
             _activeTiles.Remove(tile);
@@ -156,13 +157,13 @@ namespace Content.Server.Atmos
         }
 
         /// <inheritdoc />
-        public void AddExcitedGroup(WeakReference<ExcitedGroup> excitedGroup)
+        public void AddExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Add(excitedGroup);
         }
 
         /// <inheritdoc />
-        public void RemoveExcitedGroup(WeakReference<ExcitedGroup> excitedGroup)
+        public void RemoveExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Remove(excitedGroup);
         }
@@ -171,13 +172,6 @@ namespace Content.Server.Atmos
         public TileAtmosphere GetTile(MapIndices indices)
         {
             return !_tiles.TryGetValue(indices, out var tile) ? null : tile;
-        }
-
-        /// <inheritdoc />
-        public bool IsZoneBlocked(MapIndices indices)
-        {
-            var ac = GetObstructingComponent(indices);
-            return ac != null && ac.ZoneBlocked;
         }
 
         /// <inheritdoc />
@@ -280,14 +274,8 @@ namespace Content.Server.Atmos
 
         public void ProcessExcitedGroups()
         {
-            foreach (var weak in _excitedGroups.ToArray())
+            foreach (var excitedGroup in _excitedGroups.ToArray())
             {
-                if (!weak.TryGetTarget(out var excitedGroup))
-                {
-                    _excitedGroups.Remove(weak);
-                    continue;
-                }
-
                 excitedGroup.BreakdownCooldown++;
                 excitedGroup.DismantleCooldown++;
 

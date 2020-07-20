@@ -22,6 +22,7 @@ namespace Content.Shared.Atmos
         }
 
         private static readonly GasPrototype[] GasPrototypes;
+
         public static GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
         public static GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
 
@@ -108,6 +109,11 @@ namespace Content.Shared.Atmos
         ///     Minimum temperature difference before the gas temperatures are just set to be equal.
         /// </summary>
         public const float MinimumTemperatureDeltaToConsider = 0.5f;
+
+        /// <summary>
+        ///     Minimum temperature for starting superconduction.
+        /// </summary>
+        public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
 
         /// <summary>
         ///     Minimum heat capacity.

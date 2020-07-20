@@ -12,9 +12,8 @@ namespace Content.Server.Atmos
     public class ExcitedGroup : IDisposable
     {
         private bool _disposed = false;
-        private WeakReference<ExcitedGroup> _weakReference;
-        private readonly List<TileAtmosphere> _tile = new List<TileAtmosphere>();
-        private IGridAtmosphereManager _gridAtmosphereManager;
+        private readonly HashSet<TileAtmosphere> _tile = new HashSet<TileAtmosphere>(Atmospherics.ZumosTileLimit);
+        private GridAtmosphereManager _gridAtmosphereManager;
 
         public int DismantleCooldown { get; set; }
         public int BreakdownCooldown { get; set; }
@@ -33,9 +32,8 @@ namespace Content.Server.Atmos
 
             if (ourSize > otherSize)
             {
-                for (int i = 0; i < otherSize; i++)
+                foreach (var tile in other._tile)
                 {
-                    var tile = other._tile[i];
                     tile.ExcitedGroup = this;
                     _tile.Add(tile);
                 }
@@ -44,21 +42,14 @@ namespace Content.Server.Atmos
             }
             else
             {
-                for (int i = 0; i < ourSize; i++)
+                foreach (var tile in _tile)
                 {
-                    var tile = _tile[i];
                     tile.ExcitedGroup = other;
                     other._tile.Add(tile);
                 }
                 _tile.Clear();
-                ;
                 other.ResetCooldowns();
             }
-        }
-
-        public ExcitedGroup()
-        {
-            _weakReference = new WeakReference<ExcitedGroup>(this);
         }
 
         ~ExcitedGroup()
@@ -66,10 +57,10 @@ namespace Content.Server.Atmos
             Dispose();
         }
 
-        public void Initialize(IGridAtmosphereManager gridAtmosphereManager)
+        public void Initialize(GridAtmosphereManager gridAtmosphereManager)
         {
             _gridAtmosphereManager = gridAtmosphereManager;
-            _gridAtmosphereManager.AddExcitedGroup(_weakReference);
+            _gridAtmosphereManager.AddExcitedGroup(this);
         }
 
         public void ResetCooldowns()
@@ -132,7 +123,7 @@ namespace Content.Server.Atmos
         {
             if (_disposed) return;
             _disposed = true;
-            _gridAtmosphereManager.RemoveExcitedGroup(_weakReference);
+            _gridAtmosphereManager.RemoveExcitedGroup(this);
             _gridAtmosphereManager = null;
         }
     }

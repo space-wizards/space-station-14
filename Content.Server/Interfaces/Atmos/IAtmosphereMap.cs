@@ -21,7 +21,7 @@ namespace Content.Server.Interfaces.Atmos
         /// </remarks>
         /// <param name="grid">The ID of the grid in question</param>
         /// <returns>The atmosphere manager for the selected grid</returns>
-        IGridAtmosphereManager GetGridAtmosphereManager(GridId grid);
+        GridAtmosphereManager GetGridAtmosphereManager(GridId grid);
 
         /// <summary>
         /// Update all the ship's atmospheres, both for reactions and updating modified rooms.
