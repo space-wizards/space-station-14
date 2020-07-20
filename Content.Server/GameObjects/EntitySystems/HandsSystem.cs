@@ -32,6 +32,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -239,17 +240,26 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 return false;
             }
 
-            if (!EntityManager.TryGetEntity(uid, out var pointed))
+            string message;
+            if (EntityManager.TryGetEntity(uid, out var pointed))
             {
-                return false;
+                message = player == pointed
+                    ? $"{player.Name} {Loc.GetString("points at {0:themself}", player)}"
+                    : $"{player.Name} {Loc.GetString("points at {0:theName}", pointed)}";
+            }
+            else
+            {
+                var tileRef = _mapManager.GetGrid(coords.GridID).GetTileRef(coords);
+                var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
+
+                message = $"{player.Name} {Loc.GetString("points at {0}", tileDef.DisplayName)}";
             }
 
             player.Transform.LocalRotation = new Angle(
-                pointed.Transform.MapPosition.Position -
+                coords.ToMapPos(_mapManager) -
                 player.Transform.MapPosition.Position);
 
             var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
-            var message = $"{player.Name} {Loc.GetString("points at the {0}", pointed.Name)}";
 
             EntityManager.SpawnEntity("pointingarrow", coords);
 
