@@ -261,7 +261,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                     continue;
                 }
 
-                pointed.PopupMessage(viewer.AttachedEntity, message);
+                player.PopupMessage(viewer.AttachedEntity, message);
             }
 
             return true;
