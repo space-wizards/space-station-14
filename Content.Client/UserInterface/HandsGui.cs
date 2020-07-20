@@ -33,6 +33,7 @@ namespace Content.Client.UserInterface
         private readonly ItemStatusPanel _topPanel;
         private readonly ItemStatusPanel _rightPanel;
 
+        private readonly HBoxContainer _guiContainer;
         private readonly VBoxContainer _handsColumn;
         private readonly HBoxContainer _handsContainer;
 
@@ -42,7 +43,7 @@ namespace Content.Client.UserInterface
         {
             IoCManager.InjectDependencies(this);
 
-            AddChild(new HBoxContainer
+            AddChild(_guiContainer = new HBoxContainer
             {
                 SeparationOverride = 0,
                 Children =
@@ -269,38 +270,87 @@ namespace Content.Client.UserInterface
                 _itemSlotManager.UpdateCooldown(hand.Button, hand.Entity);
             }
 
-            if (component.Hands.Count == 2)
+            switch (component.Hands.Count)
             {
-                if (_lastHands != 2)
-                {
+                case var n when n == 0 && _lastHands != 0:
+                    _guiContainer.Visible = false;
+
                     _topPanel.Update(null);
+                    _leftPanel.Update(null);
+                    _rightPanel.Update(null);
 
-                    if (_handsColumn.Children.Contains(_topPanel))
+                    break;
+                case 1:
+                    if (_lastHands != 1)
                     {
-                        _handsColumn.RemoveChild(_topPanel);
+                        _guiContainer.Visible = true;
+
+                        _topPanel.Update(null);
+                        _topPanel.Visible = false;
+
+                        _leftPanel.Update(null);
+                        _leftPanel.Visible = false;
+
+                        _rightPanel.Visible = true;
+
+                        if (!_guiContainer.Children.Contains(_rightPanel))
+                        {
+                            _rightPanel.AddChild(_rightPanel);
+                            _rightPanel.SetPositionFirst();
+                        }
                     }
-                }
 
-                _leftPanel.Update(component.Hands[0].Entity);
-                _rightPanel.Update(component.Hands[1].Entity);
+                    _rightPanel.Update(component.Hands[0].Entity);
 
-                // Order is left, right
-                foreach (var hand in component.Hands)
-                {
-                    var tooltip = GetItemPanel(hand);
-                    tooltip.Update(hand.Entity);
-                }
-            }
-            else
-            {
-                if (_lastHands == 2 && !_handsColumn.Children.Contains(_topPanel))
-                {
-                    _handsColumn.AddChild(_topPanel);
-                }
+                    break;
+                case 2:
+                    if (_lastHands != 2)
+                    {
+                        _guiContainer.Visible = true;
+                        _topPanel.Update(null);
+                        _topPanel.Visible = false;
 
-                _topPanel.Update(component.ActiveHand);
-                _leftPanel.Update(null);
-                _rightPanel.Update(null);
+                        _leftPanel.Visible = true;
+                        _rightPanel.Visible = true;
+
+                        if (_handsColumn.Children.Contains(_topPanel))
+                        {
+                            _handsColumn.RemoveChild(_topPanel);
+                        }
+                    }
+
+                    _leftPanel.Update(component.Hands[0].Entity);
+                    _rightPanel.Update(component.Hands[1].Entity);
+
+                    // Order is left, right
+                    foreach (var hand in component.Hands)
+                    {
+                        var tooltip = GetItemPanel(hand);
+                        tooltip.Update(hand.Entity);
+                    }
+
+                    break;
+                case var n when n > 2:
+                    if (_lastHands <= 2)
+                    {
+                        _guiContainer.Visible = true;
+
+                        _topPanel.Visible = true;
+                        _leftPanel.Visible = false;
+                        _rightPanel.Visible = false;
+
+                        if (!_handsColumn.Children.Contains(_topPanel))
+                        {
+                            _handsColumn.AddChild(_topPanel);
+                            _topPanel.SetPositionFirst();
+                        }
+                    }
+
+                    _topPanel.Update(component.ActiveHand);
+                    _leftPanel.Update(null);
+                    _rightPanel.Update(null);
+
+                    break;
             }
 
             _lastHands = component.Hands.Count;
