@@ -10,9 +10,11 @@ using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -26,7 +28,7 @@ namespace Content.Client.GameObjects.Components.Mobs
     public sealed class ClientOverlayEffectsComponent : SharedOverlayEffectsComponent//, ICharacterUI
     {
         /// <summary>
-        /// An enum representing the current state being applied to the user
+        /// A list of overlay containers representing the current overlays applied
         /// </summary>
         private List<OverlayContainer> _currentEffects = new List<OverlayContainer>();
 
@@ -41,43 +43,57 @@ namespace Content.Client.GameObjects.Components.Mobs
         // Required dependencies
         [Dependency] private readonly IOverlayManager _overlayManager;
         [Dependency] private readonly IReflectionManager _reflectionManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IClientNetManager _netManager;
 #pragma warning restore 649
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            UpdateOverlays();
+        }
 
         public override void HandleMessage(ComponentMessage message, IComponent component)
         {
             switch (message)
             {
                 case PlayerAttachedMsg _:
-                    var overlays = new List<OverlayContainer>(_currentEffects);
-                    _currentEffects.Clear();
-                    SetEffects(overlays);
+                    UpdateOverlays();
                     break;
                 case PlayerDetachedMsg _:
-                    ActiveOverlays = new List<OverlayContainer>();
+                    ActiveOverlays.ForEach(o => _overlayManager.RemoveOverlay(o.ID));
                     break;
             }
         }
 
-        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession session = null)
         {
-            base.HandleComponentState(curState, nextState);
-
-            if (!(curState is OverlayEffectComponentState state))
+            base.HandleNetworkMessage(message, netChannel, session);
+            if (message is OverlayEffectComponentMessage overlayMessage)
             {
-                return;
+                SetEffects(overlayMessage.Overlays);
+            }
+        }
+
+        private void UpdateOverlays()
+        {
+            _currentEffects = _overlayManager.AllOverlays
+                .Where(overlay => Enum.IsDefined(typeof(SharedOverlayID), overlay.ID))
+                .Select(overlay => new OverlayContainer(overlay.ID))
+                .ToList();
+
+            foreach (var overlayContainer in ActiveOverlays)
+            {
+                if (!_overlayManager.HasOverlay(overlayContainer.ID))
+                {
+                    if (TryCreateOverlay(overlayContainer, out var overlay))
+                    {
+                        _overlayManager.AddOverlay(overlay);
+                    }
+                }
             }
 
-            if (_playerManager?.LocalPlayer != null && _playerManager.LocalPlayer.ControlledEntity != Owner)
-            {
-                _currentEffects = state.Overlays;
-                return;
-            }
-
-            if (ActiveOverlays.Equals(state.Overlays))
-                return;
-
-            ActiveOverlays = state.Overlays;
+            SendNetworkMessage(new ResendOverlaysMessage(), _netManager.ServerChannel);
         }
 
         private void SetEffects(List<OverlayContainer> newOverlays)
@@ -96,7 +112,13 @@ namespace Content.Client.GameObjects.Components.Mobs
                 {
                     AddOverlay(container);
                 }
+                else
+                {
+                    UpdateOverlayConfiguration(container, _overlayManager.GetOverlay(container.ID));
+                }
             }
+
+            _currentEffects = newOverlays;
         }
 
         private void RemoveOverlay(OverlayContainer container)
@@ -107,6 +129,11 @@ namespace Content.Client.GameObjects.Components.Mobs
 
         private void AddOverlay(OverlayContainer container)
         {
+            if (_overlayManager.HasOverlay(container.ID))
+            {
+                return;
+            }
+
             ActiveOverlays.Add(container);
             if (TryCreateOverlay(container, out var overlay))
             {
@@ -118,26 +145,38 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
         }
 
+        private void UpdateOverlayConfiguration(OverlayContainer container, Overlay overlay)
+        {
+            var configurableTypes = overlay.GetType()
+                .GetInterfaces()
+                .Where(type =>
+                    type.IsGenericType
+                    && type.GetGenericTypeDefinition() == typeof(IConfigurable<>)
+                    && container.Parameters.Exists(p => p.GetType() == type.GenericTypeArguments.First()))
+                .ToList();
+
+            if (configurableTypes.Count > 0)
+            {
+                foreach (var type in configurableTypes)
+                {
+                    var method = type.GetMethod(nameof(IConfigurable<object>.Configure));
+                    var parameter = container.Parameters
+                        .First(p => p.GetType() == type.GenericTypeArguments.First());
+
+                    method!.Invoke(overlay, new []{ parameter });
+                }
+            }
+        }
+
         private bool TryCreateOverlay(OverlayContainer container, out Overlay overlay)
         {
             var overlayTypes = _reflectionManager.GetAllChildren<Overlay>();
-            var foundType = overlayTypes.FirstOrDefault(t => t.Name == container.ID);
+            var overlayType = overlayTypes.FirstOrDefault(t => t.Name == container.ID);
 
-            if (foundType != null)
+            if (overlayType != null)
             {
-                overlay = Activator.CreateInstance(foundType) as Overlay;
-                var configurable = foundType
-                    .GetInterfaces()
-                    .FirstOrDefault(type =>
-                        type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IConfigurable<>)
-                                           && type.GenericTypeArguments.First() == container.GetType());
-
-                if (configurable != null)
-                {
-                    var method = overlay?.GetType().GetMethod("Configure");
-                    method?.Invoke(overlay, new []{ container });
-                }
-
+                overlay = Activator.CreateInstance(overlayType) as Overlay;
+                UpdateOverlayConfiguration(container, overlay);
                 return true;
             }
 

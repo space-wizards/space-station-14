@@ -1,6 +1,3 @@
-// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
 using System.Text;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
