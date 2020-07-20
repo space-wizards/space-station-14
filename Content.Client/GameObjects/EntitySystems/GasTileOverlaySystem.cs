@@ -26,10 +26,10 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        private float _timer = 0f;
-
-        public static GasPrototype GetGas(int gasId) =>
-            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(gasId.ToString());
+        private float[] _timer = new float[Atmospherics.TotalNumberOfGases];
+        private float[][] _frameDelays = new float[Atmospherics.TotalNumberOfGases][];
+        private int[] _frameCounter = new int[Atmospherics.TotalNumberOfGases];
+        private readonly Texture[][] _frames = new Texture[Atmospherics.TotalNumberOfGases][];
 
         private Dictionary<GridId, Dictionary<MapIndices, GasData[]>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, GasData[]>>();
 
@@ -40,6 +40,32 @@ namespace Content.Client.GameObjects.EntitySystems
             _overlayManager.AddOverlay(new GasTileOverlay());
 
             SubscribeNetworkEvent(new EntityEventHandler<GasTileOverlayMessage>(OnTileOverlayMessage));
+
+            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var gas = Atmospherics.GetGas(i);
+                switch (gas.GasOverlay)
+                {
+                    case SpriteSpecifier.Rsi animated:
+                        var rsi = _resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;
+                        var stateId = animated.RsiState;
+
+                        if(!rsi.TryGetState(stateId, out var state)) continue;
+
+                        _frames[i] = state.GetFrames(RSI.State.Direction.South);
+                        _frameDelays[i] = state.GetDelays();
+                        _frameCounter[i] = 0;
+                        break;
+                    case SpriteSpecifier.Texture texture:
+                        _frames[i] = new[] {texture.Frame0()};
+                        _frameDelays[i] = Array.Empty<float>();
+                        break;
+                    case null:
+                        _frames[i] = Array.Empty<Texture>();
+                        _frameDelays[i] = Array.Empty<float>();
+                        break;
+                }
+            }
         }
 
         public (Texture, float opacity)[] GetOverlays(GridId gridIndex, MapIndices indices)
@@ -51,22 +77,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             foreach (var gasData in overlays)
             {
-                var gas = GetGas(gasData.Index);
-
-                if (gas.GasOverlay is SpriteSpecifier.Rsi animated)
-                {
-                    var rsi = _resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;
-                    var stateId = animated.RsiState;
-
-                    if(!rsi.TryGetState(stateId, out var state)) continue;
-
-                    list.Add((state.GetFrameAtSecond(RSI.State.Direction.South, _timer), gasData.Opacity));
-
-                    continue;
-                }
-
-                var texture = gas.GasOverlay.Frame0();
-                list.Add((texture, gasData.Opacity));
+                var frames = _frames[gasData.Index];
+                list.Add((frames[_frameCounter[gasData.Index]], gasData.Opacity));
             }
 
             return list.ToArray();
@@ -93,7 +105,19 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.FrameUpdate(frameTime);
 
-            _timer += frameTime;
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var delays = _frameDelays[i];
+                if (delays.Length == 0) continue;
+
+                var frameCount = _frameCounter[i];
+                _timer[i] += frameTime;
+                if (_timer[i] >= delays[frameCount])
+                {
+                    _timer[i] = 0f;
+                    _frameCounter[i] = (frameCount + 1) % _frames[i].Length;
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.IoC;
+﻿using System.Collections.Generic;
+using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Atmos
@@ -8,11 +9,21 @@ namespace Content.Shared.Atmos
     /// </summary>
     public static class Atmospherics
     {
-        public static GasPrototype GetGas(int gasId) =>
-            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(gasId.ToString());
+        static Atmospherics()
+        {
+            var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
-        public static GasPrototype GetGas(Gas gasId) =>
-            IoCManager.Resolve<IPrototypeManager>().Index<GasPrototype>(((int)gasId).ToString());
+            GasPrototypes = new GasPrototype[TotalNumberOfGases];
+
+            for (int i = 0; i < TotalNumberOfGases; i++)
+            {
+                GasPrototypes[i] = protoMan.Index<GasPrototype>(i.ToString());
+            }
+        }
+
+        private static readonly GasPrototype[] GasPrototypes;
+        public static GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
+        public static GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
 
         #region ATMOS
         /// <summary>
