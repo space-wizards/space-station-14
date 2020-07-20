@@ -165,6 +165,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         void ILand.Land(LandEventArgs eventArgs)
         {
             if (_pressurized &&
+                !Opened &&
                 _random.Prob(0.25f) &&
                 Owner.TryGetComponent(out SolutionComponent component))
             {
