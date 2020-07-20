@@ -45,8 +45,6 @@ namespace Content.Shared.Chemistry
         /// <inheritdoc />
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _contents, "reagents", new List<ReagentQuantity>());
-
             serializer.DataReadWriteFunction(
                 "reagents",
                 new List<ReagentQuantity>(),

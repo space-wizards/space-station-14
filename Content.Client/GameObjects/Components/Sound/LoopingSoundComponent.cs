@@ -96,14 +96,11 @@ namespace Content.Client.GameObjects.Components.Sound
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Writing) return;
-            serializer.TryReadDataField("schedules", out List<ScheduledSound> schedules);
-            if (schedules == null) return;
-            foreach (var schedule in schedules)
-            {
-                if (schedule == null) continue;
-                AddScheduledSound(schedule);
-            }
+
+            serializer.DataReadFunction(
+                "schedules",
+                new List<ScheduledSound>(),
+                schedules => schedules.ForEach(AddScheduledSound));
         }
     }
 }
