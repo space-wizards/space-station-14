@@ -244,10 +244,14 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 return false;
             }
 
-            player.Transform.LocalRotation = new Angle(pointed.Transform.WorldPosition - player.Transform.WorldPosition);
+            player.Transform.LocalRotation = new Angle(
+                pointed.Transform.MapPosition.Position -
+                player.Transform.MapPosition.Position);
 
             var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
             var message = $"{player.Name} {Loc.GetString("points at the {0}", pointed.Name)}";
+
+            EntityManager.SpawnEntity("pointingarrow", coords);
 
             // TODO: FOV
             foreach (var viewer in viewers)

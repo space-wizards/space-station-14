@@ -1,0 +1,9 @@
+﻿- type: entity
+  name: pointing arrow
+  id: pointingarrow
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Interface/Misc/pointing.rsi
+    state: pointing
+  - type: PointingArrow
