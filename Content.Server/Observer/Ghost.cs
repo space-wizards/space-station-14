@@ -1,12 +1,17 @@
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Shared.Atmos;
 using Content.Shared.GameObjects;
 using Robust.Server.Interfaces.Console;
+using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Server.Observer
 {
@@ -24,6 +29,18 @@ namespace Content.Server.Observer
                 return;
             }
 
+            var gam = EntitySystem.Get<AtmosphereSystem>()
+                .GetGridAtmosphere(player.AttachedEntity.Transform.GridID);
+
+            gam?.RepopulateTiles();
+
+            var gridPos = player.AttachedEntity.Transform.GridPosition;
+
+            var indices = new MapIndices((int)gridPos.X, (int)gridPos.Y);
+            var tile = gam?.GetTile(indices);
+            tile?.Air?.Add(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
+            gam?.AddActiveTile(tile);
+
             var mind = player.ContentData().Mind;
             var canReturn = player.AttachedEntity != null;
             var name = player.AttachedEntity?.Name ?? player.Name;
@@ -38,6 +55,8 @@ namespace Content.Server.Observer
             }
 
             var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
+
+
 
             if (canReturn && player.AttachedEntity.TryGetComponent(out SpeciesComponent species))
             {

@@ -69,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             RepopulateTiles();
         }
 
-        private void RepopulateTiles()
+        public void RepopulateTiles()
         {
             _tiles.Clear();
 
