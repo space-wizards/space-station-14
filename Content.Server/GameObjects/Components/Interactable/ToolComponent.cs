@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.EntitySystems;
+using Mono.Cecil;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -65,14 +66,25 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var qualities = serializer.ReadDataField("qualities", new List<ToolQuality>());
-                foreach (var quality in qualities)
+            serializer.DataReadWriteFunction(
+                "qualities",
+                new List<ToolQuality>(),
+                qualities => qualities.ForEach(AddQuality),
+                () =>
                 {
-                    AddQuality(quality);
-                }
-            }
+                    var qualities = new List<ToolQuality>();
+
+                    foreach (ToolQuality quality in Enum.GetValues(typeof(ToolQuality)))
+                    {
+                        if ((_qualities & quality) != 0)
+                        {
+                            qualities.Add(quality);
+                        }
+                    }
+
+                    return qualities;
+                });
+
             serializer.DataField(this, mod => SpeedModifier, "speed", 1);
             serializer.DataField(this, use => UseSound, "useSound", string.Empty);
             serializer.DataField(this, collection => UseSoundCollection, "useSoundCollection", string.Empty);
