@@ -14,3 +14,4 @@
   - type: Icon
     texture: Objects\Devices\radio.png
   - type: Listening
+  - type: Radio
