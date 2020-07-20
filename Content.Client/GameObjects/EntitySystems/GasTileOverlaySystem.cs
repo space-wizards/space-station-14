@@ -71,7 +71,7 @@ namespace Content.Client.GameObjects.EntitySystems
         public (Texture, float opacity)[] GetOverlays(GridId gridIndex, MapIndices indices)
         {
             if (!_overlay.TryGetValue(gridIndex, out var tiles) || !tiles.TryGetValue(indices, out var overlays))
-                return new (Texture, float)[0];
+                return Array.Empty<(Texture, float)>();
 
             var list = new (Texture, float)[overlays.Length];
 
