@@ -333,6 +333,18 @@ namespace Content.Server.GameTicking
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (player == null)
+            {
+                shell.SendText(player, "Only a player can run this command.");
+                return;
+            }
+
+            if (player.AttachedEntity == null)
+            {
+                shell.SendText(player, "You have no entity.");
+                return;
+            }
+
             var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
             var hand = manager.PartDictionary.First(x => x.Key == string.Join(" ", args));
             manager.InstallBodyPart(hand.Value, hand.Key + new Random());
@@ -347,6 +359,18 @@ namespace Content.Server.GameTicking
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (player == null)
+            {
+                shell.SendText(player, "Only a player can run this command.");
+                return;
+            }
+
+            if (player.AttachedEntity == null)
+            {
+                shell.SendText(player, "You have no entity.");
+                return;
+            }
+
             var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
             var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
             manager.DisconnectBodyPart(hand.Value, true);
