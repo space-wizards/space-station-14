@@ -157,7 +157,7 @@ namespace Content.Client.GameObjects
         {
             base.ExposeData(serializer);
 
-            if (!serializer.Reading)
+            if (serializer.Writing)
             {
                 return;
             }
