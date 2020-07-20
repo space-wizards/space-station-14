@@ -18,9 +18,7 @@ namespace Content.Server.GameObjects.Components
             if (Owner.TryGetComponent<RadioComponent>(out RadioComponent radio))
             {
                 radio.PassOnMessage(speech);
-            }
-                
+            }   
         }
-
     }
 }
