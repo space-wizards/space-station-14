@@ -83,8 +83,7 @@ namespace Content.Server.Chat
                         && !source.HasComponent<RadioComponent>())
                     {
                         listener.HeardSpeech(message);
-                    }
-                        
+                    }     
                 }
             }
         }

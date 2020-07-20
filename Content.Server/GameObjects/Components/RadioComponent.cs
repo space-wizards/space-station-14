@@ -56,7 +56,6 @@ namespace Content.Server.GameObjects.Components.Interactable
         public void Speaker(string message)
         {
             var chat = IoCManager.Resolve<IChatManager>();
-
             chat.EntitySay(Owner, message);
         }
 
