@@ -16,6 +16,9 @@ using System;
 using Content.Server.GameObjects.Components;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.EntitySystems;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Robust.Shared.Interfaces.Map;
 
 namespace Content.Server.Chat
 {
@@ -27,6 +30,8 @@ namespace Content.Server.Chat
         private const int VoiceRange = 7; // how far voice goes in world units
 
 #pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -74,17 +79,17 @@ namespace Content.Server.Chat
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            var entities = source.EntityManager.GetEntitiesInRange(pos, VoiceRange);
-            if (entities.Count() > 0)
+            if (!source.HasComponent<ListeningComponent>())
             {
-                foreach (var entity in entities)
+                var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>().GetActiveListeners();
+                foreach (var listener in listeners.ToArray())
                 {
-                    if (entity.TryGetComponent<ListeningComponent>(out ListeningComponent listener)
-                        && !source.HasComponent<RadioComponent>())
+                    if( pos.Distance(_mapManager, listener.Owner.Transform.GridPosition) < VoiceRange)
                     {
-                        listener.HeardSpeech(message);
-                    }     
+                    listener.PassSpeechData(message, source);
+                    }
                 }
+
             }
         }
 

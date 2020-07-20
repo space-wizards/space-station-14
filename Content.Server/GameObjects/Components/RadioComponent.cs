@@ -15,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    class RadioComponent : Component, IUse
+    class RadioComponent : Component, IUse, IListen
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -25,6 +25,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         public override string Name => "Radio";
 
         private bool _radioOn;
+        private int _listenRange = 7;
         private RadioSystem _radioSystem = default!;
 
         [ViewVariables]
@@ -43,6 +44,19 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.Initialize();
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
+
+            RadioOn = true;
+            _radioSystem.Subscribe(this);
+        }
+
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+
+            if(RadioOn)
+            {
+                _radioSystem.Unsubscribe(this);
+            }
         }
 
         public void PassOnMessage(string message)
@@ -73,6 +87,16 @@ namespace Content.Server.GameObjects.Components.Interactable
                 _radioSystem.Unsubscribe(this);
                 return true;
             }
+        }
+
+        public void HeardSpeech(string speech, IEntity source)
+        {
+            PassOnMessage(speech);
+        }
+
+        public int GetListenRange()
+        {
+            return _listenRange;
         }
     }
 }
