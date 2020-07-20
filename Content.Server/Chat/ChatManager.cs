@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using Content.Server.GameObjects.Components;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Interactable;
 
 namespace Content.Server.Chat
 {
@@ -73,12 +74,13 @@ namespace Content.Server.Chat
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            var entities = source.EntityManager.GetEntitiesInRange(pos, VoiceRange);
+            var entities = source.EntityManager.GetEntitiesInRange(pos, (VoiceRange / 7));
             if (entities.Count() > 0)
             {
                 foreach (var entity in entities)
                 {
-                    if (entity.TryGetComponent<ListeningComponent>(out ListeningComponent listener))
+                    if (entity.TryGetComponent<ListeningComponent>(out ListeningComponent listener)
+                        && !source.HasComponent<RadioComponent>())
                     {
                         listener.HeardSpeech(message);
                     }
