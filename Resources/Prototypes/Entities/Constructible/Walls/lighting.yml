@@ -22,8 +22,6 @@
     energy: 1.2
     offset: "0.5, 0"
     color: "#DCDCC6"
-  - type: Physics
-    Anchored: true
   placement:
     snap:
     - Wallmount

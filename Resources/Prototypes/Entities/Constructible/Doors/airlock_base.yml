@@ -54,8 +54,6 @@
   - type: Occluder
   - type: SnapGrid
     offset: Center
-  - type: Physics
-    Anchored: true
   placement:
     mode: SnapgridCenter
 

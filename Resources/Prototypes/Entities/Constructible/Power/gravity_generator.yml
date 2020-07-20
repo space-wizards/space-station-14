@@ -36,7 +36,5 @@
     interfaces:
       - key: enum.GravityGeneratorUiKey.Key
         type: GravityGeneratorBoundUserInterface
-  - type: Physics
-    Anchored: true
   placement:
     mode: AlignTileAny

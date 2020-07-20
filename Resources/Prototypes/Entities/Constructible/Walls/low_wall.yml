@@ -29,8 +29,6 @@
   - type: LowWall
     key: walls
     base: metal_
-  - type: Physics
-    Anchored: true
 
 - type: entity
   id: LowWallOverlay

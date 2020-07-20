@@ -36,8 +36,6 @@
   - type: IconSmooth
     key: walls
     base: solid
-  - type: Physics
-    Anchored: true
 
 - type: entity
   id: brick_wall
