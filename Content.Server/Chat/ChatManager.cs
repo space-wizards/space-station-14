@@ -74,7 +74,7 @@ namespace Content.Server.Chat
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            var entities = source.EntityManager.GetEntitiesInRange(pos, (VoiceRange / 7));
+            var entities = source.EntityManager.GetEntitiesInRange(pos, VoiceRange);
             if (entities.Count() > 0)
             {
                 foreach (var entity in entities)
