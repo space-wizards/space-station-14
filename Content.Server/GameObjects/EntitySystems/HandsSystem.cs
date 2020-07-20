@@ -20,6 +20,7 @@ using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.Interfaces;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -29,6 +30,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IPlayerManager _playerManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -48,6 +50,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
+                .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(Point))
                 .Register<HandsSystem>();
         }
 
@@ -219,6 +222,41 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                         handsComp.PutInHandOrDrop(lastStoredEntity.GetComponent<ItemComponent>());
                 }
             }
+        }
+
+        private bool Point(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            var entity = session?.AttachedEntity;
+            if (entity == null)
+            {
+                return false;
+            }
+
+            if (!coords.InRange(_mapManager, entity.Transform.GridPosition, 15))
+            {
+                entity.PopupMessage(entity, Loc.GetString("You can't reach there!"));
+                return false;
+            }
+
+            if (!EntityManager.TryGetEntity(uid, out var pointed))
+            {
+                return false;
+            }
+
+            var viewers = _playerManager.GetPlayersInRange(entity.Transform.GridPosition, 15);
+            var message = $"{entity.Name} {Loc.GetString("points at the {0}", pointed.Name)}";
+
+            foreach (var viewer in viewers)
+            {
+                if (viewer.AttachedEntity == null)
+                {
+                    continue;
+                }
+
+                pointed.PopupMessage(viewer.AttachedEntity, message);
+            }
+
+            return true;
         }
     }
 }
