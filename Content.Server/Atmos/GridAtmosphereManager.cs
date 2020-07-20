@@ -47,7 +47,7 @@ namespace Content.Server.Atmos
         {
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
 
-            var tile = GetTile(indices).Tile;
+            var tile = _grid.GetTileRef(indices).Tile;
 
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var tileDef = (ContentTileDefinition)tileDefinitionManager[tile.TypeId];

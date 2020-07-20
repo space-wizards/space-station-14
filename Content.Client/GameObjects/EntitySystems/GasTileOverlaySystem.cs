@@ -82,9 +82,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (!_overlay.TryGetValue(data.GridIndex, out var gridOverlays))
                 {
                 	gridOverlays = new Dictionary<MapIndices, GasData[]>();
-                    _overlay.Add(data.GridIndex, gridOverlays)
+                    _overlay.Add(data.GridIndex, gridOverlays);
                 }
-                
+
                 gridOverlays[data.GridIndices] = data.GasData;
             }
         }
