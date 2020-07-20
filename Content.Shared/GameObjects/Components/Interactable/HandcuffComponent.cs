@@ -39,7 +39,7 @@ namespace Content.Shared.GameObjects.Components.Interactable
         /// </summary>
         [ViewVariables] private float breakoutTime;
 
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _cancellationTokenSource;
 
         private readonly float interactRange;
 
@@ -51,15 +51,14 @@ namespace Content.Shared.GameObjects.Components.Interactable
         {
             interactRange = SharedInteractionSystem.InteractionRange / 2;
             _cancellationTokenSource = new CancellationTokenSource();
-            //IoCManager.InjectDependencies(this);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref cuffTime, "cuffTime", 5.0f);
-            serializer.DataField(ref breakoutTime, "breakoutTime", 60.0f);
-            serializer.DataField(ref uncuffTime, "uncuffTime", 10.0f);
+            serializer.DataField(ref breakoutTime, "breakoutTime", 30.0f);
+            serializer.DataField(ref uncuffTime, "uncuffTime", 5.0f);
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -68,6 +67,9 @@ namespace Content.Shared.GameObjects.Components.Interactable
             {
                 return;
             }
+
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
 
             //HandsComponent isn't accessible in Shared
             /*if (!eventArgs.Target.TryGetComponent<HandsComponent>(out var sharedHands))
@@ -80,6 +82,7 @@ namespace Content.Shared.GameObjects.Components.Interactable
             {
                 _notifyManager.PopupMessage(eventArgs.User, eventArgs.User,
                     "Cuffing yourself is a bad idea.");
+                return;
             }
 
             if (!EntitySystem.Get<SharedInteractionSystem>()
@@ -98,7 +101,7 @@ namespace Content.Shared.GameObjects.Components.Interactable
 
             startPosition = eventArgs.Target.Transform.GridPosition;
             // TODO: do_after() once it exists
-            Timer.Spawn(TimeSpan.FromSeconds(breakoutTime), () => Cuff(eventArgs.User, eventArgs.Target), _cancellationTokenSource.Token);
+            Timer.Spawn(TimeSpan.FromSeconds(cuffTime), () => Cuff(eventArgs.User, eventArgs.Target), _cancellationTokenSource.Token);
         }
 
         private void Cuff(IEntity user, IEntity target)
@@ -111,9 +114,9 @@ namespace Content.Shared.GameObjects.Components.Interactable
                 return;
             }
 
-            if (Owner.Transform.GridPosition != startPosition)
+            if (target.Transform.GridPosition != startPosition)
             {
-                _notifyManager.PopupMessage(user, user, "You failed to use the cuffs, stand still next time.");
+                _notifyManager.PopupMessage(user, user, "You failed to use the cuffs, the target needs to stand still.");
                 return;
             }
 
