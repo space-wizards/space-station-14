@@ -73,15 +73,16 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!_overlay.TryGetValue(gridIndex, out var tiles) || !tiles.TryGetValue(indices, out var overlays))
                 return new (Texture, float)[0];
 
-            var list = new List<(Texture, float)>();
+            var list = new (Texture, float)[overlays.Length];
 
-            foreach (var gasData in overlays)
+            for (var i = 0; i < overlays.Length; i++)
             {
+                var gasData = overlays[i];
                 var frames = _frames[gasData.Index];
-                list.Add((frames[_frameCounter[gasData.Index]], gasData.Opacity));
+                list[i] = (frames[_frameCounter[gasData.Index]], gasData.Opacity);
             }
 
-            return list.ToArray();
+            return list;
         }
 
         private void OnTileOverlayMessage(GasTileOverlayMessage ev)
