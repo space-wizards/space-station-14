@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects
 
             Open();
 
-            if (user.TryGetComponent(out HandsComponent hands) && hands.Count == 2)
+            if (user.TryGetComponent(out HandsComponent hands) && hands.Count == 0)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
                     AudioParams.Default.WithVolume(-2));
