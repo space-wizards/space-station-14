@@ -1,10 +1,10 @@
 ﻿using System;
-using Content.Server.Interfaces.Atmos;
+using Content.Server.Atmos;
+using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
-using Robust.Shared.Interfaces.Map;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -15,28 +15,12 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class AirtightComponent : Component, IMapInit
     {
-#pragma warning disable 649
-        [Dependency] private readonly IAtmosphereMap _atmosphereMap;
-#pragma warning restore 649
-
         private SnapGridComponent _snapGrid;
         private (GridId, MapIndices) _lastPosition;
 
         public override string Name => "Airtight";
 
-        private bool _zoneBlocked = true;
         private bool _airBlocked = true;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool ZoneBlocked
-        {
-            get => _zoneBlocked;
-            set
-            {
-                _zoneBlocked = value;
-                _atmosphereMap.GetGridAtmosphereManager(Owner.Transform.GridID).Invalidate(_snapGrid.Position);
-            }
-        }
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
@@ -45,7 +29,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             set
             {
                 _airBlocked = value;
-                _atmosphereMap.GetGridAtmosphereManager(Owner.Transform.GridID).Invalidate(_snapGrid.Position);
+                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(_snapGrid.Position);
             }
         }
 
@@ -54,7 +38,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.ExposeData(serializer);
 
             serializer.DataField(ref _airBlocked, "airBlocked", true);
-            serializer.DataField(ref _zoneBlocked, "zoneBlocked", true);
         }
 
         public override void Initialize()
@@ -76,7 +59,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.OnRemove();
 
             _airBlocked = false;
-            _zoneBlocked = false;
 
             UpdatePosition();
         }
@@ -93,7 +75,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.Shutdown();
 
             _airBlocked = false;
-            _zoneBlocked = false;
 
             _snapGrid.OnPositionChanged -= OnTransformMove;
             UpdatePosition();
@@ -110,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void UpdatePosition(GridId gridId, MapIndices pos)
         {
-            _atmosphereMap.GetGridAtmosphereManager(gridId).Invalidate(pos);
+            EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(gridId)?.Invalidate(pos);
         }
 
     }

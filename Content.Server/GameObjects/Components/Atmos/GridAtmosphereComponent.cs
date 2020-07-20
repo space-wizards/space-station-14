@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.Interfaces.Atmos;
+using System.Runtime.Serialization;
+using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
-namespace Content.Server.Atmos
+namespace Content.Server.GameObjects.Components.Atmos
 {
-    public class GridAtmosphereManager
+    [RegisterComponent, Serializable]
+    public class GridAtmosphereComponent : Component, ISerializable
     {
+        public override string Name => "GridAtmosphere";
+
         private int _timer = 0;
         private int _updateCounter = 0;
-        private readonly IMapGrid _grid;
+        private IMapGrid _grid;
         private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
@@ -36,11 +40,6 @@ namespace Content.Server.Atmos
             ActiveTiles,
             ExcitedGroups,
             HighPressureDelta,
-        }
-
-        public GridAtmosphereManager(IMapGrid grid)
-        {
-            _grid = grid;
         }
 
         public void PryTile(MapIndices indices)
@@ -60,9 +59,13 @@ namespace Content.Server.Atmos
             tileItem.Transform.WorldPosition += (0.2f, 0.2f);
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
             // TODO ATMOS Not repopulate tiles here
+
+            base.Initialize();
+
+            _grid = Owner.GetComponent<IMapGridComponent>().Grid;
             RepopulateTiles();
         }
 
@@ -307,6 +310,11 @@ namespace Content.Server.Atmos
         public void Dispose()
         {
 
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

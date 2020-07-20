@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.Interfaces.Atmos;
+using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -38,10 +42,13 @@ namespace Content.Server.GameObjects.EntitySystems
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(GridId gridIndex, MapIndices indices)
         {
-            if(!_invalid.TryGetValue(gridIndex, out var set) || set == null)
-                _invalid.Add(gridIndex, new HashSet<MapIndices>());
+            if (!_invalid.TryGetValue(gridIndex, out var set) || set == null)
+            {
+                set = new HashSet<MapIndices>();
+                _invalid.Add(gridIndex, set);
+            }
 
-            _invalid[gridIndex].Add(indices);
+            set.Add(indices);
         }
 
         public void SetTileOverlay(GridId gridIndex, MapIndices indices, GasData[] gasData)
@@ -84,12 +91,14 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private void Revalidate()
         {
-            var atmosMan = IoCManager.Resolve<IAtmosphereMap>();
+            var mapMan = IoCManager.Resolve<IMapManager>();
+            var entityMan = IoCManager.Resolve<IEntityManager>();
             var list = new List<GasData>();
 
             foreach (var (gridId, indices) in _invalid)
             {
-                var gam = atmosMan.GetGridAtmosphereManager(gridId);
+                var grid = entityMan.GetEntity(mapMan.GetGrid(gridId).GridEntityId);
+                if (!grid.TryGetComponent(out GridAtmosphereComponent gam)) continue;
 
                 foreach (var index in indices)
                 {

@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.Atmos;
+﻿using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -11,14 +11,12 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class GasAnalyzerComponent : Component, IExamine
     {
-        [Dependency] private IAtmosphereMap _atmos = default!;
-
         public override string Name => "GasAnalyzer";
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (!inDetailsRange) return;
 
-            var gam = _atmos.GetGridAtmosphereManager(Owner.Transform.GridID);
+            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
             if (gam == null) return;
 
             var position = Owner.Transform.GridPosition;

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Content.Server.Interfaces.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos
 {
@@ -13,7 +9,7 @@ namespace Content.Server.Atmos
     {
         private bool _disposed = false;
         private readonly HashSet<TileAtmosphere> _tile = new HashSet<TileAtmosphere>(Atmospherics.ZumosTileLimit);
-        private GridAtmosphereManager _gridAtmosphereManager;
+        private GridAtmosphereComponent _gridAtmosphereComponent;
 
         public int DismantleCooldown { get; set; }
         public int BreakdownCooldown { get; set; }
@@ -57,10 +53,10 @@ namespace Content.Server.Atmos
             Dispose();
         }
 
-        public void Initialize(GridAtmosphereManager gridAtmosphereManager)
+        public void Initialize(GridAtmosphereComponent gridAtmosphereComponent)
         {
-            _gridAtmosphereManager = gridAtmosphereManager;
-            _gridAtmosphereManager.AddExcitedGroup(this);
+            _gridAtmosphereComponent = gridAtmosphereComponent;
+            _gridAtmosphereComponent.AddExcitedGroup(this);
         }
 
         public void ResetCooldowns()
@@ -113,7 +109,7 @@ namespace Content.Server.Atmos
                 tile.ExcitedGroup = null;
                 if (!unexcite) continue;
                 tile.Excited = false;
-                _gridAtmosphereManager.RemoveActiveTile(tile);
+                _gridAtmosphereComponent.RemoveActiveTile(tile);
             }
 
             _tile.Clear();
@@ -123,8 +119,8 @@ namespace Content.Server.Atmos
         {
             if (_disposed) return;
             _disposed = true;
-            _gridAtmosphereManager.RemoveExcitedGroup(this);
-            _gridAtmosphereManager = null;
+            _gridAtmosphereComponent.RemoveExcitedGroup(this);
+            _gridAtmosphereComponent = null;
         }
     }
 }

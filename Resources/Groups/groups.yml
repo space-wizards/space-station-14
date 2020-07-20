@@ -157,6 +157,7 @@
   - deleteewc
   - sudo
   - asay
+  - addatmos
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

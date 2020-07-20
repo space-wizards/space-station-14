@@ -1,13 +1,9 @@
 using Content.Server.AI.WorldState;
-using Content.Server.Atmos;
-﻿using Content.Server.Cargo;
-﻿using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.WorldState;
 using Content.Server.Cargo;
+ using Content.Server.AI.Utility.Considerations;
 using Content.Server.Chat;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.Atmos;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
@@ -20,6 +16,7 @@ using Content.Shared.Kitchen;
 using Robust.Shared.IoC;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.GameObjects.EntitySystems;
 
 namespace Content.Server
 {
@@ -35,7 +32,6 @@ namespace Content.Server
             IoCManager.Register<ISandboxManager, SandboxManager>();
             IoCManager.Register<ICargoOrderDataManager, CargoOrderDataManager>();
             IoCManager.Register<IModuleManager, ServerModuleManager>();
-            IoCManager.Register<IAtmosphereMap, AtmosphereMap>();
             IoCManager.Register<IServerPreferencesManager, ServerPreferencesManager>();
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
