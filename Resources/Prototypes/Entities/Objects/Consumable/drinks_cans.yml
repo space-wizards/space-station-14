@@ -3,8 +3,9 @@
   id: DrinkCanBaseFull
   abstract: true
   components:
-  - type: PressurizedDrink
+  - type: Drink
     openSounds: canOpenSounds
+    pressurized: true
   - type: Solution
     maxVol: 20
     contents:

@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Fluids;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAfterInteract))]
-    public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange,IExamine
+    public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange,IExamine, ILand
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -48,6 +49,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         private AppearanceComponent _appearanceComponent;
         private string _soundCollection;
+        private bool _pressurized;
+        private string _burstSound;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -55,6 +58,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
             serializer.DataField(ref _defaultToOpened, "isOpen", false); //For things like cups of coffee.
             serializer.DataField(ref _soundCollection, "openSounds","canOpenSounds");
+            serializer.DataField(ref _pressurized, "pressurized",false);
+            serializer.DataField(ref _burstSound, "burstSound", "/Audio/Effects/flash_bang.ogg");
         }
 
         public override void Initialize()
@@ -155,6 +160,22 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _contents.TryAddSolution(split);
             target.PopupMessage(target, Loc.GetString("You've had enough {0}!", Owner.Name));
             return false;
+        }
+
+        void ILand.Land(LandEventArgs eventArgs)
+        {
+            if (_pressurized &&
+                _random.Prob(0.25f) &&
+                Owner.TryGetComponent(out SolutionComponent component))
+            {
+                Opened = true;
+
+                var solution = component.SplitSolution(component.CurrentVolume);
+                SpillHelper.SpillAt(Owner, solution, "PuddleSmear");
+
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_burstSound, Owner,
+                    AudioParams.Default.WithVolume(-4));
+            }
         }
     }
 }
