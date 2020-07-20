@@ -1,14 +1,7 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-
-using System;
-using Robust.Shared.Utility;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Materials;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.GameObjects.Components.Research;
@@ -21,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Research
 {

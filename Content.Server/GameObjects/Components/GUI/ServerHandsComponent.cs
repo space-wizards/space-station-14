@@ -1,7 +1,4 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
@@ -568,7 +565,7 @@ namespace Content.Server.GameObjects
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out PhysicsComponent physics))
+                if (!message.Entity.TryGetComponent(out IPhysicsComponent physics))
                 {
                     return;
                 }

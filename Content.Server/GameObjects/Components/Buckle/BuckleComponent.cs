@@ -3,7 +3,6 @@ using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
@@ -11,11 +10,13 @@ using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -85,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         private bool ContainerChanged { get; set; }
 
         /// <summary>
-        ///     The amount of space that this entity occupies in a <see cref="StrapComponent"/>.
+        ///     The amount of space that this entity occupies in a
+        ///     <see cref="StrapComponent"/>.
         /// </summary>
         [ViewVariables]
         public int Size => _size;
@@ -106,9 +108,9 @@ namespace Content.Server.GameObjects.Components.Buckle
         }
 
         /// <summary>
-        ///     Reattaches this entity to the strap, modifying its position and rotation
+        ///     Reattaches this entity to the strap, modifying its position and rotation.
         /// </summary>
-        /// <param name="strap">The strap to reattach to</param>
+        /// <param name="strap">The strap to reattach to.</param>
         private void ReAttach(StrapComponent strap)
         {
             var ownTransform = Owner.Transform;
@@ -130,6 +132,11 @@ namespace Content.Server.GameObjects.Components.Buckle
                     StandingStateHelper.Down(Owner);
                     ownTransform.WorldRotation = Angle.South;
                     break;
+            }
+
+            if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
+            {
+                ownTransform.WorldPosition += (0, 0.15f);
             }
         }
 
@@ -167,10 +174,16 @@ namespace Content.Server.GameObjects.Components.Buckle
                 return false;
             }
 
+            var ownerPosition = Owner.Transform.MapPosition;
             var strapPosition = strap.Owner.Transform.MapPosition;
+            var interaction = EntitySystem.Get<SharedInteractionSystem>();
+            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == strap.Owner;
 
-            if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
+            if (!interaction.InRangeUnobstructed(ownerPosition, strapPosition, _range, predicate: Ignored))
             {
+                _notifyManager.PopupMessage(strap.Owner, user,
+                    Loc.GetString("You can't reach there!"));
+
                 return false;
             }
 
@@ -291,8 +304,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
                 if (!InteractionChecks.InRangeUnobstructed(user, strapPosition, _range))
                 {
-                    _notifyManager.PopupMessage(Owner, user,
-                        Loc.GetString("You can't reach there!"));
                     return false;
                 }
             }
@@ -413,7 +424,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             base.ExposeData(serializer);
 
             serializer.DataField(ref _size, "size", 100);
-            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 2);
+            serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
 
             var seconds = 0.25f;
             serializer.DataField(ref seconds, "cooldown", 0.25f);

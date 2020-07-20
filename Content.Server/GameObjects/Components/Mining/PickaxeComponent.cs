@@ -14,7 +14,7 @@ namespace Content.Server.GameObjects.Components.Mining
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref MiningSound, "miningSound", "/Audio/Items/mining/pickaxe.ogg");
+            serializer.DataField(ref MiningSound, "miningSound", "/Audio/Items/Mining/pickaxe.ogg");
             serializer.DataField(ref MiningSpeedMultiplier, "miningSpeedMultiplier", 1f);
         }
     }

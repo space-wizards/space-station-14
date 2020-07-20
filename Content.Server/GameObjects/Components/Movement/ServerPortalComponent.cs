@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             // This will blow up an entity it's attached to
             base.OnAdd();
-            if (Owner.TryGetComponent<CollidableComponent>(out var collide))
+            if (Owner.TryGetComponent<ICollidableComponent>(out var collide))
             {
                 //collide.IsHardCollidable = false;
             }

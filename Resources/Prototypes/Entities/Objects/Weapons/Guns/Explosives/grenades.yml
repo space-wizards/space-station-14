@@ -1,0 +1,88 @@
+- type: entity
+  name: explosive grenade
+  description: Grenade that creates small devastating explosion
+  parent: BaseItem
+  id: ExGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Icon
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: Explosive
+    devastationRange: 1
+    heavyImpactRange: 3
+    lightImpactRange: 5
+    flashRange: 7
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer2D
+      countdown_sound: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: flashbang
+  description: Eeeeeeeeeeeeeeeeeeeeee
+  parent: BaseItem
+  id: GrenadeFlashBang
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Icon
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 3.5
+  - type: FlashExplosive
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer2D
+      countdown_sound: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: Syndicate minibomb
+  description: A syndicate manufactured explosive used to sow destruction and chaos.
+  parent: BaseItem
+  id: SyndieMiniBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Icon
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: Explosive
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
+    flashRange: 10
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer2D
+      countdown_sound: /Audio/Effects/countdown.ogg
