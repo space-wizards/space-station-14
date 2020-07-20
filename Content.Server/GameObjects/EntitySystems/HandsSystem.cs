@@ -21,6 +21,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Interfaces;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -226,15 +227,15 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
         private bool Point(ICommonSession session, GridCoordinates coords, EntityUid uid)
         {
-            var entity = session?.AttachedEntity;
-            if (entity == null)
+            var player = session?.AttachedEntity;
+            if (player == null)
             {
                 return false;
             }
 
-            if (!coords.InRange(_mapManager, entity.Transform.GridPosition, 15))
+            if (!coords.InRange(_mapManager, player.Transform.GridPosition, 15))
             {
-                entity.PopupMessage(entity, Loc.GetString("You can't reach there!"));
+                player.PopupMessage(player, Loc.GetString("You can't reach there!"));
                 return false;
             }
 
@@ -243,9 +244,12 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 return false;
             }
 
-            var viewers = _playerManager.GetPlayersInRange(entity.Transform.GridPosition, 15);
-            var message = $"{entity.Name} {Loc.GetString("points at the {0}", pointed.Name)}";
+            player.Transform.LocalRotation = new Angle(pointed.Transform.WorldPosition - player.Transform.WorldPosition);
 
+            var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
+            var message = $"{player.Name} {Loc.GetString("points at the {0}", pointed.Name)}";
+
+            // TODO: FOV
             foreach (var viewer in viewers)
             {
                 if (viewer.AttachedEntity == null)
