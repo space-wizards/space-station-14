@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
@@ -13,7 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
@@ -23,7 +21,7 @@ namespace Content.Server.GameObjects
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class ServerDoorComponent : Component, IActivate, ICollideBehavior, ICollideSpecial
+    public class ServerDoorComponent : Component, IActivate, ICollideBehavior
     {
         public override string Name => "Door";
 
@@ -39,7 +37,7 @@ namespace Content.Server.GameObjects
         protected bool AutoClose = true;
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
-        
+
         private CollidableComponent collidableComponent;
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
@@ -119,17 +117,6 @@ namespace Content.Server.GameObjects
                 if (dotProduct <= -0.9f)
                     TryOpen(entity);
             }
-        }
-
-        bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
-        {
-            // don't block thrown items if the door is open
-            if (!collidableComponent.Hard && collidedWith.Owner.TryGetComponent(out ThrownItemComponent item))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private void SetAppearance(DoorVisualState state)
@@ -311,7 +298,7 @@ namespace Content.Server.GameObjects
             {
                 OpenTimeCounter += frameTime;
             }
-            
+
             if (OpenTimeCounter > CloseSpeed)
             {
                 if (!CanClose() || !Close())

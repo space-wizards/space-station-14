@@ -19,6 +19,7 @@ namespace Content.Server.GameObjects.Components
         public const float DefaultThrowTime = 0.25f;
 
         private bool _shouldCollide = true;
+        private bool _shouldStop = false;
 
         public override string Name => "ThrownItem";
         public override uint? NetID => ContentNetIDs.THROWN_ITEM;
@@ -31,6 +32,13 @@ namespace Content.Server.GameObjects.Components
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (!_shouldCollide) return;
+            if (entity.TryGetComponent(out CollidableComponent collid)) 
+            {
+                if (!collid.Hard) // ignore non hard
+                    return;
+
+                _shouldStop = true; // hit something hard => stop after this collision
+            }
             if (entity.TryGetComponent(out DamageableComponent damage))
             {
                 damage.TakeDamage(DamageType.Brute, 10, Owner, User);
@@ -68,7 +76,7 @@ namespace Content.Server.GameObjects.Components
 
         void ICollideBehavior.PostCollide(int collideCount)
         {
-            if (collideCount > 0)
+            if (_shouldStop && collideCount > 0)
             {
                 StopThrow();
             }
