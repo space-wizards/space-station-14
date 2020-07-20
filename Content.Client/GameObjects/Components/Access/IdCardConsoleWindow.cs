@@ -1,6 +1,3 @@
-// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Access;

@@ -1,0 +1,40 @@
+- type: entity
+  parent: UniformBase
+  id: UniformBartender
+  name: bartender's uniform
+  description: It looks like it could use some more flair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/bartender.rsi
+    state: barman
+  - type: Icon
+    sprite: Clothing/Uniforms/bartender.rsi
+    state: barman
+  - type: Clothing
+    sprite: Clothing/Uniforms/bartender.rsi
+
+- type: entity
+  parent: UniformBartender
+  id: UniformBartenderSkirt
+  name: bartender's skirt
+  components:
+  - type: Sprite
+    state: skirt
+  - type: Icon
+    state: skirt
+  - type: Clothing
+    ClothingPrefix: skirt
+    femaleMask: UniformTop
+
+
+- type: entity
+  parent: UniformBartender
+  id: UniformBartenderPurple
+  name: purple bartender's uniform
+  components:
+  - type: Sprite
+    state: purple
+  - type: Icon
+    state: purple
+  - type: Clothing
+    ClothingPrefix: purple
