@@ -81,3 +81,8 @@
   - /Audio/Effects/Footsteps/asteroid3.ogg
   - /Audio/Effects/Footsteps/asteroid4.ogg
   - /Audio/Effects/Footsteps/asteroid5.ogg
+
+- type: soundCollection
+  id: footstep_snow
+  files:
+  - /Audio/Effects/Footsteps/snowstep.ogg

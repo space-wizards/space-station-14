@@ -358,11 +358,18 @@ namespace Content.Server.GameObjects.Components
             if (!CanWeldShut)
                 return false;
 
+            if (_contents.Contains(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                return false;
+            }
+
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
                 return false;
+
 
             IsWeldedShut ^= true;
             return true;

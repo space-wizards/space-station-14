@@ -1,0 +1,28 @@
+# Security wardrobe
+- type: entity
+  id: WardrobeSecurity
+  parent: WardrobeBase
+  name: "security wardrobe"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state: generic
+      state_closed: red_door
+  - type: Icon
+    state: red_door
+
+# Atmospherics wardrobe
+- type: entity
+  id: WardrobeAtmospherics
+  parent: WardrobeBase
+  name: "atmospherics wardrobe"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state: generic
+      state_closed: atmos_wardrobe_door
+  - type: Icon
+    state: atmos_door
+

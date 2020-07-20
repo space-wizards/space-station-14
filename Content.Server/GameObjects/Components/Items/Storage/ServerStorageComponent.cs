@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private bool _storageInitialCalculated;
         private int _storageUsed;
-        private int _storageCapacityMax = 10000;
+        private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
         public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -323,7 +323,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _storageCapacityMax, "Capacity", 10000);
+            serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
