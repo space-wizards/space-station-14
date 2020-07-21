@@ -22,6 +22,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -58,6 +59,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         [ViewVariables]
         private TimeSpan _buckleTime;
+
+        public GridCoordinates? BucklePosition { get; private set; }
 
         private StrapComponent? _buckledTo;
 
@@ -110,8 +113,6 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         /// <summary>
         ///     Reattaches this entity to the strap, modifying its position and rotation.
-        ///     The position offset must be less than the breaking threshold defined in
-        ///     <see cref="BuckleSystem.MoveEvent"/>
         /// </summary>
         /// <param name="strap">The strap to reattach to.</param>
         private void ReAttach(StrapComponent strap)
@@ -137,9 +138,15 @@ namespace Content.Server.GameObjects.Components.Buckle
                     break;
             }
 
+            BucklePosition = Owner.Transform.GridPosition;
+
             if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
             {
-                ownTransform.WorldPosition += (0, 0.15f);
+                var offset = (0, 0.15f);
+
+                // Assign BucklePosition first, before causing a MoveEvent to fire
+                BucklePosition = ownTransform.GridPosition.Offset(offset);
+                ownTransform.WorldPosition += offset;
             }
         }
 
@@ -260,9 +267,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 appearance.SetData(BuckleVisuals.Buckled, true);
             }
 
-            ReAttach(strap);
-
             BuckledTo = strap;
+
+            ReAttach(strap);
             BuckleStatus();
 
             return true;

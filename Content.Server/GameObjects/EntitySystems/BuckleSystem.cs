@@ -20,21 +20,20 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <summary>
         ///     Checks if a buckled entity should be unbuckled from moving
         ///     too far from its strap.
-        ///     The threshold must be higher than the vertical offset for
-        ///     north facing straps in <see cref="BuckleComponent.ReAttach"/>
         /// </summary>
         /// <param name="moveEvent">The move event of a buckled entity.</param>
         private void MoveEvent(MoveEvent moveEvent)
         {
             if (!moveEvent.Sender.TryGetComponent(out BuckleComponent buckle) ||
-                buckle.BuckledTo == null)
+                buckle.BuckledTo == null ||
+                !buckle.BucklePosition.HasValue)
             {
                 return;
             }
 
-            var strapPosition = buckle.BuckledTo.Owner.Transform.GridPosition;
+            var bucklePosition = buckle.BucklePosition.Value;
 
-            if (moveEvent.NewPosition.InRange(_mapManager, strapPosition, 0.2f))
+            if (moveEvent.NewPosition.InRange(_mapManager, bucklePosition, 0.2f))
             {
                 return;
             }
