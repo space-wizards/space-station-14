@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Shared.Input;
@@ -10,6 +11,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -25,7 +27,16 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 #pragma warning restore 649
+
+        private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.2f);
+
+        /// <summary>
+        ///     A dictionary of players to the last time that they
+        ///     pointed at something.
+        /// </summary>
+        private Dictionary<ICommonSession, TimeSpan> _pointers = default!;
 
         public override void Initialize()
         {
@@ -36,6 +47,8 @@ namespace Content.Server.GameObjects.EntitySystems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(Point))
                 .Register<PointingSystem>();
+
+            _pointers = new Dictionary<ICommonSession, TimeSpan>();
         }
 
         public override void Update(float frameTime)
@@ -80,6 +93,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
+            if (_pointers.TryGetValue(session!, out var lastTime) &&
+                _gameTiming.CurTime < lastTime + PointDelay)
+            {
+                return false;
+            }
+
             if (!coords.InRange(_mapManager, player.Transform.GridPosition, 15))
             {
                 player.PopupMessage(player, Loc.GetString("You can't reach there!"));
@@ -119,6 +138,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 viewerMessage = $"{player.Name} {Loc.GetString("points at {0}.", tileDef.DisplayName)}";
             }
+
+            _pointers[session!] = _gameTiming.CurTime;
 
             SendMessage(player, viewers, pointed, selfMessage, viewerMessage, viewerPointedAtMessage);
 
