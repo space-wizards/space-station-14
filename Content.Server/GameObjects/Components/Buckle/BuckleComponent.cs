@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Buckle
         [ViewVariables]
         private TimeSpan _buckleTime;
 
-        public GridCoordinates? BucklePosition { get; private set; }
+        public Vector2? BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
 
@@ -120,7 +120,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             var ownTransform = Owner.Transform;
             var strapTransform = strap.Owner.Transform;
 
-            ownTransform.GridPosition = strapTransform.GridPosition;
             ownTransform.AttachParent(strapTransform);
 
             switch (strap.Position)
@@ -138,15 +137,16 @@ namespace Content.Server.GameObjects.Components.Buckle
                     break;
             }
 
-            BucklePosition = Owner.Transform.GridPosition;
-
+            // Assign BuckleOffset first, before causing a MoveEvent to fire
             if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
             {
-                var offset = (0, 0.15f);
-
-                // Assign BucklePosition first, before causing a MoveEvent to fire
-                BucklePosition = ownTransform.GridPosition.Offset(offset);
-                ownTransform.WorldPosition += offset;
+                BuckleOffset = (0, 0.15f);
+                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset!.Value;
+            }
+            else
+            {
+                BuckleOffset = Vector2.Zero;
+                ownTransform.WorldPosition = strapTransform.WorldPosition;
             }
         }
 

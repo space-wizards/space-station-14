@@ -26,12 +26,12 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             if (!moveEvent.Sender.TryGetComponent(out BuckleComponent buckle) ||
                 buckle.BuckledTo == null ||
-                !buckle.BucklePosition.HasValue)
+                !buckle.BuckleOffset.HasValue)
             {
                 return;
             }
 
-            var bucklePosition = buckle.BucklePosition.Value;
+            var bucklePosition = buckle.BuckledTo.Owner.Transform.GridPosition.Offset(buckle.BuckleOffset.Value);
 
             if (moveEvent.NewPosition.InRange(_mapManager, bucklePosition, 0.2f))
             {
