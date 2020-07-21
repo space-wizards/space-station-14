@@ -20,14 +20,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         [ViewVariables] public override bool Stunned => StunnedTimer > 0f;
         [ViewVariables] public override bool KnockedDown => KnockdownTimer > 0f;
         [ViewVariables] public override bool SlowedDown => SlowdownTimer > 0f;
-        [ViewVariables] public float StunCap => _stunCap;
-        [ViewVariables] public float KnockdownCap => _knockdownCap;
-        [ViewVariables] public float SlowdownCap => _slowdownCap;
-
-        protected override void OnStun()
-        {
-            StandingStateHelper.DropAllItemsInHands(Owner, false);
-        }
 
         protected override void OnKnockdown()
         {
