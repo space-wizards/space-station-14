@@ -56,6 +56,8 @@ namespace Content.Server.GameObjects.Components.GUI
         // Mostly arbitrary.
         public const float PickupRange = 2;
 
+        [ViewVariables] public int Count => _hands.Count;
+
         // TODO: This does not serialize what objects are held.
         protected override void Startup()
         {
