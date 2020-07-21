@@ -29,5 +29,6 @@
     <Folder Include="GameObjects\Components\Trigger\" />
     <EmbeddedResource Include="Text\Names\*.txt" />
     <Folder Include="GameObjects\Components\Visualizers" />
+    <Folder Include="Mobs" />
   </ItemGroup>
 </Project>

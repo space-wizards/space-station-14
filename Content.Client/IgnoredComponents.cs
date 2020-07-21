@@ -128,7 +128,6 @@
             "StressTestMovement",
             "Toys",
             "SurgeryTool",
-            "Slippery",
             "EmitSoundOnThrow",
             "Flash",
             "DamageOnToolInteract",

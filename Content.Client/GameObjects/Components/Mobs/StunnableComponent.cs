@@ -1,7 +1,10 @@
 #nullable enable
+using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
@@ -16,6 +19,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         public override bool Stunned => _stunned;
         public override bool KnockedDown => _knockedDown;
         public override bool SlowedDown => _slowedDown;
+
+        protected override void OnInteractHand()
+        {
+            EntitySystem.Get<AudioSystem>()
+                .Play("/Audio/Effects/thudswoosh.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+        }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
