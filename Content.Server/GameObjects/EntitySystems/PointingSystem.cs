@@ -96,7 +96,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             string selfMessage;
             string viewerMessage;
-            string viewerPointedAtMessage = null;
+            string? viewerPointedAtMessage = null;
 
             if (EntityManager.TryGetEntity(uid, out var pointed))
             {
