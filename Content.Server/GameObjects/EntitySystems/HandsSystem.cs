@@ -31,8 +31,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager;
 #pragma warning restore 649
 
         private const float ThrowForce = 1.5f; // Throwing force of mobs in Newtons
@@ -51,9 +49,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
-                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
-                .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(Point))
-                .Register<HandsSystem>();
+                .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt)).Register<HandsSystem>();
         }
 
         /// <inheritdoc />
@@ -224,57 +220,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
                         handsComp.PutInHandOrDrop(lastStoredEntity.GetComponent<ItemComponent>());
                 }
             }
-        }
-
-        private bool Point(ICommonSession session, GridCoordinates coords, EntityUid uid)
-        {
-            var player = session?.AttachedEntity;
-            if (player == null)
-            {
-                return false;
-            }
-
-            if (!coords.InRange(_mapManager, player.Transform.GridPosition, 15))
-            {
-                player.PopupMessage(player, Loc.GetString("You can't reach there!"));
-                return false;
-            }
-
-            string message;
-            if (EntityManager.TryGetEntity(uid, out var pointed))
-            {
-                message = player == pointed
-                    ? $"{player.Name} {Loc.GetString("points at {0:themself}", player)}"
-                    : $"{player.Name} {Loc.GetString("points at {0:theName}", pointed)}";
-            }
-            else
-            {
-                var tileRef = _mapManager.GetGrid(coords.GridID).GetTileRef(coords);
-                var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
-
-                message = $"{player.Name} {Loc.GetString("points at {0}", tileDef.DisplayName)}";
-            }
-
-            player.Transform.LocalRotation = new Angle(
-                coords.ToMapPos(_mapManager) -
-                player.Transform.MapPosition.Position);
-
-            var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
-
-            EntityManager.SpawnEntity("pointingarrow", coords);
-
-            // TODO: FOV
-            foreach (var viewer in viewers)
-            {
-                if (viewer.AttachedEntity == null)
-                {
-                    continue;
-                }
-
-                player.PopupMessage(viewer.AttachedEntity, message);
-            }
-
-            return true;
         }
     }
 }
