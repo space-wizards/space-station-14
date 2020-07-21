@@ -20,6 +20,12 @@ namespace Content.Server.GameObjects.Components.Pointing
         private float _step;
 
         /// <summary>
+        ///     The amount of units that this arrow will move by when multiplied
+        ///     by the frame time.
+        /// </summary>
+        private float _speed;
+
+        /// <summary>
         ///     The current amount of seconds left before the arrow changes
         ///     movement direction.
         /// </summary>
@@ -35,7 +41,8 @@ namespace Content.Server.GameObjects.Components.Pointing
             base.ExposeData(serializer);
 
             serializer.DataField(ref _duration, "duration", 4);
-            serializer.DataField(ref _step, "step", 1);
+            serializer.DataField(ref _step, "step", 0.5f);
+            serializer.DataField(ref _speed, "speed", 1);
         }
 
         protected override void Startup()
@@ -50,7 +57,8 @@ namespace Content.Server.GameObjects.Components.Pointing
 
         public void Update(float frameTime)
         {
-            Owner.Transform.LocalPosition += (0, _up ? 0.01f : -0.01f);
+            var movement = _speed * frameTime * (_up ? 1 : -1);
+            Owner.Transform.LocalPosition += (0, movement);
 
             _duration -= frameTime;
             _currentStep -= frameTime;
