@@ -1,6 +1,7 @@
 ﻿using Content.Shared.GameObjects.Components.Pointing;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Server.GameObjects.Components.Pointing
@@ -10,15 +11,15 @@ namespace Content.Server.GameObjects.Components.Pointing
     {
         private const float Step = 1;
 
-        private float _timeLeft;
+        private float _duration;
         private float _currentStep;
         private bool _up;
 
-        public override void Initialize()
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            base.Initialize();
+            base.ExposeData(serializer);
 
-            _timeLeft = 5;
+            serializer.DataField(ref _duration, "duration", 4);
         }
 
         protected override void Startup()
@@ -35,10 +36,10 @@ namespace Content.Server.GameObjects.Components.Pointing
         {
             Owner.Transform.LocalPosition += (0, _up ? 0.01f : -0.01f);
 
-            _timeLeft -= frameTime;
+            _duration -= frameTime;
             _currentStep -= frameTime;
 
-            if (_timeLeft <= 0)
+            if (_duration <= 0)
             {
                 Owner.Delete();
                 return;
