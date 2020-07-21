@@ -74,7 +74,7 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
-            stun.Paralyze(5f);
+            stun.Paralyze(5);
             _slipped.Add(entity.Uid);
 
             OnSlip();

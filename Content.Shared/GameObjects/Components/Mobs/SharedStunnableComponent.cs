@@ -51,9 +51,9 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [ViewVariables] protected float WalkModifierOverride = 0f;
         [ViewVariables] protected float RunModifierOverride = 0f;
 
-        [ViewVariables] public abstract bool Stunned { get; }
-        [ViewVariables] public abstract bool KnockedDown { get; }
-        [ViewVariables] public abstract bool SlowedDown { get; }
+        [ViewVariables] public bool Stunned => StunnedTimer > 0f;
+        [ViewVariables] public bool KnockedDown => KnockdownTimer > 0f;
+        [ViewVariables] public bool SlowedDown => SlowdownTimer > 0f;
 
         private float StunTimeModifier
         {
@@ -116,7 +116,6 @@ namespace Content.Shared.GameObjects.Components.Mobs
             {
                 return false;
             }
-
 
             StunnedTimer = seconds;
             LastStun = _gameTiming.CurTime;
@@ -273,17 +272,17 @@ namespace Content.Shared.GameObjects.Components.Mobs
         [Serializable, NetSerializable]
         protected sealed class StunnableComponentState : ComponentState
         {
-            public bool Stunned { get; }
-            public bool KnockedDown { get; }
-            public bool SlowedDown { get; }
+            public float StunnedTimer { get; }
+            public float KnockdownTimer { get; }
+            public float SlowdownTimer { get; }
             public float WalkModifierOverride { get; }
             public float RunModifierOverride { get; }
 
-            public StunnableComponentState(bool stunned, bool knockedDown, bool slowedDown, float walkModifierOverride, float runModifierOverride) : base(ContentNetIDs.STUNNABLE)
+            public StunnableComponentState(float stunnedTimer, float knockdownTimer, float slowdownTimer, float walkModifierOverride, float runModifierOverride) : base(ContentNetIDs.STUNNABLE)
             {
-                Stunned = stunned;
-                KnockedDown = knockedDown;
-                SlowedDown = slowedDown;
+                StunnedTimer = stunnedTimer;
+                KnockdownTimer = knockdownTimer;
+                SlowdownTimer = slowdownTimer;
                 WalkModifierOverride = walkModifierOverride;
                 RunModifierOverride = runModifierOverride;
             }

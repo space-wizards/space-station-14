@@ -17,10 +17,6 @@ namespace Content.Server.GameObjects.Components.Mobs
         [Dependency] private IGameTiming _gameTiming;
 #pragma warning restore 649
 
-        [ViewVariables] public override bool Stunned => StunnedTimer > 0f;
-        [ViewVariables] public override bool KnockedDown => KnockdownTimer > 0f;
-        [ViewVariables] public override bool SlowedDown => SlowdownTimer > 0f;
-
         protected override void OnKnockdown()
         {
             StandingStateHelper.Down(Owner);
@@ -110,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public override ComponentState GetComponentState()
         {
-            return new StunnableComponentState(Stunned, KnockedDown, SlowedDown, WalkModifierOverride,
+            return new StunnableComponentState(StunnedTimer, KnockdownTimer, SlowdownTimer, WalkModifierOverride,
                 RunModifierOverride);
         }
     }
