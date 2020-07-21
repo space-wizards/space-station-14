@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.EntitySystems
             EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(Point))
+                .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
 
             _pointers = new Dictionary<ICommonSession, TimeSpan>();
@@ -85,7 +85,12 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        private bool Point(ICommonSession? session, GridCoordinates coords, EntityUid uid)
+        public bool InRange(GridCoordinates from, GridCoordinates to)
+        {
+            return from.InRange(_mapManager, to, 15);
+        }
+
+        public bool TryPoint(ICommonSession? session, GridCoordinates coords, EntityUid uid)
         {
             var player = session?.AttachedEntity;
             if (player == null)
@@ -99,15 +104,17 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            if (!coords.InRange(_mapManager, player.Transform.GridPosition, 15))
+            if (!InRange(coords, player.Transform.GridPosition))
             {
                 player.PopupMessage(player, Loc.GetString("You can't reach there!"));
                 return false;
             }
 
-            player.Transform.LocalRotation = new Angle(
-                coords.ToMapPos(_mapManager) -
-                player.Transform.MapPosition.Position);
+            var diff = coords.ToMapPos(_mapManager) - player.Transform.MapPosition.Position;
+            if (diff.LengthSquared > 0.01f)
+            {
+                player.Transform.LocalRotation = new Angle(diff);
+            }
 
             var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
 
