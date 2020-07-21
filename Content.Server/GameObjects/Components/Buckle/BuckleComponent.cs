@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    StandingStateHelper.Down(Owner);
+                    StandingStateHelper.Down(Owner, force: true);
                     ownTransform.WorldRotation = Angle.South;
                     break;
             }
