@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
@@ -109,6 +110,8 @@ namespace Content.Server.GameObjects.Components.Buckle
 
         /// <summary>
         ///     Reattaches this entity to the strap, modifying its position and rotation.
+        ///     The position offset must be less than the breaking threshold defined in
+        ///     <see cref="BuckleSystem.MoveEvent"/>
         /// </summary>
         /// <param name="strap">The strap to reattach to.</param>
         private void ReAttach(StrapComponent strap)
@@ -315,8 +318,8 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
             {
-                Owner.Transform.DetachParent();
                 Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+                Owner.Transform.DetachParent();
             }
 
             BuckledTo = null;
