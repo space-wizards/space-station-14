@@ -10,3 +10,6 @@
     duration: 4
     step: 0.5
     speed: 1
+  - type: Appearance
+    visuals:
+    - type: RoguePointingArrowVisualizer
