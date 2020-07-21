@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using System.Drawing;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
@@ -8,6 +8,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -50,6 +51,27 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
+        // TODO: FOV
+        private void SendMessage(IEntity source, IList<IPlayerSession> viewers, IEntity? pointed, string selfMessage, string viewerMessage, string? viewerPointedAtMessage = null)
+        {
+            foreach (var viewer in viewers)
+            {
+                var viewerEntity = viewer.AttachedEntity;
+                if (viewerEntity == null)
+                {
+                    continue;
+                }
+
+                var message = viewerEntity == source
+                    ? selfMessage
+                    : viewerEntity == pointed && viewerPointedAtMessage != null
+                        ? viewerPointedAtMessage
+                        : viewerMessage;
+
+                source.PopupMessage(viewer.AttachedEntity, message);
+            }
+        }
+
         private bool Point(ICommonSession? session, GridCoordinates coords, EntityUid uid)
         {
             var player = session?.AttachedEntity;
@@ -64,21 +86,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            string message;
-            if (EntityManager.TryGetEntity(uid, out var pointed))
-            {
-                message = player == pointed
-                    ? $"{player.Name} {Loc.GetString("points at {0:themself}", player)}"
-                    : $"{player.Name} {Loc.GetString("points at {0:theName}", pointed)}";
-            }
-            else
-            {
-                var tileRef = _mapManager.GetGrid(coords.GridID).GetTileRef(coords);
-                var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
-
-                message = $"{player.Name} {Loc.GetString("points at {0}", tileDef.DisplayName)}";
-            }
-
             player.Transform.LocalRotation = new Angle(
                 coords.ToMapPos(_mapManager) -
                 player.Transform.MapPosition.Position);
@@ -87,16 +94,33 @@ namespace Content.Server.GameObjects.EntitySystems
 
             EntityManager.SpawnEntity("pointingarrow", coords);
 
-            // TODO: FOV
-            foreach (var viewer in viewers)
-            {
-                if (viewer.AttachedEntity == null)
-                {
-                    continue;
-                }
+            string selfMessage;
+            string viewerMessage;
+            string viewerPointedAtMessage = null;
 
-                player.PopupMessage(viewer.AttachedEntity, message);
+            if (EntityManager.TryGetEntity(uid, out var pointed))
+            {
+                selfMessage = player == pointed
+                    ? Loc.GetString("You point at yourself.")
+                    : Loc.GetString("You point at {0:theName}.", pointed);
+
+                viewerMessage = player == pointed
+                    ? $"{player.Name} {Loc.GetString("points at {0:themself}.", player)}"
+                    : $"{player.Name} {Loc.GetString("points at {0:theName}.", pointed)}";
+
+                viewerPointedAtMessage = $"{player.Name} {Loc.GetString("points at you.")}";
             }
+            else
+            {
+                var tileRef = _mapManager.GetGrid(coords.GridID).GetTileRef(coords);
+                var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
+
+                selfMessage = Loc.GetString("You point at {0}.", tileDef.DisplayName);
+
+                viewerMessage = $"{player.Name} {Loc.GetString("points at {0}.", tileDef.DisplayName)}";
+            }
+
+            SendMessage(player, viewers, pointed, selfMessage, viewerMessage, viewerPointedAtMessage);
 
             return true;
         }
