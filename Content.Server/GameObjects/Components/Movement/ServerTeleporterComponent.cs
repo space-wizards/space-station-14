@@ -251,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 soundPlayer.PlayAtCoords(_departureSound, user.Transform.GridPosition);
 
                 // Arrival
-                user.Transform.DetachParent();
+                user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
                 soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.GridPosition);
             }

@@ -315,7 +315,7 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
             {
-                Owner.Transform.DetachParent();
+                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
                 Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
             }
 

@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Movement
             // Departure
             // Do we need to rate-limit sounds to stop ear BLAST?
             soundPlayer.PlayAtCoords(_departureSound, entity.Transform.GridPosition);
-            entity.Transform.DetachParent();
+            entity.Transform.AttachToGridOrMap();
             entity.Transform.GridPosition = position;
             soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.GridPosition);
             TryChangeState(PortalState.RecentlyTeleported);
