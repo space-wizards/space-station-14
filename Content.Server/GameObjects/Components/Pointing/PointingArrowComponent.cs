@@ -9,10 +9,25 @@ namespace Content.Server.GameObjects.Components.Pointing
     [RegisterComponent]
     public class PointingArrowComponent : SharedPointingArrowComponent
     {
-        private const float Step = 1;
-
+        /// <summary>
+        ///     The current amount of seconds left on this arrow.
+        /// </summary>
         private float _duration;
+
+        /// <summary>
+        ///     The amount of seconds before the arrow changes movement direction.
+        /// </summary>
+        private float _step;
+
+        /// <summary>
+        ///     The current amount of seconds left before the arrow changes
+        ///     movement direction.
+        /// </summary>
         private float _currentStep;
+
+        /// <summary>
+        ///     Whether or not this arrow is currently going up.
+        /// </summary>
         private bool _up;
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -20,6 +35,7 @@ namespace Content.Server.GameObjects.Components.Pointing
             base.ExposeData(serializer);
 
             serializer.DataField(ref _duration, "duration", 4);
+            serializer.DataField(ref _step, "step", 1);
         }
 
         protected override void Startup()
@@ -47,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Pointing
 
             if (_currentStep <= 0)
             {
-                _currentStep = Step;
+                _currentStep = _step;
                 _up ^= true;
             }
         }
