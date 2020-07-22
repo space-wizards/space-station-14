@@ -135,6 +135,8 @@
             "CustodialClosetFill",
             "NoSlip",
             "TrashSpawner",
+            "Pill",
+            "RCD",
             "DisposalTransit",
             "DisposalEntry",
             "DisposalJunction",
@@ -142,7 +144,7 @@
             "Recycler",
             "Conveyor",
             "ConveyorSwitch",
-            "Flippable"
+            "Flippable",
         };
     }
 }
