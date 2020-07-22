@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        protected override void SetController(IPhysicsComponent physics)
+        protected override void AddController(IPhysicsComponent physics)
         {
             physics.SetController<MoverController>();
         }
@@ -100,7 +100,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (ev.Entity.TryGetComponent(out IPhysicsComponent physics))
             {
-                (physics.Controller as MoverController)?.StopMoving();
+                if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                {
+                    ((MoverController) controller).StopMoving();
+                }
             }
         }
 

@@ -43,7 +43,7 @@ namespace Content.Client.GameObjects.EntitySystems
             FrameUpdate(frameTime);
         }
 
-        protected override void SetController(IPhysicsComponent physics)
+        protected override void AddController(IPhysicsComponent physics)
         {
             physics.SetController<MoverController>();
         }

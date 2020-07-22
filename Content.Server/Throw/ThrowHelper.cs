@@ -85,8 +85,9 @@ namespace Content.Server.Throw
 
             projComp.StartThrow(angle.ToVec() * spd);
 
-            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics)
-                                       && physics.Controller is MoverController mover)
+            if (throwSourceEnt != null
+                && throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics)
+                && physics.Controllers.TryGetValue(typeof(MoverController), out var mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 
@@ -98,7 +99,7 @@ namespace Content.Server.Throw
                     // If somebody wants they can come along and make it so magboots completely hold you still.
                     // Would be a cool incentive to use them.
                     const float ThrowFactor = 5.0f; // Break Newton's Third Law for better gameplay
-                    mover.Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
+                    ((MoverController) mover).Push(-angle.ToVec(), spd * ThrowFactor / physics.Mass);
                 }
             }
         }

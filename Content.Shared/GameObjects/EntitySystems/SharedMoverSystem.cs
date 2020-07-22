@@ -15,6 +15,7 @@ using Robust.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Players;
 
 namespace Content.Shared.GameObjects.EntitySystems
@@ -57,10 +58,10 @@ namespace Content.Shared.GameObjects.EntitySystems
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics,
             ICollidableComponent? collider = null)
         {
-            if (physics.Controller == null)
+            if (!physics.Controllers.ContainsKey(typeof(MoverController)))
             {
                 // Set up controller
-                SetController(physics);
+                AddController(physics);
             }
 
             var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
@@ -82,7 +83,10 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                (physics.Controller as MoverController)?.StopMoving();
+                if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                {
+                    ((MoverController) controller).StopMoving();
+                }
             }
             else
             {
@@ -90,7 +94,11 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (weightless)
                 {
-                    (physics.Controller as MoverController)?.Push(combined, mover.CurrentPushSpeed);
+                    if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                    {
+                        ((MoverController) controller).Push(combined, mover.CurrentPushSpeed);
+                    }
+
                     transform.LocalRotation = walkDir.GetDir().ToAngle();
                     return;
                 }
@@ -98,7 +106,13 @@ namespace Content.Shared.GameObjects.EntitySystems
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
                 //Console.WriteLine($"{walkDir} ({mover.CurrentWalkSpeed}) + {sprintDir} ({mover.CurrentSprintSpeed}): {total}");
 
-                (physics.Controller as MoverController)?.Move(total, 1);
+                {
+                    if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                    {
+                        ((MoverController) controller).Move(total, 1);
+                    }
+                }
+
                 transform.LocalRotation = total.GetDir().ToAngle();
 
                 HandleFootsteps(mover);
@@ -110,7 +124,7 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         }
 
-        protected abstract void SetController(IPhysicsComponent physics);
+        protected abstract void AddController(IPhysicsComponent physics);
 
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
             ICollidableComponent collider)
