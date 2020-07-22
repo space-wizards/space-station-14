@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -487,6 +489,11 @@ namespace Content.Server.GameObjects
             if (IsPulling)
             {
                 (PulledObject!.Controller as PullController)?.StopPull();
+
+                if (PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent oldStatus))
+                {
+                    oldStatus.ChangeStatusEffectIcon(StatusEffect.Pulled, "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+                }
             }
 
             PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
@@ -498,6 +505,11 @@ namespace Content.Server.GameObjects
             }
 
             controller!.StartPull(Owner.GetComponent<IPhysicsComponent>());
+
+            if (PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent newStatus))
+            {
+                newStatus.ChangeStatusEffectIcon(StatusEffect.Pulled, "/Textures/Interface/StatusEffects/Buckle/buckled.png");
+            }
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
@@ -606,6 +618,17 @@ namespace Content.Server.GameObjects
                 physics.LinearVelocity = Vector2.Zero;
                 return;
             }
+        }
+
+        public override void StopPulling()
+        {
+            if (PulledObject?.Owner != null &&
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            {
+                status.ChangeStatusEffectIcon(StatusEffect.Pulled, "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+            }
+
+            base.StopPulling();
         }
     }
 }

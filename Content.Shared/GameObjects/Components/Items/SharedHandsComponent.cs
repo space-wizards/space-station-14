@@ -21,7 +21,7 @@ namespace Content.Shared.GameObjects
         [ViewVariables]
         protected bool IsPulling => PulledObject != null;
 
-        public void StopPulling()
+        public virtual void StopPulling()
         {
             (PulledObject?.Controller as PullController)?.StopPull();
             PulledObject = null;
