@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
+using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
@@ -12,7 +13,8 @@ using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    internal class AtmosphereSystem : EntitySystem
+    [UsedImplicitly]
+    public class AtmosphereSystem : EntitySystem
     {
 #pragma warning disable 649
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
@@ -25,7 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             _mapManager.TileChanged += OnTileChanged;
-            EntityQuery = new MultipleTypeEntityQuery(new List<Type>(){typeof(GridAtmosphereComponent), typeof(IMapGridComponent)});
+            EntityQuery = new MultipleTypeEntityQuery(new List<Type>(){typeof(GridAtmosphereComponent)});
         }
 
         public GridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
@@ -35,8 +37,10 @@ namespace Content.Server.GameObjects.EntitySystems
             return gridEnt.TryGetComponent(out GridAtmosphereComponent atmos) ? atmos : null;
         }
 
-        public override void FrameUpdate(float frameTime)
+        public override void Update(float frameTime)
         {
+            base.Update(frameTime);
+
             foreach (var gridEnt in RelevantEntities)
             {
                 var grid = gridEnt.GetComponent<IMapGridComponent>();

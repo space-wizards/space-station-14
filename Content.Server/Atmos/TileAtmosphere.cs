@@ -37,23 +37,12 @@ namespace Content.Server.Atmos
         public ExcitedGroup ExcitedGroup { get; set; }
         public GasMixture Air { get; set; }
 
-        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, float volume)
+        public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null)
         {
             _gridAtmosphereComponent = atmosphereComponent;
             GridIndex = gridIndex;
             GridIndices = gridIndices;
-
-            if(_gridAtmosphereComponent.IsAirBlocked(GridIndices)) return;
-
-            // TODO ATMOS Load default gases from tile here or something
-            Air = new GasMixture(volume) {Temperature = Atmospherics.T20C};
-
-
-            if (_gridAtmosphereComponent.IsSpace(GridIndices))
-            {
-                Air.Temperature = Atmospherics.TCMB;
-                Air.MarkImmutable();
-            }
+            Air = mixture;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -74,7 +63,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.

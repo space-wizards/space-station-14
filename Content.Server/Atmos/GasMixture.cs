@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using Content.Shared.Atmos;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
 using Logger = Robust.Shared.Log.Logger;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
@@ -11,10 +14,11 @@ namespace Content.Server.Atmos
     /// <summary>
     ///     A general-purposes, variable volume gas mixture.
     /// </summary>
-    public class GasMixture
+    [Serializable]
+    public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
     {
-        private readonly float[] _moles = new float[Atmospherics.TotalNumberOfGases];
-        private readonly float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
+        private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
+        private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
         private float _temperature = Atmospherics.TCMB;
         public IReadOnlyList<float> Gases => _moles;
 
@@ -404,6 +408,56 @@ namespace Content.Server.Atmos
             {
                 _moles[i] *= multiplier;
             }
+        }
+
+        public void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(this, x => Immutable, "immutable", false);
+            serializer.DataField(this, x => Volume, "volume", 0f);
+            serializer.DataField(this, x => LastShare, "lastShare", 0f);
+            serializer.DataField(this, x => TemperatureArchived, "temperatureArchived", 0f);
+            serializer.DataField(ref _moles, "moles", new float[Atmospherics.TotalNumberOfGases]);
+            serializer.DataField(ref _molesArchived, "molesArchived", new float[Atmospherics.TotalNumberOfGases]);
+            serializer.DataField(ref _temperature, "temperature", Atmospherics.TCMB);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is GasMixture mix)
+                return Equals(mix);
+            return false;
+        }
+
+        public bool Equals(GasMixture other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(_moles, other._moles)
+                   && Equals(_molesArchived, other._molesArchived)
+                   && _temperature.Equals(other._temperature)
+                   && Immutable == other.Immutable
+                   && LastShare.Equals(other.LastShare)
+                   && TemperatureArchived.Equals(other.TemperatureArchived)
+                   && Volume.Equals(other.Volume);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_moles, _molesArchived, _temperature, Immutable, LastShare, TemperatureArchived, Volume);
+        }
+
+        public object Clone()
+        {
+            return new GasMixture()
+            {
+                _moles = (float[])_moles.Clone(),
+                _molesArchived = (float[])_molesArchived.Clone(),
+                _temperature = _temperature,
+                Immutable = Immutable,
+                LastShare = LastShare,
+                TemperatureArchived = TemperatureArchived,
+                Volume = Volume,
+            };
         }
     }
 }

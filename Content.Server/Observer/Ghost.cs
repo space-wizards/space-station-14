@@ -32,14 +32,12 @@ namespace Content.Server.Observer
             var gam = EntitySystem.Get<AtmosphereSystem>()
                 .GetGridAtmosphere(player.AttachedEntity.Transform.GridID);
 
-            gam?.RepopulateTiles();
-
             var gridPos = player.AttachedEntity.Transform.GridPosition;
 
             var indices = new MapIndices((int)gridPos.X, (int)gridPos.Y);
             var tile = gam?.GetTile(indices);
             tile?.Air?.Add(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
-            gam?.AddActiveTile(tile);
+            gam?.Invalidate(indices);
 
             var mind = player.ContentData().Mind;
             var canReturn = player.AttachedEntity != null;

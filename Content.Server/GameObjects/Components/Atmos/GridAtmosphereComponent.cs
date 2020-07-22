@@ -12,13 +12,15 @@ using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent, Serializable]
-    public class GridAtmosphereComponent : Component, ISerializable
+    public class GridAtmosphereComponent : Component
     {
         public override string Name => "GridAtmosphere";
 
@@ -66,7 +68,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.Initialize();
 
             _grid = Owner.GetComponent<IMapGridComponent>().Grid;
-            RepopulateTiles();
+
+            if(_tiles.Count == 0)
+                RepopulateTiles();
         }
 
         public void RepopulateTiles()
@@ -75,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var tile in _grid.GetAllTiles(false))
             {
-                _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, GetVolumeForCells(1)));
+                _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, null));
             }
 
             foreach (var (_, tile) in _tiles)
@@ -99,7 +103,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(this, _grid.Index, indices, GetVolumeForCells(1));
+                    tile = new TileAtmosphere(this, _grid.Index, indices, null);
                     _tiles.Add(indices, tile);
                 }
 
@@ -312,9 +316,35 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public override void ExposeData(ObjectSerializer serializer)
         {
-            throw new NotImplementedException();
+            base.ExposeData(serializer);
+            if (serializer.Reading)
+            {
+                var gridId = Owner.GetComponent<IMapGridComponent>().Grid.Index;
+
+                if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture> uniqueMixes) ||
+                    !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int> tiles))
+                    return;
+                foreach (var (indices, mix) in tiles)
+                {
+                    _tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes[mix].Clone()));
+                    Invalidate(indices);
+                }
+            } else if (serializer.Writing)
+            {
+                var uniqueMixes = new List<GasMixture>();
+                var tiles = new Dictionary<MapIndices, int>();
+                foreach (var (indices, tile) in _tiles)
+                {
+                    if (tile.Air == null) continue;
+                    uniqueMixes.Add(tile.Air);
+                    tiles[indices] = uniqueMixes.Count - 1;
+                }
+
+                serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
+                serializer.DataField(ref tiles, "tiles", new Dictionary<MapIndices, int>());
+            }
         }
     }
 }
