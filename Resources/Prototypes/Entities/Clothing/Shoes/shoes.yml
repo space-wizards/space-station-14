@@ -947,3 +947,29 @@
     sprite: Clothing/Shoes/yellow.rsi
   - type: Clothing
     sprite: Clothing/Shoes/yellow.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesBee
+  name: bee socks
+  description: Make them loins buzz
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/beesocks.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/beesocks.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/beesocks.rsi
+
+- type: entity
+  parent: ShoesBase
+  id: ShoesCoder
+  name: coder socks
+  description: It's time to code sisters!!!1
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/codersocks.rsi
+  - type: Icon
+    sprite: Clothing/Shoes/codersocks.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/codersocks.rsi
