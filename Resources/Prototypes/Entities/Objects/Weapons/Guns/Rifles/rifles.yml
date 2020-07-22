@@ -1,0 +1,317 @@
+- type: entity
+  name: BaseRifle
+  parent: BaseItem
+  id: RifleBase
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Icon
+    state: icon
+  - type: Item
+    size: 24
+    state: icon
+  - type: MagazineBarrel
+    currentSelector: Automatic
+    allSelectors:
+    - Automatic
+    magFillPrototype: MagazineLRifle
+    fireRate: 5
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 90
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+
+- type: entity
+  name: AKMS
+  parent: RifleBase
+  id: RifleAk
+  description: Weapon of the oppressed, oppressors, and extremists of all flavours. This is a copy of an ancient semi-automatic rifle chambered for .30 Rifle. If it won't fire, percussive maintenance should get it working again. It is known for its easy maintenance, and low price. This gun is not in active military service anymore, but has become ubiquitous among criminals and insurgents. This is a high-quality copy, which has an automatic fire mode.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: LRifle
+    magazineTypes:
+    - Rifle
+    fireRate: 5
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 90
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: black AK
+  parent: RifleBase
+  id: RifleBlackAk
+  description: Weapon of the oppressed, oppressors, and extremists of all flavours. This is a copy of an ancient semi-automatic rifle chambered for .30 Rifle. If it won't fire, percussive maintenance should get it working again. It is known for its easy maintenance, and low price. This gun is not in active military service anymore, but has become ubiquitous among criminals and insurgents. This is a high-quality copy, which has an automatic fire mode.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: LRifle
+    magazineTypes:
+    - Rifle
+    fireRate: 6
+    minAngle: 0
+    maxAngle: 60
+    angleIncrease: 15
+    angleDecay: 60
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: Z8 Bulldog
+  parent: RifleBase
+  id: RifleCarbine
+  description: The Z8 Bulldog is an older bullpup carbine model, made by Frozen Star.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: SRifle
+    magazineTypes:
+    - Rifle
+    magFillPrototype: MagazineSRifle
+    fireRate: 5
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 60
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/batrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: Dallas
+  parent: RifleBase
+  id: RifleDallas
+  description: Dallas is a pulse-action air-cooled automatic assault rifle made by unknown manufacturer. This weapon is very rare, but deadly efficient. It's used by elite mercenaries, assassins or bald marines.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: ClRifle
+    magazineTypes:
+    - Rifle
+    magFillPrototype: MagazineClRifle10x24
+    fireRate: 8
+    minAngle: 10
+    maxAngle: 60
+    angleIncrease: 10
+    angleDecay: 60
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/m41.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/m41_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/m41_reload.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: STS-35
+  parent: RifleBase
+  id: RifleSTS
+  description: The rugged STS-35 is a durable automatic weapon, popular on frontier worlds. Uses .30 Rifle rounds. This one is unmarked.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: LRifle
+    magazineTypes:
+    - Rifle
+    fireRate: 5
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 60
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: Vintorez
+  parent: RifleBase
+  id: RifleVintorez
+  description: This gun is a copy of a design from a country that no longer exists. It is still highly prized for its armor piercing capabilities.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: SRifle
+    magazineTypes:
+    - Rifle
+    magFillPrototype: MagazineSRifle
+    fireRate: 5
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 60
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true
+
+- type: entity
+  name: Wintermute
+  parent: RifleBase
+  id: RifleWintermute
+  description: A high end military grade assault rifle, designed as a modern ballistic infantry weapon. Primarily used by and produced for IH troops.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+  - type: RangedWeapon
+  - type: MagazineBarrel
+    caliber: SRifle
+    magazineTypes:
+    - Rifle
+    magFillPrototype: MagazineSRifle
+    autoEjectMag: true
+    fireRate: 5
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 60
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true

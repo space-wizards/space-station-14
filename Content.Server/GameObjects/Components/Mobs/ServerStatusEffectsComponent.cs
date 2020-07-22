@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
@@ -47,10 +46,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             Dirty();
         }
 
-        public void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
+        public override void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
         {
             _statusEffects[effect] = new StatusEffectStatus()
                 {Icon = icon, Cooldown = cooldown};
+
             Dirty();
         }
 

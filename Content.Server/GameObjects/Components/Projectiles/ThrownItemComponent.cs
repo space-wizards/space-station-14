@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 _shouldCollide = false;
             }
@@ -61,11 +61,11 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            if (Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 body.PhysicsShapes[0].CollisionMask &= (int) ~CollisionGroup.ThrownItem;
 
-                var physics = Owner.GetComponent<PhysicsComponent>();
+                var physics = Owner.GetComponent<IPhysicsComponent>();
                 physics.LinearVelocity = Vector2.Zero;
                 physics.Status = BodyStatus.OnGround;
                 body.Status = BodyStatus.OnGround;
@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components
 
         public void StartThrow(Vector2 initialImpulse)
         {
-            var comp = Owner.GetComponent<PhysicsComponent>();
+            var comp = Owner.GetComponent<IPhysicsComponent>();
             comp.Status = BodyStatus.InAir;
             comp.Momentum = initialImpulse;
             StartStopTimer();

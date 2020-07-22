@@ -1,9 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Utility;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Research;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Research;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
@@ -12,7 +10,6 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

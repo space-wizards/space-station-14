@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Observer;
-using Content.Server.Players;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Console;
@@ -13,7 +10,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 
 namespace Content.Server.Chat
 {

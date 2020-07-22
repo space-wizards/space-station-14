@@ -1,16 +1,15 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.PDA;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.PDA;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -40,7 +39,7 @@ namespace Content.Server.GameObjects.Components.PDA
         [ViewVariables] private BoundUserInterface _interface = default!;
         [ViewVariables] private string _startingIdCard = default!;
         [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
-        [ViewVariables] public IEntity? OwnerMob { get; private set; }
+        [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
 
@@ -116,7 +115,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             var ownerInfo = new PDAIdInfoText
             {
-                ActualOwnerName = OwnerMob?.Name,
+                ActualOwnerName = OwnerName,
                 IdOwner = ContainedID?.FullName,
                 JobTitle = ContainedID?.JobTitle
             };
@@ -183,16 +182,10 @@ namespace Content.Server.GameObjects.Components.PDA
             return true;
         }
 
-        public void SetPDAOwner(IEntity mob)
+        public void SetPDAOwner(string name)
         {
-            if (mob == OwnerMob)
-            {
-                return;
-            }
-
-            OwnerMob = mob;
+            OwnerName = name;
             UpdatePDAUserInterface();
-
         }
 
         private void InsertIdCard(IdCardComponent card)

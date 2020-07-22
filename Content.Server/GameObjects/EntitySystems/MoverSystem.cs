@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -66,8 +66,8 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
 
                 var mover = entity.GetComponent<IMoverComponent>();
-                var physics = entity.GetComponent<PhysicsComponent>();
-                if (entity.TryGetComponent<CollidableComponent>(out var collider))
+                var physics = entity.GetComponent<IPhysicsComponent>();
+                if (entity.TryGetComponent<ICollidableComponent>(out var collider))
                 {
                     UpdateKinematics(entity.Transform, mover, physics, collider);
                 }
@@ -78,7 +78,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        protected override void SetController(PhysicsComponent physics)
+        protected override void SetController(IPhysicsComponent physics)
         {
             physics.SetController<MoverController>();
         }
@@ -98,7 +98,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out PhysicsComponent physics))
+            if (ev.Entity.TryGetComponent(out IPhysicsComponent physics))
             {
                 (physics.Controller as MoverController)?.StopMoving();
             }

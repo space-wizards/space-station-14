@@ -1,0 +1,85 @@
+- type: entity
+  name: Launcher Base
+  parent: BaseItem
+  id: LauncherBase
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+  - type: Icon
+    state: icon
+  - type: Item
+    size: 24
+    state: icon
+
+- type: entity
+  name: china lake
+  parent: LauncherBase
+  id: LauncherChinaLake
+  description: This centuries-old design was recently rediscovered and adapted for use in modern battlefields. Working similar to a pump-action combat shotgun, its light weight and robust design quickly made it a popular weapon. It uses specialised grenade shells.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: bolt-closed
+        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
+  - type: RangedWeapon
+  - type: BoltActionBarrel
+    caliber: Grenade
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: GrenadeFrag
+    fireRate: 1
+    capacity: 3
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: Appearance
+    visuals:
+    - type: BarrelBoltVisualizer
+
+- type: entity
+  name: RPG-7
+  parent: LauncherBase
+  id: LauncherRocket
+  description: A modified ancient rocket-propelled grenade launcher, this design is centuries old, but well preserved.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+  - type: RangedWeapon
+  - type: RevolverBarrel
+    caliber: Rocket
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: RocketAmmo
+    fireRate: 0.5
+    capacity: 1
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 1
+      zeroVisible: true

@@ -1,0 +1,420 @@
+﻿- type: entity
+  id: VendingMachine
+  name: vending machine
+  components:
+  - type: Physics
+    Anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/empty.rsi
+    layers:
+    - state: normal
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/empty.rsi
+    state: normal
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Damageable
+  - type: Breakable
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+    - type: WiresVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.VendingMachineUiKey.Key
+      type: VendingMachineBoundUserInterface
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: PowerReceiver
+  - type: Wires
+    BoardName: "Vending Machine"
+    LayoutId: Vending
+  - type: Anchorable
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineAmmo
+  name: AmmoVend
+  components:
+  - type: VendingMachine
+    pack: AmmoVend
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineBooze
+  name: Booze-O-Mat
+  components:
+  - type: VendingMachine
+    pack: Booze-O-Mat
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/boozeomat.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCart
+  name: PTech
+  components:
+  - type: VendingMachine
+    pack: PTech
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/cart.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/cart.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineChapel
+  name: PietyVend
+  components:
+  - type: VendingMachine
+    pack: PietyVend
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/chapel.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/chapel.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCigs
+  name: cigarette machine
+  components:
+  - type: VendingMachine
+    pack: Cigarette machine
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/cigs.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/cigs.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCoffee
+  name: hot drinks machine
+  components:
+  - type: VendingMachine
+    pack: Hot Drinks machine
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/coffee.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/coffee.rsi
+    layers:
+    - state: normal
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: screen
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineCola
+  name: Robust Softdrinks
+  components:
+  - type: VendingMachine
+    pack: Robust Softdrinks
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/cola.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/cola.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineDinnerware
+  name: Dinnerware
+  components:
+  - type: VendingMachine
+    pack: Dinnerware
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/dinnerware.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/dinnerware.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineDiscount
+  name: Discount Dan's
+  components:
+  - type: VendingMachine
+    pack: Discount Dan's
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/discount.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/discount.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineEngivend
+  name: Engi-Vend
+  components:
+  - type: VendingMachine
+    pack: Engi-Vend
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/engivend.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/engivend.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineHats
+  name: Hatlord 9000
+  components:
+  - type: VendingMachine
+    pack: Hatlord 9000
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/hats.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/hats.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineMagivend
+  name: MagiVend
+  components:
+  - type: VendingMachine
+    pack: MagiVend
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/magivend.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/magivend.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineMedical
+  name: NanoMed Plus
+  components:
+  - type: VendingMachine
+    pack: NanoMed Plus
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/medical.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/medical.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineMining
+  name: Dwarven Mining Equipment
+  components:
+  - type: VendingMachine
+    pack: Dwarven Mining Equipment
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/mining.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/mining.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineNutri
+  name: NutriMax
+  components:
+  - type: VendingMachine
+    pack: NutriMax
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/nutri.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/nutri.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineRobotics
+  name: Robotech Deluxe
+  components:
+  - type: VendingMachine
+    pack: Robotech Deluxe
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/robotics.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/robotics.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSales
+  name: Sales
+  components:
+  - type: VendingMachine
+    pack: Sales
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/sale.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/sale.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSec
+  name: SecTech
+  components:
+  - type: VendingMachine
+    pack: SecTech
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/sec.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/sec.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSeeds
+  name: MegaSeed Servitor
+  components:
+  - type: VendingMachine
+    pack: MegaSeed Servitor
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/seeds.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/seeds.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineShoes
+  name: Shoelord 9000
+  components:
+  - type: VendingMachine
+    pack: Shoelord 9000
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/shoes.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/shoes.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSmartFridge
+  name: SmartFridge
+  components:
+  - type: VendingMachine
+    pack: SmartFridge
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/smartfridge.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/smartfridge.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSnack
+  name: Getmore Chocolate Corp
+  components:
+  - type: VendingMachine
+    pack: Getmore Chocolate Corp
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/snack.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/snack.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSoviet
+  name: Товарищ-vend
+  components:
+  - type: VendingMachine
+    pack: soviet
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSovietSoda
+  name: BODA
+  components:
+  - type: VendingMachine
+    pack: BODA
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/sovietsoda.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSuits
+  name: Suitlord 9000
+  components:
+  - type: VendingMachine
+    pack: Suitlord 9000
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/suits.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/suits.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineTheater
+  name: AutoDrobe
+  components:
+  - type: VendingMachine
+    pack: AutoDrobe
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/theater.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/theater.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineVendomat
+  name: Vendomat
+  components:
+  - type: VendingMachine
+    pack: Vendomat
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/vendomat.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/vendomat.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineVox
+  name: Trader Supply
+  components:
+  - type: VendingMachine
+    pack: Trader Supply
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/vox.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/vox.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineWallMedical
+  name: NanoMed
+  components:
+  - type: VendingMachine
+    pack: NanoMed
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/wallmed.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/wallmed.rsi
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineYouTool
+  name: YouTool
+  components:
+  - type: VendingMachine
+    pack: YouTool
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/youtool.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/youtool.rsi

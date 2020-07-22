@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Items.Storage;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.Interfaces.GameObjects;

@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Movement
             base.Initialize();
 
             // This component requires a physics component.
-            if (!Owner.HasComponent<PhysicsComponent>())
+            if (!Owner.HasComponent<IPhysicsComponent>())
                 Owner.AddComponent<PhysicsComponent>();
         }
 
