@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 #pragma warning restore 649
 
-        private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.2f);
+        private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
         /// <summary>
         ///     A dictionary of players to the last time that they
