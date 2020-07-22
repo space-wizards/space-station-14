@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Client.GameObjects.Components.Movement
 {
     [UsedImplicitly]
-    public class PortalVisualizer2D : AppearanceVisualizer
+    public class PortalVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
         {

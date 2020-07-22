@@ -12,7 +12,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: blue_door
   - type: Icon
@@ -26,7 +26,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: pink_door
   - type: Icon
@@ -40,7 +40,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: black_door
   - type: Icon
@@ -54,7 +54,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: green_door
   - type: Icon
@@ -68,7 +68,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: orange_door
   - type: Icon
@@ -82,7 +82,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: yellow_door
   - type: Icon
@@ -96,7 +96,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: white_door
   - type: Icon
@@ -110,7 +110,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: grey_door
   - type: Icon
@@ -124,7 +124,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: mixed_door
   - type: Icon

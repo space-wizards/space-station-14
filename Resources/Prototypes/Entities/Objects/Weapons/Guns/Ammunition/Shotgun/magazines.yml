@@ -10,7 +10,7 @@
     capacity: 8
   - type: Icon
     state: icon
-  - type: Sprite 
+  - type: Sprite
     netsync: false
     layers:
     - state: base
@@ -19,7 +19,7 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 2
       zeroVisible: false

@@ -6,7 +6,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: red_door
   - type: Icon
@@ -20,7 +20,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: generic
       state_closed: atmos_wardrobe_door
   - type: Icon

@@ -9,7 +9,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Nutrition
 {
     [UsedImplicitly]
-    public sealed class DrinkFoodVisualizer2D : AppearanceVisualizer
+    public sealed class DrinkFoodVisualizer : AppearanceVisualizer
     {
         private int _steps;
 

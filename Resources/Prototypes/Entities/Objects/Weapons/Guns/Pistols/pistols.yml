@@ -21,7 +21,7 @@
     state: icon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     currentSelector: Single
     allSelectors:
@@ -41,8 +41,8 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -51,7 +51,7 @@
   name: clarissa
   parent: PistolBase
   id: PistolClarissa
-  description: 
+  description:
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/clarissa.rsi
@@ -63,7 +63,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     - HCPistol
     fireRate: 5
@@ -76,7 +76,7 @@
   name: colt M1911
   parent: PistolBase
   id: PistolColt
-  description: 
+  description:
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/colt.rsi
@@ -93,7 +93,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     fireRate: 5
     minAngle: 0
@@ -102,7 +102,7 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: giskard
@@ -120,7 +120,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     fireRate: 5
     minAngle: 0
@@ -169,7 +169,7 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: lamia
@@ -192,7 +192,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Magnum
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     magFillPrototype: MagazineMagnum
     autoEjectMag: true
@@ -208,7 +208,7 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -236,7 +236,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: ClRifle
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     magFillPrototype: MagazineClRiflePistol
     autoEjectMag: true
@@ -268,7 +268,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     fireRate: 5
     minAngle: 0
@@ -277,7 +277,7 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: mk 58 (wood)
@@ -300,7 +300,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     fireRate: 5
     minAngle: 0
@@ -309,7 +309,7 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: molly
@@ -330,7 +330,7 @@
     currentSelector: Automatic
     allSelectors:
     - Automatic
-    magazineTypes: 
+    magazineTypes:
     - HCPistol
     - Smg
     magFillPrototype: MagazinePistolSmg
@@ -362,7 +362,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     - HCPistol
     fireRate: 5
@@ -372,7 +372,7 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: paco
@@ -390,7 +390,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Pistol
     autoEjectMag: true
     fireRate: 5

@@ -9,7 +9,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
-    public class SpeciesVisualizer2D : AppearanceVisualizer
+    public class SpeciesVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

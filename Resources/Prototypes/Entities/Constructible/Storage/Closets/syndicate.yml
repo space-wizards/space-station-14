@@ -7,7 +7,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: syndicate
   - type: Icon
     state: syndicate_door

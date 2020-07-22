@@ -259,7 +259,7 @@
     state: icon-10
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 11
 
 - type: entity
@@ -1813,7 +1813,7 @@
     state: icon-1
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 2
 
 - type: entity

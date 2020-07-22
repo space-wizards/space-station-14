@@ -13,7 +13,7 @@
   # Only use visualizer if there's multiple steps available
 # - type: Appearance
 #     visuals:
-#     - type: FoodVisualizer2D
+#     - type: FoodVisualizer
 #       base_state: icon
 #       steps: 1
 
