@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using Content.Shared.Atmos;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
@@ -17,14 +18,21 @@ namespace Content.Server.Atmos
     [Serializable]
     public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
     {
+        [ViewVariables]
         private float[] _moles = new float[Atmospherics.TotalNumberOfGases];
+
+        [ViewVariables]
         private float[] _molesArchived = new float[Atmospherics.TotalNumberOfGases];
         private float _temperature = Atmospherics.TCMB;
         public IReadOnlyList<float> Gases => _moles;
 
+        [ViewVariables]
         public bool Immutable { get; private set; }
+
+        [ViewVariables]
         public float LastShare { get; private set; } = 0;
 
+        [ViewVariables]
         public float HeatCapacity
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -42,6 +50,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [ViewVariables]
         public float HeatCapacityArchived
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,6 +68,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [ViewVariables]
         public float TotalMoles
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -75,6 +85,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [ViewVariables]
         public float Pressure
         {
             get
@@ -84,6 +95,7 @@ namespace Content.Server.Atmos
             }
         }
 
+        [ViewVariables]
         public float Temperature
         {
             get => _temperature;
@@ -94,10 +106,13 @@ namespace Content.Server.Atmos
             }
         }
 
+        [ViewVariables]
         public float ThermalEnergy => Temperature * HeatCapacity;
 
+        [ViewVariables]
         public float TemperatureArchived { get; private set; }
 
+        [ViewVariables]
         public float Volume { get; set; }
 
         public GasMixture()

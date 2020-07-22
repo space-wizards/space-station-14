@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
 using MathF = CannyFastMath.MathF;
 
@@ -21,20 +22,39 @@ namespace Content.Server.Atmos
         private int _archivedCycle = 0;
         private int _currentCycle = 0;
 
+        [ViewVariables]
         public TileAtmosphere PressureSpecificTarget { get; set; } = null;
+
+        [ViewVariables]
         public float PressureDifference { get; set; } = 0;
+
+        [ViewVariables]
         public int AtmosCooldown { get; set; } = 0;
+
+        [ViewVariables]
         public bool Excited { get; set; } = false;
+
+        [ViewVariables]
         private GridAtmosphereComponent _gridAtmosphereComponent;
 
+        [ViewVariables]
         private readonly Dictionary<Direction, TileAtmosphere> _adjacentTiles = new Dictionary<Direction, TileAtmosphere>();
 
+        [ViewVariables]
         private TileAtmosInfo _tileAtmosInfo;
+
         private Direction _pressureDirection;
 
+        [ViewVariables]
         public GridId GridIndex { get; }
+
+        [ViewVariables]
         public MapIndices GridIndices { get; }
+
+        [ViewVariables]
         public ExcitedGroup ExcitedGroup { get; set; }
+
+        [ViewVariables]
         public GasMixture Air { get; set; }
 
         public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null)
@@ -530,14 +550,14 @@ namespace Content.Server.Atmos
 
                     LastShareCheck();
                 }
-
-                React();
-                UpdateVisuals();
-
-                if((ExcitedGroup == null && !(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true)))
-                    || (AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2)))
-                    _gridAtmosphereComponent.RemoveActiveTile(this);
             }
+
+            React();
+            UpdateVisuals();
+
+            if(AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2) ||
+               (ExcitedGroup == null && !(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true))))
+                _gridAtmosphereComponent.RemoveActiveTile(this);
         }
 
         private bool ConsiderSuperconductivity(bool starting)

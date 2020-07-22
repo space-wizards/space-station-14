@@ -2,19 +2,34 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
     public struct TileAtmosInfo
     {
+        [ViewVariables]
         public int LastCycle;
+
+        [ViewVariables]
         public long LastQueueCycle;
+
+        [ViewVariables]
         public long LastSlowQueueCycle;
+
+        [ViewVariables]
         public float MoleDelta;
 
+        [ViewVariables]
         public float TransferDirectionEast;
+
+        [ViewVariables]
         public float TransferDirectionWest;
+
+        [ViewVariables]
         public float TransferDirectionNorth;
+
+        [ViewVariables]
         public float TransferDirectionSouth;
 
         public float this[Direction direction]
@@ -51,9 +66,15 @@ namespace Content.Server.Atmos
             }
         }
 
+        [ViewVariables]
         public float CurrentTransferAmount;
+
+        [ViewVariables]
         public float DistanceScore;
+
         public Direction CurrentTransferDirection;
+
+        [ViewVariables]
         public bool FastDone;
     }
 }

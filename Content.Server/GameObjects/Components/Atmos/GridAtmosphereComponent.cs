@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -16,25 +17,36 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent, Serializable]
-    public class GridAtmosphereComponent : Component
+    public class GridAtmosphereComponent : Component, IEnumerable<TileAtmosphere>
     {
         public override string Name => "GridAtmosphere";
 
         private int _timer = 0;
         private int _updateCounter = 0;
         private IMapGrid _grid;
+
+        [ViewVariables]
         private readonly HashSet<ExcitedGroup> _excitedGroups = new HashSet<ExcitedGroup>(1000);
+
+        [ViewVariables]
         private readonly Dictionary<MapIndices, TileAtmosphere> _tiles = new Dictionary<MapIndices, TileAtmosphere>(1000);
+
+        [ViewVariables]
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
-        private ProcessState _state = ProcessState.TileEqualize;
-
+        [ViewVariables]
         private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
+        private ProcessState _state = ProcessState.TileEqualize;
 
         private enum ProcessState
         {
@@ -63,14 +75,11 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public override void Initialize()
         {
-            // TODO ATMOS Not repopulate tiles here
-
             base.Initialize();
 
             _grid = Owner.GetComponent<IMapGridComponent>().Grid;
 
-            if(_tiles.Count == 0)
-                RepopulateTiles();
+            RepopulateTiles();
         }
 
         public void RepopulateTiles()
@@ -79,7 +88,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var tile in _grid.GetAllTiles(false))
             {
-                _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, null));
+                if(!_tiles.ContainsKey(tile.GridIndices))
+                    _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
             }
 
             foreach (var (_, tile) in _tiles)
@@ -103,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (tile == null)
                 {
-                    tile = new TileAtmosphere(this, _grid.Index, indices, null);
+                    tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
                     _tiles.Add(indices, tile);
                 }
 
@@ -345,6 +355,16 @@ namespace Content.Server.GameObjects.Components.Atmos
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
                 serializer.DataField(ref tiles, "tiles", new Dictionary<MapIndices, int>());
             }
+        }
+
+        public IEnumerator<TileAtmosphere> GetEnumerator()
+        {
+            return _tiles.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
