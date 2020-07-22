@@ -86,7 +86,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
             if (!_entityManager.TryGetEntity(req.EntityUid, out var entity))
             {
-                Logger.Warning($"{nameof(RequestVerbs)} called on a client-side entity with id {req.EntityUid} by player {player}.");
+                Logger.Warning($"{nameof(RequestVerbs)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
                 return;
             }
 
