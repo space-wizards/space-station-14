@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests
                 var entityMan = IoCManager.Resolve<IEntityManager>();
 
                 human = entityMan.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                uniform = entityMan.SpawnEntity("JanitorUniform", MapCoordinates.Nullspace);
+                uniform = entityMan.SpawnEntity("UniformJanitor", MapCoordinates.Nullspace);
                 idCard = entityMan.SpawnEntity("AssistantIDCard", MapCoordinates.Nullspace);
                 pocketItem = entityMan.SpawnEntity("FlashlightLantern", MapCoordinates.Nullspace);
                 var tooBigItem = entityMan.SpawnEntity("ToolboxEmergency", MapCoordinates.Nullspace);
