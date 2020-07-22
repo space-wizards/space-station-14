@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;

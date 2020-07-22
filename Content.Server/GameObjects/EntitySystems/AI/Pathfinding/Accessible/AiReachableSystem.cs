@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
@@ -148,7 +148,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
             var collisionMask = 0;
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent))
+            if (entity.TryGetComponent(out ICollidableComponent collidableComponent))
             {
                 collisionMask = collidableComponent.CollisionMask;
             }

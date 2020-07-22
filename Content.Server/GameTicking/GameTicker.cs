@@ -800,7 +800,7 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(mob);
+            pdaComponent.SetPDAOwner(characterName);
             var mindComponent = mob.GetComponent<MindComponent>();
             if (mindComponent.HasMind) //Redundancy checks.
             {

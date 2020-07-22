@@ -135,6 +135,8 @@
             "CustodialClosetFill",
             "NoSlip",
             "TrashSpawner",
+            "Pill",
+            "RCD",
         };
     }
 }

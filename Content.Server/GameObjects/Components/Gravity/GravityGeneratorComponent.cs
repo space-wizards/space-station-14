@@ -1,25 +1,19 @@
 ﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Gravity;
 using Content.Shared.GameObjects.Components.Interactable;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Gravity
 {

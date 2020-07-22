@@ -6,6 +6,7 @@ using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -135,7 +136,7 @@ namespace Content.Server.GameObjects.Components
 
         public void Fumble()
         {
-            if (Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
+            if (Owner.TryGetComponent<IPhysicsComponent>(out var physicsComponent))
             {
                 physicsComponent.LinearVelocity += RandomOffset();
             }

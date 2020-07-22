@@ -18,7 +18,7 @@ namespace Content.Client.Graphics.Overlays
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public CircleMaskOverlay() : base(nameof(OverlayType.CircleMaskOverlay))
+        public CircleMaskOverlay() : base(nameof(SharedOverlayID.CircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
             Shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();

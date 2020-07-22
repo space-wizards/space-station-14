@@ -1,0 +1,11 @@
+- type: entity
+  id: LockerQuarterMaster
+  parent: LockerSecureBase
+  name: "quatermaster's locker"
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer2D
+      state: qm
+  - type: Icon
+    state: qm_door
