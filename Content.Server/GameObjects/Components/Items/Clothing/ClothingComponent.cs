@@ -1,7 +1,4 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;

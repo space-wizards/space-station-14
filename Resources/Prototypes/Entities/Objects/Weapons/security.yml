@@ -1,0 +1,51 @@
+- type: entity
+  name: stun baton
+  parent: BaseItem
+  id: Stunbaton
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/stunbaton.rsi
+      state: stunbaton_off
+
+    - type: Icon
+      sprite: Objects/Weapons/Melee/stunbaton.rsi
+      state: stunbaton_off
+
+    - type: Stunbaton
+      damage: 1
+      range: 0.75
+      arcwidth: 0
+      arc: default
+
+    - type: Item
+      size: 10
+      sprite: Objects/Weapons/Melee/stunbaton.rsi
+      HeldPrefix: off
+
+    - type: ItemCooldown
+
+- type: entity
+  name: flash
+  parent: BaseItem
+  id: Flash
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/flash.rsi
+      state: flash
+
+    - type: Icon
+      sprite: Objects/Weapons/Melee/flash.rsi
+      state: flash
+
+    - type: Flash
+      damage: 0
+      cooldownTime: 1
+      arc: smash
+      hitSound: /Audio/Weapons/flash.ogg
+
+    - type: Item
+      size: 2
+      sprite: Objects/Weapons/Melee/flash.rsi
+
+    - type: ItemCooldown
+

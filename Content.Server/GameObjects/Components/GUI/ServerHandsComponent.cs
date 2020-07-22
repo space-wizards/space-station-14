@@ -1,7 +1,4 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
@@ -57,6 +54,8 @@ namespace Content.Server.GameObjects
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
+
+        [ViewVariables] public int Count => _orderedHands.Count;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
