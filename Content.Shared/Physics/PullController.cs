@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Items;
@@ -18,18 +19,18 @@ namespace Content.Shared.Physics
 
         private const float DistBeforeStopPull = SharedInteractionSystem.InteractionRange;
 
-        private IPhysicsComponent _controlledComponent;
+        private ICollidableComponent? _controlledComponent;
 
-        private IPhysicsComponent _puller;
+        private ICollidableComponent? _puller;
 
         public bool GettingPulled => _puller != null;
 
-        public override IPhysicsComponent ControlledComponent
+        public override ICollidableComponent? ControlledComponent
         {
             set => _controlledComponent = value;
         }
 
-        public void StartPull(IPhysicsComponent pull)
+        public void StartPull(ICollidableComponent? pull)
         {
             _puller = pull;
         }
@@ -37,22 +38,27 @@ namespace Content.Shared.Physics
         public void StopPull()
         {
             _puller = null;
-            _controlledComponent.RemoveController();
+            _controlledComponent?.RemoveController();
         }
 
-        public void MoveTo(GridCoordinates puller, GridCoordinates to)
+        public void TryMoveTo(GridCoordinates from, GridCoordinates to)
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-
-            if (!puller.InRange(mapManager, to, SharedInteractionSystem.InteractionRange))
+            if (_puller == null || _controlledComponent == null)
             {
                 return;
             }
 
-            var dir = to.Position - puller.Position;
-            var ray = new CollisionRay(puller.Position, dir.Normalized, (int) CollisionGroup.Impassable);
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            if (!from.InRange(mapManager, to, SharedInteractionSystem.InteractionRange))
+            {
+                return;
+            }
+
+            var dir = to.Position - from.Position;
+            var ray = new CollisionRay(from.Position, dir.Normalized, (int) CollisionGroup.Impassable);
             var physicsManager = IoCManager.Resolve<IPhysicsManager>();
-            var rayResults = physicsManager.IntersectRayWithPredicate(puller.ToMap(mapManager).MapId, ray, dir.Length).ToList();
+            var rayResults = physicsManager.IntersectRayWithPredicate(from.ToMap(mapManager).MapId, ray, dir.Length).ToList();
             var position = rayResults.Count > 0
                 ? new GridCoordinates(rayResults[0].HitPos, to.GridID)
                 : to;
@@ -70,9 +76,10 @@ namespace Content.Shared.Physics
 
         public override void UpdateBeforeProcessing()
         {
-            base.UpdateBeforeProcessing();
-
-            if (_puller == null) return;
+            if (_puller == null || _controlledComponent == null)
+            {
+                return;
+            }
 
             // Are we outside of pulling range?
             var dist = _puller.Owner.Transform.WorldPosition - _controlledComponent.Owner.Transform.WorldPosition;

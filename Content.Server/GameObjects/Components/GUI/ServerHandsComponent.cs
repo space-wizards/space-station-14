@@ -498,7 +498,7 @@ namespace Content.Server.GameObjects
                 }
             }
 
-            PulledObject = pullable.Owner.GetComponent<IPhysicsComponent>();
+            PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
 
             if (!(PulledObject?.Controller is PullController controller))
             {
@@ -506,7 +506,7 @@ namespace Content.Server.GameObjects
                 controller = (PullController) PulledObject.Controller;
             }
 
-            controller!.StartPull(Owner.GetComponent<IPhysicsComponent>());
+            controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
 
             if (PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent newStatus))
             {
@@ -516,7 +516,7 @@ namespace Content.Server.GameObjects
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
         {
-            (PulledObject?.Controller as PullController)?.MoveTo(puller, to);
+            (PulledObject?.Controller as PullController)?.TryMoveTo(puller, to);
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
