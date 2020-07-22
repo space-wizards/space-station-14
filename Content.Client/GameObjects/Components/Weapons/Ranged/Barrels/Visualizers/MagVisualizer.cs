@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
 {
     [UsedImplicitly]
-    public sealed class MagVisualizer2D : AppearanceVisualizer
+    public sealed class MagVisualizer : AppearanceVisualizer
     {
         private bool _magLoaded;
         private string _magState;
@@ -63,7 +63,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                 {
                     return;
                 }
-                
+
                 var step = ContentHelpers.RoundToLevels(current, capacity, _magSteps);
 
                 if (step == 0 && !_zeroVisible)
@@ -72,7 +72,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                     {
                         sprite.LayerSetVisible(RangedBarrelVisualLayers.Mag, false);
                     }
-                    
+
                     if (sprite.LayerMapTryGet(RangedBarrelVisualLayers.MagUnshaded, out _))
                     {
                         sprite.LayerSetVisible(RangedBarrelVisualLayers.MagUnshaded, false);
@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
                 {
                     sprite.LayerSetVisible(RangedBarrelVisualLayers.Mag, false);
                 }
-                
+
                 if (sprite.LayerMapTryGet(RangedBarrelVisualLayers.MagUnshaded, out _))
                 {
                     sprite.LayerSetVisible(RangedBarrelVisualLayers.MagUnshaded, false);

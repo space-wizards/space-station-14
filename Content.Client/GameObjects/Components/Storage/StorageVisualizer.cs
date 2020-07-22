@@ -7,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Storage
 {
-    public sealed class StorageVisualizer2D : AppearanceVisualizer
+    public sealed class StorageVisualizer : AppearanceVisualizer
     {
         private string _stateBase;
         private string _stateOpen;

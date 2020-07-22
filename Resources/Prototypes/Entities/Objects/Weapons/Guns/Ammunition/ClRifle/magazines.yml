@@ -11,7 +11,7 @@
     capacity: 30
   - type: Icon
     state: icon
-  - type: Sprite 
+  - type: Sprite
     netsync: false
     layers:
     - state: base
@@ -20,7 +20,7 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 2
       zeroVisible: false
@@ -54,7 +54,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag.rsi
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 6
       zeroVisible: false
@@ -76,7 +76,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_hv.rsi
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 6
       zeroVisible: false
@@ -96,7 +96,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_practice.rsi
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 6
       zeroVisible: false
@@ -116,7 +116,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/ClRifle/cl_pistol_mag_rubber.rsi
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 6
       zeroVisible: false

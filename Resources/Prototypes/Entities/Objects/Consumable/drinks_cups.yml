@@ -46,7 +46,7 @@
     state: icon-6
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 7
 
 - type: entity
@@ -65,7 +65,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -84,7 +84,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -103,7 +103,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -122,7 +122,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -141,7 +141,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -160,7 +160,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -179,7 +179,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -198,7 +198,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -217,7 +217,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -236,7 +236,7 @@
     state: icon-3
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 4
 
 - type: entity
@@ -288,7 +288,7 @@
     state: icon-1
   - type: Appearance
     visuals:
-    - type: DrinkFoodVisualizer2D
+    - type: DrinkFoodVisualizer
       steps: 2
 
 - type: entity

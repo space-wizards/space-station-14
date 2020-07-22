@@ -126,7 +126,7 @@
   - type: Damageable
   - type: Appearance
     visuals:
-    - type: SpeciesVisualizer2D
+    - type: SpeciesVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
   - type: Teleportable
@@ -253,7 +253,7 @@
 
     - type: Appearance
       visuals:
-        - type: SpeciesVisualizer2D
+        - type: SpeciesVisualizer
 
     - type: HumanoidAppearance
 

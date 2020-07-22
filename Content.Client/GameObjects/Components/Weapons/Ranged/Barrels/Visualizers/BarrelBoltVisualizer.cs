@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
 {
     [UsedImplicitly]
-    public sealed class BarrelBoltVisualizer2D : AppearanceVisualizer
+    public sealed class BarrelBoltVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
         {
@@ -19,7 +19,7 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualize
         public override void OnChangeData(AppearanceComponent component)
         {
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            
+
             if (!component.TryGetData(BarrelBoltVisuals.BoltOpen, out bool boltOpen))
             {
                 return;

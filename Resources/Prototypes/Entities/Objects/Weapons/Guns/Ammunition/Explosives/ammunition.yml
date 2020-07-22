@@ -37,7 +37,7 @@
     state: base
   - type: Appearance
     visuals:
-    - type: SpentAmmoVisualizer2D
+    - type: SpentAmmoVisualizer
 
 - type: entity
   id: GrenadeBlast
@@ -59,7 +59,7 @@
     state: base
   - type: Appearance
     visuals:
-    - type: SpentAmmoVisualizer2D
+    - type: SpentAmmoVisualizer
 
 - type: entity
   id: GrenadeFlash
@@ -81,7 +81,7 @@
     state: base
   - type: Appearance
     visuals:
-    - type: SpentAmmoVisualizer2D
+    - type: SpentAmmoVisualizer
 
 - type: entity
   id: GrenadeFrag
@@ -103,4 +103,4 @@
     state: base
   - type: Appearance
     visuals:
-    - type: SpentAmmoVisualizer2D
+    - type: SpentAmmoVisualizer

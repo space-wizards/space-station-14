@@ -7,7 +7,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: eng
       state_closed: eng_tool_door
   - type: Icon
@@ -22,7 +22,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: eng
       state_closed: eng_rad_door
   - type: Icon
@@ -37,7 +37,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: emergency
   - type: Icon
     state: emergency_door
@@ -51,7 +51,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: fire
   - type: Icon
     state: fire_door
@@ -65,7 +65,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: bomb
   - type: Icon
     state: bomb_door

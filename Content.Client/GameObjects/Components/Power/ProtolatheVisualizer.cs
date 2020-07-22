@@ -9,9 +9,9 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
-    public class AutolatheVisualizer2D : AppearanceVisualizer
+    public class ProtolatheVisualizer : AppearanceVisualizer
     {
-        private const string AnimationKey = "autolathe_animation";
+        private const string AnimationKey = "protolathe_animation";
 
         private Animation _buildingAnimation;
         private Animation _insertingMetalAnimation;
@@ -23,26 +23,21 @@ namespace Content.Client.GameObjects.Components.Power
         {
             base.LoadData(node);
 
-            _buildingAnimation = PopulateAnimation("autolathe_building", "autolathe_building_unlit", 0.5f);
-            _insertingMetalAnimation = PopulateAnimation("autolathe_inserting_metal_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingGlassAnimation = PopulateAnimation("autolathe_inserting_glass_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingGoldAnimation = PopulateAnimation("autolathe_inserting_gold_plate", "autolathe_inserting_unlit", 0.9f);
-            _insertingPhoronAnimation = PopulateAnimation("autolathe_inserting_phoron_sheet", "autolathe_inserting_unlit", 0.9f);
+            _buildingAnimation = PopulateAnimation("protolathe_building", 0.9f);
+            _insertingMetalAnimation = PopulateAnimation("protolathe_metal", 0.9f);
+            _insertingGlassAnimation = PopulateAnimation("protolathe_glass", 0.9f);
+            _insertingGoldAnimation = PopulateAnimation("protolathe_gold", 0.9f);
+            _insertingPhoronAnimation = PopulateAnimation("protolathe_phoron", 0.9f);
         }
 
-        private Animation PopulateAnimation(string sprite, string spriteUnlit, float length)
+        private Animation PopulateAnimation(string sprite, float length)
         {
             var animation = new Animation {Length = TimeSpan.FromSeconds(length)};
 
             var flick = new AnimationTrackSpriteFlick();
             animation.AnimationTracks.Add(flick);
-            flick.LayerKey = AutolatheVisualLayers.Base;
+            flick.LayerKey = ProtolatheVisualLayers.AnimationLayer;
             flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(sprite, 0f));
-
-            var flickUnlit = new AnimationTrackSpriteFlick();
-            animation.AnimationTracks.Add(flickUnlit);
-            flickUnlit.LayerKey = AutolatheVisualLayers.BaseUnlit;
-            flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(spriteUnlit, 0f));
 
             return animation;
         }
@@ -65,7 +60,7 @@ namespace Content.Client.GameObjects.Components.Power
             {
                 state = LatheVisualState.Idle;
             }
-
+            sprite.LayerSetVisible(ProtolatheVisualLayers.AnimationLayer, true);
             switch (state)
             {
                 case LatheVisualState.Idle:
@@ -74,8 +69,9 @@ namespace Content.Client.GameObjects.Components.Power
                         animPlayer.Stop(AnimationKey);
                     }
 
-                    sprite.LayerSetState(AutolatheVisualLayers.Base, "autolathe");
-                    sprite.LayerSetState(AutolatheVisualLayers.BaseUnlit, "autolathe_unlit");
+                    sprite.LayerSetState(ProtolatheVisualLayers.Base, "protolathe");
+                    sprite.LayerSetState(ProtolatheVisualLayers.BaseUnlit, "protolathe_unlit");
+                    sprite.LayerSetVisible(ProtolatheVisualLayers.AnimationLayer, false);
                     break;
                 case LatheVisualState.Producing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
@@ -112,12 +108,13 @@ namespace Content.Client.GameObjects.Components.Power
             }
 
             var glowingPartsVisible = !(component.TryGetData(PowerDeviceVisuals.Powered, out bool powered) && !powered);
-            sprite.LayerSetVisible(AutolatheVisualLayers.BaseUnlit, glowingPartsVisible);
+            sprite.LayerSetVisible(ProtolatheVisualLayers.BaseUnlit, glowingPartsVisible);
         }
-        public enum AutolatheVisualLayers
+        public enum ProtolatheVisualLayers
         {
             Base,
-            BaseUnlit
+            BaseUnlit,
+            AnimationLayer
         }
     }
 }

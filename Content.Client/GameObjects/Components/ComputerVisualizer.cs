@@ -7,7 +7,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components
 {
-    public sealed class ComputerVisualizer2D : AppearanceVisualizer
+    public sealed class ComputerVisualizer : AppearanceVisualizer
     {
         private string KeyboardState = "generic_key";
         private string ScreenState = "generic";

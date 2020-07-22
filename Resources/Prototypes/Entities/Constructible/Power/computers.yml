@@ -33,19 +33,19 @@
     sprite: Constructible/Power/computers.rsi
     layers:
     - state: computer
-      map: ["enum.ComputerVisualizer2D+Layers.Body"]
+      map: ["enum.ComputerVisualizer+Layers.Body"]
     - state: generic_key_off
-      map: ["enum.ComputerVisualizer2D+Layers.Keyboard"]
+      map: ["enum.ComputerVisualizer+Layers.Keyboard"]
     - state: generic
       shader: unshaded
-      map: ["enum.ComputerVisualizer2D+Layers.Screen"]
+      map: ["enum.ComputerVisualizer+Layers.Screen"]
     - state: generic_key
       shader: unshaded
-      map: ["enum.ComputerVisualizer2D+Layers.KeyboardOn"]
+      map: ["enum.ComputerVisualizer+Layers.KeyboardOn"]
 
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: generic_key
       screen: generic
 
@@ -57,7 +57,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: atmos_key
       screen: "alert-2"
 
@@ -69,7 +69,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: power_key
       screen: power_monitor
 
@@ -81,7 +81,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: tech_key
       screen: supply
   - type: CargoConsole
@@ -113,7 +113,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: tech_key
       screen: request
   - type: CargoConsole
@@ -126,7 +126,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: med_key
       screen: medcomp
 
@@ -138,7 +138,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: rd_key
       screen: rdcomp
   - type: ResearchClient
@@ -168,7 +168,7 @@
       type: IdCardConsoleBoundUserInterface
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: id_key
       screen: id
 
@@ -184,7 +184,7 @@
       type: BodyScannerBoundUserInterface
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: generic_key
       screen: generic
 
@@ -195,7 +195,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: generic_key
       screen: comm
   - type: CommunicationsConsole
@@ -211,7 +211,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: ComputerVisualizer2D
+    - type: ComputerVisualizer
       key: generic_key
       screen: solar_screen
   - type: SolarControlConsole

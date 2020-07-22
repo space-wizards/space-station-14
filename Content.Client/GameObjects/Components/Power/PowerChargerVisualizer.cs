@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Client.GameObjects.Components.Power
 {
     [UsedImplicitly]
-    public class PowerChargerVisualizer2D : AppearanceVisualizer
+    public class PowerChargerVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
         {
