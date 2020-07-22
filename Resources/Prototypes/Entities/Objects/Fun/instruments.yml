@@ -125,7 +125,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   - type: Item
-    size: 24
+    size: 10
     sprite: Objects/Fun/Instruments/harmonica.rsi
 
 - type: entity
@@ -212,7 +212,7 @@
   - type: Item
     size: 24
     sprite: Objects/Fun/Instruments/banjo.rsi
-    
+
 - type: entity
   name: gilded bike horn
   description: An exquisitely decorated bike horn, capable of honking in a variety of notes.

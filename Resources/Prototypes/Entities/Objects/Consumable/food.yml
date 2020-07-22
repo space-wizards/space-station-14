@@ -563,6 +563,8 @@
   id: FoodChocolateBar
   description: Such sweet, fattening food.
   components:
+  - type: Item
+    size: 10
   - type: Solution
     contents:
       reagents:
