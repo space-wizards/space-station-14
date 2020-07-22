@@ -1,4 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
+using JetBrains.Annotations;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.GameObjects.Systems;
 using System;
 using System.Collections.Generic;
@@ -9,25 +11,57 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class RadioSystem : EntitySystem
     {
-        private readonly HashSet<RadioComponent> _activeRadios = new HashSet<RadioComponent>();
+        private List<RadioComponent> _activeRadios;
+        private List<string> _messages;
 
-        public bool Subscribe(RadioComponent radio)
+        public override void Initialize()
         {
-            return _activeRadios.Add(radio);
+            base.Initialize();
+
+            _activeRadios = new List<RadioComponent>();
+            _messages = new List<string>();
         }
 
-        public bool Unsubscribe(RadioComponent radio)
+        public void Subscribe(RadioComponent radio)
         {
-            return _activeRadios.Remove(radio);
+            if (_activeRadios.Contains(radio))
+            {
+                return;
+            }
+
+            _activeRadios.Add(radio);
+        }
+
+        public void Unsubscribe(RadioComponent radio)
+        {
+            if (!_activeRadios.Contains(radio))
+            {
+                return;
+            }
+
+            _activeRadios.Remove(radio);
         }
 
         public void SpreadMessage(RadioComponent source, string message)
         {
-            foreach (RadioComponent radio in _activeRadios.ToArray())
+            if (_messages.Contains(message))
             {
-                if (radio == source || radio == null) { continue; }
+                return;
+            }
+
+            _messages.Add(message);
+
+            foreach (var radio in _activeRadios)
+            {
+                if (radio == source)
+                {
+                    continue;
+                }
+
                 radio.Speaker(message);
             }
+
+            _messages.Remove(message);
         }
     }
 }

@@ -79,17 +79,13 @@ namespace Content.Server.Chat
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            if (!source.HasComponent<ListeningComponent>())
+            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>().GetActiveListeners();
+            foreach (var listener in listeners)
             {
-                var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>().GetActiveListeners();
-                foreach (var listener in listeners.ToArray())
+                if (pos.Distance(_mapManager, listener.Owner.Transform.GridPosition) < VoiceRange)
                 {
-                    if( pos.Distance(_mapManager, listener.Owner.Transform.GridPosition) < VoiceRange)
-                    {
                     listener.PassSpeechData(message, source);
-                    }
                 }
-
             }
         }
 

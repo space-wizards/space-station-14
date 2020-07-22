@@ -1,5 +1,8 @@
 ﻿using Content.Server.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,19 +11,33 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class ListeningSystem : EntitySystem
     {
-        private readonly HashSet<ListeningComponent> _activeListeners = new HashSet<ListeningComponent>();
+        private readonly List<ListeningComponent> _activeListeners = new List<ListeningComponent>();
 
-        public bool Subscribe(ListeningComponent listener)
+        public void Subscribe(ListeningComponent listener)
         {
-            return _activeListeners.Add(listener);
+            if (_activeListeners.Contains(listener))
+            {
+                return;
+            }
+
+            _activeListeners.Add(listener);
+
+            return;
         }
 
-        public bool Unsubscribe(ListeningComponent listener)
+        public void Unsubscribe(ListeningComponent listener)
         {
-            return _activeListeners.Remove(listener);
+            if (!_activeListeners.Contains(listener))
+            {
+                return;
+            }
+
+            _activeListeners.Remove(listener);
+
+            return;
         }
 
-        public HashSet<ListeningComponent> GetActiveListeners()
+        public List<ListeningComponent> GetActiveListeners()
         {
             return _activeListeners;
         }
