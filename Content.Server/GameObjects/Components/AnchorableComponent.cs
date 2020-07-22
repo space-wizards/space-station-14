@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -20,12 +19,12 @@ namespace Content.Server.GameObjects.Components
         /// </summary>
         /// <param name="user">The user doing the action</param>
         /// <param name="utilizing">The tool being used, can be null if forcing it</param>
-        /// <param name="physics">The physics component of the owning entity</param>
+        /// <param name="collidable">The physics component of the owning entity</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out IPhysicsComponent physics, bool force = false)
+        private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out ICollidableComponent collidable, bool force = false)
         {
-            if (!Owner.TryGetComponent(out physics))
+            if (!Owner.TryGetComponent(out collidable))
             {
                 return false;
             }
@@ -90,12 +89,12 @@ namespace Content.Server.GameObjects.Components
         /// <returns>true if toggled, false otherwise</returns>
         private bool TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (!Owner.TryGetComponent(out ICollidableComponent collidable))
             {
                 return false;
             }
 
-            return physics.Anchored ?
+            return collidable.Anchored ?
                 TryUnAnchor(user, utilizing, force) :
                 TryAnchor(user, utilizing, force);
         }

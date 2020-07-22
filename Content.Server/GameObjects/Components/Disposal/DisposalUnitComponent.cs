@@ -79,8 +79,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out PhysicsComponent physics) ||
-            physics.Anchored;
+            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            collidable.Anchored;
 
         public bool CanInsert(IEntity entity)
         {
@@ -104,8 +104,8 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             return (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
                     receiver.Powered) &&
-                   (!Owner.TryGetComponent(out PhysicsComponent physics) ||
-                    physics.Anchored);
+                   (!Owner.TryGetComponent(out CollidableComponent collidable) ||
+                    collidable.Anchored);
         }
 
         public bool TryFlush()
@@ -231,8 +231,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!Owner.TryGetComponent(out PhysicsComponent physics) ||
-                physics.Anchored)
+            if (!Owner.TryGetComponent(out CollidableComponent collidable) ||
+                collidable.Anchored)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Anchored);
                 return;
@@ -269,9 +269,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Startup();
 
             Owner.EnsureComponent<AnchorableComponent>();
-            var physics = Owner.EnsureComponent<PhysicsComponent>();
+            var collidable = Owner.EnsureComponent<CollidableComponent>();
 
-            physics.AnchoredChanged += UpdateVisualState;
+            collidable.AnchoredChanged += UpdateVisualState;
             UpdateVisualState();
         }
 

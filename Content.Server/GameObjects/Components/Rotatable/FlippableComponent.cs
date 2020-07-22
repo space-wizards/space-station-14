@@ -21,8 +21,8 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryFlip(IEntity user)
         {
-            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
-                physics.Anchored)
+            if (Owner.TryGetComponent(out ICollidableComponent collidable) &&
+                collidable.Anchored)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, Loc.GetString("It's stuck."));
                 return;

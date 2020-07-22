@@ -115,8 +115,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 return false;
             }
 
-            if (!entity.TryGetComponent(out PhysicsComponent physics) ||
-                physics.Anchored)
+            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+                collidable.Anchored)
             {
                 return false;
             }
