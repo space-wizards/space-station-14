@@ -268,7 +268,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
             // Don't collide with other mobs
-            return collidedWith.Owner.HasComponent<SharedSpeciesComponent>();
+            return collidedWith.Entity.HasComponent<SharedSpeciesComponent>();
         }
 
         [Serializable, NetSerializable]

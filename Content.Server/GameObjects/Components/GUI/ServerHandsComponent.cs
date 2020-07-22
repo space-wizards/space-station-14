@@ -61,6 +61,8 @@ namespace Content.Server.GameObjects
         // Mostly arbitrary.
         public const float PickupRange = 2;
 
+        [ViewVariables] public int Count => _orderedHands.Count;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
