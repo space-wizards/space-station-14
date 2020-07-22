@@ -8,18 +8,31 @@
 
 - type: entity
   parent: UniformBase
-  id: JanitorUniform
+  id: UniformJanitor
   name: janitor jumpsuit
   description: The jumpsuit for the poor sop with a mop
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_janitor.rsi
-    state: janitor
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_janitor.rsi
-    state: janitor
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_janitor.rsi
+
+- type: entity
+  parent: UniformJanitor
+  id: UniformJanitorSkirt
+  name: janitor jumpskirt
+  components:
+  - type: Sprite
+    state: jan_skirt
+  - type: Icon
+    state: jan_skirt
+  - type: Clothing
+    ClothingPrefix: jan_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -28,12 +41,25 @@
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_engineering.rsi
-    state: engine
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_engineering.rsi
-    state: engine
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_engineering.rsi
+
+- type: entity
+  parent: UniformEngineering
+  id: UniformEngineeringSkirt
+  name: engineering jumpskirt
+  components:
+  - type: Sprite
+    state: engine_skirt
+  - type: Icon
+    state: engine_skirt
+  - type: Clothing
+    ClothingPrefix: engine_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -48,6 +74,107 @@
     state: assistant
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_assistant.rsi
+
+- type: entity
+  parent: UniformBase
+  id: UniformChemistry
+  name: chemistry jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: chemistry
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: chemistry
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    ClothingPrefix: chemistry
+
+- type: entity
+  parent: UniformChemistry
+  id: UniformChemistrySkirt
+  name: chemistry jumpskirt
+  components:
+  - type: Sprite
+    state: chemistry_skirt
+  - type: Icon
+    state: chemistry_skirt
+  - type: Clothing
+    ClothingPrefix: chemistry_skirt
+    femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformParamedic
+  name: paramedic jumpsuit
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: paramedic
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: paramedic
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    ClothingPrefix: paramedic
+
+- type: entity
+  parent: UniformParamedic
+  id: UniformParamedicSkirt
+  name: paramedic jumpskirt
+  components:
+  - type: Sprite
+    state: paramedic_skirt
+  - type: Icon
+    state: paramedic_skirt
+  - type: Clothing
+    ClothingPrefix: paramedic_skirt
+    femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformScrubsPurple
+  name: purple scrubs
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: scrubspurple
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: scrubspurple
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    ClothingPrefix: scrubspurple
+
+- type: entity
+  parent: UniformBase
+  id: UniformScrubsGreen
+  name: green scrubs
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: scrubsgreen
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: scrubsgreen
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    ClothingPrefix: scrubsgreen
+
+- type: entity
+  parent: UniformBase
+  id: UniformScrubsBlue
+  name: blue scrubs
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: scrubsblue
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: scrubsblue
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    ClothingPrefix: scrubsblue
 
 - type: entity
   parent: UniformBase
@@ -81,34 +208,102 @@
     sprite: Clothing/Uniforms/uniform_sec.rsi
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecSkirt
+  name: security jumpskirt
+  description: A jumpskirt made of strong material, providing robust protection.
+  components:
+  - type: Sprite
+    state: sec_skirt
+  - type: Icon
+    state: sec_skirt
+  - type: Clothing
+    ClothingPrefix: sec_skirt
+    femaleMask: UniformTop
+
+- type: entity
   parent: UniformBase
   id: UniformCargoTech
-  name: cargo technician jumpsuit
-  description: Shooooorts! They're comfy and easy to wear!
+  name: cargo tech jumpsuit
+  description:
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
-    state: cargotech
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
-    state: cargotech
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cargotech.rsi
 
 - type: entity
+  parent: UniformCargoTech
+  id: UniformCargoTechSkirt
+  name: cargo tech jumpskirt
+  components:
+  - type: Sprite
+    state: cargo_skirt
+  - type: Icon
+    state: cargo_skirt
+  - type: Clothing
+    ClothingPrefix: cargo_skirt
+    femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformQM
+  name: qm jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_cargotech.rsi
+    state: qm
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_cargotech.rsi
+    state: qm
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_cargotech.rsi
+
+- type: entity
+  parent: UniformQM
+  id: UniformQMSkirt
+  name: qm jumpskirt
+  components:
+  - type: Sprite
+    state: qm_skirt
+  - type: Icon
+    state: qm_skirt
+  - type: Clothing
+    ClothingPrefix: qm_skirt
+    femaleMask: UniformTop
+
+- type: entity
   parent: UniformBase
   id: UniformChef
-  name: chef's uniform
+  name: chef uniform
   description: Can't cook without this.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_chef.rsi
-    state: chef
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_chef.rsi
-    state: chef
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_chef.rsi
+
+- type: entity
+  parent: UniformChef
+  id: UniformChefSkirt
+  name: chef skirt
+  components:
+  - type: Sprite
+    state: chef_skirt
+  - type: Icon
+    state: chef_skirt
+  - type: Clothing
+    ClothingPrefix: chef_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -127,48 +322,59 @@
 
 - type: entity
   parent: UniformBase
-  id: UniformHoP
-  name: head of personnel jumpsuit
-  description: It's a jumpsuit worn by someone who works in the position of Head of Personnel.
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/uniform_hop.rsi
-    state: hop
-  - type: Icon
-    sprite: Clothing/Uniforms/uniform_hop.rsi
-    state: hop
-  - type: Clothing
-    sprite: Clothing/Uniforms/uniform_hop.rsi
-
-- type: entity
-  parent: UniformBase
   id: UniformChiefEngineer
-  name: chief engineer jumpsuit
+  name: ce jumpsuit
   description: It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of Chief Engineer. It has minor radiation shielding.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_ce.rsi
-    state: ce
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_ce.rsi
-    state: ce
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_ce.rsi
 
 - type: entity
+  parent: UniformChiefEngineer
+  id: UniformChiefEngineerSkirt
+  name: ce jumpskirt
+  components:
+  - type: Sprite
+    state: chief_skirt
+  - type: Icon
+    state: chief_skirt
+  - type: Clothing
+    ClothingPrefix: chief_skirt
+    femaleMask: UniformTop
+
+- type: entity
   parent: UniformBase
   id: UniformCMO
-  name: chief medical officer jumpsuit
+  name: cmo jumpsuit
   description: It's a jumpsuit worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_cmo.rsi
-    state: cmo
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_cmo.rsi
-    state: cmo
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_cmo.rsi
+
+- type: entity
+  parent: UniformCMO
+  id: UniformCMOSkirt
+  name: cmo jumpskirt
+  components:
+  - type: Sprite
+    state: cmo_skirt
+  - type: Icon
+    state: cmo_skirt
+  - type: Clothing
+    ClothingPrefix: cmo_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -177,13 +383,26 @@
   description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/uniform_md.rsi
-    state: md
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: icon
   - type: Icon
-    sprite: Clothing/Uniforms/uniform_md.rsi
-    state: md
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Uniforms/uniform_md.rsi
+    sprite: Clothing/Uniforms/uniform_medical.rsi
+
+- type: entity
+  parent: UniformMedicalDoctor
+  id: UniformMedicalDoctorSkirt
+  name: medical doctor jumpskirt
+  components:
+  - type: Sprite
+    state: medical_skirt
+  - type: Icon
+    state: medical_skirt
+  - type: Clothing
+    ClothingPrefix: medical_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
@@ -193,32 +412,58 @@
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_scientist.rsi
-    state: scientist
+    state: icon
   - type: Icon
     sprite: Clothing/Uniforms/uniform_scientist.rsi
-    state: scientist
+    state: icon
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_scientist.rsi
+
+- type: entity
+  parent: UniformScientist
+  id: UniformScientistSkirt
+  name: scientist jumpskirt
+  components:
+  - type: Sprite
+    state: sci_skirt
+  - type: Icon
+    state: sci_skirt
+  - type: Clothing
+    ClothingPrefix: sci_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
   id: UniformResearchDirector
-  name: research director vest suit
-  description: It's a suit worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
+  name: rd turtleneck
+  description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/uniform_rd.rsi
-    state: rd
+    sprite: Clothing/Uniforms/uniform_rnd.rsi
+    state: icon
   - type: Icon
-    sprite: Clothing/Uniforms/uniform_rd.rsi
-    state: rd
+    sprite: Clothing/Uniforms/uniform_rnd.rsi
+    state: icon
   - type: Clothing
-    sprite: Clothing/Uniforms/uniform_rd.rsi
+    sprite: Clothing/Uniforms/uniform_rnd.rsi
+
+- type: entity
+  parent: UniformResearchDirector
+  id: UniformResearchDirectorSkirt
+  name: rd skirtleneck
+  components:
+  - type: Sprite
+    state: rnd_skirt
+  - type: Icon
+    state: rnd_skirt
+  - type: Clothing
+    ClothingPrefix: rnd_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase
   id: UniformMime
-  name: mime's clothes
+  name: mime suit
   description: ...
   components:
   - type: Sprite
@@ -231,19 +476,161 @@
     sprite: Clothing/Uniforms/uniform_mime.rsi
 
 - type: entity
+  parent: UniformMime
+  id: UniformMimeSkirt
+  name: mime skirt
+  components:
+  - type: Sprite
+    state: mime_skirt
+  - type: Icon
+    state: mime_skirt
+  - type: Clothing
+    ClothingPrefix: mime_skirt
+    femaleMask: UniformTop
+
+- type: entity
   parent: UniformBase
-  id: UniformHoS
-  name: head of security jumpsuit
-  description: A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security.
+  id: UniformHoSAlt
+  name: head of security turtleneck
+  description:
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: hos
+    state: hosalt
   - type: Icon
     sprite: Clothing/Uniforms/uniform_hos.rsi
-    state: hos
+    state: hosalt
   - type: Clothing
     sprite: Clothing/Uniforms/uniform_hos.rsi
+    HeldPrefix: hosalt
+
+- type: entity
+  parent: UniformHoSAlt
+  id: UniformHoSAltSkirt
+  name: head of security skirtleneck
+  components:
+  - type: Sprite
+    state: hosalt_skirt
+  - type: Icon
+    state: hosalt_skirt
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    ClothingPrefix: hosalt_skirt
+    femaleMask: UniformTop
+    HeldPrefix: hosalt
+
+- type: entity
+  parent: UniformBase
+  id: UniformHoS
+  name: head of security jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSSkirt
+  name: head of security jumpskirt
+  components:
+  - type: Sprite
+    state: hos_skirt
+  - type: Icon
+    state: hos_skirt
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hos.rsi
+    ClothingPrefix: hos_skirt
+    femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformPrisoner
+  name: prisoner jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_prisoner.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_prisoner.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_prisoner.rsi
+
+- type: entity
+  parent: UniformPrisoner
+  id: UniformPrisonerSkirt
+  name: prisoner jumpskirt
+  components:
+  - type: Sprite
+    state: prisoner_skirt
+  - type: Icon
+    state: prisoner_skirt
+  - type: Clothing
+    ClothingPrefix: prisoner_skirt
+    femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformHop
+  name: hop jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_hop.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_hop.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hop.rsi
+
+- type: entity
+  parent: UniformHop
+  id: UniformHopSkirt
+  name: hop jumpskirt
+  components:
+  - type: Sprite
+    state: hop_skirt
+  - type: Icon
+    state: hop_skirt
+  - type: Clothing
+    ClothingPrefix: hop_skirt
+    femaleMask: UniformTop
+
+- type: entity
+  parent: UniformBase
+  id: UniformHydroponics
+  name: hydroponics jumpsuit
+  description:
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_hydro.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_hydro.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_hydro.rsi
+
+- type: entity
+  parent: UniformHydroponics
+  id: UniformHydroponicsSkirt
+  name: hydroponics jumpskirt
+  components:
+  - type: Sprite
+    state: hydro_skirt
+  - type: Icon
+    state: hydro_skirt
+  - type: Clothing
+    ClothingPrefix: hydro_skirt
+    femaleMask: UniformTop
 
 - type: entity
   parent: UniformBase

@@ -32,7 +32,6 @@ namespace Content.Client.GameObjects.Components.Clothing
             base.ExposeData(serializer);
 
             serializer.DataField(ref _femaleMask, "femaleMask", FemaleClothingMask.UniformFull);
-            serializer.DataField(this, p => p.ClothingEquippedPrefix, "ClothingPrefix", null);
         }
 
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)
