@@ -8,24 +8,25 @@ using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
-    public class MoverController : VirtualController
+    public class ConveyedController : VirtualController
     {
         public override ICollidableComponent? ControlledComponent { protected get; set; }
 
         public void Move(Vector2 velocityDirection, float speed)
         {
-            if (ControlledComponent?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false
-                && IoCManager.Resolve<IPhysicsManager>().IsWeightless(ControlledComponent.Owner.Transform.GridPosition)) return;
-            Push(velocityDirection, speed);
+            if (ControlledComponent?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false &&
+                IoCManager.Resolve<IPhysicsManager>().IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+            {
+                return;
+            }
+
+            LinearVelocity = velocityDirection * speed * 100;
         }
 
-        public void Push(Vector2 velocityDirection, float speed)
+        public override void UpdateAfterProcessing()
         {
-            LinearVelocity = velocityDirection * speed;
-        }
+            base.UpdateAfterProcessing();
 
-        public void StopMoving()
-        {
             LinearVelocity = Vector2.Zero;
         }
     }

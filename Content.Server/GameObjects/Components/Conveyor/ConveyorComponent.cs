@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -147,6 +148,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
+            var direction = GetAngle().ToVec();
+            var speed = _speed * frameTime;
 
             foreach (var entity in intersecting)
             {
@@ -155,8 +158,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
                     continue;
                 }
 
-                // TODO: Push instead of teleporting
-                entity.Transform.WorldPosition += GetAngle().ToVec() * _speed * frameTime;
+                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                {
+                    var controller = collidable.GetOrCreateController<ConveyedController>();
+                    controller.Move(direction, speed);
+                }
             }
         }
 
