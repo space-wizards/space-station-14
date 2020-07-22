@@ -2601,16 +2601,15 @@
     sprite: Clothing/Head/sec_helm.rsi
 
 - type: entity
+  parent: HatBase
   id: HatSkub
   name: Skub Hat
   description: 'Best paired with the Skub Suit.'
   components:
   - type: Sprite
     sprite: Clothing/Head/skubhead.rsi
-    state: icon
   - type: Icon
     sprite: Clothing/Head/skubhead.rsi
-    state: icon
   - type: Clothing
     sprite: Clothing/Head/skubhead.rsi
 
