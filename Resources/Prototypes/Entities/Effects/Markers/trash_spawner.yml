@@ -21,7 +21,7 @@
         - PuddleShit
         - TrashPlate
         - TrashSnackBowl
-      rareChance: 0.2
+      rareChance: 0.03
       prototypes:
         - TrashRaisins
         - TrashCandy
@@ -29,7 +29,6 @@
         - TrashChips
         - TrashLiquidFood
         - TrashPistachiosPack
-        - TrashPizzaBoxMessy
         - TrashPlasticBag
         - TrashPopcorn
         - TrashSemkiPack
