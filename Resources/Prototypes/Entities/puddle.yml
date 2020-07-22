@@ -118,3 +118,35 @@
     state: writing-0
   - type: Puddle
     variants: 5
+
+- type: entity
+  name: piss
+  id: PuddlePiss
+  parent: PuddleBase
+  description: A puddle of piss.
+  components:
+  - type: Sprite
+    sprite: Fluids/smear.rsi # Placeholder
+    color: "#DDFF00"
+    state: smear-0
+  - type: Icon
+    sprite: Fluids/smear.rsi
+    state: smear-0
+  - type: Puddle
+    variants: 7
+
+- type: entity
+  name: shit
+  id: PuddleShit
+  parent: PuddleBase
+  description: A bit of shit.
+  components:
+  - type: Sprite
+    sprite: Fluids/writing.rsi # Placeholder
+    color: "#a56c47"
+    state: writing-0
+  - type: Icon
+    sprite: Fluids/writing.rsi
+    state: writing-0
+  - type: Puddle
+    variants: 5
