@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Server.GameObjects.Components.Pointing
@@ -28,40 +29,51 @@ namespace Content.Server.GameObjects.Components.Pointing
         /// <summary>
         ///     The current amount of seconds left on this arrow.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _duration;
 
         /// <summary>
         ///     The amount of seconds before the arrow changes movement direction.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _step;
 
         /// <summary>
         ///     The amount of units that this arrow will move by when multiplied
         ///     by the frame time.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _speed;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _rogue;
 
         /// <summary>
         ///     The current amount of seconds left before the arrow changes
         ///     movement direction.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _currentStep;
 
         /// <summary>
         ///     Whether or not this arrow is currently going up.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         private bool _up;
 
+        [ViewVariables]
         private IEntity? _chasing;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _turningDelay;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _chasingDelay;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _chasingSpeed;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         private float _chasingTime;
 
         public override void ExposeData(ObjectSerializer serializer)
