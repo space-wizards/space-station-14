@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components.Movement;
+﻿#nullable enable
+using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
@@ -10,7 +11,7 @@ namespace Content.Shared.Physics
     public class MoverController : VirtualController
     {
         private Vector2 _velocity;
-        private ICollidableComponent _component = null;
+        private ICollidableComponent? _component;
 
         public Vector2 Velocity
         {
@@ -30,8 +31,8 @@ namespace Content.Shared.Physics
 
         public void Move(Vector2 velocityDirection, float speed)
         {
-            if (!_component.Owner.HasComponent<MovementIgnoreGravityComponent>() && IoCManager
-                .Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition)) return;
+            if (_component?.Owner.HasComponent<MovementIgnoreGravityComponent>() == false
+                && IoCManager.Resolve<IPhysicsManager>().IsWeightless(_component.Owner.Transform.GridPosition)) return;
             Push(velocityDirection, speed);
         }
 
@@ -48,6 +49,11 @@ namespace Content.Shared.Physics
         public override void UpdateBeforeProcessing()
         {
             base.UpdateBeforeProcessing();
+
+            if (_component == null)
+            {
+                return;
+            }
 
             if (Velocity == Vector2.Zero)
             {
