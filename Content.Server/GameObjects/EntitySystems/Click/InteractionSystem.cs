@@ -273,9 +273,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             var physics = pull.Owner.GetComponent<IPhysicsComponent>();
 
-            physics.SetController<PullController>();
+            if (!(physics.Controller is PullController pullController))
+            {
+                physics.SetController<PullController>();
+                pullController = (PullController) physics.Controller;
+            }
 
-            if (!((PullController)physics.Controller)!.GettingPulled)
+            if (!pullController!.GettingPulled)
             {
                 hands.StartPulling(pull);
             }
