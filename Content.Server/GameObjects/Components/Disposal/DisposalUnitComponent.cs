@@ -93,7 +93,17 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool TryInsert(IEntity entity)
         {
-            return CanInsert(entity) && _container.Insert(entity);
+            if (!CanInsert(entity) || !_container.Insert(entity))
+            {
+                return false;
+            }
+
+            if (entity.TryGetComponent(out IActorComponent actor))
+            {
+                _userInterface.Close(actor.playerSession);
+            }
+
+            return true;
         }
 
         private void Remove(IEntity entity)
