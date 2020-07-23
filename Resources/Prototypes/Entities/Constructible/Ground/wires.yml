@@ -1,0 +1,101 @@
+- type: entity
+  abstract: true
+  id: WireBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Icon
+    texture: Constructible/Power/eightdirwire.png
+  - type: Sprite
+    drawdepth: BelowFloor  
+  - type: IconSmooth
+    mode: CardinalFlags
+  - type: Destructible
+    thresholdvalue: 100
+  - type: SubFloorHide
+  
+- type: entity
+  parent: WireBase
+  id: HVWire
+  name: HV Wire
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/hv_cable.rsi
+    state: hvcable_0
+  - type: IconSmooth
+    base: hvcable_
+    key: hv_cables
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"] }
+  - type: Wire
+    wireDroppedOnCutPrototype: HVWireStack1
+    wireType: HighVoltage
+  - type: Destructible
+    spawnondestroy: HVWireStack1
+  
+- type: entity
+  parent: WireBase
+  id: MVWire
+  name: MV Wire
+  components:
+  - type: Sprite
+    color: Yellow
+    sprite: Constructible/Power/mv_cable.rsi
+    state: mvcable_0
+  - type: IconSmooth
+    base: mvcable_
+    key: mv_cables
+  - type: NodeContainer
+    nodeTypes: { MVPower : ["AdjacentNode"] }
+  - type: Wire
+    wireDroppedOnCutPrototype: MVWireStack1
+    wireType: MediumVoltage
+  - type: Destructible
+    spawnondestroy: MVWireStack1
+    
+- type: entity
+  parent: WireBase
+  id: ApcExtensionCable
+  name: Apc Extension Cable
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Constructible/Power/lv_cable.rsi
+    state: lvcable_0
+  - type: IconSmooth
+    base: lvcable_
+    key: lv_cables
+  - type: NodeContainer
+    nodeTypes: { Apc : ["AdjacentNode"] }
+  - type: PowerProvider
+    voltage: Apc
+  - type: Wire
+    wireDroppedOnCutPrototype: ApcExtensionCableStack1
+    wireType: Apc
+  - type: Destructible
+    spawnondestroy: ApcExtensionCableStack1
+    
+#Depriciated, to be removed from maps
+
+- type: entity
+  id: Wire
+  name: Depriciated Wire
+  parent: ApcExtensionCable
+  components:
+  - type: NodeContainer
+    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
+
+- type: entity
+  id: Generator
+  name: Depriciated Generator
+  parent: DebugGenerator
+  components:
+  - type: PowerSupplier
+    voltage: High
+    supplyRate: 100000
+  

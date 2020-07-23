@@ -1,6 +1,6 @@
 - type: soundCollection
   id: ToySqueak
   files:
-  - /Audio/items/toys/toysqueak1.ogg
-  - /Audio/items/toys/toysqueak2.ogg
-  - /Audio/items/toys/toysqueak3.ogg
+  - /Audio/Items/toys/toysqueak1.ogg
+  - /Audio/Items/toys/toysqueak2.ogg
+  - /Audio/Items/toys/toysqueak3.ogg

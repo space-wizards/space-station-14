@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Map;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 
 namespace Content.Server.BodySystem {
 
@@ -26,6 +24,9 @@ namespace Content.Server.BodySystem {
 
         [ViewVariables]
         private BodyTemplate _template;
+
+        [ViewVariables]
+        private string _presetName;
 
         [ViewVariables]
         private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
@@ -105,7 +106,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Returns whether the given slot name exists within the current <see cref="BodyTemplate"/>. 
+        ///     Returns whether the given slot name exists within the current <see cref="BodyTemplate"/>.
         /// </summary>
         public bool SlotExists(string slotName)
         {
@@ -177,29 +178,46 @@ namespace Content.Server.BodySystem {
         /////////  Server-specific stuff
         /////////
 
-        public override void ExposeData(ObjectSerializer serializer) {
+        public override void ExposeData(ObjectSerializer serializer)
+        {
             base.ExposeData(serializer);
 
-            string templateName = null;
-            serializer.DataField(ref templateName, "BaseTemplate", "bodyTemplate.Humanoid");
-            if (serializer.Reading) {
-                if (!_prototypeManager.TryIndex(templateName, out BodyTemplatePrototype templateData))
-                    throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + templateName + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
+            serializer.DataReadWriteFunction(
+                "BaseTemplate",
+                "bodyTemplate.Humanoid",
+                template =>
+                {
+                    if (!_prototypeManager.TryIndex(template, out BodyTemplatePrototype templateData))
+                    {
+                        throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + template + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
+                    }
 
-                string presetName = null;
-                serializer.DataField(ref presetName, "BasePreset", "bodyPreset.BasicHuman");
-                if (!_prototypeManager.TryIndex(presetName, out BodyPresetPrototype presetData))
-                    throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + presetName + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
+                    _template = new BodyTemplate(templateData);
+                },
+                () => _template.Name);
 
-                _template = new BodyTemplate(templateData);
-                LoadBodyPreset(new BodyPreset(presetData));
-            }
+            serializer.DataReadWriteFunction(
+                "BasePreset",
+                "bodyPreset.BasicHuman",
+                preset =>
+                {
+                    if (!_prototypeManager.TryIndex(preset, out BodyPresetPrototype presetData))
+                    {
+                        throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + preset + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
+                    }
+
+                    LoadBodyPreset(new BodyPreset(presetData));
+                },
+                () => _presetName);
         }
 
         /// <summary>
         ///     Loads the given <see cref="BodyPreset"/> - forcefully changes all limbs found in both the preset and this template!
         /// </summary>
-        public void LoadBodyPreset(BodyPreset preset) {
+        public void LoadBodyPreset(BodyPreset preset)
+        {
+            _presetName = preset.Name;
+
             foreach (var (slotName, type) in _template.Slots) {
                 if (!preset.PartIDs.TryGetValue(slotName, out string partID)) { //For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
                     continue; //If the preset doesn't define anything for it, continue.
@@ -291,7 +309,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        /// Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see> if they were hanging off it. 
+        /// Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see> if they were hanging off it.
         /// </summary>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity) {
             if (!_partDictionary.ContainsValue(part))
@@ -316,7 +334,7 @@ namespace Content.Server.BodySystem {
         }
 
         /// <summary>
-        ///     Internal string version of DisconnectBodyPart for performance purposes. Yes, it is actually more performant. 
+        ///     Internal string version of DisconnectBodyPart for performance purposes. Yes, it is actually more performant.
         /// </summary>
         private void DisconnectBodyPartByName(string name, bool dropEntity) {
             if (!TryGetBodyPart(name, out BodyPart part))

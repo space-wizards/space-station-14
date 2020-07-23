@@ -1,22 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Utility;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Utensil;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -48,19 +44,29 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _useSound, "useSound", "/Audio/Items/eatfood.ogg");
             serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(5));
             serializer.DataField(ref _trashPrototype, "trash", null);
 
-            if (serializer.Reading)
-            {
-                var utensils = serializer.ReadDataField("utensils", new List<UtensilType>());
-                foreach (var utensil in utensils)
+            serializer.DataReadWriteFunction(
+                "utensils",
+                new List<UtensilType>(),
+                types => types.ForEach(type => _utensilsNeeded |= type),
+                () =>
                 {
-                    _utensilsNeeded |= utensil;
-                    Dirty();
-                }
-            }
+                    var types = new List<UtensilType>();
+
+                    foreach (UtensilType type in Enum.GetValues(typeof(UtensilType)))
+                    {
+                        if ((_utensilsNeeded & type) != 0)
+                        {
+                            types.Add(type);
+                        }
+                    }
+
+                    return types;
+                });
         }
 
         public override void Initialize()

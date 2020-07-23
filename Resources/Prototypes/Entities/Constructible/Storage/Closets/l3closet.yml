@@ -1,0 +1,49 @@
+# Base level 3 bio hazard closet
+- type: entity
+  id: LockerL3
+  parent: LockerGeneric
+  name: "level 3 biohazard gear closet"
+  description: "It's a storage unit for level 3 biohazard gear."
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio
+  - type: Icon
+    state: bio_door
+
+# Virology variant
+- type: entity
+  id: LockerL3Virology
+  parent: LockerL3
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio_viro
+  - type: Icon
+    state: bio_viro_door
+
+# Security variant
+- type: entity
+  id: LockerL3Security
+  parent: LockerL3
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio_sec
+  - type: Icon
+    state: bio_sec_door
+
+# Janitor variant
+- type: entity
+  id: LockerL3Janitor
+  parent: LockerL3
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: bio_jan
+  - type: Icon
+    state: bio_jan_door

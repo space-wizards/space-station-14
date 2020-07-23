@@ -1,18 +1,9 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Robust.Server.GameObjects.Components.UserInterface;
+﻿using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Content.Server.Utility;
 using Content.Shared.BodySystem;
-
+using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.BodySystem
 {

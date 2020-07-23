@@ -8,6 +8,7 @@ using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
@@ -88,31 +89,57 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _fireRateSelector, "currentSelector", FireRateSelector.Safety);
             serializer.DataField(ref _fireRate, "fireRate", 2.0f);
 
             // This hard-to-read area's dealing with recoil
             // Use degrees in yaml as it's easier to read compared to "0.0125f"
-            if (serializer.Reading)
-            {
-                var minAngle = serializer.ReadDataField("minAngle", 0) / 2;
-                _minAngle = Angle.FromDegrees(minAngle);
-                // Random doubles it as it's +/- so uhh we'll just half it here for readability
-                var maxAngle = serializer.ReadDataField("maxAngle", 45) / 2;
-                _maxAngle = Angle.FromDegrees(maxAngle);
-                var angleIncrease = serializer.ReadDataField("angleIncrease", (40 / _fireRate));
-                _angleIncrease = angleIncrease * (float) Math.PI / 180;
-                var angleDecay = serializer.ReadDataField("angleDecay", (float) 20);
-                _angleDecay = angleDecay * (float) Math.PI / 180;
-                serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
+            serializer.DataReadWriteFunction(
+                "minAngle",
+                0,
+                angle => _minAngle = Angle.FromDegrees(angle / 2f),
+                () => _minAngle.Degrees * 2);
 
-                // FireRate options
-                var allFireRates = serializer.ReadDataField("allSelectors", new List<FireRateSelector>());
-                foreach (var fireRate in allFireRates)
+            // Random doubles it as it's +/- so uhh we'll just half it here for readability
+            serializer.DataReadWriteFunction(
+                "maxAngle",
+                45,
+                angle => _maxAngle = Angle.FromDegrees(angle / 2f),
+                () => _maxAngle.Degrees * 2);
+
+            serializer.DataReadWriteFunction(
+                "angleIncrease",
+                40 / _fireRate,
+                angle => _angleIncrease = angle * (float) Math.PI / 180,
+                () => _angleIncrease / (float) Math.PI / 180);
+
+            serializer.DataReadWriteFunction(
+                "angleDecay",
+                20f,
+                angle => _angleDecay = angle * (float) Math.PI / 180,
+                () => _angleDecay / (float) Math.PI / 180);
+
+            serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
+
+            serializer.DataReadWriteFunction(
+                "allSelectors",
+                new List<FireRateSelector>(),
+                selectors => selectors.ForEach(selector => _allRateSelectors |= selector),
+                () =>
                 {
-                    _allRateSelectors |= fireRate;
-                }
-            }
+                    var types = new List<FireRateSelector>();
+
+                    foreach (FireRateSelector selector in Enum.GetValues(typeof(FireRateSelector)))
+                    {
+                        if ((_allRateSelectors & selector) != 0)
+                        {
+                            types.Add(selector);
+                        }
+                    }
+
+                    return types;
+                });
 
             // For simplicity we'll enforce it this way; ammo determines max spread
             if (_spreadRatio > 1.0f)
@@ -122,6 +149,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             serializer.DataField(ref _canMuzzleFlash, "canMuzzleFlash", true);
+
             // Sounds
             serializer.DataField(ref _soundGunshot, "soundGunshot", null);
             serializer.DataField(ref _soundEmpty, "soundEmpty", "/Audio/Weapons/Guns/Empty/empty.ogg");
@@ -374,13 +402,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physicsComponent = projectile.GetComponent<PhysicsComponent>();
+                var physicsComponent = projectile.GetComponent<IPhysicsComponent>();
                 physicsComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
-                projectile.GetComponent<PhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
+                projectile.GetComponent<IPhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
         }

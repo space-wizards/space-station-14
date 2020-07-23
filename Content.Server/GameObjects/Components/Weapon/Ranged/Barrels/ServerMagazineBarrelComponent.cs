@@ -1,14 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Items.Storage;
+using System.Linq;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -97,14 +96,25 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Reading)
-            {
-                var magTypes = serializer.ReadDataField("magazineTypes", new List<MagazineType>());
-                foreach (var mag in magTypes)
+
+            serializer.DataReadWriteFunction(
+                "magazineTypes",
+                new List<MagazineType>(),
+                types => types.ForEach(mag => _magazineTypes |= mag),
+                () =>
                 {
-                    _magazineTypes |= mag;
-                }
-            }
+                    var types = new List<MagazineType>();
+
+                    foreach (MagazineType mag in Enum.GetValues(typeof(MagazineType)))
+                    {
+                        if ((_magazineTypes & mag) != 0)
+                        {
+                            types.Add(mag);
+                        }
+                    }
+
+                    return types;
+                });
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);
