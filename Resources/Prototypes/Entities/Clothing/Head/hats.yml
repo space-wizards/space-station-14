@@ -1018,32 +1018,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatFeatherTrilby
-  name: feather trilby
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/feather_trilby.rsi
-  - type: Icon
-    sprite: Clothing/Head/feather_trilby.rsi
-  - type: Clothing
-    sprite: Clothing/Head/feather_trilby.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatFedora
-  name: fedora
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/fedora.rsi
-  - type: Icon
-    sprite: Clothing/Head/fedora.rsi
-  - type: Clothing
-    sprite: Clothing/Head/fedora.rsi
-
-- type: entity
-  parent: HatBase
   id: HatFez
   name: fez
   description: ''
