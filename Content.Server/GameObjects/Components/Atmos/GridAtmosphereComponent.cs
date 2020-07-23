@@ -186,9 +186,17 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (_tiles.TryGetValue(indices, out var tile)) return tile;
 
-            // We don't have that tile, so it must be space!
-            tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)));
-            tile.Air.MarkImmutable();
+            // We don't have that tile!
+            if (IsSpace(indices))
+            {
+                tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)));
+                tile.Air.MarkImmutable();
+            }
+            else
+            {
+                tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+            }
+
             _tiles[indices] = tile;
 
             Invalidate(indices);

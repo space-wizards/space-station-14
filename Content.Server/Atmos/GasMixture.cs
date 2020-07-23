@@ -163,12 +163,14 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(int gasId, float quantity)
         {
+            if (Immutable) return;
             _moles[gasId] += quantity;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(Gas gasId, float moles)
         {
+            if (Immutable) return;
             Add((int)gasId, moles);
         }
 
