@@ -5,7 +5,6 @@ using System.Threading;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
@@ -42,28 +41,30 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override string Name => "DisposalUnit";
 
         /// <summary>
-        ///     The delay for an entity trying to move out of this unit
+        ///     The delay for an entity trying to move out of this unit.
         /// </summary>
         private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
         /// <summary>
-        ///     Last time that an entity tried to exit this disposal unit
+        ///     Last time that an entity tried to exit this disposal unit.
         /// </summary>
         private TimeSpan _lastExitAttempt;
 
-        /// <summary>
-        ///     The time that it takes this disposal unit to flush its contents
-        /// </summary>
         [ViewVariables]
-        private TimeSpan _flushTime;
+        private TimeSpan _engageTime;
 
         /// <summary>
-        ///     Token used to cancel delayed appearance changes
+        ///     Token used to cancel a flush after an engage.
         /// </summary>
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _engageToken;
 
         /// <summary>
-        ///     Container of entities inside this disposal unit
+        ///     Token used to cancel delayed appearance changes.
+        /// </summary>
+        private CancellationTokenSource _animationToken;
+
+        /// <summary>
+        ///     Container of entities inside this disposal unit.
         /// </summary>
         [ViewVariables]
         private Container _container;
@@ -111,12 +112,43 @@ namespace Content.Server.GameObjects.Components.Disposal
             _container.Remove(entity);
         }
 
+        private bool CanEngage()
+        {
+            return (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+                    receiver.Powered) &&
+                   (!Owner.TryGetComponent(out CollidableComponent collidable) ||
+                    collidable.Anchored);
+        }
+
         private bool CanFlush()
         {
             return (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
                     receiver.Powered) &&
                    (!Owner.TryGetComponent(out CollidableComponent collidable) ||
                     collidable.Anchored);
+        }
+
+        private bool TryEngage()
+        {
+            if (!CanEngage())
+            {
+                return false;
+            }
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
+            }
+
+            Timer.Spawn(_engageTime, () =>
+            {
+                TryFlush();
+                UpdateVisualState();
+            }, _animationToken.Token);
+
+            UpdateInterface();
+
+            return true;
         }
 
         public bool TryFlush()
@@ -141,12 +173,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 _container.Remove(entity);
                 entryComponent.TryInsert(entity);
-            }
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
-                Timer.Spawn(_flushTime, UpdateVisualState, _cancellationTokenSource.Token);
             }
 
             UpdateInterface();
@@ -223,7 +249,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    TryFlush();
+                    TryEngage();
                     break;
                 case UiButton.Power:
                     TogglePower();
@@ -256,17 +282,19 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.ExposeData(serializer);
 
-            var flushSeconds = 2;
-            serializer.DataField(ref flushSeconds, "flushTime", 2);
-
-            _flushTime = TimeSpan.FromSeconds(flushSeconds);
+            serializer.DataReadWriteFunction(
+                "engageTime",
+                2,
+                seconds => _engageTime = TimeSpan.FromSeconds(seconds),
+                () => (int) _engageTime.TotalSeconds);
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _cancellationTokenSource = new CancellationTokenSource();
+            _engageToken = new CancellationTokenSource();
+            _animationToken = new CancellationTokenSource();
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(DisposalUnitUiKey.Key);
@@ -294,7 +322,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             _userInterface.CloseAll();
-            _cancellationTokenSource.Cancel();
+            _animationToken.Cancel();
             _container = null;
 
             base.OnRemove();
@@ -397,7 +425,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component.TryFlush();
+                component.TryEngage();
             }
         }
     }
