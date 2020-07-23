@@ -288,6 +288,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
+            foreach (var entity in _container.ContainedEntities.ToArray())
+            {
+                _container.ForceRemove(entity);
+            }
+
             _userInterface.CloseAll();
             _cancellationTokenSource.Cancel();
             _container = null;
