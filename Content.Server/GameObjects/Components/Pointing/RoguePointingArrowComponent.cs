@@ -100,7 +100,12 @@ namespace Content.Server.GameObjects.Components.Pointing
 
             if (_turningDelay > 0)
             {
-                Owner.Transform.LocalRotation = Angle.FromDegrees((_chasing.Transform.WorldPosition - Owner.Transform.WorldPosition).ToAngle().Degrees + 90);
+                var difference = _chasing.Transform.WorldPosition - Owner.Transform.WorldPosition;
+                var angle = difference.ToAngle();
+                var adjusted = angle.Degrees + 90;
+                var newAngle = Angle.FromDegrees(adjusted);
+
+                Owner.Transform.LocalRotation = newAngle;
 
                 UpdateAppearance();
                 return;
