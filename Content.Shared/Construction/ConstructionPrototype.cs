@@ -85,10 +85,10 @@ namespace Content.Shared.Construction
             ser.DataField(ref _id, "id", string.Empty);
             ser.DataField(ref _description, "description", string.Empty);
             ser.DataField(ref _icon, "icon", SpriteSpecifier.Invalid);
-            ser.DataField(ref _type, "objecttype", ConstructionType.Structure);
+            ser.DataField(ref _type, "objectType", ConstructionType.Structure);
             ser.DataField(ref _result, "result", null);
-            ser.DataField(ref _placementMode, "placementmode", "PlaceFree");
-            ser.DataField(ref _canBuildInImpassable, "canbuildinimpassable", false);
+            ser.DataField(ref _placementMode, "placementMode", "PlaceFree");
+            ser.DataField(ref _canBuildInImpassable, "canBuildInImpassable", false);
 
             _keywords = ser.ReadDataField<List<string>>("keywords", new List<string>());
             {

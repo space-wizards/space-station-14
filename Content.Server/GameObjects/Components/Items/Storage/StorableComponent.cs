@@ -8,13 +8,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     {
         public override string Name => "Storable";
 
-        public int ObjectSize = 0;
+        public int ObjectSize;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref ObjectSize, "Size", 1);
+            serializer.DataField(ref ObjectSize, "size", 1);
         }
     }
 

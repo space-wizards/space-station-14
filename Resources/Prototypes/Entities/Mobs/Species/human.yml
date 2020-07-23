@@ -1,0 +1,261 @@
+# Both humans and NPCs inherit from this.
+# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+- type: entity
+  save: false
+  name: Urist McHands
+  id: BaseHumanMob_Content
+  description: A miserable pile of secrets
+  drawdepth: Mobs
+  abstract: true
+  components:
+  - type: Flashable
+  - type: Hands
+    hands:
+    - left
+    - right
+  - type: MovementSpeedModifier
+  - type: Hunger
+  - type: Thirst
+  # Organs
+  - type: Solution
+    maxVol: 250
+    caps: 32
+  - type: Bloodstream
+    max_volume: 100
+  - type: Stomach
+    max_volume: 250
+    digestionDelay: 20
+  # StatusEffects
+  - type: Stunnable
+  # EndStatusEffects
+  - type: Inventory
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.HumanoidVisualLayers.Chest"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_chest_m
+    - map: ["enum.HumanoidVisualLayers.Head"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_head_m
+    - sprite: Mobs/Customization/eyes.rsi
+      state: eyes
+      color: "#008800"
+    - map: ["enum.HumanoidVisualLayers.RArm"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_r_arm
+    - map: ["enum.HumanoidVisualLayers.LArm"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_l_arm
+    - map: ["enum.HumanoidVisualLayers.RLeg"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_r_leg
+    - map: ["enum.HumanoidVisualLayers.LLeg"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_l_leg
+    - shader: StencilClear
+      sprite: Mobs/Species/human.rsi
+      state: human_l_leg
+    - shader: StencilMask
+      map: ["enum.HumanoidVisualLayers.StencilMask"]
+      sprite: Mobs/Customization/masking_helpers.rsi
+      state: female_full
+      visible: false
+    - map: ["enum.Slots.INNERCLOTHING"]
+      shader: StencilDraw
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_l_hand
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+      color: "#e8b59b"
+      sprite: Mobs/Species/human.rsi
+      state: human_r_hand
+    - map: ["enum.Slots.IDCARD"]
+    - map: ["enum.Slots.GLOVES"]
+    - map: ["enum.Slots.SHOES"]
+    - map: ["enum.Slots.EARS"]
+    - map: ["enum.Slots.OUTERCLOTHING"]
+    - map: ["enum.Slots.EYES"]
+    - map: ["enum.Slots.BELT"]
+    - map: ["enum.Slots.NECK"]
+    - map: ["enum.Slots.BACKPACK"]
+    - map: ["enum.HumanoidVisualLayers.FacialHair"]
+      state: shaved
+      sprite: Mobs/Customization/human_facial_hair.rsi
+    - map: ["enum.HumanoidVisualLayers.Hair"]
+      state: bald
+      sprite: Mobs/Customization/human_hair.rsi
+    - map: ["enum.Slots.MASK"]
+    - map: ["enum.Slots.HEAD"]
+    - map: ["hand-left"]
+    - map: ["hand-right"]
+  - type: Icon
+    sprite: Mobs/Species/human.rsi
+    state: human_basic
+  - type: Physics
+    mass: 85
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.35,0.35,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Species
+    Template: Human
+    HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+  - type: HeatResistance
+  - type: Damageable
+  - type: Appearance
+    visuals:
+    - type: SpeciesVisualizer
+    - type: BuckleVisualizer
+  - type: CombatMode
+  - type: Teleportable
+  - type: CharacterInfo
+  - type: FootstepSound
+  - type: HumanoidAppearance
+  - type: AnimationPlayer
+  - type: Buckle
+  - type: UnarmedCombat
+    range: 0.8
+    arcwidth: 30
+    arc: fist
+  - type: Grammar
+    proper: true
+
+- type: entity
+  save: false
+  name: Urist McHands
+  id: HumanMob_Dummy
+  abstract: true
+  description: A dummy human meant to be used in character setup
+  components:
+    - type: Hands
+      hands:
+        - left
+        - right
+
+    - type: Inventory
+    - type: Sprite
+      netsync: false
+      drawdepth: Mobs
+
+      layers:
+      - map: ["enum.HumanoidVisualLayers.Chest"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_chest_m
+      - map: ["enum.HumanoidVisualLayers.Head"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_head_m
+      - sprite: Mobs/Customization/eyes.rsi
+        state: eyes
+        color: "#008800"
+      - map: ["enum.HumanoidVisualLayers.RArm"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_r_arm
+      - map: ["enum.HumanoidVisualLayers.LArm"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_l_arm
+      - map: ["enum.HumanoidVisualLayers.RLeg"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_r_leg
+      - map: ["enum.HumanoidVisualLayers.LLeg"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_l_leg
+
+      - shader: StencilClear
+      - shader: StencilMask
+        map: ["enum.HumanoidVisualLayers.StencilMask"]
+        sprite: Mobs/Customization/masking_helpers.rsi
+        state: female_full
+        visible: false
+
+      - map: ["enum.Slots.INNERCLOTHING"]
+        shader: StencilDraw
+
+      - map: ["enum.HumanoidVisualLayers.LHand"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_l_hand
+      - map: ["enum.HumanoidVisualLayers.RHand"]
+        color: "#e8b59b"
+        sprite: Mobs/Species/human.rsi
+        state: human_r_hand
+
+      - map: ["enum.Slots.IDCARD"]
+      - map: ["enum.Slots.GLOVES"]
+      - map: ["enum.Slots.SHOES"]
+      - map: ["enum.Slots.EARS"]
+      - map: ["enum.Slots.OUTERCLOTHING"]
+      - map: ["enum.Slots.EYES"]
+      - map: ["enum.Slots.BELT"]
+      - map: ["enum.Slots.NECK"]
+      - map: ["enum.Slots.BACKPACK"]
+      - map: ["enum.HumanoidVisualLayers.FacialHair"]
+        state: shaved
+        sprite: Mobs/Customization/human_facial_hair.rsi
+      - map: ["enum.HumanoidVisualLayers.Hair"]
+        state: bald
+        sprite: Mobs/Customization/human_hair.rsi
+      - map: ["enum.Slots.MASK"]
+      - map: ["enum.Slots.HEAD"]
+      - map: ["hand-left"]
+      - map: ["hand-right"]
+
+    - type: Icon
+      sprite: Mobs/Species/human.rsi
+      state: human_basic
+
+    - type: Physics
+      mass: 85
+
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+          mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
+          layer:
+          - MobImpassable
+
+    - type: Species
+      Template: Human
+      HeatResistance: 323
+    - type: Damageable
+
+    - type: Appearance
+      visuals:
+        - type: SpeciesVisualizer
+
+    - type: HumanoidAppearance
+
+    - type: Grammar
+      proper: true

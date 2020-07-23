@@ -27,56 +27,60 @@ namespace Content.Client.State
     // OH GOD.
     // Ok actually it's fine.
     // Instantiated dynamically through the StateManager, Dependencies will be resolved.
-    public partial class GameScreenBase : StateBase
+    public partial class GameScreenBase : Robust.Client.State.State
     {
 #pragma warning disable 649
-        [Dependency] private readonly IClientEntityManager _entityManager;
-        [Dependency] private readonly IInputManager _inputManager;
-        [Dependency] private readonly IPlayerManager _playerManager;
-        [Dependency] private readonly IEyeManager _eyeManager;
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IGameTiming _timing;
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager;
-
-        [Dependency] private readonly IConfigurationManager _configurationManager;
+        [Dependency] protected readonly IClientEntityManager EntityManager;
+        [Dependency] protected readonly IInputManager InputManager;
+        [Dependency] protected readonly IPlayerManager PlayerManager;
+        [Dependency] protected readonly IEyeManager EyeManager;
+        [Dependency] protected readonly IEntitySystemManager EntitySystemManager;
+        [Dependency] protected readonly IGameTiming Timing;
+        [Dependency] protected readonly IMapManager MapManager;
+        [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager;
+        [Dependency] protected readonly IConfigurationManager ConfigurationManager;
 #pragma warning restore 649
 
         private IEntity _lastHoveredEntity;
 
         public override void Startup()
         {
-            _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
+            InputManager.KeyBindStateChanged += OnKeyBindStateChanged;
         }
 
         public override void Shutdown()
         {
-            _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
+            InputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
 
         public override void FrameUpdate(FrameEventArgs e)
         {
             base.FrameUpdate(e);
 
-            var mousePosWorld = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-            var entityToClick = _userInterfaceManager.CurrentlyHovered != null
+            // If there is no local player, there is no session, and therefore nothing to do here.
+            var localPlayer = PlayerManager.LocalPlayer;
+            if (localPlayer == null)
+                return;
+
+            var mousePosWorld = EyeManager.ScreenToMap(InputManager.MouseScreenPosition);
+            var entityToClick = UserInterfaceManager.CurrentlyHovered != null
                 ? null
                 : GetEntityUnderPosition(mousePosWorld);
 
             var inRange = false;
-            if (_playerManager.LocalPlayer.ControlledEntity != null && entityToClick != null)
+            if (localPlayer.ControlledEntity != null && entityToClick != null)
             {
-                var playerPos = _playerManager.LocalPlayer.ControlledEntity.Transform.MapPosition;
+                var playerPos = localPlayer.ControlledEntity.Transform.MapPosition;
                 var entityPos = entityToClick.Transform.MapPosition;
-                inRange = _entitySystemManager.GetEntitySystem<SharedInteractionSystem>()
+                inRange = EntitySystemManager.GetEntitySystem<SharedInteractionSystem>()
                     .InRangeUnobstructed(playerPos, entityPos,
                         predicate: entity =>
-                            entity == _playerManager.LocalPlayer.ControlledEntity || entity == entityToClick,
+                            entity == localPlayer.ControlledEntity || entity == entityToClick,
                         ignoreInsideBlocker: true);
             }
 
             InteractionOutlineComponent outline;
-            if(!_configurationManager.GetCVar<bool>("outline.enabled"))
+            if(!ConfigurationManager.GetCVar<bool>("outline.enabled"))
             {
                 if(entityToClick != null && entityToClick.TryGetComponent(out outline))
                 {
@@ -117,13 +121,13 @@ namespace Content.Client.State
 
         public IList<IEntity> GetEntitiesUnderPosition(GridCoordinates coordinates)
         {
-            return GetEntitiesUnderPosition(coordinates.ToMap(_mapManager));
+            return GetEntitiesUnderPosition(coordinates.ToMap(MapManager));
         }
 
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = _entityManager.GetEntitiesIntersecting(coordinates.MapId,
+            var entities = EntityManager.GetEntitiesIntersecting(coordinates.MapId,
                 Box2.CenteredAround(coordinates.Position, (1, 1)));
 
             // Check the entities against whether or not we can click them
@@ -204,23 +208,25 @@ namespace Content.Client.State
         /// <param name="args">Event data values for a bound key state change.</param>
         private void OnKeyBindStateChanged(BoundKeyEventArgs args)
         {
-            var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
+            // If there is no InputSystem, then there is nothing to forward to, and nothing to do here.
+            if(!EntitySystemManager.TryGetEntitySystem(out InputSystem inputSys))
+                return;
 
             var func = args.Function;
-            var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
+            var funcId = InputManager.NetworkBindMap.KeyFunctionID(func);
 
-            var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
+            var mousePosWorld = EyeManager.ScreenToMap(args.PointerLocation);
             var entityToClick = GetEntityUnderPosition(mousePosWorld);
 
-            if (!_mapManager.TryFindGridAt(mousePosWorld, out var grid))
-                grid = _mapManager.GetDefaultGrid(mousePosWorld.MapId);
+            if (!MapManager.TryFindGridAt(mousePosWorld, out var grid))
+                grid = MapManager.GetDefaultGrid(mousePosWorld.MapId);
 
-            var message = new FullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId, args.State,
+            var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, args.State,
                 grid.MapToGrid(mousePosWorld), args.PointerLocation,
                 entityToClick?.Uid ?? EntityUid.Invalid);
 
             // client side command handlers will always be sent the local player session.
-            var session = _playerManager.LocalPlayer.Session;
+            var session = PlayerManager.LocalPlayer.Session;
             inputSys.HandleInputCommand(session, func, message);
         }
     }

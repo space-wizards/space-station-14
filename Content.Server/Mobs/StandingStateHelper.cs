@@ -1,4 +1,3 @@
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;

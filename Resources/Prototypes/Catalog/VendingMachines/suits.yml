@@ -4,7 +4,7 @@
   description: A vending machine containing jumpsuits and dress garments.
   spriteName: suits
   startingInventory:
-    JanitorUniform: 3
+    UniformJanitor: 3
     UniformColorGrey: 3
     UniformEngineering: 3
     UniformAssistant: 3

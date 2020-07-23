@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Items
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/items/genhit.ogg", Owner);
+            _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/genhit.ogg", Owner);
             int mode = (int) this._mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             this._mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Items
                     var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
                     var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
                     ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
-                    _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", Owner);
+                    _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
                     _ammo--;
                     return; //Alright we're done here
                 default:
@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Items
             if (canPlaceTile) //If desiredTile is null by this point, something has gone horribly wrong and you need to fix it.
             {
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
-                _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/items/deconstruct.ogg", Owner);
+                _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
                 _ammo--;
             }
         }

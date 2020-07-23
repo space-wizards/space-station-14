@@ -3,12 +3,16 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -148,7 +152,14 @@ namespace Content.Server.GameObjects
                 Deny();
                 return;
             }
+
             Open();
+
+            if (user.TryGetComponent(out HandsComponent hands) && hands.Count == 0)
+            {
+                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
+                    AudioParams.Default.WithVolume(-2));
+            }
         }
 
         public void Open()
@@ -301,7 +312,7 @@ namespace Content.Server.GameObjects
             {
                 OpenTimeCounter += frameTime;
             }
-            
+
             if (OpenTimeCounter > CloseSpeed)
             {
                 if (!CanClose() || !Close())

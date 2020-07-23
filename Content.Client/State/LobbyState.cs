@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Client.Interfaces;
 using Content.Client.Interfaces.Chat;
@@ -26,7 +26,7 @@ using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.State
 {
-    public class LobbyState : StateBase
+    public class LobbyState : Robust.Client.State.State
     {
 #pragma warning disable 649
         [Dependency] private readonly IBaseClient _baseClient;

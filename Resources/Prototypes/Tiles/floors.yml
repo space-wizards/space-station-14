@@ -267,7 +267,7 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: snowstep
+  footstep_sounds: footstep_snow
   friction: 0.35
 
 - type: tile
