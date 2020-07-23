@@ -1629,32 +1629,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatNeilpattersonHat
-  name: neil patterson hat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/neilpatterson0_hat.rsi
-  - type: Icon
-    sprite: Clothing/Head/neilpatterson0_hat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/neilpatterson0_hat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNeilpatterson1Hat
-  name: neil patterson1 hat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/neilpatterson1_hat.rsi
-  - type: Icon
-    sprite: Clothing/Head/neilpatterson1_hat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/neilpatterson1_hat.rsi
-
-- type: entity
-  parent: HatBase
   id: HatNinjaRig
   name: ninja rig
   description: ''
