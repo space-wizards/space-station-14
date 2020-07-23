@@ -6,6 +6,8 @@ using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
+using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input.Binding;
@@ -36,36 +38,50 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     A dictionary of players to the last time that they
         ///     pointed at something.
         /// </summary>
-        private Dictionary<ICommonSession, TimeSpan> _pointers = default!;
+        private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
+
+        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        {
+            if (e.NewStatus != SessionStatus.Disconnected)
+            {
+                return;
+            }
+
+            _pointers.Remove(e.Session);
+        }
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
+        }
 
-            _pointers = new Dictionary<ICommonSession, TimeSpan>();
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+            _pointers.Clear();
         }
 
         public override void Update(float frameTime)
         {
             foreach (var entity in RelevantEntities)
             {
-                if (!entity.TryGetComponent(out PointingArrowComponent arrow))
-                {
-                    continue;
-                }
-
-                arrow.Update(frameTime);
+                entity.GetComponent<PointingArrowComponent>().Update(frameTime);
             }
         }
 
         // TODO: FOV
-        private void SendMessage(IEntity source, IList<IPlayerSession> viewers, IEntity? pointed, string selfMessage, string viewerMessage, string? viewerPointedAtMessage = null)
+        private void SendMessage(IEntity source, IList<IPlayerSession> viewers, IEntity? pointed, string selfMessage,
+            string viewerMessage, string? viewerPointedAtMessage = null)
         {
             foreach (var viewer in viewers)
             {
