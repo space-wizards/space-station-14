@@ -86,6 +86,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             !Owner.TryGetComponent(out CollidableComponent collidable) ||
             collidable.Anchored;
 
+        [ViewVariables]
+        private State State => _pressure >= 1 ? State.Ready : State.Pressurizing;
+
         public bool CanInsert(IEntity entity)
         {
             return Powered &&
@@ -213,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, _pressure, Powered);
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, Loc.GetString($"{State}"), _pressure, Powered);
         }
 
         private void UpdateInterface()

@@ -15,6 +15,7 @@ namespace Content.Client.GameObjects.Components.Disposal
     /// </summary>
     public class DisposalUnitWindow : SS14Window
     {
+        private readonly Label _unitState;
         private readonly ProgressBar _pressureBar;
         private readonly Label _pressurePercentage;
         public readonly Button Engage;
@@ -33,8 +34,8 @@ namespace Content.Client.GameObjects.Components.Disposal
                     {
                         Children =
                         {
-                            new Label {Text = Loc.GetString("State:")},
-                            new Label {Text = Loc.GetString("Ready")} // TODO
+                            new Label {Text = Loc.GetString("State: ")},
+                            (_unitState = new Label {Text = Loc.GetString("Ready")})
                         }
                     },
                     new Control {CustomMinimumSize = (0, 10)},
@@ -131,6 +132,7 @@ namespace Content.Client.GameObjects.Components.Disposal
         public void UpdateState(DisposalUnitBoundUserInterfaceState state)
         {
             Title = state.UnitName;
+            _unitState.Text = state.UnitState;
             UpdatePressureBar(state.Pressure);
             Power.Pressed = state.Powered;
         }

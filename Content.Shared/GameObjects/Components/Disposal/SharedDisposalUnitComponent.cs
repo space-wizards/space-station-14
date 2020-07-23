@@ -32,15 +32,24 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
+        public enum State
+        {
+            Ready,
+            Pressurizing
+        }
+
+        [Serializable, NetSerializable]
         public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly string UnitName;
+            public readonly string UnitState;
             public readonly float Pressure;
             public readonly bool Powered;
 
-            public DisposalUnitBoundUserInterfaceState(string unitName, float pressure, bool powered)
+            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered)
             {
                 UnitName = unitName;
+                UnitState = unitState;
                 Pressure = pressure;
                 Powered = powered;
             }
