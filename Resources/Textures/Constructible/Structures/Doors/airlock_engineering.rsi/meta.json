@@ -8,6 +8,15 @@
     "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/doors/Dooreng.dmi",
     "states": [
         {
+            "name": "bolted",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "closed",
             "directions": 1,
             "delays": [
@@ -18,21 +27,24 @@
         },
         {
             "name": "closed_unlit",
-            "directions": 1
+            "directions": 1,
+            "delays": [
+                []
+            ]
         },
         {
             "name": "closing",
             "directions": 1,
             "delays": [
                 [
-                  0.1,
-                  0.1,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.2
+                    0.1,
+                    0.1,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.2
                 ]
             ]
         },
@@ -41,12 +53,12 @@
             "directions": 1,
             "delays": [
                 [
-                  0.25,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.15
+                    0.25,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.15
                 ]
             ]
         },
@@ -58,47 +70,6 @@
                     0.1,
                     0.1,
                     0.1
-                ]
-            ]
-        },
-        {
-            "name": "bolted",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "panel_closing",
-            "directions": 1,
-            "delays": [
-                [
-                  0.1,
-                  0.1,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.2
-                ]
-            ]
-        },
-        {
-            "name": "panel_opening",
-            "directions": 1,
-            "delays": [
-                [
-                  0.1,
-                  0.1,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.2
                 ]
             ]
         },
@@ -116,14 +87,14 @@
             "directions": 1,
             "delays": [
                 [
-                  0.1,
-                  0.1,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.2
+                    0.1,
+                    0.1,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.2
                 ]
             ]
         },
@@ -132,12 +103,27 @@
             "directions": 1,
             "delays": [
                 [
-                  0.1,
-                  0.1,
-                  0.07,
-                  0.07,
-                  0.07,
-                  0.25
+                    0.1,
+                    0.1,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "panel_closing",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.27
                 ]
             ]
         },
@@ -147,6 +133,21 @@
             "delays": [
                 [
                     1.0
+                ]
+            ]
+        },
+        {
+            "name": "panel_opening",
+            "directions": 1,
+            "delays": [
+                [
+                    0.2,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.07,
+                    0.2
                 ]
             ]
         },
