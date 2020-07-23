@@ -13,29 +13,29 @@
 
 - type: entity
   parent: HatBase
-  id: HatAliceMccrea
-  name: alice mccrea
+  id: HatFireWeldingMask
+  name: fire welding mask
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/alice_mccrea_1.rsi
+    sprite: Clothing/Head/fire_welding_mask_1.rsi
   - type: Icon
-    sprite: Clothing/Head/alice_mccrea_1.rsi
+    sprite: Clothing/Head/fire_welding_mask_1.rsi
   - type: Clothing
-    sprite: Clothing/Head/alice_mccrea_1.rsi
+    sprite: Clothing/Head/fire_welding_mask_1.rsi
 
 - type: entity
   parent: HatBase
-  id: HatAliceMccreaup
-  name: alice mccrea (up)
+  id: HatFireWeldingMask
+  name: fire welding mask (up)
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/alice_mccrea_1up.rsi
+    sprite: Clothing/Head/fire_welding_mask_1up.rsi
   - type: Icon
-    sprite: Clothing/Head/alice_mccrea_1up.rsi
+    sprite: Clothing/Head/fire_welding_mask_1up.rsi
   - type: Clothing
-    sprite: Clothing/Head/alice_mccrea_1up.rsi
+    sprite: Clothing/Head/fire_welding_mask_1up.rsi
 
 - type: entity
   parent: HatBase
@@ -911,19 +911,6 @@
     sprite: Clothing/Head/engineering_rig_sealed.rsi
   - type: Clothing
     sprite: Clothing/Head/engineering_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatEngspaceHelmet
-  name: engspace helmet
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/engspace_helmet.rsi
-  - type: Icon
-    sprite: Clothing/Head/engspace_helmet.rsi
-  - type: Clothing
-    sprite: Clothing/Head/engspace_helmet.rsi
 
 - type: entity
   parent: HatBase
