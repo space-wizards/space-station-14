@@ -484,7 +484,10 @@ namespace Content.Server.GameObjects
         {
             if (IsPulling)
             {
-                (PulledObject!.Controller as PullController)?.StopPull();
+                if (PulledObject!.TryGetController(out PullController oldController))
+                {
+                    oldController.StopPull();
+                }
 
                 if (PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent oldStatus))
                 {
@@ -494,11 +497,7 @@ namespace Content.Server.GameObjects
 
             PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
 
-            if (!(PulledObject?.Controller is PullController controller))
-            {
-                PulledObject!.SetController<PullController>();
-                controller = (PullController) PulledObject.Controller;
-            }
+            var controller = PulledObject!.EnsureController<PullController>();
 
             controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
 
@@ -510,7 +509,11 @@ namespace Content.Server.GameObjects
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
         {
-            (PulledObject?.Controller as PullController)?.TryMoveTo(puller, to);
+            if (PulledObject != null &&
+                PulledObject.TryGetController(out PullController controller))
+            {
+                controller.TryMoveTo(puller, to);
+            }
         }
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)

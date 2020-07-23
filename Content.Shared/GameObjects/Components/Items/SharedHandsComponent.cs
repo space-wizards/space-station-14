@@ -23,7 +23,12 @@ namespace Content.Shared.GameObjects
 
         public virtual void StopPulling()
         {
-            (PulledObject?.Controller as PullController)?.StopPull();
+            if (PulledObject != null &&
+                PulledObject.TryGetController(out PullController controller))
+            {
+                controller.StopPull();
+            }
+
             PulledObject = null;
         }
     }

@@ -19,16 +19,9 @@ namespace Content.Shared.Physics
 
         private const float DistBeforeStopPull = SharedInteractionSystem.InteractionRange;
 
-        private ICollidableComponent? _controlledComponent;
-
         private ICollidableComponent? _puller;
 
         public bool GettingPulled => _puller != null;
-
-        public override ICollidableComponent? ControlledComponent
-        {
-            set => _controlledComponent = value;
-        }
 
         public void StartPull(ICollidableComponent? pull)
         {
@@ -38,12 +31,12 @@ namespace Content.Shared.Physics
         public void StopPull()
         {
             _puller = null;
-            _controlledComponent?.RemoveController();
+            ControlledComponent?.TryRemoveController<PullController>();
         }
 
         public void TryMoveTo(GridCoordinates from, GridCoordinates to)
         {
-            if (_puller == null || _controlledComponent == null)
+            if (_puller == null || ControlledComponent == null)
             {
                 return;
             }
@@ -71,18 +64,18 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            _controlledComponent.Owner.Transform.GridPosition = position;
+            ControlledComponent.Owner.Transform.GridPosition = position;
         }
 
         public override void UpdateBeforeProcessing()
         {
-            if (_puller == null || _controlledComponent == null)
+            if (_puller == null || ControlledComponent == null)
             {
                 return;
             }
 
             // Are we outside of pulling range?
-            var dist = _puller.Owner.Transform.WorldPosition - _controlledComponent.Owner.Transform.WorldPosition;
+            var dist = _puller.Owner.Transform.WorldPosition - ControlledComponent.Owner.Transform.WorldPosition;
 
             if (dist.Length > DistBeforeStopPull)
             {
@@ -90,11 +83,11 @@ namespace Content.Shared.Physics
             }
             else if (dist.Length > DistBeforePull)
             {
-                _controlledComponent.LinearVelocity = dist.Normalized * _puller.LinearVelocity.Length * 1.1f;
+                LinearVelocity = dist.Normalized * _puller.LinearVelocity.Length * 1.1f;
             }
             else
             {
-                _controlledComponent.LinearVelocity = Vector2.Zero;
+                LinearVelocity = Vector2.Zero;
             }
         }
     }
