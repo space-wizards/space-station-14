@@ -2835,16 +2835,3 @@
     sprite: Clothing/Head/yellowsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/yellowsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatZhanScarf
-  name: zhan scarf
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/zhan_scarf.rsi
-  - type: Icon
-    sprite: Clothing/Head/zhan_scarf.rsi
-  - type: Clothing
-    sprite: Clothing/Head/zhan_scarf.rsi
