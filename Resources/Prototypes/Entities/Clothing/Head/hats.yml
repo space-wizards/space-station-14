@@ -1616,7 +1616,7 @@
 
 - type: entity
   parent: HatBase
-  id: HatBlueFlameWeldingMaskup
+  id: HatBlueFlameWeldingMask
   name: blue flame welding mask
   description: ''
   components:
