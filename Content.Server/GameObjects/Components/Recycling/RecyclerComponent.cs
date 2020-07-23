@@ -1,13 +1,19 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Recycling;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -17,6 +23,10 @@ namespace Content.Server.GameObjects.Components.Recycling
     [RegisterComponent]
     public class RecyclerComponent : Component, ICollideBehavior
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+#pragma warning restore 649
+
         public override string Name => "Recycler";
 
         /// <summary>
@@ -96,6 +106,78 @@ namespace Content.Server.GameObjects.Components.Recycling
             constructionSystem.SpawnIngredient(recyclerPosition, lastStep);
 
             entity.Delete();
+        }
+
+        private bool CanRun()
+        {
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver) &&
+                !receiver.Powered)
+            {
+                return false;
+            }
+
+            if (Owner.HasComponent<ItemComponent>())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CanMove(IEntity entity)
+        {
+            if (entity == Owner)
+            {
+                return false;
+            }
+
+            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+                collidable.Anchored)
+            {
+                return false;
+            }
+
+            if (entity.HasComponent<ConveyorComponent>())
+            {
+                return false;
+            }
+
+            if (entity.HasComponent<IMapGridComponent>())
+            {
+                return false;
+            }
+
+            if (ContainerHelpers.IsInContainer(entity))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void Update(float frameTime)
+        {
+            if (!CanRun())
+            {
+                return;
+            }
+
+            var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
+            var direction = Vector2.UnitX;
+
+            foreach (var entity in intersecting)
+            {
+                if (!CanMove(entity))
+                {
+                    continue;
+                }
+
+                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                {
+                    var controller = collidable.EnsureController<ConveyedController>();
+                    controller.Move(direction, frameTime);
+                }
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)

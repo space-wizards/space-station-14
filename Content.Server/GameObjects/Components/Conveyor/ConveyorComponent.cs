@@ -89,8 +89,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private ConveyorGroup? Group => Id.HasValue ? EntitySystem.Get<ConveyorSystem>().EnsureGroup(Id.Value) : null;
 
         /// <summary>
-        ///     Calculates the angle in which entities on top of this conveyor belt
-        ///     are pushed in
+        ///     Calculates the angle in which entities on top of this conveyor
+        ///     belt are pushed in
         /// </summary>
         /// <returns>
         ///     The angle when taking into account if the conveyor is reversed
