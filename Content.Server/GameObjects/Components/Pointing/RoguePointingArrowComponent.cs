@@ -117,17 +117,21 @@ namespace Content.Server.GameObjects.Components.Pointing
 
             UpdateAppearance();
 
-            Owner.Transform.WorldPosition -= (Owner.Transform.WorldPosition - _chasing.Transform.WorldPosition) * frameTime * _chasingSpeed;
+            var toChased = _chasing.Transform.WorldPosition - Owner.Transform.WorldPosition;
+
+            Owner.Transform.WorldPosition += toChased * frameTime * _chasingSpeed;
 
             _chasingTime -= frameTime;
 
-            if (_chasingTime <= 0)
+            if (_chasingTime > 0)
             {
-                ExplosionHelper.SpawnExplosion(Owner.Transform.GridPosition, 0, 2, 1, 1);
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
-
-                Owner.Delete();
+                return;
             }
+
+            ExplosionHelper.SpawnExplosion(Owner.Transform.GridPosition, 0, 2, 1, 1);
+            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
+
+            Owner.Delete();
         }
     }
 }
