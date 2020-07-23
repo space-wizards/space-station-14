@@ -75,7 +75,7 @@ namespace Content.Client.Commands
             }
 
             console.Commands["togglelight"].Execute(console);
-            console.Commands["showwires"].Execute(console);
+            console.Commands["showsubfloor"].Execute(console);
 
             return true;
         }
