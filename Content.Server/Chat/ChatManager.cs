@@ -82,9 +82,10 @@ namespace Content.Server.Chat
             var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>().GetActiveListeners();
             foreach (var listener in listeners)
             {
-                if (pos.Distance(_mapManager, listener.Owner.Transform.GridPosition) < VoiceRange)
+                var dist = pos.Distance(_mapManager, listener.Owner.Transform.GridPosition);
+                if (dist < VoiceRange)
                 {
-                    listener.PassSpeechData(message, source);
+                    listener.PassSpeechData(message, source, dist);
                 }
             }
         }

@@ -38,20 +38,14 @@ namespace Content.Server.GameObjects.Components
             _listeningSystem.Unsubscribe(this);
         }
 
-        public void PassSpeechData(string speech, IEntity source)
+        public void PassSpeechData(string speech, IEntity source, float distance)
         {
             
             foreach (var listener in Owner.GetAllComponents<IListen>())
             {
+                if (distance > listener.GetListenRange()) { continue; }
                 listener.HeardSpeech(speech, source);
             }
-        }
-
-        public int GetListenRange()
-        {
-            //TODO: implement a way to support multiple listeners on one entity
-            //right now it just returns the same amount as voicerange, maybe change to return a list to iterate in chatmanager?
-            return 7;
         }
     }
 }
