@@ -50,6 +50,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private TimeSpan _lastExitAttempt;
 
+        /// <summary>
+        ///     The current pressure of this disposal unit.
+        ///     Prevents it from flushing if it is not equal to or bigger than 1.
+        /// </summary>
+        private float _pressure;
+
         [ViewVariables]
         private TimeSpan _engageTime;
 
@@ -57,11 +63,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     Token used to cancel a flush after an engage.
         /// </summary>
         private CancellationTokenSource _engageToken;
-
-        /// <summary>
-        ///     Token used to cancel delayed appearance changes.
-        /// </summary>
-        private CancellationTokenSource _animationToken;
 
         /// <summary>
         ///     Container of entities inside this disposal unit.
@@ -114,7 +115,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool CanEngage()
         {
-            return (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            return _pressure >= 1 &&
+                   (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
                     receiver.Powered) &&
                    (!Owner.TryGetComponent(out CollidableComponent collidable) ||
                     collidable.Anchored);
@@ -144,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 TryFlush();
                 UpdateVisualState();
-            }, _animationToken.Token);
+            }, _engageToken.Token);
 
             UpdateInterface();
 
@@ -174,6 +176,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _container.Remove(entity);
                 entryComponent.TryInsert(entity);
             }
+
+            _pressure = 0;
 
             UpdateInterface();
 
@@ -206,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, 1, Powered);
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, _pressure, Powered);
         }
 
         private void UpdateInterface()
@@ -278,9 +282,29 @@ namespace Content.Server.GameObjects.Components.Disposal
             appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
         }
 
+        public void Update(float frameTime)
+        {
+            if (!Powered)
+            {
+                return;
+            }
+
+            _pressure = _pressure + frameTime > 1
+                ? 1
+                : _pressure + 0.05f * frameTime;
+
+            UpdateInterface();
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
+            serializer.DataReadWriteFunction(
+                "pressure",
+                1.0f,
+                pressure => _pressure = pressure,
+                () => _pressure);
 
             serializer.DataReadWriteFunction(
                 "engageTime",
@@ -294,7 +318,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Initialize();
 
             _engageToken = new CancellationTokenSource();
-            _animationToken = new CancellationTokenSource();
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(DisposalUnitUiKey.Key);
@@ -322,7 +345,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             _userInterface.CloseAll();
-            _animationToken.Cancel();
+            _engageToken.Cancel();
             _container = null;
 
             base.OnRemove();
