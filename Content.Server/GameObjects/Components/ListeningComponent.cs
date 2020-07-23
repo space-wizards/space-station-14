@@ -40,8 +40,8 @@ namespace Content.Server.GameObjects.Components
 
         public void PassSpeechData(string speech, IEntity source)
         {
-            var attachedListeners = Owner.GetAllComponents<IListen>().ToArray();
-            foreach (var listener in attachedListeners)
+            
+            foreach (var listener in Owner.GetAllComponents<IListen>())
             {
                 listener.HeardSpeech(speech, source);
             }
