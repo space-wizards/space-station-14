@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Pointing
 
             if (_chasingTime <= 0)
             {
-                ExplosionHelper.SpawnExplosion(Owner.Transform.GridPosition, 5, 3, 2, 1);
+                ExplosionHelper.SpawnExplosion(Owner.Transform.GridPosition, 0, 2, 1, 1);
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/explosion.ogg", Owner);
 
                 Owner.Delete();
