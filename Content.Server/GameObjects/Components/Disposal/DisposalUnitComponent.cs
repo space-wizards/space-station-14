@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -35,7 +36,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing
     {
 #pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
         public override string Name => "DisposalUnit";
@@ -62,18 +63,18 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         ///     Token used to cancel a flush after an engage.
         /// </summary>
-        private CancellationTokenSource _engageToken;
+        private CancellationTokenSource? _engageToken;
 
         /// <summary>
         ///     Container of entities inside this disposal unit.
         /// </summary>
         [ViewVariables]
-        private Container _container;
+        private Container _container = default!;
 
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
         [ViewVariables]
-        private BoundUserInterface _userInterface;
+        private BoundUserInterface _userInterface = default!;
 
         [ViewVariables]
         public bool Powered =>
@@ -115,7 +116,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool CanEngage()
         {
-            return _pressure >= 1 &&
+            return _engageToken == null &&
+                   _pressure >= 1 &&
                    (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
                     receiver.Powered) &&
                    (!Owner.TryGetComponent(out CollidableComponent collidable) ||
@@ -130,17 +132,19 @@ namespace Content.Server.GameObjects.Components.Disposal
                     collidable.Anchored);
         }
 
-        private bool TryEngage()
+        private void TryEngage()
         {
             if (!CanEngage())
             {
-                return false;
+                return;
             }
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Flushing);
             }
+
+            _engageToken = new CancellationTokenSource();
 
             Timer.Spawn(_engageTime, () =>
             {
@@ -149,8 +153,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             }, _engageToken.Token);
 
             UpdateInterface();
-
-            return true;
         }
 
         public bool TryFlush()
@@ -177,6 +179,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 entryComponent.TryInsert(entity);
             }
 
+            _engageToken = null;
             _pressure = 0;
 
             UpdateInterface();
@@ -237,6 +240,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             if (!PlayerCanUse(obj.Session.AttachedEntity))
             {
                 return;
@@ -317,7 +325,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            _engageToken = new CancellationTokenSource();
             _container = ContainerManagerComponent.Ensure<Container>(Name, Owner);
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(DisposalUnitUiKey.Key);
@@ -345,13 +352,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             _userInterface.CloseAll();
-            _engageToken.Cancel();
-            _container = null;
+            _engageToken?.Cancel();
+            _container = null!;
 
             base.OnRemove();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
