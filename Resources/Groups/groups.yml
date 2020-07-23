@@ -19,6 +19,7 @@
   Name: Moderator
   Commands:
   - login
+  - logout
   - joingame
   - help
   - list
@@ -39,6 +40,7 @@
 - Index: 100
   Name: Administrator
   Commands:
+  - logout
   - joingame
   - help
   - list
@@ -83,12 +85,14 @@
   - hostlogin
   - deleteewc
   - asay
+  - mapping
   CanViewVar: true
   CanAdminPlace: true
 
 - Index: 200
   Name: Host
   Commands:
+  - logout
   - joingame
   - help
   - list
@@ -154,6 +158,7 @@
   - deleteewc
   - sudo
   - asay
+  - mapping
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
@@ -179,6 +179,17 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         }
 
         /// <summary>
+        /// Get the entity's tile position, then get the corresponding node
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public PathfindingNode GetNode(IEntity entity)
+        {
+            var tile = _mapManager.GetGrid(entity.Transform.GridID).GetTileRef(entity.Transform.GridPosition);
+            return GetNode(tile);
+        }
+
+        /// <summary>
         /// Return the corresponding PathfindingNode for this tile
         /// </summary>
         /// <param name="tile"></param>
@@ -347,7 +358,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public bool CanTraverse(IEntity entity, PathfindingNode node)
         {
-            if (entity.TryGetComponent(out CollidableComponent collidableComponent) &&
+            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) &&
                 (collidableComponent.CollisionMask & node.BlockedCollisionMask) != 0)
             {
                 return false;

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -15,11 +12,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -137,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return ammo;
         }
 
-        public override IEntity TakeProjectile(GridCoordinates spawnAt)
+        public override IEntity TakeProjectile(GridCoordinates spawnAtGrid, MapCoordinates spawnAtMap)
         {
             var powerCellEntity = _powerCellContainer.ContainedEntity;
 
@@ -166,7 +161,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
             else
             {
-                entity = Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition);
+                entity = Owner.Transform.GridID != GridId.Invalid ?
+                    Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.GridPosition)
+                    : Owner.EntityManager.SpawnEntity(_ammoPrototype, Owner.Transform.MapPosition);
             }
 
             if (entity.TryGetComponent(out ProjectileComponent projectileComponent))

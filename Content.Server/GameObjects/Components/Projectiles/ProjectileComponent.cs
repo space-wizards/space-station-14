@@ -63,6 +63,15 @@ namespace Content.Server.GameObjects.Components.Projectiles
         /// <param name="entity"></param>
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            // This is so entities that shouldn't get a collision are ignored.
+            if (entity.TryGetComponent(out ICollidableComponent collidable) && collidable.Hard == false)
+            {
+                _deleteOnCollide = false;
+                return;
+            }
+            else
+                _deleteOnCollide = true;
+
             if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
@@ -82,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out PhysicsComponent physicsComponent))
+                                && Owner.TryGetComponent(out IPhysicsComponent physicsComponent))
             {
                 var direction = physicsComponent.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);

@@ -7,6 +7,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.UserInterface.Stylesheets
 {
@@ -69,26 +70,29 @@ namespace Content.Client.UserInterface.Stylesheets
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
 
+            static (StyleBox, StyleBox, StyleBox, StyleBox) ButtonPermutations(StyleBoxTexture @base)
+            {
+                var normal = new StyleBoxTexture(@base) {Modulate = ButtonColorDefault};
+                var hover = new StyleBoxTexture(@base) {Modulate = ButtonColorHovered};
+                var pressed = new StyleBoxTexture(@base) {Modulate = ButtonColorPressed};
+                var disabled = new StyleBoxTexture(@base) {Modulate = ButtonColorDisabled};
+
+                return (normal, hover, pressed, disabled);
+            }
+
             // Button styles.
-            var buttonNormal = new StyleBoxTexture(BaseButton)
-            {
-                Modulate = ButtonColorDefault
-            };
+            var (buttonNormal, buttonHover, buttonPressed, buttonDisabled)
+                = ButtonPermutations(BaseButton);
 
-            var buttonHover = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorHovered
-            };
+            var (buttonRNormal, buttonRHover, buttonRPressed, buttonRDisabled)
+                = ButtonPermutations(BaseButtonOpenRight);
 
-            var buttonPressed = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorPressed
-            };
+            var (buttonLNormal, buttonLHover, buttonLPressed, buttonLDisabled)
+                = ButtonPermutations(BaseButtonOpenLeft);
 
-            var buttonDisabled = new StyleBoxTexture(buttonNormal)
-            {
-                Modulate = ButtonColorDisabled
-            };
+            var (buttonBNormal, buttonBHover, buttonBPressed, buttonBDisabled)
+                = ButtonPermutations(BaseButtonOpenBoth);
+
 
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -315,6 +319,58 @@ namespace Content.Client.UserInterface.Stylesheets
                 {
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Center),
                 }),
+
+                // Right open buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRNormal),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRHover),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenRight)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonRDisabled),
+
+                // Left open buttons.
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLNormal),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLHover),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenLeft)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonLDisabled),
+
+                // "Both" open buttons
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBNormal),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBHover),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBPressed),
+
+                Element<ContainerButton>().Class(ContainerButton.StyleClassButton).Class(ButtonOpenBoth)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonBDisabled),
+
 
                 new StyleRule(new SelectorChild(
                     new SelectorElement(typeof(Button), null, null, new[] {ContainerButton.StylePseudoClassDisabled}),

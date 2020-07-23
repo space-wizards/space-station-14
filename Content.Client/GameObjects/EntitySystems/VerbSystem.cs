@@ -94,8 +94,11 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
             _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
 
-            _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
-            RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            if (!entity.Uid.IsClientSide())
+            {
+                _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
+                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);

@@ -1,18 +1,14 @@
 ﻿using Content.Server.GameObjects.Components.Stack;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Utility;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Items
 {

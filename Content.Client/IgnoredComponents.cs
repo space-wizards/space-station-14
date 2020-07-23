@@ -31,7 +31,7 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storeable",
+            "Storable",
             "Dice",
             "Construction",
             "Door",
@@ -127,7 +127,15 @@
             "Wire",
             "StressTestMovement",
             "Toys",
-            "SurgeryTool"
+            "SurgeryTool",
+            "EmitSoundOnThrow",
+            "Flash",
+            "DamageOnToolInteract",
+            "CustodialClosetFill",
+            "NoSlip",
+            "TrashSpawner",
+            "Pill",
+            "RCD",
         };
     }
 }
