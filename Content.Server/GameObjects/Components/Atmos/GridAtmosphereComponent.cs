@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -12,11 +13,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
@@ -24,6 +27,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent, Serializable]
     public class GridAtmosphereComponent : Component, IEnumerable<TileAtmosphere>
     {
+        [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
+
         public override string Name => "GridAtmosphere";
 
         private int _timer = 0;
@@ -145,25 +150,24 @@ namespace Content.Server.GameObjects.Components.Atmos
             _invalidatedCoords.Clear();
         }
 
-        /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddActiveTile(TileAtmosphere tile)
         {
-            if (tile?.GridIndex != _grid.Index) return;
+            if (tile?.GridIndex != _grid.Index || tile?.Air == null) return;
+            tile.Excited = true;
             _activeTiles.Add(tile);
         }
 
-        /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveActiveTile(TileAtmosphere tile)
         {
             _activeTiles.Remove(tile);
+            tile.Excited = false;
         }
 
-        /// <inheritdoc />
         public void AddHighPressureDelta(TileAtmosphere tile)
         {
-            if (tile?.GridIndex == _grid.Index) return;
+            if (tile?.GridIndex != _grid.Index) return;
             _highPressureDelta.Add(tile);
         }
 
@@ -216,7 +220,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             return _grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        /// <inheritdoc />
         public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices)
         {
             var sides = new Dictionary<Direction, TileAtmosphere>();
@@ -229,10 +232,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             return sides;
         }
 
-        /// <inheritdoc />
         public int HighPressureDeltaCount => _highPressureDelta.Count;
 
-        /// <inheritdoc />
         public float GetVolumeForCells(int cellCount)
         {
             return _grid.TileSize * cellCount * Atmospherics.CellVolume;
@@ -286,22 +287,39 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void ProcessTileEqualize()
         {
+            var watch = new Stopwatch();
+            watch.Start();
+
             foreach (var tile in _activeTiles.ToArray())
             {
                 tile.EqualizePressureInZone(_updateCounter);
+
+                // Process the rest next time.
+                if (watch.Elapsed.Seconds >= 0.1f)
+                    break;
             }
         }
 
         public void ProcessActiveTiles()
         {
+            var watch = new Stopwatch();
+            watch.Start();
+
             foreach (var tile in _activeTiles.ToArray())
             {
                 tile.ProcessCell(_updateCounter);
+
+                // Process the rest of tiles next time.
+                if (watch.Elapsed.Seconds >= 0.1f)
+                    break;
             }
         }
 
         public void ProcessExcitedGroups()
         {
+            var watch = new Stopwatch();
+            watch.Start();
+
             foreach (var excitedGroup in _excitedGroups.ToArray())
             {
                 excitedGroup.BreakdownCooldown++;
@@ -312,6 +330,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     excitedGroup.Dismantle();
+
+                // Process the rest of excited groups next time.
+                if (watch.Elapsed.Seconds >= 0.1f)
+                    break;
             }
         }
 

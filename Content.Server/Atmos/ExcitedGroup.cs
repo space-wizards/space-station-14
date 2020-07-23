@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos
 {
     public class ExcitedGroup : IDisposable
     {
+        [ViewVariables]
         private bool _disposed = false;
+
+        [ViewVariables]
         private readonly HashSet<TileAtmosphere> _tile = new HashSet<TileAtmosphere>(Atmospherics.ZumosTileLimit);
+
+        [ViewVariables]
         private GridAtmosphereComponent _gridAtmosphereComponent;
 
+        [ViewVariables]
         public int DismantleCooldown { get; set; }
+
+        [ViewVariables]
         public int BreakdownCooldown { get; set; }
 
         public void AddTile(TileAtmosphere tile)

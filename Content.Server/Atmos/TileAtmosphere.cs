@@ -4,6 +4,9 @@ using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Audio;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -12,15 +15,19 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
+using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
     public class TileAtmosphere
     {
+        [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
+
         private static long _eqQueueCycleCtr = 0;
         private int _archivedCycle = 0;
         private int _currentCycle = 0;
+        private static int _soundCooldown = 0;
 
         [ViewVariables]
         public TileAtmosphere PressureSpecificTarget { get; set; } = null;
@@ -59,6 +66,7 @@ namespace Content.Server.Atmos
 
         public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null)
         {
+            IoCManager.InjectDependencies(this);
             _gridAtmosphereComponent = atmosphereComponent;
             GridIndex = gridIndex;
             GridIndices = gridIndices;
@@ -77,10 +85,21 @@ namespace Content.Server.Atmos
         {
             // TODO ATMOS finish this
 
+            if(PressureDifference > 15)
+            {
+                if(_soundCooldown == 0)
+                    EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
+                        GridIndices.ToGridCoordinates(GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathF.Clamp(PressureDifference / 10, 10, 100)));
+            }
+
             if (PressureDifference > 100)
             {
                 // Do space wind graphics here!
             }
+
+            _soundCooldown++;
+            if (_soundCooldown > 75)
+                _soundCooldown = 0;
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -413,20 +432,22 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void FinalizeEq()
         {
+            var transferDirections = new Dictionary<Direction, float>();
             var hasTransferDirs = false;
             foreach (var direction in Cardinal)
             {
                 var amount = _tileAtmosInfo[direction];
+                transferDirections[direction] = amount;
                 if (amount == 0) continue;
+                _tileAtmosInfo[direction] = 0;
                 hasTransferDirs = true;
-                break;
             }
 
             if (!hasTransferDirs) return;
 
             foreach (var direction in Cardinal)
             {
-                var amount = _tileAtmosInfo[direction];
+                var amount = transferDirections[direction];
                 var tile = _adjacentTiles[direction];
                 if (tile?.Air == null) continue;
                 if (amount > 0)
@@ -625,7 +646,7 @@ namespace Content.Server.Atmos
                 foreach (var direction in Cardinal)
                 {
                     if (!_adjacentTiles.TryGetValue(direction, out var tile2)) continue;
-                    if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                    if (tile2?._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                     if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                     if(tile2.Air.Immutable) continue;
                     tile2._tileAtmosInfo.CurrentTransferDirection = direction.GetOpposite();
@@ -660,15 +681,13 @@ namespace Content.Server.Atmos
                 }
                 tile.Air.Clear();
                 tile.UpdateVisuals();
-                tile.FloorRip(sum);
+                tile.HandleDecompressionFloorRip(sum);
             }
         }
 
-        private void FloorRip(float sum)
+        private void HandleDecompressionFloorRip(float sum)
         {
-            // TODO ATMOS Fix this
-            Logger.Info($"Floor rip! SUM: {sum} CHANCE: {MathF.Clamp(sum / 100, 0, 1)}");
-            if (sum > 20 && IoCManager.Resolve<IRobustRandom>().Prob(MathF.Clamp(sum / 100, 0, 1)))
+            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 10, 0, 30)/100f))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 
