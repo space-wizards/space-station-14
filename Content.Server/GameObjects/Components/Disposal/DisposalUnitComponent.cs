@@ -16,6 +16,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -305,6 +306,20 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
+                    Loc.GetString("You can't do that!"));
+                return false;
+            }
+
+            if (ContainerHelpers.IsInContainer(eventArgs.User))
+            {
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, eventArgs.User,
+                    Loc.GetString("You can't reach there!"));
+                return false;
+            }
+
             if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 return false;
