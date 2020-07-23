@@ -2448,19 +2448,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatSwat-alt
-  name: swat-alt
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/swat-alt.rsi
-  - type: Icon
-    sprite: Clothing/Head/swat-alt.rsi
-  - type: Clothing
-    sprite: Clothing/Head/swat-alt.rsi
-
-- type: entity
-  parent: HatBase
   id: HatSwat
   name: swat
   description: ''
@@ -2471,32 +2458,6 @@
     sprite: Clothing/Head/swat.rsi
   - type: Clothing
     sprite: Clothing/Head/swat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSwathelm
-  name: swat helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/swathelm.rsi
-  - type: Icon
-    sprite: Clothing/Head/swathelm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/swathelm.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSwatold
-  name: swat old
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/swatold.rsi
-  - type: Icon
-    sprite: Clothing/Head/swatold.rsi
-  - type: Clothing
-    sprite: Clothing/Head/swatold.rsi
 
 - type: entity
   parent: HatBase
