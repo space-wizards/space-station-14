@@ -288,6 +288,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
+            _userInterface.CloseAll();
             _cancellationTokenSource.Cancel();
             _container = null;
 
