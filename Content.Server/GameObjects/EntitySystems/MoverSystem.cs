@@ -98,12 +98,10 @@ namespace Content.Server.GameObjects.EntitySystems
                 ev.Entity.RemoveComponent<PlayerInputMoverComponent>();
             }
 
-            if (ev.Entity.TryGetComponent(out IPhysicsComponent physics))
+            if (ev.Entity.TryGetComponent(out IPhysicsComponent physics) &&
+                physics.TryGetController<MoverController>(out var controller))
             {
-                if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
-                {
-                    ((MoverController) controller).StopMoving();
-                }
+                controller.StopMoving();
             }
         }
 

@@ -87,7 +87,7 @@ namespace Content.Server.Throw
 
             if (throwSourceEnt != null
                 && throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics)
-                && physics.Controllers.TryGetValue(typeof(MoverController), out var mover))
+                && physics.TryGetController<MoverController>(out var mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 

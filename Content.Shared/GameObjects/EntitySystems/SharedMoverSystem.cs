@@ -58,11 +58,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics,
             ICollidableComponent? collider = null)
         {
-            if (!physics.Controllers.ContainsKey(typeof(MoverController)))
-            {
-                // Set up controller
-                AddController(physics);
-            }
+            physics.GetOrCreateController<MoverController>();
 
             var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
                              _physicsManager.IsWeightless(transform.GridPosition);
@@ -83,9 +79,9 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                if (physics.TryGetController<MoverController>(out var controller))
                 {
-                    ((MoverController) controller).StopMoving();
+                    controller.StopMoving();
                 }
             }
             else
@@ -94,9 +90,9 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (weightless)
                 {
-                    if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                    if (physics.TryGetController<MoverController>(out var controller))
                     {
-                        ((MoverController) controller).Push(combined, mover.CurrentPushSpeed);
+                        controller.Push(combined, mover.CurrentPushSpeed);
                     }
 
                     transform.LocalRotation = walkDir.GetDir().ToAngle();
@@ -107,9 +103,9 @@ namespace Content.Shared.GameObjects.EntitySystems
                 //Console.WriteLine($"{walkDir} ({mover.CurrentWalkSpeed}) + {sprintDir} ({mover.CurrentSprintSpeed}): {total}");
 
                 {
-                    if (physics.Controllers.TryGetValue(typeof(MoverController), out var controller))
+                    if (physics.TryGetController<MoverController>(out var controller))
                     {
-                        ((MoverController) controller).Move(total, 1);
+                        controller.Move(total, 1);
                     }
                 }
 

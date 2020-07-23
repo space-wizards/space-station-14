@@ -9,7 +9,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.GameObjects.Components.Recycling
 {
     [UsedImplicitly]
-    public class RecyclerVisualizer2D : AppearanceVisualizer
+    public class RecyclerVisualizer : AppearanceVisualizer
     {
         private string _stateClean;
         private string _stateBloody;

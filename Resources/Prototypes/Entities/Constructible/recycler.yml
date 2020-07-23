@@ -30,7 +30,7 @@
     state: grinder-o0
   - type: Appearance
     visuals:
-    - type: RecyclerVisualizer2D
+    - type: RecyclerVisualizer
       state_clean: grinder-o1
       state_bloody: grinder-o1bld
   - type: Recycler
