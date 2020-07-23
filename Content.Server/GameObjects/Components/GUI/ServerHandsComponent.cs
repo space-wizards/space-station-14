@@ -595,7 +595,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 }
 
                 // set velocity to zero
-                physics.LinearVelocity = Vector2.Zero;
+                physics.Stop();
                 return;
             }
         }

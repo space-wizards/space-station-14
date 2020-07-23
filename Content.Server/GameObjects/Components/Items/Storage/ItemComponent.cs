@@ -136,24 +136,6 @@ namespace Content.Server.GameObjects.Components
             return new ItemComponentState(EquippedPrefix);
         }
 
-        public void Fumble()
-        {
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physicsComponent))
-            {
-                physicsComponent.LinearVelocity += RandomOffset();
-            }
-        }
-
-        private Vector2 RandomOffset()
-        {
-            return new Vector2(RandomOffset(), RandomOffset());
-            float RandomOffset()
-            {
-                var size = 15.0F;
-                return (_robustRandom.NextFloat() * size) - size / 2;
-            }
-        }
-
         public void OnExplosion(ExplosionEventArgs eventArgs)
         {
             var sourceLocation = eventArgs.Source;

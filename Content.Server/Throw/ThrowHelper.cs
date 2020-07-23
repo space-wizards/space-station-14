@@ -75,18 +75,14 @@ namespace Content.Server.Throw
                 throwSourceEnt.Transform.LocalRotation = angle.GetCardinalDir().ToAngle();
             }
 
-            if (!thrownEnt.TryGetComponent(out IPhysicsComponent physComp))
-                physComp = thrownEnt.AddComponent<PhysicsComponent>();
+            // scaling is handled elsewhere, this is just multiplying by 10 independent of timing as a fix until elsewhere values are updated
+            var spd = throwForce * 10;
 
-            var timing = IoCManager.Resolve<IGameTiming>();
+            projComp.StartThrow(angle.ToVec(), spd);
 
-            // scaling is handled elsewhere, this is just multiplying by 60 independent of timing as a fix until elsewhere values are updated
-            var spd = throwForce * 60;
-
-            projComp.StartThrow(angle.ToVec() * spd);
-
-            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics)
-                                       && physics.Controller is MoverController mover)
+            if (throwSourceEnt != null &&
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
+                physics.TryGetController(out MoverController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 
