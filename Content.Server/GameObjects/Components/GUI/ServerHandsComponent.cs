@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.GUI
 #pragma warning restore 649
 
         private string? _activeHand;
-        private int _nextHand;
+        private uint _nextHand;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
