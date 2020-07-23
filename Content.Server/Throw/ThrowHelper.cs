@@ -85,8 +85,9 @@ namespace Content.Server.Throw
 
             projComp.StartThrow(angle.ToVec() * spd);
 
-            if (throwSourceEnt != null && throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics)
-                                       && physics.Controller is MoverController mover)
+            if (throwSourceEnt != null &&
+                throwSourceEnt.TryGetComponent<IPhysicsComponent>(out var physics) &&
+                physics.TryGetController(out MoverController mover))
             {
                 var physicsMgr = IoCManager.Resolve<IPhysicsManager>();
 
