@@ -1031,32 +1031,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatFlatCap
-  name: flat cap
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/flat_cap.rsi
-  - type: Icon
-    sprite: Clothing/Head/flat_cap.rsi
-  - type: Clothing
-    sprite: Clothing/Head/flat_cap.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatGentcap
-  name: gent cap
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/gentcap.rsi
-  - type: Icon
-    sprite: Clothing/Head/gentcap.rsi
-  - type: Clothing
-    sprite: Clothing/Head/gentcap.rsi
-
-- type: entity
-  parent: HatBase
   id: HatGladiator
   name: gladiator
   description: ''
@@ -1483,19 +1457,6 @@
     sprite: Clothing/Head/kittyinner.rsi
   - type: Clothing
     sprite: Clothing/Head/kittyinner.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatKrinnHat
-  name: krinn hat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/krinn_hat.rsi
-  - type: Icon
-    sprite: Clothing/Head/krinn_hat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/krinn_hat.rsi
 
 - type: entity
   parent: HatBase
