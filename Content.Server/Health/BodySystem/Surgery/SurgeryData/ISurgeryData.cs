@@ -1,41 +1,51 @@
-﻿using Content.Server.BodySystem;
+﻿using System;
+using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Health.BodySystem.Surgery.Data
+namespace Content.Server.BodySystem
 {
+
+
+
     /// <summary>
     ///     This data class represents the state of a <see cref="BodyPart"/> in regards to everything surgery related - whether there's an incision on it, whether the bone is broken, etc.
-    /// </summary>
-    public abstract class SurgeryData
+    /// </summary>	
+    public abstract class ISurgeryData
     {
+
         /// <summary>
         ///     The <see cref="BodyPart"/> this surgeryData is attached to. The ISurgeryData class should not exist without a <see cref="BodyPart"/> that it
         ///     represents, and will throw errors if it is null.
-        /// </summary>
+        /// </summary>	
         protected BodyPart _parent;
 
         /// <summary>
         ///     The <see cref="BodyPartType"/> of the parent <see cref="BodyPart"/>.
-        /// </summary>
+        /// </summary>	
         protected BodyPartType _parentType => _parent.PartType;
 
         public delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
 
 
-        public SurgeryData(BodyPart parent)
+        public ISurgeryData(BodyPart parent)
         {
             _parent = parent;
         }
 
         /// <summary>
-        ///     Returns the description of this current <see cref="BodyPart"/> to be shown upon observing the given entity.
+        ///     Returns the description of this current <see cref="BodyPart"/> to be shown upon observing the given entity. 
         /// </summary>
         public abstract string GetDescription(IEntity target);
 
         /// <summary>
-        ///     Returns whether a <see cref="Mechanism"/> can be installed into the <see cref="BodyPart"/> this ISurgeryData represents.
+        ///     Returns whether a <see cref="Mechanism"/> can be installed into the <see cref="BodyPart"/> this ISurgeryData represents. 
         /// </summary>
         public abstract bool CanInstallMechanism(Mechanism toBeInstalled);
 
@@ -50,7 +60,7 @@ namespace Content.Server.Health.BodySystem.Surgery.Data
         public abstract SurgeryAction GetSurgeryStep(SurgeryType toolType);
 
         /// <summary>
-        ///     Returns whether the given <see cref="SurgeryType"/> can be used to perform a surgery on the BodyPart this <see cref="SurgeryData"/> represents.
+        ///     Returns whether the given <see cref="SurgeryType"/> can be used to perform a surgery on the BodyPart this <see cref="ISurgeryData"/> represents.
         /// </summary>
         public bool CheckSurgery(SurgeryType toolType)
         {

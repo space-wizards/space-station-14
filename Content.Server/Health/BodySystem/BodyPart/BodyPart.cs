@@ -1,36 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.Health.BodySystem.Surgery.Data;
-using Content.Shared.BodySystem;
-using Content.Shared.Health.BodySystem.BodyPart;
+﻿using Content.Shared.BodySystem;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
+
+
 
 namespace Content.Server.BodySystem
 {
+
+
     /// <summary>
     ///     Data class representing a singular limb such as an arm or a leg. Typically held within either a <see cref="BodyManagerComponent"/>,
     ///     which coordinates functions between BodyParts, or a <see cref="DroppedBodyPartComponent"/>.
     /// </summary>
     public class BodyPart
     {
-        [ViewVariables]
-        private SurgeryData _surgeryData;
 
         [ViewVariables]
-        private readonly List<Mechanism> _mechanisms = new List<Mechanism>();
+        private ISurgeryData _surgeryData;
 
         [ViewVariables]
-        private int _sizeUsed;
+        private List<Mechanism> _mechanisms = new List<Mechanism>();
+
+        [ViewVariables]
+        private int _sizeUsed = 0;
 
         /// <summary>
         ///     The name of this BodyPart, often displayed to the user. For example, it could be named "advanced robotic arm".
         /// </summary>
         [ViewVariables]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         ///     Plural version of this BodyPart name.
@@ -40,55 +44,55 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///     Path to the RSI that represents this BodyPart.
-        /// </summary>
+        /// </summary>			  
         [ViewVariables]
         public string RSIPath { get; set; }
 
         /// <summary>
         ///     RSI state that represents this BodyPart.
-        /// </summary>
+        /// </summary>			  
         [ViewVariables]
         public string RSIState { get; set; }
 
         /// <summary>
-        ///     <see cref="BodyPartType"/> that this BodyPart is considered to be. For example, BodyPartType.Arm.
+        ///     <see cref="BodyPartType"/> that this BodyPart is considered to be. For example, BodyPartType.Arm. 
         /// </summary>
         [ViewVariables]
         public BodyPartType PartType { get; set; }
 
         /// <summary>
         ///     Max HP of this BodyPart.
-        /// </summary>
+        /// </summary>		
         [ViewVariables]
         public int MaxDurability { get; set; }
 
         /// <summary>
         ///     Current HP of this BodyPart based on sum of all damage types.
-        /// </summary>
+        /// </summary>		
         [ViewVariables]
         public int CurrentDurability => MaxDurability - CurrentDamages.Damage;
 
         /// <summary>
         ///     Current damage dealt to this BodyPart.
-        /// </summary>
+        /// </summary>		
         [ViewVariables]
         public AbstractDamageContainer CurrentDamages { get; set; }
 
         /// <summary>
         ///     At what HP this BodyPartis completely destroyed.
-        /// </summary>
+        /// </summary>		
         [ViewVariables]
         public int DestroyThreshold { get; set; }
 
         /// <summary>
         ///     Armor of this BodyPart against attacks.
-        /// </summary>
+        /// </summary>		
         [ViewVariables]
         public float Resistance { get; set; }
 
         /// <summary>
         ///     Determines many things: how many mechanisms can be fit inside this BodyPart, whether a body can fit through tiny crevices, etc.
-        /// </summary>
+        /// </summary>		
         [ViewVariables]
         public int Size { get; set; }
 
@@ -117,10 +121,20 @@ namespace Content.Server.BodySystem
             LoadFromPrototype(data);
         }
 
+
+
+
+
+
         public bool CanAttachBodyPart(BodyPart toBeConnected)
         {
             return _surgeryData.CanAttachBodyPart(toBeConnected);
         }
+
+
+
+
+
 
         /// <summary>
         ///     Returns whether the given <see cref="Mechanism"/> can be installed on this BodyPart.
@@ -128,10 +142,7 @@ namespace Content.Server.BodySystem
         public bool CanInstallMechanism(Mechanism mechanism)
         {
             if (_sizeUsed + mechanism.Size > Size)
-            {
                 return false; //No space
-            }
-
             return _surgeryData.CanInstallMechanism(mechanism);
         }
 
@@ -162,7 +173,7 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///     Tries to remove the given <see cref="Mechanism"/> reference from this BodyPart. Returns null if there was an error in spawning the entity or removing the mechanism, otherwise returns a reference to the <see cref="DroppedMechanismComponent"/> on the newly spawned entity.
-        /// </summary>
+        /// </summary>	
         public DroppedMechanismComponent DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
         {
             if (!_mechanisms.Contains(mechanismTarget))
@@ -178,7 +189,7 @@ namespace Content.Server.BodySystem
 
         /// <summary>
         ///     Tries to destroy the given <see cref="Mechanism"/> in the given BodyPart. Returns false if there was an error, true otherwise. Does NOT spawn a dropped entity.
-        /// </summary>
+        /// </summary>	
         public bool DestroyMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget)
         {
             if (!_mechanisms.Contains(mechanismTarget))
@@ -187,6 +198,10 @@ namespace Content.Server.BodySystem
             _sizeUsed -= mechanismTarget.Size;
             return true;
         }
+
+
+
+
 
         /// <summary>
         ///     Returns whether the given <see cref="SurgeryType"/> can be used on the current state of this BodyPart.
@@ -204,9 +219,13 @@ namespace Content.Server.BodySystem
             return _surgeryData.PerformSurgery(toolType, target, surgeon, performer);
         }
 
+
+
+
+
         /// <summary>
         ///    Loads the given <see cref="BodyPartPrototype"/> - current data on this <see cref="BodyPart"/> will be overwritten!
-        /// </summary>
+        /// </summary>	
         public virtual void LoadFromPrototype(BodyPartPrototype data)
         {
             Name = data.Name;
@@ -232,6 +251,7 @@ namespace Content.Server.BodySystem
                 }
                 _mechanisms.Add(new Mechanism(mechanismData));
             }
+
         }
     }
 }

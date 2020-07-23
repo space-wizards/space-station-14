@@ -1,18 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Content.Server.BodySystem;
 using Content.Shared.BodySystem;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Health.BodySystem.Surgery.Data
+namespace Content.Server.BodySystem
 {
+
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.
-    /// </summary>
-    public class BiologicalSurgeryData : SurgeryData
+    /// </summary>	
+    public class BiologicalSurgeryData : ISurgeryData
     {
+
         protected bool _skinOpened = false;
         protected bool _vesselsClamped = false;
         protected bool _skinRetracted = false;
@@ -133,8 +141,8 @@ namespace Content.Server.Health.BodySystem.Surgery.Data
         {
             if (_parent.Mechanisms.Count <= 0)
                 return;
-            var toSend = new List<Mechanism>();
-            foreach (var mechanism in _parent.Mechanisms)
+            List<Mechanism> toSend = new List<Mechanism>();
+            foreach (Mechanism mechanism in _parent.Mechanisms)
             {
                 if (!_disconnectedOrgans.Contains(mechanism))
                     toSend.Add(mechanism);
