@@ -1499,19 +1499,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatMailman
-  name: mailman
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mailman.rsi
-  - type: Icon
-    sprite: Clothing/Head/mailman.rsi
-  - type: Clothing
-    sprite: Clothing/Head/mailman.rsi
-
-- type: entity
-  parent: HatBase
   id: HatMarisa
   name: marisa
   description: ''
