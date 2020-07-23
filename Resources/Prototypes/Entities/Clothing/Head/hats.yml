@@ -1577,19 +1577,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatMetroid
-  name: metroid
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/metroid.rsi
-  - type: Icon
-    sprite: Clothing/Head/metroid.rsi
-  - type: Clothing
-    sprite: Clothing/Head/metroid.rsi
-
-- type: entity
-  parent: HatBase
   id: HatMimesoft
   name: mimesoft
   description: ''
