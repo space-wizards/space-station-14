@@ -1720,29 +1720,29 @@
 
 - type: entity
   parent: HatBase
-  id: HatNorahBriggs
-  name: norah briggs
+  id: HatBlueFlameWeldingMaskup
+  name: blue flame welding mask
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/norah_briggs_1.rsi
+    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
   - type: Icon
-    sprite: Clothing/Head/norah_briggs_1.rsi
+    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
   - type: Clothing
-    sprite: Clothing/Head/norah_briggs_1.rsi
+    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
 
 - type: entity
   parent: HatBase
-  id: HatNorahBriggsup
-  name: norah briggs (up)
+  id: HatBlueFlameWeldingMaskup
+  name: blue flame welding mask (up)
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/norah_briggs_1up.rsi
+    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
   - type: Icon
-    sprite: Clothing/Head/norah_briggs_1up.rsi
+    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
   - type: Clothing
-    sprite: Clothing/Head/norah_briggs_1up.rsi
+    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
 
 - type: entity
   parent: HatBase
