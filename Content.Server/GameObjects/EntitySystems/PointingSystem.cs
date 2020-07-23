@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.EntitySystems
         /// </summary>
         private readonly Dictionary<ICommonSession, TimeSpan> _pointers = new Dictionary<ICommonSession, TimeSpan>();
 
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.Disconnected)
             {
