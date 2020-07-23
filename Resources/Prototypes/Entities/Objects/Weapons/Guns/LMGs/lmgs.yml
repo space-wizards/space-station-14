@@ -64,8 +64,8 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 4
       zeroVisible: true
@@ -100,8 +100,8 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 6
       zeroVisible: true

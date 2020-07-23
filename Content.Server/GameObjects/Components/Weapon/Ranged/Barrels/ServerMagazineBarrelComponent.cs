@@ -96,14 +96,25 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Reading)
-            {
-                var magTypes = serializer.ReadDataField("magazineTypes", new List<MagazineType>());
-                foreach (var mag in magTypes)
+
+            serializer.DataReadWriteFunction(
+                "magazineTypes",
+                new List<MagazineType>(),
+                types => types.ForEach(mag => _magazineTypes |= mag),
+                () =>
                 {
-                    _magazineTypes |= mag;
-                }
-            }
+                    var types = new List<MagazineType>();
+
+                    foreach (MagazineType mag in Enum.GetValues(typeof(MagazineType)))
+                    {
+                        if ((_magazineTypes & mag) != 0)
+                        {
+                            types.Add(mag);
+                        }
+                    }
+
+                    return types;
+                });
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
             serializer.DataField(ref _magFillPrototype, "magFillPrototype", null);
             serializer.DataField(ref _autoEjectMag, "autoEjectMag", false);

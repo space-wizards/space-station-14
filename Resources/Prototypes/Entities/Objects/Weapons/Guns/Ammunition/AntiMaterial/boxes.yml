@@ -10,7 +10,7 @@
   - type: Icon
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/AntiMaterial/anti_material.rsi
     state: icon
-  - type: Sprite 
+  - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/AntiMaterial/anti_material.rsi
     layers:
@@ -20,7 +20,7 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 2
       zeroVisible: false

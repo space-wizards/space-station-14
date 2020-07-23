@@ -21,7 +21,7 @@
     state: base
   - type: Appearance
     visuals:
-    - type: SpentAmmoVisualizer2D
+    - type: SpentAmmoVisualizer
 
 - type: entity
   id: ShellShotgunBeanbag

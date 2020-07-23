@@ -56,7 +56,7 @@
     - Automatic
     fireRate: 3
     caliber: Shotgun
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     magFillPrototype: MagazineShotgun
     soundGunshot: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
@@ -68,8 +68,8 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -115,7 +115,7 @@
     sound_bolt_closed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: Bull
@@ -142,7 +142,7 @@
     maxAngle: 120
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 5
       zeroVisible: false
@@ -238,4 +238,4 @@
     soundBoltClosed: /Audio/Weapons/Guns/Cock/shotgun_close.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer

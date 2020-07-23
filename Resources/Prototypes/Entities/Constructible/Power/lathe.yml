@@ -74,7 +74,7 @@
       - Multitool
   - type: Appearance
     visuals:
-    - type: AutolatheVisualizer2D
+    - type: AutolatheVisualizer
 
 - type: entity
   parent: BaseLathe
@@ -129,4 +129,4 @@
       type: ResearchClientBoundUserInterface
   - type: Appearance
     visuals:
-    - type: ProtolatheVisualizer2D
+    - type: ProtolatheVisualizer

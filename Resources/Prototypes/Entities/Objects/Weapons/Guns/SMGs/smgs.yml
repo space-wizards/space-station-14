@@ -19,7 +19,7 @@
     - Automatic
     fireRate: 8
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Smg
     minAngle: 5
     maxAngle: 60
@@ -61,7 +61,7 @@
     - Automatic
     fireRate: 10
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Smg
     minAngle: 10
     maxAngle: 60
@@ -69,8 +69,8 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -103,7 +103,7 @@
     - Automatic
     fireRate: 8
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Smg
     minAngle: 5
     maxAngle: 60
@@ -112,8 +112,8 @@
     autoEjectMag: true
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -154,8 +154,8 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -188,12 +188,12 @@
     - Automatic
     fireRate: 10
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - Smg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -229,12 +229,12 @@
     - Automatic
     fireRate: 8
     caliber: Pistol
-    magazineTypes: 
+    magazineTypes:
     - SmgTopMounted
     magFillPrototype: MagazinePistolSmgTopMounted
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 6
       zeroVisible: true
@@ -266,13 +266,13 @@
     - Automatic
     fireRate: 8
     caliber: Magnum
-    magazineTypes: 
+    magazineTypes:
     - Smg
     magFillPrototype: MagazineMagnumSmg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true

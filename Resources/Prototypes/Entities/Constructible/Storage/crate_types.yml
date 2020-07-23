@@ -11,7 +11,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state_open: plasticcrate_open
       state_closed: plasticcrate_door
   - type: Icon
@@ -31,7 +31,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state_open: freezer_open
       state_closed: freezer_door
   - type: Icon
@@ -51,7 +51,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state_open: hydrocrate_open
       state_closed: hydrocrate_door
   - type: Icon
@@ -71,7 +71,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state_open: medicalcrate_open
       state_closed: medicalcrate_door
   - type: Icon
@@ -92,7 +92,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state_open: radiationcrate_open
       state_closed: radiationcrate_door
   - type: Icon
@@ -112,7 +112,7 @@
       map: ["enum.StorageVisualLayers.Door"]
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state_open: o2crate_open
       state_closed: o2crate_door
   - type: Icon
