@@ -255,6 +255,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
+            if (player == pulledObject)
+            {
+                return false;
+            }
+
             if (!pulledObject.TryGetComponent<PullableComponent>(out var pull))
             {
                 return false;
