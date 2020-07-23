@@ -7,7 +7,7 @@ using Robust.Client.Interfaces.GameObjects.Components;
 namespace Content.Client.GameObjects.Components.Movement
 {
     [UsedImplicitly]
-    public class HandTeleporterVisualizer2D : AppearanceVisualizer
+    public class HandTeleporterVisualizer : AppearanceVisualizer
     {
 
         public override void OnChangeData(AppearanceComponent component)

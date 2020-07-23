@@ -56,7 +56,7 @@
       type: ResearchClientBoundUserInterface
   - type: Appearance
     visuals:
-    - type: PowerDeviceVisualizer2D
+    - type: PowerDeviceVisualizer
   - type: PowerReceiver
   - type: Anchorable
   - type: Physics

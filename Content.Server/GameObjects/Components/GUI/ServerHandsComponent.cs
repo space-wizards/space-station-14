@@ -61,16 +61,10 @@ namespace Content.Server.GameObjects
         {
             base.ExposeData(serializer);
 
-            // TODO: This does not serialize what objects are held.
-            serializer.DataField(ref _orderedHands, "hands", new List<string>(0));
-            if (serializer.Reading)
-            {
-                foreach (var handsname in _orderedHands)
-                {
-                    AddHand(handsname);
-                }
-            }
-
+            serializer.DataReadWriteFunction("hands",
+                new List<string>(0),
+                hands => hands.ForEach(AddHand),
+                () => _orderedHands);
             serializer.DataField(ref _activeIndex, "defaultHand", _orderedHands.LastOrDefault());
         }
 

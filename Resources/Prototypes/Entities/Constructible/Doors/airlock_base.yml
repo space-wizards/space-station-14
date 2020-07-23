@@ -38,11 +38,11 @@
   - type: Airlock
   - type: Appearance
     visuals:
-    - type: AirlockVisualizer2D
+    - type: AirlockVisualizer
       open_sound: /Audio/Machines/airlock_open.ogg
       close_sound: /Audio/Machines/airlock_close.ogg
       deny_sound: /Audio/Machines/airlock_deny.ogg
-    - type: WiresVisualizer2D
+    - type: WiresVisualizer
   - type: PowerReceiver
   - type: Wires
     BoardName: "Airlock Control"

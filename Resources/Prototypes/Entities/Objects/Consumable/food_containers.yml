@@ -158,7 +158,7 @@
     sprite: Objects/Consumable/FoodContainers/donutbox.rsi
   - type: Appearance
     visuals:
-    - type: FoodContainerVisualizer2D
+    - type: FoodContainerVisualizer
       mode: Discrete
       base_state: donutbox
       steps: 7
@@ -198,7 +198,7 @@
     sprite: Objects/Consumable/FoodContainers/eggbox.rsi
   - type: Appearance
     visuals:
-    - type: FoodContainerVisualizer2D
+    - type: FoodContainerVisualizer
       mode: Discrete
       base_state: eggbox
       steps: 13
@@ -325,7 +325,7 @@
     sprite: Objects/Consumable/FoodContainers/pizzaboxstack.rsi
   - type: Appearance
     visuals:
-    - type: FoodContainerVisualizer2D
+    - type: FoodContainerVisualizer
       mode: Discrete
       base_state: pizzaboxstack
       steps: 5

@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
+using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -85,6 +86,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
             if (!_entityManager.TryGetEntity(req.EntityUid, out var entity))
             {
+                Logger.Warning($"{nameof(RequestVerbs)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
                 return;
             }
 

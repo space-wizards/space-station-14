@@ -10,7 +10,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
-    public class TimerTriggerVisualizer2D : AppearanceVisualizer
+    public class TimerTriggerVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "priming_animation";
 

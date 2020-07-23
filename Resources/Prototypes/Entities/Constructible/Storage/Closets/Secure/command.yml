@@ -5,7 +5,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: cap
   - type: Icon
     state: cap_door
@@ -17,7 +17,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: hop
   - type: Icon
     state: hop_door

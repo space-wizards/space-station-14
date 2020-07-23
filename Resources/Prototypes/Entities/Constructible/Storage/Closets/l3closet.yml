@@ -7,7 +7,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: bio
   - type: Icon
     state: bio_door
@@ -19,7 +19,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: bio_viro
   - type: Icon
     state: bio_viro_door
@@ -31,7 +31,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: bio_sec
   - type: Icon
     state: bio_sec_door
@@ -43,7 +43,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: bio_jan
   - type: Icon
     state: bio_jan_door

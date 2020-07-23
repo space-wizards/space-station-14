@@ -51,7 +51,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: LRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     fireRate: 5
     minAngle: 0
@@ -64,7 +64,7 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -90,7 +90,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: LRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     fireRate: 6
     minAngle: 0
@@ -103,7 +103,7 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -131,7 +131,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: SRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     magFillPrototype: MagazineSRifle
     fireRate: 5
@@ -145,8 +145,8 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -172,7 +172,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: ClRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     magFillPrototype: MagazineClRifle10x24
     fireRate: 8
@@ -186,7 +186,7 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -214,7 +214,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: LRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     fireRate: 5
     minAngle: 0
@@ -227,8 +227,8 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -256,7 +256,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: SRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     magFillPrototype: MagazineSRifle
     fireRate: 5
@@ -266,8 +266,8 @@
     angleDecay: 60
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true
@@ -295,7 +295,7 @@
   - type: RangedWeapon
   - type: MagazineBarrel
     caliber: SRifle
-    magazineTypes: 
+    magazineTypes:
     - Rifle
     magFillPrototype: MagazineSRifle
     autoEjectMag: true
@@ -310,8 +310,8 @@
     soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 1
       zeroVisible: true

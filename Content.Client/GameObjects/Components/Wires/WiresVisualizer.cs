@@ -4,7 +4,7 @@ using static Content.Shared.GameObjects.Components.SharedWiresComponent;
 
 namespace Content.Client.GameObjects.Components.Wires
 {
-    public class WiresVisualizer2D : AppearanceVisualizer
+    public class WiresVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

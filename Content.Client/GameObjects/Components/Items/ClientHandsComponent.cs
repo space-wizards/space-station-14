@@ -152,15 +152,11 @@ namespace Content.Client.GameObjects
         {
             base.ExposeData(serializer);
 
-            if (!serializer.Reading)
-            {
-                return;
-            }
-
-            foreach (var slot in serializer.ReadDataFieldCached("hands", new List<string>()))
-            {
-                _hands.Add(slot, null);
-            }
+            serializer.DataReadWriteFunction(
+                "hands",
+                new List<string>(),
+                hands => hands.ForEach(slot => _hands.Add(slot, null)),
+                () => _hands.Keys.ToList());
 
             serializer.DataField(this, x => ActiveIndex, "defaultHand", _hands.Keys.LastOrDefault());
         }

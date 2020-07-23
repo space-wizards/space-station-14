@@ -12,7 +12,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Doors
 {
-    public class AirlockVisualizer2D : AppearanceVisualizer
+    public class AirlockVisualizer : AppearanceVisualizer
     {
         private const string AnimationKey = "airlock_animation";
 
@@ -42,7 +42,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var flickMaintenancePanel = new AnimationTrackSpriteFlick();
                 CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                flickMaintenancePanel.LayerKey = WiresVisualizer2D.WiresVisualLayers.MaintenancePanel;
+                flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
                 flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
 
                 var sound = new AnimationTrackPlaySound();
@@ -64,7 +64,7 @@ namespace Content.Client.GameObjects.Components.Doors
 
                 var flickMaintenancePanel = new AnimationTrackSpriteFlick();
                 OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                flickMaintenancePanel.LayerKey = WiresVisualizer2D.WiresVisualLayers.MaintenancePanel;
+                flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
                 flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
 
                 var sound = new AnimationTrackPlaySound();
@@ -113,7 +113,7 @@ namespace Content.Client.GameObjects.Components.Doors
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
                     sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted");
-                    sprite.LayerSetState(WiresVisualizer2D.WiresVisualLayers.MaintenancePanel, "panel_open");
+                    sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Closing:
                     if (!animPlayer.HasRunningAnimation(AnimationKey))

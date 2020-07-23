@@ -6,7 +6,7 @@ using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerC
 
 namespace Content.Client.GameObjects.Components.MedicalScanner
 {
-    public class MedicalScannerVisualizer2D : AppearanceVisualizer
+    public class MedicalScannerVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
