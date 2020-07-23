@@ -39,19 +39,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatAmp
-  name: amp
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/amp.rsi
-  - type: Icon
-    sprite: Clothing/Head/amp.rsi
-  - type: Clothing
-    sprite: Clothing/Head/amp.rsi
-
-- type: entity
-  parent: HatBase
   id: HatAssetProtectionRig
   name: asset protection rig
   description: ''
