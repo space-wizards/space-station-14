@@ -20,6 +20,11 @@ namespace Content.Shared.Physics
                 return;
             }
 
+            if (ControlledComponent?.Status == BodyStatus.InAir)
+            {
+                return;
+            }
+
             LinearVelocity = velocityDirection * speed * 100;
         }
 
