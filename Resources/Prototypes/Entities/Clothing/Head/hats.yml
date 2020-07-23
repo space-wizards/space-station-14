@@ -2357,19 +2357,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatSecHelm
-  name: sec helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/sec_helm.rsi
-  - type: Icon
-    sprite: Clothing/Head/sec_helm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/sec_helm.rsi
-
-- type: entity
-  parent: HatBase
   id: HatSkub
   name: Skub Hat
   description: 'Best paired with the Skub Suit.'
@@ -2393,19 +2380,6 @@
     sprite: Clothing/Head/sombrero.rsi
   - type: Clothing
     sprite: Clothing/Head/sombrero.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSpace
-  name: space
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/space.rsi
-  - type: Icon
-    sprite: Clothing/Head/space.rsi
-  - type: Clothing
-    sprite: Clothing/Head/space.rsi
 
 - type: entity
   parent: HatBase
