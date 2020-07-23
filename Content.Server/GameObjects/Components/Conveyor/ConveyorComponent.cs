@@ -1,4 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿#nullable enable
+using System;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -29,19 +31,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
     public class ConveyorComponent : Component, IExamine, IInteractUsing, IAfterInteract
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager;
-        [Dependency] private readonly IRobustRandom _random;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 #pragma warning restore 649
 
         public override string Name => "Conveyor";
 
         /// <summary>
-        ///     The angle in radians to move entities by in relation
+        ///     The angle in degrees to move entities by in relation
         ///     to the owner's rotation.
-        ///     Parsed from YAML as degrees.
         /// </summary>
         [ViewVariables]
-        private double _angle;
+        private int _angle;
 
         /// <summary>
         ///     The amount of units to move the entity by.
@@ -49,6 +50,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         [ViewVariables(VVAccess.ReadWrite)]
         private float _speed;
 
+        private uint? _id;
         private ConveyorState _state;
 
         /// <summary>
@@ -72,7 +74,19 @@ namespace Content.Server.GameObjects.Components.Conveyor
         }
 
         [ViewVariables]
-        public uint? Id { get; set; }
+        private uint? Id
+        {
+            get => _id;
+            set
+            {
+                var old = _id;
+                _id = value;
+
+                EntitySystem.Get<ConveyorSystem>().ChangeId(this, old, _id);
+            }
+        }
+
+        private ConveyorGroup? Group => Id.HasValue ? EntitySystem.Get<ConveyorSystem>().EnsureGroup(Id.Value) : null;
 
         /// <summary>
         ///     Calculates the angle in which entities on top of this conveyor belt
@@ -84,8 +98,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private Angle GetAngle()
         {
             var adjustment = _state == ConveyorState.Reversed ? MathHelper.Pi : 0;
+            var radians = MathHelper.DegreesToRadians(_angle);
 
-            return new Angle(Owner.Transform.LocalRotation.Theta + _angle + adjustment);
+            return new Angle(Owner.Transform.LocalRotation.Theta + radians + adjustment);
         }
 
         private bool CanRun()
@@ -160,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
                 if (entity.TryGetComponent(out ICollidableComponent collidable))
                 {
-                    var controller = collidable.GetOrCreateController<ConveyedController>();
+                    var controller = collidable.EnsureController<ConveyedController>();
                     controller.Move(direction, speed);
                 }
             }
@@ -174,7 +189,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 State = ConveyorState.Loose;
 
                 Owner.AddComponent<ItemComponent>();
-                EntitySystem.Get<ConveyorSystem>().RemoveConnection(this);
+                Group?.RemoveConveyor(this);
                 Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
 
                 return true;
@@ -183,11 +198,16 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return false;
         }
 
-        public void SyncState(ConveyorSwitchComponent conveyorSwitch)
+        public void SyncState(ConveyorState state)
         {
-            State = conveyorSwitch.State == ConveyorState.Loose
+            if (State == ConveyorState.Loose)
+            {
+                return;
+            }
+
+            State = state == ConveyorState.Loose
                 ? ConveyorState.Off
-                : conveyorSwitch.State;
+                : state;
         }
 
         private void DeItemize(GridCoordinates coordinates)
@@ -199,19 +219,15 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             Owner.Transform.GridPosition = coordinates;
             Owner.RemoveComponent<ItemComponent>();
-            State = ConveyorState.Off; // TODO
+            State = ConveyorState.Off;
         }
 
-        // TODO: Load id from the map
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            double degrees = 0;
-            serializer.DataField(ref degrees, "angle", 0);
-
-            _angle = MathHelper.DegreesToRadians(degrees);
-
+            serializer.DataField(this, conveyor => conveyor.Id, "id", null);
+            serializer.DataField(ref _angle, "angle", 0);
             serializer.DataField(ref _speed, "speed", 2);
         }
 
@@ -219,7 +235,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             base.OnRemove();
 
-            EntitySystem.Get<ConveyorSystem>().RemoveConnection(this);
+            Group?.RemoveConveyor(this);
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
