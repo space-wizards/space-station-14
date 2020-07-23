@@ -1,3 +1,4 @@
+using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
 using Content.Shared.GameObjects.Components.Markers;
@@ -8,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.Commands
 {
@@ -38,6 +40,33 @@ namespace Content.Client.Commands
         {
             EntitySystem.Get<SubFloorHideSystem>()
                 .EnableAll ^= true;
+
+            return false;
+        }
+    }
+
+    internal sealed class ShowSubFloorForever : IConsoleCommand
+    {
+        // ReSharper disable once StringLiteralTypo
+        public string Command => "showsubfloorforever";
+        public string Description => "Makes entities below the floor always visible until the client is restarted.";
+        public string Help => $"Usage: {Command}";
+
+        public bool Execute(IDebugConsole console, params string[] args)
+        {
+            EntitySystem.Get<SubFloorHideSystem>()
+                .EnableAll = true;
+
+            var components = IoCManager.Resolve<IEntityManager>().ComponentManager
+                .GetAllComponents<SubFloorHideComponent>();
+
+            foreach (var component in components)
+            {
+                if (component.Owner.TryGetComponent(out ISpriteComponent sprite))
+                {
+                    sprite.DrawDepth = (int) DrawDepth.Overlays;
+                }
+            }
 
             return false;
         }
@@ -75,7 +104,7 @@ namespace Content.Client.Commands
             }
 
             console.Commands["togglelight"].Execute(console);
-            console.Commands["showsubfloor"].Execute(console);
+            console.Commands["showsubfloorforever"].Execute(console);
 
             return true;
         }
