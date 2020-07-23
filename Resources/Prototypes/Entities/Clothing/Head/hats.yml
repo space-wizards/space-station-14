@@ -367,7 +367,7 @@
 - type: entity
   parent: HatBase
   id: HatBioCmo
-  name: bio - cmo
+  name: bio hood (CMO)
   description: ''
   components:
   - type: Sprite
@@ -380,7 +380,7 @@
 - type: entity
   parent: HatBase
   id: HatBioGeneral
-  name: bio - general
+  name: bio hood
   description: ''
   components:
   - type: Sprite
@@ -393,7 +393,7 @@
 - type: entity
   parent: HatBase
   id: HatBioJanitor
-  name: bio - janitor
+  name: bio hood (janitor)
   description: ''
   components:
   - type: Sprite
@@ -406,7 +406,7 @@
 - type: entity
   parent: HatBase
   id: HatBioScientist
-  name: bio - scientist
+  name: bio hood (scientist)
   description: ''
   components:
   - type: Sprite
@@ -419,7 +419,7 @@
 - type: entity
   parent: HatBase
   id: HatBioSecurity
-  name: bio - security
+  name: bio hood (security)
   description: ''
   components:
   - type: Sprite
@@ -432,7 +432,7 @@
 - type: entity
   parent: HatBase
   id: HatBioVirology
-  name: bio - virology
+  name: bio hood (virology)
   description: ''
   components:
   - type: Sprite
