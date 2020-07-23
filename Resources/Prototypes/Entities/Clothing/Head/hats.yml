@@ -966,19 +966,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatEnosAdlai
-  name: enos adlai
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/enos_adlai_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/enos_adlai_1.rsi
-  - type: Clothing
-    sprite: Clothing/Head/enos_adlai_1.rsi
-
-- type: entity
-  parent: HatBase
   id: HatEvaRig
   name: EVA rig
   description: ''
@@ -1314,19 +1301,6 @@
     sprite: Clothing/Head/hgpiratecap.rsi
   - type: Clothing
     sprite: Clothing/Head/hgpiratecap.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHmHelmet
-  name: HM helmet
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hm_helmet.rsi
-  - type: Icon
-    sprite: Clothing/Head/hm_helmet.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hm_helmet.rsi
 
 - type: entity
   parent: HatBase
