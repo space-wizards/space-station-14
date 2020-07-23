@@ -5,7 +5,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Client.GameObjects.Components.Power
 {
-    public class ApcVisualizer2D : AppearanceVisualizer
+    public class ApcVisualizer : AppearanceVisualizer
     {
         public override void InitializeEntity(IEntity entity)
         {

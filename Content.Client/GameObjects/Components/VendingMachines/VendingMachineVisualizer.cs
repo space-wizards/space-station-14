@@ -9,7 +9,7 @@ using static Content.Shared.GameObjects.Components.VendingMachines.SharedVending
 
 namespace Content.Client.GameObjects.Components.VendingMachines
 {
-    public class VendingMachineVisualizer2D : AppearanceVisualizer
+    public class VendingMachineVisualizer : AppearanceVisualizer
     {
         // TODO: The length of these animations is supposed to be dictated
         // by the vending machine's pack prototype's `AnimationDuration`

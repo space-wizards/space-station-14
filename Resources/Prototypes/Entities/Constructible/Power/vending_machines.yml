@@ -37,8 +37,8 @@
   - type: Breakable
   - type: Appearance
     visuals:
-    - type: VendingMachineVisualizer2D
-    - type: WiresVisualizer2D
+    - type: VendingMachineVisualizer
+    - type: WiresVisualizer
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key

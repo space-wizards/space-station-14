@@ -13,6 +13,8 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         public override string Name => "StatusEffectsUI";
         public override uint? NetID => ContentNetIDs.STATUSEFFECTS;
+
+        public abstract void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown);
     }
 
     [Serializable, NetSerializable]

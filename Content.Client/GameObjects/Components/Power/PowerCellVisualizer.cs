@@ -8,7 +8,7 @@ using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.GameObjects.Components.Power
 {
-    public class PowerCellVisualizer2D : AppearanceVisualizer
+    public class PowerCellVisualizer : AppearanceVisualizer
     {
         private string _prefix;
 

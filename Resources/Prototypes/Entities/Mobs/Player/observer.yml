@@ -22,6 +22,9 @@
     sprite: Mobs/Ghosts/ghost_human.rsi
     state: animated
     color: "#fff8"
+    layers:
+      - state: animated
+        shader: unshaded
 
   - type: MovementSpeedModifier
     baseSprintSpeed: 14

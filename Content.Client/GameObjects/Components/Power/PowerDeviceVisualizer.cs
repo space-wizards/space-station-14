@@ -6,7 +6,7 @@ using Robust.Client.Interfaces.GameObjects.Components;
 namespace Content.Client.GameObjects.Components.Power
 {
     [UsedImplicitly]
-    public class PowerDeviceVisualizer2D : AppearanceVisualizer
+    public class PowerDeviceVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {

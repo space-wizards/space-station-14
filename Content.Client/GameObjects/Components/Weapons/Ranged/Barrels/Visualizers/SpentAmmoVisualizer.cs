@@ -6,7 +6,7 @@ using Robust.Client.Interfaces.GameObjects.Components;
 namespace Content.Client.GameObjects.Components.Weapons.Ranged.Barrels.Visualizers
 {
     [UsedImplicitly]
-    public sealed class SpentAmmoVisualizer2D : AppearanceVisualizer
+    public sealed class SpentAmmoVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
