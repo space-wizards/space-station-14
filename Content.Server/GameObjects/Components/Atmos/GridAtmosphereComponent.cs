@@ -92,7 +92,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
             }
 
-            foreach (var (_, tile) in _tiles)
+            foreach (var (_, tile) in _tiles.ToArray())
             {
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void Revalidate()
         {
-            foreach (var indices in _invalidatedCoords)
+            foreach (var indices in _invalidatedCoords.ToArray())
             {
                 var tile = GetTile(indices);
                 AddActiveTile(tile);
@@ -184,7 +184,16 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public TileAtmosphere GetTile(MapIndices indices)
         {
-            return !_tiles.TryGetValue(indices, out var tile) ? null : tile;
+            if (_tiles.TryGetValue(indices, out var tile)) return tile;
+
+            // We don't have that tile, so it must be space!
+            tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)));
+            tile.Air.MarkImmutable();
+            _tiles[indices] = tile;
+
+            Invalidate(indices);
+
+            return tile;
         }
 
         public bool IsAirBlocked(MapIndices indices)

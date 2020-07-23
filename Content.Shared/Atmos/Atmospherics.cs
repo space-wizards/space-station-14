@@ -66,14 +66,9 @@ namespace Content.Shared.Atmos
         #endregion
 
         /// <summary>
-        ///     Minimum amount of moles for a gas to be visible.
+        ///     Visible moles multiplied by this factor to get moles at which gas is at max visibility.
         /// </summary>
-        public const float GasMolesVisible = 0.25f;
-
-        /// <summary>
-        ///     Gas opacity will be max at this value.
-        /// </summary>
-        public const float GasMolesVisibleMax = MolesCellStandard * 0.75f;
+        public const float FactorGasVisibleMax = 20f;
 
         /// <summary>
         ///     Minimum number of moles a gas can have.
@@ -133,6 +128,8 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const int ExcitedGroupsDismantleCycles = 16;
 
+        #endregion
+
         /// <summary>
         ///     Hard limit for tile equalization.
         /// </summary>
@@ -147,8 +144,6 @@ namespace Content.Shared.Atmos
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
         public const int TotalNumberOfGases = 4;
-
-        #endregion
     }
 
     /// <summary>

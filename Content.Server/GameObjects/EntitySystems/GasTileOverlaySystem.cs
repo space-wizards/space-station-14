@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.EntitySystems
                         if (overlay == null) continue;
                         var moles = tile.Air.Gases[i];
                         if(moles == 0f || moles < gas.GasMolesVisible) continue;
-                        list.Add(new GasData(i, MathF.Max(MathF.Min(1, moles / Atmospherics.GasMolesVisibleMax), 0f)));
+                        list.Add(new GasData(i, MathF.Max(MathF.Min(1, moles / gas.GasMolesVisibleMax), 0f)));
                     }
 
                     if (list.Count == 0) continue;
