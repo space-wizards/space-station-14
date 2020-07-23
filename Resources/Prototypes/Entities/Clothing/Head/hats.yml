@@ -367,7 +367,7 @@
 - type: entity
   parent: HatBase
   id: HatBioCmo
-  name: bio hood (CMO)
+  name: bio - cmo
   description: ''
   components:
   - type: Sprite
@@ -380,7 +380,7 @@
 - type: entity
   parent: HatBase
   id: HatBioGeneral
-  name: bio hood
+  name: bio - general
   description: ''
   components:
   - type: Sprite
@@ -393,7 +393,7 @@
 - type: entity
   parent: HatBase
   id: HatBioJanitor
-  name: bio hood (janitor)
+  name: bio - janitor
   description: ''
   components:
   - type: Sprite
@@ -406,7 +406,7 @@
 - type: entity
   parent: HatBase
   id: HatBioScientist
-  name: bio hood (scientist)
+  name: bio - scientist
   description: ''
   components:
   - type: Sprite
@@ -419,7 +419,7 @@
 - type: entity
   parent: HatBase
   id: HatBioSecurity
-  name: bio hood (security)
+  name: bio - security
   description: ''
   components:
   - type: Sprite
@@ -432,7 +432,7 @@
 - type: entity
   parent: HatBase
   id: HatBioVirology
-  name: bio hood (virology)
+  name: bio - virology
   description: ''
   components:
   - type: Sprite
@@ -496,19 +496,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatBombsuitold
-  name: bombsuit old
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bombsuitold.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuitold.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bombsuitold.rsi
-
-- type: entity
-  parent: HatBase
   id: HatBombsuitsec
   name: bombsuit sec
   description: ''
@@ -519,19 +506,6 @@
     sprite: Clothing/Head/bombsuitsec.rsi
   - type: Clothing
     sprite: Clothing/Head/bombsuitsec.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBombsuitsecold
-  name: bombsuit sec old
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bombsuitsecold.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuitsecold.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bombsuitsecold.rsi
 
 - type: entity
   parent: HatBase
