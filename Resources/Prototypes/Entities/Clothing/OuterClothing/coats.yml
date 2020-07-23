@@ -298,18 +298,3 @@
     state: hos_trenchcoat
   - type: Clothing
     sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
-
-- type: entity
-  parent: OuterclothingBase
-  id: OuterclothingCommissarCoat
-  name: commissar coat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/commissar_coat.rsi
-    state: icon
-  - type: Icon
-    sprite: Clothing/OuterClothing/commissar_coat.rsi
-    state: icon
-  - type: Clothing
-    sprite: Clothing/OuterClothing/commissar_coat.rsi
