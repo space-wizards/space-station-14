@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
@@ -380,7 +381,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
-                projectile.GetComponent<IPhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
+
+                projectile
+                    .GetComponent<IPhysicsComponent>()
+                    .EnsureController<BulletController>()
+                    .LinearVelocity = projectileAngle.ToVec() * velocity;
+
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
         }
