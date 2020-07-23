@@ -8,6 +8,7 @@ using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 
 namespace Content.Server.BodySystem {
 
