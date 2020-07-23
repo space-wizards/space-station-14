@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Server.Explosions;
 using Content.Shared.GameObjects.Components.Pointing;
@@ -14,15 +15,15 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Server.GameObjects.Components.Pointing
 {
-    public class RoguePointingArrowComponent : Component
+    [RegisterComponent]
+    public class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-
-        public override string Name => "RoguePointingArrow";
 
         [ViewVariables]
         private IEntity? _chasing;
@@ -62,10 +63,17 @@ namespace Content.Server.GameObjects.Components.Pointing
                 return;
             }
 
-            var direction = (_chasing.Transform.WorldPosition - Owner.Transform.WorldPosition).ToAngle().Degrees + 90;
+            appearance.SetData(RoguePointingArrowVisuals.Rotation, Owner.Transform.LocalRotation.Degrees);
+        }
 
-            appearance.SetData(PointingArrowVisuals.Rotation, direction);
-            appearance.SetData(PointingArrowVisuals.Rotation, Owner.Transform.WorldRotation.Degrees);
+        protected override void Startup()
+        {
+            base.Startup();
+
+            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            {
+                sprite.DrawDepth = (int) DrawDepth.Overlays;
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -92,13 +100,15 @@ namespace Content.Server.GameObjects.Components.Pointing
 
             if (_turningDelay > 0)
             {
+                Owner.Transform.LocalRotation = Angle.FromDegrees((_chasing.Transform.WorldPosition - Owner.Transform.WorldPosition).ToAngle().Degrees + 90);
+
                 UpdateAppearance();
                 return;
             }
 
             _chasingDelay -= frameTime;
 
-            Owner.Transform.WorldRotation += Angle.FromDegrees(90 * frameTime);
+            Owner.Transform.WorldRotation += Angle.FromDegrees(20);
 
             UpdateAppearance();
 

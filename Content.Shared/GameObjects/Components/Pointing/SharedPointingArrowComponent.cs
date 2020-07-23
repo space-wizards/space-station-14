@@ -8,10 +8,4 @@ namespace Content.Shared.GameObjects.Components.Pointing
     {
         public sealed override string Name => "PointingArrow";
     }
-
-    [Serializable, NetSerializable]
-    public enum PointingArrowVisuals
-    {
-        Rotation
-    }
 }

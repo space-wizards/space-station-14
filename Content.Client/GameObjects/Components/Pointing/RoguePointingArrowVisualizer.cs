@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Pointing
                 return;
             }
 
-            if (component.TryGetData<double>(PointingArrowVisuals.Rotation, out var degrees))
+            if (component.TryGetData<double>(RoguePointingArrowVisuals.Rotation, out var degrees))
             {
                 SetRotation(component, Angle.FromDegrees(degrees));
             }

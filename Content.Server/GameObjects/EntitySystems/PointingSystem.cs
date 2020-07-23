@@ -50,35 +50,6 @@ namespace Content.Server.GameObjects.EntitySystems
             _pointers.Remove(e.Session);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-
-            EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
-                .Register<PointingSystem>();
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-
-            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
-            _pointers.Clear();
-        }
-
-        public override void Update(float frameTime)
-        {
-            foreach (var entity in RelevantEntities)
-            {
-                entity.GetComponent<PointingArrowComponent>().Update(frameTime);
-            }
-        }
-
         // TODO: FOV
         private void SendMessage(IEntity source, IList<IPlayerSession> viewers, IEntity? pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
@@ -167,6 +138,35 @@ namespace Content.Server.GameObjects.EntitySystems
             SendMessage(player, viewers, pointed, selfMessage, viewerMessage, viewerPointedAtMessage);
 
             return true;
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+
+            EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
+
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
+                .Register<PointingSystem>();
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+
+            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+            _pointers.Clear();
+        }
+
+        public override void Update(float frameTime)
+        {
+            foreach (var entity in RelevantEntities)
+            {
+                entity.GetComponent<PointingArrowComponent>().Update(frameTime);
+            }
         }
     }
 }
