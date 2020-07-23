@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
     public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing, IAfterInteract
     {
 #pragma warning disable 649
-        [Dependency] private readonly IServerEntityManager _entityManager;
         [Dependency] private readonly IRobustRandom _random;
 #pragma warning restore 649
 
@@ -170,10 +169,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction<uint?>(
+            serializer.DataReadWriteFunction<uint>(
                 "id",
-                null,
-                id => Id = id ?? EntitySystem.Get<ConveyorSystem>().NextId(),
+                0,
+                id => Id = id == 0 ? EntitySystem.Get<ConveyorSystem>().NextId() : id,
                 () => Id);
         }
 
