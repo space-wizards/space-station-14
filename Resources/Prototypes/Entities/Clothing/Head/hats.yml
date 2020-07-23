@@ -273,19 +273,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatBeretBadge
-  name: beret badge
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/beret_badge.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret_badge.rsi
-  - type: Clothing
-    sprite: Clothing/Head/beret_badge.rsi
-
-- type: entity
-  parent: HatBase
   id: HatBeretEngineering
   name: beret engineering
   description: ''
@@ -312,57 +299,20 @@
   - type: Clothing
     sprite: Clothing/Head/beret_hos.rsi
 
-- type: entity
-  parent: HatBase
-  id: HatBeretNavyHos
-  name: beret navy HoS
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/beret_navy_hos.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret_navy_hos.rsi
-  - type: Clothing
-    sprite: Clothing/Head/beret_navy_hos.rsi
+
 
 - type: entity
   parent: HatBase
-  id: HatBeretNavyOfficer
-  name: beret navy officer
+  id: HatBeretWarden
+  name: beret warden
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/beret_navy_officer.rsi
+    sprite: Clothing/Head/beret_warden.rsi
   - type: Icon
-    sprite: Clothing/Head/beret_navy_officer.rsi
+    sprite: Clothing/Head/beret_warden.rsi
   - type: Clothing
-    sprite: Clothing/Head/beret_navy_officer.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBeretNavyWarden
-  name: beret navy warden
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/beret_navy_warden.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret_navy_warden.rsi
-  - type: Clothing
-    sprite: Clothing/Head/beret_navy_warden.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBeretPurple
-  name: beret purple
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/beret_purple.rsi
-  - type: Icon
-    sprite: Clothing/Head/beret_purple.rsi
-  - type: Clothing
-    sprite: Clothing/Head/beret_purple.rsi
+    sprite: Clothing/Head/beret_warden.rsi
 
 - type: entity
   parent: HatBase
