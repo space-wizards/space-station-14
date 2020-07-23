@@ -225,8 +225,16 @@ namespace Content.Server.BodySystem {
                 if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData)) { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                     throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
                 }
-                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
-                _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+
+                //Try and remove an existing limb if that exists.
+                if (_partDictionary.Remove(slotName, out var removedPart))
+                {
+                    BodyPartRemoved(removedPart, slotName);
+                }
+
+                var addedPart = new BodyPart(newPartData);
+                _partDictionary.Add(slotName, addedPart); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+                BodyPartAdded(addedPart, slotName);
             }
         }
 

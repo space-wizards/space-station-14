@@ -34,6 +34,7 @@ namespace Content.Server.GameObjects.Components.GUI
 #pragma warning restore 649
 
         private string? _activeHand;
+        private int _nextHand;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
@@ -390,7 +391,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException($"Hand '{name}' already exists.");
             }
 
-            var container = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + name, Owner);
+            var container = ContainerManagerComponent.Create<ContainerSlot>($"hand {_nextHand++}", Owner);
             var hand = new Hand(name, container);
 
             _hands.Add(hand);
