@@ -27,7 +27,6 @@ using Content.Server.Interfaces.Chat;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.Health.BodySystem;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 
