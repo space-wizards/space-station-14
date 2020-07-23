@@ -888,19 +888,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatEdvinTelephosphor
-  name: edvin telephosphor
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/edvin_telephosphor_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/edvin_telephosphor_1.rsi
-  - type: Clothing
-    sprite: Clothing/Head/edvin_telephosphor_1.rsi
-
-- type: entity
-  parent: HatBase
   id: HatEmergencyhelm
   name: emergency helm
   description: ''
