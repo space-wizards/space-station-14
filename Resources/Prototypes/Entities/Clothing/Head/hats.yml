@@ -498,19 +498,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatBrucehachert
-  name: bruce hachert
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/brucehachert.rsi
-  - type: Icon
-    sprite: Clothing/Head/brucehachert.rsi
-  - type: Clothing
-    sprite: Clothing/Head/brucehachert.rsi
-
-- type: entity
-  parent: HatBase
   id: HatBunny
   name: bunny
   description: ''
