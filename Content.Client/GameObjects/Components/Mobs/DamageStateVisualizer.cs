@@ -11,12 +11,12 @@ using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 namespace Content.Client.GameObjects.Components.Mobs
 {
     [UsedImplicitly]
-    public sealed class DamageStateVisualizer2D : AppearanceVisualizer
+    public sealed class DamageStateVisualizer : AppearanceVisualizer
     {
         private DamageStateVisualData _data = DamageStateVisualData.Normal;
         private Dictionary<DamageStateVisualData, string> _stateMap = new Dictionary<DamageStateVisualData,string>();
         private int? _originalDrawDepth = null;
-        
+
         public override void LoadData(YamlMappingNode node)
         {
             base.LoadData(node);
@@ -24,12 +24,12 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 _stateMap.Add(DamageStateVisualData.Normal, normal.AsString());
             }
-            
+
             if (node.TryGetNode("crit", out var crit))
             {
                 _stateMap.Add(DamageStateVisualData.Crit, crit.AsString());
             }
-            
+
             if (node.TryGetNode("dead", out var dead))
             {
                 _stateMap.Add(DamageStateVisualData.Dead, dead.AsString());
@@ -62,7 +62,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             {
                 _originalDrawDepth = sprite.DrawDepth;
                 sprite.DrawDepth = (int) DrawDepth.FloorObjects;
-            } 
+            }
             else if (_originalDrawDepth != null)
             {
                 sprite.DrawDepth = _originalDrawDepth.Value;
