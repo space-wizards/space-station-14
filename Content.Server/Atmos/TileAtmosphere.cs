@@ -666,6 +666,7 @@ namespace Content.Server.Atmos
 
         private void FloorRip(float sum)
         {
+            // TODO ATMOS Fix this
             Logger.Info($"Floor rip! SUM: {sum} CHANCE: {MathF.Clamp(sum / 100, 0, 1)}");
             if (sum > 20 && IoCManager.Resolve<IRobustRandom>().Prob(MathF.Clamp(sum / 100, 0, 1)))
                 _gridAtmosphereComponent.PryTile(GridIndices);

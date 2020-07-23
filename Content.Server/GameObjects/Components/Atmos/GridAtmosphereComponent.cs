@@ -167,38 +167,32 @@ namespace Content.Server.GameObjects.Components.Atmos
             _highPressureDelta.Add(tile);
         }
 
-        /// <inheritdoc />
         public bool HasHighPressureDelta(TileAtmosphere tile)
         {
             return _highPressureDelta.Contains(tile);
         }
 
-        /// <inheritdoc />
         public void AddExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Add(excitedGroup);
         }
 
-        /// <inheritdoc />
         public void RemoveExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Remove(excitedGroup);
         }
 
-        /// <inheritdoc />
         public TileAtmosphere GetTile(MapIndices indices)
         {
             return !_tiles.TryGetValue(indices, out var tile) ? null : tile;
         }
 
-        /// <inheritdoc />
         public bool IsAirBlocked(MapIndices indices)
         {
             var ac = GetObstructingComponent(indices);
             return ac != null && ac.AirBlocked;
         }
 
-        /// <inheritdoc />
         public bool IsSpace(MapIndices indices)
         {
             // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space

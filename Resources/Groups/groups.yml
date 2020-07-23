@@ -158,6 +158,9 @@
   - sudo
   - asay
   - addatmos
+  - addgas
+  - listgases
+  - removegas
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

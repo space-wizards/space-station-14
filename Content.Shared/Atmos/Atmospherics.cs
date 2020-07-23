@@ -25,6 +25,7 @@ namespace Content.Shared.Atmos
 
         public static GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
         public static GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
+        public static IEnumerable<GasPrototype> Gases => GasPrototypes;
 
         #region ATMOS
         /// <summary>
