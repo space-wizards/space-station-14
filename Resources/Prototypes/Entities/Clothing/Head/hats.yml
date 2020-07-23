@@ -2786,19 +2786,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatViking
-  name: viking
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/viking.rsi
-  - type: Icon
-    sprite: Clothing/Head/viking.rsi
-  - type: Clothing
-    sprite: Clothing/Head/viking.rsi
-
-- type: entity
-  parent: HatBase
   id: HatVioletwizard
   name: violetwizard
   description: ''
@@ -2952,32 +2939,6 @@
     sprite: Clothing/Head/yellowsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/yellowsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatYukiMatsuda
-  name: yuki matsuda
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/yuki_matsuda_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/yuki_matsuda_1.rsi
-  - type: Clothing
-    sprite: Clothing/Head/yuki_matsuda_1.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatYukiMatsudaup
-  name: yuki matsuda (up)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/yuki_matsuda_1up.rsi
-  - type: Icon
-    sprite: Clothing/Head/yuki_matsuda_1up.rsi
-  - type: Clothing
-    sprite: Clothing/Head/yuki_matsuda_1up.rsi
 
 - type: entity
   parent: HatBase
