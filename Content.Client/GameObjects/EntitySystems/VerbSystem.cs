@@ -443,6 +443,13 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (args.Function == EngineKeyFunctions.Use ||
                     args.Function == ContentKeyFunctions.Point)
                 {
+                    // TODO: Remove an entity from the menu when it is deleted
+                    if (_entity.Deleted)
+                    {
+                        _master.CloseAllMenus();
+                        return;
+                    }
+
                     var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
 
                     var func = args.Function;
