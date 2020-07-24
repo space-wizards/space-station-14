@@ -42,9 +42,6 @@ namespace Content.Server.Atmos
                 moveProb = MathF.Abs((pressureDifference / pressureComponent.PressureResistance * ProbabilityBasePercent) -
                            ProbabilityOffset);
 
-            if(pressureDifference > 10f)
-                Logger.Info($"PRESS DIFF! PROB: {moveProb/100f} FORCE: {maxForce} DIFF: {pressureDifference}");
-
             if (moveProb > ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
                                              && !float.IsPositiveInfinity(pressureComponent.MoveResist)
                                              && (!ControlledComponent.Anchored
@@ -57,8 +54,6 @@ namespace Content.Server.Atmos
                 {
                     var pos = throwTarget.Position - transform.GridPosition.Position;
                     LinearVelocity = pos * moveForce;
-
-                    Logger.Info($"MOVED! {pos} {moveForce} {LinearVelocity}");
                 }
                 else
                 {
