@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if(RadioOn)
             {
-                _radioSystem.SpreadMessage(this, message);
+                _radioSystem.SpreadMessage(Owner, message);
             }
         }
 

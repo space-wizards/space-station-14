@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _messages = new List<string>();
         }
 
-        public void SpreadMessage(RadioComponent source, string message)
+        public void SpreadMessage(IEntity source, string message)
         {
             if (_messages.Contains(message))
             {
@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var radioEntity in EntityManager.GetEntities(RadioQuery))
             {
                 var radio = radioEntity.GetComponent<RadioComponent>();
-                if (radio == source || !radio.RadioOn)
+                if (radioEntity == source || !radio.RadioOn)
                 {
                     continue;
                 }
