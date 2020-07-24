@@ -75,11 +75,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            if (serializer.Reading)
-            {
-                _powerCellPrototype = serializer.ReadDataField<string>("powerCellPrototype", null);
-            }
 
+            serializer.DataField(ref _powerCellPrototype, "powerCellPrototype", null);
             serializer.DataField(ref _powerCellRemovable, "powerCellRemovable", false);
             serializer.DataField(ref _baseFireCost, "fireCost", 300);
             serializer.DataField(ref _ammoPrototype, "ammoPrototype", null);

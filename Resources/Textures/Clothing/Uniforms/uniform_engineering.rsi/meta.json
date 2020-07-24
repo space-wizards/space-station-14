@@ -5,10 +5,19 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 9a3a3a180344460263e8df7ea2565128e07b86b5",
+    "copyright": "https://github.com/tgstation/tgstation",
     "states": [
         {
-            "name": "engine",
+            "name": "icon",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "engine_skirt",
             "directions": 1,
             "delays": [
                 [
@@ -18,6 +27,24 @@
         },
         {
             "name": "equipped-INNERCLOTHING",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "engine_skirt-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [

@@ -18,7 +18,7 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 2
       zeroVisible: false
@@ -99,7 +99,7 @@
     fillPrototype: CartridgeClRifleHV
   - type: Icon
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_hv.rsi
-  - type: Sprite 
+  - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_hv.rsi
 
 - type: entity
@@ -112,7 +112,7 @@
     fillPrototype: CartridgeClRiflePractice
   - type: Icon
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_practice.rsi
-  - type: Sprite 
+  - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_practice.rsi
 
 - type: entity
@@ -125,5 +125,5 @@
     fillPrototype: CartridgeClRifleRubber
   - type: Icon
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_rubber.rsi
-  - type: Sprite 
+  - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/ClRifle/cl_rifle_box_rubber.rsi

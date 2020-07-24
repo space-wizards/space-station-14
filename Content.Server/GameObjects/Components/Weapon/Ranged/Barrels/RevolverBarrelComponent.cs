@@ -44,15 +44,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-
-            if (serializer.Reading)
-            {
-                var capacity = serializer.ReadDataField("capacity", 6);
-                _ammoSlots = new IEntity[capacity];
-            }
-
-            // TODO: Writing?
+            serializer.DataReadWriteFunction(
+                "capacity",
+                6,
+                cap => _ammoSlots = new IEntity[cap],
+                () => _ammoSlots.Length);
             serializer.DataField(ref _fillPrototype, "fillPrototype", null);
 
             // Sounds

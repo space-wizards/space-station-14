@@ -19,7 +19,7 @@
   - type: LoopingSound
   - type: Appearance
     visuals:
-    - type: HandTeleporterVisualizer2D
+    - type: HandTeleporterVisualizer
 
 - type: entity
   name: "hand teleporter - random"
@@ -62,4 +62,4 @@
     state: portal-pending
   - type: Appearance
     visuals:
-    - type: PortalVisualizer2D
+    - type: PortalVisualizer

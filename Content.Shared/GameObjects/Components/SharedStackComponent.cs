@@ -53,7 +53,7 @@ namespace Content.Shared.GameObjects.Components
             serializer.DataFieldCached(ref _maxCount, "max", 50);
             serializer.DataFieldCached(ref _count, "count", MaxCount);
 
-            if (!serializer.Reading)
+            if (serializer.Writing)
             {
                 return;
             }

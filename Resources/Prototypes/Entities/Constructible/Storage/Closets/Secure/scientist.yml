@@ -5,7 +5,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: rd
   - type: Icon
     state: rd_door

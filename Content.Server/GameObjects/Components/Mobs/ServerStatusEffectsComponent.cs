@@ -47,10 +47,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             Dirty();
         }
 
-        public void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
+        public override void ChangeStatusEffect(StatusEffect effect, string icon, ValueTuple<TimeSpan, TimeSpan>? cooldown)
         {
             _statusEffects[effect] = new StatusEffectStatus()
                 {Icon = icon, Cooldown = cooldown};
+
             Dirty();
         }
 

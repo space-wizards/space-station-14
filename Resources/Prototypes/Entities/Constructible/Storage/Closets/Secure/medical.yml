@@ -7,7 +7,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: med
   - type: Icon
     state: med_door
@@ -20,7 +20,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: med_secure
   - type: Icon
     state: med_secure_door
@@ -33,7 +33,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: med
       state_closed: chemical_door
   - type: Icon
@@ -47,7 +47,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: cmo
   - type: Icon
     state: cmo_door

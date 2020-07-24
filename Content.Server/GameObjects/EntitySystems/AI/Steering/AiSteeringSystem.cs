@@ -634,6 +634,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // God there's so many ways to do this
                     // err for now we'll just assume the first entity is the center and just add a vector for it
                     var collisionEntity = _entityManager.GetEntity(uid);
+
+                    //Pathfinding updates are deferred so this may not be done yet.
+                    if (collisionEntity.Deleted) continue;
+                    
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right

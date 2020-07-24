@@ -39,7 +39,7 @@
     thresholdvalue: 100
   - type: Appearance
     visuals:
-    - type: MedicalScannerVisualizer2D
+    - type: MedicalScannerVisualizer
   - type: UserInterface
     interfaces:
     - key: enum.MedicalScannerUiKey.Key

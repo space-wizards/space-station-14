@@ -4,6 +4,7 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -85,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Movement
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
-                physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * CurrentWalkSpeed;
+                var controller = physComp.EnsureController<ShuttleController>();
+                controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
             }
         }
 

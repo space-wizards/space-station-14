@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.PDA
         [ViewVariables] private BoundUserInterface _interface = default!;
         [ViewVariables] private string _startingIdCard = default!;
         [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntities.Count < 1;
-        [ViewVariables] public IEntity? OwnerMob { get; private set; }
+        [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
 
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.PDA
         {
             var ownerInfo = new PDAIdInfoText
             {
-                ActualOwnerName = OwnerMob?.Name,
+                ActualOwnerName = OwnerName,
                 IdOwner = ContainedID?.FullName,
                 JobTitle = ContainedID?.JobTitle
             };
@@ -182,16 +182,10 @@ namespace Content.Server.GameObjects.Components.PDA
             return true;
         }
 
-        public void SetPDAOwner(IEntity mob)
+        public void SetPDAOwner(string name)
         {
-            if (mob == OwnerMob)
-            {
-                return;
-            }
-
-            OwnerMob = mob;
+            OwnerName = name;
             UpdatePDAUserInterface();
-
         }
 
         private void InsertIdCard(IdCardComponent card)

@@ -615,7 +615,7 @@
     soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
+    - type: BarrelBoltVisualizer
 
 - type: entity
   name: foamblade
