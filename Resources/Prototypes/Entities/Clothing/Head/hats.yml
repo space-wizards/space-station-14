@@ -13,45 +13,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatFireWeldingMask
-  name: fire welding mask
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/fire_welding_mask_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/fire_welding_mask_1.rsi
-  - type: Clothing
-    sprite: Clothing/Head/fire_welding_mask_1.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatFireWeldingMaskup
-  name: fire welding mask (up)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/fire_welding_mask_1up.rsi
-  - type: Icon
-    sprite: Clothing/Head/fire_welding_mask_1up.rsi
-  - type: Clothing
-    sprite: Clothing/Head/fire_welding_mask_1up.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatAtmosHelm
-  name: atmos helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/atmos_helm.rsi
-  - type: Icon
-    sprite: Clothing/Head/atmos_helm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/atmos_helm.rsi
-
-- type: entity
-  parent: HatBase
   id: HatBandana
   name: bandana
   description: ''
@@ -275,84 +236,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatBioCmo
-  name: bio - cmo
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bio_cmo.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_cmo.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bio_cmo.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBioGeneral
-  name: bio - general
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bio_general.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_general.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bio_general.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBioJanitor
-  name: bio - janitor
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bio_janitor.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_janitor.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bio_janitor.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBioScientist
-  name: bio - scientist
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bio_scientist.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_scientist.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bio_scientist.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBioSecurity
-  name: bio - security
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bio_security.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_security.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bio_security.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBioVirology
-  name: bio - virology
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bio_virology.rsi
-  - type: Icon
-    sprite: Clothing/Head/bio_virology.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bio_virology.rsi
-
-- type: entity
-  parent: HatBase
   id: HatBluesoft
   name: bluesoft
   description: ''
@@ -389,45 +272,6 @@
     sprite: Clothing/Head/boater_hat.rsi
   - type: Clothing
     sprite: Clothing/Head/boater_hat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBombsuit
-  name: bombsuit
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bombsuit.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuit.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bombsuit.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBombsuitsec
-  name: bombsuit sec
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bombsuitsec.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuitsec.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bombsuitsec.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBombsuitWhite
-  name: bombsuit white
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/bombsuit_white.rsi
-  - type: Icon
-    sprite: Clothing/Head/bombsuit_white.rsi
-  - type: Clothing
-    sprite: Clothing/Head/bombsuit_white.rsi
 
 - type: entity
   parent: HatBase
@@ -626,32 +470,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatCespaceHelmet
-  name: ce space helmet
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cespace_helmet.rsi
-  - type: Icon
-    sprite: Clothing/Head/cespace_helmet.rsi
-  - type: Clothing
-    sprite: Clothing/Head/cespace_helmet.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatChaplainHood
-  name: chaplain hood
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/chaplain_hood.rsi
-  - type: Icon
-    sprite: Clothing/Head/chaplain_hood.rsi
-  - type: Clothing
-    sprite: Clothing/Head/chaplain_hood.rsi
-
-- type: entity
-  parent: HatBase
   id: HatChefhat
   name: chef hat
   description: ''
@@ -675,19 +493,6 @@
     sprite: Clothing/Head/chickenhead.rsi
   - type: Clothing
     sprite: Clothing/Head/chickenhead.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatConstructiondrone
-  name: construction drone
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/constructiondrone.rsi
-  - type: Icon
-    sprite: Clothing/Head/constructiondrone.rsi
-  - type: Clothing
-    sprite: Clothing/Head/constructiondrone.rsi
 
 - type: entity
   parent: HatBase
@@ -717,16 +522,16 @@
 
 - type: entity
   parent: HatBase
-  id: HatCosmo
-  name: cosmo
+  id: HatCosmonaut
+  name: cosmonaut
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/cosmo.rsi
+    sprite: Clothing/Head/cosmonaut.rsi
   - type: Icon
-    sprite: Clothing/Head/cosmo.rsi
+    sprite: Clothing/Head/cosmonaut.rsi
   - type: Clothing
-    sprite: Clothing/Head/cosmo.rsi
+    sprite: Clothing/Head/cosmonaut.rsi
 
 - type: entity
   parent: HatBase
@@ -743,45 +548,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatCulthood
-  name: cult hood
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/culthood.rsi
-  - type: Icon
-    sprite: Clothing/Head/culthood.rsi
-  - type: Clothing
-    sprite: Clothing/Head/culthood.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCultHelmet
-  name: cult helmet
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cult_helmet.rsi
-  - type: Icon
-    sprite: Clothing/Head/cult_helmet.rsi
-  - type: Clothing
-    sprite: Clothing/Head/cult_helmet.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCultHoodalt
-  name: cult hood alt
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cult_hoodalt.rsi
-  - type: Icon
-    sprite: Clothing/Head/cult_hoodalt.rsi
-  - type: Clothing
-    sprite: Clothing/Head/cult_hoodalt.rsi
-
-- type: entity
-  parent: HatBase
   id: HatDeathsquad
   name: deathsquad
   description: ''
@@ -795,55 +561,29 @@
 
 - type: entity
   parent: HatBase
-  id: HatDetective
-  name: detective
+  id: HatFedoraBrown
+  name:  brown fedora
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/detective.rsi
+    sprite: Clothing/Head/brownfedora.rsi
   - type: Icon
-    sprite: Clothing/Head/detective.rsi
+    sprite: Clothing/Head/brownfedora.rsi
   - type: Clothing
-    sprite: Clothing/Head/detective.rsi
+    sprite: Clothing/Head/brownfedora.rsi
 
 - type: entity
   parent: HatBase
-  id: HatDetective2
-  name: detective2
+  id: HatFedoraGrey
+  name: grey fedora
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/detective2.rsi
+    sprite: Clothing/Head/greyfedora.rsi
   - type: Icon
-    sprite: Clothing/Head/detective2.rsi
+    sprite: Clothing/Head/greyfedora.rsi
   - type: Clothing
-    sprite: Clothing/Head/detective2.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatEmergencyhelm
-  name: emergency helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/emergencyhelm.rsi
-  - type: Icon
-    sprite: Clothing/Head/emergencyhelm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/emergencyhelm.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatEngHelm
-  name: eng helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/eng_helm.rsi
-  - type: Icon
-    sprite: Clothing/Head/eng_helm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/eng_helm.rsi
+    sprite: Clothing/Head/greyfedora.rsi
 
 - type: entity
   parent: HatBase
@@ -951,110 +691,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatHardhatDblue
-  name: hardhat dblue
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_dblue.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_dblue.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_dblue.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhat Orange
-  name: hardhat orange
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_orange.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_orange.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_orange.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatPumpkin
-  name: hardhat pumpkin
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_pumpkin.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_pumpkin.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_pumpkin.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatRed
-  name: hardhat red
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_red.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_red.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_red.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatWhite
-  name: hardhat white
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_white.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_white.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_white.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatYellow
-  name: hardhat yellow
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat0_yellow.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat0_yellow.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat0_yellow.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardhatPumpkinAlt
-  name: hardhat pumpkin (alt)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardhat1_pumpkin.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardhat1_pumpkin.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardhat1_pumpkin.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHasturhood
-  name: hasturhood
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hasturhood.rsi
-  - type: Icon
-    sprite: Clothing/Head/hasturhood.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hasturhood.rsi
-
-- type: entity
-  parent: HatBase
   id: HatHeadslime
   name: headslime
   description: ''
@@ -1091,19 +727,6 @@
     sprite: Clothing/Head/helmetold.rsi
   - type: Clothing
     sprite: Clothing/Head/helmetold.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHgpiratecap
-  name: hg pirate cap
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hgpiratecap.rsi
-  - type: Icon
-    sprite: Clothing/Head/hgpiratecap.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hgpiratecap.rsi
 
 - type: entity
   parent: HatBase
@@ -1172,94 +795,29 @@
 
 - type: entity
   parent: HatBase
-  id: HatKitty
-  name: kitty
+  id: HatWitch1
+  name: witch hat
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/kitty.rsi
+    sprite: Clothing/Head/witchhat.rsi
   - type: Icon
-    sprite: Clothing/Head/kitty.rsi
+    sprite: Clothing/Head/witchhat.rsi
   - type: Clothing
-    sprite: Clothing/Head/kitty.rsi
+    sprite: Clothing/Head/witchhat.rsi
 
 - type: entity
   parent: HatBase
-  id: HatKittyinner
-  name: kitty inner
+  id: HatWizardHelm
+  name: wizard helm
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/kittyinner.rsi
+    sprite: Clothing/Head/wizardhelm.rsi
   - type: Icon
-    sprite: Clothing/Head/kittyinner.rsi
+    sprite: Clothing/Head/wizardhelm.rsi
   - type: Clothing
-    sprite: Clothing/Head/kittyinner.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatLightRiot
-  name: light riot
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/light_riot.rsi
-  - type: Icon
-    sprite: Clothing/Head/light_riot.rsi
-  - type: Clothing
-    sprite: Clothing/Head/light_riot.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatLightRiotOn
-  name: light riot (on)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/light_riot_on.rsi
-  - type: Icon
-    sprite: Clothing/Head/light_riot_on.rsi
-  - type: Clothing
-    sprite: Clothing/Head/light_riot_on.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMagus
-  name: magus
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/magus.rsi
-  - type: Icon
-    sprite: Clothing/Head/magus.rsi
-  - type: Clothing
-    sprite: Clothing/Head/magus.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMarisa
-  name: marisa
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/marisa.rsi
-  - type: Icon
-    sprite: Clothing/Head/marisa.rsi
-  - type: Clothing
-    sprite: Clothing/Head/marisa.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMedicalHelm
-  name: medical helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/medical_helm.rsi
-  - type: Icon
-    sprite: Clothing/Head/medical_helm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/medical_helm.rsi
+    sprite: Clothing/Head/wizardhelm.rsi
 
 - type: entity
   parent: HatBase
@@ -1289,110 +847,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatMiningHelm
-  name: mining helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mining_helm.rsi
-  - type: Icon
-    sprite: Clothing/Head/mining_helm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/mining_helm.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMonkey
-  name: monkey
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/monkey.rsi
-  - type: Icon
-    sprite: Clothing/Head/monkey.rsi
-  - type: Clothing
-    sprite: Clothing/Head/monkey.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMouseBrown
-  name: mouse brown
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mouse_brown.rsi
-  - type: Icon
-    sprite: Clothing/Head/mouse_brown.rsi
-  - type: Clothing
-    sprite: Clothing/Head/mouse_brown.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMouseGray
-  name: mouse gray
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mouse_gray.rsi
-  - type: Icon
-    sprite: Clothing/Head/mouse_gray.rsi
-  - type: Clothing
-    sprite: Clothing/Head/mouse_gray.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMouseWhite
-  name: mouse white
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/mouse_white.rsi
-  - type: Icon
-    sprite: Clothing/Head/mouse_white.rsi
-  - type: Clothing
-    sprite: Clothing/Head/mouse_white.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBlueFlameWeldingMask
-  name: blue flame welding mask
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
-  - type: Icon
-    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
-  - type: Clothing
-    sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatBlueFlameWeldingMaskup
-  name: blue flame welding mask (up)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
-  - type: Icon
-    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
-  - type: Clothing
-    sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNunHood
-  name: nun hood
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/nun_hood.rsi
-  - type: Icon
-    sprite: Clothing/Head/nun_hood.rsi
-  - type: Clothing
-    sprite: Clothing/Head/nun_hood.rsi
-
-- type: entity
-  parent: HatBase
   id: HatNursehat
   name: nurse hat
   description: ''
@@ -1403,32 +857,6 @@
     sprite: Clothing/Head/nursehat.rsi
   - type: Clothing
     sprite: Clothing/Head/nursehat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNymph
-  name: nymph
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/nymph.rsi
-  - type: Icon
-    sprite: Clothing/Head/nymph.rsi
-  - type: Clothing
-    sprite: Clothing/Head/nymph.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatOfficercap
-  name: officer cap
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/officercap.rsi
-  - type: Icon
-    sprite: Clothing/Head/officercap.rsi
-  - type: Clothing
-    sprite: Clothing/Head/officercap.rsi
 
 - type: entity
   parent: HatBase
@@ -1471,84 +899,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatPai-cat
-  name: pai-cat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/pai-cat.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-cat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/pai-cat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPai-monkey
-  name: pai-monkey
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/pai-monkey.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-monkey.rsi
-  - type: Clothing
-    sprite: Clothing/Head/pai-monkey.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPai-mouse
-  name: pai-mouse
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/pai-mouse.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-mouse.rsi
-  - type: Clothing
-    sprite: Clothing/Head/pai-mouse.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPai-repairbot
-  name: pai-repairbot
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/pai-repairbot.rsi
-  - type: Icon
-    sprite: Clothing/Head/pai-repairbot.rsi
-  - type: Clothing
-    sprite: Clothing/Head/pai-repairbot.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPaintedwelding
-  name: painted welding mask
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/paintedwelding.rsi
-  - type: Icon
-    sprite: Clothing/Head/paintedwelding.rsi
-  - type: Clothing
-    sprite: Clothing/Head/paintedwelding.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPaintedweldingup
-  name: painted welding mask (up)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/paintedweldingup.rsi
-  - type: Icon
-    sprite: Clothing/Head/paintedweldingup.rsi
-  - type: Clothing
-    sprite: Clothing/Head/paintedweldingup.rsi
-
-- type: entity
-  parent: HatBase
   id: HatPaper
   name: paper
   description: ''
@@ -1559,19 +909,6 @@
     sprite: Clothing/Head/paper.rsi
   - type: Clothing
     sprite: Clothing/Head/paper.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatPetehat
-  name: pete hat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/petehat.rsi
-  - type: Icon
-    sprite: Clothing/Head/petehat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/petehat.rsi
 
 - type: entity
   parent: HatBase
@@ -1614,19 +951,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatPolicehelm
-  name: police helm
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/policehelm.rsi
-  - type: Icon
-    sprite: Clothing/Head/policehelm.rsi
-  - type: Clothing
-    sprite: Clothing/Head/policehelm.rsi
-
-- type: entity
-  parent: HatBase
   id: HatPurplesoft
   name: purple soft
   description: ''
@@ -1666,19 +990,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatRad
-  name: rad
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/rad.rsi
-  - type: Icon
-    sprite: Clothing/Head/rad.rsi
-  - type: Clothing
-    sprite: Clothing/Head/rad.rsi
-
-- type: entity
-  parent: HatBase
   id: HatRainbowsoft
   name: rainbowsoft
   description: ''
@@ -1702,19 +1013,6 @@
     sprite: Clothing/Head/rainbowsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/rainbowsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatRedcoat
-  name: redcoat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/redcoat.rsi
-  - type: Icon
-    sprite: Clothing/Head/redcoat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/redcoat.rsi
 
 - type: entity
   parent: HatBase
@@ -1757,19 +1055,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatRepairbot
-  name: repairbot
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/repairbot.rsi
-  - type: Icon
-    sprite: Clothing/Head/repairbot.rsi
-  - type: Clothing
-    sprite: Clothing/Head/repairbot.rsi
-
-- type: entity
-  parent: HatBase
   id: HatRichard
   name: richard
   description: ''
@@ -1780,151 +1065,6 @@
     sprite: Clothing/Head/richard.rsi
   - type: Clothing
     sprite: Clothing/Head/richard.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-old
-  name: hardsuit-old
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-old.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-old.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-old.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-atmos
-  name: hardsuit-atmos
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-atmos.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-atmos.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-atmos.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-engineering
-  name: hardsuit-engineering
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-engineering.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-engineering.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-engineering.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-hazardhardsuit
-  name: hardsuit-hazardhardsuit
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-medical
-  name: hardsuit-medical
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-medical.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-medical.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-medical.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-mining
-  name: hardsuit-mining
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-mining.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-mining.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-mining.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-sectg
-  name: hardsuit-sectg
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-sectg.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-sectg.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-sectg.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-syndie
-  name: hardsuit-syndie
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-syndie.rsi
-    state: icon
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-syndie.rsi
-    state: icon
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-syndie.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-white
-  name: hardsuit-white
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-white.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-white.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-white.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHardsuit-wiz
-  name: hardsuit-wiz
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hardsuit-wiz.rsi
-  - type: Icon
-    sprite: Clothing/Head/hardsuit-wiz.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hardsuit-wiz.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatRiot
-  name: riot
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/riot.rsi
-  - type: Icon
-    sprite: Clothing/Head/riot.rsi
-  - type: Clothing
-    sprite: Clothing/Head/riot.rsi
 
 - type: entity
   parent: HatBase
@@ -1954,19 +1094,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatScaf
-  name: scaf
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/scaf.rsi
-  - type: Icon
-    sprite: Clothing/Head/scaf.rsi
-  - type: Clothing
-    sprite: Clothing/Head/scaf.rsi
-
-- type: entity
-  parent: HatBase
   id: HatSecsoft
   name: secsoft
   description: ''
@@ -1990,32 +1117,6 @@
     sprite: Clothing/Head/secsoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/secsoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSecurity
-  name: security
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/security.rsi
-  - type: Icon
-    sprite: Clothing/Head/security.rsi
-  - type: Clothing
-    sprite: Clothing/Head/security.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSkub
-  name: Skub Hat
-  description: 'Best paired with the Skub Suit.'
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/skubhead.rsi
-  - type: Icon
-    sprite: Clothing/Head/skubhead.rsi
-  - type: Clothing
-    sprite: Clothing/Head/skubhead.rsi
 
 - type: entity
   parent: HatBase
@@ -2068,32 +1169,6 @@
     sprite: Clothing/Head/surgcap_purple.rsi
   - type: Clothing
     sprite: Clothing/Head/surgcap_purple.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSwat
-  name: swat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/swat.rsi
-  - type: Icon
-    sprite: Clothing/Head/swat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/swat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSwatup
-  name: swat helm (up)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/swatup.rsi
-  - type: Icon
-    sprite: Clothing/Head/swatup.rsi
-  - type: Clothing
-    sprite: Clothing/Head/swatup.rsi
 
 - type: entity
   parent: HatBase
@@ -2162,16 +1237,16 @@
 
 - type: entity
   parent: HatBase
-  id: HatV62
-  name: v62
+  id: HatNightVis
+  name: night vision
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/v62.rsi
+    sprite: Clothing/Head/nightvis.rsi
   - type: Icon
-    sprite: Clothing/Head/v62.rsi
+    sprite: Clothing/Head/nightvis.rsi
   - type: Clothing
-    sprite: Clothing/Head/v62.rsi
+    sprite: Clothing/Head/nightvis.rsi
 
 - type: entity
   parent: HatBase
@@ -2198,32 +1273,6 @@
     sprite: Clothing/Head/void.rsi
   - type: Clothing
     sprite: Clothing/Head/void.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatWelding
-  name: welding mask
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/welding.rsi
-  - type: Icon
-    sprite: Clothing/Head/welding.rsi
-  - type: Clothing
-    sprite: Clothing/Head/welding.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatWeldingup
-  name: welding mask (up)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/weldingup.rsi
-  - type: Icon
-    sprite: Clothing/Head/weldingup.rsi
-  - type: Clothing
-    sprite: Clothing/Head/weldingup.rsi
 
 - type: entity
   parent: HatBase
@@ -2258,16 +1307,16 @@
   description: ''
   components:
   - type: Sprite
-    sprite: Clothing/Head/wizard.rsi
+    sprite: Clothing/Head/wizardhat.rsi
   - type: Icon
-    sprite: Clothing/Head/wizard.rsi
+    sprite: Clothing/Head/wizardhat.rsi
   - type: Clothing
-    sprite: Clothing/Head/wiza
+    sprite: Clothing/Head/wizardhat.rsi
 
 - type: entity
   parent: HatBase
-  id: HatXenom
-  name: xenom
+  id: HatXenoMom
+  name: xeno matriarch
   description: ''
   components:
   - type: Sprite
@@ -2279,7 +1328,7 @@
 
 - type: entity
   parent: HatBase
-  id: HatXenos
+  id: HatXeno
   name: xenos
   description: ''
   components:
