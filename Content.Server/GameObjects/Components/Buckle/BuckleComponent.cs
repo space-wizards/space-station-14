@@ -2,6 +2,7 @@
 using System;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
@@ -21,6 +22,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -57,6 +59,8 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </summary>
         [ViewVariables]
         private TimeSpan _buckleTime;
+
+        public Vector2? BuckleOffset { get; private set; }
 
         private StrapComponent? _buckledTo;
 
@@ -116,7 +120,6 @@ namespace Content.Server.GameObjects.Components.Buckle
             var ownTransform = Owner.Transform;
             var strapTransform = strap.Owner.Transform;
 
-            ownTransform.GridPosition = strapTransform.GridPosition;
             ownTransform.AttachParent(strapTransform);
 
             switch (strap.Position)
@@ -129,14 +132,21 @@ namespace Content.Server.GameObjects.Components.Buckle
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    StandingStateHelper.Down(Owner);
+                    StandingStateHelper.Down(Owner, force: true);
                     ownTransform.WorldRotation = Angle.South;
                     break;
             }
 
+            // Assign BuckleOffset first, before causing a MoveEvent to fire
             if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
             {
-                ownTransform.WorldPosition += (0, 0.15f);
+                BuckleOffset = (0, 0.15f);
+                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset!.Value;
+            }
+            else
+            {
+                BuckleOffset = Vector2.Zero;
+                ownTransform.WorldPosition = strapTransform.WorldPosition;
             }
         }
 
@@ -257,9 +267,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 appearance.SetData(BuckleVisuals.Buckled, true);
             }
 
-            ReAttach(strap);
-
             BuckledTo = strap;
+
+            ReAttach(strap);
             BuckleStatus();
 
             return true;
@@ -315,8 +325,8 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
             {
-                Owner.Transform.DetachParent();
                 Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+                Owner.Transform.DetachParent();
             }
 
             BuckledTo = null;
