@@ -1,7 +1,9 @@
 ﻿using NFluidsynth;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
@@ -13,23 +15,26 @@ namespace Content.Server.Atmos
     public class HighPressureMovementController : VirtualController
     {
         [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private IPhysicsManager _physicsManager = default!;
         public override ICollidableComponent? ControlledComponent { protected get; set; }
 
         private const float MoveForcePushRatio = 1f;
         private const float MoveForceForcePushRatio = 1f;
         private const float ProbabilityOffset = 25f;
         private const float ProbabilityBasePercent = 10f;
-        private const float ThrowForce = 4000f;
+        private const float ThrowForce = 100f;
 
         public void ExperiencePressureDifference(int cycle, float pressureDifference, Direction direction,
-            float pressureResistanceProbDelta, TileAtmosphere throwTarget)
+            float pressureResistanceProbDelta, GridCoordinates throwTarget)
         {
             if (ControlledComponent == null)
                 return;
 
             // TODO ATMOS stuns?
 
+            var transform = ControlledComponent.Owner.Transform;
             var pressureComponent = ControlledComponent.Owner.GetComponent<MovedByPressureComponent>();
+            var negative = pressureDifference < 0;
             var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
             var moveProb = 100f;
 
@@ -47,9 +52,18 @@ namespace Content.Server.Atmos
                 || (ControlledComponent.Anchored && (maxForce >= (pressureComponent.MoveResist * MoveForceForcePushRatio))))
             {
                 var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 25f);
-                LinearVelocity = direction.ToVec() * moveForce;
 
-                Logger.Info($"MOVED! {moveForce} {LinearVelocity}");
+                if (maxForce > ThrowForce && throwTarget != GridCoordinates.InvalidGrid)
+                {
+                    var pos = throwTarget.Position - transform.GridPosition.Position;
+                    LinearVelocity = pos * moveForce;
+
+                    Logger.Info($"MOVED! {pos} {moveForce} {LinearVelocity}");
+                }
+                else
+                {
+                    LinearVelocity = direction.ToVec() * moveForce * (negative ? -1 : 1);
+                }
 
                 pressureComponent.LastHighPressureMovementAirCycle = cycle;
             }
@@ -58,9 +72,13 @@ namespace Content.Server.Atmos
         public override void UpdateAfterProcessing()
         {
             base.UpdateAfterProcessing();
-            LinearVelocity *= 0.85f;
-            if (LinearVelocity.Length < 1f)
-                Stop();
+
+            if (ControlledComponent != null && !_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+            {
+                LinearVelocity *= 0.85f;
+                if (LinearVelocity.Length < 1f)
+                    Stop();
+            }
         }
     }
 }
