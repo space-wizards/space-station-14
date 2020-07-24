@@ -17,8 +17,6 @@
     - type: TrashSpawner
       rarePrototypes:
         - PuddleVomit
-        - PuddlePiss
-        - PuddleShit
         - TrashPlate
         - TrashSnackBowl
       rareChance: 0.03
