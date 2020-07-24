@@ -39,7 +39,7 @@ namespace Content.Shared.Atmos
         public const float OneAtmosphere = 101.325f;
 
         /// <summary>
-        ///     -270.3ºC in K
+        ///     -270.3ºC in K. CMB stands for Cosmic Background Radiation.
         /// </summary>
         public const float TCMB = 2.7f;
 
