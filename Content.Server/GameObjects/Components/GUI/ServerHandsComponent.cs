@@ -484,27 +484,14 @@ namespace Content.Server.GameObjects
         {
             if (IsPulling)
             {
-                if (PulledObject!.TryGetController(out PullController oldController))
-                {
-                    oldController.StopPull();
-                }
-
-                if (PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent oldStatus))
-                {
-                    oldStatus.ChangeStatusEffectIcon(StatusEffect.Pulled, "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
-                }
+                StopPulling();
             }
 
             PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
-
             var controller = PulledObject!.EnsureController<PullController>();
-
             controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
 
-            if (PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent newStatus))
-            {
-                newStatus.ChangeStatusEffectIcon(StatusEffect.Pulled, "/Textures/Interface/StatusEffects/Buckle/buckled.png");
-            }
+            ChangePullingStatuses(true);
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
@@ -619,14 +606,29 @@ namespace Content.Server.GameObjects
             }
         }
 
-        public override void StopPulling()
+        private void ChangePullingStatuses(bool pulling)
         {
             if (PulledObject?.Owner != null &&
-                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
             {
-                status.ChangeStatusEffectIcon(StatusEffect.Pulled, "/Textures/Interface/StatusEffects/Buckle/unbuckled.png");
+                pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
+                    pulling
+                        ? "/Textures/Interface/StatusEffects/Pull/pulled.png"
+                        : "/Textures/Interface/StatusEffects/Pull/notpulled.png");
             }
 
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            {
+                ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
+                    pulling
+                        ? "/Textures/Interface/StatusEffects/Pull/pulling.png"
+                        : "/Textures/Interface/StatusEffects/Pull/notpulling.png");
+            }
+        }
+
+        public override void StopPulling()
+        {
+            ChangePullingStatuses(false);
             base.StopPulling();
         }
     }

@@ -58,6 +58,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
         Thirst,
         Stun,
         Buckled,
-        Pulled,
+        Pulling,
+        Pulled
     }
 }
