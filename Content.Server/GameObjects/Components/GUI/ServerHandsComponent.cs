@@ -491,7 +491,7 @@ namespace Content.Server.GameObjects
             var controller = PulledObject!.EnsureController<PullController>();
             controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
 
-            ChangePullingStatuses(true);
+            AddPullingStatuses();
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
@@ -606,29 +606,39 @@ namespace Content.Server.GameObjects
             }
         }
 
-        private void ChangePullingStatuses(bool pulling)
+        private void AddPullingStatuses()
         {
             if (PulledObject?.Owner != null &&
                 PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
             {
                 pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
-                    pulling
-                        ? "/Textures/Interface/StatusEffects/Pull/pulled.png"
-                        : "/Textures/Interface/StatusEffects/Pull/notpulled.png");
+                    "/Textures/Interface/StatusEffects/Pull/pulled.png");
             }
 
             if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
             {
                 ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
-                    pulling
-                        ? "/Textures/Interface/StatusEffects/Pull/pulling.png"
-                        : "/Textures/Interface/StatusEffects/Pull/notpulling.png");
+                    "/Textures/Interface/StatusEffects/Pull/pulling.png");
+            }
+        }
+
+        private void RemovePullingStatuses()
+        {
+            if (PulledObject?.Owner != null &&
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            {
+                pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
+            }
+
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            {
+                ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
             }
         }
 
         public override void StopPulling()
         {
-            ChangePullingStatuses(false);
+            RemovePullingStatuses();
             base.StopPulling();
         }
     }
