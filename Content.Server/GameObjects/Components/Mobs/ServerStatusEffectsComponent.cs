@@ -95,6 +95,14 @@ namespace Content.Server.GameObjects.Components.Mobs
 
                             buckle.TryUnbuckle(player);
                             break;
+                        case StatusEffect.Pulling:
+                            if (!player.TryGetComponent(out HandsComponent hands))
+                            {
+                                break;
+                            }
+
+                            hands.StopPulling();
+                            break;
                     }
 
                     break;
