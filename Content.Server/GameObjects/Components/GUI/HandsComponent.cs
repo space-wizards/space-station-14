@@ -428,7 +428,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public override ComponentState GetComponentState()
         {
-            var hands = new List<SharedHand>();
+            var hands = new SharedHand[_hands.Count];
 
             for (var i = 0; i < _hands.Count; i++)
             {
@@ -439,7 +439,7 @@ namespace Content.Server.GameObjects.Components.GUI
                         : HandLocation.Middle;
 
                 var hand = _hands[i].ToShared(i, location);
-                hands.Add(hand);
+                hands[i] = hand;
             }
 
             return new HandsComponentState(hands, ActiveHand);

@@ -34,10 +34,10 @@ namespace Content.Shared.GameObjects.Components.Items
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly List<SharedHand> Hands;
+        public readonly SharedHand[] Hands;
         public readonly string ActiveIndex;
 
-        public HandsComponentState(List<SharedHand> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(SharedHand[] hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
