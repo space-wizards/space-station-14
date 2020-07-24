@@ -1,7 +1,9 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,35 +13,15 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class RadioSystem : EntitySystem
     {
-        private List<RadioComponent> _activeRadios;
+        private IEntityQuery RadioQuery;
         private List<string> _messages;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _activeRadios = new List<RadioComponent>();
+            RadioQuery = new TypeEntityQuery(typeof(RadioComponent));
             _messages = new List<string>();
-        }
-
-        public void Subscribe(RadioComponent radio)
-        {
-            if (_activeRadios.Contains(radio))
-            {
-                return;
-            }
-
-            _activeRadios.Add(radio);
-        }
-
-        public void Unsubscribe(RadioComponent radio)
-        {
-            if (!_activeRadios.Contains(radio))
-            {
-                return;
-            }
-
-            _activeRadios.Remove(radio);
         }
 
         public void SpreadMessage(RadioComponent source, string message)
@@ -51,9 +33,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radio in _activeRadios)
+            foreach (var radioEntity in EntityManager.GetEntities(RadioQuery))
             {
-                if (radio == source)
+                var radio = radioEntity.GetComponent<RadioComponent>();
+                if (radio == source || !radio.RadioOn)
                 {
                     continue;
                 }

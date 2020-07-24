@@ -46,18 +46,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
 
-            RadioOn = true;
-            _radioSystem.Subscribe(this);
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            if(RadioOn)
-            {
-                _radioSystem.Unsubscribe(this);
-            }
+            RadioOn = false;
         }
 
         public void PassOnMessage(string message)
@@ -80,14 +69,12 @@ namespace Content.Server.GameObjects.Components.Interactable
             if(RadioOn)
             {
                 _notifyManager.PopupMessage(Owner, eventArgs.User, "The radio is now on.");
-                _radioSystem.Subscribe(this);
-                return true;
-            } else
+            }
+            else
             {
                 _notifyManager.PopupMessage(Owner, eventArgs.User, "The radio is now off.");
-                _radioSystem.Unsubscribe(this);
-                return true;
             }
+            return true;
         }
 
         public void HeardSpeech(string speech, IEntity source)
