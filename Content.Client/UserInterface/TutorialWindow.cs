@@ -81,9 +81,10 @@ Use hand/object in hand: [color=#a4885c]{22}[/color]
 Do wide attack: [color=#a4885c]{23}[/color]
 Use targeted entity: [color=#a4885c]{11}[/color]
 Throw held item: [color=#a4885c]{12}[/color]
-Pull entity: [color=#a4885c]{28}[/color]
+Pull entity: [color=#a4885c]{30}[/color]
 Move pulled entity: [color=#a4885c]{29}[/color]
 Examine entity: [color=#a4885c]{13}[/color]
+Point somewhere: [color=#a4885c]{28}[/color]
 Open entity context menu: [color=#a4885c]{14}[/color]
 Toggle combat mode: [color=#a4885c]{15}[/color]
 Toggle console: [color=#a4885c]{16}[/color]
@@ -117,6 +118,7 @@ Toggle sandbox window: [color=#a4885c]{21}[/color]",
                 Key(SmartEquipBelt),
                 Key(FocusOOC),
                 Key(FocusAdminChat),
+                Key(Point),
                 Key(TryPullObject),
                 Key(MovePulledObject)));
 

@@ -20,6 +20,8 @@ using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Shared.Interfaces;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {

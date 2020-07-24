@@ -265,3 +265,7 @@ binds:
   type: state
   key: Tab
   mod1: Shift
+- function: Point
+  type: State
+  key: MouseMiddle
+  mod1: Shift
