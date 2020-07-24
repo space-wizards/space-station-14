@@ -8,15 +8,15 @@ namespace Content.Server.Atmos
     {
         public override string Name => "MovedByPressure";
 
-        public float PressureResistance { get; set; } = 10f;
-        public float MoveResist { get; set; } = 10f;
+        public float PressureResistance { get; set; } = 1f;
+        public float MoveResist { get; set; } = 100f;
         public int LastHighPressureMovementAirCycle { get; set; } = 0;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(this, x => PressureResistance, "pressureResistance", 10f);
-            serializer.DataField(this, x => MoveResist, "moveResist", 1000f);
+            serializer.DataField(this, x => PressureResistance, "pressureResistance", 1f);
+            serializer.DataField(this, x => MoveResist, "moveResist", 100f);
         }
     }
 }
