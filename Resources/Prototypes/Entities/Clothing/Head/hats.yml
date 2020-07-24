@@ -1880,8 +1880,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/rig-syndie.rsi
+    state: icon
   - type: Icon
     sprite: Clothing/Head/rig-syndie.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Head/rig-syndie.rsi
 
