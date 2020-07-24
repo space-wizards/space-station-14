@@ -1,11 +1,9 @@
 #nullable enable
 using System;
-using System.Linq;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -22,6 +20,8 @@ namespace Content.Shared.Physics
         private ICollidableComponent? _puller;
 
         public bool GettingPulled => _puller != null;
+
+        private GridCoordinates? _movingTo;
 
         public void StartPull(ICollidableComponent? pull)
         {
@@ -48,15 +48,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            var dir = to.Position - from.Position;
-            var ray = new CollisionRay(from.Position, dir.Normalized, (int) CollisionGroup.Impassable);
-            var physicsManager = IoCManager.Resolve<IPhysicsManager>();
-            var rayResults = physicsManager.IntersectRayWithPredicate(from.ToMap(mapManager).MapId, ray, dir.Length).ToList();
-            var position = rayResults.Count > 0
-                ? new GridCoordinates(rayResults[0].HitPos, to.GridID)
-                : to;
-
-            var dist = _puller.Owner.Transform.GridPosition.Position - position.Position;
+            var dist = _puller.Owner.Transform.GridPosition.Position - to.Position;
 
             if (Math.Sqrt(dist.LengthSquared) > DistBeforeStopPull ||
                 Math.Sqrt(dist.LengthSquared) < 0.25f)
@@ -64,7 +56,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            ControlledComponent.Owner.Transform.GridPosition = position;
+            _movingTo = to;
         }
 
         public override void UpdateBeforeProcessing()
@@ -81,6 +73,11 @@ namespace Content.Shared.Physics
             {
                 _puller.Owner.GetComponent<ISharedHandsComponent>().StopPulling();
             }
+            else if (_movingTo.HasValue)
+            {
+                var diff = _movingTo.Value.Position - ControlledComponent.Owner.Transform.GridPosition.Position;
+                LinearVelocity = diff.Normalized * 5;
+            }
             else if (dist.Length > DistBeforePull)
             {
                 LinearVelocity = dist.Normalized * _puller.LinearVelocity.Length * 1.1f;
@@ -88,6 +85,27 @@ namespace Content.Shared.Physics
             else
             {
                 LinearVelocity = Vector2.Zero;
+            }
+        }
+
+        public override void UpdateAfterProcessing()
+        {
+            base.UpdateAfterProcessing();
+
+            if (ControlledComponent == null)
+            {
+                _movingTo = null;
+                return;
+            }
+
+            if (_movingTo == null)
+            {
+                return;
+            }
+
+            if (ControlledComponent.Owner.Transform.GridPosition.Position.EqualsApprox(_movingTo.Value.Position, 0.01))
+            {
+                _movingTo = null;
             }
         }
     }
