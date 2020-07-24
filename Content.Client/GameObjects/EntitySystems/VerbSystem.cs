@@ -440,7 +440,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
 
-                if (args.Function == EngineKeyFunctions.Use)
+                if (args.Function == EngineKeyFunctions.Use ||
+                    args.Function == ContentKeyFunctions.Point)
                 {
                     var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
 
