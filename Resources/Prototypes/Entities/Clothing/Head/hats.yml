@@ -39,32 +39,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatAssetProtectionRig
-  name: asset protection rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/asset_protection_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/asset_protection_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/asset_protection_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatAssetProtectionRigSealed
-  name: asset protection rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/asset_protection_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/asset_protection_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/asset_protection_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
   id: HatAtmosHelm
   name: atmos helm
   description: ''
@@ -285,8 +259,6 @@
     state: beret_hos
   - type: Clothing
     sprite: Clothing/Head/beret_hos.rsi
-
-
 
 - type: entity
   parent: HatBase
@@ -667,32 +639,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatCeRig
-  name: ce rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ce_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/ce_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/ce_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCeRigSealed
-  name: ce rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ce_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/ce_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/ce_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
   id: HatChaplainHood
   name: chaplain hood
   description: ''
@@ -888,32 +834,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatEngineeringRig
-  name: engineering rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/engineering_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/engineering_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/engineering_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatEngineeringRigSealed
-  name: engineering rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/engineering_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/engineering_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/engineering_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
   id: HatEngHelm
   name: eng helm
   description: ''
@@ -924,32 +844,6 @@
     sprite: Clothing/Head/eng_helm.rsi
   - type: Clothing
     sprite: Clothing/Head/eng_helm.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatEvaRig
-  name: EVA rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/eva_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/eva_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/eva_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatEvaRigSealed
-  name: EVA rig sealed
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/eva_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/eva_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/eva_rig_sealed.rsi
 
 - type: entity
   parent: HatBase
@@ -1041,32 +935,6 @@
     sprite: Clothing/Head/greysoft_flipped.rsi
   - type: Clothing
     sprite: Clothing/Head/greysoft_flipped.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHackerRig
-  name: hacker rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hacker_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/hacker_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hacker_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHackerRigSealed
-  name: hacker rig sealed
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hacker_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/hacker_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hacker_rig_sealed.rsi
 
 - type: entity
   parent: HatBase
@@ -1187,32 +1055,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatHazardRig
-  name: hazard rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hazard_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/hazard_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hazard_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatHazardRigSealed
-  name: hazard rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/hazard_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/hazard_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/hazard_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
   id: HatHeadslime
   name: headslime
   description: ''
@@ -1314,32 +1156,6 @@
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
   - type: Clothing
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatIhsRig
-  name: IHS rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ihs_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/ihs_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/ihs_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatIhsRigSealed
-  name: IHS rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ihs_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/ihs_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/ihs_rig_sealed.rsi
 
 - type: entity
   parent: HatBase
@@ -1447,58 +1263,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatMedicalRig
-  name: medical rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/medical_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/medical_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/medical_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMedicalRigSealed
-  name: medical rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/medical_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/medical_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/medical_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMercRig
-  name: merc rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/merc_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/merc_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/merc_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatMercRigSealed
-  name: merc rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/merc_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/merc_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/merc_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
   id: HatMimesoft
   name: mimesoft
   description: ''
@@ -1587,32 +1351,6 @@
     sprite: Clothing/Head/mouse_white.rsi
   - type: Clothing
     sprite: Clothing/Head/mouse_white.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNinjaRig
-  name: ninja rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ninja_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/ninja_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/ninja_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatNinjaRigSealed
-  name: ninja rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/ninja_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/ninja_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/ninja_rig_sealed.rsi
 
 - type: entity
   parent: HatBase
@@ -2227,32 +1965,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatScienceRig
-  name: science rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/science_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/science_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/science_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatScienceRigSealed
-  name: science rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/science_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/science_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/science_rig_sealed.rsi
-
-- type: entity
-  parent: HatBase
   id: HatSecsoft
   name: secsoft
   description: ''
@@ -2289,32 +2001,6 @@
     sprite: Clothing/Head/security.rsi
   - type: Clothing
     sprite: Clothing/Head/security.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSecurityRig
-  name: security rig
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/security_rig.rsi
-  - type: Icon
-    sprite: Clothing/Head/security_rig.rsi
-  - type: Clothing
-    sprite: Clothing/Head/security_rig.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatSecurityRigSealed
-  name: security rig (sealed)
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/security_rig_sealed.rsi
-  - type: Icon
-    sprite: Clothing/Head/security_rig_sealed.rsi
-  - type: Clothing
-    sprite: Clothing/Head/security_rig_sealed.rsi
 
 - type: entity
   parent: HatBase
