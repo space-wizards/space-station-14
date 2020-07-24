@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -23,6 +28,8 @@ namespace Content.Server.Atmos
     public class TileAtmosphere
     {
         [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
+        [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
+        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
         private static long _eqQueueCycleCtr = 0;
         private int _archivedCycle = 0;
@@ -90,6 +97,20 @@ namespace Content.Server.Atmos
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
                         GridIndices.ToGridCoordinates(GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathF.Clamp(PressureDifference / 10, 10, 100)));
+            }
+
+
+            foreach (var entity in _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(GridIndex).ParentMapId, Box2.UnitCentered.Translated(GridIndices)))
+            {
+                if (!entity.TryGetComponent(out ICollidableComponent physics)
+                    ||  !entity.TryGetComponent(out MovedByPressureComponent pressure))
+                    continue;
+
+                var pressureMovements = physics.EnsureController<HighPressureMovementController>();
+                if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
+                {
+                    pressureMovements.ExperiencePressureDifference(_gridAtmosphereComponent.UpdateCounter, PressureDifference, _pressureDirection.GetOpposite(), 0, PressureSpecificTarget);
+                }
             }
 
             if (PressureDifference > 100)
@@ -331,8 +352,8 @@ namespace Content.Server.Atmos
                                 tile._tileAtmosInfo.CurrentTransferDirection != (Direction)(-1))
                             {
                                 tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
-                                tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection]._tileAtmosInfo
-                                    .CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
+                                if(tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var adjacent))
+                                    adjacent._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
                                 tile._tileAtmosInfo.CurrentTransferAmount = 0;
                             }
                         }
@@ -400,8 +421,9 @@ namespace Content.Server.Atmos
                                 tile._tileAtmosInfo.CurrentTransferDirection != (Direction) (-1))
                             {
                                 tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
-                                tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection]._tileAtmosInfo
-                                    .CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
+
+                                if(tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var adjacent))
+                                    adjacent._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
                                 tile._tileAtmosInfo.CurrentTransferAmount = 0;
                             }
                         }
@@ -448,8 +470,7 @@ namespace Content.Server.Atmos
             foreach (var direction in Cardinal)
             {
                 var amount = transferDirections[direction];
-                var tile = _adjacentTiles[direction];
-                if (tile?.Air == null) continue;
+                if (!_adjacentTiles.TryGetValue(direction, out var tile) || tile.Air == null) continue;
                 if (amount > 0)
                 {
                     // Prevent infinite recursion.
@@ -586,7 +607,7 @@ namespace Content.Server.Atmos
             return false;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ExplosivelyDepressurize(int cycleNum)
         {
             if (Air == null) return;
@@ -666,8 +687,7 @@ namespace Content.Server.Atmos
                 var inHdp = _gridAtmosphereComponent.HasHighPressureDelta(tile);
                 if(!inHdp)
                     _gridAtmosphereComponent.AddHighPressureDelta(tile);
-                var tile2 = tile._adjacentTiles[tile._tileAtmosInfo.CurrentTransferDirection];
-                if (tile2?.Air == null) continue;
+                if (!tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var tile2) || tile2.Air == null) continue;
                 var sum = tile2.Air.TotalMoles;
                 totalGasesRemoved += sum;
                 tile._tileAtmosInfo.CurrentTransferAmount += sum;
@@ -718,7 +738,8 @@ namespace Content.Server.Atmos
         {
             foreach (var direction in Cardinal)
             {
-                _adjacentTiles[direction] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
+                if(!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction)))
+                    _adjacentTiles[direction] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
             }
         }
 

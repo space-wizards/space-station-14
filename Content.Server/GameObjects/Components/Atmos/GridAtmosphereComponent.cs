@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "GridAtmosphere";
 
         private int _timer = 0;
-        private int _updateCounter = 0;
+        public int UpdateCounter { get; private set; } = 0;
         private IMapGrid _grid;
 
         [ViewVariables]
@@ -81,6 +81,15 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
+
+            _grid = Owner.GetComponent<IMapGridComponent>().Grid;
+
+            RepopulateTiles();
+        }
+
+        public override void OnAdd()
+        {
+            base.OnAdd();
 
             _grid = Owner.GetComponent<IMapGridComponent>().Grid;
 
@@ -271,7 +280,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
             }
 
-            _updateCounter++;
+            UpdateCounter++;
         }
 
         public void ProcessHighPressureDelta()
@@ -292,7 +301,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var tile in _activeTiles.ToArray())
             {
-                tile.EqualizePressureInZone(_updateCounter);
+                tile.EqualizePressureInZone(UpdateCounter);
 
                 // Process the rest next time.
                 if (watch.Elapsed.Seconds >= 0.1f)
@@ -307,7 +316,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             foreach (var tile in _activeTiles.ToArray())
             {
-                tile.ProcessCell(_updateCounter);
+                tile.ProcessCell(UpdateCounter);
 
                 // Process the rest of tiles next time.
                 if (watch.Elapsed.Seconds >= 0.1f)
