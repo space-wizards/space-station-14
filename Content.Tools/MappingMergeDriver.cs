@@ -1,4 +1,6 @@
-﻿namespace Content.Tools
+﻿using System;
+
+namespace Content.Tools
 {
     internal static class MappingMergeDriver
     {
@@ -9,6 +11,8 @@
             var other = new Map(args[3]);
 
             ours.Merge(other);
+
+            Environment.Exit(0);
         }
     }
 }
