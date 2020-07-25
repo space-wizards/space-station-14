@@ -13,14 +13,14 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class RadioSystem : EntitySystem
     {
-        private IEntityQuery RadioQuery;
+        private IEntityQuery EntityQuery;
         private List<string> _messages;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            RadioQuery = new TypeEntityQuery(typeof(RadioComponent));
+            EntityQuery = new TypeEntityQuery(typeof(RadioComponent));
             _messages = new List<string>();
         }
 
@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radioEntity in EntityManager.GetEntities(RadioQuery))
+            foreach (var radioEntity in EntityManager.GetEntities(EntityQuery))
             {
                 var radio = radioEntity.GetComponent<RadioComponent>();
                 if (radioEntity == source || !radio.RadioOn)
