@@ -34,7 +34,6 @@ namespace Content.Server.Atmos
 
             var transform = ControlledComponent.Owner.Transform;
             var pressureComponent = ControlledComponent.Owner.GetComponent<MovedByPressureComponent>();
-            var negative = pressureDifference < 0;
             var maxForce = MathF.Sqrt(pressureDifference) * 2.25f;
             var moveProb = 100f;
 
@@ -57,7 +56,7 @@ namespace Content.Server.Atmos
                 }
                 else
                 {
-                    LinearVelocity = direction.ToVec() * moveForce * (negative ? -1 : 1);
+                    LinearVelocity = direction.ToVec() * moveForce;
                 }
 
                 pressureComponent.LastHighPressureMovementAirCycle = cycle;
