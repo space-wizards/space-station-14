@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -8,49 +11,18 @@ namespace Content.Server.GameObjects
     /// Resistance set used by damageable objects.
     /// For each damage type, has a coefficient, damage reduction and "included in total" value.
     /// </summary>
-    public class ResistanceSet
+    public class ResistanceSet : IExposeData
     {
-        Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
-        static Dictionary<string, ResistanceSet> _resistanceSets = new Dictionary<string, ResistanceSet>();
+        [ViewVariables]
+        private readonly Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
 
-        //TODO: make it load from YAML instead of hardcoded like this
-        public ResistanceSet()
+        public void ExposeData(ObjectSerializer serializer)
         {
-            _resistances.Add(DamageType.Total, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Acid, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Brute, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Heat, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Cold, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Toxic, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Electric, new ResistanceSetSettings(1f, 0, true));
-        }
-
-        /// <summary>
-        /// Loads a resistance set with the given name.
-        /// </summary>
-        /// <param name="setName">Name of the resistance set.</param>
-        /// <returns>Resistance set by given name</returns>
-        public static ResistanceSet GetResistanceSet(string setName)
-        {
-            ResistanceSet resistanceSet = null;
-
-            if (!_resistanceSets.TryGetValue(setName, out resistanceSet))
+            foreach (DamageType damageType in Enum.GetValues(typeof(DamageType)))
             {
-                resistanceSet = Load(setName);
-            }
-
-            return resistanceSet;
-        }
-
-        static ResistanceSet Load(string setName)
-        {
-            //TODO: only creates a standard set RN, should be YAMLed
-
-            ResistanceSet resistanceSet = new ResistanceSet();
-
-            _resistanceSets.Add(setName, resistanceSet);
-
-            return resistanceSet;
+                var stringID = damageType.ToString().ToLower();
+                _resistances[damageType] = serializer.ReadDataField(stringID, new ResistanceSetSettings());
+            } 
         }
 
         /// <summary>
@@ -78,23 +50,30 @@ namespace Content.Server.GameObjects
         {
             //Damage that goes straight to total (for whatever reason) never applies twice
 
-            return damageType == DamageType.Total ? false : _resistances[damageType].AppliesToTotal;
+            return damageType != DamageType.Total && _resistances[damageType].AppliesToTotal;
         }
 
         /// <summary>
         /// Settings for a specific damage type in a resistance set.
         /// </summary>
-        struct ResistanceSetSettings
+        public class ResistanceSetSettings : IExposeData
         {
             public float Coefficient { get; private set; }
             public int DamageReduction { get; private set; }
             public bool AppliesToTotal { get; private set; }
 
-            public ResistanceSetSettings(float coefficient, int damageReduction, bool appliesInTotal)
+            public ResistanceSetSettings(float coefficient = 1, int damageReduction = 0, bool appliesInTotal = true)
             {
                 Coefficient = coefficient;
                 DamageReduction = damageReduction;
                 AppliesToTotal = appliesInTotal;
+            }
+
+            public void ExposeData(ObjectSerializer serializer)
+            {
+                serializer.DataField(this, x => Coefficient, "coefficient", 1);
+                serializer.DataField(this, x => DamageReduction, "damageReduction", 0);
+                serializer.DataField(this, x => AppliesToTotal, "appliesToTotal", true);
             }
         }
     }

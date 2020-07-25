@@ -47,12 +47,7 @@ namespace Content.Server.GameObjects
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            // TODO: Writing.
-            serializer.DataReadFunction("resistanceset", "honk", name =>
-            {
-                Resistances = ResistanceSet.GetResistanceSet(name);
-            });
+            serializer.DataField(this, x => Resistances, "resistances", ResistanceSet.DefaultResistanceSet);
         }
 
         public bool IsDead()
