@@ -46,8 +46,8 @@
     soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
-    - type: BarrelBoltVisualizer2D
-    - type: MagVisualizer2D
+    - type: BarrelBoltVisualizer
+    - type: MagVisualizer
       magState: mag
       steps: 4
       zeroVisible: true

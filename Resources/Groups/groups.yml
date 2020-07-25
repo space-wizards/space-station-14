@@ -86,6 +86,8 @@
   - deleteewc
   - asay
   - mapping
+  - addhand
+  - removehand
   CanViewVar: true
   CanAdminPlace: true
 
@@ -159,6 +161,8 @@
   - sudo
   - asay
   - mapping
+  - addhand
+  - removehand
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

@@ -45,16 +45,16 @@ namespace Content.Shared.Chemistry
         /// <inheritdoc />
         public void ExposeData(ObjectSerializer serializer)
         {
-            serializer.DataField(ref _contents, "reagents", new List<ReagentQuantity>());
-
-            if (serializer.Reading)
-            {
-                TotalVolume = ReagentUnit.New(0);
-                foreach (var reagent in _contents)
+            serializer.DataReadWriteFunction(
+                "reagents",
+                new List<ReagentQuantity>(),
+                quantities =>
                 {
-                    TotalVolume += reagent.Quantity;
-                }
-            }
+                    _contents = quantities;
+                    TotalVolume = ReagentUnit.New(0);
+                    quantities.ForEach(reagent => TotalVolume += reagent.Quantity);
+                },
+                () => _contents);
         }
 
         /// <summary>

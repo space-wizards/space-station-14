@@ -5,7 +5,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: qm
   - type: Icon
     state: qm_door

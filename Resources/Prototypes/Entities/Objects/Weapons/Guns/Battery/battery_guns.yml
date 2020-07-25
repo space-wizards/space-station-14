@@ -34,7 +34,7 @@
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 5
       zeroVisible: true
@@ -75,7 +75,7 @@
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 5
       zeroVisible: false
@@ -117,7 +117,7 @@
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 5
       zeroVisible: true
@@ -159,7 +159,7 @@
     soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 5
       zeroVisible: true

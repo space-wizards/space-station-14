@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -490,6 +493,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
         {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                return false;
+            }
+
             if (!eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface) ||
                 !placeableSurface.IsPlaceable)
             {

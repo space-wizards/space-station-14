@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
@@ -800,7 +801,7 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(mob);
+            pdaComponent.SetPDAOwner(characterName);
             var mindComponent = mob.GetComponent<MindComponent>();
             if (mindComponent.HasMind) //Redundancy checks.
             {

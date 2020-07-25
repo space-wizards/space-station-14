@@ -6,7 +6,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: hos
   - type: Icon
     state: hos_door
@@ -19,7 +19,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: warden
   - type: Icon
     state: warden_door
@@ -32,7 +32,7 @@
   components:
   - type: Appearance
     visuals:
-    - type: StorageVisualizer2D
+    - type: StorageVisualizer
       state: sec
   - type: Icon
     state: sec_door

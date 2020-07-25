@@ -1,6 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
@@ -100,7 +102,7 @@ namespace Content.Server.GameObjects.Components
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
 
@@ -132,24 +134,6 @@ namespace Content.Server.GameObjects.Components
         public override ComponentState GetComponentState()
         {
             return new ItemComponentState(EquippedPrefix);
-        }
-
-        public void Fumble()
-        {
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physicsComponent))
-            {
-                physicsComponent.LinearVelocity += RandomOffset();
-            }
-        }
-
-        private Vector2 RandomOffset()
-        {
-            return new Vector2(RandomOffset(), RandomOffset());
-            float RandomOffset()
-            {
-                var size = 15.0F;
-                return (_robustRandom.NextFloat() * size) - size / 2;
-            }
         }
 
         public void OnExplosion(ExplosionEventArgs eventArgs)

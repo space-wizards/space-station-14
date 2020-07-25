@@ -94,8 +94,11 @@ namespace Content.Client.GameObjects.EntitySystems
             _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
             _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
 
-            _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
-            RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            if (!entity.Uid.IsClientSide())
+            {
+                _currentVerbListRoot.List.AddChild(new Label {Text = "Waiting on Server..."});
+                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+            }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
@@ -437,8 +440,16 @@ namespace Content.Client.GameObjects.EntitySystems
                     return;
                 }
 
-                if (args.Function == EngineKeyFunctions.Use)
+                if (args.Function == EngineKeyFunctions.Use ||
+                    args.Function == ContentKeyFunctions.Point)
                 {
+                    // TODO: Remove an entity from the menu when it is deleted
+                    if (_entity.Deleted)
+                    {
+                        _master.CloseAllMenus();
+                        return;
+                    }
+
                     var inputSys = _master.EntitySystemManager.GetEntitySystem<InputSystem>();
 
                     var func = args.Function;
