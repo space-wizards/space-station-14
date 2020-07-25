@@ -326,8 +326,8 @@ namespace Content.Server.GameObjects.Components.Buckle
 
             if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
             {
+                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
                 Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
-                Owner.Transform.DetachParent();
             }
 
             BuckledTo = null;
