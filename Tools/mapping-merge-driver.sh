@@ -1,1 +1,1 @@
-dotnet run MappingMergeDriver "$@"
+dotnet run --project ./Content.Tools "$@"
