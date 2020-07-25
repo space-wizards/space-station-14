@@ -13,9 +13,7 @@ namespace Content.Tools
             var fileName = args[4];
 
             ours.Merge(other);
-
-            var writer = new StreamWriter(fileName);
-            ours.Save(writer);
+            ours.Save(fileName);
 
             Environment.Exit(0);
         }

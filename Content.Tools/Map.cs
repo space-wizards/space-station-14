@@ -93,8 +93,9 @@ namespace Content.Tools
             Parse();
         }
 
-        public void Save(TextWriter writer)
+        public void Save(string fileName)
         {
+            var writer = new StreamWriter(fileName);
             var document = new YamlDocument(Root);
             var stream = new YamlStream(document);
 
