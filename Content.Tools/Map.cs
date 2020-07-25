@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Robust.Shared.Utility;
+using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Tools
@@ -45,7 +47,7 @@ namespace Content.Tools
             {
                 uid = MaxId + 1;
                 MaxId++;
-                node.Children["uid"] = uid.ToString();
+                node.Children["uid"] = uid.ToString(CultureInfo.InvariantCulture);
             }
 
             GetEntitiesNode().Add(node);
@@ -90,11 +92,13 @@ namespace Content.Tools
 
         public void Save(string fileName)
         {
-            var writer = new StreamWriter(fileName);
+            using var writer = new StreamWriter(fileName);
             var document = new YamlDocument(Root);
             var stream = new YamlStream(document);
+            var emitter = new Emitter(writer);
+            var fixer = new TagFixer(emitter);
 
-            stream.Save(writer, false);
+            stream.Save(fixer, false);
 
             writer.Flush();
         }
