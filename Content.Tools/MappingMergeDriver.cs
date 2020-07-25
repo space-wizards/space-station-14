@@ -6,14 +6,14 @@ namespace Content.Tools
     {
         public static void Main(string[] args)
         {
-            var ourPath = args[1];
+            var ourPath = args[0];
             var ours = new Map(ourPath);
-            var based = args[2];
-            var other = new Map(args[3]);
-            var fileName = args[4];
+            var based = args[1];
+            var other = new Map(args[2]);
+            var fileName = args[3];
 
             ours.Merge(other);
-            ours.Save(ourPath);
+            ours.Save(fileName);
 
             Environment.Exit(0);
         }
