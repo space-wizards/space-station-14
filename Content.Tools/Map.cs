@@ -96,7 +96,7 @@ namespace Content.Tools
             var document = new YamlDocument(Root);
             var stream = new YamlStream(document);
             var emitter = new Emitter(writer);
-            var fixer = new TagFixer(emitter);
+            var fixer = new TypeTagPreserver(emitter);
 
             stream.Save(fixer, false);
 

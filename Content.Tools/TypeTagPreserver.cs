@@ -3,11 +3,11 @@ using YamlDotNet.Core.Events;
 
 namespace Content.Tools
 {
-    public class TagFixer : IEmitter
+    public class TypeTagPreserver : IEmitter
     {
         private readonly IEmitter _emitter;
 
-        public TagFixer(IEmitter emitter)
+        public TypeTagPreserver(IEmitter emitter)
         {
            _emitter = emitter;
         }
