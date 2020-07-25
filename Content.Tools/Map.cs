@@ -95,6 +95,8 @@ namespace Content.Tools
             var stream = new YamlStream(document);
 
             stream.Save(writer, false);
+
+            writer.Flush();
         }
     }
 }
