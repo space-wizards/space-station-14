@@ -248,14 +248,19 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
                 Owner.Transform.GridPosition, AudioParams.Default, 5);
 
-                var health = shooter.GetComponent<DamageableComponent>();
-                health.TakeDamage(DamageType.Brute, 10);
-                health.TakeDamage(DamageType.Heat, 5);
+                if (shooter.TryGetComponent(out DamageableComponent health))
+                {
+                    health.TakeDamage(DamageType.Brute, 10);
+                    health.TakeDamage(DamageType.Heat, 5);
+                }
 
-                var stun = shooter.GetComponent<StunnableComponent>();
-                stun.Paralyze(3f);
+                if (shooter.TryGetComponent(out StunnableComponent stun))
+                {
+                    stun.Paralyze(3f);
+                }
+
                 //I think maybe this should probably eject the magazine
-                ///if the gun is one that uses mags.
+                //if the gun is one that uses mags.
                 _notifyManager.PopupMessage(shooter,shooter, Loc.GetString("The gun blows up in your face!"));
                 Owner.Delete();
                 return;
