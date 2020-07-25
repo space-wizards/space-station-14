@@ -774,10 +774,7 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
-            if(jobPrototype.ID == "Clown")
-            {
-                mob.AddComponent<ClumsyComponent>();
-            }
+            jobPrototype.Special?.AfterEquip(mob);
         }
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
