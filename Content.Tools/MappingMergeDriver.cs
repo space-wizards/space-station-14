@@ -13,7 +13,7 @@ namespace Content.Tools
             var fileName = args[3];
 
             ours.Merge(other);
-            ours.Save(fileName);
+            ours.Save(ourPath);
 
             Environment.Exit(0);
         }

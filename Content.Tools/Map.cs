@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Robust.Shared.Utility;
@@ -74,18 +75,9 @@ namespace Content.Tools
             MaxId = Entities.Max(entry => entry.Key);
         }
 
-        private void Parse()
-        {
-            var oldMaxId = MaxId;
-
-            Initialize();
-
-            DebugTools.Assert(oldMaxId == MaxId);
-        }
-
         public void Merge(Map other)
         {
-            foreach (var (id, otherEntity) in other.ParseEntities())
+            foreach (var (id, otherEntity) in other.Entities)
             {
                 if (!Entities.TryGetValue(id, out var thisEntity) ||
                     !thisEntity.Equals(otherEntity))
@@ -94,8 +86,6 @@ namespace Content.Tools
                     return;
                 }
             }
-
-            Parse();
         }
 
         public void Save(string fileName)
@@ -104,7 +94,7 @@ namespace Content.Tools
             var document = new YamlDocument(Root);
             var stream = new YamlStream(document);
 
-            stream.Save(writer);
+            stream.Save(writer, false);
         }
     }
 }
