@@ -418,45 +418,6 @@
 
 - type: entity
   parent: HatBase
-  id: HatCat
-  name: cat
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cat.rsi
-  - type: Icon
-    sprite: Clothing/Head/cat.rsi
-  - type: Clothing
-    sprite: Clothing/Head/cat.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCat2
-  name: cat2
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cat2.rsi
-  - type: Icon
-    sprite: Clothing/Head/cat2.rsi
-  - type: Clothing
-    sprite: Clothing/Head/cat2.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatCat3
-  name: cat3
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/cat3.rsi
-  - type: Icon
-    sprite: Clothing/Head/cat3.rsi
-  - type: Clothing
-    sprite: Clothing/Head/cat3.rsi
-
-- type: entity
-  parent: HatBase
   id: HatCentcom
   name: centcom
   description: ''
@@ -779,19 +740,6 @@
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
   - type: Clothing
     sprite: Clothing/Head/ihsvoidhelm_on.rsi
-
-- type: entity
-  parent: HatBase
-  id: HatKitten
-  name: kitten
-  description: ''
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/kitten.rsi
-  - type: Icon
-    sprite: Clothing/Head/kitten.rsi
-  - type: Clothing
-    sprite: Clothing/Head/kitten.rsi
 
 - type: entity
   parent: HatBase

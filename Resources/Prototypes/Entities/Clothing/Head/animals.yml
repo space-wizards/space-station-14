@@ -101,3 +101,42 @@
     sprite: Clothing/Head/pai-mouse.rsi
   - type: Clothing
     sprite: Clothing/Head/pai-mouse.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatCatGrey
+  name: grey cat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/cat.rsi
+  - type: Icon
+    sprite: Clothing/Head/cat.rsi
+  - type: Clothing
+    sprite: Clothing/Head/cat.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatCatBrown
+  name: brown cat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/cat2.rsi
+  - type: Icon
+    sprite: Clothing/Head/cat2.rsi
+  - type: Clothing
+    sprite: Clothing/Head/cat2.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatCatBlack
+  name: black cat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/cat3.rsi
+  - type: Icon
+    sprite: Clothing/Head/cat3.rsi
+  - type: Clothing
+    sprite: Clothing/Head/cat3.rsi
