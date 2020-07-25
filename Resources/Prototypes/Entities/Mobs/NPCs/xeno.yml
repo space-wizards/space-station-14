@@ -10,9 +10,6 @@
   - type: AiController
     logic: Xeno
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
   - type: InteractionOutline
   - type: Sprite
@@ -58,7 +55,6 @@
     damage: 90
   - type: Appearance
     visuals:
-    - type: DamageStateVisualizer2D
+    - type: DamageStateVisualizer
       normal: running
       dead: dead
-      

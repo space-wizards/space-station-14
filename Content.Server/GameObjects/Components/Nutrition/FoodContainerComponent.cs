@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -54,8 +55,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
+            if (!eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            {
+                return false;
+            }
 
-            var hands = eventArgs.User.TryGetComponent(out HandsComponent handsComponent);
             var itemToSpawn = _entityManager.SpawnEntity(GetRandomPrototype(), Owner.Transform.GridPosition);
             handsComponent.PutInHandOrDrop(itemToSpawn.GetComponent<ItemComponent>());
             _count--;

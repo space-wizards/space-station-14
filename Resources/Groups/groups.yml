@@ -86,6 +86,8 @@
   - deleteewc
   - asay
   - mapping
+  - addhand
+  - removehand
   - tilepry
   - anchor
   - unanchor
@@ -163,6 +165,8 @@
   - sudo
   - asay
   - mapping
+  - addhand
+  - removehand
   - tilepry
   - anchor
   - unanchor

@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.EntitySystems.Click;

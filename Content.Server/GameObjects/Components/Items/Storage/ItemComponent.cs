@@ -1,6 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
@@ -110,7 +112,7 @@ namespace Content.Server.GameObjects.Components
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
 
