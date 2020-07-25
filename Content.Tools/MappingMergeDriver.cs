@@ -8,7 +8,7 @@ namespace Content.Tools
         {
             var ourPath = args[0];
             var ours = new Map(ourPath);
-            var based = args[1];
+            var based = args[1]; // On what?
             var other = new Map(args[2]);
             var fileName = args[3];
 

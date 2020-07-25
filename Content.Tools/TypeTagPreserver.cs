@@ -5,12 +5,12 @@ namespace Content.Tools
 {
     public class TypeTagPreserver : IEmitter
     {
-        private readonly IEmitter _emitter;
-
         public TypeTagPreserver(IEmitter emitter)
         {
-           _emitter = emitter;
+           Emitter = emitter;
         }
+
+        private IEmitter Emitter { get; }
 
         public void Emit(ParsingEvent @event)
         {
@@ -19,7 +19,7 @@ namespace Content.Tools
                 @event = new MappingStart(mapping.Anchor, mapping.Tag, false, mapping.Style, mapping.Start, mapping.End);
             }
 
-            _emitter.Emit(@event);
+            Emitter.Emit(@event);
         }
     }
 }
