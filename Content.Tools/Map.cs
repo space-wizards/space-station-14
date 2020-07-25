@@ -10,25 +10,23 @@ namespace Content.Tools
     {
         public Map(YamlStream stream)
         {
-            Stream = stream;
+            Root = stream.Documents[0].RootNode;
             Parse();
         }
 
         public Map(string path)
         {
             using var reader = new StreamReader(path);
-            var yaml = new YamlStream();
+            var stream = new YamlStream();
 
-            yaml.Load(reader);
+            stream.Load(reader);
 
-            Stream = yaml;
+            Root = stream.Documents[0].RootNode;
 
             Parse();
         }
 
-        public YamlStream Stream { get; }
-
-        public YamlNode Root => Stream.Documents[0].RootNode;
+        private YamlNode Root { get; }
 
         private Dictionary<uint, YamlMappingNode> Entities { get; set; }
 
@@ -93,6 +91,14 @@ namespace Content.Tools
             }
 
             Parse();
+        }
+
+        public void Save(TextWriter writer)
+        {
+            var document = new YamlDocument(Root);
+            var stream = new YamlStream(document);
+
+            stream.Save(writer);
         }
     }
 }
