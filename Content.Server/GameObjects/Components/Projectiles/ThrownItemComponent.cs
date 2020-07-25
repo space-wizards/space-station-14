@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.Components
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (!_shouldCollide) return;
-            if (entity.TryGetComponent(out CollidableComponent collid)) 
+            if (entity.TryGetComponent(out CollidableComponent collid))
             {
                 if (!collid.Hard) // ignore non hard
                     return;
@@ -65,10 +65,13 @@ namespace Content.Server.GameObjects.Components
             {
                 body.PhysicsShapes[0].CollisionMask &= (int) ~CollisionGroup.ThrownItem;
 
-                var physics = Owner.GetComponent<IPhysicsComponent>();
-                physics.LinearVelocity = Vector2.Zero;
-                physics.Status = BodyStatus.OnGround;
+                if (body.TryGetController(out ThrownController controller))
+                {
+                    controller.LinearVelocity = Vector2.Zero;
+                }
+
                 body.Status = BodyStatus.OnGround;
+
                 Owner.RemoveComponent<ThrownItemComponent>();
                 EntitySystem.Get<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.GridPosition);
             }
@@ -82,11 +85,14 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        public void StartThrow(Vector2 initialImpulse)
+        public void StartThrow(Vector2 direction, float speed)
         {
             var comp = Owner.GetComponent<IPhysicsComponent>();
             comp.Status = BodyStatus.InAir;
-            comp.Momentum = initialImpulse;
+
+            var controller = comp.EnsureController<ThrownController>();
+            controller.Push(direction, speed);
+
             StartStopTimer();
         }
 
@@ -109,6 +115,13 @@ namespace Content.Server.GameObjects.Components
             }
 
             StopThrow();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Owner.EnsureComponent<CollidableComponent>().EnsureController<ThrownController>();
         }
     }
 }

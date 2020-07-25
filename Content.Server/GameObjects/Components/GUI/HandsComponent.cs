@@ -1,10 +1,13 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.GameObjects.Components;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.BodySystem;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -18,72 +21,67 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
-    public class HandsComponent : SharedHandsComponent, IHandsComponent
+    public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 #pragma warning restore 649
 
-        private string _activeIndex;
+        private string? _activeHand;
+        private uint _nextHand;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string ActiveIndex
+        public string? ActiveHand
         {
-            get => _activeIndex;
+            get => _activeHand;
             set
             {
-                if (!_hands.ContainsKey(value))
+                if (value != null && GetHand(value) == null)
                 {
                     throw new ArgumentException($"No hand '{value}'");
                 }
 
-                _activeIndex = value;
+                _activeHand = value;
                 Dirty();
             }
         }
 
-        [ViewVariables] private readonly Dictionary<string, ContainerSlot> _hands = new Dictionary<string, ContainerSlot>();
-        [ViewVariables] private List<string> _orderedHands = new List<string>();
+        [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
 
-        [ViewVariables] public int Count => _orderedHands.Count;
+        [ViewVariables] public int Count => _hands.Count;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        // TODO: This does not serialize what objects are held.
+        protected override void Startup()
         {
-            base.ExposeData(serializer);
-
-            serializer.DataReadWriteFunction("hands",
-                new List<string>(0),
-                hands => hands.ForEach(AddHand),
-                () => _orderedHands);
-            serializer.DataField(ref _activeIndex, "defaultHand", _orderedHands.LastOrDefault());
+            base.Startup();
+            ActiveHand = _hands.LastOrDefault()?.Name;
         }
 
         public IEnumerable<ItemComponent> GetAllHeldItems()
         {
-            foreach (var slot in _hands.Values)
+            foreach (var hand in _hands)
             {
-                if (slot.ContainedEntity != null)
+                if (hand.Entity != null)
                 {
-                    yield return slot.ContainedEntity.GetComponent<ItemComponent>();
+                    yield return hand.Entity.GetComponent<ItemComponent>();
                 }
             }
         }
 
         public bool IsHolding(IEntity entity)
         {
-            foreach (var slot in _hands.Values)
+            foreach (var hand in _hands)
             {
-                if (slot.ContainedEntity == entity)
+                if (hand.Entity == entity)
                 {
                     return true;
                 }
@@ -91,28 +89,38 @@ namespace Content.Server.GameObjects
             return false;
         }
 
-        public ItemComponent GetHand(string index)
+        private Hand? GetHand(string name)
         {
-            var slot = _hands[index];
-            return slot.ContainedEntity?.GetComponent<ItemComponent>();
+            return _hands.FirstOrDefault(hand => hand.Name == name);
         }
 
-        public ItemComponent GetActiveHand => GetHand(ActiveIndex);
+        public ItemComponent? GetItem(string handName)
+        {
+            return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
+        }
+
+        public ItemComponent? GetActiveHand => ActiveHand == null
+            ? null
+            : GetItem(ActiveHand);
 
         /// <summary>
         ///     Enumerates over the hand keys, returning the active hand first.
         /// </summary>
         public IEnumerable<string> ActivePriorityEnumerable()
         {
-            yield return ActiveIndex;
-            foreach (var hand in _hands.Keys)
+            if (ActiveHand != null)
             {
-                if (hand == ActiveIndex)
+                yield return ActiveHand;
+            }
+
+            foreach (var hand in _hands)
+            {
+                if (hand.Name == ActiveHand)
                 {
                     continue;
                 }
 
-                yield return hand;
+                yield return hand.Name;
             }
         }
 
@@ -120,7 +128,7 @@ namespace Content.Server.GameObjects
         {
             foreach (var hand in ActivePriorityEnumerable())
             {
-                if (PutInHand(item, hand, fallback: false))
+                if (PutInHand(item, hand, false))
                 {
                     return true;
                 }
@@ -131,14 +139,14 @@ namespace Content.Server.GameObjects
 
         public bool PutInHand(ItemComponent item, string index, bool fallback = true)
         {
-            if (!CanPutInHand(item, index))
+            var hand = GetHand(index);
+            if (!CanPutInHand(item, index) || hand == null)
             {
                 return fallback && PutInHand(item);
             }
 
-            var slot = _hands[index];
             Dirty();
-            var success = slot.Insert(item.Owner);
+            var success = hand.Container.Insert(item.Owner);
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
@@ -152,14 +160,16 @@ namespace Content.Server.GameObjects
         public void PutInHandOrDrop(ItemComponent item)
         {
             if (!PutInHand(item))
+            {
                 item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
+            }
         }
 
         public bool CanPutInHand(ItemComponent item)
         {
-            foreach (var hand in ActivePriorityEnumerable())
+            foreach (var handName in ActivePriorityEnumerable())
             {
-                if (CanPutInHand(item, hand))
+                if (CanPutInHand(item, handName))
                 {
                     return true;
                 }
@@ -170,49 +180,53 @@ namespace Content.Server.GameObjects
 
         public bool CanPutInHand(ItemComponent item, string index)
         {
-            var slot = _hands[index];
-            return slot.CanInsert(item.Owner);
+            return GetHand(index)?.Container.CanInsert(item.Owner) == true;
         }
 
-        public string FindHand(IEntity entity)
+        public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
         {
-            foreach (var (index, slot) in _hands)
+            handName = null;
+
+            foreach (var hand in _hands)
             {
-                if (slot.ContainedEntity == entity)
+                if (hand.Entity == entity)
                 {
-                    return index;
+                    handName = hand.Name;
+                    return true;
                 }
             }
 
-            return null;
+            return false;
         }
 
         public bool Drop(string slot, GridCoordinates coords, bool doMobChecks = true)
         {
-            if (!CanDrop(slot))
+            var hand = GetHand(slot);
+            if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
             }
 
-            var inventorySlot = _hands[slot];
-            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+            var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
+            if (!hand.Container.Remove(hand.Entity))
             {
                 return false;
             }
 
-            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
-                return false;
-
-            if (ContainerHelpers.TryGetContainer(Owner, out var container) &&
-                !container.Insert(item.Owner))
+            if (doMobChecks &&
+                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
             {
                 return false;
             }
 
             item.RemovedFromSlot();
             item.Owner.Transform.GridPosition = coords;
+
+            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            {
+                container.Insert(item.Owner);
+            }
 
             Dirty();
             return true;
@@ -225,8 +239,7 @@ namespace Content.Server.GameObjects
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var slot = FindHand(entity);
-            if (slot == null)
+            if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
@@ -236,24 +249,21 @@ namespace Content.Server.GameObjects
 
         public bool Drop(string slot, bool doMobChecks = true)
         {
-            if (!CanDrop(slot))
+            var hand = GetHand(slot);
+            if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
             }
 
-            var inventorySlot = _hands[slot];
-            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+            var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
-                return false;
-
-            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
+            if (doMobChecks &&
+                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
             {
                 return false;
             }
 
-            if (ContainerHelpers.TryGetContainer(Owner, out var container) &&
-                !container.Insert(item.Owner))
+            if (!hand.Container.Remove(hand.Entity))
             {
                 return false;
             }
@@ -264,6 +274,11 @@ namespace Content.Server.GameObjects
             if (item.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
                 spriteComponent.RenderOrder = item.Owner.EntityManager.CurrentTick.Value;
+            }
+
+            if (ContainerHelpers.TryGetContainer(Owner, out var container))
+            {
+                container.Insert(item.Owner);
             }
 
             Dirty();
@@ -277,8 +292,7 @@ namespace Content.Server.GameObjects
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var slot = FindHand(entity);
-            if (slot == null)
+            if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
@@ -298,31 +312,30 @@ namespace Content.Server.GameObjects
                 throw new ArgumentNullException(nameof(targetContainer));
             }
 
-            if (!CanDrop(slot))
+            var hand = GetHand(slot);
+            if (!CanDrop(slot) || hand?.Entity == null)
             {
                 return false;
             }
 
-
-            var inventorySlot = _hands[slot];
-            var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
+            var item = hand.Entity.GetComponent<ItemComponent>();
 
             if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
             {
                 return false;
             }
 
-            if (!inventorySlot.CanRemove(inventorySlot.ContainedEntity))
+            if (!hand.Container.CanRemove(hand.Entity))
             {
                 return false;
             }
 
-            if (!targetContainer.CanInsert(inventorySlot.ContainedEntity))
+            if (!targetContainer.CanInsert(hand.Entity))
             {
                 return false;
             }
 
-            if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
+            if (!hand.Container.Remove(hand.Entity))
             {
                 throw new InvalidOperationException();
             }
@@ -345,8 +358,7 @@ namespace Content.Server.GameObjects
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            var slot = FindHand(entity);
-            if (slot == null)
+            if (!TryHand(entity, out var slot))
             {
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
@@ -357,94 +369,103 @@ namespace Content.Server.GameObjects
         /// <summary>
         ///     Checks whether an item can be dropped from the specified slot.
         /// </summary>
-        /// <param name="slot">The slot to check for.</param>
+        /// <param name="name">The slot to check for.</param>
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanDrop(string slot)
+        public bool CanDrop(string name)
         {
-            var inventorySlot = _hands[slot];
-
-            if (ContainerHelpers.TryGetContainer(Owner, out var container) &&
-                !container.CanInsert(inventorySlot.ContainedEntity))
+            var hand = GetHand(name);
+            if (hand?.Entity == null)
             {
                 return false;
             }
 
-            return inventorySlot.CanRemove(inventorySlot.ContainedEntity);
+            return hand.Container.CanRemove(hand.Entity);
         }
 
-        public void AddHand(string index)
+        public void AddHand(string name)
         {
-            if (HasHand(index))
+            if (HasHand(name))
             {
-                throw new InvalidOperationException($"Hand '{index}' already exists.");
+                throw new InvalidOperationException($"Hand '{name}' already exists.");
             }
 
-            var slot = ContainerManagerComponent.Create<ContainerSlot>(Name + "_" + index, Owner);
-            _hands[index] = slot;
-            if (!_orderedHands.Contains(index))
-            {
-                _orderedHands.Add(index);
-            }
+            var container = ContainerManagerComponent.Create<ContainerSlot>($"hand {_nextHand++}", Owner);
+            var hand = new Hand(name, container);
 
-            ActiveIndex ??= index;
-            Dirty();
-        }
+            _hands.Add(hand);
 
-        public void RemoveHand(string index)
-        {
-            if (!HasHand(index))
-            {
-                throw new InvalidOperationException($"Hand '{index}' does not exist.");
-            }
-
-            _hands[index].Shutdown(); //TODO verify this
-            _hands.Remove(index);
-            _orderedHands.Remove(index);
-
-            if (index == ActiveIndex)
-            {
-                _activeIndex = _orderedHands.Count == 0 ? null : _orderedHands[0];
-            }
+            ActiveHand ??= name;
 
             Dirty();
         }
 
-        public bool HasHand(string index)
+        public void RemoveHand(string name)
         {
-            return _hands.ContainsKey(index);
+            var hand = GetHand(name);
+            if (hand == null)
+            {
+                throw new InvalidOperationException($"Hand '{name}' does not exist.");
+            }
+
+            Drop(hand.Name, false);
+            hand!.Dispose();
+            _hands.Remove(hand);
+
+            if (name == ActiveHand)
+            {
+                _activeHand = _hands.FirstOrDefault()?.Name;
+            }
+
+            Dirty();
         }
 
-        /// <summary>
-        ///     Get the name of the slot passed to the inventory component.
-        /// </summary>
-        private string HandSlotName(string index) => $"_hand_{index}";
+        public bool HasHand(string name)
+        {
+            return _hands.Any(hand => hand.Name == name);
+        }
 
         public override ComponentState GetComponentState()
         {
-            var dict = new Dictionary<string, EntityUid>(_hands.Count);
-            foreach (var hand in _hands)
+            var hands = new SharedHand[_hands.Count];
+
+            for (var i = 0; i < _hands.Count; i++)
             {
-                if (hand.Value.ContainedEntity != null)
-                {
-                    dict[hand.Key] = hand.Value.ContainedEntity.Uid;
-                }
+                var location = i == 0
+                    ? HandLocation.Right
+                    : i == _hands.Count - 1
+                        ? HandLocation.Left
+                        : HandLocation.Middle;
+
+                var hand = _hands[i].ToShared(i, location);
+                hands[i] = hand;
             }
 
-            return new HandsComponentState(dict, ActiveIndex);
+            return new HandsComponentState(hands, ActiveHand);
         }
 
         public void SwapHands()
         {
-            var index = _orderedHands.FindIndex(x => x == ActiveIndex);
+            if (ActiveHand == null)
+            {
+                return;
+            }
+
+            var hand = GetHand(ActiveHand);
+            if (hand == null)
+            {
+                throw new InvalidOperationException($"No hand found with name {ActiveHand}");
+            }
+
+            var index = _hands.IndexOf(hand);
             index++;
-            if (index >= _orderedHands.Count)
+            if (index == _hands.Count)
             {
                 index = 0;
             }
 
-            ActiveIndex = _orderedHands[index];
+            ActiveHand = _hands[index].Name;
         }
 
         public void ActivateItem()
@@ -469,7 +490,7 @@ namespace Content.Server.GameObjects
             return false;
         }
 
-        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
 
@@ -485,15 +506,19 @@ namespace Content.Server.GameObjects
                     var playerEntity = session.AttachedEntity;
 
                     if (playerEntity == Owner && HasHand(msg.Index))
-                        ActiveIndex = msg.Index;
+                    {
+                        ActiveHand = msg.Index;
+                    }
+
                     break;
                 }
 
                 case ClientAttackByInHandMsg msg:
                 {
-                    if (!_hands.TryGetValue(msg.Index, out var slot))
+                    var hand = GetHand(msg.Index);
+                    if (hand == null)
                     {
-                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand index '{0}'",
+                        Logger.WarningS("go.comp.hands", "Got a ClientAttackByInHandMsg with invalid hand name '{0}'",
                             msg.Index);
                         return;
                     }
@@ -501,19 +526,22 @@ namespace Content.Server.GameObjects
                     var playerEntity = session.AttachedEntity;
                     var used = GetActiveHand?.Owner;
 
-                    if (playerEntity == Owner && slot.ContainedEntity != null)
+                    if (playerEntity == Owner && hand.Entity != null)
                     {
                         var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
                         if (used != null)
                         {
-                            interactionSystem.Interaction(Owner, used, slot.ContainedEntity,
+                            interactionSystem.Interaction(Owner, used, hand.Entity,
                                 GridCoordinates.InvalidGrid);
                         }
                         else
                         {
-                            var entity = slot.ContainedEntity;
+                            var entity = hand.Entity;
                             if (!Drop(entity))
+                            {
                                 break;
+                            }
+
                             interactionSystem.Interaction(Owner, entity);
                         }
                     }
@@ -521,7 +549,7 @@ namespace Content.Server.GameObjects
                     break;
                 }
 
-                case UseInHandMsg msg:
+                case UseInHandMsg _:
                 {
                     var playerEntity = session.AttachedEntity;
                     var used = GetActiveHand?.Owner;
@@ -538,7 +566,7 @@ namespace Content.Server.GameObjects
                 case ActivateInHandMsg msg:
                 {
                     var playerEntity = session.AttachedEntity;
-                    var used = GetHand(msg.Index)?.Owner;
+                    var used = GetItem(msg.Index)?.Owner;
 
                     if (playerEntity == Owner && used != null)
                     {
@@ -552,9 +580,9 @@ namespace Content.Server.GameObjects
 
         public void HandleSlotModifiedMaybe(ContainerModifiedMessage message)
         {
-            foreach (var container in _hands.Values)
+            foreach (var hand in _hands)
             {
-                if (container != message.Container)
+                if (hand.Container != message.Container)
                 {
                     continue;
                 }
@@ -567,9 +595,52 @@ namespace Content.Server.GameObjects
                 }
 
                 // set velocity to zero
-                physics.LinearVelocity = Vector2.Zero;
+                physics.Stop();
                 return;
             }
+        }
+
+        void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)
+        {
+            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            {
+                return;
+            }
+
+            AddHand(eventArgs.SlotName);
+        }
+
+        void IBodyPartRemoved.BodyPartRemoved(BodyPartRemovedEventArgs eventArgs)
+        {
+            if (eventArgs.Part.PartType != BodyPartType.Hand)
+            {
+                return;
+            }
+
+            RemoveHand(eventArgs.SlotName);
+        }
+    }
+
+    public class Hand : IDisposable
+    {
+        public Hand(string name, ContainerSlot container)
+        {
+            Name = name;
+            Container = container;
+        }
+
+        public string Name { get; }
+        public IEntity? Entity => Container.ContainedEntity;
+        public ContainerSlot Container { get; }
+
+        public void Dispose()
+        {
+            Container.Shutdown(); // TODO verify this
+        }
+
+        public SharedHand ToShared(int index, HandLocation location)
+        {
+            return new SharedHand(index, Name, Entity?.Uid, location);
         }
     }
 }

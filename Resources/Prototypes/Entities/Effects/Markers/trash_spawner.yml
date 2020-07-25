@@ -17,28 +17,23 @@
     - type: TrashSpawner
       rarePrototypes:
         - PuddleVomit
-        - TrashPizzaBoxMessy
         - TrashPlate
         - TrashSnackBowl
-        - TrashTray
-      rareChance: 0.05
+      rareChance: 0.03
       prototypes:
         - TrashRaisins
         - TrashCandy
         - TrashCheesieHonkers
         - TrashChips
-        - TrashCornCob
         - TrashLiquidFood
         - TrashPistachiosPack
-        - TrashPizzaBoxMessy
         - TrashPlasticBag
         - TrashPopcorn
         - TrashSemkiPack
         - TrashSOSJerky
         - TrashSyndiCakes
         - TrashTastyBread
-      chance: 0.75
+      chance: 0.5
       offset: 0.2
   placement:
     mode: AlignTileAny
-

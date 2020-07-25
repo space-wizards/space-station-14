@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
@@ -19,12 +20,13 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
     [RegisterComponent]
-    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent
+    public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
     {
         public override string Name => "MagazineBarrel";
         public override uint? NetID => ContentNetIDs.MAGAZINE_BARREL;
@@ -410,6 +412,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             return false;
+        }
+
+        public override void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            base.Examine(message, inDetailsRange);
+
+            var text = Loc.GetString("\nIt uses {0} ammo.", Caliber);
+            message.AddText(text);
         }
 
         [Verb]

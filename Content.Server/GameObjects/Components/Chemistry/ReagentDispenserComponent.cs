@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Content.Shared.GameObjects.EntitySystems;
@@ -21,6 +21,7 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
