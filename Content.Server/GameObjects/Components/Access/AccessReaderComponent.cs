@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;

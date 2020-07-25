@@ -10,9 +10,6 @@
   - type: AiController
     logic: Mimic
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
   - type: InteractionOutline
   - type: Sprite

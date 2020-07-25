@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects;

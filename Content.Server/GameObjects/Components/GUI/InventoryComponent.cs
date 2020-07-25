@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -326,7 +327,7 @@ namespace Content.Server.GameObjects
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
-                        hands.Drop(hands.ActiveIndex);
+                        hands.Drop(hands.ActiveHand);
                         if (!Equip(msg.Inventoryslot, clothing, out var reason))
                         {
                             hands.PutInHand(clothing);
