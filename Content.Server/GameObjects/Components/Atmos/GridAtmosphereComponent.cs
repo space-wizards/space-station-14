@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
@@ -59,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             ActiveTiles,
             ExcitedGroups,
             HighPressureDelta,
+            Hotspots,
         }
 
         public void PryTile(MapIndices indices)
@@ -100,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _tiles.Clear();
 
-            foreach (var tile in _grid.GetAllTiles(false))
+            foreach (var tile in _grid.GetAllTiles())
             {
                 if(!_tiles.ContainsKey(tile.GridIndices))
                     _tiles.Add(tile.GridIndices, new TileAtmosphere(this, tile.GridIndex, tile.GridIndices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C}));
@@ -170,8 +172,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveActiveTile(TileAtmosphere tile)
         {
+            if (tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
+            tile.ExcitedGroup?.Dispose();
         }
 
         public void AddHighPressureDelta(TileAtmosphere tile)
@@ -202,19 +206,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             // We don't have that tile!
             if (IsSpace(indices))
             {
-                tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)));
-                tile.Air.MarkImmutable();
-            }
-            else
-            {
-                tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+                var space = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(int.MaxValue){Temperature = Atmospherics.TCMB});
+                space.Air.MarkImmutable();
+                return space;
             }
 
-            _tiles[indices] = tile;
-
-            Invalidate(indices);
-
-            return tile;
+            return null;
         }
 
         public bool IsAirBlocked(MapIndices indices)
@@ -276,22 +273,15 @@ namespace Content.Server.GameObjects.Components.Atmos
                     return;
                 case ProcessState.HighPressureDelta:
                     ProcessHighPressureDelta();
+                    _state = ProcessState.Hotspots;
+                    break;
+                case ProcessState.Hotspots:
+                    ProcessHotspots();
                     _state = ProcessState.TileEqualize;
                     break;
             }
 
             UpdateCounter++;
-        }
-
-        public void ProcessHighPressureDelta()
-        {
-            foreach (var tile in _highPressureDelta.ToArray())
-            {
-                tile.HighPressureMovements();
-                tile.PressureDifference = 0f;
-                tile.PressureSpecificTarget = null;
-                _highPressureDelta.Remove(tile);
-            }
         }
 
         public void ProcessTileEqualize()
@@ -344,6 +334,23 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (watch.Elapsed.Seconds >= 0.1f)
                     break;
             }
+        }
+
+        public void ProcessHighPressureDelta()
+        {
+            foreach (var tile in _highPressureDelta.ToArray())
+            {
+                tile.HighPressureMovements();
+                tile.PressureDifference = 0f;
+                tile.PressureSpecificTarget = null;
+                _highPressureDelta.Remove(tile);
+            }
+        }
+
+        private void ProcessHotspots()
+        {
+            // TODO ATMOS
+            return;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)

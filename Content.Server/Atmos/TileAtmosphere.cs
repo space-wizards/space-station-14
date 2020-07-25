@@ -4,9 +4,11 @@ using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Physics;
+using Namotion.Reflection;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
@@ -25,7 +27,7 @@ using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
-    public class TileAtmosphere
+    public class TileAtmosphere : IGasMixtureHolder
     {
         [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
@@ -57,6 +59,8 @@ namespace Content.Server.Atmos
         [ViewVariables]
         private TileAtmosInfo _tileAtmosInfo;
 
+        private Hotspot _hotspot;
+
         private Direction _pressureDirection;
 
         [ViewVariables]
@@ -85,6 +89,11 @@ namespace Content.Server.Atmos
         {
             _archivedCycle = fireCount;
             Air?.Archive();
+        }
+
+        public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
+        {
+
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -598,13 +607,45 @@ namespace Content.Server.Atmos
             React();
             UpdateVisuals();
 
-            if(AtmosCooldown > (Atmospherics.ExcitedGroupsDismantleCycles * 2) ||
-               (ExcitedGroup == null && !(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true))))
+            if((!(Air.Temperature > Atmospherics.MinimumTemperatureStartSuperConduction && ConsiderSuperconductivity(true))) && ExcitedGroup == null)
                 _gridAtmosphereComponent.RemoveActiveTile(this);
+        }
+
+        public void ProcessHotspot()
+        {
+            if (!_hotspot.Valid) return;
+            if (!_hotspot.SkippedFirstProcess)
+            {
+                _hotspot.SkippedFirstProcess = true;
+                return;
+            }
+
+            ExcitedGroup?.ResetCooldowns();
+
+            if ((_hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (_hotspot.Volume <= 1f)
+                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || Air.Gases[(int)Gas.Phoron] < 0.5f)
+            {
+                _hotspot = new Hotspot();
+                UpdateVisuals();
+                return;
+            }
+        }
+
+        private void PerformHotspotExposure()
+        {
+            if (Air == null) return;
+
+            var bypass = _hotspot.SkippedFirstProcess && (_hotspot.Volume > Atmospherics.CellVolume*0.95);
+
+            if (bypass)
+            {
+                // TODO ATMOS: Continue and finish this
+            }
         }
 
         private bool ConsiderSuperconductivity(bool starting)
         {
+            // TODO ATMOS
             return false;
         }
 
@@ -708,7 +749,8 @@ namespace Content.Server.Atmos
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 10, 0, 30)/100f))
+            Logger.Info($"{sum} {sum/100f}");
+            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 100, 0.005f, 0.3f)))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 
@@ -721,8 +763,8 @@ namespace Content.Server.Atmos
 
         private void React()
         {
-            // TODO ATMOS React
-            //throw new System.NotImplementedException();
+            // TODO ATMOS I think this is enough? gotta make sure...
+            Air?.React(this);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -770,5 +812,10 @@ namespace Content.Server.Atmos
             };
 
         private static GasTileOverlaySystem _gasTileOverlaySystem;
+
+        public void TemperatureExpose(GasMixture mixture, float temperature, float cellVolume)
+        {
+            // TODO ATMOS do this
+        }
     }
 }

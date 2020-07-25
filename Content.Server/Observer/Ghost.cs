@@ -35,7 +35,7 @@ namespace Content.Server.Observer
             var indices = player.AttachedEntity.Transform.GridPosition.ToMapIndices();
 
             var tile = gam?.GetTile(indices);
-            tile?.Air?.Add(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
+            tile?.Air?.AdjustMoles(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
             gam?.Invalidate(indices);
 
             var mind = player.ContentData().Mind;

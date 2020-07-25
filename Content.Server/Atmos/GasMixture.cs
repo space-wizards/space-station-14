@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
@@ -106,6 +109,8 @@ namespace Content.Server.Atmos
             }
         }
 
+        public float ReactionResultFire { get; set; }
+
         [ViewVariables]
         public float ThermalEnergy => Temperature * HeatCapacity;
 
@@ -161,17 +166,41 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Add(int gasId, float quantity)
+        public float GetMoles(int gasId)
         {
-            if (Immutable) return;
-            _moles[gasId] += quantity;
+            return _moles[gasId];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Add(Gas gasId, float moles)
+        public float GetMoles(Gas gas)
         {
-            if (Immutable) return;
-            Add((int)gasId, moles);
+            return GetMoles((int)gas);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetMoles(int gasId, float quantity)
+        {
+            if (!Immutable)
+                _moles[gasId] = quantity;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetMoles(Gas gas, float quantity)
+        {
+            SetMoles((int)gas, quantity);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AdjustMoles(int gasId, float quantity)
+        {
+            if (!Immutable)
+                _moles[gasId] += quantity;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AdjustMoles(Gas gas, float moles)
+        {
+            AdjustMoles((int)gas, moles);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -408,6 +437,37 @@ namespace Content.Server.Atmos
 
             return true;
 
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReactionResult React(IGasMixtureHolder holder)
+        {
+            var reaction = ReactionResult.NoReaction;
+            var temperature = Temperature;
+            var energy = ThermalEnergy;
+
+            foreach (var prototype in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<GasReactionPrototype>())
+            {
+                if (energy < prototype.MinimumEnergyRequirement ||
+                    temperature < prototype.MinimumTemperatureRequirement)
+                    continue;
+
+                for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
+                {
+                    if(i > Atmospherics.TotalNumberOfGases)
+                        throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
+
+                    var req = prototype.MinimumRequirements[i];
+                    if (GetMoles(i) < req)
+                        continue;
+
+                    reaction = prototype.React(this, holder);
+                    if(reaction.HasFlag(ReactionResult.NoReaction))
+                        break;
+                }
+            }
+
+            return reaction;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -18,4 +18,11 @@
   name: Phoron
   specificHeat: 200
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
-  gasOverlayState: phoron_old
+  gasOverlayState: phoron
+
+- type: gas
+  id: 4
+  name: Tritium
+  specificHeat: 10
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: tritium

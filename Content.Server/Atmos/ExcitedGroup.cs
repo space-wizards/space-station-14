@@ -129,6 +129,9 @@ namespace Content.Server.Atmos
             if (_disposed) return;
             _disposed = true;
             _gridAtmosphereComponent.RemoveExcitedGroup(this);
+
+            Dismantle();
+
             _gridAtmosphereComponent = null;
         }
     }

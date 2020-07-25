@@ -15,7 +15,7 @@ namespace Content.Shared.Atmos
 
             GasPrototypes = new GasPrototype[TotalNumberOfGases];
 
-            for (int i = 0; i < TotalNumberOfGases; i++)
+            for (var i = 0; i < TotalNumberOfGases; i++)
             {
                 GasPrototypes[i] = protoMan.Index<GasPrototype>(i.ToString());
             }
@@ -144,6 +144,17 @@ namespace Content.Shared.Atmos
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
         public const int TotalNumberOfGases = 4;
+
+        public const float FireMinimumTemperatureToExist = T0C + 100f;
+        public const float FirePhoronEnergyReleased = 3000000f;
+
+        public const float SuperSaturationThreshold = 96f;
+
+        public const float OxygenBurnRateBase = 1.4f;
+        public const float PhoronMinimumBurnTemperature = (100f+T0C);
+        public const float PhoronUpperTemperature = (1370f+T0C);
+        public const float PhoronOxygenFullburn = 10f;
+        public const float PhoronBurnRateDelta = 9f;
     }
 
     /// <summary>
@@ -155,5 +166,6 @@ namespace Content.Shared.Atmos
         Nitrogen = 1,
         CarbonDioxide = 2,
         Phoron = 3,
+        Tritium = 4,
     }
 }

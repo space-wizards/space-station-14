@@ -122,12 +122,12 @@ namespace Content.Server.Atmos
 
             if (gasId != -1)
             {
-                tile.Air.Add(gasId, moles);
+                tile.Air.AdjustMoles(gasId, moles);
                 gam.Invalidate(indices);
                 return;
             }
 
-            tile.Air.Add(gas, moles);
+            tile.Air.AdjustMoles(gas, moles);
             gam.Invalidate(indices);
         }
     }
@@ -176,12 +176,12 @@ namespace Content.Server.Atmos
             {
                 if (gasId != -1)
                 {
-                    tile.Air?.Add(gasId, moles);
+                    tile.Air?.AdjustMoles(gasId, moles);
                     gam.Invalidate(tile.GridIndices);
                     continue;
                 }
 
-                tile.Air?.Add(gas, moles);
+                tile.Air?.AdjustMoles(gas, moles);
                 gam.Invalidate(tile.GridIndices);
             }
         }
