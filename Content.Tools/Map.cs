@@ -11,7 +11,7 @@ namespace Content.Tools
         public Map(YamlStream stream)
         {
             Root = stream.Documents[0].RootNode;
-            Parse();
+            Initialize();
         }
 
         public Map(string path)
@@ -23,7 +23,7 @@ namespace Content.Tools
 
             Root = stream.Documents[0].RootNode;
 
-            Parse();
+            Initialize();
         }
 
         private YamlNode Root { get; }
@@ -68,12 +68,17 @@ namespace Content.Tools
             return entities;
         }
 
+        private void Initialize()
+        {
+            Entities = ParseEntities();
+            MaxId = Entities.Max(entry => entry.Key);
+        }
+
         private void Parse()
         {
             var oldMaxId = MaxId;
 
-            Entities = ParseEntities();
-            MaxId = Entities.Max(entry => entry.Key);
+            Initialize();
 
             DebugTools.Assert(oldMaxId == MaxId);
         }
