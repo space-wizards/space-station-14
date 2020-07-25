@@ -91,6 +91,16 @@ namespace Content.Client.GameObjects
                 doneSlots.Add(slot);
             }
 
+            if (cast.HoverEntity != null)
+            {
+                var slot = cast.HoverEntity.Value.Key;
+                var tuple = cast.HoverEntity.Value.Value;
+                var entity = Owner.EntityManager.GetEntity(tuple.Item1);
+                var fits = tuple.Item2;
+
+                InterfaceController?.HoverInSlot(slot, entity, fits);
+            }
+
             foreach (var slot in _slots.Keys.ToList())
             {
                 if (!doneSlots.Contains(slot))
@@ -169,6 +179,11 @@ namespace Content.Client.GameObjects
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
             SendNetworkMessage(equipmessage);
+        }
+
+        public void SendHoverMessage(Slots slot)
+        {
+            SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
         }
 
         public void SendOpenStorageUIMessage(Slots slot)

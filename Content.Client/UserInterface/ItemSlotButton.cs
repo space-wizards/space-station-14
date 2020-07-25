@@ -17,6 +17,10 @@ namespace Content.Client.UserInterface
 
         public Action<GUIBoundKeyEventArgs> OnPressed { get; set; }
         public Action<GUIBoundKeyEventArgs> OnStoragePressed { get; set; }
+        public Action<GUIMouseHoverEventArgs> OnHover { get; set; }
+
+        public bool EntityHover { get; set; } = false;
+        public bool MouseIsHovering = false;
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
@@ -56,6 +60,23 @@ namespace Content.Client.UserInterface
 
             StorageButton.OnPressed += OnStorageButtonPressed;
 
+            Button.OnMouseEntered += _ =>
+            {
+                MouseIsHovering = true;
+            };
+            Button.OnMouseEntered += OnButtonHover;
+
+            Button.OnMouseExited += _ =>
+            {
+                MouseIsHovering = false;
+                if (EntityHover)
+                {
+                    EntityHover = false;
+                    SpriteView.Sprite = null;
+                    StorageButton.Visible = false;
+                }
+            };
+
             AddChild(CooldownDisplay = new CooldownGraphic
             {
                 SizeFlagsHorizontal = SizeFlags.Fill,
@@ -79,6 +100,11 @@ namespace Content.Client.UserInterface
             {
                 OnPressed?.Invoke(args.Event);
             }
+        }
+
+        private void OnButtonHover(GUIMouseHoverEventArgs args)
+        {
+            OnHover?.Invoke(args);
         }
     }
 }

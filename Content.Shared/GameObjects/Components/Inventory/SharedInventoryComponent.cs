@@ -51,10 +51,12 @@ namespace Content.Shared.GameObjects
         protected class InventoryComponentState : ComponentState
         {
             public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
+            public KeyValuePair<Slots, Tuple<EntityUid, bool>>? HoverEntity { get; }
 
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities) : base(ContentNetIDs.STORAGE)
+            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, Tuple<EntityUid, bool>>? hoverEntity = null) : base(ContentNetIDs.STORAGE)
             {
                 Entities = entities;
+                HoverEntity = hoverEntity;
             }
         }
 
@@ -74,7 +76,8 @@ namespace Content.Shared.GameObjects
             public enum ClientInventoryUpdate
             {
                 Equip = 0,
-                Use = 1
+                Use = 1,
+                Hover = 2
             }
         }
 
