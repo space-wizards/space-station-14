@@ -12,6 +12,7 @@ namespace Content.Client.UserInterface
     {
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
+        public SpriteView HoverSpriteView { get; }
         public BaseButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
@@ -19,7 +20,7 @@ namespace Content.Client.UserInterface
         public Action<GUIBoundKeyEventArgs> OnStoragePressed { get; set; }
         public Action<GUIMouseHoverEventArgs> OnHover { get; set; }
 
-        public bool EntityHover { get; set; } = false;
+        public bool EntityHover => HoverSpriteView.Sprite != null;
         public bool MouseIsHovering = false;
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
@@ -36,6 +37,12 @@ namespace Content.Client.UserInterface
             Button.OnKeyBindDown += OnButtonPressed;
 
             AddChild(SpriteView = new SpriteView
+            {
+                Scale = (2, 2),
+                OverrideDirection = Direction.South
+            });
+
+            AddChild(HoverSpriteView = new SpriteView
             {
                 Scale = (2, 2),
                 OverrideDirection = Direction.South
@@ -69,13 +76,7 @@ namespace Content.Client.UserInterface
             Button.OnMouseExited += _ =>
             {
                 MouseIsHovering = false;
-                if (EntityHover)
-                {
-                    SpriteView.Sprite?.Owner.Delete();
-                    EntityHover = false;
-                    SpriteView.Sprite = null;
-                    StorageButton.Visible = false;
-                }
+                ClearHover();
             };
 
             AddChild(CooldownDisplay = new CooldownGraphic
@@ -84,6 +85,15 @@ namespace Content.Client.UserInterface
                 SizeFlagsVertical = SizeFlags.Fill,
                 Visible = false,
             });
+        }
+
+        public void ClearHover()
+        {
+            if (EntityHover)
+            {
+                HoverSpriteView.Sprite?.Owner.Delete();
+                HoverSpriteView.Sprite = null;
+            }
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
