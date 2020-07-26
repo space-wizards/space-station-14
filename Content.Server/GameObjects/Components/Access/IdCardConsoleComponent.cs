@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Access;
 using Content.Shared.GameObjects.Components.Access;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 return;
             }
-            if(!hands.Drop(hands.ActiveIndex, container))
+            if(!hands.Drop(hands.ActiveHand, container))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You can't let go of the ID card!"));
                 return;

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.BodySystem;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Chemistry;
 using Robust.Shared.Serialization;
 using Robust.Shared.Interfaces.GameObjects;
@@ -22,10 +24,10 @@ using Content.Server.Interfaces;
 using Robust.Shared.Audio;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
-using Content.Server.BodySystem;
 using Content.Shared.BodySystem;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Kitchen
@@ -211,9 +213,15 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 return false;
             }
 
-            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand.Owner;
+            var itemEntity = eventArgs.User.GetComponent<HandsComponent>().GetActiveHand?.Owner;
 
-            if(itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
+            if (itemEntity == null)
+            {
+                eventArgs.User.PopupMessage(eventArgs.User, Loc.GetString("You have no active hand!"));
+                return false;
+            }
+
+            if (itemEntity.TryGetComponent<PourableComponent>(out var attackPourable))
             {
                 if (!itemEntity.TryGetComponent<SolutionComponent>(out var attackSolution)
                     || !attackSolution.CanPourOut)

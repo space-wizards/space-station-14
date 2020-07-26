@@ -116,7 +116,7 @@ namespace Content.Server.AI.Utility.AiLogic
             _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
             if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed += DeathHandle;
+                damageableComponent.DamageThresholdPassed += DamageThresholdHandle;
             }
         }
 
@@ -125,22 +125,25 @@ namespace Content.Server.AI.Utility.AiLogic
             // TODO: If DamageableComponent removed still need to unsubscribe?
             if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed -= DeathHandle;
+                damageableComponent.DamageThresholdPassed -= DamageThresholdHandle;
             }
 
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
         }
 
-        private void DeathHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
+        private void DamageThresholdHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
         {
-            if (eventArgs.DamageThreshold.ThresholdType == ThresholdType.Death)
+            if (!SelfEntity.TryGetComponent(out SpeciesComponent speciesComponent))
+            {
+                return;
+            }
+
+            if (speciesComponent.CurrentDamageState is DeadState)
             {
                 _isDead = true;
             }
-
-            // TODO: If we get healed - double-check what it should be
-            if (eventArgs.DamageThreshold.ThresholdType == ThresholdType.None)
+            else
             {
                 _isDead = false;
             }
