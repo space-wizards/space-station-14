@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             set
             {
                 _occludesLight = value;
-                _contents.OccludesLight = _occludesLight;
+                Contents.OccludesLight = _occludesLight;
             }
         }
 
