@@ -125,6 +125,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _cachedAccessible.Clear();
         }
 
+        public void ResettingCleanup()
+        {
+            _queuedUpdates.Clear();
+            _regions.Clear();
+            _cachedAccessible.Clear();
+        }
+
         private void RecalculateNodeRegions(PathfindingChunkUpdateMessage message)
         {
             // TODO: Only need to do changed nodes ideally
