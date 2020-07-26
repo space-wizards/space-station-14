@@ -15,7 +15,6 @@
   - type: Damageable
   - type: Breakable
   - type: Rotatable
-  - type: Flippable
 
 - type: entity
   id: DisposalPipe
@@ -131,6 +130,8 @@
       state_free: conpipe-j1
       state_anchored: pipe-j1
       state_broken: pipe-b
+  - type: Flippable
+    entity: DisposalJunctionFlipped
 
 - type: entity
   id: DisposalJunctionFlipped
@@ -155,6 +156,8 @@
       state_free: conpipe-j2
       state_anchored: pipe-j2
       state_broken: pipe-b
+  - type: Flippable
+    entity: DisposalJunction
 
 - type: entity
   id: DisposalYJunction
