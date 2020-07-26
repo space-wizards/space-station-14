@@ -13,7 +13,6 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class RadioSystem : EntitySystem
     {
-        private IEntityQuery EntityQuery;
         private List<string> _messages;
 
         public override void Initialize()
