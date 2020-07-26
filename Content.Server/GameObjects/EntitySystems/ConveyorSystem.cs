@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public uint NextId()
         {
-            uint id = 1;
+            uint id = 0;
 
             while (_groups.ContainsKey(id))
             {
@@ -49,16 +49,16 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public void ChangeId(ConveyorSwitchComponent conveyorSwitch, uint old, uint @new)
+        public void ChangeId(ConveyorSwitchComponent conveyorSwitch, uint? old, uint? @new)
         {
-            if (old != 0)
+            if (old.HasValue)
             {
-                EnsureGroup(old).RemoveSwitch(conveyorSwitch);
+                EnsureGroup(old.Value).RemoveSwitch(conveyorSwitch);
             }
 
-            if (@new != 0)
+            if (@new.HasValue)
             {
-                EnsureGroup(@new).AddSwitch(conveyorSwitch);
+                EnsureGroup(@new.Value).AddSwitch(conveyorSwitch);
             }
         }
 

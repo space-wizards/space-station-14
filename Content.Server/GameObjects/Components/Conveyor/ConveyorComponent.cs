@@ -72,7 +72,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private ConveyorGroup? Group => _id.HasValue ? EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value) : null;
+        private ConveyorGroup? Group => _id == null
+            ? null
+            : EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value);
 
         /// <summary>
         ///     Calculates the angle in which entities on top of this conveyor
@@ -199,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         public void Disconnect()
         {
-            _id = 0;
+            _id = null;
             State = ConveyorState.Off;
         }
 
