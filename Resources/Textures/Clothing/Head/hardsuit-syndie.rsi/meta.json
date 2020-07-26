@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/discordia-space/CEV-Eris/raw/40b254106b46981b8ad95ccd5589deb8fa56e765/icons/inventory/head/mob.dmi",
+  "copyright": "https://github.com/discordia-space/CEV-Eris/raw/master/icons/inventory/head/mob.dmi",
   "states": [
     {
       "name": "equipped-HELMET",
@@ -26,25 +26,7 @@
       ]
     },
     {
-      "name": "visorlit-equipped-HELMET",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "headlight-equipped-HELMET",
+      "name": "combat-equipped-HELMET",
       "directions": 4,
       "delays": [
         [
@@ -98,7 +80,7 @@
       ]
     },
     {
-      "name": "visorlit-inhand-left",
+      "name": "combat-inhand-left",
       "directions": 4,
       "delays": [
         [
@@ -116,43 +98,7 @@
       ]
     },
     {
-      "name": "visorlit-inhand-right",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "headlight-inhand-left",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "headlight-inhand-right",
+      "name": "combat-inhand-right",
       "directions": 4,
       "delays": [
         [
@@ -171,24 +117,6 @@
     },
     {
       "name": "icon",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "visorlit",
-      "directions": 1,
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "headlight",
       "directions": 1,
       "delays": [
         [
