@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
@@ -10,12 +11,18 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class ConveyorSystem : EntitySystem
     {
-        private uint _nextId;
         private readonly Dictionary<uint, ConveyorGroup> _groups = new Dictionary<uint, ConveyorGroup>();
 
         public uint NextId()
         {
-            return ++_nextId;
+            uint id = 0;
+
+            while (_groups.ContainsKey(id))
+            {
+                id++;
+            }
+
+            return id;
         }
 
         public ConveyorGroup EnsureGroup(uint id)
@@ -80,10 +87,19 @@ namespace Content.Server.GameObjects.EntitySystems
 
                 conveyor.Update(frameTime);
             }
+
+            foreach (var (id, group) in _groups)
+            {
+                if (group.IsEmpty())
+                {
+                    group.Dispose();
+                    _groups.Remove(id);
+                }
+            }
         }
     }
 
-    public class ConveyorGroup
+    public class ConveyorGroup : IDisposable
     {
         private readonly HashSet<ConveyorComponent> _conveyors;
         private readonly HashSet<ConveyorSwitchComponent> _switches;
@@ -148,6 +164,17 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 connectedSwitch.SyncState(state);
             }
+        }
+
+        public bool IsEmpty()
+        {
+            return _conveyors.Count == 0 && _switches.Count == 0;
+        }
+
+        public void Dispose()
+        {
+            _conveyors.Clear();
+            _switches.Clear();
         }
     }
 }

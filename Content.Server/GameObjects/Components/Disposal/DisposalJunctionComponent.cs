@@ -20,11 +20,10 @@ namespace Content.Server.GameObjects.Components.Disposal
 #pragma warning restore 649
 
         /// <summary>
-        ///     The angles to connect to in radians.
-        ///     Parsed from YAML files as degrees.
+        ///     The angles to connect to.
         /// </summary>
         [ViewVariables]
-        private List<int> _degrees;
+        private List<Angle> _degrees;
 
         public override string Name => "DisposalJunction";
 

@@ -13,11 +13,6 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
         public abstract bool InTube { get; protected set; }
 
-        bool IActionBlocker.CanInteract()
-        {
-            return !InTube;
-        }
-
         bool IActionBlocker.CanThrow()
         {
             return !InTube;

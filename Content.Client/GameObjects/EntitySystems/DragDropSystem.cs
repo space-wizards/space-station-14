@@ -56,7 +56,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // entity performing the drag action
         private IEntity _dragger;
         private IEntity _draggedEntity;
-        private List<IClientDraggable> _draggables;
+        private readonly List<IClientDraggable> _draggables = new List<IClientDraggable>();
         private IEntity _dragShadow;
         private DragState _state;
         // time since mouse down over the dragged entity
@@ -91,7 +91,6 @@ namespace Content.Client.GameObjects.EntitySystems
 
         public override void Initialize()
         {
-            _draggables = new List<IClientDraggable>();
             _state = DragState.NotDragging;
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();

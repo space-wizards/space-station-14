@@ -39,11 +39,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
         public override string Name => "Conveyor";
 
         /// <summary>
-        ///     The angle in degrees to move entities by in relation
-        ///     to the owner's rotation.
+        ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
         [ViewVariables]
-        private int _angle;
+        private Angle _angle;
 
         /// <summary>
         ///     The amount of units to move the entity by.
@@ -165,7 +164,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             var intersecting = _entityManager.GetEntitiesIntersecting(Owner, true);
             var direction = GetAngle().ToVec();
-            var speed = _speed * frameTime;
 
             foreach (var entity in intersecting)
             {
@@ -177,7 +175,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 if (entity.TryGetComponent(out ICollidableComponent collidable))
                 {
                     var controller = collidable.EnsureController<ConveyedController>();
-                    controller.Move(direction, speed);
+                    controller.Move(direction, _speed);
                 }
             }
         }
