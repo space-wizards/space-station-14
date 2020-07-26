@@ -16,7 +16,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing
+    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing, IActivate
     {
         public override string Name => "ConveyorSwitch";
 
@@ -150,6 +150,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             return true;
+        }
+
+        void IActivate.Activate(ActivateEventArgs eventArgs)
+        {
+            NextState();
         }
     }
 }
