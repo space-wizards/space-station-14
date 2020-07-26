@@ -49,6 +49,7 @@
       state_closed: generic_door
   - type: LoopingSound
   - type: Anchorable
+  - type: Pullable
   placement:
     snap:
     - Wall

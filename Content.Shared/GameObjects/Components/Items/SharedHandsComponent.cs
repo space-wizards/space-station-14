@@ -1,16 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+﻿#nullable enable
+using System;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.GameObjects.Components.Items
 {
-    public abstract class SharedHandsComponent : Component
+    public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
         public sealed override string Name => "Hands";
         public sealed override uint? NetID => ContentNetIDs.HANDS;
+
+        [ViewVariables]
+        protected ICollidableComponent? PulledObject;
+
+        [ViewVariables]
+        protected bool IsPulling => PulledObject != null;
+
+        public virtual void StopPull()
+        {
+            if (PulledObject != null &&
+                PulledObject.TryGetController(out PullController controller))
+            {
+                controller.StopPull();
+            }
+
+            PulledObject = null;
+        }
     }
 
     [Serializable, NetSerializable]
@@ -35,9 +53,9 @@ namespace Content.Shared.GameObjects.Components.Items
     public class HandsComponentState : ComponentState
     {
         public readonly SharedHand[] Hands;
-        public readonly string ActiveIndex;
+        public readonly string? ActiveIndex;
 
-        public HandsComponentState(SharedHand[] hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(SharedHand[] hands, string? activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
