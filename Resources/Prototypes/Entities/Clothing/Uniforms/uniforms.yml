@@ -647,6 +647,59 @@
       HeldPrefix: gy_suit
 
 - type: entity
+  parent: UniformHoS
+  id: UniformHoSParadeMale
+  name: head of security's parade uniform
+  description: A male head of security's luxury-wear, for special occasions.
+  components:
+    - type: Sprite
+      state: hos_parade_male
+    - type: Icon
+      state: hos_parade_male
+    - type: Clothing
+      ClothingPrefix: hos_parade_male
+
+- type: entity
+  parent: UniformHoSParadeMale
+  id: UniformHoSParadeFem
+  name: head of security's parade uniform
+  description: A female head of security's luxury-wear, for special occasions.
+  components:
+    - type: Sprite
+      state: hos_parade_fem
+    - type: Icon
+      state: hos_parade_fem
+    - type: Clothing
+      ClothingPrefix: hos_parade_fem
+      femaleMask: UniformTop
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSFormal
+  name: head of security's formal uniform
+  description: The insignia on this uniform tells you that this uniform belongs to the Head of Security.
+  components:
+    - type: Sprite
+      state: hosblueclothes
+    - type: Icon
+      state: hosblueclothes
+    - type: Clothing
+      ClothingPrefix: hosblueclothes
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSFormalTan
+  name: head of security's formal uniform (tan)
+  description: The insignia on this uniform tells you that this uniform belongs to the Head of Security.
+  components:
+    - type: Sprite
+      state: hostanclothes
+    - type: Icon
+      state: hostanclothes
+    - type: Clothing
+      ClothingPrefix: hostanclothes
+
+- type: entity
   parent: UniformBase
   id: UniformWarden
   name: security suit
