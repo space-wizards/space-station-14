@@ -33,8 +33,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             // No contents, we do nothing
             if (Contents.ContainedEntities.Count == 0) return;
 
-            var playSound = false;
-
             var lockers = _entityManager.GetEntities(new TypeEntityQuery(typeof(EntityStorageComponent))).ToList();
 
             if (lockers.Contains(Owner))
@@ -51,13 +49,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                playSound = true;
                 Contents.ForceRemove(entity);
                 entity.Transform.AttachToGridOrMap();
                 locker.Insert(entity);
             }
 
-            if (!playSound) return;
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/teleport_departure.ogg", Owner, AudioHelpers.WithVariation(0.125f));
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/teleport_arrival.ogg", lockerEnt, AudioHelpers.WithVariation(0.125f));
         }
