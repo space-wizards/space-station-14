@@ -23,6 +23,8 @@ namespace Content.Shared.Physics
 
         private GridCoordinates? _movingTo;
 
+        public ICollidableComponent? Puller => _puller;
+
         public void StartPull(ICollidableComponent? pull)
         {
             _puller = pull;
@@ -71,7 +73,7 @@ namespace Content.Shared.Physics
 
             if (dist.Length > DistBeforeStopPull)
             {
-                _puller.Owner.GetComponent<ISharedHandsComponent>().StopPulling();
+                _puller.Owner.GetComponent<ISharedHandsComponent>().StopPull();
             }
             else if (_movingTo.HasValue)
             {

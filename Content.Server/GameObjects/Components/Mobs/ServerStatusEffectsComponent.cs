@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                                 break;
                             }
 
-                            hands.StopPulling();
+                            hands.StopPull();
                             break;
                     }
 

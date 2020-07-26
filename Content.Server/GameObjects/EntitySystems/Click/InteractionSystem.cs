@@ -282,11 +282,11 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 
             if (controller.GettingPulled)
             {
-                hands.StopPulling();
+                hands.StopPull();
             }
             else
             {
-                hands.StartPulling(pull);
+                hands.StartPull(pull);
             }
 
             return false;

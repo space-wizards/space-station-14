@@ -1,11 +1,7 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -23,7 +19,7 @@ namespace Content.Shared.GameObjects.Components.Items
         [ViewVariables]
         protected bool IsPulling => PulledObject != null;
 
-        public virtual void StopPulling()
+        public virtual void StopPull()
         {
             if (PulledObject != null &&
                 PulledObject.TryGetController(out PullController controller))

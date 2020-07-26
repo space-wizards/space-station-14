@@ -4,6 +4,6 @@ namespace Content.Shared.GameObjects.Components.Items
 {
     public interface ISharedHandsComponent : IComponent
     {
-        void StopPulling();
+        void StopPull();
     }
 }

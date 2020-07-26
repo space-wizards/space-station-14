@@ -495,11 +495,16 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public void StartPulling(PullableComponent pullable)
+        public void StartPull(PullableComponent pullable)
         {
+            if (Owner == pullable.Owner)
+            {
+                return;
+            }
+
             if (IsPulling)
             {
-                StopPulling();
+                StopPull();
             }
 
             PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
@@ -658,10 +663,10 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public override void StopPulling()
+        public override void StopPull()
         {
             RemovePullingStatuses();
-            base.StopPulling();
+            base.StopPull();
         }
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)
