@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (!Owner.Transform.IsMapTransform)
             {
-                Owner.Transform.DetachParent();
+                Owner.Transform.AttachToGridOrMap();
             }
         }
 
