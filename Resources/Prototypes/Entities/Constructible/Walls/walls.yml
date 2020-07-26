@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: base_wall
   name: basewall
   description: Keeps the air in and the greytide out.
@@ -27,6 +27,10 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
+    resistances:
+      brute:
+        coefficient: 0.5
+        damageReduction: 5
   - type: Destructible
     thresholdvalue: 100
     spawnondestroy: Girder

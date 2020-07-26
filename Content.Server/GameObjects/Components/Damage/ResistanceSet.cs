@@ -13,15 +13,25 @@ namespace Content.Server.GameObjects
     /// </summary>
     public class ResistanceSet : IExposeData
     {
+        public static ResistanceSet DefaultResistanceSet = new ResistanceSet();
+
         [ViewVariables]
         private readonly Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
+
+        public ResistanceSet()
+        {
+            foreach (DamageType damageType in Enum.GetValues(typeof(DamageType)))
+            {
+                _resistances[damageType] = new ResistanceSetSettings();
+            }
+        }
 
         public void ExposeData(ObjectSerializer serializer)
         {
             foreach (DamageType damageType in Enum.GetValues(typeof(DamageType)))
             {
-                var stringID = damageType.ToString().ToLower();
-                _resistances[damageType] = serializer.ReadDataField(stringID, new ResistanceSetSettings());
+                var resistanceName = damageType.ToString().ToLower();
+                _resistances[damageType] = serializer.ReadDataField(resistanceName, new ResistanceSetSettings());
             } 
         }
 
@@ -58,16 +68,9 @@ namespace Content.Server.GameObjects
         /// </summary>
         public class ResistanceSetSettings : IExposeData
         {
-            public float Coefficient { get; private set; }
-            public int DamageReduction { get; private set; }
-            public bool AppliesToTotal { get; private set; }
-
-            public ResistanceSetSettings(float coefficient = 1, int damageReduction = 0, bool appliesInTotal = true)
-            {
-                Coefficient = coefficient;
-                DamageReduction = damageReduction;
-                AppliesToTotal = appliesInTotal;
-            }
+            public float Coefficient { get; private set; } = 1;
+            public int DamageReduction { get; private set; } = 0;
+            public bool AppliesToTotal { get; private set; } = true;
 
             public void ExposeData(ObjectSerializer serializer)
             {

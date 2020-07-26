@@ -34,7 +34,8 @@ namespace Content.Server.GameObjects
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
 
-        Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
+        [ViewVariables]
+        public Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
         public event EventHandler<DamageEventArgs> Damaged;
