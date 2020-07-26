@@ -3,11 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.BodySystem;
+using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -27,6 +31,7 @@ namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     [ComponentReference(typeof(IHandsComponent))]
+    [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved
     {
 #pragma warning disable 649
@@ -490,6 +495,34 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
+        public void StartPull(PullableComponent pullable)
+        {
+            if (Owner == pullable.Owner)
+            {
+                return;
+            }
+
+            if (IsPulling)
+            {
+                StopPull();
+            }
+
+            PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
+            var controller = PulledObject!.EnsureController<PullController>();
+            controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
+
+            AddPullingStatuses();
+        }
+
+        public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
+        {
+            if (PulledObject != null &&
+                PulledObject.TryGetController(out PullController controller))
+            {
+                controller.TryMoveTo(puller, to);
+            }
+        }
+
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -598,6 +631,42 @@ namespace Content.Server.GameObjects.Components.GUI
                 physics.Stop();
                 return;
             }
+        }
+
+        private void AddPullingStatuses()
+        {
+            if (PulledObject?.Owner != null &&
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            {
+                pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
+                    "/Textures/Interface/StatusEffects/Pull/pulled.png");
+            }
+
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            {
+                ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
+                    "/Textures/Interface/StatusEffects/Pull/pulling.png");
+            }
+        }
+
+        private void RemovePullingStatuses()
+        {
+            if (PulledObject?.Owner != null &&
+                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            {
+                pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
+            }
+
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            {
+                ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
+            }
+        }
+
+        public override void StopPull()
+        {
+            RemovePullingStatuses();
+            base.StopPull();
         }
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)

@@ -14,6 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
+    [ComponentReference(typeof(ISharedHandsComponent))]
     public class HandsComponent : SharedHandsComponent
     {
         private HandsGui? _gui;
