@@ -550,6 +550,77 @@
 
 - type: entity
   parent: UniformBase
+  id: UniformWarden
+  name: security suit
+  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_warden.rsi
+    state: rwarden
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_warden.rsi
+    state: rwarden
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_warden.rsi
+    ClothingPrefix: rwarden
+    HeldPrefix: rwarden
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenSkirt
+  name: warden's suitskirt
+  description: A formal security suitskirt for officers complete with Nanotrasen belt buckle.
+  components:
+    - type: Sprite
+      state: rwarden_skirt
+    - type: Icon
+      state: rwarden
+    - type: Clothing
+      femaleMask: UniformTop
+      ClothingPrefix: rwarden_skirt
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenGrey
+  name: grey security suit
+  description: A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+    - type: Sprite
+      state: warden
+    - type: Icon
+      state: warden
+    - type: Clothing
+      ClothingPrefix: warden
+      HeldPrefix: gy_suit
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenFormal
+  name: warden's formal uniform
+  description: The insignia on this uniform tells you that this uniform belongs to the Warden.
+  components:
+    - type: Sprite
+      state: wardenblueclothes
+    - type: Icon
+      state: wardenblueclothes
+    - type: Clothing
+      ClothingPrefix: wardenblueclothes
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenFormalTan
+  name: warden's formal uniform (tan)
+  description: The insignia on this uniform tells you that this uniform belongs to the Warden.
+  components:
+    - type: Sprite
+      state: wardentanclothes
+    - type: Icon
+      state: wardentanclothes
+    - type: Clothing
+      ClothingPrefix: wardentanclothes
+
+- type: entity
+  parent: UniformBase
   id: UniformPrisoner
   name: prisoner jumpsuit
   description:
