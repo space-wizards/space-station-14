@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
@@ -8,6 +9,7 @@ using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -154,7 +156,7 @@ namespace Content.Server.GameObjects.Components
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
-                if (!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<SpeciesComponent>())
+                if (!entity.HasComponent<StorableComponent>() && !entity.HasComponent<SpeciesComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -356,11 +358,18 @@ namespace Content.Server.GameObjects.Components
             if (!CanWeldShut)
                 return false;
 
+            if (_contents.Contains(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                return false;
+            }
+
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
                 return false;
+
 
             IsWeldedShut ^= true;
             return true;

@@ -1,5 +1,5 @@
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -18,11 +18,16 @@ namespace Content.Server.Mobs
         /// <param name="entity">The mob in question</param>
         /// <param name="playSound">Whether to play a sound when falling down or not</param>
         /// <param name="dropItems">Whether to make the mob drop all the items on his hands</param>
+        /// <param name="force">Whether or not to check if the entity can fall.</param>
         /// <returns>False if the mob was already downed or couldn't set the state</returns>
-        public static bool Down(IEntity entity, bool playSound = true, bool dropItems = true)
+        public static bool Down(IEntity entity, bool playSound = true, bool dropItems = true, bool force = false)
         {
-            if (!EffectBlockerSystem.CanFall(entity) ||
-                !entity.TryGetComponent(out AppearanceComponent appearance))
+            if (!force && !EffectBlockerSystem.CanFall(entity))
+            {
+                return false;
+            }
+
+            if (!entity.TryGetComponent(out AppearanceComponent appearance))
             {
                 return false;
             }

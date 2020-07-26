@@ -1,5 +1,5 @@
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory
@@ -38,8 +38,8 @@ namespace Content.Server.AI.Operators.Inventory
 
             foreach (var slot in handsComponent.ActivePriorityEnumerable())
             {
-                if (handsComponent.GetHand(slot) != itemComponent) continue;
-                handsComponent.ActiveIndex = slot;
+                if (handsComponent.GetItem(slot) != itemComponent) continue;
+                handsComponent.ActiveHand = slot;
                 handsComponent.ActivateItem();
                 return Outcome.Success;
             }

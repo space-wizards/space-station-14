@@ -1,0 +1,109 @@
+- type: entity
+  name: beaker
+  parent: BaseItem
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: Beaker
+  components:
+  - type: Sprite
+    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
+  - type: Icon
+    texture: Objects/Specific/Chemistry/beakers.rsi/beaker.png
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    HeldPrefix: beaker
+  - type: Solution
+    fillingState: beaker
+    maxVol: 50
+    caps: 27
+  - type: Pourable
+    transferAmount: 5.0
+  - type: CanSpill
+
+- type: entity
+  name: large beaker
+  parent: BaseItem
+  description: Used to contain a large amount of chemicals or solutions.
+  id: LargeBeaker
+  components:
+  - type: Sprite
+    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
+  - type: Icon
+    texture: Objects/Specific/Chemistry/beakers.rsi/beakerlarge.png
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beakers.rsi
+    HeldPrefix: beaker
+  - type: Solution
+    fillingState: beakerlarge
+    maxVol: 100
+    caps: 27
+  - type: Pourable
+    transferAmount: 5.0
+  - type: CanSpill
+
+- type: entity
+  name: dropper
+  parent: BaseItem
+  description: Used to transfer small amounts of chemical solution between containers.
+  id: Dropper
+  components:
+  - type: Sprite
+    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
+  - type: Icon
+    texture: Objects/Specific/Chemistry/dropper.rsi/dropper.png
+  - type: Solution
+    fillingState: dropper
+    fillingSteps: 2
+    maxVol: 5
+    caps: 19
+  - type: Pourable
+    transferAmount: 5.0
+  - type: CanSpill
+
+- type: entity
+  name: syringe
+  parent: BaseItem
+  description: Used to draw blood samples from mobs, or to inject them with reagents
+  id: Syringe
+  components:
+  - type: Sprite
+    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
+  - type: Icon
+    texture: Objects/Specific/Chemistry/syringe.rsi/0.png
+  - type: Solution
+    fillingState: syringe
+    fillingSteps: 5
+    maxVol: 15
+    caps: 19
+  - type: Injector
+    injectOnly: false
+  - type: CanSpill
+
+- type: entity
+  name: bottle
+  parent: BaseItem
+  id: bottle
+  components:
+    - type: Drink
+    - type: Solution
+      maxVol: 30
+    - type: Pourable
+      transferAmount: 5
+    - type: Sprite
+      texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
+    - type: Icon
+      texture: Objects/Specific/Chemistry/bottle.rsi/bottle.png
+    - type: CanSpill
+
+- type: entity
+  name: pill
+  parent: FoodBase
+  id: pill
+  description: It's not a suppository.
+  components:
+    - type: Pill
+    - type: Solution
+      maxVol: 50
+    - type: Sprite
+      texture: Objects/Specific/Chemistry/pills.rsi/pill.png
+    - type: Icon
+      texture: Objects/Specific/Chemistry/pills.rsi/pill.png

@@ -37,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Networking
         {
             // Initialize client & server with text component and system registered.
             // They can't be registered/detected automatically.
-            var (client, server) = await StartConnectedServerClientPair(
+            var (client, server) = await StartConnectedServerDummyTickerClientPair(
                 new ClientContentIntegrationOption
                 {
                     // This test is designed around specific timing values and when I wrote it interpolation was off.

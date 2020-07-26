@@ -26,20 +26,22 @@ namespace Content.Shared.GameObjects.Components.Research
         {
             base.ExposeData(serializer);
 
-            if (serializer.Reading)
-            {
-                var recipes = serializer.ReadDataField("protolatherecipes", new List<string>());
-                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                foreach (var id in recipes)
+            serializer.DataReadWriteFunction(
+                "protolatherecipes",
+                new List<string>(),
+                recipes =>
                 {
-                    if (!prototypeManager.TryIndex(id, out LatheRecipePrototype recipe)) continue;
-                    _protolatheRecipes.Add(recipe);
-                }
-            } else if (serializer.Writing)
-            {
-                var recipes = GetProtolatheRecipeIdList();
-                serializer.DataField(ref recipes, "protolatherecipes", new List<string>());
-            }
+                    var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+
+                    foreach (var id in recipes)
+                    {
+                        if (prototypeManager.TryIndex(id, out LatheRecipePrototype recipe))
+                        {
+                            _protolatheRecipes.Add(recipe);
+                        }
+                    }
+                },
+                GetProtolatheRecipeIdList);
         }
 
         /// <summary>

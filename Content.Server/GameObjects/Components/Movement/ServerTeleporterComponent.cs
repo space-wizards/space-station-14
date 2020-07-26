@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -17,7 +17,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -115,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 {
                     // Added this component to avoid stacking portals and causing shenanigans
                     // TODO: Doesn't do a great job of stopping stacking portals for directed
-                    if (entity.HasComponent<CollidableComponent>() || entity.HasComponent<ServerTeleporterComponent>())
+                    if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<ServerTeleporterComponent>())
                     {
                         return;
                     }
@@ -160,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Movement
             // TODO: Check the user's spot? Upside is no stacking TPs but downside is they can't unstuck themselves from walls.
             foreach (var entity in _serverEntityManager.GetEntitiesIntersecting(user.Transform.MapID, target))
             {
-                if (entity.HasComponent<CollidableComponent>() || entity.HasComponent<ServerPortalComponent>())
+                if (entity.HasComponent<ICollidableComponent>() || entity.HasComponent<ServerPortalComponent>())
                 {
                     return false;
                 }
@@ -252,7 +251,7 @@ namespace Content.Server.GameObjects.Components.Movement
                 soundPlayer.PlayAtCoords(_departureSound, user.Transform.GridPosition);
 
                 // Arrival
-                user.Transform.DetachParent();
+                user.Transform.AttachToGridOrMap();
                 user.Transform.WorldPosition = vector;
                 soundPlayer.PlayAtCoords(_arrivalSound, user.Transform.GridPosition);
             }

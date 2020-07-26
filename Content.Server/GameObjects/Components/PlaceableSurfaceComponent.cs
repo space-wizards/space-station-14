@@ -1,6 +1,6 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Utility;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -18,6 +18,7 @@ namespace Content.Server.GameObjects.Components
 
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
+
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!IsPlaceable)

@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -274,7 +275,10 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // Try to find the stack with the material in the user's hand.
-            var hands = placingEnt.GetComponent<HandsComponent>();
+            if(!placingEnt.TryGetComponent<HandsComponent>(out var hands))
+            {
+                return false;
+            };
             var activeHand = hands.GetActiveHand?.Owner;
             if (activeHand == null)
             {

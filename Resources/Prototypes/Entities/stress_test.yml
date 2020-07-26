@@ -1,0 +1,9 @@
+- type: entity
+  id: StressTest
+  name: stress test
+  components:
+  - type: Icon
+    texture: Effects/explosion.rsi/explosion.png
+  - type: Sprite
+    texture: Effects/explosion.rsi/explosion.png
+  - type: StressTestMovement
