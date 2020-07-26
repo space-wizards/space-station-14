@@ -125,6 +125,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 () => _id);
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (_id == 0)
+            {
+                return;
+            }
+
+            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id).AddSwitch(this);
+        }
+
         public override void OnRemove()
         {
             base.OnRemove();

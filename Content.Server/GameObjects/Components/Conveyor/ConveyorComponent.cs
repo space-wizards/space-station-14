@@ -217,6 +217,18 @@ namespace Content.Server.GameObjects.Components.Conveyor
             serializer.DataField(ref _speed, "speed", 2);
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (_id == null)
+            {
+                return;
+            }
+
+            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value).AddConveyor(this);
+        }
+
         public override void OnRemove()
         {
             base.OnRemove();
