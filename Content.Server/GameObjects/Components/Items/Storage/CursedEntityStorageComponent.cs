@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             var lockerEnt =
                 _robustRandom.Pick(_entityManager.GetEntities(new TypeEntityQuery(typeof(EntityStorageComponent))).ToList());
 
-            if (lockerEnt == null) return; // No valid lockers anywhere.
+            if (lockerEnt == null || lockerEnt == Owner) return; // No valid lockers anywhere.
 
             var locker = lockerEnt.GetComponent<EntityStorageComponent>();
 
