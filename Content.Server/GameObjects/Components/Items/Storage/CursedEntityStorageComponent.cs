@@ -30,6 +30,9 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             base.CloseStorage();
 
+            // No contents, we do nothing
+            if (Contents.ContainedEntities.Count == 0) return;
+
             var playSound = false;
 
             var lockers = _entityManager.GetEntities(new TypeEntityQuery(typeof(EntityStorageComponent))).ToList();
