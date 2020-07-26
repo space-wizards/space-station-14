@@ -93,10 +93,8 @@ namespace Content.Client.GameObjects
 
             if (cast.HoverEntity != null)
             {
-                var slot = cast.HoverEntity.Value.Key;
-                var tuple = cast.HoverEntity.Value.Value;
-                var entity = Owner.EntityManager.GetEntity(tuple.Item1);
-                var fits = tuple.Item2;
+                var (slot, (entityUid, fits)) = cast.HoverEntity.Value;
+                var entity = Owner.EntityManager.GetEntity(entityUid);
 
                 InterfaceController?.HoverInSlot(slot, entity, fits);
             }
