@@ -13,6 +13,7 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -622,6 +623,7 @@ namespace Content.Server.GameTicking
 
             // Reset pathing system
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
+            EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
 
             _spawnedPositions.Clear();
             _manifest.Clear();
@@ -775,6 +777,7 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
+            jobPrototype.Special?.AfterEquip(mob);
         }
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)

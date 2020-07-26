@@ -13,9 +13,6 @@
   - type: Collidable
   - type: Clickable
   - type: InteractionOutline
-  - type: EntityStorage
-    showContents: true
-    noDoor: true
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

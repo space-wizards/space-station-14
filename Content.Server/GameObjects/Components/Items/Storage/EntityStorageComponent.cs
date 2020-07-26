@@ -49,6 +49,7 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         private IEntityQuery _entityQuery;
         private bool _showContents;
+        private bool _occludesLight;
         private bool _open;
         private bool _isWeldedShut;
         private int _collisionMaskStorage;
@@ -65,6 +66,17 @@ namespace Content.Server.GameObjects.Components
             {
                 _showContents = value;
                 _contents.ShowContents = _showContents;
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool OccludesLight
+        {
+            get => _occludesLight;
+            set
+            {
+                _occludesLight = value;
+                _contents.OccludesLight = _occludesLight;
             }
         }
 
@@ -101,6 +113,7 @@ namespace Content.Server.GameObjects.Components
             _entityQuery = new IntersectingEntityQuery(Owner);
 
             _contents.ShowContents = _showContents;
+            _contents.OccludesLight = _occludesLight;
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
@@ -116,6 +129,7 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _storageCapacityMax, "Capacity", 30);
             serializer.DataField(ref _isCollidableWhenOpen, "IsCollidableWhenOpen", false);
             serializer.DataField(ref _showContents, "showContents", false);
+            serializer.DataField(ref _occludesLight, "occludesLight", true);
             serializer.DataField(ref _open, "open", false);
             serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
