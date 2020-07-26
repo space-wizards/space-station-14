@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -75,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (!Owner.Transform.IsMapTransform)
             {
-                Owner.Transform.AttachToGridOrMap();
+                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
             }
         }
 
