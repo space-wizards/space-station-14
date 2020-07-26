@@ -125,6 +125,13 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 () => _id);
         }
 
+        public override void OnRemove()
+        {
+            base.OnRemove();
+
+            Group?.RemoveSwitch(this);
+        }
+
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return NextState();
