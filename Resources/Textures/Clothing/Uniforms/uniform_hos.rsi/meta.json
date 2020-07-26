@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/BeeStation/BeeStation-Hornet",
+    "copyright": "Taken from https://github.com/BeeStation/BeeStation-Hornet and https://github.com/tgstation/tgstation/ at commit c323b1ed63e7a9c33f48abcdf24f11e30e136aa0",
     "states": [
         {
             "name": "equipped-INNERCLOTHING",

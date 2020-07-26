@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/ at commit c323b1ed63e7a9c33f48abcdf24f11e30e136aa0",
     "states": [
         {
             "name": "gy_suit-inhand-left hand",
