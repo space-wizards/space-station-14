@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Storage;
-using Content.Client.Interfaces.GameObjects;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -137,7 +137,7 @@ namespace Content.Client.GameObjects.Components.Storage
                 {
                     var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
 
-                    if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                    if (controlledEntity.TryGetComponent(out HandsComponent hands))
                     {
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
                     }
@@ -250,7 +250,7 @@ namespace Content.Client.GameObjects.Components.Storage
             {
                 var controlledEntity = IoCManager.Resolve<IPlayerManager>().LocalPlayer.ControlledEntity;
 
-                if (controlledEntity.TryGetComponent(out IHandsComponent hands))
+                if (controlledEntity.TryGetComponent(out HandsComponent hands))
                 {
                     StorageEntity.SendNetworkMessage(new InsertEntityMessage());
                 }

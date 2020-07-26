@@ -25,8 +25,25 @@ namespace Content.Server
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgDoNotify>(nameof(MsgDoNotify));
+            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor));
+            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates));
+            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity));
+
             _initialized = true;
+        }
+
+        public override void PopupMessage(IEntity source, IEntity viewer, string message)
+        {
+            if (!viewer.TryGetComponent(out IActorComponent actor))
+            {
+                return;
+            }
+
+            var netMessage = _netManager.CreateNetMessage<MsgDoNotifyEntity>();
+            netMessage.Entity = source.Uid;
+            netMessage.Message = message;
+
+            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
 
         public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)
@@ -36,9 +53,10 @@ namespace Content.Server
                 return;
             }
 
-            var netMessage = _netManager.CreateNetMessage<MsgDoNotify>();
+            var netMessage = _netManager.CreateNetMessage<MsgDoNotifyCoordinates>();
             netMessage.Coordinates = coordinates;
             netMessage.Message = message;
+
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
 
@@ -49,9 +67,9 @@ namespace Content.Server
                 return;
             }
 
-            var netMessage = _netManager.CreateNetMessage<MsgDoNotify>();
+            var netMessage = _netManager.CreateNetMessage<MsgDoNotifyCursor>();
             netMessage.Message = message;
-            netMessage.AtCursor = true;
+
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
         }
 

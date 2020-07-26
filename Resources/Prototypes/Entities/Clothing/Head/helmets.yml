@@ -1,0 +1,169 @@
+- type: entity
+  parent: HatBase
+  id: HatAtmosHelm
+  name: atmos helm
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/atmos_helm.rsi
+  - type: Icon
+    sprite: Clothing/Head/atmos_helm.rsi
+  - type: Clothing
+    sprite: Clothing/Head/atmos_helm.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatCultHelmet
+  name: cult helmet
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/cult_helmet.rsi
+  - type: Icon
+    sprite: Clothing/Head/cult_helmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/cult_helmet.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhatDblue
+  name: hardhat dblue
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat0_dblue.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat0_dblue.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat0_dblue.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhat Orange
+  name: hardhat orange
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat0_orange.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat0_orange.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat0_orange.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhatPumpkin
+  name: hardhat pumpkin
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat0_pumpkin.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat0_pumpkin.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat0_pumpkin.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhatRed
+  name: hardhat red
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat0_red.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat0_red.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat0_red.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhatWhite
+  name: hardhat white
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat0_white.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat0_white.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat0_white.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhatYellow
+  name: hardhat yellow
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat0_yellow.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat0_yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat0_yellow.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardhatPumpkinAlt
+  name: hardhat pumpkin (alt)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardhat1_pumpkin.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardhat1_pumpkin.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardhat1_pumpkin.rsi
+
+
+- type: entity
+  parent: HatBase
+  id: HatLightRiot
+  name: light riot
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/light_riot.rsi
+  - type: Icon
+    sprite: Clothing/Head/light_riot.rsi
+  - type: Clothing
+    sprite: Clothing/Head/light_riot.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatLightRiotOn
+  name: light riot (on)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/light_riot_on.rsi
+  - type: Icon
+    sprite: Clothing/Head/light_riot_on.rsi
+  - type: Clothing
+    sprite: Clothing/Head/light_riot_on.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatScaf
+  name: scaf
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/scaf.rsi
+  - type: Icon
+    sprite: Clothing/Head/scaf.rsi
+  - type: Clothing
+    sprite: Clothing/Head/scaf.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatSecurity
+  name: security
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/security.rsi
+  - type: Icon
+    sprite: Clothing/Head/security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/security.rsi

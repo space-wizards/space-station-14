@@ -11,7 +11,7 @@
     capacity: 30
   - type: Icon
     state: icon
-  - type: Sprite 
+  - type: Sprite
     netsync: false
     layers:
     - state: base
@@ -20,7 +20,7 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 2
       zeroVisible: false
@@ -41,7 +41,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/l_rifle_box.rsi
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 8
       zeroVisible: false
@@ -135,7 +135,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LRifle/pk_box.rsi
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 7
       zeroVisible: false

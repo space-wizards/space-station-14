@@ -1,7 +1,7 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
   save: false
-  name: Xeno
+  name: Xeno hunter
   id: XenoMob_Content
   description: They mostly come at night. Mostly.
   drawdepth: Mobs
@@ -10,19 +10,17 @@
   - type: AiController
     logic: Xeno
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
-  # Organs
   - type: InteractionOutline
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Species/xeno.rsi
-    state: running
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: running
+      sprite: Mobs/Species/xeno_hunter.rsi
   - type: Icon
-    sprite: Mobs/Species/xeno.rsi
-    state: running
+    sprite: Mobs/Species/xeno_hunter.rsi
+    state: standing
   - type: Clickable
   - type: Physics
     mass: 85
@@ -48,13 +46,15 @@
   - type: Damageable
   - type: CombatMode
   - type: Teleportable
-  - type: CharacterInfo
   - type: FootstepSound
-  - type: HumanoidAppearance
   - type: Stunnable
-  - type: AnimationPlayer
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: claw
     damage: 90
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: running
+      dead: dead

@@ -128,13 +128,14 @@
             "StressTestMovement",
             "Toys",
             "SurgeryTool",
-            "Slippery",
             "EmitSoundOnThrow",
             "Flash",
             "DamageOnToolInteract",
             "CustodialClosetFill",
             "NoSlip",
             "TrashSpawner",
+            "Pill",
+            "RCD",
         };
     }
 }

@@ -19,14 +19,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         void CombineGroup(INodeGroup newGroup);
 
-        void BeforeCombine();
-
-        void AfterCombine();
-
-        void BeforeRemakeSpread();
-
-        void AfterRemakeSpread();
-
         void RemakeGroup();
     }
 
@@ -62,14 +54,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 newGroup.CombineGroup(this);
                 return;
             }
-            BeforeCombine();
-            newGroup.BeforeCombine();
             foreach (var node in Nodes)
             {
                 node.NodeGroup = newGroup;
             }
-            AfterCombine();
-            newGroup.AfterCombine();
         }
 
         /// <summary>
@@ -78,7 +66,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         /// </summary>
         public void RemakeGroup()
         {
-            BeforeRemake();
             foreach (var node in Nodes)
             {
                 node.ClearNodeGroup();
@@ -87,7 +74,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 if (node.TryAssignGroupIfNeeded())
                 {
-                    node.StartSpreadingGroup();
+                    node.SpreadGroup();
                 }
             }
         }
@@ -96,18 +83,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         
         protected virtual void OnRemoveNode(Node node) { }
 
-        protected virtual void BeforeRemake() { }
-
-        protected virtual void AfterRemake() { }
-
-        public virtual void BeforeCombine() { }
-
-        public virtual void AfterCombine() { }
-
-        public virtual void BeforeRemakeSpread() { }
-
-        public virtual void AfterRemakeSpread() { }
-
         private class NullNodeGroup : INodeGroup
         {
             public IReadOnlyList<Node> Nodes => _nodes;
@@ -115,10 +90,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             public void AddNode(Node node) { }
             public void CombineGroup(INodeGroup newGroup) { }
             public void RemoveNode(Node node) { }
-            public void BeforeCombine() { }
-            public void AfterCombine() { }
-            public void BeforeRemakeSpread() { }
-            public void AfterRemakeSpread() { }
             public void RemakeGroup() { }
         }
     }

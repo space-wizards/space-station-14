@@ -10,9 +10,6 @@
   components:
   - type: Flashable
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
   - type: Hunger
   - type: Thirst
@@ -126,7 +123,7 @@
   - type: Damageable
   - type: Appearance
     visuals:
-    - type: SpeciesVisualizer2D
+    - type: SpeciesVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
   - type: Teleportable
@@ -150,10 +147,6 @@
   description: A dummy human meant to be used in character setup
   components:
     - type: Hands
-      hands:
-        - left
-        - right
-
     - type: Inventory
     - type: Sprite
       netsync: false
@@ -253,7 +246,7 @@
 
     - type: Appearance
       visuals:
-        - type: SpeciesVisualizer2D
+        - type: SpeciesVisualizer
 
     - type: HumanoidAppearance
 

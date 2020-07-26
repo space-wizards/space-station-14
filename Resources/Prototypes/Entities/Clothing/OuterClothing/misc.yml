@@ -1,0 +1,313 @@
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingApron
+  name: apron
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/apron.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/apron.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/apron.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingApronchef
+  name: apron (chef)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/apronchef.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/apronchef.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/apronchef.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingAssjacket
+  name: ass jacket
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/ass_jacket.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/ass_jacket.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/ass_jacket.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBedsheet
+  name: ghost costume
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bedsheet.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bedsheet.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bedsheet.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBlackhoodie
+  name: black hoodie
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/black_hoodie.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/black_hoodie.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/black_hoodie.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBlackhoodieopen
+  name: black hoodie (open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/black_hoodie_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/black_hoodie_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/black_hoodie_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingCardborg
+  name: cardborg
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/cardborg.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/cardborg.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/cardborg.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingChaplainhoodie
+  name: chaplain hoodie
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/chaplain_hoodie.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/chaplain_hoodie.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/chaplain_hoodie.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingChef
+  name: chef
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/chef.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/chef.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/chef.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingChickensuit
+  name: chicken suit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/chickensuit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/chickensuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/chickensuit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingClassicponcho
+  name: classic poncho
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/classicponcho.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/classicponcho.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/classicponcho.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingCultrobes
+  name: cult robes
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/cultrobes.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/cultrobes.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/cultrobes.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingDetvest
+  name: detective's vest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/detvest.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/detvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/detvest.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingHazard
+  name: hazard
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/hazard.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/hazard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/hazard.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingJudge
+  name: judge
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/judge.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/judge.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/judge.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingMonkeysuit
+  name: monkey suit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/monkeysuit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/monkeysuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/monkeysuit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingPoncho
+  name: poncho
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/poncho.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/poncho.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/poncho.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingSanta
+  name: santa
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/santa.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/santa.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/santa.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingStraightjacket
+  name: straight jacket
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/straight_jacket.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/straight_jacket.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/straight_jacket.rsi
+
+# This sprite looks like shit too but whatever...
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingSurgeon
+  name: surgeon
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/surgeon.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/surgeon.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/surgeon.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingVest
+  name: vest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/vest.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/vest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/vest.rsi
+
+# Is this wizard wearing a fanny pack???
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingVioletwizard
+  name: violet wizard
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/violetwizard.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/violetwizard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/violetwizard.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingWizard
+  name: wizard
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/wizard.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/wizard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/wizard.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingXenos
+  name: xenos
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/xenos.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/xenos.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/xenos.rsi

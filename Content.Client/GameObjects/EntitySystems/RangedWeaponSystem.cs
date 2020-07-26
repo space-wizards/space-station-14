@@ -1,6 +1,6 @@
 ﻿using System;
+using Content.Client.GameObjects.Components.Items;
 using Content.Client.GameObjects.Components.Weapons.Ranged;
-using Content.Client.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.Graphics.ClientEye;
@@ -11,7 +11,6 @@ using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
@@ -48,7 +47,7 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 return;
             }
-            
+
             var state = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
             if (!_combatModeSystem.IsInCombatMode() || state != BoundKeyState.Down)
             {
@@ -58,7 +57,7 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             var entity = _playerManager.LocalPlayer.ControlledEntity;
-            if (entity == null || !entity.TryGetComponent(out IHandsComponent hands))
+            if (entity == null || !entity.TryGetComponent(out HandsComponent hands))
             {
                 return;
             }

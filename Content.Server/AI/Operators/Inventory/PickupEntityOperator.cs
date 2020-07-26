@@ -1,5 +1,5 @@
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Robust.Shared.Containers;
@@ -41,11 +41,11 @@ namespace Content.Server.AI.Operators.Inventory
 
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                if (handsComponent.GetHand(hand) == null)
+                if (handsComponent.GetItem(hand) == null)
                 {
-                    if (handsComponent.ActiveIndex != hand)
+                    if (handsComponent.ActiveHand != hand)
                     {
-                        handsComponent.ActiveIndex = hand;
+                        handsComponent.ActiveHand = hand;
                     }
 
                     emptyHands = true;

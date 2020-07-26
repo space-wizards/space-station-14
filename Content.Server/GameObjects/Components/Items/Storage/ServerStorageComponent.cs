@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Storage;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -43,12 +45,23 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         private Container? _storage;
 
+        private bool _occludesLight;
         private bool _storageInitialCalculated;
         private int _storageUsed;
         private int _storageCapacityMax;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new HashSet<IPlayerSession>();
 
         public IReadOnlyCollection<IEntity>? StoredEntities => _storage?.ContainedEntities;
+
+        public bool OccludesLight
+        {
+            get => _occludesLight;
+            set
+            {
+                _occludesLight = value;
+                if (_storage != null) _storage.OccludesLight = value;
+            }
+        }
 
         private void EnsureInitialCalculated()
         {
@@ -315,6 +328,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             // ReSharper disable once StringLiteralTypo
             _storage = ContainerManagerComponent.Ensure<Container>("storagebase", Owner);
+            _storage.OccludesLight = _occludesLight;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -322,6 +336,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             base.ExposeData(serializer);
 
             serializer.DataField(ref _storageCapacityMax, "capacity", 10000);
+            serializer.DataField(ref _occludesLight, "occludesLight", true);
             //serializer.DataField(ref StorageUsed, "used", 0);
         }
 
@@ -490,6 +505,11 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
         bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
         {
+            if (!ActionBlockerSystem.CanInteract(eventArgs.User))
+            {
+                return false;
+            }
+
             if (!eventArgs.Target.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurface) ||
                 !placeableSurface.IsPlaceable)
             {

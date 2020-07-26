@@ -18,7 +18,7 @@
       map: ["enum.RangedBarrelVisualLayers.Mag"]
   - type: Appearance
     visuals:
-    - type: MagVisualizer2D
+    - type: MagVisualizer
       magState: mag
       steps: 7
       zeroVisible: false
