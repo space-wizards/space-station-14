@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects
         [ViewVariables]
         private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
 
-        private KeyValuePair<Slots, Tuple<EntityUid, bool>>? HoverEntity;
+        private KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity;
 
         public override void Initialize()
         {
@@ -372,11 +372,11 @@ namespace Content.Server.GameObjects
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
                         var canEquip = CanEquip(msg.Inventoryslot, activeHand, out var reason);
-                        HoverEntity = new KeyValuePair<Slots, Tuple<EntityUid, bool>>(msg.Inventoryslot, new Tuple<EntityUid, bool>(activeHand.Owner.Uid, canEquip));
+                        HoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
 
                         Dirty();
                     }
-                    
+
                     break;
                 }
             }

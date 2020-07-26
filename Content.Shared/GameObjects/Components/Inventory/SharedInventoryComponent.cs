@@ -51,9 +51,9 @@ namespace Content.Shared.GameObjects
         protected class InventoryComponentState : ComponentState
         {
             public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
-            public KeyValuePair<Slots, Tuple<EntityUid, bool>>? HoverEntity { get; }
+            public KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity { get; }
 
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, Tuple<EntityUid, bool>>? hoverEntity = null) : base(ContentNetIDs.STORAGE)
+            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null) : base(ContentNetIDs.STORAGE)
             {
                 Entities = entities;
                 HoverEntity = hoverEntity;
