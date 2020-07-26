@@ -274,6 +274,20 @@
       ClothingPrefix: officertanclothes
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecGrey
+  name: grey security jumpsuit
+  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+    - type: Sprite
+      state: security_grey
+    - type: Icon
+      state: security_grey
+    - type: Clothing
+      ClothingPrefix: security_grey
+      HeldPrefix: gy_suit
+
+- type: entity
   parent: UniformBase
   id: UniformDetective
   name: hard-worn suit
