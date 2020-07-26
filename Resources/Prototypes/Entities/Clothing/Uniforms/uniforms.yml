@@ -633,6 +633,20 @@
     femaleMask: UniformTop
 
 - type: entity
+  parent: UniformHoS
+  id: UniformHoSGrey
+  name: head of security's grey jumpsuit
+  description:
+  components:
+    - type: Sprite
+      state: hos_grey
+    - type: Icon
+      state: hos_grey
+    - type: Clothing
+      ClothingPrefix: hos_grey
+      HeldPrefix: gy_suit
+
+- type: entity
   parent: UniformBase
   id: UniformWarden
   name: security suit
