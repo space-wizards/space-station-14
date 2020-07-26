@@ -249,6 +249,23 @@
 
 - type: entity
   parent: UniformBase
+  id: UniformDetective
+  name: hard-worn suit
+  description: Someone who wears this means business.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/uniform_detective.rsi
+      state: detective
+    - type: Icon
+      sprite: Clothing/Uniforms/uniform_detective.rsi
+      state: detective
+    - type: Clothing
+      sprite: Clothing/Uniforms/uniform_detective.rsi
+      ClothingPrefix: detective
+      HeldPrefix: detective
+
+- type: entity
+  parent: UniformBase
   id: UniformCargoTech
   name: cargo tech jumpsuit
   description:
