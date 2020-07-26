@@ -235,6 +235,19 @@
       ClothingPrefix: blueshift
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecConstable
+  name: constable outfit
+  description: A british looking outfit.
+  components:
+    - type: Sprite
+      state: constable
+    - type: Icon
+      state: constable
+    - type: Clothing
+      ClothingPrefix: constable
+
+- type: entity
   parent: UniformBase
   id: UniformCargoTech
   name: cargo tech jumpsuit
