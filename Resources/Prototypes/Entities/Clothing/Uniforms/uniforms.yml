@@ -248,6 +248,32 @@
       ClothingPrefix: constable
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecFormal
+  name: security officer's formal uniform
+  description: The latest in fashionable security outfits.
+  components:
+    - type: Sprite
+      state: officerblueclothes
+    - type: Icon
+      state: officerblueclothes
+    - type: Clothing
+      ClothingPrefix: officerblueclothes
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecFormalTan
+  name: security officer's formal uniform (tan)
+  description: The latest in fashionable security outfits.
+  components:
+    - type: Sprite
+      state: officertanclothes
+    - type: Icon
+      state: officertanclothes
+    - type: Clothing
+      ClothingPrefix: officertanclothes
+
+- type: entity
   parent: UniformBase
   id: UniformDetective
   name: hard-worn suit
