@@ -71,6 +71,7 @@ namespace Content.Client.UserInterface
                 MouseIsHovering = false;
                 if (EntityHover)
                 {
+                    SpriteView.Sprite?.Owner.Delete();
                     EntityHover = false;
                     SpriteView.Sprite = null;
                     StorageButton.Visible = false;

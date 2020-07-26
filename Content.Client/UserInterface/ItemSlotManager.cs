@@ -132,6 +132,7 @@ namespace Content.Client.UserInterface
         {
             if (entity == null || !button.MouseIsHovering)
             {
+                button.SpriteView.Sprite?.Owner.Delete();
                 button.SpriteView.Sprite = null;
                 button.StorageButton.Visible = false;
                 return;
