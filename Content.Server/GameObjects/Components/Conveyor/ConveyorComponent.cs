@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private int _angle;
 
         /// <summary>
-        ///     The amount of units to move the entity by.
+        ///     The amount of units to move the entity by per second.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         private float _speed;
