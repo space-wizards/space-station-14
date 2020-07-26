@@ -6,7 +6,6 @@ using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
@@ -238,33 +237,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
 
-            //Explode in the face of the clown!! ;^)
-            if(shooter.HasComponent<ClumsyComponent>())
-            {
-
-                soundSystem.PlayAtCoords("/Audio/Items/bikehorn.ogg",
-                Owner.Transform.GridPosition, AudioParams.Default, 5);
-
-                soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                Owner.Transform.GridPosition, AudioParams.Default, 5);
-
-                if (shooter.TryGetComponent(out DamageableComponent health))
-                {
-                    health.TakeDamage(DamageType.Brute, 10);
-                    health.TakeDamage(DamageType.Heat, 5);
-                }
-
-                if (shooter.TryGetComponent(out StunnableComponent stun))
-                {
-                    stun.Paralyze(3f);
-                }
-
-                //I think maybe this should probably eject the magazine
-                //if the gun is one that uses mags.
-                _notifyManager.PopupMessage(shooter,shooter, Loc.GetString("The gun blows up in your face!"));
-                Owner.Delete();
-                return;
-            }
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent hitscan))
