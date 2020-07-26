@@ -288,6 +288,32 @@
       HeldPrefix: gy_suit
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecSpacePol
+  name: police uniform
+  description: Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol.
+  components:
+    - type: Sprite
+      state: spacepol
+    - type: Icon
+      state: spacepol
+    - type: Clothing
+      ClothingPrefix: spacepol
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecSpacePolFamilies
+  name: space police uniform
+  description: A police uniform often found in the lines at donut shops.
+  components:
+    - type: Sprite
+      state: spacepolice_families
+    - type: Icon
+      state: spacepolice_families
+    - type: Clothing
+      ClothingPrefix: spacepolice_families
+
+- type: entity
   parent: UniformBase
   id: UniformDetective
   name: hard-worn suit
