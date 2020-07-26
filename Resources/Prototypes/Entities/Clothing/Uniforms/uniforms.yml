@@ -265,6 +265,47 @@
       HeldPrefix: detective
 
 - type: entity
+  parent: UniformDetective
+  id: UniformDetectiveSkirt
+  name: detective's suitskirt
+  description: Someone who wears this means business.
+  components:
+    - type: Sprite
+      state: detective_skirt
+    - type: Icon
+      state: detective_skirt
+    - type: Clothing
+      ClothingPrefix: detective_skirt
+      femaleMask: UniformTop
+
+- type: entity
+  parent: UniformDetective
+  id: UniformDetectiveGrey
+  name: noir suit
+  description: A hard-boiled private investigator's grey suit, complete with tie clip.
+  components:
+    - type: Sprite
+      state: greydetective
+    - type: Icon
+      state: greydetective
+    - type: Clothing
+      ClothingPrefix: greydetective
+
+- type: entity
+  parent: UniformDetectiveGrey
+  id: UniformDetectiveGreySkirt
+  name: noir suitskirt
+  description: A hard-boiled private investigator's grey suitskirt, complete with tie clip.
+  components:
+    - type: Sprite
+      state: greydetective_skirt
+    - type: Icon
+      state: greydetective_skirt
+    - type: Clothing
+      ClothingPrefix: greydetective_skirt
+      femaleMask: UniformTop
+
+- type: entity
   parent: UniformBase
   id: UniformCargoTech
   name: cargo tech jumpsuit
