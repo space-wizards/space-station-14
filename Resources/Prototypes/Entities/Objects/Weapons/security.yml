@@ -23,7 +23,6 @@
       HeldPrefix: off
 
     - type: ItemCooldown
-    - type: GasAnalyzer
 
 - type: entity
   name: flash
