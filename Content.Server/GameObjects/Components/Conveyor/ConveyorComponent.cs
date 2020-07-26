@@ -29,7 +29,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, IExamine, IInteractUsing, IAfterInteract
+    public class ConveyorComponent : Component, IExamine, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -209,18 +209,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 : state;
         }
 
-        private void DeItemize(GridCoordinates coordinates)
-        {
-            if (!Owner.HasComponent<ItemComponent>())
-            {
-                return;
-            }
-
-            Owner.Transform.GridPosition = coordinates;
-            Owner.RemoveComponent<ItemComponent>();
-            State = ConveyorState.Off;
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -260,28 +248,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             return false;
-        }
-
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
-            {
-                return;
-            }
-
-            if (!Owner.HasComponent<ItemComponent>() ||
-                !eventArgs.CanReach ||
-                eventArgs.Target != null)
-            {
-                return;
-            }
-
-            if (!hands.Drop(Owner))
-            {
-                return;
-            }
-
-            DeItemize(eventArgs.ClickLocation);
         }
     }
 }
