@@ -1,6 +1,4 @@
 ﻿#nullable enable
-using System;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
@@ -19,7 +17,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -50,7 +47,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
         [ViewVariables(VVAccess.ReadWrite)]
         private float _speed;
 
+        [ViewVariables]
         private uint? _id;
+
         private ConveyorState _state;
 
         /// <summary>
@@ -73,20 +72,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        [ViewVariables]
-        private uint? Id
-        {
-            get => _id;
-            set
-            {
-                var old = _id;
-                _id = value;
-
-                EntitySystem.Get<ConveyorSystem>().ChangeId(this, old, _id);
-            }
-        }
-
-        private ConveyorGroup? Group => Id.HasValue ? EntitySystem.Get<ConveyorSystem>().EnsureGroup(Id.Value) : null;
+        private ConveyorGroup? Group => _id.HasValue ? EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value) : null;
 
         /// <summary>
         ///     Calculates the angle in which entities on top of this conveyor
@@ -155,7 +141,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return true;
         }
 
-        public void Update(float frameTime)
+        public void Update()
         {
             if (!CanRun())
             {
@@ -197,23 +183,36 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return false;
         }
 
-        public void SyncState(ConveyorState state)
+        public void Sync(ConveyorGroup group)
         {
+            _id = group.Id;
+
             if (State == ConveyorState.Loose)
             {
                 return;
             }
 
-            State = state == ConveyorState.Loose
+            State = group.State == ConveyorState.Loose
                 ? ConveyorState.Off
-                : state;
+                : group.State;
+        }
+
+        public void Disconnect()
+        {
+            _id = 0;
+            State = ConveyorState.Off;
+        }
+
+        public void ChangeId(uint id)
+        {
+            EntitySystem.Get<ConveyorSystem>().ChangeId(this, _id, id);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, conveyor => conveyor.Id, "id", null);
+            serializer.DataField(ref _id, "id", null);
             serializer.DataField(ref _angle, "angle", 0);
             serializer.DataField(ref _speed, "speed", 2);
         }
@@ -227,8 +226,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var tooltip = Id.HasValue
-                ? Loc.GetString("It's switch has an id of {0}.", Id.Value)
+            var tooltip = _id.HasValue
+                ? Loc.GetString("Its switch has an id of {0}.", _id.Value)
                 : Loc.GetString("It doesn't have an associated switch.");
 
             message.AddMarkup(tooltip);

@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Conveyor;
-using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -25,29 +16,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing, IAfterInteract
+    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing
     {
-#pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _random;
-#pragma warning restore 649
-
         public override string Name => "ConveyorSwitch";
 
-        private uint _id;
-        private ConveyorState _state;
-
         [ViewVariables]
-        private uint Id
-        {
-            get => _id;
-            set
-            {
-                var old = _id;
-                _id = value;
+        private uint _id;
 
-                EntitySystem.Get<ConveyorSystem>().ChangeId(this, old, _id);
-            }
-        }
+        private ConveyorState _state;
 
         /// <summary>
         ///     The current state of this switch
@@ -67,29 +43,38 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private ConveyorGroup Group => EntitySystem.Get<ConveyorSystem>().EnsureGroup(Id);
+        private ConveyorGroup Group => EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id);
 
-        /// <summary>
-        ///     Syncs this switch with the state of another
-        /// </summary>
-        /// <param name="state">The state to sync with</param>
-        public void SyncState(ConveyorState state)
+        public void Sync(ConveyorGroup group)
         {
+            _id = group.Id;
+
             if (State == ConveyorState.Loose)
             {
                 return;
             }
 
-            State = state == ConveyorState.Loose
+            State = group.State == ConveyorState.Loose
                 ? ConveyorState.Off
-                : state;
+                : group.State;
+        }
+
+        public void Disconnect()
+        {
+            _id = 0;
+            State = ConveyorState.Off;
+        }
+
+        public void ChangeId(uint id)
+        {
+            EntitySystem.Get<ConveyorSystem>().ChangeId(this, _id, id);
         }
 
         public void Connect(IEntity user, ConveyorComponent conveyor)
         {
             Group.AddConveyor(conveyor);
 
-            user.PopupMessage(user, Loc.GetString("Conveyor linked with id {0}.", Id));
+            user.PopupMessage(user, Loc.GetString("Conveyor linked with id {0}.", _id));
         }
 
         /// <summary>
@@ -123,47 +108,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return true;
         }
 
-        private bool ToolUsed(IEntity user, ToolComponent tool)
-        {
-            if (!Owner.HasComponent<ItemComponent>() &&
-                tool.UseTool(user, Owner, ToolQuality.Prying))
-            {
-                return Itemize();
-            }
-
-            return false;
-        }
-
         private void SyncWith(IEntity user, ConveyorSwitchComponent other)
         {
-            Id = other.Id;
-            Owner.PopupMessage(user, Loc.GetString("Switch changed to id {0}.", Id));
-        }
-
-        private bool Itemize()
-        {
-            if (Owner.HasComponent<ItemComponent>())
-            {
-                return false;
-            }
-
-            Owner.AddComponent<ItemComponent>();
-            NextState();
-            Owner.Transform.WorldPosition += (_random.NextFloat() * 0.4f - 0.2f, _random.NextFloat() * 0.4f - 0.2f);
-
-            return true;
-        }
-
-        private void DeItemize(GridCoordinates coordinates)
-        {
-            if (!Owner.HasComponent<ItemComponent>())
-            {
-                return;
-            }
-
-            Owner.Transform.GridPosition = coordinates;
-            Owner.RemoveComponent<ItemComponent>();
-            NextState();
+            _id = other._id;
+            Owner.PopupMessage(user, Loc.GetString("Switch changed to id {0}.", _id));
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -173,8 +121,8 @@ namespace Content.Server.GameObjects.Components.Conveyor
             serializer.DataReadWriteFunction<uint>(
                 "id",
                 0,
-                id => Id = id == 0 ? EntitySystem.Get<ConveyorSystem>().NextId() : id,
-                () => Id);
+                id => _id = id == 0 ? EntitySystem.Get<ConveyorSystem>().NextId() : id,
+                () => _id);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
@@ -184,16 +132,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("It has an id of {0}.", Id));
+            message.AddMarkup(Loc.GetString("It has an id of {0}.", _id));
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out ToolComponent tool))
-            {
-                return ToolUsed(eventArgs.User, tool);
-            }
-
             if (eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
             {
                 Connect(eventArgs.User, conveyor);
@@ -207,28 +150,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
 
             return true;
-        }
-
-        void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out HandsComponent hands))
-            {
-                return;
-            }
-
-            if (!Owner.HasComponent<ItemComponent>() ||
-                !eventArgs.CanReach ||
-                eventArgs.Target != null)
-            {
-                return;
-            }
-
-            if (!hands.Drop(Owner))
-            {
-                return;
-            }
-
-            DeItemize(eventArgs.ClickLocation);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public uint NextId()
         {
-            uint id = 0;
+            uint id = 1;
 
             while (_groups.ContainsKey(id))
             {
@@ -49,16 +49,16 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public void ChangeId(ConveyorSwitchComponent conveyorSwitch, uint old, uint current)
+        public void ChangeId(ConveyorSwitchComponent conveyorSwitch, uint old, uint @new)
         {
             if (old != 0)
             {
                 EnsureGroup(old).RemoveSwitch(conveyorSwitch);
             }
 
-            if (current != 0)
+            if (@new != 0)
             {
-                EnsureGroup(current).AddSwitch(conveyorSwitch);
+                EnsureGroup(@new).AddSwitch(conveyorSwitch);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
                 }
 
-                conveyor.Update(frameTime);
+                conveyor.Update();
             }
 
             foreach (var (id, group) in _groups)
@@ -113,32 +113,35 @@ namespace Content.Server.GameObjects.EntitySystems
         }
 
         public uint Id { get; }
+
         public IReadOnlyCollection<ConveyorComponent> Conveyors => _conveyors;
+
         public IReadOnlyCollection<ConveyorSwitchComponent> Switches => _switches;
-        public ConveyorState State { get; }
+
+        public ConveyorState State { get; set; }
 
         public void AddConveyor(ConveyorComponent conveyor)
         {
             _conveyors.Add(conveyor);
-            conveyor.SyncState(State);
+            conveyor.Sync(this);
         }
 
         public void RemoveConveyor(ConveyorComponent conveyor)
         {
             _conveyors.Remove(conveyor);
-            conveyor.SyncState(ConveyorState.Off);
+            conveyor.Disconnect();
         }
 
         public void AddSwitch(ConveyorSwitchComponent conveyorSwitch)
         {
             _switches.Add(conveyorSwitch);
-            conveyorSwitch.SyncState(State);
+            conveyorSwitch.Sync(this);
         }
 
         public void RemoveSwitch(ConveyorSwitchComponent conveyorSwitch)
         {
             _switches.Remove(conveyorSwitch);
-            conveyorSwitch.SyncState(ConveyorState.Off);
+            conveyorSwitch.Disconnect();
         }
 
         public void SetState(ConveyorSwitchComponent conveyorSwitch)
@@ -155,14 +158,16 @@ namespace Content.Server.GameObjects.EntitySystems
                 state = ConveyorState.Off;
             }
 
+            State = state;
+
             foreach (var conveyor in Conveyors)
             {
-                conveyor.SyncState(state);
+                conveyor.Sync(this);
             }
 
             foreach (var connectedSwitch in _switches)
             {
-                connectedSwitch.SyncState(state);
+                connectedSwitch.Sync(this);
             }
         }
 
