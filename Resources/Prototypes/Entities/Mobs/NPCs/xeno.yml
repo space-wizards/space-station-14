@@ -10,9 +10,6 @@
   - type: AiController
     logic: Xeno
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
   - type: InteractionOutline
   - type: Sprite

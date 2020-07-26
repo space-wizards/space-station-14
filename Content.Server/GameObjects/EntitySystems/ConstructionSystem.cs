@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -119,6 +120,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     _notifyManager.PopupMessage(msg.Attacked, msg.User,
                         "Cannot be deconstructed.");
+                    msg.Handled = true;
                     return;
                 }
 
@@ -128,6 +130,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     _notifyManager.PopupMessage(msg.Attacked, msg.User,
                         "Cannot be deconstructed.");
+                    msg.Handled = true;
                     return;
                 }
 
@@ -137,6 +140,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 {
                     _notifyManager.PopupMessage(msg.Attacked, msg.User,
                         "Wrong tool to start deconstruct.");
+                    msg.Handled = true;
                     return;
                 }
 

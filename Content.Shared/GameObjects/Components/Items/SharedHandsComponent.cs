@@ -1,14 +1,16 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Components.Items
 {
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
@@ -33,14 +35,31 @@ namespace Content.Shared.GameObjects
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class SharedHand
+    {
+        public readonly int Index;
+        public readonly string Name;
+        public readonly EntityUid? EntityUid;
+        public readonly HandLocation Location;
+
+        public SharedHand(int index, string name, EntityUid? entityUid, HandLocation location)
+        {
+            Index = index;
+            Name = name;
+            EntityUid = entityUid;
+            Location = location;
+        }
+    }
+
     // The IDs of the items get synced over the network.
     [Serializable, NetSerializable]
     public class HandsComponentState : ComponentState
     {
-        public readonly Dictionary<string, EntityUid> Hands;
+        public readonly SharedHand[] Hands;
         public readonly string ActiveIndex;
 
-        public HandsComponentState(Dictionary<string, EntityUid> hands, string activeIndex) : base(ContentNetIDs.HANDS)
+        public HandsComponentState(SharedHand[] hands, string activeIndex) : base(ContentNetIDs.HANDS)
         {
             Hands = hands;
             ActiveIndex = activeIndex;
@@ -96,5 +115,12 @@ namespace Content.Shared.GameObjects
             Directed = true;
             Index = index;
         }
+    }
+
+    public enum HandLocation : byte
+    {
+        Left,
+        Middle,
+        Right
     }
 }

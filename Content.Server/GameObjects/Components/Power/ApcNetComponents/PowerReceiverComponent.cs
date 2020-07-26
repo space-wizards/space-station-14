@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// <summary>
         ///     Amount of charge this needs from an APC per second to function.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public int Load { get => _load; set => SetLoad(value); }
         private int _load;
 

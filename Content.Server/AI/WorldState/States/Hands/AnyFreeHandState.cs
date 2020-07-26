@@ -1,4 +1,5 @@
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using JetBrains.Annotations;
 
 namespace Content.Server.AI.WorldState.States.Hands
@@ -16,7 +17,7 @@ namespace Content.Server.AI.WorldState.States.Hands
 
             foreach (var hand in handsComponent.ActivePriorityEnumerable())
             {
-                if (handsComponent.GetHand(hand) == null)
+                if (handsComponent.GetItem(hand) == null)
                 {
                     return true;
                 }

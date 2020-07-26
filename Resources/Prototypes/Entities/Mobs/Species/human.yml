@@ -10,9 +10,6 @@
   components:
   - type: Flashable
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
   - type: Hunger
   - type: Thirst
@@ -151,10 +148,6 @@
   description: A dummy human meant to be used in character setup
   components:
     - type: Hands
-      hands:
-        - left
-        - right
-
     - type: Inventory
     - type: Sprite
       netsync: false
