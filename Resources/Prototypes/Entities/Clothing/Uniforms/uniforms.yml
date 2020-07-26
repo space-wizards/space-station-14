@@ -222,6 +222,19 @@
     femaleMask: UniformTop
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecBlueShirt
+  name: blue shirt and tie
+  description: I'm a little busy right now, Calhoun.
+  components:
+    - type: Sprite
+      state: blueshift
+    - type: Icon
+      state: blueshift
+    - type: Clothing
+      ClothingPrefix: blueshift
+
+- type: entity
   parent: UniformBase
   id: UniformCargoTech
   name: cargo tech jumpsuit
