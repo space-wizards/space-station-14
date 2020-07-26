@@ -273,6 +273,8 @@ namespace Content.Server.GameObjects.Components.Buckle
             ReAttach(strap);
             BuckleStatus();
 
+            SendMessage(new BuckleMessage(Owner, to));
+
             return true;
         }
 
@@ -317,19 +319,13 @@ namespace Content.Server.GameObjects.Components.Buckle
                 }
             }
 
-            if (BuckledTo.Owner.TryGetComponent(out StrapComponent strap))
-            {
-                strap.Remove(this);
-                _entitySystem.GetEntitySystem<AudioSystem>()
-                    .PlayFromEntity(strap.UnbuckleSound, Owner);
-            }
-
             if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
             {
                 ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
                 Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
             }
 
+            var oldBuckledTo = BuckledTo;
             BuckledTo = null;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
@@ -352,6 +348,15 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
 
             BuckleStatus();
+
+            if (oldBuckledTo.Owner.TryGetComponent(out StrapComponent strap))
+            {
+                strap.Remove(this);
+                _entitySystem.GetEntitySystem<AudioSystem>()
+                    .PlayFromEntity(strap.UnbuckleSound, Owner);
+            }
+
+            SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
 
             return true;
         }
