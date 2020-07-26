@@ -50,7 +50,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
                 Contents.ForceRemove(entity);
-                entity.Transform.AttachToGridOrMap();
                 locker.Insert(entity);
             }
 
