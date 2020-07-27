@@ -9,7 +9,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalEntryComponent : DisposalTubeComponent
     {
-        private const string HolderPrototypeId = "disposalholder";
+        private const string HolderPrototypeId = "DisposalHolder";
 
         public override string Name => "DisposalEntry";
 

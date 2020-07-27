@@ -81,14 +81,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             StartingTime = 0;
             TimeLeft = 0;
 
-            if (!Owner.Transform.IsMapTransform)
-            {
-                ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
-            }
-
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
                 _contents.ForceRemove(entity);
+
+                if (entity.Transform.Parent == Owner.Transform)
+                {
+                    ContainerHelpers.AttachParentToContainerOrGrid(entity.Transform);
+                }
             }
 
             Owner.Delete();
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Initialize();
 
-            _contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
+            _contents = ContainerManagerComponent.Ensure<Container>(nameof(DisposalHolderComponent), Owner);
         }
     }
 }
