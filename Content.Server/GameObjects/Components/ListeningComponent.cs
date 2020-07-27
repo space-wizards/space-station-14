@@ -15,28 +15,8 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class ListeningComponent : Component
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Listening";
-
-        private ListeningSystem _listeningSystem = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            _listeningSystem = _entitySystemManager.GetEntitySystem<ListeningSystem>();
-            _listeningSystem.Subscribe(this);
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-
-            _listeningSystem.Unsubscribe(this);
-        }
 
         public void PassSpeechData(string speech, IEntity source, float distance)
         {

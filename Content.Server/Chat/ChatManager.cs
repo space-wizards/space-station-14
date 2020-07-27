@@ -30,7 +30,6 @@ namespace Content.Server.Chat
         private const int VoiceRange = 7; // how far voice goes in world units
 
 #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
@@ -79,15 +78,8 @@ namespace Content.Server.Chat
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
 
-            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>().GetActiveListeners();
-            foreach (var listener in listeners)
-            {
-                var dist = pos.Distance(_mapManager, listener.Owner.Transform.GridPosition);
-                if (dist < VoiceRange)
-                {
-                    listener.PassSpeechData(message, source, dist);
-                }
-            }
+            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
+            listeners.PingListeners(source, pos, message);
         }
 
         public void EntityMe(IEntity source, string action)

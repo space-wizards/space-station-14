@@ -1,5 +1,7 @@
 ﻿using Content.Server.GameObjects.Components;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -11,35 +13,26 @@ namespace Content.Server.GameObjects.EntitySystems
 {
     class ListeningSystem : EntitySystem
     {
-        private readonly List<ListeningComponent> _activeListeners = new List<ListeningComponent>();
+#pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+#pragma warning restore 649
 
-        public void Subscribe(ListeningComponent listener)
+        public override void Initialize()
         {
-            if (_activeListeners.Contains(listener))
-            {
-                return;
-            }
-
-            _activeListeners.Add(listener);
-
-            return;
+            base.Initialize();
+            EntityQuery = new TypeEntityQuery(typeof(ListeningComponent));
         }
 
-        public void Unsubscribe(ListeningComponent listener)
+        public void PingListeners(IEntity source, GridCoordinates sourcePos, string message)
         {
-            if (!_activeListeners.Contains(listener))
+            foreach (var listener in RelevantEntities)
             {
-                return;
+                var dist = sourcePos.Distance(_mapManager, listener.Transform.GridPosition);
+
+                listener.GetComponent<ListeningComponent>()
+                        .PassSpeechData(message, source, dist);
             }
-
-            _activeListeners.Remove(listener);
-
-            return;
-        }
-
-        public List<ListeningComponent> GetActiveListeners()
-        {
-            return _activeListeners;
         }
     }
 }
