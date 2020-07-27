@@ -45,6 +45,11 @@ namespace Content.Client.Chat
         /// </summary>
         private const int SpeechBubbleCap = 4;
 
+        /// <summary>
+        ///     The max amount of characters an entity can send in one message
+        /// </summary>
+        private const int CharacterLimit = 1000;
+
         private const char ConCmdSlash = '/';
         private const char OOCAlias = '[';
         private const char MeAlias = '@';
@@ -212,6 +217,14 @@ namespace Content.Client.Chat
 
             if (string.IsNullOrWhiteSpace(text))
                 return;
+
+            // Check if message is longer than character limit
+            if (text.Length > CharacterLimit)
+            {
+                _currentChatBox?.AddLine("Your message exceeds " + CharacterLimit + " character limit", ChatChannel.None, Color.Red);
+                _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent 
+                return;
+            }
 
             switch (text[0])
             {
