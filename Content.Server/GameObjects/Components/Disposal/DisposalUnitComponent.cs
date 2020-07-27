@@ -132,6 +132,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _userInterface.Close(actor.playerSession);
             }
 
+            UpdateVisualState();
+
             return true;
         }
 
@@ -144,6 +146,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _automaticEngageToken?.Cancel();
                 _automaticEngageToken = null;
             }
+
+            UpdateVisualState();
         }
 
         private bool CanFlush()
@@ -193,16 +197,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        private void TryEject(IEntity entity)
-        {
-            _container.Remove(entity);
-        }
-
         private void TryEjectContents()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
-                TryEject(entity);
+                Remove(entity);
             }
         }
 
@@ -312,6 +311,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             else
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Anchored);
+
+                if (ContainedEntities.Count > 0)
+                {
+                    appearance.SetData(Visuals.Light, LightState.Full);
+                    return;
+                }
+
                 appearance.SetData(Visuals.Light, _pressure < 1
                     ? LightState.Charging
                     : LightState.Ready);
