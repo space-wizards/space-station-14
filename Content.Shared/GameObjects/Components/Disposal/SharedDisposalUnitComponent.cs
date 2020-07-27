@@ -13,6 +13,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         public enum Visuals
         {
             VisualState,
+            Handle
         }
 
         [Serializable, NetSerializable]
@@ -21,8 +22,14 @@ namespace Content.Shared.GameObjects.Components.Disposal
             UnAnchored,
             Charging,
             Ready,
-            Engaging,
             Flushing
+        }
+
+        [Serializable, NetSerializable]
+        public enum HandleState
+        {
+            Normal,
+            Engaged
         }
 
         [Serializable, NetSerializable]

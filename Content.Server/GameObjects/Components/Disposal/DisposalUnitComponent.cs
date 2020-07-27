@@ -59,16 +59,13 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         private float _pressure;
 
+        private bool _engaged;
+
         [ViewVariables]
         private TimeSpan _engageTime;
 
         [ViewVariables]
         private TimeSpan _automaticEngageTime;
-
-        /// <summary>
-        ///     Token used to cancel a flush after an engage.
-        /// </summary>
-        private CancellationTokenSource? _engageToken;
 
         /// <summary>
         ///     Token used to cancel the automatic engage of a disposal unit
@@ -99,6 +96,17 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private State State => _pressure >= 1 ? State.Ready : State.Pressurizing;
+
+        [ViewVariables]
+        public bool Engaged
+        {
+            get => _engaged;
+            set
+            {
+                _engaged = value;
+                UpdateVisualState();
+            }
+        }
 
         public bool CanInsert(IEntity entity)
         {
@@ -138,41 +146,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
         }
 
-        private bool CanEngage()
+        private bool CanFlush()
         {
-            return _engageToken == null &&
+            return _engaged &&
                    _pressure >= 1 &&
                    (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
                     receiver.Powered) &&
                    (!Owner.TryGetComponent(out CollidableComponent collidable) ||
                     collidable.Anchored);
-        }
-
-        private bool CanFlush()
-        {
-            return (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
-                    receiver.Powered) &&
-                   (!Owner.TryGetComponent(out CollidableComponent collidable) ||
-                    collidable.Anchored);
-        }
-
-        private void TryEngage()
-        {
-            if (!CanEngage())
-            {
-                return;
-            }
-
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Engaging);
-            }
-
-            _engageToken = new CancellationTokenSource();
-
-            Timer.Spawn(_engageTime, () => TryFlush(), _engageToken.Token);
-
-            UpdateInterface();
         }
 
         public bool TryFlush()
@@ -202,17 +183,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
 
-            _engageToken?.Cancel();
-            _engageToken = null;
-
             _pressure = 0;
 
+            UpdateVisualState(true);
             UpdateInterface();
 
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
-            }
+            _engaged = false;
 
             return true;
         }
@@ -291,7 +267,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    TryEngage();
+                    _engaged = true;
+                    TryFlush();
                     break;
                 case UiButton.Power:
                     TogglePower();
@@ -305,10 +282,19 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void UpdateVisualState()
         {
+            UpdateVisualState(false);
+        }
+
+        private void UpdateVisualState(bool flush)
+        {
             if (!Owner.TryGetComponent(out AppearanceComponent appearance))
             {
                 return;
             }
+
+            appearance.SetData(Visuals.Handle, _engaged
+                ? HandleState.Engaged
+                : HandleState.Normal);
 
             if (!Anchored)
             {
@@ -316,7 +302,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (_engageToken != null)
+            if (flush)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Flushing);
             }
@@ -344,6 +330,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (oldPressure < 1 && _pressure >= 1)
             {
                 UpdateVisualState();
+
+                if (_engaged)
+                {
+                    TryFlush();
+                }
             }
 
             UpdateInterface();
@@ -407,9 +398,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
 
-            _engageToken?.Cancel();
-            _engageToken = null;
-
             _container = null!;
 
             base.OnRemove();
@@ -423,7 +411,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 case RelayMovementEntityMessage msg:
                     var timing = IoCManager.Resolve<IGameTiming>();
-                    if (_engageToken != null ||
+                    if (_engaged ||
                         !msg.Entity.HasComponent<HandsComponent>() ||
                         timing.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
@@ -513,7 +501,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component.TryEngage();
+                component._engaged = true;
+                component.TryFlush();
             }
         }
     }

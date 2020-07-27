@@ -63,19 +63,8 @@ namespace Content.Client.GameObjects.Components.Disposal
                     sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, true);
                     sprite.LayerSetState(DisposalUnitVisualLayers.Light, _overlayReady);
                     break;
-                case VisualState.Engaging:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
-
-                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, true);
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Handle, _overlayEngaging);
-
-                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, false);
-                    break;
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
-
-                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, true);
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Handle, _overlayEngaging);
 
                     sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, false);
 
@@ -87,6 +76,17 @@ namespace Content.Client.GameObjects.Components.Disposal
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            if (!appearance.TryGetData(Visuals.Handle, out HandleState handleState) ||
+                handleState == HandleState.Normal)
+            {
+                sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, false);
+            }
+            else
+            {
+                sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, true);
+                sprite.LayerSetState(DisposalUnitVisualLayers.Handle, _overlayEngaging);
             }
         }
 
