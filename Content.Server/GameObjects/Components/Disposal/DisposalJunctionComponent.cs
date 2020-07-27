@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             var direction = Owner.Transform.LocalRotation;
 
-            return _degrees.Select(degree => new Angle(direction.Theta + MathHelper.DegreesToRadians(degree)).GetDir()).ToArray();
+            return _degrees.Select(degree => new Angle(degree.Theta + direction.Theta).GetDir()).ToArray();
         }
 
         public override Direction NextDirection(DisposalHolderComponent holder)
