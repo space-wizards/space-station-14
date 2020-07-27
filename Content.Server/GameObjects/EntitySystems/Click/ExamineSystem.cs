@@ -1,10 +1,8 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.EntitySystemMessages;
+﻿using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -24,7 +22,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public class ExamineSystem : ExamineSystemShared
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IEntityManager _entityManager;
 #pragma warning restore 649
 
         private static readonly FormattedMessage _entityNotFoundMessage;
@@ -92,22 +90,17 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var playerEnt = session.AttachedEntity;
             var channel = player.ConnectedClient;
 
-            DoExamine(playerEnt, channel, request.EntityUid);
-        }
-
-        public void DoExamine(IEntity? examiner, INetChannel channel, EntityUid on)
-        {
-            if (examiner == null
-                || !_entityManager.TryGetEntity(on, out var entity)
-                || !CanExamine(examiner, entity))
+            if (playerEnt == null
+                || !_entityManager.TryGetEntity(request.EntityUid, out var entity)
+                || !CanExamine(playerEnt, entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    on, _entityNotFoundMessage), channel);
+                    request.EntityUid, _entityNotFoundMessage), channel);
                 return;
             }
 
-            var text = GetExamineText(entity, examiner);
-            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(on, text), channel);
+            var text = GetExamineText(entity, player.AttachedEntity);
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text), channel);
         }
     }
 }
