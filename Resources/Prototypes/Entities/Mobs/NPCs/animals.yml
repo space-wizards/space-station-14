@@ -1,0 +1,96 @@
+- type: entity
+  save: false
+  name: monkey
+  id: MonkeyMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Civilian
+  - type: MovementSpeedModifier
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: monkey
+      sprite: Mobs/Species/monkey.rsi
+  - type: Icon
+    sprite: Mobs/Species/monkey.rsi
+    state: icon
+  - type: Clickable
+  - type: Physics
+    mass: 50
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.35,0.45,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Species
+    Template: Human
+    HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+  - type: HeatResistance
+  - type: Damageable
+  - type: CombatMode
+  - type: Teleportable
+  - type: Stunnable
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage: 50
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: monkey
+      dead: dead
+
+- type: entity
+  save: false
+  name: gorilla
+  parent: MonkeyMob_Content
+  id: GorillaMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crawling
+      sprite: Mobs/Species/gorilla.rsi
+  - type: Icon
+    sprite: Mobs/Species/gorilla.rsi
+    state: icon
+  - type: Physics
+    mass: 90
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.90,-0.50,0.05,0.50"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: crawling
+      dead: dead
