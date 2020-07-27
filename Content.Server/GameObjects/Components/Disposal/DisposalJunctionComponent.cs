@@ -26,20 +26,20 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override string Name => "DisposalJunction";
 
-        public override Direction[] ConnectableDirections()
+        protected override Direction[] ConnectableDirections()
         {
             var direction = Owner.Transform.LocalRotation;
 
             return _degrees.Select(degree => new Angle(direction.Theta + MathHelper.DegreesToRadians(degree)).GetDir()).ToArray();
         }
 
-        public override Direction NextDirection(DisposalHolderComponent disposable)
+        public override Direction NextDirection(DisposalHolderComponent holder)
         {
             var next = Owner.Transform.LocalRotation;
             var directions = ConnectableDirections().Skip(1).ToArray();
 
             if (Connected.TryGetValue(next.GetDir(), out var forwardTube) &&
-                disposable.PreviousTube == forwardTube)
+                holder.PreviousTube == forwardTube)
             {
                 return _random.Pick(directions);
             }

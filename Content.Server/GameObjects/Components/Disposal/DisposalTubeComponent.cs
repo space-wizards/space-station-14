@@ -58,40 +58,40 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     The directions that this tube can connect to others from
         /// </summary>
         /// <returns>a new array of the directions</returns>
-        public abstract Direction[] ConnectableDirections();
+        protected abstract Direction[] ConnectableDirections();
 
-        public abstract Direction NextDirection(DisposalHolderComponent disposable);
+        public abstract Direction NextDirection(DisposalHolderComponent holder);
 
-        public virtual Vector2 ExitVector(DisposalHolderComponent disposable)
+        public virtual Vector2 ExitVector(DisposalHolderComponent holder)
         {
-            return NextDirection(disposable).ToVec();
+            return NextDirection(holder).ToVec();
         }
 
-        public IDisposalTubeComponent NextTube(DisposalHolderComponent disposable)
+        public IDisposalTubeComponent NextTube(DisposalHolderComponent holder)
         {
-            var nextDirection = NextDirection(disposable);
+            var nextDirection = NextDirection(holder);
             return Connected.GetValueOrDefault(nextDirection);
         }
 
-        public bool Remove(DisposalHolderComponent disposable)
+        public bool Remove(DisposalHolderComponent holder)
         {
-            var removed = Contents.Remove(disposable.Owner);
-            disposable.ExitDisposals();
+            var removed = Contents.Remove(holder.Owner);
+            holder.ExitDisposals();
             return removed;
         }
 
-        public bool TransferTo(DisposalHolderComponent disposable, IDisposalTubeComponent to)
+        public bool TransferTo(DisposalHolderComponent holder, IDisposalTubeComponent to)
         {
-            var position = disposable.Owner.Transform.LocalPosition;
-            if (!to.Contents.Insert(disposable.Owner))
+            var position = holder.Owner.Transform.LocalPosition;
+            if (!to.Contents.Insert(holder.Owner))
             {
                 return false;
             }
 
-            disposable.Owner.Transform.LocalPosition = position;
+            holder.Owner.Transform.LocalPosition = position;
 
-            Contents.Remove(disposable.Owner);
-            disposable.EnterTube(to);
+            Contents.Remove(holder.Owner);
+            holder.EnterTube(to);
 
             return true;
         }
@@ -158,12 +158,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in Contents.ContainedEntities)
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent disposable))
+                if (!entity.TryGetComponent(out DisposalHolderComponent holder))
                 {
                     continue;
                 }
 
-                disposable.ExitDisposals();
+                holder.ExitDisposals();
             }
 
             foreach (var connected in Connected.Values)
@@ -180,19 +180,19 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 foreach (var entity in Contents.ContainedEntities)
                 {
-                    if (!entity.TryGetComponent(out DisposalHolderComponent disposable))
+                    if (!entity.TryGetComponent(out DisposalHolderComponent holder))
                     {
                         continue;
                     }
 
-                    if (disposable.PreviousTube == adjacent)
+                    if (holder.PreviousTube == adjacent)
                     {
-                        disposable.PreviousTube = null;
+                        holder.PreviousTube = null;
                     }
 
-                    if (disposable.NextTube == adjacent)
+                    if (holder.NextTube == adjacent)
                     {
-                        disposable.NextTube = null;
+                        holder.NextTube = null;
                     }
                 }
 

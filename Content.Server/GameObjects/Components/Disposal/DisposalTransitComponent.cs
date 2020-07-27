@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         public override string Name => "DisposalTransit";
 
-        public override Direction[] ConnectableDirections()
+        protected override Direction[] ConnectableDirections()
         {
             var rotation = Owner.Transform.LocalRotation;
             var opposite = new Angle(rotation.Theta + Math.PI);
@@ -20,10 +20,10 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {rotation.GetDir(), opposite.GetDir()};
         }
 
-        public override Direction NextDirection(DisposalHolderComponent disposable)
+        public override Direction NextDirection(DisposalHolderComponent holder)
         {
             var directions = ConnectableDirections();
-            var previousTube = disposable.PreviousTube;
+            var previousTube = holder.PreviousTube;
             var forward = directions[0];
             if (previousTube == null || !Connected.ContainsValue(previousTube))
             {

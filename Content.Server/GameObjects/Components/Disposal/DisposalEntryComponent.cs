@@ -38,12 +38,12 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        public override Direction[] ConnectableDirections()
+        protected override Direction[] ConnectableDirections()
         {
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }
 
-        public override Direction NextDirection(DisposalHolderComponent disposable)
+        public override Direction NextDirection(DisposalHolderComponent holder)
         {
             return ConnectableDirections()[0];
         }
