@@ -36,6 +36,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public HashSet<PathfindingNode> Nodes => _nodes;
         private HashSet<PathfindingNode> _nodes;
 
+        public bool Deleted { get; private set; }
+
         public PathfindingRegion(PathfindingNode originNode, HashSet<PathfindingNode> nodes, bool isDoor = false)
         {
             OriginNode = originNode;
@@ -53,6 +55,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 var neighbor = neighbors[i];
                 neighbor.Neighbors.Remove(this);
             }
+
+            Deleted = true;
         }
 
         /// <summary>
