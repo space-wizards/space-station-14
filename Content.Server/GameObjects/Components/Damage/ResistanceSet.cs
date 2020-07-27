@@ -31,7 +31,11 @@ namespace Content.Server.GameObjects
             foreach (DamageType damageType in Enum.GetValues(typeof(DamageType)))
             {
                 var resistanceName = damageType.ToString().ToLower();
-                _resistances[damageType] = serializer.ReadDataField(resistanceName, new ResistanceSetSettings());
+                serializer.DataReadFunction(resistanceName, new ResistanceSetSettings(), resistanceSetting =>
+                {
+                    _resistances[damageType] = resistanceSetting;
+                });
+                //_resistances[damageType] = serializer.ReadDataField(resistanceName, new ResistanceSetSettings());
             } 
         }
 
