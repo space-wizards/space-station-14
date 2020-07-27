@@ -56,6 +56,7 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
             msg.MessageWrap = "SERVER: {0}";
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
         }
 
@@ -65,6 +66,7 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
             msg.MessageWrap = "SERVER: {0}";
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
@@ -93,6 +95,7 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
             msg.SenderEntity = source.Uid;
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToMany(msg, clients.ToList());
 
             var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
@@ -124,6 +127,7 @@ namespace Content.Server.Chat
             msg.Message = action;
             msg.MessageWrap = $"{source.Name} {{0}}";
             msg.SenderEntity = source.Uid;
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
@@ -140,6 +144,7 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
             msg.MessageWrap = $"OOC: {player.SessionId}: {{0}}";
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
 
             _mommiLink.SendOOCMessage(player.SessionId.ToString(), message);
@@ -161,6 +166,7 @@ namespace Content.Server.Chat
             msg.Message = message;
             msg.MessageWrap = $"{_localizationManager.GetString("DEAD")}: {player.AttachedEntity.Name}: {{0}}";
             msg.SenderEntity = player.AttachedEntityUid.GetValueOrDefault();
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
@@ -185,6 +191,7 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.AdminChat;
             msg.Message = message;
             msg.MessageWrap = $"{_localizationManager.GetString("ADMIN")}: {player.SessionId}: {{0}}";
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToMany(msg, clients.ToList());
         }
 
@@ -194,6 +201,7 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.OOC;
             msg.Message = message;
             msg.MessageWrap = $"OOC: (D){sender}: {{0}}";
+            msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
         }
     }

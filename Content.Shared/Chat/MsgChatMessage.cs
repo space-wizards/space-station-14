@@ -39,12 +39,17 @@ namespace Content.Shared.Chat
         /// </summary>
         public EntityUid SenderEntity { get; set; }
 
+        /// <summary>
+        ///     The maximum length a player-sent message can get
+        /// </summary>
+        public int MaxMessageLength { get; set; }
+
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
             Channel = (ChatChannel) buffer.ReadInt16();
             Message = buffer.ReadString();
             MessageWrap = buffer.ReadString();
-
+            
             switch (Channel)
             {
                 case ChatChannel.Local:
@@ -54,6 +59,8 @@ namespace Content.Shared.Chat
                     SenderEntity = buffer.ReadEntityUid();
                     break;
             }
+
+            MaxMessageLength = buffer.ReadInt16();
         }
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
@@ -71,6 +78,8 @@ namespace Content.Shared.Chat
                     buffer.Write(SenderEntity);
                     break;
             }
+
+            buffer.Write(MaxMessageLength);
         }
     }
 }

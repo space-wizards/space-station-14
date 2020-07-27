@@ -337,6 +337,9 @@ namespace Content.Client.Chat
         {
             Logger.Debug($"{msg.Channel}: {msg.Message}");
 
+            // Get the maximum message length
+            _maxMessageLength = msg.MaxMessageLength;
+
             // Log all incoming chat to repopulate when filter is un-toggled
             var storedMessage = new StoredChatMessage(msg);
             filteredHistory.Add(storedMessage);
