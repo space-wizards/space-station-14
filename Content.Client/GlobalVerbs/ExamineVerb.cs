@@ -1,10 +1,8 @@
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.GameObjects;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Utility;
 
 namespace Content.Client.GlobalVerbs
 {
