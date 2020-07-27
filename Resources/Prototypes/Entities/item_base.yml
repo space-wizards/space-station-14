@@ -19,3 +19,4 @@
     mass: 5
   - type: Sprite
     drawdepth: Items
+  - type: Pullable

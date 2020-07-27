@@ -138,6 +138,7 @@
     arc: fist
   - type: Grammar
     proper: true
+  - type: Pullable
 
 - type: entity
   save: false

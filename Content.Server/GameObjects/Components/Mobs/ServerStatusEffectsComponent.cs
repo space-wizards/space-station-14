@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Buckle;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
@@ -103,6 +104,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                             }
 
                             controller.RemoveController();
+                            break;
+                        case StatusEffect.Pulling:
+                            if (!player.TryGetComponent(out HandsComponent hands))
+                            {
+                                break;
+                            }
+
+                            hands.StopPull();
                             break;
                     }
 

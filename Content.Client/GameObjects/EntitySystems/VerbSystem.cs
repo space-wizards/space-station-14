@@ -447,7 +447,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
 
                 if (args.Function == EngineKeyFunctions.Use ||
-                    args.Function == ContentKeyFunctions.Point)
+                    args.Function == ContentKeyFunctions.Point ||
+                    args.Function == ContentKeyFunctions.TryPullObject ||
+                    args.Function == ContentKeyFunctions.MovePulledObject)
                 {
                     // TODO: Remove an entity from the menu when it is deleted
                     if (_entity.Deleted)
