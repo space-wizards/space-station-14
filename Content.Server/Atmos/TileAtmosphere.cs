@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Content.Shared.Physics;
-using Namotion.Reflection;
 using Robust.Server.GameObjects.EntitySystems;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -22,7 +18,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
 using Logger = Robust.Shared.Log.Logger;
-using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
@@ -43,9 +38,6 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public float PressureDifference { get; set; } = 0;
-
-        [ViewVariables]
-        public int AtmosCooldown { get; set; } = 0;
 
         [ViewVariables]
         public bool Excited { get; set; } = false;
@@ -177,7 +169,7 @@ namespace Content.Server.Atmos
                     totalMoles += tileMoles;
                 }
 
-                foreach (var (direction, adj) in exploring._adjacentTiles)
+                foreach (var (_, adj) in exploring._adjacentTiles)
                 {
                     if (adj?.Air == null) continue;
                     if(adj._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
@@ -542,7 +534,6 @@ namespace Content.Server.Atmos
 
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
-            AtmosCooldown++;
             foreach (var (direction, enemyTile) in _adjacentTiles)
             {
                 // If the tile is null or has no air, we don't do anything
@@ -797,11 +788,9 @@ namespace Content.Server.Atmos
             if (lastShare > Atmospherics.MinimumAirToSuspend)
             {
                 ExcitedGroup.ResetCooldowns();
-                AtmosCooldown = 0;
             } else if (lastShare > Atmospherics.MinimumMolesDeltaToMove)
             {
                 ExcitedGroup.DismantleCooldown = 0;
-                AtmosCooldown = 0;
             }
         }
 
