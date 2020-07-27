@@ -27,10 +27,6 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    resistances:
-      brute:
-        coefficient: 0.5
-        damageReduction: 5
   - type: Destructible
     thresholdvalue: 100
     spawnondestroy: Girder
