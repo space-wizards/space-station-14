@@ -5,6 +5,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
+using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
@@ -30,6 +31,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IGameTiming _gameTiming;
         [Dependency] private readonly IInputManager _inputManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
+        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IEyeManager _eyeManager;
         [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 0649
@@ -45,6 +47,8 @@ namespace Content.Client.UserInterface
             {
                 if (!entity.TryGetComponent(out ISpriteComponent sprite))
                     return false;
+
+                button.ClearHover();
                 button.SpriteView.Sprite = sprite;
                 button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
             }
@@ -123,6 +127,28 @@ namespace Content.Client.UserInterface
             {
                 cooldownDisplay.Visible = false;
             }
+        }
+
+        public void HoverInSlot(ItemSlotButton button, IEntity entity, bool fits)
+        {
+            if (entity == null || !button.MouseIsHovering)
+            {
+                button.ClearHover();
+                return;
+            }
+
+            if (!entity.HasComponent<SpriteComponent>())
+            {
+                return;
+            }
+
+            // Set green / red overlay at 50% transparency
+            var hoverEntity = _entityManager.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
+            var hoverSprite = hoverEntity.GetComponent<SpriteComponent>();
+            hoverSprite.CopyFrom(entity.GetComponent<SpriteComponent>());
+            hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
+
+            button.HoverSpriteView.Sprite = hoverSprite;
         }
     }
 }

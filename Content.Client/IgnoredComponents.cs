@@ -136,6 +136,7 @@
             "TrashSpawner",
             "Pill",
             "RCD",
+            "Pullable",
         };
     }
 }

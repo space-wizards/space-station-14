@@ -10,9 +10,6 @@
   components:
   - type: Flashable
   - type: Hands
-    hands:
-    - left
-    - right
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Hunger
@@ -142,6 +139,7 @@
     arc: fist
   - type: Grammar
     proper: true
+  - type: Pullable
 
 - type: entity
   save: false
@@ -151,10 +149,6 @@
   description: A dummy human meant to be used in character setup
   components:
     - type: Hands
-      hands:
-        - left
-        - right
-
     - type: Inventory
     - type: Sprite
       netsync: false

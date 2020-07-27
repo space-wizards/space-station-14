@@ -29,10 +29,10 @@
   components:
   - type: Sprite
     sprite: Clothing/Glasses/sunglasses.rsi
-    state: sunglasses
+    state: icon
   - type: Icon
     sprite: Clothing/Glasses/sunglasses.rsi
-    state: sunglasses
+    state: icon
   - type: Clothing
     sprite: Clothing/Glasses/sunglasses.rsi
 

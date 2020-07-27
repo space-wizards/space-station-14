@@ -1,0 +1,300 @@
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBomber
+  name: bomber
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bomber.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bomber.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bomber.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBomberopen
+  name: bomber (open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bomber_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bomber_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bomber_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingCargojacket
+  name: cargo jacket
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/cargo_jacket.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/cargo_jacket.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/cargo_jacket.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingChurchcoat
+  name: church coat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/church_coat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/church_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/church_coat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingDetective
+  name: detective
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/detective.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/detective.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/detective.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingGentlecoat
+  name: gentle coat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/gentlecoat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/gentlecoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/gentlecoat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingGreyhoodie
+  name: grey hoodie
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/grey_hoodie.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/grey_hoodie.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/grey_hoodie.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingGreyhoodieopen
+  name: grey hoodie (open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/grey_hoodie_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/grey_hoodie_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/grey_hoodie_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingInspcoat
+  name: inspector coat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/insp_coat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/insp_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/insp_coat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingJensencoat
+  name: jensen coat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/jensencoat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/jensencoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/jensencoat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoat
+  name: lab coat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatopen
+  name: lab coat (open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatchem
+  name: lab coat (chem)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_chem.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_chem.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_chem.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatchemopen
+  name: lab coat (chem open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_chem_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_chem_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_chem_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatcmo
+  name: lab coat (CMO)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_cmo.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_cmo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_cmo.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatcmoopen
+  name: lab coat (CMO open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_cmo_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_cmo_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_cmo_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatmedspec
+  name: lab coat (medical)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_medspec.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_medspec.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_medspec.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLabcoatmedspecopen
+  name: lab coat (medical open)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/labcoat_medspec_open.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/labcoat_medspec_open.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/labcoat_medspec_open.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingLeatherjacket
+  name: leather jacket
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/leather_jacket.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/leather_jacket.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/leather_jacket.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingPirate
+  name: pirate
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/pirate.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/pirate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/pirate.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingQmcoat
+  name: QM coat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/qm_coat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/qm_coat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/qm_coat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingRedwizard
+  name: red wizard
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/redwizard.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/redwizard.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/redwizard.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingHoSTrenchcoat
+  name: head of security trenchcoat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
+    state: hos_trenchcoat
+  - type: Icon
+    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
+    state: hos_trenchcoat
+  - type: Clothing
+    sprite: Clothing/OuterClothing/hos_trenchcoat.rsi
