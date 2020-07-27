@@ -35,7 +35,6 @@ namespace Content.Server.GameObjects
                 {
                     _resistances[damageType] = resistanceSetting;
                 });
-                //_resistances[damageType] = serializer.ReadDataField(resistanceName, new ResistanceSetSettings());
             } 
         }
 
