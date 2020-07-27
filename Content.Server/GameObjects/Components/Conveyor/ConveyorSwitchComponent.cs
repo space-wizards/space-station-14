@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         public override string Name => "ConveyorSwitch";
 
         [ViewVariables]
-        private uint? _id;
+        private uint _id;
 
         private ConveyorState _state;
 
@@ -44,9 +44,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private ConveyorGroup? Group => _id == null
+        private ConveyorGroup? Group => _id == 0
             ? null
-            : EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value);
+            : EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id);
 
         public void Sync(ConveyorGroup group)
         {
@@ -64,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         public void Disconnect()
         {
-            _id = null;
+            _id = 0;
             State = ConveyorState.Off;
         }
 
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         public void Connect(IEntity user, ConveyorComponent conveyor)
         {
-            if (_id == null)
+            if (_id == 0)
             {
                 return;
             }
@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// </returns>
         private bool NextState()
         {
-            if (_id == null)
+            if (_id == 0)
             {
                 return false;
             }
@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             _id = other._id;
 
-            Owner.PopupMessage(user, _id == null
+            Owner.PopupMessage(user, _id == 0
                 ? Loc.GetString("Switch id erased.")
                 : Loc.GetString("Switch changed to id {0}.", _id));
         }
@@ -125,10 +125,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction(
+            serializer.DataReadWriteFunction<uint>(
                 "id",
-                null,
-                id => _id = id ?? EntitySystem.Get<ConveyorSystem>().NextId(),
+                0,
+                id => _id = id == 0
+                    ? EntitySystem.Get<ConveyorSystem>().NextId()
+                    : id,
                 () => _id);
         }
 
@@ -136,12 +138,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             base.Initialize();
 
-            if (_id == null)
+            if (_id == 0)
             {
                 return;
             }
 
-            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value).AddSwitch(this);
+            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id).AddSwitch(this);
         }
 
         public override void OnRemove()
@@ -158,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(_id == null
+            message.AddMarkup(_id == 0
                 ? Loc.GetString("It doesn't have an id.")
                 : Loc.GetString("It has an id of {0}.", _id));
         }

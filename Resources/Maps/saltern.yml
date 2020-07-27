@@ -33527,7 +33527,6 @@ entities:
     type: ContainerContainer
   - Anchored: True
     type: Physics
-- uid: 3462
 - uid: 3461
   type: DisposalYJunction
   components:

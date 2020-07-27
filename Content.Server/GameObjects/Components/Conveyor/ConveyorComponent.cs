@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         private float _speed;
 
         [ViewVariables]
-        private uint? _id;
+        private uint _id;
 
         private ConveyorState _state;
 
@@ -72,9 +72,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private ConveyorGroup? Group => _id == null
+        private ConveyorGroup? Group => _id == 0
             ? null
-            : EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value);
+            : EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id);
 
         /// <summary>
         ///     Calculates the angle in which entities on top of this conveyor
@@ -201,7 +201,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         public void Disconnect()
         {
-            _id = null;
+            _id = 0;
             State = ConveyorState.Off;
         }
 
@@ -214,7 +214,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(ref _id, "id", null);
+            serializer.DataField<uint>(ref _id, "id", 0);
             serializer.DataField(ref _angle, "angle", 0);
             serializer.DataField(ref _speed, "speed", 2);
         }
@@ -223,12 +223,12 @@ namespace Content.Server.GameObjects.Components.Conveyor
         {
             base.Initialize();
 
-            if (_id == null)
+            if (_id == 0)
             {
                 return;
             }
 
-            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id.Value).AddConveyor(this);
+            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id).AddConveyor(this);
         }
 
         public override void OnRemove()
@@ -240,9 +240,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var tooltip = _id.HasValue
-                ? Loc.GetString("Its switch has an id of {0}.", _id.Value)
-                : Loc.GetString("It doesn't have an associated switch.");
+            var tooltip = _id == 0
+                ? Loc.GetString("It doesn't have an associated switch.")
+                : Loc.GetString("Its switch has an id of {0}.", _id);
 
             message.AddMarkup(tooltip);
         }

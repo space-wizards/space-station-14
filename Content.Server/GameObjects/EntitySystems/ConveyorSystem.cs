@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public uint NextId()
         {
-            uint id = 0;
+            uint id = 1;
 
             while (_groups.ContainsKey(id))
             {
