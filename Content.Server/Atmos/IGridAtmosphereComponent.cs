@@ -1,0 +1,103 @@
+﻿using System.Collections.Generic;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Map;
+
+namespace Content.Server.Atmos
+{
+    public interface IGridAtmosphereComponent : IComponent, IEnumerable<TileAtmosphere>
+    {
+        /// <summary>
+        ///     Number of times <see cref="Update"/> has been called.
+        /// </summary>
+        int UpdateCounter { get; }
+
+        /// <summary>
+        ///     How many tiles have high pressure delta.
+        /// </summary>
+        int HighPressureDeltaCount { get; }
+
+        /// <summary>
+        ///     Attemps to pry a tile.
+        /// </summary>
+        /// <param name="indices"></param>
+        void PryTile(MapIndices indices);
+
+        /// <summary>
+        ///     Invalidates a coordinate to be revalidated again.
+        ///     Use this after changing a tile's gas contents, or when the tile becomes space, etc.
+        /// </summary>
+        /// <param name="indices"></param>
+        void Invalidate(MapIndices indices);
+
+        /// <summary>
+        ///     Adds an active tile so it becomes processed every update until it becomes inactive.
+        ///     Also makes the tile excited.
+        /// </summary>
+        /// <param name="tile"></param>
+        void AddActiveTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Removes an active tile and disposes of its <seealso cref="ExcitedGroup"/>.
+        ///     Use with caution.
+        /// </summary>
+        /// <param name="tile"></param>
+        void RemoveActiveTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Marks a tile has having high pressure differences that need to be equalized.
+        /// </summary>
+        /// <param name="tile"></param>
+        void AddHighPressureDelta(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Returns whether the tile in question is marked as having high pressure differences or not.
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
+        bool HasHighPressureDelta(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Adds a excited group to be processed.
+        /// </summary>
+        /// <param name="excitedGroup"></param>
+        void AddExcitedGroup(ExcitedGroup excitedGroup);
+
+        /// <summary>
+        ///     Removes an excited group.
+        /// </summary>
+        /// <param name="excitedGroup"></param>
+        void RemoveExcitedGroup(ExcitedGroup excitedGroup);
+
+        /// <summary>
+        ///     Returns a tile in question.
+        /// </summary>
+        /// <param name="indices"></param>
+        /// <returns></returns>
+        TileAtmosphere GetTile(MapIndices indices);
+
+        /// <summary>
+        ///     Returns if the tile in question is air-blocked.
+        ///     This could be due to a wall, an airlock, etc.
+        ///     Also see AirtightComponent.
+        /// </summary>
+        /// <param name="indices"></param>
+        /// <returns></returns>
+        bool IsAirBlocked(MapIndices indices);
+
+        /// <summary>
+        ///     Returns if the tile in question is space.
+        /// </summary>
+        /// <param name="indices"></param>
+        /// <returns></returns>
+        bool IsSpace(MapIndices indices);
+
+        /// <summary>
+        ///     Returns the volume in liters for a number of cells/tiles.
+        /// </summary>
+        /// <param name="cellCount"></param>
+        /// <returns></returns>
+        float GetVolumeForCells(int cellCount);
+
+        void Update(float frameTime);
+    }
+}

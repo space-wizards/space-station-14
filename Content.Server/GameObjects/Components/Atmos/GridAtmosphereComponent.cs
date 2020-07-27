@@ -25,8 +25,11 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    ///     This is our SSAir equivalent.
+    /// </summary>
     [RegisterComponent, Serializable]
-    public class GridAtmosphereComponent : Component, IEnumerable<TileAtmosphere>
+    public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
         [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
 
@@ -63,6 +66,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             Hotspots,
         }
 
+        /// <inheritdoc />
         public void PryTile(MapIndices indices)
         {
             if (IsSpace(indices) || IsAirBlocked(indices)) return;
@@ -115,6 +119,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+        /// <inheritdoc />
         public void Invalidate(MapIndices indices)
         {
             _invalidatedCoords.Add(indices);
@@ -161,6 +166,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             _invalidatedCoords.Clear();
         }
 
+        /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddActiveTile(TileAtmosphere tile)
         {
@@ -169,6 +175,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             _activeTiles.Add(tile);
         }
 
+        /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveActiveTile(TileAtmosphere tile)
         {
@@ -178,27 +185,36 @@ namespace Content.Server.GameObjects.Components.Atmos
             tile.ExcitedGroup?.Dispose();
         }
 
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddHighPressureDelta(TileAtmosphere tile)
         {
             if (tile?.GridIndex != _grid.Index) return;
             _highPressureDelta.Add(tile);
         }
 
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasHighPressureDelta(TileAtmosphere tile)
         {
             return _highPressureDelta.Contains(tile);
         }
 
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Add(excitedGroup);
         }
 
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Remove(excitedGroup);
         }
 
+        /// <inheritdoc />
         public TileAtmosphere GetTile(MapIndices indices)
         {
             if (_tiles.TryGetValue(indices, out var tile)) return tile;
@@ -214,12 +230,14 @@ namespace Content.Server.GameObjects.Components.Atmos
             return null;
         }
 
+        /// <inheritdoc />
         public bool IsAirBlocked(MapIndices indices)
         {
             var ac = GetObstructingComponent(indices);
             return ac != null && ac.AirBlocked;
         }
 
+        /// <inheritdoc />
         public bool IsSpace(MapIndices indices)
         {
             // TODO ATMOS use ContentTileDefinition to define in YAML whether or not a tile is considered space
@@ -238,13 +256,16 @@ namespace Content.Server.GameObjects.Components.Atmos
             return sides;
         }
 
+        /// <inheritdoc />
         public int HighPressureDeltaCount => _highPressureDelta.Count;
 
+        /// <inheritdoc />
         public float GetVolumeForCells(int cellCount)
         {
             return _grid.TileSize * cellCount * Atmospherics.CellVolume;
         }
 
+        /// <inheritdoc />
         public void Update(float frameTime)
         {
             _timer += 1;
