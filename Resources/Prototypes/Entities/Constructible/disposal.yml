@@ -105,7 +105,7 @@
       overlay_charging: dispover-charge
       overlay_ready: dispover-ready
       overlay_full: dispover-full
-      overlay_engaging: dispover-handle
+      overlay_engaged: dispover-handle
       state_flush: disposal-flush
       flush_sound: /Audio/Machines/disposalflush.ogg
       flush_time: 2

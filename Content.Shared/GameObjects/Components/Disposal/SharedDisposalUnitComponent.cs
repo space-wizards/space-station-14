@@ -13,15 +13,15 @@ namespace Content.Shared.GameObjects.Components.Disposal
         public enum Visuals
         {
             VisualState,
-            Handle
+            Handle,
+            Light
         }
 
         [Serializable, NetSerializable]
         public enum VisualState
         {
             UnAnchored,
-            Charging,
-            Ready,
+            Anchored,
             Flushing
         }
 
@@ -30,6 +30,15 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             Normal,
             Engaged
+        }
+
+        [Serializable, NetSerializable]
+        public enum LightState
+        {
+            Off,
+            Charging,
+            Full,
+            Ready
         }
 
         [Serializable, NetSerializable]

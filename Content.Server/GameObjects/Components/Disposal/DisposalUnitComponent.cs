@@ -299,18 +299,22 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!Anchored)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
+                appearance.SetData(Visuals.Handle, HandleState.Normal);
+                appearance.SetData(Visuals.Light, LightState.Off);
                 return;
             }
 
             if (flush)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Flushing);
+                appearance.SetData(Visuals.Light, LightState.Off);
             }
             else
             {
-                appearance.SetData(Visuals.VisualState, _pressure < 1
-                    ? VisualState.Charging
-                    : VisualState.Ready);
+                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
+                appearance.SetData(Visuals.Light, _pressure < 1
+                    ? LightState.Charging
+                    : LightState.Ready);
             }
         }
 
