@@ -14,6 +14,8 @@
     state: stool_base
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: bar stool
@@ -42,6 +44,8 @@
     state: officechair_white
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: dark office chair
@@ -59,6 +63,8 @@
     state: officechair_dark
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: chair
@@ -76,6 +82,8 @@
     state: chair
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: wooden chair
@@ -87,7 +95,9 @@
     color: "white"
   - type: Icon
     state: wooden_chair
-
+  - type: Anchorable
+  - type: Pullable
+  
 - type: entity
   name: bed
   id: Bed

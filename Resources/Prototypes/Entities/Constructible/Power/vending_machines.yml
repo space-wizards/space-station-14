@@ -50,6 +50,7 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   parent: VendingMachine
