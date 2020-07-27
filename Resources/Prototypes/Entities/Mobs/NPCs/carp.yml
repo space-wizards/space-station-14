@@ -1,4 +1,3 @@
-# Hacky for the stress test so don't even consider adding to this
 - type: entity
   save: false
   name: space carp
@@ -9,7 +8,6 @@
   components:
   - type: AiController
     logic: Xeno
-  - type: Hands
   - type: MovementSpeedModifier
   - type: InteractionOutline
   - type: Sprite
@@ -17,9 +15,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
-      sprite: Mobs/Species/space_carp.rsi
+      sprite: Mobs/Species/carp_space.rsi
   - type: Icon
-    sprite: Mobs/Species/space_carp.rsi
+    sprite: Mobs/Species/carp_space.rsi
     state: icon
   - type: Clickable
   - type: Physics
@@ -57,4 +55,56 @@
     visuals:
     - type: DamageStateVisualizer
       normal: carp
+      dead: dead
+
+- type: entity
+  save: false
+  name: magicarp
+  parent: CarpMob_Content
+  id: MagicarpMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: magicarp
+      sprite: Mobs/Species/carp_magic.rsi
+  - type: Icon
+    sprite: Mobs/Species/carp_magic.rsi
+    state: icon
+  - type: Physics
+    mass: 60
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: magicarp
+      dead: dead
+
+- type: entity
+  save: false
+  name: holocarp
+  parent: CarpMob_Content
+  id: HolocarpMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: holocarp
+      sprite: Mobs/Species/carp_holo.rsi
+  - type: Icon
+    sprite: Mobs/Species/carp_holo.rsi
+    state: icon
+  - type: Physics
+    mass: 5
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: holocarp
       dead: dead
