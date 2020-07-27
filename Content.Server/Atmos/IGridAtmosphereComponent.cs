@@ -23,6 +23,12 @@ namespace Content.Server.Atmos
         void PryTile(MapIndices indices);
 
         /// <summary>
+        ///     Burns a tile.
+        /// </summary>
+        /// <param name="gridIndices"></param>
+        void BurnTile(MapIndices gridIndices);
+
+        /// <summary>
         ///     Invalidates a coordinate to be revalidated again.
         ///     Use this after changing a tile's gas contents, or when the tile becomes space, etc.
         /// </summary>
@@ -42,6 +48,18 @@ namespace Content.Server.Atmos
         /// </summary>
         /// <param name="tile"></param>
         void RemoveActiveTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Marks a tile as having a hotspot so it can be processed.
+        /// </summary>
+        /// <param name="tile"></param>
+        void AddHotspotTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Removes a tile from the hotspot processing list.
+        /// </summary>
+        /// <param name="tile"></param>
+        void RemoveHotspotTile(TileAtmosphere tile);
 
         /// <summary>
         ///     Marks a tile has having high pressure differences that need to be equalized.

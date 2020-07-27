@@ -49,6 +49,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         private readonly HashSet<TileAtmosphere> _activeTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
         [ViewVariables]
@@ -183,6 +186,22 @@ namespace Content.Server.GameObjects.Components.Atmos
             _activeTiles.Remove(tile);
             tile.Excited = false;
             tile.ExcitedGroup?.Dispose();
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddHotspotTile(TileAtmosphere tile)
+        {
+            if (tile?.GridIndex != _grid.Index || tile?.Air == null) return;
+            _hotspotTiles.Add(tile);
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void RemoveHotspotTile(TileAtmosphere tile)
+        {
+            if (tile == null) return;
+            _hotspotTiles.Remove(tile);
         }
 
         /// <inheritdoc />
@@ -370,8 +389,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void ProcessHotspots()
         {
-            // TODO ATMOS
-            return;
+            foreach (var hotspot in _hotspotTiles.ToArray())
+            {
+                hotspot.ProcessHotspot();
+            }
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
@@ -435,6 +456,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        /// <inheritdoc />
+        public void BurnTile(MapIndices gridIndices)
+        {
+            // TODO ATMOS
         }
     }
 }

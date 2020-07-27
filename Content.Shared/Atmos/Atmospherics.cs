@@ -146,7 +146,10 @@ namespace Content.Shared.Atmos
         public const int TotalNumberOfGases = 4;
 
         public const float FireMinimumTemperatureToExist = T0C + 100f;
+        public const float FireMinimumTemperatureToSpread = T0C + 150f;
+        public const float FireSpreadRadiosityScale = 0.85f;
         public const float FirePhoronEnergyReleased = 3000000f;
+        public const float FireGrowthRate = 40000f;
 
         public const float SuperSaturationThreshold = 96f;
 

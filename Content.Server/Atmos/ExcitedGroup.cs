@@ -103,7 +103,6 @@ namespace Content.Server.Atmos
             {
                 if (tile?.Air == null) continue;
                 tile.Air.CopyFromMutable(combined);
-                tile.AtmosCooldown = 0;
                 tile.UpdateVisuals();
             }
 

@@ -15,10 +15,6 @@ namespace Content.Server.Atmos
             var temperature = mixture.Temperature;
             var location = holder as TileAtmosphere;
 
-            // Handle phoron burning
-            var phoronBurnRate = 0f;
-            var oxygenBurnRate = 0f;
-
             // More phoron released at higher temperatures
             var temperatureScale = 0f;
             var superSaturation = false;
@@ -31,7 +27,8 @@ namespace Content.Server.Atmos
 
             if (temperatureScale > 0f)
             {
-                oxygenBurnRate = Atmospherics.OxygenBurnRateBase - temperatureScale;
+                var phoronBurnRate = 0f;
+                var oxygenBurnRate = Atmospherics.OxygenBurnRateBase - temperatureScale;
 
                 if (mixture.GetMoles(Gas.Oxygen) / mixture.GetMoles(Gas.Phoron) >
                     Atmospherics.SuperSaturationThreshold)

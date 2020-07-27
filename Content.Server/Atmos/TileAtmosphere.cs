@@ -85,7 +85,46 @@ namespace Content.Server.Atmos
 
         public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
         {
+            if (Air == null)
+                return;
 
+            var oxygen = Air.GetMoles(Gas.Oxygen);
+
+            if (oxygen < 0.5f)
+                return;
+
+            var phoron = Air.GetMoles(Gas.Phoron);
+            var tritium = Air.GetMoles(Gas.Tritium);
+
+            if (_hotspot.Valid)
+            {
+                if (soh)
+                {
+                    if (phoron > 0.5f || tritium > 0.5f)
+                    {
+                        if (_hotspot.Temperature < exposedTemperature)
+                            _hotspot.Temperature = exposedTemperature;
+                        if (_hotspot.Volume < exposedVolume)
+                            _hotspot.Volume = exposedVolume;
+                    }
+                }
+
+                return;
+            }
+
+            if ((exposedTemperature > Atmospherics.PhoronMinimumBurnTemperature) && (phoron > 0.5f || tritium > 0.5f))
+            {
+                _hotspot = new Hotspot
+                {
+                    Valid = true,
+                    Volume = exposedVolume * 25f,
+                    Temperature = exposedTemperature,
+                    SkippedFirstProcess = _currentCycle > _gridAtmosphereComponent.UpdateCounter
+                };
+
+                _gridAtmosphereComponent.AddActiveTile(this);
+                _gridAtmosphereComponent.AddHotspotTile(this);
+            }
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -604,7 +643,12 @@ namespace Content.Server.Atmos
 
         public void ProcessHotspot()
         {
-            if (!_hotspot.Valid) return;
+            if (!_hotspot.Valid)
+            {
+                _gridAtmosphereComponent.RemoveHotspotTile(this);
+                return;
+            }
+
             if (!_hotspot.SkippedFirstProcess)
             {
                 _hotspot.SkippedFirstProcess = true;
@@ -620,18 +664,62 @@ namespace Content.Server.Atmos
                 UpdateVisuals();
                 return;
             }
+
+            PerformHotspotExposure();
+
+            if (_hotspot.Bypassing)
+            {
+                // TODO ATMOS Change fire texture here
+                _gridAtmosphereComponent.BurnTile(GridIndices);
+
+                if (Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
+                {
+                    var radiatedTemperature = Air.Temperature * Atmospherics.FireSpreadRadiosityScale;
+                    foreach (var (_, tile) in _adjacentTiles)
+                    {
+                        if(!tile._hotspot.Valid)
+                            tile.HotspotExpose(radiatedTemperature, Atmospherics.CellVolume/4);
+                    }
+                }
+            }
+            else
+            {
+                // TODO ATMOS More fire texture stuff here
+            }
+
+            if (_hotspot.Temperature > MaxFireTemperatureSustained)
+                MaxFireTemperatureSustained = _hotspot.Temperature;
+
+            // TODO ATMOS Maybe destroy location here?
         }
+
+        public float MaxFireTemperatureSustained { get; private set; }
 
         private void PerformHotspotExposure()
         {
-            if (Air == null) return;
+            if (Air == null || !_hotspot.Valid) return;
 
-            var bypass = _hotspot.SkippedFirstProcess && (_hotspot.Volume > Atmospherics.CellVolume*0.95);
+            _hotspot.Bypassing = _hotspot.SkippedFirstProcess && (_hotspot.Volume > Atmospherics.CellVolume*0.95);
 
-            if (bypass)
+            if (_hotspot.Bypassing)
             {
-                // TODO ATMOS: Continue and finish this
+                _hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
+                _hotspot.Temperature = Air.Temperature;
             }
+            else
+            {
+                var affected = Air.RemoveRatio(_hotspot.Volume / Air.Volume);
+                if (affected != null)
+                {
+                    affected.Temperature = _hotspot.Temperature;
+                    affected.React(this);
+                    _hotspot.Temperature = affected.Temperature;
+                    _hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
+                    AssumeAir(affected);
+                }
+            }
+
+            // TODO ATMOS Let all entities in this tile know about the fire?
         }
 
         private bool ConsiderSuperconductivity(bool starting)
@@ -756,6 +844,23 @@ namespace Content.Server.Atmos
         {
             // TODO ATMOS I think this is enough? gotta make sure...
             Air?.React(this);
+        }
+
+        public bool AssumeAir(GasMixture giver)
+        {
+            if (giver == null) return false;
+            if (Air == null)
+            {
+                Air = (GasMixture)giver.Clone();
+            }
+            else
+            {
+                Air.Merge(giver);
+            }
+
+            UpdateVisuals();
+
+            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
