@@ -47,15 +47,17 @@ namespace Content.Server.Atmos
                                                  && (maxForce >= (pressureComponent.MoveResist * MoveForcePushRatio)))
                 || (ControlledComponent.Anchored && (maxForce >= (pressureComponent.MoveResist * MoveForceForcePushRatio))))
             {
-                var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 25f);
+
 
                 if (maxForce > ThrowForce && throwTarget != GridCoordinates.InvalidGrid)
                 {
+                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 25f);
                     var pos = throwTarget.Position - transform.GridPosition.Position;
                     LinearVelocity = pos * moveForce;
                 }
                 else
                 {
+                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 10f);
                     LinearVelocity = direction.ToVec() * moveForce;
                 }
 

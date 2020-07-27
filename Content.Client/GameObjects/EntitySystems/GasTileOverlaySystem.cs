@@ -15,6 +15,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -26,12 +27,24 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        private float[] _timer = new float[Atmospherics.TotalNumberOfGases];
-        private float[][] _frameDelays = new float[Atmospherics.TotalNumberOfGases][];
-        private int[] _frameCounter = new int[Atmospherics.TotalNumberOfGases];
+        private readonly Dictionary<float, Color> _fireCache = new Dictionary<float, Color>();
+
+        // Gas overlays
+        private readonly float[] _timer = new float[Atmospherics.TotalNumberOfGases];
+        private readonly float[][] _frameDelays = new float[Atmospherics.TotalNumberOfGases][];
+        private readonly int[] _frameCounter = new int[Atmospherics.TotalNumberOfGases];
         private readonly Texture[][] _frames = new Texture[Atmospherics.TotalNumberOfGases][];
 
-        private Dictionary<GridId, Dictionary<MapIndices, GasData[]>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, GasData[]>>();
+        // Fire overlays
+        private const int FireStates = 3;
+        private const string FireRsiPath = "/Textures/Effects/fire.rsi";
+
+        private readonly float[] _fireTimer = new float[FireStates];
+        private readonly float[][] _fireFrameDelays = new float[FireStates][];
+        private readonly int[] _fireFrameCounter = new int[FireStates];
+        private readonly Texture[][] _fireFrames = new Texture[FireStates][];
+
+        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayData>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, GasOverlayData>>();
 
         public override void Initialize()
         {
@@ -41,7 +54,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             SubscribeNetworkEvent(new EntityEventHandler<GasTileOverlayMessage>(OnTileOverlayMessage));
 
-            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gas = Atmospherics.GetGas(i);
                 switch (gas.GasOverlay)
@@ -66,20 +79,43 @@ namespace Content.Client.GameObjects.EntitySystems
                         break;
                 }
             }
+
+            var fire = _resourceCache.GetResource<RSIResource>(FireRsiPath).RSI;
+
+            for (var i = 0; i < FireStates; i++)
+            {
+                if (!fire.TryGetState((i+1).ToString(), out var state))
+                    throw new ArgumentOutOfRangeException($"Fire RSI doesn't have state \"{i}\"!");
+
+                _fireFrames[i] = state.GetFrames(RSI.State.Direction.South);
+                _fireFrameDelays[i] = state.GetDelays();
+                _fireFrameCounter[i] = 0;
+            }
         }
 
-        public (Texture, float opacity)[] GetOverlays(GridId gridIndex, MapIndices indices)
+        public (Texture, Color color)[] GetOverlays(GridId gridIndex, MapIndices indices)
         {
             if (!_overlay.TryGetValue(gridIndex, out var tiles) || !tiles.TryGetValue(indices, out var overlays))
-                return Array.Empty<(Texture, float)>();
+                return Array.Empty<(Texture, Color)>();
 
-            var list = new (Texture, float)[overlays.Length];
+            var fire = overlays.FireState != 0;
+            var length = overlays.Gas.Length + (fire ? 1 : 0);
 
-            for (var i = 0; i < overlays.Length; i++)
+            var list = new (Texture, Color)[length];
+
+            for (var i = 0; i < overlays.Gas.Length; i++)
             {
-                var gasData = overlays[i];
+                var gasData = overlays.Gas[i];
                 var frames = _frames[gasData.Index];
-                list[i] = (frames[_frameCounter[gasData.Index]], gasData.Opacity);
+                list[i] = (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
+            }
+
+            if (fire)
+            {
+                var state = overlays.FireState - 1;
+                var frames = _fireFrames[state];
+                // TODO ATMOS Set color depending on temperature
+                list[length - 1] = (frames[_fireFrameCounter[state]], Color.White);
             }
 
             return list;
@@ -94,11 +130,11 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 if (!_overlay.TryGetValue(data.GridIndex, out var gridOverlays))
                 {
-                	gridOverlays = new Dictionary<MapIndices, GasData[]>();
+                	gridOverlays = new Dictionary<MapIndices, GasOverlayData>();
                     _overlay.Add(data.GridIndex, gridOverlays);
                 }
 
-                gridOverlays[data.GridIndices] = data.GasData;
+                gridOverlays[data.GridIndices] = data.Data;
             }
         }
 
@@ -113,11 +149,21 @@ namespace Content.Client.GameObjects.EntitySystems
 
                 var frameCount = _frameCounter[i];
                 _timer[i] += frameTime;
-                if (_timer[i] >= delays[frameCount])
-                {
-                    _timer[i] = 0f;
-                    _frameCounter[i] = (frameCount + 1) % _frames[i].Length;
-                }
+                if (!(_timer[i] >= delays[frameCount])) continue;
+                _timer[i] = 0f;
+                _frameCounter[i] = (frameCount + 1) % _frames[i].Length;
+            }
+
+            for (var i = 0; i < FireStates; i++)
+            {
+                var delays = _fireFrameDelays[i];
+                if (delays.Length == 0) continue;
+
+                var frameCount = _fireFrameCounter[i];
+                _fireTimer[i] += frameTime;
+                if (!(_fireTimer[i] >= delays[frameCount])) continue;
+                _fireTimer[i] = 0f;
+                _fireFrameCounter[i] = (frameCount + 1) % _fireFrames[i].Length;
             }
         }
     }

@@ -51,7 +51,8 @@ namespace Content.Server.Atmos
         [ViewVariables]
         private TileAtmosInfo _tileAtmosInfo;
 
-        private Hotspot _hotspot;
+        [ViewVariables]
+        public Hotspot Hotspot;
 
         private Direction _pressureDirection;
 
@@ -96,16 +97,16 @@ namespace Content.Server.Atmos
             var phoron = Air.GetMoles(Gas.Phoron);
             var tritium = Air.GetMoles(Gas.Tritium);
 
-            if (_hotspot.Valid)
+            if (Hotspot.Valid)
             {
                 if (soh)
                 {
                     if (phoron > 0.5f || tritium > 0.5f)
                     {
-                        if (_hotspot.Temperature < exposedTemperature)
-                            _hotspot.Temperature = exposedTemperature;
-                        if (_hotspot.Volume < exposedVolume)
-                            _hotspot.Volume = exposedVolume;
+                        if (Hotspot.Temperature < exposedTemperature)
+                            Hotspot.Temperature = exposedTemperature;
+                        if (Hotspot.Volume < exposedVolume)
+                            Hotspot.Volume = exposedVolume;
                     }
                 }
 
@@ -114,13 +115,14 @@ namespace Content.Server.Atmos
 
             if ((exposedTemperature > Atmospherics.PhoronMinimumBurnTemperature) && (phoron > 0.5f || tritium > 0.5f))
             {
-                _hotspot = new Hotspot
+                Hotspot = new Hotspot
                 {
-                    Valid = true,
                     Volume = exposedVolume * 25f,
                     Temperature = exposedTemperature,
                     SkippedFirstProcess = _currentCycle > _gridAtmosphereComponent.UpdateCounter
                 };
+
+                Hotspot.Start();
 
                 _gridAtmosphereComponent.AddActiveTile(this);
                 _gridAtmosphereComponent.AddHotspotTile(this);
@@ -643,31 +645,31 @@ namespace Content.Server.Atmos
 
         public void ProcessHotspot()
         {
-            if (!_hotspot.Valid)
+            if (!Hotspot.Valid)
             {
                 _gridAtmosphereComponent.RemoveHotspotTile(this);
                 return;
             }
 
-            if (!_hotspot.SkippedFirstProcess)
+            if (!Hotspot.SkippedFirstProcess)
             {
-                _hotspot.SkippedFirstProcess = true;
+                Hotspot.SkippedFirstProcess = true;
                 return;
             }
 
             ExcitedGroup?.ResetCooldowns();
 
-            if ((_hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (_hotspot.Volume <= 1f)
+            if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
                 || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || Air.Gases[(int)Gas.Phoron] < 0.5f)
             {
-                _hotspot = new Hotspot();
+                Hotspot = new Hotspot();
                 UpdateVisuals();
                 return;
             }
 
             PerformHotspotExposure();
 
-            if (_hotspot.Bypassing)
+            if (Hotspot.Bypassing)
             {
                 // TODO ATMOS Change fire texture here
                 _gridAtmosphereComponent.BurnTile(GridIndices);
@@ -677,7 +679,7 @@ namespace Content.Server.Atmos
                     var radiatedTemperature = Air.Temperature * Atmospherics.FireSpreadRadiosityScale;
                     foreach (var (_, tile) in _adjacentTiles)
                     {
-                        if(!tile._hotspot.Valid)
+                        if(!tile.Hotspot.Valid)
                             tile.HotspotExpose(radiatedTemperature, Atmospherics.CellVolume/4);
                     }
                 }
@@ -687,8 +689,8 @@ namespace Content.Server.Atmos
                 // TODO ATMOS More fire texture stuff here
             }
 
-            if (_hotspot.Temperature > MaxFireTemperatureSustained)
-                MaxFireTemperatureSustained = _hotspot.Temperature;
+            if (Hotspot.Temperature > MaxFireTemperatureSustained)
+                MaxFireTemperatureSustained = Hotspot.Temperature;
 
             // TODO ATMOS Maybe destroy location here?
         }
@@ -697,24 +699,24 @@ namespace Content.Server.Atmos
 
         private void PerformHotspotExposure()
         {
-            if (Air == null || !_hotspot.Valid) return;
+            if (Air == null || !Hotspot.Valid) return;
 
-            _hotspot.Bypassing = _hotspot.SkippedFirstProcess && (_hotspot.Volume > Atmospherics.CellVolume*0.95);
+            Hotspot.Bypassing = Hotspot.SkippedFirstProcess && (Hotspot.Volume > Atmospherics.CellVolume*0.95);
 
-            if (_hotspot.Bypassing)
+            if (Hotspot.Bypassing)
             {
-                _hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
-                _hotspot.Temperature = Air.Temperature;
+                Hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
+                Hotspot.Temperature = Air.Temperature;
             }
             else
             {
-                var affected = Air.RemoveRatio(_hotspot.Volume / Air.Volume);
+                var affected = Air.RemoveRatio(Hotspot.Volume / Air.Volume);
                 if (affected != null)
                 {
-                    affected.Temperature = _hotspot.Temperature;
+                    affected.Temperature = Hotspot.Temperature;
                     affected.React(this);
-                    _hotspot.Temperature = affected.Temperature;
-                    _hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
+                    Hotspot.Temperature = affected.Temperature;
+                    Hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
                     AssumeAir(affected);
                 }
             }
@@ -828,8 +830,7 @@ namespace Content.Server.Atmos
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            Logger.Info($"{sum} {sum/100f}");
-            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 100, 0.005f, 0.3f)))
+            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 100, 0.005f, 0.5f)))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 

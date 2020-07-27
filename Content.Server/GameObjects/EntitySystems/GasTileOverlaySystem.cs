@@ -27,8 +27,8 @@ namespace Content.Server.GameObjects.EntitySystems
         private HashSet<GasTileOverlayData> _queue = new HashSet<GasTileOverlayData>();
         private Dictionary<GridId, HashSet<MapIndices>> _invalid = new Dictionary<GridId, HashSet<MapIndices>>();
 
-        private Dictionary<GridId, Dictionary<MapIndices, GasData[]>> _overlay =
-            new Dictionary<GridId, Dictionary<MapIndices, GasData[]>>();
+        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayData>> _overlay =
+            new Dictionary<GridId, Dictionary<MapIndices, GasOverlayData>>();
 
         [Robust.Shared.IoC.Dependency] private IPlayerManager _playerManager = default!;
 
@@ -51,12 +51,12 @@ namespace Content.Server.GameObjects.EntitySystems
             set.Add(indices);
         }
 
-        public void SetTileOverlay(GridId gridIndex, MapIndices indices, GasData[] gasData)
+        public void SetTileOverlay(GridId gridIndex, MapIndices indices, GasData[] gasData, int fireState = 0, float fireTemperature = 0f)
         {
             if(!_overlay.TryGetValue(gridIndex, out var _))
-                _overlay[gridIndex] = new Dictionary<MapIndices, GasData[]>();
+                _overlay[gridIndex] = new Dictionary<MapIndices, GasOverlayData>();
 
-            _overlay[gridIndex][indices] = gasData;
+            _overlay[gridIndex][indices] = new GasOverlayData(fireState, fireTemperature, gasData);
             _queue.Add(GetData(gridIndex, indices));
         }
 
@@ -76,7 +76,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 foreach (var (indices, _) in tiles)
                 {
                     var data = GetData(gridId, indices);
-                    if(data.GasData.Length > 0)
+                    if(data.Data.Gas.Length > 0)
                         list.Add(data);
                 }
             }
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private GasTileOverlayData GetData(GridId gridIndex, MapIndices indices)
         {
-            return new GasTileOverlayData(gridIndex, indices, _overlay[gridIndex][indices] ?? new GasData[0]);
+            return new GasTileOverlayData(gridIndex, indices, _overlay[gridIndex][indices]);
         }
 
         private void Revalidate()
@@ -120,7 +120,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
                     if (list.Count == 0) continue;
 
-                    SetTileOverlay(gridId, index, list.ToArray());
+                    SetTileOverlay(gridId, index, list.ToArray(), tile.Hotspot.State, tile.Hotspot.Temperature);
                 }
 
                 indices.Clear();

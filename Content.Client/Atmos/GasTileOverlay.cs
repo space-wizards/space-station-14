@@ -54,9 +54,9 @@ namespace Content.Client.Atmos
             {
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
-                    foreach (var (texture, opacity) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
+                    foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
                     {
-                        drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y), Color.White.WithAlpha(opacity));
+                        drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y), color);
                     }
                 }
             }
