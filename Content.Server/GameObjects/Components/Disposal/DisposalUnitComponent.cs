@@ -165,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
-                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
+                appearance.SetData(Visuals.VisualState, VisualState.Engaging);
             }
 
             _engageToken = new CancellationTokenSource();
@@ -208,7 +208,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             _pressure = 0;
 
             UpdateInterface();
-            UpdateVisualState();
+
+            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
+            }
 
             return true;
         }
@@ -306,14 +310,22 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            if (!Owner.TryGetComponent(out CollidableComponent collidable) ||
-                collidable.Anchored)
+            if (!Anchored)
             {
-                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
+                appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
                 return;
             }
 
-            appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
+            if (_engageToken != null)
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
+            }
+            else
+            {
+                appearance.SetData(Visuals.VisualState, _pressure < 1
+                    ? VisualState.Charging
+                    : VisualState.Ready);
+            }
         }
 
         public void Update(float frameTime)
@@ -323,9 +335,16 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
+            var oldPressure = _pressure;
+
             _pressure = _pressure + frameTime > 1
                 ? 1
                 : _pressure + 0.05f * frameTime;
+
+            if (oldPressure < 1 && _pressure >= 1)
+            {
+                UpdateVisualState();
+            }
 
             UpdateInterface();
         }

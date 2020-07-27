@@ -73,6 +73,10 @@
     layers:
     - state: condisposal
       map: ["enum.DisposalUnitVisualLayers.Base"]
+    - state: dispover-handle
+      map: ["enum.DisposalUnitVisualLayers.Handle"]
+    - state: dispover-ready
+      map: ["enum.DisposalUnitVisualLayers.Light"]
   - type: Icon
     sprite: Constructible/Power/disposal.rsi
     state: disposal
@@ -98,6 +102,10 @@
     - type: DisposalUnitVisualizer
       state_unanchored: condisposal
       state_anchored: disposal
+      overlay_charging: dispover-charge
+      overlay_ready: dispover-ready
+      overlay_full: dispover-full
+      overlay_engaging: dispover-handle
       state_flush: disposal-flush
       flush_sound: /Audio/Machines/disposalflush.ogg
       flush_time: 2

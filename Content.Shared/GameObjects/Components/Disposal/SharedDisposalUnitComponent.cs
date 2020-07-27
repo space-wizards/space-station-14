@@ -19,7 +19,9 @@ namespace Content.Shared.GameObjects.Components.Disposal
         public enum VisualState
         {
             UnAnchored,
-            Anchored,
+            Charging,
+            Ready,
+            Engaging,
             Flushing
         }
 

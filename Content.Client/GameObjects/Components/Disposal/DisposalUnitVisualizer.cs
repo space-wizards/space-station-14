@@ -19,6 +19,10 @@ namespace Content.Client.GameObjects.Components.Disposal
 
         private string _stateAnchored;
         private string _stateUnAnchored;
+        private string _overlayCharging;
+        private string _overlayReady;
+        private string _overlayFull;
+        private string _overlayEngaging;
         private string _stateFlush;
 
         private Animation _flushAnimation;
@@ -39,19 +43,50 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             switch (state)
             {
+                case VisualState.UnAnchored:
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateUnAnchored);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, false);
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, false);
+                    break;
+                case VisualState.Charging:
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, false);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, true);
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Light, _overlayCharging);
+                    break;
+                case VisualState.Ready:
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, true);
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Light, _overlayReady);
+                    break;
+                case VisualState.Engaging:
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, true);
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Handle, _overlayEngaging);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, false);
+                    break;
                 case VisualState.Flushing:
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, true);
+                    sprite.LayerSetState(DisposalUnitVisualLayers.Handle, _overlayEngaging);
+
+                    sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, false);
+
                     if (!animPlayer.HasRunningAnimation(AnimationKey))
                     {
                         animPlayer.Play(_flushAnimation, AnimationKey);
                     }
 
                     break;
-                case VisualState.UnAnchored:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateUnAnchored);
-                    break;
-                case VisualState.Anchored:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, _stateAnchored);
-                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -61,6 +96,10 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             _stateAnchored = node.GetNode("state_anchored").AsString();
             _stateUnAnchored = node.GetNode("state_unanchored").AsString();
+            _overlayCharging = node.GetNode("overlay_charging").AsString();
+            _overlayReady = node.GetNode("overlay_ready").AsString();
+            _overlayFull = node.GetNode("overlay_full").AsString();
+            _overlayEngaging = node.GetNode("overlay_engaging").AsString();
             _stateFlush = node.GetNode("state_flush").AsString();
 
             var flushSound = node.GetNode("flush_sound").AsString();
@@ -103,6 +142,8 @@ namespace Content.Client.GameObjects.Components.Disposal
 
     public enum DisposalUnitVisualLayers
     {
-        Base
+        Base,
+        Handle,
+        Light
     }
 }
