@@ -514,7 +514,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    component.ContainedEntities.Contains(user))
                 {
                     return;
                 }
@@ -536,7 +537,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!ActionBlockerSystem.CanInteract(user))
+                if (!ActionBlockerSystem.CanInteract(user) ||
+                    component.ContainedEntities.Contains(user))
                 {
                     return;
                 }
