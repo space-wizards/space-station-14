@@ -209,4 +209,4 @@
   - type: Spray
     transferAmount: 5
     sprayRange: 3
-    spraySound: Effects/spray.ogg
+    spraySound: /Audio/Effects/spray.ogg

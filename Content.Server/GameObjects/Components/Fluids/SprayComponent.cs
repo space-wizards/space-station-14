@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects;
-using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
-using NFluidsynth;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -28,8 +23,9 @@ namespace Content.Server.GameObjects.Components.Fluids
     class SprayComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 #pragma warning restore 649
         public override string Name => "Spray";
 
@@ -64,6 +60,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             serializer.DataField(ref _spraySound, "spraySound", string.Empty);
         }
 
+        // Source: https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C.23
         List<GridCoordinates> GetTilesBetween(GridCoordinates origin, GridCoordinates end, int range = 100)
         {
             var tiles = new List<GridCoordinates>();
@@ -85,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             if (CurrentVolume <= 0)
             {
-                _notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("Not enough left!"));
+                _notifyManager.PopupMessage(Owner, eventArgs.User, Loc.GetString("It's empty!"));
                 return;
             }
 
@@ -102,6 +99,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             var playerCoord = mapGrid.GridTileToLocal(playerTile.GridIndices);
 
             // Get the tiles we want to spray things at
+            //TODO: if you spray directly against a wall, you should spray the ground instead?
             List<GridCoordinates> tiles;
             if (clickCoordinates == playerCoord) // clicked on the tile standing on
             {
@@ -116,8 +114,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             //Play sound
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner);
 
+            //TODO: add spray effect?
             // Spray the tiles, half the amount each step
-            var intSys = EntitySystem.Get<SharedInteractionSystem>();
             ReagentUnit amount = TransferAmount;
             foreach (var tile in tiles)
             {
@@ -126,8 +124,21 @@ namespace Content.Server.GameObjects.Components.Fluids
 
                 var mapCoords = tile.ToMap(_mapManager);
 
-                //FIXME: this doesn't work as wanted yet (stopped by walls, but also by open doors)
-                if (intSys.InRangeUnobstructed(eventArgs.User.Transform.MapPosition, mapCoords, range: _sprayRange, ignoredEnt: eventArgs.User))
+                // Check if any impassable & hard entities on the tile (e.g. walls, vending machines)
+                var ents = _entityManager.GetEntitiesAt(mapCoords.MapId, mapCoords.Position, true);
+                var unobstructed = true;
+                foreach (var ent in ents)
+                {
+                    if (ent.TryGetComponent(out ICollidableComponent coll))
+                    {
+                        if ((coll.CollisionLayer & (int)Content.Shared.Physics.CollisionGroup.MobImpassable) != 0 && coll.Hard)
+                        {
+                            unobstructed = false;
+                            break;
+                        }
+                    }
+                }
+                if (unobstructed)
                 {
                     //TODO: maybe remove the sound? and maybe the puddle overflow
                     SpillHelper.SpillAt(tile, _contents.SplitSolution(amount), "PuddleSmear"); //make non PuddleSmear?
@@ -135,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 }
                 else // found wall and that stops the spray
                 {
-                    break; 
+                    break;
                 }
             }
         }
