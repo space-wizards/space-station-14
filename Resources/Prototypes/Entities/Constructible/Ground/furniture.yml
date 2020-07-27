@@ -97,7 +97,7 @@
     state: wooden_chair
   - type: Anchorable
   - type: Pullable
-  
+
 - type: entity
   name: bed
   id: Bed
