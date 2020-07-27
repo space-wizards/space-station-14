@@ -77,15 +77,16 @@ namespace Content.Server.Chat
                 return;
             }
 
-            // Check if entity is a player
+            // Get entity's PlayerSession
             IPlayerSession playerSession = source.GetComponent<IActorComponent>().playerSession;
 
-            // Check if message exceeds the character limit
-            if (message.Length > MaxMessageLength)
-            {
-                DispatchServerMessage(playerSession, "Your message exceeds " + MaxMessageLength + " character limit");
-                return;
-            }
+            // Check if message exceeds the character limit if the sender is a player
+            if (playerSession != null)
+                if (message.Length > MaxMessageLength)
+                {
+                    DispatchServerMessage(playerSession, "Your message exceeds " + MaxMessageLength + " character limit");
+                    return;
+                }
 
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
@@ -113,11 +114,12 @@ namespace Content.Server.Chat
             IPlayerSession playerSession = source.GetComponent<IActorComponent>().playerSession;
 
             // Check if message exceeds the character limit
-            if (action.Length > MaxMessageLength)
-            {
-                DispatchServerMessage(playerSession, "Your message exceeds " + MaxMessageLength + " character limit");
-                return;
-            }
+            if (playerSession != null)
+                if (action.Length > MaxMessageLength)
+                {
+                    DispatchServerMessage(playerSession, "Your message exceeds " + MaxMessageLength + " character limit");
+                    return;
+                }
 
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
@@ -133,7 +135,7 @@ namespace Content.Server.Chat
 
         public void SendOOC(IPlayerSession player, string message)
         {
-            // Check if message exceeds the character limit
+            // Check if message exceeds the character limi
             if (message.Length > MaxMessageLength)
             {
                 DispatchServerMessage(player, "Your message exceeds " + MaxMessageLength + " character limit");
