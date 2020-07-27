@@ -77,7 +77,7 @@
     texture: Objects/Tools/cable_coil.png
   - type: Icon
     texture: Objects/Tools/cable_coil.png
-  - type: ConduitPlacer
+  - type: WirePlacer
   - type: Clickable
     bounds:
       all: -0.15,-0.15,0.15,0.15
@@ -97,8 +97,9 @@
   components:
   - type: Sprite
     color: Orange
-  - type: ConduitPlacer
-    conduitPrototypeID: HVWire
+  - type: WirePlacer
+    wirePrototypeID: HVWire
+    blockingWireType: HighVoltage
 
 - type: entity
   id: MVWireStack
@@ -107,8 +108,9 @@
   components:
   - type: Sprite
     color: Yellow
-  - type: ConduitPlacer
-    conduitPrototypeID: MVWire
+  - type: WirePlacer
+    wirePrototypeID: MVWire
+    blockingWireType: MediumVoltage
 
 - type: entity
   id: ApcExtensionCableStack
@@ -117,8 +119,9 @@
   components:
   - type: Sprite
     color: Green
-  - type: ConduitPlacer
-    conduitPrototypeID: ApcExtensionCable
+  - type: WirePlacer
+    wirePrototypeID: ApcExtensionCable
+    blockingWireType: Apc
     
 - type: entity
   id: HVWireStack1
