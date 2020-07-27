@@ -17,6 +17,12 @@
   - type: Rotatable
 
 - type: entity
+  id: DisposalHolder
+  name: disposal holder
+  components:
+  - type: DisposalHolder
+
+- type: entity
   id: DisposalPipe
   parent: DisposalPipeBase
   name: disposal pipe segment

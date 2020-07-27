@@ -10,11 +10,11 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
         Container Contents { get; }
 
-        Direction NextDirection(DisposableComponent disposable);
-        Vector2 ExitVector(DisposableComponent disposable);
-        IDisposalTubeComponent? NextTube(DisposableComponent disposable);
-        bool Remove(DisposableComponent disposable);
-        bool TransferTo(DisposableComponent disposable, IDisposalTubeComponent to);
+        Direction NextDirection(DisposalHolderComponent holder);
+        Vector2 ExitVector(DisposalHolderComponent holder);
+        IDisposalTubeComponent? NextTube(DisposalHolderComponent holder);
+        bool Remove(DisposalHolderComponent holder);
+        bool TransferTo(DisposalHolderComponent holder, IDisposalTubeComponent to);
         bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube);
         void AdjacentDisconnected(IDisposalTubeComponent adjacent);
         void MoveEvent(MoveEvent moveEvent);

@@ -60,27 +60,27 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <returns>a new array of the directions</returns>
         public abstract Direction[] ConnectableDirections();
 
-        public abstract Direction NextDirection(DisposableComponent disposable);
+        public abstract Direction NextDirection(DisposalHolderComponent disposable);
 
-        public virtual Vector2 ExitVector(DisposableComponent disposable)
+        public virtual Vector2 ExitVector(DisposalHolderComponent disposable)
         {
             return NextDirection(disposable).ToVec();
         }
 
-        public IDisposalTubeComponent NextTube(DisposableComponent disposable)
+        public IDisposalTubeComponent NextTube(DisposalHolderComponent disposable)
         {
             var nextDirection = NextDirection(disposable);
             return Connected.GetValueOrDefault(nextDirection);
         }
 
-        public bool Remove(DisposableComponent disposable)
+        public bool Remove(DisposalHolderComponent disposable)
         {
             var removed = Contents.Remove(disposable.Owner);
             disposable.ExitDisposals();
             return removed;
         }
 
-        public bool TransferTo(DisposableComponent disposable, IDisposalTubeComponent to)
+        public bool TransferTo(DisposalHolderComponent disposable, IDisposalTubeComponent to)
         {
             var position = disposable.Owner.Transform.LocalPosition;
             if (!to.Contents.Insert(disposable.Owner))
@@ -158,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in Contents.ContainedEntities)
             {
-                if (!entity.TryGetComponent(out DisposableComponent disposable))
+                if (!entity.TryGetComponent(out DisposalHolderComponent disposable))
                 {
                     continue;
                 }
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 foreach (var entity in Contents.ContainedEntities)
                 {
-                    if (!entity.TryGetComponent(out DisposableComponent disposable))
+                    if (!entity.TryGetComponent(out DisposalHolderComponent disposable))
                     {
                         continue;
                     }

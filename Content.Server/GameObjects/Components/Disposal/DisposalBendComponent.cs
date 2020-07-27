@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {direction.GetDir(), side.GetDir()};
         }
 
-        public override Direction NextDirection(DisposableComponent disposable)
+        public override Direction NextDirection(DisposalHolderComponent disposable)
         {
             var directions = ConnectableDirections();
             var previousTube = disposable.PreviousTube;

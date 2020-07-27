@@ -6,7 +6,6 @@ using System.Threading;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
-using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
@@ -35,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IDragDropOn
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
@@ -98,7 +97,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private State State => _pressure >= 1 ? State.Ready : State.Pressurizing;
 
         [ViewVariables]
-        public bool Engaged
+        private bool Engaged
         {
             get => _engaged;
             set
@@ -110,19 +109,22 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool CanInsert(IEntity entity)
         {
-            return Powered &&
-                   Anchored &&
-                   entity.HasComponent<DisposableComponent>() &&
-                   _container.CanInsert(entity);
-        }
-
-        public bool TryInsert(IEntity entity)
-        {
-            if (!CanInsert(entity) || !_container.Insert(entity))
+            if (!Powered || !Anchored)
             {
                 return false;
             }
 
+            if (!entity.HasComponent<ItemComponent>() &&
+                !entity.HasComponent<SpeciesComponent>())
+            {
+                return false;
+            }
+
+            return _container.CanInsert(entity);
+        }
+
+        private void AfterInsert(IEntity entity)
+        {
             _automaticEngageToken = new CancellationTokenSource();
 
             Timer.Spawn(_automaticEngageTime, () => TryFlush(), _automaticEngageToken.Token);
@@ -133,6 +135,33 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             UpdateVisualState();
+        }
+
+        public bool TryInsert(IEntity entity)
+        {
+            if (!CanInsert(entity) || !_container.Insert(entity))
+            {
+                return false;
+            }
+
+            AfterInsert(entity);
+
+            return true;
+        }
+
+        private bool TryDrop(IEntity user, IEntity entity)
+        {
+            if (!user.TryGetComponent(out HandsComponent hands))
+            {
+                return false;
+            }
+
+            if (!CanInsert(entity) || !hands.Drop(entity, _container))
+            {
+                return false;
+            }
+
+            AfterInsert(entity);
 
             return true;
         }
@@ -152,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool CanFlush()
         {
-            return _engaged &&
+            return Engaged &&
                    _pressure >= 1 &&
                    (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
                     receiver.Powered) &&
@@ -178,21 +207,23 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             var entryComponent = entry.GetComponent<DisposalEntryComponent>();
+            var entities = _container.ContainedEntities.ToList();
             foreach (var entity in _container.ContainedEntities.ToList())
             {
                 _container.Remove(entity);
-                entryComponent.TryInsert(entity);
             }
+
+            entryComponent.TryInsert(entities);
 
             _automaticEngageToken?.Cancel();
             _automaticEngageToken = null;
 
             _pressure = 0;
 
+            Engaged = false;
+
             UpdateVisualState(true);
             UpdateInterface();
-
-            _engaged = false;
 
             return true;
         }
@@ -266,7 +297,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    _engaged = true;
+                    Engaged = true;
                     TryFlush();
                     break;
                 case UiButton.Power:
@@ -291,7 +322,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            appearance.SetData(Visuals.Handle, _engaged
+            appearance.SetData(Visuals.Handle, Engaged
                 ? HandleState.Engaged
                 : HandleState.Normal);
 
@@ -341,7 +372,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 UpdateVisualState();
 
-                if (_engaged)
+                if (Engaged)
                 {
                     TryFlush();
                 }
@@ -421,7 +452,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 case RelayMovementEntityMessage msg:
                     var timing = IoCManager.Resolve<IGameTiming>();
-                    if (_engaged ||
+                    if (Engaged ||
                         !msg.Entity.HasComponent<HandsComponent>() ||
                         timing.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
@@ -468,7 +499,17 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return TryInsert(eventArgs.Using);
+            return TryDrop(eventArgs.User, eventArgs.Using);
+        }
+
+        bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
+        {
+            return CanInsert(eventArgs.Dropped);
+        }
+
+        bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
+        {
+            return TryInsert(eventArgs.Dropped);
         }
 
         [Verb]
@@ -511,7 +552,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component._engaged = true;
+                component.Engaged = true;
                 component.TryFlush();
             }
         }

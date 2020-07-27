@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System.Collections.Generic;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 
@@ -8,22 +9,31 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalEntryComponent : DisposalTubeComponent
     {
+        private const string HolderPrototypeId = "disposalholder";
+
         public override string Name => "DisposalEntry";
 
-        private bool CanInsert(IEntity entity)
+        public bool TryInsert(IReadOnlyCollection<IEntity> entities)
         {
-            return entity.HasComponent<DisposableComponent>();
+            var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.GridPosition);
+            var holderComponent = holder.GetComponent<DisposalHolderComponent>();
+
+            foreach (var entity in entities)
+            {
+                holderComponent.TryInsert(entity);
+            }
+
+            return TryInsert(holderComponent);
         }
 
-        public bool TryInsert(IEntity entity)
+        public bool TryInsert(DisposalHolderComponent holder)
         {
-            if (!CanInsert(entity) || !Contents.Insert(entity))
+            if (!Contents.Insert(holder.Owner))
             {
                 return false;
             }
 
-            var disposable = entity.EnsureComponent<DisposableComponent>();
-            disposable.EnterTube(this);
+            holder.EnterTube(this);
 
             return true;
         }
@@ -33,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return new[] {Owner.Transform.LocalRotation.GetDir()};
         }
 
-        public override Direction NextDirection(DisposableComponent disposable)
+        public override Direction NextDirection(DisposalHolderComponent disposable)
         {
             return ConnectableDirections()[0];
         }

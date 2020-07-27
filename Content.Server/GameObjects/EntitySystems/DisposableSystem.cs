@@ -12,14 +12,14 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            EntityQuery = new TypeEntityQuery(typeof(DisposableComponent));
+            EntityQuery = new TypeEntityQuery(typeof(DisposalHolderComponent));
         }
 
         public override void Update(float frameTime)
         {
             foreach (var disposable in RelevantEntities)
             {
-                disposable.GetComponent<DisposableComponent>().Update(frameTime);
+                disposable.GetComponent<DisposalHolderComponent>().Update(frameTime);
             }
         }
     }

@@ -6,7 +6,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
@@ -34,7 +33,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _degrees.Select(degree => new Angle(direction.Theta + MathHelper.DegreesToRadians(degree)).GetDir()).ToArray();
         }
 
-        public override Direction NextDirection(DisposableComponent disposable)
+        public override Direction NextDirection(DisposalHolderComponent disposable)
         {
             var next = Owner.Transform.LocalRotation;
             var directions = ConnectableDirections().Skip(1).ToArray();

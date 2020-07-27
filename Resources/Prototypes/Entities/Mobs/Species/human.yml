@@ -139,7 +139,6 @@
   - type: Grammar
     proper: true
   - type: Pullable
-  - type: Disposable
 
 - type: entity
   save: false

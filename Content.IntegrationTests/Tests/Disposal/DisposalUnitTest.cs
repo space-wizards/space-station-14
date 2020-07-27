@@ -13,7 +13,7 @@ using Robust.Shared.Map;
 namespace Content.IntegrationTests.Tests.Disposal
 {
     [TestFixture]
-    [TestOf(typeof(DisposableComponent))]
+    [TestOf(typeof(DisposalHolderComponent))]
     [TestOf(typeof(DisposalEntryComponent))]
     [TestOf(typeof(DisposalUnitComponent))]
     public class DisposalUnitTest : ContentIntegrationTest
@@ -27,13 +27,8 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 if (result)
                 {
-                    Assert.True(entity.TryGetComponent(out DisposableComponent disposable));
-
                     // Not in a tube yet
-                    Assert.False(disposable.InTube);
-                    Assert.Null(disposable.PreviousTube);
-                    Assert.Null(disposable.CurrentTube);
-                    Assert.Null(disposable.NextTube);
+                    Assert.That(entity.Transform.Parent == unit.Owner.Transform);
                 }
             }
         }
@@ -59,16 +54,6 @@ namespace Content.IntegrationTests.Tests.Disposal
 
             Assert.AreEqual(unit.TryFlush(), entry != null);
             Assert.AreEqual(unit.ContainedEntities.Count == 0, entry != null || entities.Length == 0);
-
-            foreach (var entity in entities)
-            {
-                Assert.True(entity.TryGetComponent(out DisposableComponent disposable));
-                Assert.AreEqual(disposable.InTube, entry != null);
-
-                Assert.Null(disposable.PreviousTube);
-                Assert.AreEqual(disposable.CurrentTube, entry);
-                Assert.AreEqual(disposable.NextTube, next);
-            }
         }
 
         [Test]
@@ -91,8 +76,6 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", MapCoordinates.Nullspace);
 
                 // Test for components existing
-                Assert.True(human.HasComponent<DisposableComponent>());
-                Assert.True(wrench.HasComponent<DisposableComponent>());
                 Assert.True(disposalUnit.TryGetComponent(out DisposalUnitComponent unit));
                 Assert.True(disposalTrunk.TryGetComponent(out DisposalEntryComponent entry));
 

@@ -1,17 +1,20 @@
-﻿#nullable enable
-using Content.Shared.GameObjects.Components.Disposal;
-using Content.Shared.Interfaces.GameObjects.Components;
+#nullable enable
+using System.Linq;
+using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
     [RegisterComponent]
-    public class DisposableComponent : SharedDisposableComponent, IDragDrop
+    public class DisposalHolderComponent : Component
     {
-        private bool _inDisposals;
+        public override string Name => "DisposalHolder";
+
+        private Container _contents = null!;
 
         /// <summary>
         ///     The total amount of time that it will take for this entity to
@@ -26,20 +29,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private float TimeLeft { get; set; }
 
-        /// <summary>
-        ///     Whether or not this entity is currently inside a disposal tube
-        /// </summary>
-        [ViewVariables]
-        public override bool InTube
-        {
-            get => _inDisposals;
-            protected set
-            {
-                _inDisposals = value;
-                Dirty();
-            }
-        }
-
         [ViewVariables]
         public IDisposalTubeComponent? PreviousTube { get; set; }
 
@@ -49,10 +38,29 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         public IDisposalTubeComponent? NextTube { get; set; }
 
+        private bool CanInsert(IEntity entity)
+        {
+            if (!_contents.CanInsert(entity))
+            {
+                return false;
+            }
+
+            return entity.HasComponent<ItemComponent>() ||
+                   entity.HasComponent<SpeciesComponent>();
+        }
+
+        public bool TryInsert(IEntity entity)
+        {
+            if (!CanInsert(entity) || !_contents.Insert(entity))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void EnterTube(IDisposalTubeComponent tube)
         {
-            InTube = true;
-
             if (CurrentTube != null)
             {
                 PreviousTube = CurrentTube;
@@ -67,7 +75,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public void ExitDisposals()
         {
-            InTube = false;
             PreviousTube = null;
             CurrentTube = null;
             NextTube = null;
@@ -78,15 +85,17 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
             }
+
+            foreach (var entity in _contents.ContainedEntities.ToArray())
+            {
+                _contents.ForceRemove(entity);
+            }
+
+            Owner.Delete();
         }
 
         public void Update(float frameTime)
         {
-            if (!InTube)
-            {
-                return;
-            }
-
             while (frameTime > 0)
             {
                 var time = frameTime;
@@ -130,20 +139,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             ExitDisposals();
         }
 
-        public override ComponentState GetComponentState()
+        public override void Initialize()
         {
-            return new DisposableComponentState(InTube);
-        }
+            base.Initialize();
 
-        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
-        }
-
-        bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
-        {
-            return eventArgs.Target.TryGetComponent(out DisposalUnitComponent unit) &&
-                   unit.TryInsert(Owner);
+            _contents = ContainerManagerComponent.Ensure<Container>(Name, Owner);
         }
     }
 }
