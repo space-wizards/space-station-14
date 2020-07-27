@@ -371,7 +371,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             {
                 case RelayMovementEntityMessage msg:
                     var timing = IoCManager.Resolve<IGameTiming>();
-                    if (!msg.Entity.HasComponent<HandsComponent>() ||
+                    if (_engageToken != null ||
+                        !msg.Entity.HasComponent<HandsComponent>() ||
                         timing.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
                         break;
