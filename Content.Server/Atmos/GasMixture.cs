@@ -446,6 +446,7 @@ namespace Content.Server.Atmos
             var temperature = Temperature;
             var energy = ThermalEnergy;
 
+            // TODO ATMOS Take reaction priority into account!
             foreach (var prototype in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<GasReactionPrototype>())
             {
                 if (energy < prototype.MinimumEnergyRequirement ||
