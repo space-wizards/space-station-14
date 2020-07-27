@@ -62,10 +62,19 @@ namespace Content.Server.GameObjects.Components.Disposal
         [ViewVariables]
         private TimeSpan _engageTime;
 
+        [ViewVariables]
+        private TimeSpan _automaticEngageTime;
+
         /// <summary>
         ///     Token used to cancel a flush after an engage.
         /// </summary>
         private CancellationTokenSource? _engageToken;
+
+        /// <summary>
+        ///     Token used to cancel the automatic engage of a disposal unit
+        ///     after an entity enters it.
+        /// </summary>
+        private CancellationTokenSource? _automaticEngageToken;
 
         /// <summary>
         ///     Container of entities inside this disposal unit.
@@ -106,6 +115,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
+            _automaticEngageToken = new CancellationTokenSource();
+
+            Timer.Spawn(_automaticEngageTime, () => TryFlush(), _automaticEngageToken.Token);
+
             if (entity.TryGetComponent(out IActorComponent actor))
             {
                 _userInterface.Close(actor.playerSession);
@@ -117,6 +130,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void Remove(IEntity entity)
         {
             _container.Remove(entity);
+
+            if (ContainedEntities.Count == 0)
+            {
+                _automaticEngageToken?.Cancel();
+                _automaticEngageToken = null;
+            }
         }
 
         private bool CanEngage()
@@ -151,11 +170,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _engageToken = new CancellationTokenSource();
 
-            Timer.Spawn(_engageTime, () =>
-            {
-                TryFlush();
-                UpdateVisualState();
-            }, _engageToken.Token);
+            Timer.Spawn(_engageTime, () => TryFlush(), _engageToken.Token);
 
             UpdateInterface();
         }
@@ -184,10 +199,16 @@ namespace Content.Server.GameObjects.Components.Disposal
                 entryComponent.TryInsert(entity);
             }
 
+            _automaticEngageToken?.Cancel();
+            _automaticEngageToken = null;
+
+            _engageToken?.Cancel();
             _engageToken = null;
+
             _pressure = 0;
 
             UpdateInterface();
+            UpdateVisualState();
 
             return true;
         }
@@ -324,6 +345,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 2,
                 seconds => _engageTime = TimeSpan.FromSeconds(seconds),
                 () => (int) _engageTime.TotalSeconds);
+
+            serializer.DataReadWriteFunction(
+                "automaticEngageTime",
+                30,
+                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
+                () => (int) _automaticEngageTime.TotalSeconds);
         }
 
         public override void Initialize()
@@ -357,7 +384,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             _userInterface.CloseAll();
+
+            _automaticEngageToken?.Cancel();
+            _automaticEngageToken = null;
+
             _engageToken?.Cancel();
+            _engageToken = null;
+
             _container = null!;
 
             base.OnRemove();
