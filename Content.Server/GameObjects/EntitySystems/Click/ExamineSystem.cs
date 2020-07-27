@@ -1,10 +1,10 @@
-﻿using Content.Server.Utility;
+﻿#nullable enable
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -16,6 +16,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         /// Returns a status examine value for components appended to the end of the description of the entity
         /// </summary>
+        /// <param name="message">The message to append to which will be displayed.</param>
         /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
         void Examine(FormattedMessage message, bool inDetailsRange);
     }
@@ -23,7 +24,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
     public class ExamineSystem : ExamineSystemShared
     {
 #pragma warning disable 649
-        [Dependency] private IEntityManager _entityManager;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 #pragma warning restore 649
 
         private static readonly FormattedMessage _entityNotFoundMessage;
@@ -91,17 +92,22 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var playerEnt = session.AttachedEntity;
             var channel = player.ConnectedClient;
 
-            if (playerEnt == null
-                || !_entityManager.TryGetEntity(request.EntityUid, out var entity)
-                || !CanExamine(playerEnt, entity))
+            DoExamine(playerEnt, channel, request.EntityUid);
+        }
+
+        public void DoExamine(IEntity? examiner, INetChannel channel, EntityUid on)
+        {
+            if (examiner == null
+                || !_entityManager.TryGetEntity(on, out var entity)
+                || !CanExamine(examiner, entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityNotFoundMessage), channel);
+                    on, _entityNotFoundMessage), channel);
                 return;
             }
 
-            var text = GetExamineText(entity, player.AttachedEntity);
-            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text), channel);
+            var text = GetExamineText(entity, examiner);
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(on, text), channel);
         }
     }
 }
