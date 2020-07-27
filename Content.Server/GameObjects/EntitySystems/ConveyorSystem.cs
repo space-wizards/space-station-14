@@ -178,6 +178,16 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public void Dispose()
         {
+            foreach (var conveyor in _conveyors)
+            {
+                conveyor.Disconnect();
+            }
+
+            foreach (var conveyorSwitch in _switches)
+            {
+                conveyorSwitch.Disconnect();
+            }
+
             _conveyors.Clear();
             _switches.Clear();
         }
