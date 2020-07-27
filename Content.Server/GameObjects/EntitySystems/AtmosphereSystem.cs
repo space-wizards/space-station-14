@@ -41,6 +41,9 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
+            // You know, this is probably NOT a good idea. Blame moony.
+            GC.TryStartNoGCRegion(64000000);
+
             foreach (var gridEnt in RelevantEntities)
             {
                 var grid = gridEnt.GetComponent<IMapGridComponent>();
@@ -48,8 +51,9 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
 
                 gridEnt.GetComponent<GridAtmosphereComponent>().Update(frameTime);
-
             }
+
+            GC.EndNoGCRegion();
         }
 
         private void OnTileChanged(object? sender, TileChangedEventArgs eventArgs)
