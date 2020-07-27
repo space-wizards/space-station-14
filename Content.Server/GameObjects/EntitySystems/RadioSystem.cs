@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radioEntity in EntityManager.GetEntities(EntityQuery))
+            foreach (var radioEntity in RelevantEntities)
             {
                 var radio = radioEntity.GetComponent<RadioComponent>();
                 if (radioEntity == source || !radio.RadioOn)
