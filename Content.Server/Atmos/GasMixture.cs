@@ -45,11 +45,10 @@ namespace Content.Server.Atmos
 
                 for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    var moles = _moles[i];
-                    capacity += Atmospherics.GetGas(i).SpecificHeat * moles;
+                    capacity += Atmospherics.GetGas(i).SpecificHeat * _moles[i];
                 }
 
-                return MathF.Min(capacity, Atmospherics.MinimumHeatCapacity);
+                return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
             }
         }
 
@@ -63,11 +62,10 @@ namespace Content.Server.Atmos
 
                 for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
                 {
-                    var moles = _molesArchived[i];
-                    capacity += Atmospherics.GetGas(i).SpecificHeat * moles;
+                    capacity += Atmospherics.GetGas(i).SpecificHeat * _molesArchived[i];
                 }
 
-                return MathF.Min(capacity, Atmospherics.MinimumHeatCapacity);
+                return MathF.Max(capacity, Atmospherics.MinimumHeatCapacity);
             }
         }
 
@@ -104,6 +102,9 @@ namespace Content.Server.Atmos
             get => _temperature;
             set
             {
+                if(value < Atmospherics.TCMB)
+                    throw new Exception($"Tried to set gas temperature below CMB! Value: {value}");
+
                 if (Immutable) return;
                 _temperature = value;
             }
@@ -303,12 +304,12 @@ namespace Content.Server.Atmos
                 // Transfer of thermal energy (via changed heat capacity) between self and sharer.
                 if (!Immutable && newHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
-                    Temperature = (oldHeatCapacity * Temperature - heatCapacityToSharer * TemperatureArchived + heatCapacitySharerToThis * sharer.TemperatureArchived) / newHeatCapacity;
+                    Temperature = ((oldHeatCapacity * Temperature) - (heatCapacityToSharer * TemperatureArchived) + (heatCapacitySharerToThis * sharer.TemperatureArchived)) / newHeatCapacity;
                 }
 
                 if (!sharer.Immutable && newSharerHeatCapacity > Atmospherics.MinimumHeatCapacity)
                 {
-                    sharer.Temperature = (oldSharerHeatCapacity * sharer.Temperature - heatCapacitySharerToThis * sharer.TemperatureArchived + heatCapacityToSharer*TemperatureArchived) / newSharerHeatCapacity;
+                    sharer.Temperature = ((oldSharerHeatCapacity * sharer.Temperature) - (heatCapacitySharerToThis * sharer.TemperatureArchived) + (heatCapacityToSharer*TemperatureArchived)) / newSharerHeatCapacity;
                 }
 
                 // Thermal energy of the system (self and sharer) is unchanged.
