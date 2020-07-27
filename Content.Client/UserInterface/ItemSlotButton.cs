@@ -12,11 +12,16 @@ namespace Content.Client.UserInterface
     {
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
+        public SpriteView HoverSpriteView { get; }
         public BaseButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
         public Action<GUIBoundKeyEventArgs> OnPressed { get; set; }
         public Action<GUIBoundKeyEventArgs> OnStoragePressed { get; set; }
+        public Action<GUIMouseHoverEventArgs> OnHover { get; set; }
+
+        public bool EntityHover => HoverSpriteView.Sprite != null;
+        public bool MouseIsHovering = false;
 
         public ItemSlotButton(Texture texture, Texture storageTexture)
         {
@@ -32,6 +37,12 @@ namespace Content.Client.UserInterface
             Button.OnKeyBindDown += OnButtonPressed;
 
             AddChild(SpriteView = new SpriteView
+            {
+                Scale = (2, 2),
+                OverrideDirection = Direction.South
+            });
+
+            AddChild(HoverSpriteView = new SpriteView
             {
                 Scale = (2, 2),
                 OverrideDirection = Direction.South
@@ -56,12 +67,33 @@ namespace Content.Client.UserInterface
 
             StorageButton.OnPressed += OnStorageButtonPressed;
 
+            Button.OnMouseEntered += _ =>
+            {
+                MouseIsHovering = true;
+            };
+            Button.OnMouseEntered += OnButtonHover;
+
+            Button.OnMouseExited += _ =>
+            {
+                MouseIsHovering = false;
+                ClearHover();
+            };
+
             AddChild(CooldownDisplay = new CooldownGraphic
             {
                 SizeFlagsHorizontal = SizeFlags.Fill,
                 SizeFlagsVertical = SizeFlags.Fill,
                 Visible = false,
             });
+        }
+
+        public void ClearHover()
+        {
+            if (EntityHover)
+            {
+                HoverSpriteView.Sprite?.Owner.Delete();
+                HoverSpriteView.Sprite = null;
+            }
         }
 
         private void OnButtonPressed(GUIBoundKeyEventArgs args)
@@ -79,6 +111,11 @@ namespace Content.Client.UserInterface
             {
                 OnPressed?.Invoke(args.Event);
             }
+        }
+
+        private void OnButtonHover(GUIMouseHoverEventArgs args)
+        {
+            OnHover?.Invoke(args);
         }
     }
 }

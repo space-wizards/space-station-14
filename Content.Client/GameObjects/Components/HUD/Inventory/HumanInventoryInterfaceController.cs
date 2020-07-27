@@ -48,6 +48,7 @@ namespace Content.Client.GameObjects
             {
                 button.OnPressed = (e) => AddToInventory(e, slot);
                 button.OnStoragePressed = (e) => OpenStorage(e, slot);
+                button.OnHover = (e) => RequestItemHover(slot);
                 _inventoryButtons.Add(slot, new List<ItemSlotButton> {button});
             }
 
@@ -58,7 +59,8 @@ namespace Content.Client.GameObjects
                 variable = new ItemSlotButton(texture, storageTexture)
                 {
                     OnPressed = (e) => AddToInventory(e, slot),
-                    OnStoragePressed = (e) => OpenStorage(e, slot)
+                    OnStoragePressed = (e) => OpenStorage(e, slot),
+                    OnHover = (e) => RequestItemHover(slot)
                 };
                 _inventoryButtons[slot].Add(variable);
             }
@@ -111,6 +113,21 @@ namespace Content.Client.GameObjects
             foreach (var button in buttons)
             {
                 ClearButton(button, slot);
+            }
+        }
+
+        public override void HoverInSlot(Slots slot, IEntity entity, bool fits)
+        {
+            base.HoverInSlot(slot, entity, fits);
+
+            if (!_inventoryButtons.TryGetValue(slot, out var buttons))
+            {
+                return;
+            }
+
+            foreach (var button in buttons)
+            {
+                _itemSlotManager.HoverInSlot(button, entity, fits);
             }
         }
 
