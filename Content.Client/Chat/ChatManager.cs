@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -221,7 +222,8 @@ namespace Content.Client.Chat
             // Check if message is longer than the character limit
             if (text.Length > _maxMessageLength)
             {
-                _currentChatBox?.AddLine("Your message exceeds " + _maxMessageLength + " character limit", ChatChannel.None, Color.Orange);
+                string locWarning = Loc.GetString("Your message exceeds { 0 } character limit", _maxMessageLength);
+                _currentChatBox?.AddLine(locWarning, ChatChannel.None, Color.Orange);
                 _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent 
                 return;
             }
