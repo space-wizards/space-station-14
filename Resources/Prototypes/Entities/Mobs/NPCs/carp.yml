@@ -1,0 +1,60 @@
+# Hacky for the stress test so don't even consider adding to this
+- type: entity
+  save: false
+  name: space carp
+  id: CarpMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Xeno
+  - type: Hands
+  - type: MovementSpeedModifier
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: carp
+      sprite: Mobs/Species/space_carp.rsi
+  - type: Icon
+    sprite: Mobs/Species/space_carp.rsi
+    state: icon
+  - type: Clickable
+  - type: Physics
+    mass: 50
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.35,0.35,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Species
+    Template: Human
+    HeatResistance: 323
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+  - type: HeatResistance
+  - type: Damageable
+  - type: CombatMode
+  - type: Teleportable
+  - type: Stunnable
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage: 50
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: carp
+      dead: dead
