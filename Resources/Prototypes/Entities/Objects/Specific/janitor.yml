@@ -189,3 +189,24 @@
 
     - type: Slippery
       paralyzeTime: 7
+
+- type: entity
+  name: spray bottle
+  id: SprayBottle
+  parent: BaseItem
+  description: A spray bottle with an unscrewable top.
+  components:
+  - type: Sprite
+    texture: Objects/Specific/Janitorial/cleaner.png
+  - type: Icon
+    texture: Objects/Specific/Janitorial/cleaner.png
+  - type: Solution
+    maxVol: 100
+    caps: 1
+  - type: Pourable
+    transferAmount: 5.0
+  - type: CanSpill
+  - type: Spray
+    transferAmount: 5
+    sprayRange: 3
+    spraySound: Effects/spray.ogg
