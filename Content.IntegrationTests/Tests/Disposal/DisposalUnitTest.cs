@@ -47,12 +47,12 @@ namespace Content.IntegrationTests.Tests.Disposal
             UnitContains(unit, result, entities);
         }
 
-        private void Flush(DisposalUnitComponent unit, DisposalEntryComponent? entry = null, IDisposalTubeComponent? next = null, params IEntity[] entities)
+        private void Flush(DisposalUnitComponent unit, bool result, DisposalEntryComponent? entry = null, IDisposalTubeComponent? next = null, params IEntity[] entities)
         {
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.AreEqual(unit.ContainedEntities.Count, entities.Length);
 
-            Assert.AreEqual(unit.TryFlush(), entry != null);
+            Assert.AreEqual(unit.TryFlush(), result);
             Assert.AreEqual(unit.ContainedEntities.Count == 0, entry != null || entities.Length == 0);
         }
 
@@ -60,6 +60,11 @@ namespace Content.IntegrationTests.Tests.Disposal
         public async Task Test()
         {
             var server = StartServerDummyTicker();
+
+            IEntity human = null!;
+            IEntity wrench = null!;
+            DisposalUnitComponent unit = null!;
+            DisposalEntryComponent entry = null!;
 
             server.Assert(() =>
             {
@@ -70,14 +75,14 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities
-                var human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
-                var wrench = entityManager.SpawnEntity("Wrench", MapCoordinates.Nullspace);
+                human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
+                wrench = entityManager.SpawnEntity("Wrench", MapCoordinates.Nullspace);
                 var disposalUnit = entityManager.SpawnEntity("DisposalUnit", MapCoordinates.Nullspace);
-                var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", MapCoordinates.Nullspace);
+                var disposalTrunk = entityManager.SpawnEntity("DisposalTrunk", disposalUnit.Transform.MapPosition);
 
                 // Test for components existing
-                Assert.True(disposalUnit.TryGetComponent(out DisposalUnitComponent unit));
-                Assert.True(disposalTrunk.TryGetComponent(out DisposalEntryComponent entry));
+                Assert.True(disposalUnit.TryGetComponent(out unit));
+                Assert.True(disposalTrunk.TryGetComponent(out entry));
 
                 // Can't insert, unanchored and unpowered
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
@@ -100,9 +105,6 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Can't insert the trunk or the unit into itself
                 UnitInsertContains(unit, false, disposalUnit, disposalTrunk);
 
-                // Flush with no contents
-                Flush(unit, entry);
-
                 // Can insert mobs and items
                 UnitInsertContains(unit, true, human, wrench);
 
@@ -110,13 +112,16 @@ namespace Content.IntegrationTests.Tests.Disposal
                 disposalTrunk.Transform.WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
-                Flush(unit, null, null, human, wrench);
+                Flush(unit, false, null, null, human, wrench);
 
                 // Move the disposal trunk back
                 disposalTrunk.Transform.WorldPosition -= (1, 0);
 
                 // Flush with a mob and an item
-                Flush(unit, entry, null, human, wrench);
+                Flush(unit, true, entry, null, human, wrench);
+
+                // Re-pressurizing
+                Flush(unit, false, entry);
             });
 
             await server.WaitIdleAsync();

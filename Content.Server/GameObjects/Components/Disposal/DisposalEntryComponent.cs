@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool TryInsert(IReadOnlyCollection<IEntity> entities)
         {
-            var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.GridPosition);
+            var holder = Owner.EntityManager.SpawnEntity(HolderPrototypeId, Owner.Transform.MapPosition);
             var holderComponent = holder.GetComponent<DisposalHolderComponent>();
 
             foreach (var entity in entities)

@@ -181,18 +181,14 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool CanFlush()
         {
-            return Engaged &&
-                   _pressure >= 1 &&
-                   (!Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
-                    receiver.Powered) &&
-                   (!Owner.TryGetComponent(out CollidableComponent collidable) ||
-                    collidable.Anchored);
+            return _pressure >= 1 && Powered && Anchored;
         }
 
         public bool TryFlush()
         {
             if (!CanFlush())
             {
+                Engaged = true;
                 return false;
             }
 
@@ -297,7 +293,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    Engaged = true;
                     TryFlush();
                     break;
                 case UiButton.Power:
@@ -552,7 +547,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component.Engaged = true;
                 component.TryFlush();
             }
         }
