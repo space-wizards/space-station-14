@@ -40,15 +40,16 @@ namespace Content.Client.GameObjects.Components.Items
             }
         }
 
-        public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(string hand)
+        public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(HandLocation hand)
         {
             if (RsiPath == null)
             {
                 return null;
             }
 
+            var handName = hand.ToString().ToLowerInvariant();
             var rsi = GetRSI();
-            var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{hand}" : $"inhand-{hand}";
+            var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
             if (rsi.TryGetState(stateId, out _))
             {
                 return (rsi, stateId);
