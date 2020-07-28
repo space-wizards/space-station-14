@@ -61,19 +61,21 @@ namespace Content.Server.GameObjects.Components.Fluids
         }
 
         // Source: https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C.23
+        // Gets all tiles in between origin and end, plus the end tile itself
         List<GridCoordinates> GetTilesBetween(GridCoordinates origin, GridCoordinates end, int range = 100)
         {
             var tiles = new List<GridCoordinates>();
             int dx = Math.Abs((int)(end.X - origin.X)), sx = origin.X < end.X ? 1 : -1;
             int dy = Math.Abs((int)(end.Y - origin.Y)), sy = origin.Y < end.Y ? 1 : -1;
             int err = (dx > dy ? dx : -dy) / 2, e2;
-            for (int i = 0; i <= range; i++)
+            for (int i = 0; i < range; i++)
             {
-                tiles.Add(origin);
-                if (origin.X == end.X && origin.Y == end.Y) break;
                 e2 = err;
                 if (e2 > -dx) { err -= dy; origin = origin.Offset(new Vector2(sx, 0)); }
                 if (e2 < dy) { err += dx; origin = origin.Offset(new Vector2(0, sy)); }
+                // Add tile to list and check if we're at the end
+                tiles.Add(origin);
+                if (origin.X == end.X && origin.Y == end.Y) break;
             }
             return tiles;
         }
@@ -108,7 +110,6 @@ namespace Content.Server.GameObjects.Components.Fluids
             else
             {
                 tiles = GetTilesBetween(playerCoord, clickCoordinates, _sprayRange);
-                tiles.RemoveAt(0); // don't use the one we're standing on
             }
 
             //Play sound
