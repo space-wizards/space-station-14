@@ -292,10 +292,12 @@ namespace Content.Server.GameObjects.Components.Buckle
         /// </returns>
         public bool TryUnbuckle(IEntity user, bool force = false)
         {
-            if (BuckledTo == null)
+            if (!Buckled)
             {
                 return false;
             }
+
+            StrapComponent oldBuckledTo = BuckledTo!;
 
             if (!force)
             {
@@ -319,14 +321,13 @@ namespace Content.Server.GameObjects.Components.Buckle
                 }
             }
 
-            if (Owner.Transform.Parent == BuckledTo.Owner.Transform)
+            BuckledTo = null;
+
+            if (Owner.Transform.Parent == oldBuckledTo.Owner.Transform)
             {
                 ContainerHelpers.AttachParentToContainerOrGrid(Owner.Transform);
-                Owner.Transform.WorldRotation = BuckledTo.Owner.Transform.WorldRotation;
+                Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
             }
-
-            var oldBuckledTo = BuckledTo;
-            BuckledTo = null;
 
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {
