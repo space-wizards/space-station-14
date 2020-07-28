@@ -1,0 +1,206 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Client.GameObjects.Components.StationEvents;
+using JetBrains.Annotations;
+using Robust.Client.Graphics.Drawing;
+using Robust.Client.Graphics.Overlays;
+using Robust.Client.Interfaces.Graphics.ClientEye;
+using Robust.Client.Interfaces.Graphics.Overlays;
+using Robust.Client.Player;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
+using Color = Robust.Shared.Maths.Color;
+
+namespace Content.Client.GameObjects.EntitySystems.StationEvents
+{
+    /// <summary>
+    /// Handles showing the RadiationPulse event entities on the client side (using an overlay)
+    /// </summary>
+    [UsedImplicitly]
+    public sealed class ClientRadiationSystem : EntitySystem
+    {
+        // All of this just to use the overlay and get smooth circles
+        private RadiationPulseOverlay _overlay;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            EntityQuery = new TypeEntityQuery(typeof(ClientRadiationPulseComponent));
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            // TODO: There's gotta be a better way to do this and have it sync with new-join clients?
+            foreach (var _ in RelevantEntities)
+            {
+                EnableOverlay();
+                return;
+            }
+            
+            DisableOverlay();
+        }
+
+        private void EnableOverlay()
+        {
+            if (_overlay != null)
+            {
+                return;
+            }
+            
+            _overlay = new RadiationPulseOverlay();
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            overlayManager.AddOverlay(_overlay);
+        }
+
+        private void DisableOverlay()
+        {
+            if (_overlay == null)
+            {
+                return;
+            }
+            
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            overlayManager.RemoveOverlay(nameof(RadiationPulseOverlay));
+            _overlay = null;
+        }
+    }
+
+    public sealed class RadiationPulseOverlay : Overlay
+    {
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        
+        /// <summary>
+        /// Current color of a pulse
+        /// </summary>
+        private readonly Dictionary<IEntity, Color> _colors = new Dictionary<IEntity, Color>();
+        
+        /// <summary>
+        /// Whether our alpha is increasing or decreasing and at what time does it flip (or stop)
+        /// </summary>
+        private readonly Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)> _transitions = 
+                     new Dictionary<IEntity, (bool EasingIn, TimeSpan TransitionTime)>();
+
+        /// <summary>
+        /// How much the alpha changes per second for each pulse
+        /// </summary>
+        private readonly Dictionary<IEntity, float> _alphaRateOfChange = new Dictionary<IEntity, float>();
+
+        private TimeSpan _lastTick;
+        
+        // TODO: When worldHandle can do DrawCircle change this.
+        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+
+        public RadiationPulseOverlay() : base(nameof(RadiationPulseOverlay))
+        {
+            IoCManager.InjectDependencies(this);
+            _lastTick = _gameTiming.CurTime;
+        }
+
+        /// <summary>
+        /// Get the current color for the entity,
+        /// accounting for what its alpha should be and whether it should be transitioning in or out
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="elapsedTime">frametime</param>
+        /// <param name="endTime"></param>
+        /// <returns></returns>
+        private Color GetColor(IEntity entity, float elapsedTime, TimeSpan endTime)
+        {
+            var currentTime = _gameTiming.CurTime;
+            
+            // New pulse
+            if (!_colors.ContainsKey(entity))
+            {
+                UpdateTransition(entity, currentTime, endTime);
+            }
+
+            var currentColor = _colors[entity];
+            var alphaChange = _alphaRateOfChange[entity] * elapsedTime;
+
+            if (!_transitions[entity].EasingIn)
+            {
+                alphaChange *= -1;
+            }
+
+            if (currentTime > _transitions[entity].TransitionTime)
+            {
+                UpdateTransition(entity, currentTime, endTime);
+            }
+
+            _colors[entity] = _colors[entity].WithAlpha(currentColor.A + alphaChange);
+            return _colors[entity];
+        }
+
+        private void UpdateTransition(IEntity entity, TimeSpan currentTime, TimeSpan endTime)
+        {
+            bool easingIn;
+            TimeSpan transitionTime;
+            
+            if (!_transitions.TryGetValue(entity, out var transition))
+            {
+                // Start as false because it will immediately be flipped
+                easingIn = false;
+                transitionTime = (endTime - currentTime) / 2 + currentTime;
+            }
+            else
+            {
+                easingIn = transition.EasingIn;
+                transitionTime = endTime;
+            }
+            
+            _transitions[entity] = (!easingIn, transitionTime);
+            _colors[entity] = Color.Green.WithAlpha(0.0f);
+            _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
+        }
+
+        protected override void Draw(DrawingHandleBase handle)
+        {
+            // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
+            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (playerEntity == null)
+            {
+                return;
+            }
+
+            var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
+            _lastTick = _gameTiming.CurTime;
+
+            var radiationPulses = _entityManager
+                .GetEntities(new TypeEntityQuery(typeof(ClientRadiationPulseComponent)))
+                .ToList();
+
+            var screenHandle = (DrawingHandleScreen) handle;
+            var viewport = _eyeManager.GetWorldViewport();
+
+            foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
+            {
+                foreach (var pulse in radiationPulses)
+                {
+                    if (grid.Index != pulse.Transform.GridID) continue;
+                    
+                    // TODO: Check if viewport intersects circle
+                    var circlePosition = _eyeManager.WorldToScreen(pulse.Transform.WorldPosition);
+                    var comp = pulse.GetComponent<ClientRadiationPulseComponent>();
+                    
+                    // change to worldhandle when implemented
+                    screenHandle.DrawCircle(
+                        circlePosition, 
+                        comp.Range * 64,
+                        GetColor(pulse, elapsedTime, comp.EndTime));
+                }
+            }
+        }
+    }
+}

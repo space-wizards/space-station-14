@@ -42,6 +42,15 @@ namespace Content.Server.Chat
             _netManager.ServerSendToAll(msg);
         }
 
+        public void DispatchStationAnnouncement(string message)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Radio;
+            msg.Message = message;
+            msg.MessageWrap = "Station: {0}";
+            _netManager.ServerSendToAll(msg);
+        }
+
         public void DispatchServerMessage(IPlayerSession player, string message)
         {
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();

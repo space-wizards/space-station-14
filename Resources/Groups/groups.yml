@@ -36,6 +36,7 @@
   - listplayers
   - loc
   - hostlogin
+  - events
 
 - Index: 100
   Name: Administrator
@@ -86,6 +87,7 @@
   - deleteewc
   - asay
   - mapping
+  - events
   CanViewVar: true
   CanAdminPlace: true
 
@@ -159,6 +161,7 @@
   - sudo
   - asay
   - mapping
+  - events
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
