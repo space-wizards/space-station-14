@@ -111,6 +111,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 return Loc.GetString("No valid events available");
             }
             
+            CurrentEvent?.Shutdown();
             CurrentEvent = randomEvent;
             CurrentEvent.Startup();
 
