@@ -27,6 +27,7 @@ namespace Content.Client
         [Dependency] private IInputManager _inputManager;
         [Dependency] private IEyeManager _eyeManager;
         [Dependency] private IClientNetManager _netManager;
+        [Dependency] private IEntityManager _entityManager;
 #pragma warning restore 649
 
         private readonly List<PopupLabel> _aliveLabels = new List<PopupLabel>();
@@ -36,21 +37,41 @@ namespace Content.Client
         {
             DebugTools.Assert(!_initialized);
 
-            _netManager.RegisterNetMessage<MsgDoNotify>(nameof(MsgDoNotify), DoNotifyMessage);
+            _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor), DoNotifyCursor);
+            _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates), DoNotifyCoordinates);
+            _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity), DoNotifyEntity);
 
             _initialized = true;
         }
 
-        private void DoNotifyMessage(MsgDoNotify message)
+        private void DoNotifyCursor(MsgDoNotifyCursor message)
         {
-            if (message.AtCursor)
+            PopupMessage(message.Message);
+        }
+
+        private void DoNotifyCoordinates(MsgDoNotifyCoordinates message)
+        {
+            PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+        }
+
+        private void DoNotifyEntity(MsgDoNotifyEntity message)
+        {
+            if (!_entityManager.TryGetEntity(message.Entity, out var entity))
             {
-                PopupMessage(message.Message);
+                return;
             }
-            else
+
+            PopupMessage(_eyeManager.WorldToScreen(entity.Transform.GridPosition), message.Message);
+        }
+
+        public override void PopupMessage(IEntity source, IEntity viewer, string message)
+        {
+            if (viewer != _playerManager.LocalPlayer.ControlledEntity)
             {
-                PopupMessage(_eyeManager.WorldToScreen(message.Coordinates), message.Message);
+                return;
             }
+
+            PopupMessage(_eyeManager.WorldToScreen(source.Transform.GridPosition), message);
         }
 
         public override void PopupMessage(GridCoordinates coordinates, IEntity viewer, string message)

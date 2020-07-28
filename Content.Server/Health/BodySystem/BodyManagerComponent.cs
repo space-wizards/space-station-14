@@ -8,6 +8,7 @@ using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;
 using System.Linq;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 
 namespace Content.Server.BodySystem {
 
@@ -178,8 +179,7 @@ namespace Content.Server.BodySystem {
         /////////  Server-specific stuff
         /////////
 
-        public override void ExposeData(ObjectSerializer serializer)
-        {
+        public override void ExposeData(ObjectSerializer serializer) {
             base.ExposeData(serializer);
 
             serializer.DataReadWriteFunction(
@@ -225,8 +225,16 @@ namespace Content.Server.BodySystem {
                 if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData)) { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                     throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
                 }
-                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
-                _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+
+                //Try and remove an existing limb if that exists.
+                if (_partDictionary.Remove(slotName, out var removedPart))
+                {
+                    BodyPartRemoved(removedPart, slotName);
+                }
+
+                var addedPart = new BodyPart(newPartData);
+                _partDictionary.Add(slotName, addedPart); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+                BodyPartAdded(addedPart, slotName);
             }
         }
 
@@ -264,6 +272,8 @@ namespace Content.Server.BodySystem {
             if (TryGetBodyPart(slotName, out BodyPart result)) //And that nothing is in it
                 return false;
             _partDictionary.Add(slotName, part);
+            BodyPartAdded(part, slotName);
+
             return true;
         }
         /// <summary>
@@ -316,7 +326,11 @@ namespace Content.Server.BodySystem {
                 return;
             if (part != null) {
                 string slotName = _partDictionary.FirstOrDefault(x => x.Value == part).Key;
-                _partDictionary.Remove(slotName);
+                if (_partDictionary.Remove(slotName, out var partRemoved))
+                {
+                    BodyPartRemoved(partRemoved, slotName);
+                }
+
                 if (TryGetBodyPartConnections(slotName, out List<string> connections)) //Call disconnect on all limbs that were hanging off this limb.
                 {
                     foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
@@ -340,7 +354,11 @@ namespace Content.Server.BodySystem {
             if (!TryGetBodyPart(name, out BodyPart part))
                 return;
             if (part != null) {
-                _partDictionary.Remove(name);
+                if (_partDictionary.Remove(name, out var partRemoved))
+                {
+                    BodyPartRemoved(partRemoved, name);
+                }
+
                 if (TryGetBodyPartConnections(name, out List<string> connections)) {
                     foreach (string connectionName in connections) {
                         if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result)) {
@@ -355,5 +373,24 @@ namespace Content.Server.BodySystem {
             }
         }
 
+        private void BodyPartAdded(BodyPart part, string slotName)
+        {
+            var argsAdded = new BodyPartAddedEventArgs(part, slotName);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
+            {
+                component.BodyPartAdded(argsAdded);
+            }
+        }
+
+        private void BodyPartRemoved(BodyPart part, string slotName)
+        {
+            var args = new BodyPartRemovedEventArgs(part, slotName);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+            {
+                component.BodyPartRemoved(args);
+            }
+        }
     }
 }

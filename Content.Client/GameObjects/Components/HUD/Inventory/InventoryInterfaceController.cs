@@ -59,6 +59,10 @@ namespace Content.Client.GameObjects
         {
         }
 
+        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity entity, bool fits)
+        {
+        }
+
         public virtual void RemoveFromSlot(EquipmentSlotDefines.Slots slot)
         {
         }
@@ -94,6 +98,11 @@ namespace Content.Client.GameObjects
             }
 
             Owner.SendOpenStorageUIMessage(slot);
+        }
+
+        protected void RequestItemHover(EquipmentSlotDefines.Slots slot)
+        {
+            Owner.SendHoverMessage(slot);
         }
     }
 }

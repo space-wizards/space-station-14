@@ -27,6 +27,8 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+            human.AddFunction(ContentKeyFunctions.TryPullObject);
+            human.AddFunction(ContentKeyFunctions.MovePulledObject);
             human.AddFunction(ContentKeyFunctions.OpenContextMenu);
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
@@ -35,6 +37,9 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
             human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
             human.AddFunction(ContentKeyFunctions.WideAttack);
+            human.AddFunction(ContentKeyFunctions.Point);
+            human.AddFunction(ContentKeyFunctions.TryPullObject);
+            human.AddFunction(ContentKeyFunctions.MovePulledObject);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);

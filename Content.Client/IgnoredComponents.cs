@@ -136,6 +136,8 @@
             "TrashSpawner",
             "Pill",
             "RCD",
+            "Pullable",
+            "CursedEntityStorage",
         };
     }
 }

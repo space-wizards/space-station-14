@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.Interfaces.GameObjects.Components.Items
 {
-    public interface IHandsComponent : IComponent
+    public interface IHandsComponent : ISharedHandsComponent
     {
         /// <summary>
-        ///     The hand index of the currently active hand.
+        ///     The hand name of the currently active hand.
         /// </summary>
-        string ActiveIndex { get; set; }
+        string ActiveHand { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.
@@ -24,9 +25,9 @@ namespace Content.Server.Interfaces.GameObjects
         /// <summary>
         ///     Gets the item held by a hand.
         /// </summary>
-        /// <param name="index">The index of the hand to get.</param>
+        /// <param name="handName">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        ItemComponent GetHand(string index);
+        ItemComponent GetItem(string handName);
 
         /// <summary>
         /// Gets item held by the current active hand
@@ -44,7 +45,7 @@ namespace Content.Server.Interfaces.GameObjects
         ///     Puts an item into a specific hand.
         /// </summary>
         /// <param name="item">The item to put in the hand.</param>
-        /// <param name="index">The index of the hand to put the item into.</param>
+        /// <param name="index">The name of the hand to put the item into.</param>
         /// <param name="fallback">
         ///     If true and the provided hand is full, the method will fall back to <see cref="PutInHand(ItemComponent)" />
         /// </param>
@@ -62,20 +63,22 @@ namespace Content.Server.Interfaces.GameObjects
         ///     Checks to see if an item can be put in the specified hand.
         /// </summary>
         /// <param name="item">The item to check for.</param>
-        /// <param name="index">The index for the hand to check for.</param>
+        /// <param name="index">The name for the hand to check for.</param>
         /// <returns>True if the item can be inserted, false otherwise.</returns>
         bool CanPutInHand(ItemComponent item, string index);
 
         /// <summary>
         ///     Finds the hand slot holding the specified entity, if any.
         /// </summary>
-        /// <param name="entity">
-        ///     The entity to look for in our hands.
+        /// <param name="entity">The entity to look for in our hands.</param>
+        /// <param name="handName">
+        ///     The name of the hand slot if the entity is indeed held,
+        ///     <see langword="null" /> otherwise.
         /// </param>
         /// <returns>
-        ///     The index of the hand slot if the entity is indeed held, <see langword="null" /> otherwise.
+        ///     true if the entity is held, false otherwise
         /// </returns>
-        string FindHand(IEntity entity);
+        bool TryHand(IEntity entity, out string handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
@@ -135,7 +138,7 @@ namespace Content.Server.Interfaces.GameObjects
         /// </summary>
         /// <param name="slot">The slot of which to drop the entity.</param>
         /// <param name="targetContainer">The container to drop into.</param>
-        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop()"/> for the mob or not.</param>
+        /// <param name="doMobChecks">Whether to check the <see cref="ActionBlockerSystem.CanDrop(IEntity)"/> for the mob or not.</param>
         /// <returns>True on success, false if something was blocked (insertion or removal).</returns>
         /// <exception cref="InvalidOperationException">
         ///     Thrown if dry-run checks reported OK to remove and insert,
@@ -167,20 +170,20 @@ namespace Content.Server.Interfaces.GameObjects
         /// <summary>
         ///     Checks whether the item in the specified hand can be dropped.
         /// </summary>
-        /// <param name="index">The hand to check for.</param>
+        /// <param name="name">The hand to check for.</param>
         /// <returns>
         ///     True if the item can be dropped, false if the hand is empty or the item in the hand cannot be dropped.
         /// </returns>
-        bool CanDrop(string index);
+        bool CanDrop(string name);
 
         /// <summary>
         ///     Adds a new hand to this hands component.
         /// </summary>
-        /// <param name="index">The name of the hand to add.</param>
+        /// <param name="name">The name of the hand to add.</param>
         /// <exception cref="InvalidOperationException">
         ///     Thrown if a hand with specified name already exists.
         /// </exception>
-        void AddHand(string index);
+        void AddHand(string name);
 
         /// <summary>
         ///     Removes a hand from this hands component.
@@ -188,15 +191,15 @@ namespace Content.Server.Interfaces.GameObjects
         /// <remarks>
         ///     If the hand contains an item, the item is dropped.
         /// </remarks>
-        /// <param name="index">The name of the hand to remove.</param>
-        void RemoveHand(string index);
+        /// <param name="name">The name of the hand to remove.</param>
+        void RemoveHand(string name);
 
         /// <summary>
         ///     Checks whether a hand with the specified name exists.
         /// </summary>
-        /// <param name="index">The hand name to check.</param>
+        /// <param name="name">The hand name to check.</param>
         /// <returns>True if the hand exists, false otherwise.</returns>
-        bool HasHand(string index);
+        bool HasHand(string name);
 
         void HandleSlotModifiedMaybe(ContainerModifiedMessage message);
     }

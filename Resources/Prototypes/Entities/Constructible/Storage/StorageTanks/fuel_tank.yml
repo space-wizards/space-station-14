@@ -22,4 +22,5 @@
     damage: 200
     tools:
     - Welding
-
+  - type: Anchorable
+  - type: Pullable

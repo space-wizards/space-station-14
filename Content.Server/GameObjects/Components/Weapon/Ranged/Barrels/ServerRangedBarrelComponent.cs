@@ -4,9 +4,11 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
@@ -17,6 +19,7 @@ using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -24,6 +27,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Server.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -31,13 +35,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
-    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing
+    public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
@@ -232,6 +237,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
 
+
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent hitscan))
             {
@@ -380,7 +386,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
-                projectile.GetComponent<IPhysicsComponent>().LinearVelocity = projectileAngle.ToVec() * velocity;
+
+                projectile
+                    .GetComponent<IPhysicsComponent>()
+                    .EnsureController<BulletController>()
+                    .LinearVelocity = projectileAngle.ToVec() * velocity;
+
                 projectile.Transform.LocalRotation = projectileAngle.Theta;
             }
         }
@@ -435,5 +446,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
         }
         #endregion
+
+        public virtual void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var fireRateMessage = Loc.GetString(FireRateSelector switch
+            {
+                FireRateSelector.Safety => "Its safety is enabled.",
+                FireRateSelector.Single => "It's in single fire mode.",
+                FireRateSelector.Automatic => "It's in automatic fire mode.",
+                _ => throw new IndexOutOfRangeException()
+            });
+
+            message.AddText(fireRateMessage);
+        }
     }
 }

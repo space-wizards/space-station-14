@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
@@ -13,6 +14,7 @@ using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
@@ -622,6 +624,7 @@ namespace Content.Server.GameTicking
             }
             
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
+            EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
             EntitySystem.Get<WireHackingSystem>().ResetLayouts();
             EntitySystem.Get<StationEventSystem>().ResettingCleanup();
 
@@ -775,6 +778,7 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
+            jobPrototype.Special?.AfterEquip(mob);
         }
 
         private void EquipIdCard(IEntity mob, string characterName, JobPrototype jobPrototype)
