@@ -31,3 +31,4 @@
     interfaces:
     - key: enum.ChemMasterUiKey.Key
       type: ChemMasterBoundUserInterface
+  - type: Pullable

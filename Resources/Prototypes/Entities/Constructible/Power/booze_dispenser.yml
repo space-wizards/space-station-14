@@ -10,7 +10,9 @@
     texture: Constructible/Power/dispensers.rsi/booze_dispenser.png
   - type: ReagentDispenser
     pack: BoozeDispenserInventory
-
+  - type: Anchorable
+  - type: Pullable
+  
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:

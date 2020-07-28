@@ -7,15 +7,12 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
-
   - type: Icon
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
-
   - type: Item
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
-
   - type: Mop
   - type: Solution
     maxVol: 10
@@ -42,7 +39,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+      bounds: "-0.40,-0.25,0.25,0.25"
       mask:
       - Impassable
       - Opaque
@@ -53,6 +50,7 @@
     mass: 5
     Anchored: false
   - type: CanSpill
+  - type: Pullable
 
 - type: entity
   parent: BaseItem
@@ -92,11 +90,9 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
-
   - type: Icon
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
     state: caution
-
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
 
@@ -109,14 +105,11 @@
     - type: Sprite
       sprite: Objects/Specific/Janitorial/soap.rsi
       state: soap
-
     - type: Icon
       sprite: Objects/Specific/Janitorial/soap.rsi
       state: soap
-
     - type: Item
       sprite: Objects/Specific/Janitorial/soap.rsi
-
     - type: Slippery
       paralyzeTime: 2.5
 
@@ -129,7 +122,6 @@
   components:
     - type: Sprite
       state: soapnt
-
     - type: Icon
       state: soapnt
 
@@ -141,7 +133,6 @@
   components:
     - type: Sprite
       state: soapdeluxe
-
     - type: Icon
       state: soapdeluxe
 
@@ -153,10 +144,8 @@
   components:
     - type: Sprite
       state: soapsyndie
-
     - type: Icon
       state: soapsyndie
-
     - type: Slippery
       paralyzeTime: 5
 
@@ -168,10 +157,8 @@
   components:
     - type: Sprite
       state: soapgibs
-
     - type: Icon
       state: soapgibs
-
     - type: Slippery
       paralyzeTime: 2
 
@@ -183,9 +170,7 @@
   components:
     - type: Sprite
       state: soapomega
-
     - type: Icon
       state: soapomega
-
     - type: Slippery
       paralyzeTime: 7
