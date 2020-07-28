@@ -36,6 +36,11 @@ namespace Content.Server.Chat
 
         private const int VoiceRange = 7; // how far voice goes in world units
 
+        /// <summary>
+        /// The message displayed to the player when it exceeds the chat character limit
+        /// </summary>
+        private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
+
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
@@ -48,6 +53,12 @@ namespace Content.Server.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, _onMaxLengthRequest);
+
+            // Tell all the connected players the chat's character limit
+            var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
+            msg.MaxMessageLength = MaxMessageLength;
+            _netManager.ServerSendToAll(msg);
         }
 
         public void DispatchServerAnnouncement(string message)
@@ -84,7 +95,7 @@ namespace Content.Server.Chat
             if (playerSession != null)
                 if (message.Length > MaxMessageLength)
                 {
-                    DispatchServerMessage(playerSession, "Your message exceeds " + MaxMessageLength + " character limit");
+                    DispatchServerMessage(playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                     return;
                 }
 
@@ -117,7 +128,7 @@ namespace Content.Server.Chat
             if (playerSession != null)
                 if (action.Length > MaxMessageLength)
                 {
-                    DispatchServerMessage(playerSession, "Your message exceeds " + MaxMessageLength + " character limit");
+                    DispatchServerMessage(playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                     return;
                 }
 
@@ -138,7 +149,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limi
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, "Your message exceeds " + MaxMessageLength + " character limit");
+                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
 
@@ -157,7 +168,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, "Your message exceeds " + MaxMessageLength + " character limit");
+                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
 
@@ -177,7 +188,7 @@ namespace Content.Server.Chat
             // Check if message exceeds the character limit
             if (message.Length > MaxMessageLength)
             {
-                DispatchServerMessage(player, "Your message exceeds " + MaxMessageLength + " character limit");
+                DispatchServerMessage(player, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                 return;
             }
 
@@ -205,6 +216,13 @@ namespace Content.Server.Chat
             msg.MessageWrap = $"OOC: (D){sender}: {{0}}";
             msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
+        }
+
+        private void _onMaxLengthRequest(ChatMaxMsgLengthMessage msg)
+        {
+            var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
+            response.MaxMessageLength = MaxMessageLength;
+            _netManager.ServerSendMessage(response, msg.MsgChannel);
         }
     }
 }

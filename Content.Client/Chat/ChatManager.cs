@@ -4,6 +4,7 @@ using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.UserInterface;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -95,11 +96,15 @@ namespace Content.Client.Chat
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>(MsgChatMessage.NAME, _onChatMessage);
+            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(ChatMaxMsgLengthMessage.NAME, _onMaxLengthReceived);
 
             _speechBubbleRoot = new LayoutContainer();
             LayoutContainer.SetAnchorPreset(_speechBubbleRoot, LayoutContainer.LayoutPreset.Wide);
             _userInterfaceManager.StateRoot.AddChild(_speechBubbleRoot);
             _speechBubbleRoot.SetPositionFirst();
+
+            ChatMaxMsgLengthMessage msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
+            _netManager.ClientSendMessage(msg);
         }
 
         public void FrameUpdate(FrameEventArgs delta)
@@ -222,8 +227,8 @@ namespace Content.Client.Chat
             // Check if message is longer than the character limit
             if (text.Length > _maxMessageLength)
             {
-                string locWarning = Loc.GetString("Your message exceeds { 0 } character limit", _maxMessageLength);
-                _currentChatBox?.AddLine(locWarning, ChatChannel.None, Color.Orange);
+                string locWarning = Loc.GetString("Your message exceeds {0} character limit", _maxMessageLength);
+                _currentChatBox?.AddLine(locWarning, ChatChannel.Server, Color.Orange);
                 _currentChatBox.ClearOnEnter = false;   // The text shouldn't be cleared if it hasn't been sent 
                 return;
             }
@@ -362,6 +367,12 @@ namespace Content.Client.Chat
                     AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
                     break;
             }
+        }
+
+        private void _onMaxLengthReceived(ChatMaxMsgLengthMessage msg)
+        {
+
+            _maxMessageLength = msg.MaxMessageLength;
         }
 
         private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)
