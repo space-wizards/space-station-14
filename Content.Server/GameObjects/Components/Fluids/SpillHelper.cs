@@ -18,10 +18,11 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="entity">Entity location to spill at</param>
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
-        internal static void SpillAt(IEntity entity, Solution solution, string prototype)
+        /// <param name="sound">Play the spill sound</param>
+        internal static void SpillAt(IEntity entity, Solution solution, string prototype, bool sound = true)
         {
             var entityLocation = entity.Transform.GridPosition;
-            SpillAt(entityLocation, solution, prototype);
+            SpillAt(entityLocation, solution, prototype, sound);
         }
 
         // Other functions will be calling this one
@@ -32,7 +33,8 @@ namespace Content.Server.GameObjects.Components.Fluids
         /// <param name="gridCoordinates"></param>
         /// <param name="solution">Initial solution for the prototype</param>
         /// <param name="prototype">Prototype to use</param>
-        internal static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype)
+        /// <param name="sound">Play the spill sound</param>
+        internal static PuddleComponent? SpillAt(GridCoordinates gridCoordinates, Solution solution, string prototype, bool sound = true)
         {
             if (solution.TotalVolume == 0)
             {
@@ -67,7 +69,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                     continue;
                 }
 
-                if (!puddleComponent.TryAddSolution(solution))
+                if (!puddleComponent.TryAddSolution(solution, sound))
                 {
                     continue;
                 }
@@ -84,7 +86,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             var puddle = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddle.GetComponent<PuddleComponent>();
-            newPuddleComponent.TryAddSolution(solution);
+            newPuddleComponent.TryAddSolution(solution, sound);
             return newPuddleComponent;
         }
 

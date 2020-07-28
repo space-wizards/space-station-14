@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 e2 = err;
                 if (e2 > -dx) { err -= dy; origin = origin.Offset(new Vector2(sx, 0)); }
                 if (e2 < dy) { err += dx; origin = origin.Offset(new Vector2(0, sy)); }
-                // Add tile to list and check if we're at the end
+                // Add tile to list and check if we're (prematurely) at the end
                 tiles.Add(origin);
                 if (origin.X == end.X && origin.Y == end.Y) break;
             }
@@ -115,7 +115,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             //Play sound
             EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner);
 
-            //TODO: add spray effect?
+            //TODO: add spray visual effect?
             // Spray the tiles, half the amount each step
             ReagentUnit amount = TransferAmount;
             foreach (var tile in tiles)
@@ -141,8 +141,8 @@ namespace Content.Server.GameObjects.Components.Fluids
                 }
                 if (unobstructed)
                 {
-                    //TODO: maybe remove the sound? and maybe the puddle overflow
-                    SpillHelper.SpillAt(tile, _contents.SplitSolution(amount), "PuddleSmear"); //make non PuddleSmear?
+                    //TODO: maybe remove the puddle overflow?
+                    SpillHelper.SpillAt(tile, _contents.SplitSolution(amount), "PuddleSmear", false); //make non PuddleSmear?
                     amount = amount * 0.5;
                 }
                 else // found wall and that stops the spray
