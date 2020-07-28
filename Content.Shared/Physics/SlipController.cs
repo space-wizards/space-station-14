@@ -1,33 +1,38 @@
-using System;
+using Robust.Shared.Interfaces.Physics;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
     public class SlipController : VirtualController
     {
-        private float Decay { get; set; } = 0.2f;
+        [Dependency] private readonly IPhysicsManager _physicsManager;
 
-        private float DecayBy(float number, float by)
+        public SlipController()
         {
-            if (Math.Abs(number) < 0.001)
-            {
-                return 0;
-            }
-
-            if (number > 0)
-            {
-                return Math.Max(number - by, 0);
-            }
-
-            return Math.Min(number + by, 0);
+            IoCManager.InjectDependencies(this);
         }
+
+        private float Decay { get; set; } = 0.95f;
 
         public override void UpdateAfterProcessing()
         {
-            var x = DecayBy(LinearVelocity.X, Decay);
-            var y = DecayBy(LinearVelocity.Y, Decay);
+            if (ControlledComponent == null)
+            {
+                return;
+            }
 
-            LinearVelocity = (x, y);
+            if (_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
+            {
+                return;
+            }
+
+            LinearVelocity *= Decay;
+
+            if (LinearVelocity.Length < 0.001)
+            {
+                Stop();
+            }
         }
     }
 }
