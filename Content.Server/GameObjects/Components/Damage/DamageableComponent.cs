@@ -34,7 +34,8 @@ namespace Content.Server.GameObjects
         public IReadOnlyDictionary<DamageType, int> CurrentDamage => _currentDamage;
         private Dictionary<DamageType, int> _currentDamage = new Dictionary<DamageType, int>();
 
-        Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
+        [ViewVariables]
+        public Dictionary<DamageType, List<DamageThreshold>> Thresholds = new Dictionary<DamageType, List<DamageThreshold>>();
 
         public event EventHandler<DamageThresholdPassedEventArgs> DamageThresholdPassed;
         public event EventHandler<DamageEventArgs> Damaged;
@@ -47,12 +48,7 @@ namespace Content.Server.GameObjects
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-
-            // TODO: Writing.
-            serializer.DataReadFunction("resistanceset", "honk", name =>
-            {
-                Resistances = ResistanceSet.GetResistanceSet(name);
-            });
+            serializer.DataField(this, x => Resistances, "resistances", ResistanceSet.DefaultResistanceSet);
         }
 
         public bool IsDead()
