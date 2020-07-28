@@ -56,7 +56,8 @@
     - type: DamageStateVisualizer
       normal: monkey
       dead: dead
-
+  - type: Pullable
+  
 - type: entity
   save: false
   name: gorilla
