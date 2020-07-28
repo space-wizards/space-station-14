@@ -19,6 +19,9 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float Volume;
 
+        /// <summary>
+        ///     State for the fire sprite.
+        /// </summary>
         [ViewVariables]
         public int State;
 

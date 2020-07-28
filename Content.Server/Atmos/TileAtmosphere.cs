@@ -671,7 +671,7 @@ namespace Content.Server.Atmos
 
             if (Hotspot.Bypassing)
             {
-                // TODO ATMOS Change fire texture here
+                Hotspot.State = 3;
                 _gridAtmosphereComponent.BurnTile(GridIndices);
 
                 if (Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
@@ -686,7 +686,7 @@ namespace Content.Server.Atmos
             }
             else
             {
-                // TODO ATMOS More fire texture stuff here
+                Hotspot.State = Hotspot.Volume > Atmospherics.CellVolume * 0.4f ? 2 : 1;
             }
 
             if (Hotspot.Temperature > MaxFireTemperatureSustained)
@@ -849,15 +849,9 @@ namespace Content.Server.Atmos
 
         public bool AssumeAir(GasMixture giver)
         {
-            if (giver == null) return false;
-            if (Air == null)
-            {
-                Air = (GasMixture)giver.Clone();
-            }
-            else
-            {
-                Air.Merge(giver);
-            }
+            if (giver == null || Air == null) return false;
+
+            Air.Merge(giver);
 
             UpdateVisuals();
 
