@@ -77,12 +77,12 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public string RunEvent(string name)
         {
             // Could use a dictionary but it's such a minor thing, eh.
-            // Probably shouldn't Localize this
-            var upperName = name.ToUpper();
+            // Wasn't sure on whether to localize this given it's a command
+            var upperName = name.ToUpperInvariant();
             
             foreach (var stationEvent in _stationEvents)
             {
-                if (stationEvent.Name.ToUpper() != upperName)
+                if (stationEvent.Name.ToUpperInvariant() != upperName)
                 {
                     continue;
                 }
