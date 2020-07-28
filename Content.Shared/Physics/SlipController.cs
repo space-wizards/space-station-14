@@ -6,7 +6,9 @@ namespace Content.Shared.Physics
 {
     public class SlipController : VirtualController
     {
+#pragma warning disable 649
         [Dependency] private readonly IPhysicsManager _physicsManager;
+#pragma warning restore 649
 
         public SlipController()
         {
