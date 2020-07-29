@@ -1,21 +1,14 @@
-﻿using Content.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
+﻿using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     class DoorSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(ServerDoorComponent));
-        }
-
+        /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var comp in ComponentManager.EntityQuery<ServerDoorComponent>())
             {
-                var comp = entity.GetComponent<ServerDoorComponent>();
                 comp.OnUpdate(frameTime);
             }
         }

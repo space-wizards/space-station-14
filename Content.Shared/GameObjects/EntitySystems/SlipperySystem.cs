@@ -1,6 +1,5 @@
 ﻿using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Shared.GameObjects.EntitySystems
@@ -8,20 +7,12 @@ namespace Content.Shared.GameObjects.EntitySystems
     [UsedImplicitly]
     public class SlipperySystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            EntityQuery = new TypeEntityQuery(typeof(SharedSlipperyComponent));
-        }
-
+        /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            base.Update(frameTime);
-
-            foreach (var entity in RelevantEntities)
+            foreach (var slipperyComp in ComponentManager.EntityQuery<SharedSlipperyComponent>())
             {
-                entity.GetComponent<SharedSlipperyComponent>().Update(frameTime);
+                slipperyComp.Update();
             }
         }
     }
