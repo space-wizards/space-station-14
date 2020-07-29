@@ -9,6 +9,8 @@ namespace Content.Tools
     {
         public Map(string path)
         {
+            Path = path;
+
             using var reader = new StreamReader(path);
             var stream = new YamlStream();
 
@@ -17,6 +19,8 @@ namespace Content.Tools
             Root = stream.Documents[0].RootNode;
             EntitiesHandler = new EntitiesHandler(Root);
         }
+
+        public string Path { get; }
 
         private YamlNode Root { get; }
 
@@ -38,6 +42,11 @@ namespace Content.Tools
             stream.Save(fixer, false);
 
             writer.Flush();
+        }
+
+        public void Save()
+        {
+            Save(Path);
         }
     }
 }

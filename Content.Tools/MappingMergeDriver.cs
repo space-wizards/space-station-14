@@ -10,16 +10,19 @@ namespace Content.Tools
         /// %P: Actual filename of the resulting file
         public static void Main(string[] args)
         {
-            var ourPath = args[0];
-            var ours = new Map(ourPath);
-            var based = args[1]; // On what?
+            var ours = new Map(args[0]);
+            var based = new Map(args[1]); // On what?
             var other = new Map(args[2]);
-            var fileName = args[3];
 
-            ours.Merge(other);
-            ours.Save(ourPath);
+            Merge(ours, based, other);
 
             Environment.Exit(0);
+        }
+
+        public static void Merge(Map ours, Map based, Map other)
+        {
+            ours.Merge(other);
+            ours.Save();
         }
     }
 }
