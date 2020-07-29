@@ -138,6 +138,8 @@
             "RCD",
             "Pullable",
             "CursedEntityStorage",
+            "Listening",
+            "Radio",
             "DisposalHolder",
             "DisposalTransit",
             "DisposalEntry",
