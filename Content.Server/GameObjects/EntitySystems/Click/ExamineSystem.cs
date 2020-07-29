@@ -1,9 +1,7 @@
-﻿using Content.Server.Utility;
-using Content.Shared.GameObjects.EntitySystemMessages;
+﻿using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -16,6 +14,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         /// Returns a status examine value for components appended to the end of the description of the entity
         /// </summary>
+        /// <param name="message">The message to append to which will be displayed.</param>
         /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
         void Examine(FormattedMessage message, bool inDetailsRange);
     }

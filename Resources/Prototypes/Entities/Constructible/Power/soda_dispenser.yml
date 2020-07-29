@@ -10,7 +10,6 @@
     texture: Constructible/Power/dispensers.rsi/soda_dispenser.png
   - type: ReagentDispenser
     pack: SodaDispenserInventory
-
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
@@ -20,3 +19,5 @@
   - chem.Ice
   - chem.H2O
   - chem.Cream
+  - type: Anchorable
+  - type: Pullable

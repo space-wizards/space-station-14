@@ -222,6 +222,156 @@
     femaleMask: UniformTop
 
 - type: entity
+  parent: UniformSec
+  id: UniformSecBlueShirt
+  name: blue shirt and tie
+  description: I'm a little busy right now, Calhoun.
+  components:
+    - type: Sprite
+      state: blueshift
+    - type: Icon
+      state: blueshift
+    - type: Clothing
+      ClothingPrefix: blueshift
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecConstable
+  name: constable outfit
+  description: A british looking outfit.
+  components:
+    - type: Sprite
+      state: constable
+    - type: Icon
+      state: constable
+    - type: Clothing
+      ClothingPrefix: constable
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecFormal
+  name: security officer's formal uniform
+  description: The latest in fashionable security outfits.
+  components:
+    - type: Sprite
+      state: officerblueclothes
+    - type: Icon
+      state: officerblueclothes
+    - type: Clothing
+      ClothingPrefix: officerblueclothes
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecFormalTan
+  name: security officer's formal uniform (tan)
+  description: The latest in fashionable security outfits.
+  components:
+    - type: Sprite
+      state: officertanclothes
+    - type: Icon
+      state: officertanclothes
+    - type: Clothing
+      ClothingPrefix: officertanclothes
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecGrey
+  name: grey security jumpsuit
+  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+    - type: Sprite
+      state: security_grey
+    - type: Icon
+      state: security_grey
+    - type: Clothing
+      ClothingPrefix: security_grey
+      HeldPrefix: gy_suit
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecSpacePol
+  name: police uniform
+  description: Space not controlled by megacorporations, planets, or pirates is under the jurisdiction of Spacepol.
+  components:
+    - type: Sprite
+      state: spacepol
+    - type: Icon
+      state: spacepol
+    - type: Clothing
+      ClothingPrefix: spacepol
+
+- type: entity
+  parent: UniformSec
+  id: UniformSecSpacePolFamilies
+  name: space police uniform
+  description: A police uniform often found in the lines at donut shops.
+  components:
+    - type: Sprite
+      state: spacepolice_families
+    - type: Icon
+      state: spacepolice_families
+    - type: Clothing
+      ClothingPrefix: spacepolice_families
+
+- type: entity
+  parent: UniformBase
+  id: UniformDetective
+  name: hard-worn suit
+  description: Someone who wears this means business.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/uniform_detective.rsi
+      state: detective
+    - type: Icon
+      sprite: Clothing/Uniforms/uniform_detective.rsi
+      state: detective
+    - type: Clothing
+      sprite: Clothing/Uniforms/uniform_detective.rsi
+      ClothingPrefix: detective
+      HeldPrefix: detective
+
+- type: entity
+  parent: UniformDetective
+  id: UniformDetectiveSkirt
+  name: detective's suitskirt
+  description: Someone who wears this means business.
+  components:
+    - type: Sprite
+      state: detective_skirt
+    - type: Icon
+      state: detective_skirt
+    - type: Clothing
+      ClothingPrefix: detective_skirt
+      femaleMask: UniformTop
+
+- type: entity
+  parent: UniformDetective
+  id: UniformDetectiveGrey
+  name: noir suit
+  description: A hard-boiled private investigator's grey suit, complete with tie clip.
+  components:
+    - type: Sprite
+      state: greydetective
+    - type: Icon
+      state: greydetective
+    - type: Clothing
+      ClothingPrefix: greydetective
+
+- type: entity
+  parent: UniformDetectiveGrey
+  id: UniformDetectiveGreySkirt
+  name: noir suitskirt
+  description: A hard-boiled private investigator's grey suitskirt, complete with tie clip.
+  components:
+    - type: Sprite
+      state: greydetective_skirt
+    - type: Icon
+      state: greydetective_skirt
+    - type: Clothing
+      ClothingPrefix: greydetective_skirt
+      femaleMask: UniformTop
+
+- type: entity
   parent: UniformBase
   id: UniformCargoTech
   name: cargo tech jumpsuit
@@ -547,6 +697,144 @@
     sprite: Clothing/Uniforms/uniform_hos.rsi
     ClothingPrefix: hos_skirt
     femaleMask: UniformTop
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSGrey
+  name: head of security's grey jumpsuit
+  description:
+  components:
+    - type: Sprite
+      state: hos_grey
+    - type: Icon
+      state: hos_grey
+    - type: Clothing
+      ClothingPrefix: hos_grey
+      HeldPrefix: gy_suit
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSParadeMale
+  name: head of security's parade uniform
+  description: A male head of security's luxury-wear, for special occasions.
+  components:
+    - type: Sprite
+      state: hos_parade_male
+    - type: Icon
+      state: hos_parade_male
+    - type: Clothing
+      ClothingPrefix: hos_parade_male
+
+- type: entity
+  parent: UniformHoSParadeMale
+  id: UniformHoSParadeFem
+  name: head of security's parade uniform
+  description: A female head of security's luxury-wear, for special occasions.
+  components:
+    - type: Sprite
+      state: hos_parade_fem
+    - type: Icon
+      state: hos_parade_fem
+    - type: Clothing
+      ClothingPrefix: hos_parade_fem
+      femaleMask: UniformTop
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSFormal
+  name: head of security's formal uniform
+  description: The insignia on this uniform tells you that this uniform belongs to the Head of Security.
+  components:
+    - type: Sprite
+      state: hosblueclothes
+    - type: Icon
+      state: hosblueclothes
+    - type: Clothing
+      ClothingPrefix: hosblueclothes
+
+- type: entity
+  parent: UniformHoS
+  id: UniformHoSFormalTan
+  name: head of security's formal uniform (tan)
+  description: The insignia on this uniform tells you that this uniform belongs to the Head of Security.
+  components:
+    - type: Sprite
+      state: hostanclothes
+    - type: Icon
+      state: hostanclothes
+    - type: Clothing
+      ClothingPrefix: hostanclothes
+
+- type: entity
+  parent: UniformBase
+  id: UniformWarden
+  name: security suit
+  description: A formal security suit for officers complete with Nanotrasen belt buckle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/uniform_warden.rsi
+    state: rwarden
+  - type: Icon
+    sprite: Clothing/Uniforms/uniform_warden.rsi
+    state: rwarden
+  - type: Clothing
+    sprite: Clothing/Uniforms/uniform_warden.rsi
+    ClothingPrefix: rwarden
+    HeldPrefix: rwarden
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenSkirt
+  name: warden's suitskirt
+  description: A formal security suitskirt for officers complete with Nanotrasen belt buckle.
+  components:
+    - type: Sprite
+      state: rwarden_skirt
+    - type: Icon
+      state: rwarden
+    - type: Clothing
+      femaleMask: UniformTop
+      ClothingPrefix: rwarden_skirt
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenGrey
+  name: grey security suit
+  description: A formal relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+    - type: Sprite
+      state: warden
+    - type: Icon
+      state: warden
+    - type: Clothing
+      ClothingPrefix: warden
+      HeldPrefix: gy_suit
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenFormal
+  name: warden's formal uniform
+  description: The insignia on this uniform tells you that this uniform belongs to the Warden.
+  components:
+    - type: Sprite
+      state: wardenblueclothes
+    - type: Icon
+      state: wardenblueclothes
+    - type: Clothing
+      ClothingPrefix: wardenblueclothes
+
+- type: entity
+  parent: UniformWarden
+  id: UniformWardenFormalTan
+  name: warden's formal uniform (tan)
+  description: The insignia on this uniform tells you that this uniform belongs to the Warden.
+  components:
+    - type: Sprite
+      state: wardentanclothes
+    - type: Icon
+      state: wardentanclothes
+    - type: Clothing
+      ClothingPrefix: wardentanclothes
 
 - type: entity
   parent: UniformBase

@@ -146,6 +146,22 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(ActionBlockerSystem.CanMove(human));
                 Assert.True(ActionBlockerSystem.CanChangeDirection(human));
                 Assert.True(EffectBlockerSystem.CanFall(human));
+
+                // Re-buckle
+                Assert.True(buckle.TryBuckle(human, chair));
+
+                // Move away from the chair
+                human.Transform.WorldPosition += (1, 0);
+            });
+
+            server.RunTicks(1);
+
+            server.Assert(() =>
+            {
+                // No longer buckled
+                Assert.False(buckle.Buckled);
+                Assert.Null(buckle.BuckledTo);
+                Assert.IsEmpty(strap.BuckledEntities);
             });
 
             await server.WaitIdleAsync();

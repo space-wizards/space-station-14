@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: base_wall
   name: basewall
   description: Keeps the air in and the greytide out.

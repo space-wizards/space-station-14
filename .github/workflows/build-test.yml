@@ -19,6 +19,10 @@ jobs:
         touch BuildChecker/DISABLE_SUBMODULE_AUTOUPDATE
     - name: Pull engine updates
       uses: ivanbakel/submodule-dependency@v0.1.1
+    - name: Update Engine Submodules
+      run: |
+        cd RobustToolbox/
+        git submodule update --init --recursive
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
