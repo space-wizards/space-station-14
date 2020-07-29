@@ -95,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             TrySlip(collidedWith);
         }
 
-        public void Update(float frameTime)
+        public void Update()
         {
             foreach (var uid in _slipped.ToArray())
             {

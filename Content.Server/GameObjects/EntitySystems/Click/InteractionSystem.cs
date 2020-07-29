@@ -277,8 +277,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var physics = pull.Owner.GetComponent<IPhysicsComponent>();
-            var controller = physics.EnsureController<PullController>();
+            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
+                collidable.Anchored)
+            {
+                return false;
+            }
+
+            var controller = collidable.EnsureController<PullController>();
 
             if (controller.GettingPulled)
             {

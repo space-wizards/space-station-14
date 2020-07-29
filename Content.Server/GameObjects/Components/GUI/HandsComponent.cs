@@ -502,6 +502,17 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
             }
 
+            var isOwnerContained = ContainerHelpers.TryGetContainer(Owner, out var ownerContainer);
+            var isPullableContained = ContainerHelpers.TryGetContainer(pullable.Owner, out var pullableContainer);
+
+            if (isOwnerContained || isPullableContained)
+            {
+                if (ownerContainer != pullableContainer)
+                {
+                    return;
+                }
+            }
+
             if (IsPulling)
             {
                 StopPull();
