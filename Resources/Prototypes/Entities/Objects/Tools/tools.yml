@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: wirecutter
   parent: BaseItem
   id: Wirecutter
@@ -97,6 +97,7 @@
         - ReagentId: chem.WeldingFuel
           Quantity: 100
   - type: Welder
+    weldSoundCollection: Welder
   - type: PointLight
     enabled: false
     radius: 1.5
