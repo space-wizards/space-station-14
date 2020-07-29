@@ -232,7 +232,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public TileAtmosphere GetTile(GridCoordinates coordinates)
         {
-            return GetTile(_grid.GetTileRef(coordinates).GridIndices);
+            return GetTile(coordinates.ToMapIndices());
         }
 
         /// <inheritdoc />
