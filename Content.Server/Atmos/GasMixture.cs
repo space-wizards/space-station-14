@@ -348,10 +348,10 @@ namespace Content.Server.Atmos
                     var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
 
                     if (!Immutable)
-                        Temperature = MathF.Max(Temperature - heat / heatCapacity, Atmospherics.TCMB);
+                        Temperature = MathF.Abs(MathF.Max(Temperature - heat / heatCapacity, Atmospherics.TCMB));
 
                     if (!sharer.Immutable)
-                        sharer.Temperature = MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB);
+                        sharer.Temperature = MathF.Abs(MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
                 }
             }
         }
