@@ -137,6 +137,7 @@
             "Pill",
             "RCD",
             "Pullable",
+            "CursedEntityStorage",
             "DisposalHolder",
             "DisposalTransit",
             "DisposalEntry",

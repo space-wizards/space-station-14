@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
         /// </summary>
         public bool Connectable => Anchored;
 
-        private bool Anchored => !Owner.TryGetComponent<IPhysicsComponent>(out var physics) || physics.Anchored;
+        private bool Anchored => !Owner.TryGetComponent<ICollidableComponent>(out var collidable) || collidable.Anchored;
 
         [ViewVariables]
         public bool NeedsProvider { get; private set; } = true;
@@ -89,18 +89,18 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
             {
                 TryFindAndSetProvider();
             }
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
             {
                 AnchorUpdate();
-                ((IPhysicsComponent) physics).AnchoredChanged += AnchorUpdate;
+                collidable.AnchoredChanged += AnchorUpdate;
             }
         }
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent<IPhysicsComponent>(out var physics))
+            if (Owner.TryGetComponent<ICollidableComponent>(out var collidable))
             {
-                ((IPhysicsComponent) physics).AnchoredChanged -= AnchorUpdate;
+                collidable.AnchoredChanged -= AnchorUpdate;
             }
             _provider.RemoveReceiver(this);
             base.OnRemove();

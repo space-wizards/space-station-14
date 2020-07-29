@@ -57,4 +57,5 @@
     visuals:
     - type: DamageStateVisualizer
       normal: running
+      crit: crit
       dead: dead
