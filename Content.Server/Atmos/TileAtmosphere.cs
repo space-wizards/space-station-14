@@ -28,9 +28,10 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
-        private static long _eqQueueCycleCtr = 0;
         private int _archivedCycle = 0;
         private int _currentCycle = 0;
+
+        // I know this being static is evil, but I seriously can't come up with a better solution to sound spam.
         private static int _soundCooldown = 0;
 
         [ViewVariables]
@@ -192,7 +193,7 @@ namespace Content.Server.Atmos
                 return;
             }
 
-            var queueCycle = ++_eqQueueCycleCtr;
+            var queueCycle = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
             var totalMoles = 0f;
             var tiles = new TileAtmosphere[Atmospherics.ZumosHardTileLimit];
             tiles[0] = this;
@@ -340,7 +341,7 @@ namespace Content.Server.Atmos
                     {
                         giver._tileAtmosInfo.CurrentTransferDirection = (Direction)(-1);
                         giver._tileAtmosInfo.CurrentTransferAmount = 0;
-                        var queueCycleSlow = ++_eqQueueCycleCtr;
+                        var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
                         queue.Clear();
                         queue.Add(giver);
                         giver._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -409,7 +410,7 @@ namespace Content.Server.Atmos
                     {
                         taker._tileAtmosInfo.CurrentTransferDirection = (Direction) (-1);
                         taker._tileAtmosInfo.CurrentTransferAmount = 0;
-                        var queueCycleSlow = ++_eqQueueCycleCtr;
+                        var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
                         queue.Clear();
                         queue.Add(taker);
                         taker._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -735,7 +736,7 @@ namespace Content.Server.Atmos
         {
             if (Air == null) return;
             var totalGasesRemoved = 0f;
-            long queueCycle = ++_eqQueueCycleCtr;
+            var queueCycle = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
             var tiles = new List<TileAtmosphere>();
             var spaceTiles = new List<TileAtmosphere>();
             tiles.Add(this);
@@ -774,7 +775,7 @@ namespace Content.Server.Atmos
                 }
             }
 
-            var queueCycleSlow = ++_eqQueueCycleCtr;
+            var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
             var progressionOrder = new List<TileAtmosphere>();
             foreach (var tile in spaceTiles)
             {

@@ -280,6 +280,8 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public int HighPressureDeltaCount => _highPressureDelta.Count;
 
+        public long EqualizationQueueCycleControl { get; set; }
+
         /// <inheritdoc />
         public float GetVolumeForCells(int cellCount)
         {

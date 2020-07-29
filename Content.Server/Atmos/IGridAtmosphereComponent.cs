@@ -17,6 +17,11 @@ namespace Content.Server.Atmos
         int HighPressureDeltaCount { get; }
 
         /// <summary>
+        ///     Control variable for equalization.
+        /// </summary>
+        long EqualizationQueueCycleControl { get; set; }
+
+        /// <summary>
         ///     Attemps to pry a tile.
         /// </summary>
         /// <param name="indices"></param>
