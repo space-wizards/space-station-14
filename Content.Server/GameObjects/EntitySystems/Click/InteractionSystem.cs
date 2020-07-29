@@ -277,7 +277,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable))
+            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
+                collidable.Anchored)
             {
                 return false;
             }
