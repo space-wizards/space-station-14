@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/d3d351dea8d9420cee47514843a02158d0a7266f#diff-8dd94e19fdb2ff341b57e31bce101298",
   "states": [
     {
       "name": "icon",
