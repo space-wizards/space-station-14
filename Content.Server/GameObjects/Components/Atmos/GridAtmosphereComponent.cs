@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 using Content.Server.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Map;
@@ -16,7 +13,6 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -231,6 +227,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void RemoveExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Remove(excitedGroup);
+        }
+
+        /// <inheritdoc />
+        public TileAtmosphere GetTile(GridCoordinates coordinates)
+        {
+            return GetTile(_grid.GetTileRef(coordinates).GridIndices);
         }
 
         /// <inheritdoc />

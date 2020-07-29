@@ -56,7 +56,7 @@ namespace Content.Client.Atmos
                 {
                     foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
                     {
-                        drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y), color);
+                        drawHandle.DrawTexture(texture, new Vector2(tile.X, tile.Y) + mapGrid.WorldPosition, color);
                     }
                 }
             }

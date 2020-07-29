@@ -87,11 +87,18 @@ namespace Content.Server.Atmos
         void RemoveExcitedGroup(ExcitedGroup excitedGroup);
 
         /// <summary>
-        ///     Returns a tile in question.
+        ///     Returns a tile.
         /// </summary>
         /// <param name="indices"></param>
         /// <returns></returns>
         TileAtmosphere GetTile(MapIndices indices);
+
+        /// <summary>
+        ///     Returns a tile.
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
+        TileAtmosphere GetTile(GridCoordinates coordinates);
 
         /// <summary>
         ///     Returns if the tile in question is air-blocked.

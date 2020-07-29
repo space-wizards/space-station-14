@@ -17,10 +17,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (!inDetailsRange) return;
 
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-            if (gam == null) return;
 
-            var position = Owner.Transform.GridPosition;
-            var tile = gam.GetTile(new MapIndices((int) position.X, (int) position.Y)).Air;
+            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
 
             if (tile == null) return;
 
