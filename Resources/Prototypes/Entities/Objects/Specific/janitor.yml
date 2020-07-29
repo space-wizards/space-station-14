@@ -48,7 +48,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 5
-    Anchored: false
+    anchored: false
   - type: CanSpill
   - type: Pullable
 
@@ -78,7 +78,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 5
-    Anchored: false
+    anchored: false
   - type: CanSpill
 
 - type: entity
