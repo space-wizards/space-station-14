@@ -102,7 +102,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             get => _engaged;
             set
             {
+                var oldEngaged = _engaged;
                 _engaged = value;
+
+                if (oldEngaged == value)
+                {
+                    return;
+                }
+
                 UpdateVisualState();
             }
         }

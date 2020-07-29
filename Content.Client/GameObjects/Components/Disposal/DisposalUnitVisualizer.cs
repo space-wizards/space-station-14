@@ -39,7 +39,6 @@ namespace Content.Client.GameObjects.Components.Disposal
                 return;
             }
 
-
             switch (state)
             {
                 case VisualState.UnAnchored:
