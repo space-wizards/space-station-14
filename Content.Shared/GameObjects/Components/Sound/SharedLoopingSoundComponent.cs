@@ -24,6 +24,12 @@ namespace Content.Shared.GameObjects.Components.Sound
         {}
 
         /// <summary>
+        /// Stops a certain scheduled sound from playing after fading it out over a period of time.
+        /// </summary>
+        public virtual void FadeStopScheduledSound(string filename, int milliseconds)
+        {}
+
+        /// <summary>
         /// Adds an scheduled sound to be played.
         /// </summary>
         public virtual void AddScheduledSound(ScheduledSound scheduledSound)
@@ -64,6 +70,17 @@ namespace Content.Shared.GameObjects.Components.Sound
     }
 
     [NetSerializable, Serializable]
+    public class FadeStopSoundScheduleMessage : ComponentMessage
+    {
+        public string Filename;
+        public int Milliseconds;
+        public FadeStopSoundScheduleMessage()
+        {
+            Directed = true;
+        }
+    }
+
+    [NetSerializable, Serializable]
     public class StopAllSoundsMessage : ComponentMessage
     {
         public StopAllSoundsMessage()
@@ -90,7 +107,7 @@ namespace Content.Shared.GameObjects.Components.Sound
 
         /// <summary>
         /// Maximum number of milliseconds to add to the delay randomly.
-        /// Useful for random ambience noises. Generated value differs from client to client.
+        /// Useful for random ambience noises. Generated  value differs from client to client.
         /// </summary>
         public uint RandomDelay = 0;
 

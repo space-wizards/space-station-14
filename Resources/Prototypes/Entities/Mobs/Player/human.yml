@@ -17,3 +17,5 @@
   - type: CameraRecoil
   - type: Examiner
   - type: HumanInventoryController
+  - type: LoopingSound
+  - type: BackgroundAmbience

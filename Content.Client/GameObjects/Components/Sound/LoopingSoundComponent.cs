@@ -45,6 +45,17 @@ namespace Content.Client.GameObjects.Components.Sound
             }
         }
 
+        public override void FadeStopScheduledSound(string filename, int milliseconds)
+        {
+            foreach (var kvp in _audioStreams)
+            {
+                if (kvp.Key.Filename != filename) continue;
+                kvp.Key.Play = false;
+                kvp.Value.FadeStop(milliseconds);
+                _audioStreams.Remove(kvp.Key);
+            }
+        }
+
         public override void AddScheduledSound(ScheduledSound schedule)
         {
             Play(schedule);
@@ -58,7 +69,14 @@ namespace Content.Client.GameObjects.Components.Sound
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) _audioSystem = EntitySystem.Get<AudioSystem>();
-                    _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
+                    if (!_audioStreams.ContainsKey(schedule))
+                    {
+                        _audioStreams.Add(schedule, _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
+                    }
+                    else
+                    {
+                        _audioStreams[schedule] = _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
+                    }
 
                     if (schedule.Times == 0) return;
 

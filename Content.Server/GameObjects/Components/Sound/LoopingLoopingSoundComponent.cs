@@ -26,6 +26,11 @@ namespace Content.Server.GameObjects.Components.Sound
             SendNetworkMessage(new StopSoundScheduleMessage(){Filename = filename}, channel);
         }
 
+        public void FadeStopScheduledSound(string filename, int milliseconds, INetChannel channel)
+        {
+            SendNetworkMessage(new FadeStopSoundScheduleMessage(){Filename = filename, Milliseconds = milliseconds}, channel);
+        }
+
         /// <summary>
         /// Adds an scheduled sound to be played.
         /// </summary>
@@ -43,6 +48,11 @@ namespace Content.Server.GameObjects.Components.Sound
         public override void StopScheduledSound(string filename)
         {
             StopScheduledSound(filename, null);
+        }
+
+        public override void FadeStopScheduledSound(string filename, int milliseconds)
+        {
+            FadeStopScheduledSound(filename, milliseconds, null);
         }
 
         public override void AddScheduledSound(ScheduledSound schedule)
