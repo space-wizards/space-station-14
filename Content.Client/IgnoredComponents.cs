@@ -136,6 +136,10 @@
             "TrashSpawner",
             "Pill",
             "RCD",
+            "Pullable",
+            "CursedEntityStorage",
+            "Listening",
+            "Radio"
         };
     }
 }

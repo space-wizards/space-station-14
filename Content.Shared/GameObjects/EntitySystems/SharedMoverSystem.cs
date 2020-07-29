@@ -132,6 +132,12 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue;
                 }
 
+                // Don't count pulled entities
+                if (otherCollider.HasController<PullController>())
+                {
+                    continue;
+                }
+
                 // TODO: Item check.
                 var touching = ((collider.CollisionMask & otherCollider.CollisionLayer) != 0x0
                                 || (otherCollider.CollisionMask & collider.CollisionLayer) != 0x0) // Ensure collision

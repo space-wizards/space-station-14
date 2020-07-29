@@ -47,7 +47,8 @@ namespace Content.Client.UserInterface
             {
                 if (!entity.TryGetComponent(out ISpriteComponent sprite))
                     return false;
-                button.EntityHover = false;
+
+                button.ClearHover();
                 button.SpriteView.Sprite = sprite;
                 button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
             }
@@ -132,9 +133,7 @@ namespace Content.Client.UserInterface
         {
             if (entity == null || !button.MouseIsHovering)
             {
-                button.SpriteView.Sprite?.Owner.Delete();
-                button.SpriteView.Sprite = null;
-                button.StorageButton.Visible = false;
+                button.ClearHover();
                 return;
             }
 
@@ -149,9 +148,7 @@ namespace Content.Client.UserInterface
             hoverSprite.CopyFrom(entity.GetComponent<SpriteComponent>());
             hoverSprite.Color = fits ? new Color(0, 255, 0, 127) : new Color(255, 0, 0, 127);
 
-            button.EntityHover = true;
-            button.SpriteView.Sprite = hoverSprite;
-            button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
+            button.HoverSpriteView.Sprite = hoverSprite;
         }
     }
 }
