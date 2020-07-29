@@ -9,6 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Disposal
 {
+    // TODO: Add gas
     [RegisterComponent]
     public class DisposalHolderComponent : Component
     {

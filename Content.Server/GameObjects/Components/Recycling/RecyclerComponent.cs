@@ -99,11 +99,17 @@ namespace Content.Server.GameObjects.Components.Recycling
                 return;
             }
 
-            var recyclerPosition = Owner.Transform.MapPosition;
-            var lastStep = prototype.Stages[^2].Forward as ConstructionStepMaterial;
-
             var constructionSystem = EntitySystem.Get<ConstructionSystem>();
-            constructionSystem.SpawnIngredient(recyclerPosition, lastStep);
+            var recyclerPosition = Owner.Transform.MapPosition;
+            foreach (var stage in prototype.Stages)
+            {
+                if (!(stage.Forward is ConstructionStepMaterial step))
+                {
+                    continue;
+                }
+
+                constructionSystem.SpawnIngredient(recyclerPosition, step);
+            }
 
             entity.Delete();
         }

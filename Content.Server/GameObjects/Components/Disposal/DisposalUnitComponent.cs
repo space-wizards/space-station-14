@@ -304,8 +304,8 @@ namespace Content.Server.GameObjects.Components.Disposal
                     break;
                 case UiButton.Power:
                     TogglePower();
-
                     EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

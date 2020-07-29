@@ -29039,7 +29039,7 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 3034
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 397
     type: Transform
@@ -29147,17 +29147,17 @@ entities:
       yellow: '#D58C18FF'
     type: RandomToolColor
 - uid: 3046
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 1572
     type: Transform
 - uid: 3047
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 1572
     type: Transform
 - uid: 3048
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 1572
     type: Transform
