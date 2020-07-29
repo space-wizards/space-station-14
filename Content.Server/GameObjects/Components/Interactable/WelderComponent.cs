@@ -116,7 +116,13 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_solutionComponent == null)
                 return false;
 
-            return _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+            bool succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+
+            if (succeeded)
+            {
+                PlaySoundCollection("Welder");
+            }
+            return succeeded;
         }
 
         private bool CanWeld(float value)
