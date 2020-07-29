@@ -1,5 +1,4 @@
 ﻿using Lidgren.Network;
-using Robust.Client.Player;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
 using System;
