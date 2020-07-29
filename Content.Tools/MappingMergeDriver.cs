@@ -4,6 +4,10 @@ namespace Content.Tools
 {
     internal static class MappingMergeDriver
     {
+        /// %A: Our file
+        /// %O: Origin (common, base) file
+        /// %B: Other file
+        /// %P: Actual filename of the resulting file
         public static void Main(string[] args)
         {
             var ourPath = args[0];
