@@ -1,117 +1,27 @@
-{
+﻿{
     "version": 1,
     "size": {
         "x": 32,
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/tgstation/tgstation at commit c323b1ed63e7a9c33f48abcdf24f11e30e136aa0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/ at commit c323b1ed63e7a9c33f48abcdf24f11e30e136aa0",
     "states": [
-        {
-            "name": "blueshift",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "blueshift-equipped-INNERCLOTHING",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "constable",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "constable-equipped-INNERCLOTHING",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "equipped-INNERCLOTHING",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "sec_skirt-equipped-INNERCLOTHING",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
         {
             "name": "gy_suit-inhand-left hand",
             "directions": 4,
             "delays": [
                 [
-                    1
+                    1.0
                 ],
                 [
-                    1
+                    1.0
                 ],
                 [
-                    1
+                    1.0
                 ],
                 [
-                    1
+                    1.0
                 ]
             ]
         },
@@ -120,75 +30,111 @@
             "directions": 4,
             "delays": [
                 [
-                    1
+                    1.0
                 ],
                 [
-                    1
+                    1.0
                 ],
                 [
-                    1
+                    1.0
                 ],
                 [
-                    1
+                    1.0
                 ]
             ]
         },
         {
-            "name": "icon",
+            "name": "rwarden-inhand-left hand",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rwarden-inhand-right hand",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rwarden",
             "directions": 1,
             "delays": [
                 [
-                    1
+                    1.0
                 ]
             ]
         },
         {
-            "name": "sec_skirt",
+            "name": "rwarden-equipped-INNERCLOTHING",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rwarden_d-equipped-INNERCLOTHING",
+            "directions": 4,
+            "delays": [
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ],
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "rwarden_skirt",
             "directions": 1,
             "delays": [
                 [
-                    1
+                    1.0
                 ]
             ]
         },
         {
-            "name": "inhand-left hand",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "inhand-right hand",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "officerblueclothes-equipped-INNERCLOTHING",
+            "name": "rwarden_skirt-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [
@@ -206,16 +152,16 @@
             ]
         },
         {
-            "name": "officerblueclothes",
+            "name": "warden",
             "directions": 1,
             "delays": [
                 [
-                    1
+                    1.0
                 ]
             ]
         },
         {
-            "name": "officerblueclothes_d-equipped-INNERCLOTHING",
+            "name": "warden-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [
@@ -233,7 +179,7 @@
             ]
         },
         {
-            "name": "officertanclothes-equipped-INNERCLOTHING",
+            "name": "warden_d-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [
@@ -251,16 +197,16 @@
             ]
         },
         {
-            "name": "officertanclothes",
+            "name": "wardenblueclothes",
             "directions": 1,
             "delays": [
                 [
-                    1
+                    1.0
                 ]
             ]
         },
         {
-            "name": "security_grey-equipped-INNERCLOTHING",
+            "name": "wardenblueclothes-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [
@@ -278,16 +224,7 @@
             ]
         },
         {
-            "name": "security_grey",
-            "directions": 1,
-            "delays": [
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "spacepol-equipped-INNERCLOTHING",
+            "name": "wardenblueclothes_d-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [
@@ -305,16 +242,16 @@
             ]
         },
         {
-            "name": "spacepol",
+            "name": "wardentanclothes",
             "directions": 1,
             "delays": [
                 [
-                    1
+                    1.0
                 ]
             ]
         },
         {
-            "name": "spacepolice_families-equipped-INNERCLOTHING",
+            "name": "wardentanclothes-equipped-INNERCLOTHING",
             "directions": 4,
             "delays": [
                 [
@@ -328,15 +265,6 @@
                 ],
                 [
                     1.0
-                ]
-            ]
-        },
-        {
-            "name": "spacepolice_families",
-            "directions": 1,
-            "delays": [
-                [
-                    1
                 ]
             ]
         }
