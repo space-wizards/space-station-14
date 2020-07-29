@@ -24,7 +24,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 15
-    Anchored: false
+    anchored: false
   - type: Damageable
   - type: Destructible
     thresholdvalue: 10
