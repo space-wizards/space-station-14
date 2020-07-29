@@ -21,7 +21,13 @@ namespace Content.Tools
 
         public static void Merge(Map ours, Map based, Map other)
         {
-            ours.Merge(other);
+            var result = ours.Merge(other);
+
+            if (result == MergeResult.Conflict)
+            {
+                Environment.Exit(1);
+            }
+
             ours.Save();
         }
     }

@@ -26,9 +26,9 @@ namespace Content.Tools
 
         public EntitiesHandler EntitiesHandler { get; }
 
-        public void Merge(Map other)
+        public MergeResult Merge(Map other)
         {
-            EntitiesHandler.Merge(other);
+            return EntitiesHandler.Merge(other);
         }
 
         public void Save(string fileName)

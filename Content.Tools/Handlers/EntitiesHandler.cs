@@ -105,7 +105,7 @@ namespace Content.Tools.Handlers
             }
         }
 
-        public void Merge(Map map)
+        public MergeResult Merge(Map map)
         {
             foreach (var (id, otherEntity) in map.EntitiesHandler.Entities)
             {
@@ -113,9 +113,10 @@ namespace Content.Tools.Handlers
                     !thisEntity.Equals(otherEntity))
                 {
                     AddEntity(otherEntity);
-                    return;
                 }
             }
+
+            return MergeResult.Resolved;
         }
     }
 }
