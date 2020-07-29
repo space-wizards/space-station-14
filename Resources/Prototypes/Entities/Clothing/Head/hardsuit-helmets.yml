@@ -1,0 +1,131 @@
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-old
+  name: hardsuit-old
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-old.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-old.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-old.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-atmos
+  name: hardsuit-atmos
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-atmos.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-atmos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-atmos.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-engineering
+  name: hardsuit-engineering
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-engineering.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-engineering.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-hazardhardsuit
+  name: hardsuit-hazardhardsuit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-hazardhardsuit.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-medical
+  name: hardsuit-medical
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-medical.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-medical.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-medical.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-mining
+  name: hardsuit-mining
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-mining.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-mining.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-mining.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-sectg
+  name: hardsuit-sectg
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-sectg.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-sectg.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-sectg.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-syndie
+  name: hardsuit-syndie
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-syndie.rsi
+    state: icon
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-syndie.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-syndie.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-ce
+  name: hardsuit-ce
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-white.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-white.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-white.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatHardsuit-wiz
+  name: hardsuit-wiz
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/hardsuit-wiz.rsi
+  - type: Icon
+    sprite: Clothing/Head/hardsuit-wiz.rsi
+  - type: Clothing
+    sprite: Clothing/Head/hardsuit-wiz.rsi

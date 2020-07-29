@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Buckle;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
@@ -94,6 +96,22 @@ namespace Content.Server.GameObjects.Components.Mobs
                             }
 
                             buckle.TryUnbuckle(player);
+                            break;
+                        case StatusEffect.Piloting:
+                            if (!player.TryGetComponent(out ShuttleControllerComponent controller))
+                            {
+                                break;
+                            }
+
+                            controller.RemoveController();
+                            break;
+                        case StatusEffect.Pulling:
+                            if (!player.TryGetComponent(out HandsComponent hands))
+                            {
+                                break;
+                            }
+
+                            hands.StopPull();
                             break;
                     }
 

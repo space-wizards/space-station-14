@@ -1,0 +1,168 @@
+- type: entity
+  parent: HatBase
+  id: HatBioCmo
+  name: bio - cmo
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bio_cmo.rsi
+  - type: Icon
+    sprite: Clothing/Head/bio_cmo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bio_cmo.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBioGeneral
+  name: bio - general
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bio_general.rsi
+  - type: Icon
+    sprite: Clothing/Head/bio_general.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bio_general.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBioJanitor
+  name: bio - janitor
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bio_janitor.rsi
+  - type: Icon
+    sprite: Clothing/Head/bio_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bio_janitor.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBioScientist
+  name: bio - scientist
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bio_scientist.rsi
+  - type: Icon
+    sprite: Clothing/Head/bio_scientist.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bio_scientist.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBioSecurity
+  name: bio - security
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bio_security.rsi
+  - type: Icon
+    sprite: Clothing/Head/bio_security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bio_security.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBioVirology
+  name: bio - virology
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bio_virology.rsi
+  - type: Icon
+    sprite: Clothing/Head/bio_virology.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bio_virology.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBombsuit
+  name: bombsuit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bombsuit.rsi
+  - type: Icon
+    sprite: Clothing/Head/bombsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bombsuit.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBombsuitsec
+  name: bombsuit sec
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bombsuitsec.rsi
+  - type: Icon
+    sprite: Clothing/Head/bombsuitsec.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bombsuitsec.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatBombsuitWhite
+  name: bombsuit white
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/bombsuit_white.rsi
+  - type: Icon
+    sprite: Clothing/Head/bombsuit_white.rsi
+  - type: Clothing
+    sprite: Clothing/Head/bombsuit_white.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatChaplainHood
+  name: chaplain hood
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/chaplain_hood.rsi
+  - type: Icon
+    sprite: Clothing/Head/chaplain_hood.rsi
+  - type: Clothing
+    sprite: Clothing/Head/chaplain_hood.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatCulthood
+  name: cult hood
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/culthood.rsi
+  - type: Icon
+    sprite: Clothing/Head/culthood.rsi
+  - type: Clothing
+    sprite: Clothing/Head/culthood.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatNunHood
+  name: nun hood
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/nun_hood.rsi
+  - type: Icon
+    sprite: Clothing/Head/nun_hood.rsi
+  - type: Clothing
+    sprite: Clothing/Head/nun_hood.rsi
+
+- type: entity
+  parent: HatBase
+  id: HatRad
+  name: rad
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/rad.rsi
+  - type: Icon
+    sprite: Clothing/Head/rad.rsi
+  - type: Clothing
+    sprite: Clothing/Head/rad.rsi

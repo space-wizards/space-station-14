@@ -27,6 +27,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Server.Interfaces;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -41,6 +42,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
+        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
@@ -234,6 +236,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
+
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent hitscan))

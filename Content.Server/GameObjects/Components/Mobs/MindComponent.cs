@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Observer;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
@@ -21,7 +22,7 @@ namespace Content.Server.GameObjects.Components.Mobs
     [RegisterComponent]
     public class MindComponent : Component, IExamine
     {
-        private bool _showExamineInfo = false;
+        private bool _showExamineInfo;
 
         /// <inheritdoc />
         public override string Name => "Mind";
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Mobs
         ///     The mind controlling this mob. Can be null.
         /// </summary>
         [ViewVariables]
-        public Mind Mind { get; private set; }
+        public Mind? Mind { get; private set; }
 
         /// <summary>
         ///     True if we have a mind, false otherwise.
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             if (HasMind)
             {
-                var visiting = Mind.VisitingEntity;
+                var visiting = Mind?.VisitingEntity;
                 if (visiting != null)
                 {
                     if (visiting.TryGetComponent(out GhostComponent ghost))
@@ -82,7 +83,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                         ghost.CanReturnToBody = false;
                     }
 
-                    Mind.TransferTo(visiting);
+                    Mind!.TransferTo(visiting);
                 }
                 else
                 {
@@ -98,11 +99,14 @@ namespace Content.Server.GameObjects.Components.Mobs
                         }
 
                         var ghost = Owner.EntityManager.SpawnEntity("MobObserver", spawnPosition);
-                        ghost.Name = Mind.CharacterName;
-
                         var ghostComponent = ghost.GetComponent<GhostComponent>();
                         ghostComponent.CanReturnToBody = false;
-                        Mind.TransferTo(ghost);
+
+                        if (Mind != null)
+                        {
+                            ghost.Name = Mind.CharacterName;
+                            Mind.TransferTo(ghost);
+                        }
                     });
                 }
             }
@@ -117,20 +121,24 @@ namespace Content.Server.GameObjects.Components.Mobs
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (!ShowExamineInfo || !inDetailsRange)
+            {
                 return;
+            }
 
-            var dead = false;
+            var dead =
+                Owner.TryGetComponent<SpeciesComponent>(out var species) &&
+                species.CurrentDamageState is DeadState;
 
-            if(Owner.TryGetComponent<SpeciesComponent>(out var species))
-                if (species.CurrentDamageState is DeadState)
-                    dead = true;
-
-            if(!HasMind)
+            if (!HasMind)
+            {
                 message.AddMarkup(!dead
                     ? $"[color=red]" + Loc.GetString("{0:They} are totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
                     : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
-            else if (Mind.Session == null)
+            }
+            else if (Mind?.Session == null)
+            {
                 message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} have a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
+            }
         }
     }
 }

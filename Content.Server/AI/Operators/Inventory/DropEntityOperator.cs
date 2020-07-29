@@ -1,4 +1,5 @@
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
 
@@ -21,7 +22,8 @@ namespace Content.Server.AI.Operators.Inventory
         /// <returns></returns>
         public override Outcome Execute(float frameTime)
         {
-            if (!_owner.TryGetComponent(out HandsComponent handsComponent) || handsComponent.FindHand(_entity) == null)
+            if (!_owner.TryGetComponent(out HandsComponent handsComponent) ||
+                !handsComponent.TryHand(_entity, out _))
             {
                 return Outcome.Failed;
             }

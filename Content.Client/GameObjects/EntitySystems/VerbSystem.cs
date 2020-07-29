@@ -150,7 +150,8 @@ namespace Content.Client.GameObjects.EntitySystems
                     });
                 }
 
-                _currentEntityList.List.AddChild(new EntityButton(this, entity));
+                var debugEnabled = _userInterfaceManager.DebugMonitors.Visible;
+                _currentEntityList.List.AddChild(new EntityButton(this, entity, debugEnabled));
                 first = false;
             }
 
@@ -407,7 +408,7 @@ namespace Content.Client.GameObjects.EntitySystems
             private readonly VerbSystem _master;
             private readonly IEntity _entity;
 
-            public EntityButton(VerbSystem master, IEntity entity)
+            public EntityButton(VerbSystem master, IEntity entity, bool showUid)
             {
                 _master = master;
                 _entity = entity;
@@ -420,11 +421,16 @@ namespace Content.Client.GameObjects.EntitySystems
                     control.AddChild(new SpriteView {Sprite = sprite});
                 }
 
+                var text = entity.Name;
+                if (showUid)
+                {
+                    text = $"{text} ({entity.Uid})";
+                }
                 control.AddChild(new MarginContainer
                 {
                     MarginLeftOverride = 4,
                     MarginRightOverride = 4,
-                    Children = {new Label {Text = entity.Name}}
+                    Children = {new Label {Text = text}}
                 });
 
                 AddChild(control);
@@ -441,7 +447,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 }
 
                 if (args.Function == EngineKeyFunctions.Use ||
-                    args.Function == ContentKeyFunctions.Point)
+                    args.Function == ContentKeyFunctions.Point ||
+                    args.Function == ContentKeyFunctions.TryPullObject ||
+                    args.Function == ContentKeyFunctions.MovePulledObject)
                 {
                     // TODO: Remove an entity from the menu when it is deleted
                     if (_entity.Deleted)

@@ -81,6 +81,7 @@ namespace Content.Server.GameObjects.Components.Strap
         }
 
         /// <summary>
+        ///     DO NOT CALL THIS DIRECTLY.
         ///     Adds a buckled entity. Called from <see cref="BuckleComponent.TryBuckle"/>
         /// </summary>
         /// <param name="buckle">The component to add</param>
@@ -107,6 +108,8 @@ namespace Content.Server.GameObjects.Components.Strap
                 appearance.SetData(StrapVisuals.RotationAngle, _rotation);
             }
 
+            SendMessage(new StrapMessage(buckle.Owner, Owner));
+
             return true;
         }
 
@@ -120,6 +123,7 @@ namespace Content.Server.GameObjects.Components.Strap
             if (_buckledEntities.Remove(buckle.Owner))
             {
                 _occupiedSize -= buckle.Size;
+                SendMessage(new UnStrapMessage(buckle.Owner, Owner));
             }
         }
 
@@ -155,6 +159,11 @@ namespace Content.Server.GameObjects.Components.Strap
 
             _buckledEntities.Clear();
             _occupiedSize = 0;
+        }
+
+        public override ComponentState GetComponentState()
+        {
+            return new StrapComponentState(Position);
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

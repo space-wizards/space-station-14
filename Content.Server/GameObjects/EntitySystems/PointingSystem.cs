@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Pointing;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
@@ -97,10 +98,13 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
-            var diff = coords.ToMapPos(_mapManager) - player.Transform.MapPosition.Position;
-            if (diff.LengthSquared > 0.01f)
+            if (ActionBlockerSystem.CanChangeDirection(player))
             {
-                player.Transform.LocalRotation = new Angle(diff);
+                var diff = coords.ToMapPos(_mapManager) - player.Transform.MapPosition.Position;
+                if (diff.LengthSquared > 0.01f)
+                {
+                    player.Transform.LocalRotation = new Angle(diff);
+                }
             }
 
             var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
