@@ -15,9 +15,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: monkey
-      sprite: Mobs/Species/monkey.rsi
+      sprite: Mobs/Animals/monkey.rsi
   - type: Icon
-    sprite: Mobs/Species/monkey.rsi
+    sprite: Mobs/Animals/monkey.rsi
     state: icon
   - type: Clickable
   - type: Physics
@@ -57,7 +57,7 @@
       normal: monkey
       dead: dead
   - type: Pullable
-  
+
 - type: entity
   save: false
   name: gorilla
@@ -72,9 +72,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: crawling
-      sprite: Mobs/Species/gorilla.rsi
+      sprite: Mobs/Animals/gorilla.rsi
   - type: Icon
-    sprite: Mobs/Species/gorilla.rsi
+    sprite: Mobs/Animals/gorilla.rsi
     state: icon
   - type: Physics
     mass: 90
@@ -94,4 +94,43 @@
     visuals:
     - type: DamageStateVisualizer
       normal: crawling
+      dead: dead
+
+- type: entity
+  save: false
+  name: chicken
+  parent: MonkeyMob_Content
+  id: ChickenMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: random
+      sprite: Mobs/Animals/Chickens/chicken.rsi
+  - type: Icon
+    sprite: Mobs/Animals/Chickens/chicken.rsi
+    state: random
+  - type: RandomPottedPlant
+  - type: Physics
+    mass: 20
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.35,0.45,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: chicken
       dead: dead

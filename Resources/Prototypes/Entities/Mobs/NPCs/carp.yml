@@ -15,9 +15,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: carp
-      sprite: Mobs/Species/carp_space.rsi
+      sprite: Mobs/Aliens/Carps/carp_space.rsi
   - type: Icon
-    sprite: Mobs/Species/carp_space.rsi
+    sprite: Mobs/Aliens/Carps/carp_space.rsi
     state: icon
   - type: Clickable
   - type: Physics
@@ -71,9 +71,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: magicarp
-      sprite: Mobs/Species/carp_magic.rsi
+      sprite: Mobs/Aliens/Carps/carp_magic.rsi
   - type: Icon
-    sprite: Mobs/Species/carp_magic.rsi
+    sprite: Mobs/Aliens/Carps/carp_magic.rsi
     state: icon
   - type: Physics
     mass: 60
@@ -97,9 +97,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: holocarp
-      sprite: Mobs/Species/carp_holo.rsi
+      sprite: Mobs/Aliens/Carps/carp_holo.rsi
   - type: Icon
-    sprite: Mobs/Species/carp_holo.rsi
+    sprite: Mobs/Aliens/Carps/carp_holo.rsi
     state: icon
   - type: Physics
     mass: 5
