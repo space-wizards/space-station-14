@@ -485,7 +485,7 @@ namespace Content.Server.Atmos
                     {
                         if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         if(tile2?.Air == null) continue;
-                        if (tile2.Air.Compare(Air) != -2)
+                        if (tile2.Air.Compare(Air) != GasMixture.GasCompareResult.NoExchange)
                         {
                             _gridAtmosphereComponent.AddActiveTile(tile2);
                             break;
@@ -594,7 +594,7 @@ namespace Content.Server.Atmos
                     }
 
                     shouldShareAir = true;
-                } else if (Air.Compare(enemyTile.Air) != -2)
+                } else if (Air.Compare(enemyTile.Air) != GasMixture.GasCompareResult.NoExchange)
                 {
                     if (!enemyTile.Excited)
                     {

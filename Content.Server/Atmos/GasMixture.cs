@@ -356,17 +356,23 @@ namespace Content.Server.Atmos
             }
         }
 
+        public enum GasCompareResult
+        {
+            NoExchange = -2,
+            TemperatureExchange = -1,
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int Compare(GasMixture sample)
+        public GasCompareResult Compare(GasMixture sample)
         {
             var moles = 0f;
 
-            for(int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gasMoles = _moles[i];
                 var delta = MathF.Abs(gasMoles - sample._moles[i]);
                 if (delta > Atmospherics.MinimumMolesDeltaToMove && (delta > gasMoles * Atmospherics.MinimumAirRatioToMove))
-                    return i;
+                    return (GasCompareResult)i; // We can move gases!
                 moles += gasMoles;
             }
 
@@ -374,10 +380,11 @@ namespace Content.Server.Atmos
             {
                 var tempDelta = MathF.Abs(Temperature - sample.Temperature);
                 if (tempDelta > Atmospherics.MinimumTemperatureDeltaToSuspend)
-                    return -1;
+                    return GasCompareResult.TemperatureExchange; // There can be temperature exchange.
             }
 
-            return -2;
+            // No exchange at all!
+            return GasCompareResult.NoExchange;
         }
 
         /// <summary>
