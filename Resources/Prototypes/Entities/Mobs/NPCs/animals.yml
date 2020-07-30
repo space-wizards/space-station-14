@@ -166,7 +166,7 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: RandomToolColor
+  - type: RandomSpriteColor
     state: butterfly
     colors:
       blue: "#1861d5"
