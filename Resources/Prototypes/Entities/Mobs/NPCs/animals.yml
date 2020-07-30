@@ -18,7 +18,7 @@
       sprite: Mobs/Animals/monkey.rsi
   - type: Icon
     sprite: Mobs/Animals/monkey.rsi
-    state: icon
+    state: monkey
   - type: Clickable
   - type: Physics
     mass: 50
@@ -36,7 +36,7 @@
       - MobImpassable
   - type: Species
     Template: Human
-    HeatResistance: 323
+    HeatResistance: 50
   - type: BodyManager
     BaseTemplate: bodyTemplate.Humanoid
     BasePreset: bodyPreset.BasicHuman
@@ -109,12 +109,11 @@
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: random
-      sprite: Mobs/Animals/Chickens/chicken.rsi
+      state: chicken-0
+      sprite: Mobs/Animals/chicken.rsi
   - type: Icon
-    sprite: Mobs/Animals/Chickens/chicken.rsi
-    state: random
-  - type: RandomPottedPlant
+    sprite: Mobs/Animals/chicken.rsi
+    state: icon-0
   - type: Physics
     mass: 20
   - type: Collidable
@@ -132,5 +131,53 @@
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
-      normal: chicken
+      normal: chicken-0
+      dead: dead-0
+
+- type: entity
+  save: false
+  name: butterfly
+  parent: MonkeyMob_Content
+  id: ButterflyMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: butterfly
+      sprite: Mobs/Animals/butterfly.rsi
+  - type: Icon
+    sprite: Mobs/Animals/butterfly.rsi
+    state: butterfly
+  - type: Physics
+    mass: 20
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.35,0.45,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: RandomToolColor
+    state: butterfly
+    colors:
+      blue: "#1861d5"
+      red: "#951710"
+      pink: "#d5188d"
+      brown: "#a05212"
+      green: "#0e7f1b"
+      cyan: "#18a2d5"
+      yellow: "#d58c18"
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: butterfly
       dead: dead
