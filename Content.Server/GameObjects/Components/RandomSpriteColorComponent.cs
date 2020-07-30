@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
@@ -11,9 +11,9 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class RandomToolColorComponent : Component, IMapInit
+    public class RandomSpriteColorComponent : Component, IMapInit
     {
-        public override string Name => "RandomToolColor";
+        public override string Name => "RandomSpriteColor";
 
         private string _selectedColor;
         private string _baseState;

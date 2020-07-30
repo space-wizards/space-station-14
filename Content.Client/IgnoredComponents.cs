@@ -103,7 +103,7 @@
             "EmergencyClosetFill",
             "Tool",
             "TilePrying",
-            "RandomToolColor",
+            "RandomSpriteColor",
             "ConditionalSpawner",
             "PottedPlantHide",
             "SecureEntityStorage",
@@ -139,7 +139,16 @@
             "Pullable",
             "CursedEntityStorage",
             "Listening",
-            "Radio"
+            "Radio",
+            "DisposalHolder",
+            "DisposalTransit",
+            "DisposalEntry",
+            "DisposalJunction",
+            "DisposalBend",
+            "Recycler",
+            "Conveyor",
+            "ConveyorSwitch",
+            "Flippable",
         };
     }
 }

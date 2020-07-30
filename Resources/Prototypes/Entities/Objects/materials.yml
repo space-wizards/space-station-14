@@ -69,7 +69,8 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: CableStack
+  id: CableStack1
+  name: cable stack 1
   suffix: Full
   components:
   - type: Stack
@@ -84,7 +85,7 @@
       all: -0.15,-0.15,0.15,0.15
 
 - type: entity
-  parent: CableStack
+  parent: CableStack1
   id: HVWireStack
   name: HV Wire Coil
   components:
@@ -95,7 +96,7 @@
     blockingWireType: HighVoltage
 
 - type: entity
-  parent: CableStack
+  parent: CableStack1
   id: MVWireStack
   name: MV Wire Coil
   components:
@@ -106,7 +107,7 @@
     blockingWireType: MediumVoltage
 
 - type: entity
-  parent: CableStack
+  parent: CableStack1
   id: ApcExtensionCableStack
   name: Apc Extension Cable Coil
   components:
@@ -115,7 +116,7 @@
   - type: WirePlacer
     wirePrototypeID: ApcExtensionCable
     blockingWireType: Apc
-    
+
 - type: entity
   parent: HVWireStack
   id: HVWireStack1
@@ -123,7 +124,7 @@
   components:
   - type: Stack
     count: 1
-    
+
 - type: entity
   parent: MVWireStack
   id: MVWireStack1
@@ -131,7 +132,7 @@
   components:
   - type: Stack
     count: 1
-    
+
 - type: entity
   parent: ApcExtensionCableStack
   id: ApcExtensionCableStack1
@@ -139,7 +140,7 @@
   components:
   - type: Stack
     count: 1
-  
+
 - type: entity
   name: gold bar
   id: GoldStack
