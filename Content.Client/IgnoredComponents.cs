@@ -103,7 +103,7 @@
             "EmergencyClosetFill",
             "Tool",
             "TilePrying",
-            "RandomToolColor",
+            "RandomSpriteColor",
             "ConditionalSpawner",
             "PottedPlantHide",
             "SecureEntityStorage",
@@ -138,6 +138,8 @@
             "RCD",
             "Pullable",
             "CursedEntityStorage",
+            "Listening",
+            "Radio"
         };
     }
 }

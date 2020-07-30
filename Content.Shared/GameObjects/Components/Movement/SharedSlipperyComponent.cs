@@ -74,6 +74,12 @@ namespace Content.Shared.GameObjects.Components.Movement
                 return false;
             }
 
+            if (entity.TryGetComponent(out ICollidableComponent collidable))
+            {
+                var controller = collidable.EnsureController<SlipController>();
+                controller.LinearVelocity = collidable.LinearVelocity;
+            }
+
             stun.Paralyze(5);
             _slipped.Add(entity.Uid);
 
@@ -89,7 +95,7 @@ namespace Content.Shared.GameObjects.Components.Movement
             TrySlip(collidedWith);
         }
 
-        public void Update(float frameTime)
+        public void Update()
         {
             foreach (var uid in _slipped.ToArray())
             {

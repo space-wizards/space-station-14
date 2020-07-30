@@ -12,15 +12,15 @@
   - type: Icon
     texture: Constructible/Power/eightdirwire.png
   - type: Sprite
-    drawdepth: BelowFloor  
+    drawdepth: BelowFloor
   - type: IconSmooth
     mode: CardinalFlags
   - type: Destructible
     thresholdvalue: 100
   - type: SubFloorHide
   - type: Physics
-    Anchored: true
-  
+    anchored: true
+
 - type: entity
   parent: WireBase
   id: HVWire
@@ -41,7 +41,7 @@
     wireType: HighVoltage
   - type: Destructible
     spawnondestroy: HVWireStack1
-  
+
 - type: entity
   parent: WireBase
   id: MVWire
@@ -63,7 +63,7 @@
     wireType: MediumVoltage
   - type: Destructible
     spawnondestroy: MVWireStack1
-    
+
 - type: entity
   parent: WireBase
   id: ApcExtensionCable
@@ -87,7 +87,7 @@
     wireType: Apc
   - type: Destructible
     spawnondestroy: ApcExtensionCableStack1
-    
+
 #Depriciated, to be removed from maps
 
 - type: entity

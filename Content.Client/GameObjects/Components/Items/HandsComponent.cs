@@ -139,13 +139,17 @@ namespace Content.Client.GameObjects.Components.Items
 
             if (entity == null)
             {
-                _sprite.LayerSetVisible($"hand-{name}", false);
+                if (_sprite.LayerMapTryGet($"hand-{name}", out var layer))
+                {
+                    _sprite.LayerSetVisible(layer, false);
+                }
+
                 return;
             }
 
             if (!entity.TryGetComponent(out ItemComponent item)) return;
 
-            var maybeInHands = item.GetInHandStateInfo(name);
+            var maybeInHands = item.GetInHandStateInfo(hand.Location);
 
             if (!maybeInHands.HasValue)
             {

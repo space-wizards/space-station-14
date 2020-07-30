@@ -92,6 +92,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 return false;
             }
 
+            if (EntityManager.TryGetEntity(uid, out var entity) && entity.HasComponent<PointingArrowComponent>())
+            {
+                // this is a pointing arrow. no pointing here...
+                return false;
+            }
+
             if (!InRange(coords, player.Transform.GridPosition))
             {
                 player.PopupMessage(player, Loc.GetString("You can't reach there!"));
