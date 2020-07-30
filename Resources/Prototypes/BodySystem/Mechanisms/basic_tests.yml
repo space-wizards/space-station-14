@@ -9,7 +9,6 @@
     - Arm
     - Hand
 
-
 - type: mechanism
   id: mechanism.HonkModule
   name: "HONK module 3000"

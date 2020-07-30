@@ -11,13 +11,12 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
   mechanisms:
     - mechanism.Heart.BasicHuman
     - mechanism.Lungs.BasicHuman
     - mechanism.Liver.BasicHuman
     - mechanism.Kidneys.BasicHuman
-
 
 - type: bodyPart
   id: bodyPart.Head.BasicHuman
@@ -32,12 +31,10 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
   mechanisms:
     - mechanism.Brain.BasicHuman
     - mechanism.Eyes.BasicHuman
-
-
 
 - type: bodyPart
   id: bodyPart.Arm.BasicHuman
@@ -52,13 +49,11 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
     - !type:ExtensionProperty
       active: true
       reachDistance: 2.4
-
-
 
 - type: bodyPart
   id: bodyPart.Hand.BasicHuman
@@ -73,11 +68,10 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
     - !type:GraspProperty
       active: true
-
 
 - type: bodyPart
   id: bodyPart.Leg.BasicHuman
@@ -92,7 +86,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
     - !type:ExtensionProperty
       active: true
@@ -100,7 +94,7 @@
     - !type:LegProperty
       active: true
       speed: 2.6
-
+      
 - type: bodyPart
   id: bodyPart.Foot.BasicHuman
   name: "human foot"
@@ -114,7 +108,7 @@
   compatibility: Biological
   damageContainer: biologicalDamageContainer
   resistances: defaultResistances
-  surgeryDataType: Content.Server.BodySystem.BiologicalSurgeryData
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
   properties:
     - !type:FootProperty
       active: true
