@@ -41,6 +41,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
         private readonly Dictionary<string, ConstructionPrototype> _craftRecipes = new Dictionary<string, ConstructionPrototype>();
 
+        public IReadOnlyDictionary<string, ConstructionPrototype> CraftRecipes => _craftRecipes;
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -207,7 +209,7 @@ namespace Content.Server.GameObjects.EntitySystems
             spriteComp.AddLayerWithSprite(prototype.Icon);
         }
 
-        private void SpawnIngredient(MapCoordinates position, ConstructionStepMaterial lastStep)
+        public void SpawnIngredient(MapCoordinates position, ConstructionStepMaterial lastStep)
         {
             if(lastStep is null)
                 return;

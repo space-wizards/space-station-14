@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Client.State;
 using Content.Shared.GameObjects;
@@ -55,7 +56,7 @@ namespace Content.Client.GameObjects.EntitySystems
         // entity performing the drag action
         private IEntity _dragger;
         private IEntity _draggedEntity;
-        private IClientDraggable _draggable;
+        private readonly List<IClientDraggable> _draggables = new List<IClientDraggable>();
         private IEntity _dragShadow;
         private DragState _state;
         // time since mouse down over the dragged entity
@@ -146,10 +147,10 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (_interactionSystem.InRangeUnobstructed(dragger.Transform.MapPosition,
                     entity.Transform.MapPosition, ignoredEnt: dragger) == false)
                 {
-                    {
-                        return false;
-                    }
+                    return false;
                 }
+
+                var canDrag = false;
                 foreach (var draggable in entity.GetAllComponents<IClientDraggable>())
                 {
                     var dragEventArgs = new CanDragEventArgs(args.Session.AttachedEntity, entity);
@@ -158,7 +159,7 @@ namespace Content.Client.GameObjects.EntitySystems
                         // wait to initiate a drag
                         _dragger = dragger;
                         _draggedEntity = entity;
-                        _draggable = draggable;
+                        _draggables.Add(draggable);
                         _mouseDownTime = 0;
                         _state = DragState.MouseDown;
                         _mouseDownScreenPos = _inputManager.MouseScreenPosition;
@@ -166,9 +167,11 @@ namespace Content.Client.GameObjects.EntitySystems
                         // but we will save the event so we can "re-play" it if this drag does
                         // not turn into an actual drag so the click can be handled normally
                         _savedMouseDown = args;
-                        return true;
+                        canDrag = true;
                     }
                 }
+
+                return canDrag;
             }
 
             return false;
@@ -193,19 +196,21 @@ namespace Content.Client.GameObjects.EntitySystems
             // We don't use args.EntityUid here because drag interactions generally should
             // work even if there's something "on top" of the drop target
             if (_interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
-                    args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger) == false)
+                args.Coordinates.ToMap(_mapManager), ignoredEnt: _dragger, ignoreInsideBlocker: true) == false)
             {
-                {
-                    CancelDrag(false, null);
-                    return false;
-                }
+                CancelDrag(false, null);
+                return false;
             }
 
             var entities = GameScreenBase.GetEntitiesUnderPosition(_stateManager, args.Coordinates);
+
             foreach (var entity in entities)
             {
                 // check if it's able to be dropped on by current dragged entity
-                if (_draggable.ClientCanDropOn(new CanDropEventArgs(_dragger, _draggedEntity, entity)))
+                var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, entity);
+                var anyValidDraggable = _draggables.Any(draggable => draggable.ClientCanDropOn(canDropArgs));
+
+                if (anyValidDraggable)
                 {
                     // tell the server about the drop attempt
                     RaiseNetworkEvent(new DragDropMessage(args.Coordinates, _draggedEntity.Uid,
@@ -279,7 +284,10 @@ namespace Content.Client.GameObjects.EntitySystems
                     if (inRangeSprite.Visible == false) continue;
 
                     // check if it's able to be dropped on by current dragged entity
-                    if (_draggable.ClientCanDropOn(new CanDropEventArgs(_dragger, _draggedEntity, pvsEntity)))
+                    var canDropArgs = new CanDropEventArgs(_dragger, _draggedEntity, pvsEntity);
+                    var anyValidDraggable = _draggables.Any(draggable => draggable.ClientCanDropOn(canDropArgs));
+
+                    if (anyValidDraggable)
                     {
                         // highlight depending on whether its in or out of range
                         var inRange = _interactionSystem.InRangeUnobstructed(_dragger.Transform.MapPosition,
@@ -320,7 +328,7 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _dragShadow = null;
             _draggedEntity = null;
-            _draggable = null;
+            _draggables.Clear();
             _dragger = null;
             _state = DragState.NotDragging;
 
