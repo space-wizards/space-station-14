@@ -5,67 +5,52 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-
-
-
-namespace Content.Shared.BodySystem
+namespace Content.Shared.Body.Mechanism
 {
-
     /// <summary>
-    ///    Prototype for the Mechanism class.
-    /// </summary>	
+    ///     Prototype for the Mechanism class.
+    /// </summary>
     [Prototype("mechanism")]
-    [NetSerializable, Serializable]
+    [NetSerializable]
+    [Serializable]
     public class MechanismPrototype : IPrototype, IIndexedPrototype
     {
+        private List<string> _behaviorClasses;
+        private BodyPartCompatibility _compatibility;
+        private string _description;
+        private int _destroyThreshold;
+        private int _durability;
+        private string _examineMessage;
         private string _id;
         private string _name;
-        private string _description;
-        private string _examineMessage;
+        private int _resistance;
         private string _rsiPath;
         private string _rsiState;
-        private int _durability;
-        private int _destroyThreshold;
-        private int _resistance;
         private int _size;
-        private BodyPartCompatibility _compatibility;
-        private List<string> _behaviorClasses;
 
-        [ViewVariables]
-        public string ID => _id;
+        [ViewVariables] public string Name => _name;
 
-        [ViewVariables]
-        public string Name => _name;
+        [ViewVariables] public string Description => _description;
 
-        [ViewVariables]
-        public string Description => _description;
+        [ViewVariables] public string ExamineMessage => _examineMessage;
 
-        [ViewVariables]
-        public string ExamineMessage => _examineMessage;
+        [ViewVariables] public string RSIPath => _rsiPath;
 
-        [ViewVariables]
-        public string RSIPath => _rsiPath;
+        [ViewVariables] public string RSIState => _rsiState;
 
-        [ViewVariables]
-        public string RSIState => _rsiState;
+        [ViewVariables] public int Durability => _durability;
 
-        [ViewVariables]
-        public int Durability => _durability;
+        [ViewVariables] public int DestroyThreshold => _destroyThreshold;
 
-        [ViewVariables]
-        public int DestroyThreshold => _destroyThreshold;
+        [ViewVariables] public int Resistance => _resistance;
 
-        [ViewVariables]
-        public int Resistance => _resistance;
+        [ViewVariables] public int Size => _size;
 
-        [ViewVariables]
-        public int Size => _size;
+        [ViewVariables] public BodyPartCompatibility Compatibility => _compatibility;
 
-        [ViewVariables]
-        public BodyPartCompatibility Compatibility => _compatibility;
+        [ViewVariables] public List<string> BehaviorClasses => _behaviorClasses;
 
-        [ViewVariables]
-        public List<string> BehaviorClasses => _behaviorClasses;
+        [ViewVariables] public string ID => _id;
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
@@ -86,4 +71,3 @@ namespace Content.Shared.BodySystem
         }
     }
 }
-

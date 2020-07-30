@@ -5,23 +5,22 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.DamageSystem
+namespace Content.Shared.Damage.DamageContainer
 {
     /// <summary>
     ///     Prototype for the DamageContainer class.
     /// </summary>
     [Prototype("damageContainer")]
-    [NetSerializable, Serializable]
+    [NetSerializable]
+    [Serializable]
     public class DamageContainerPrototype : IPrototype, IIndexedPrototype
     {
         private List<DamageClass> _activeDamageClasses;
         private string _id;
 
-        [ViewVariables]
-        public string ID => _id;
+        [ViewVariables] public List<DamageClass> ActiveDamageClasses => _activeDamageClasses;
 
-        [ViewVariables]
-        public List<DamageClass> ActiveDamageClasses => _activeDamageClasses;
+        [ViewVariables] public string ID => _id;
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.DamageSystem;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.Maths;
 using Robust.Shared.GameObjects;

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using Content.Server.Body.Mechanisms.Behaviors;
 using Content.Server.GameObjects.Components.Body;
-using Content.Shared.BodySystem;
+using Content.Shared.Body;
+using Content.Shared.Body.Mechanism;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Mechanisms
@@ -123,19 +124,17 @@ namespace Content.Server.Body.Mechanisms
                 var mechanismBehaviorType = Type.GetType(mechanismBehaviorName);
                 if (mechanismBehaviorType == null)
                 {
-                    throw new InvalidOperationException("No MechanismBehavior was found with the name " +
-                                                        mechanismBehaviorName + "!");
+                    throw new InvalidOperationException(
+                        $"No {nameof(MechanismBehavior)} found with name {mechanismBehaviorName}");
                 }
 
                 if (!mechanismBehaviorType.IsSubclassOf(typeof(MechanismBehavior)))
                 {
-                    throw new InvalidOperationException("Class " + mechanismBehaviorName +
-                                                        " is not a subtype of MechanismBehavior, but was provided as a MechanismBehavior for mechanism prototype " +
-                                                        data.ID + "!");
+                    throw new InvalidOperationException(
+                        $"Class {mechanismBehaviorName} is not a subtype of {nameof(MechanismBehavior)} for mechanism prototype {data.ID}");
                 }
 
-                var newBehavior =
-                    (MechanismBehavior) Activator.CreateInstance(mechanismBehaviorType, this);
+                var newBehavior = (MechanismBehavior) Activator.CreateInstance(mechanismBehaviorType, this);
                 MechanismBehaviors.Add(newBehavior);
             }
         }

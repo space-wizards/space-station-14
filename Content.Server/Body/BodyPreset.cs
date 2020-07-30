@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.BodySystem;
+using Content.Shared.Body.BodyPart;
+using Content.Shared.Body.BodyPreset;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body

@@ -2,7 +2,7 @@
 using System.Linq;
 using Content.Server.Body.Mechanisms;
 using Content.Server.GameObjects.Components.Body;
-using Content.Shared.BodySystem;
+using Content.Shared.Body;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;

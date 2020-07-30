@@ -3,7 +3,6 @@ using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Players;
-using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -15,6 +14,7 @@ using System.Linq;
 using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Shared.Damage;
 
 namespace Content.Server.Chat
 {

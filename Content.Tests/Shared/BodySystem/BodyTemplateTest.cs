@@ -1,9 +1,9 @@
-﻿using Content.Shared.BodySystem;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Robust.UnitTesting;
 using System;
 using System.Collections.Generic;
 using Content.Server.Body;
+using Content.Shared.Body;
 
 namespace Content.Tests.Shared
 {

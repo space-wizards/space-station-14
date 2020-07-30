@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Shared.DamageSystem;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;

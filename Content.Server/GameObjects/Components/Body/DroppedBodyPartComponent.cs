@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using Content.Server.Body;
-using Content.Shared.BodySystem;
+using Content.Shared.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -22,10 +22,11 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {
-        private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager;
 #pragma warning restore 649
+
+        private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
         private BodyManagerComponent _bodyManagerComponentCache;
         private int _idHash;
         private IEntity _performerCache;
@@ -112,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Body
                 _performerCache = eventArgs.User;
                 _bodyManagerComponentCache = bodyManager;
             }
-            else //If surgery cannot be performed, show message saying so.
+            else // If surgery cannot be performed, show message saying so.
             {
                 _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,
                     Loc.GetString("You see no way to install {0:theName}.", Owner));
@@ -126,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
 
-            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
                 _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache,

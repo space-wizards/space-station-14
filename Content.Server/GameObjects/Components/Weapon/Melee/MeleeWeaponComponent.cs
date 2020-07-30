@@ -17,10 +17,10 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using CannyFastMath;
 using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
-using Content.Shared.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {

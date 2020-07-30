@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Surgery;
-using Content.Shared.BodySystem;
+using Content.Shared.Body;
+using Content.Shared.Body.Surgery;
 using Content.Shared.GameObjects;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -19,7 +20,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Body
 {
-    //TODO: add checks to close UI if user walks too far away from tool or target.
+    // TODO: add checks to close UI if user walks too far away from tool or target.
 
     /// <summary>
     ///     Server-side component representing a generic tool capable of performing surgery. For instance, the scalpel.
@@ -73,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Body
 
                 foreach (var (key, value) in body.PartDictionary)
                 {
-                    //For each limb in the target, add it to our cache if it is a valid option.
+                    // For each limb in the target, add it to our cache if it is a valid option.
                     if (value.SurgeryCheck(_surgeryType))
                     {
                         _optionsCache.Add(_idHash, value);
@@ -86,10 +87,10 @@ namespace Content.Server.GameObjects.Components.Body
                     OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
                     UpdateSurgeryUIBodyPartRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
                         toSend);
-                    _performerCache = eventArgs.User; //Also, cache the data.
+                    _performerCache = eventArgs.User; // Also, cache the data.
                     _bodyManagerComponentCache = body;
                 }
-                else //If surgery cannot be performed, show message saying so.
+                else // If surgery cannot be performed, show message saying so.
                 {
                     SendNoUsefulWayToUsePopup();
                 }
@@ -99,24 +100,27 @@ namespace Content.Server.GameObjects.Components.Body
                 // Attempt surgery on a DroppedBodyPart - there's only one possible target so no need for selection UI
                 _performerCache = eventArgs.User;
 
-                if (droppedBodyPart.ContainedBodyPart == null) //Throw error if the DroppedBodyPart has no data in it.
+                if (droppedBodyPart.ContainedBodyPart == null)
                 {
+                    // Throw error if the DroppedBodyPart has no data in it.
                     Logger.Debug(
                         "Surgery was attempted on an IEntity with a DroppedBodyPartComponent that doesn't have a BodyPart in it!");
                     throw new InvalidOperationException("A DroppedBodyPartComponent exists without a BodyPart in it!");
                 }
 
-                if (droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryType)) //If surgery can be performed...
+                // If surgery can be performed...
+                if (droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryType))
                 {
+                    //...do the surgery.
                     if (!droppedBodyPart.ContainedBodyPart.AttemptSurgery(_surgeryType, droppedBodyPart, this,
-                        eventArgs.User)) //...do the surgery.
+                        eventArgs.User))
                     {
-                        Logger.Debug("Error when trying to perform surgery on bodypart " + eventArgs.User.Name +
-                                     "!"); //Log error if the surgery fails somehow.
+                        // Log error if the surgery fails somehow.
+                        Logger.Debug($"Error when trying to perform surgery on bodypart {eventArgs.User.Name}!");
                         throw new InvalidOperationException();
                     }
                 }
-                else //If surgery cannot be performed, show message saying so.
+                else // If surgery cannot be performed, show message saying so.
                 {
                     SendNoUsefulWayToUsePopup();
                 }
@@ -220,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private void HandleReceiveMechanism(int key)
         {
-            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
                 SendNoUsefulWayToUseAnymorePopup();

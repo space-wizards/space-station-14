@@ -1,25 +1,24 @@
-﻿using Content.Shared.DamageSystem;
+﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Content.Shared.DamageSystem
+namespace Content.Shared.Damage.ResistanceSet
 {
-
     /// <summary>
     ///     Set of resistances used by damageable objects. Each DamageType has a multiplier and flat damage reduction value.
     /// </summary>
-    [NetSerializable, Serializable]
+    [NetSerializable]
+    [Serializable]
     public class ResistanceSet
     {
         [ViewVariables]
-        private Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
+        private Dictionary<DamageType, ResistanceSetSettings> _resistances =
+            new Dictionary<DamageType, ResistanceSetSettings>();
 
         public ResistanceSet()
         {
-            foreach (DamageType damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
+            foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {
                 _resistances.Add(damageType, new ResistanceSetSettings(1f, 0));
             }
@@ -31,7 +30,8 @@ namespace Content.Shared.DamageSystem
         }
 
         /// <summary>
-        ///     Adjusts input damage with the resistance set values. Only applies reduction if the amount is damage (positive), not healing (negative).
+        ///     Adjusts input damage with the resistance set values. Only applies reduction if the amount is damage (positive), not
+        ///     healing (negative).
         /// </summary>
         /// <param name="damageType">Type of damage.</param>
         /// <param name="amount">Incoming amount of damage.</param>
@@ -42,7 +42,9 @@ namespace Content.Shared.DamageSystem
                 amount -= _resistances[damageType].FlatReduction;
 
                 if (amount <= 0)
+                {
                     return 0;
+                }
             }
 
             amount = (int) Math.Ceiling(amount * _resistances[damageType].Coefficient);
@@ -54,14 +56,13 @@ namespace Content.Shared.DamageSystem
     /// <summary>
     ///     Settings for a specific damage type in a resistance set. Flat reduction is applied before the coefficient.
     /// </summary>
-    [NetSerializable, Serializable]
+    [NetSerializable]
+    [Serializable]
     public struct ResistanceSetSettings
     {
-        [ViewVariables]
-        public float Coefficient { get; private set; }
+        [ViewVariables] public float Coefficient { get; private set; }
 
-        [ViewVariables]
-        public int FlatReduction { get; private set; }
+        [ViewVariables] public int FlatReduction { get; private set; }
 
         public ResistanceSetSettings(float coefficient, int flatReduction)
         {
@@ -69,6 +70,4 @@ namespace Content.Shared.DamageSystem
             FlatReduction = flatReduction;
         }
     }
-
-
 }

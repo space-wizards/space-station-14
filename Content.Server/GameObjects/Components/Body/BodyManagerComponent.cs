@@ -7,8 +7,13 @@ using Content.Server.Body.Network;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
-using Content.Shared.BodySystem;
-using Content.Shared.DamageSystem;
+using Content.Shared.Body;
+using Content.Shared.Body.BodyPart;
+using Content.Shared.Body.BodyPart.BodyPartProperties.Movement;
+using Content.Shared.Body.BodyPart.BodyPartProperties.Other;
+using Content.Shared.Body.BodyPreset;
+using Content.Shared.Body.BodyTemplate;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -124,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Body
                     throw new InvalidOperationException($"No {nameof(BodyPart)} prototype found with ID {partId}");
                 }
 
-                //Try and remove an existing limb if that exists.
+                // Try and remove an existing limb if that exists.
                 if (PartDictionary.Remove(slot, out var removedPart))
                 {
                     BodyPartRemoved(removedPart, slot);
@@ -148,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             foreach (var part in PartDictionary)
             {
-                //TODO: Make this work.
+                // TODO: Make this work.
             }
 
             OnBodyChanged();
@@ -234,7 +239,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         #region DamageableComponent Implementation
 
-        //TODO: all of this
+        // TODO: all of this
 
         public override int TotalDamage => 0;
 
@@ -500,12 +505,14 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public bool InstallBodyPart(BodyPart part, string slotName)
         {
-            if (!SlotExists(slotName)) //Make sure the given slot exists
+            // Make sure the given slot exists
+            if (!SlotExists(slotName))
             {
                 return false;
             }
 
-            if (TryGetBodyPart(slotName, out _)) //And that nothing is in it
+            // And that nothing is in it
+            if (TryGetBodyPart(slotName, out _))
             {
                 return false;
             }
@@ -549,11 +556,12 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
                 PartDictionary.Remove(slotName);
-                if (TryGetBodyPartConnections(slotName, out List<string> connections)
-                ) //Call disconnect on all limbs that were hanging off this limb.
+
+                // Call disconnect on all limbs that were hanging off this limb.
+                if (TryGetBodyPartConnections(slotName, out List<string> connections))
                 {
-                    foreach (var connectionName in connections
-                    ) //This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    // This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    foreach (var connectionName in connections)
                     {
                         if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                         {
@@ -590,11 +598,11 @@ namespace Content.Server.GameObjects.Components.Body
                     BodyPartRemoved(partRemoved, slotName);
                 }
 
-                if (TryGetBodyPartConnections(slotName, out List<string> connections)
-                ) //Call disconnect on all limbs that were hanging off this limb.
+                // Call disconnect on all limbs that were hanging off this limb.
+                if (TryGetBodyPartConnections(slotName, out List<string> connections))
                 {
-                    foreach (var connectionName in connections
-                    ) //This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    // This loop is an unoptimized travesty. TODO: optimize to be less shit
+                    foreach (var connectionName in connections)
                     {
                         if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                         {

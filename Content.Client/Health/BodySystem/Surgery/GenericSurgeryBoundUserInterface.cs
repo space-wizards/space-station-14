@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Body.Surgery;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.IoC;
@@ -7,7 +8,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Players;
-using Content.Shared.BodySystem;
 
 namespace Content.Client.BodySystem
 {

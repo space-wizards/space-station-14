@@ -9,7 +9,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.BodySystem;
+using Content.Shared.Body;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Body;
-using Content.Shared.BodySystem;
+using Content.Shared.Body.BodyScanner;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -39,10 +39,7 @@ namespace Content.Server.GameObjects.Components.Body
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
-        {
-        }
-
+        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg) { }
 
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.

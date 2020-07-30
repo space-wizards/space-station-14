@@ -1,5 +1,5 @@
 ﻿using Content.Server.Body.Mechanisms;
-using Content.Shared.BodySystem;
+using Content.Shared.Body;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Body.Surgery
@@ -13,9 +13,9 @@ namespace Content.Server.Body.Surgery
         protected delegate void SurgeryAction(IBodyPartContainer container, ISurgeon surgeon, IEntity performer);
 
         /// <summary>
-        ///     The <see cref="BodyPart"/> this surgeryData is attached to. The SurgeryData class should not exist without a
-        ///     <see cref="BodyPart"/> that it
-        ///     represents, and will throw errors if it is null.
+        ///     The <see cref="BodyPart"/> this surgeryData is attached to.
+        ///     The <see cref="SurgeryData"/> class should not exist without a <see cref="BodyPart"/>
+        ///     that it represents, and will throw errors if it is null.
         /// </summary>
         protected readonly BodyPart Parent;
 

@@ -1,5 +1,4 @@
 ﻿using Content.Client.BodySystem;
-using Content.Shared.BodySystem;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -12,6 +11,7 @@ using Robust.Shared.Utility;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Content.Shared.Body.BodyScanner;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
 namespace Content.Client.UserInterface

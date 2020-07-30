@@ -1,10 +1,10 @@
 ﻿using Content.Client.UserInterface;
-using Content.Shared.BodySystem;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using Content.Shared.Body.BodyScanner;
 
 namespace Content.Client.BodySystem
 {

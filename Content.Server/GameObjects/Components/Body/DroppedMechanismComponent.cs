@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using Content.Server.Body;
 using Content.Server.Body.Mechanisms;
-using Content.Shared.BodySystem;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -31,14 +32,17 @@ namespace Content.Server.GameObjects.Components.Body
         [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore 649
 
+        public sealed override string Name => "DroppedMechanism";
+
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
+
         private BodyManagerComponent _bodyManagerComponentCache;
+
         private int _idHash;
+
         private IEntity _performerCache;
 
         private BoundUserInterface _userInterface;
-
-        public sealed override string Name => "DroppedMechanism";
 
         [ViewVariables] public Mechanism ContainedMechanism { get; private set; }
 
@@ -97,8 +101,9 @@ namespace Content.Server.GameObjects.Components.Body
 
         public override void ExposeData(ObjectSerializer serializer)
         {
-            //This is a temporary way to have spawnable hard-coded DroppedMechanismComponent prototypes
-            //In the future (when it becomes possible) DroppedMechanismComponent should be auto-generated from the Mechanism prototypes
+            // This is a temporary way to have spawnable hard-coded DroppedMechanismComponent prototypes
+            // In the future (when it becomes possible) DroppedMechanismComponent should be auto-generated from
+            // the Mechanism prototypes
             var debugLoadMechanismData = "";
             base.ExposeData(serializer);
             serializer.DataField(ref debugLoadMechanismData, "debugLoadMechanismData", "");
@@ -117,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             foreach (var (key, value) in bodyManager.PartDictionary)
             {
-                //For each limb in the target, add it to our cache if it is a valid option.
+                // For each limb in the target, add it to our cache if it is a valid option.
                 if (value.CanInstallMechanism(ContainedMechanism))
                 {
                     _optionsCache.Add(_idHash, value);
@@ -133,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Body
                 _performerCache = eventArgs.User;
                 _bodyManagerComponentCache = bodyManager;
             }
-            else //If surgery cannot be performed, show message saying so.
+            else // If surgery cannot be performed, show message saying so.
             {
                 _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User,
                     Loc.GetString("You see no way to install the {0}.", Owner.Name));
@@ -147,11 +152,12 @@ namespace Content.Server.GameObjects.Components.Body
         {
             CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
 
-            //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
+            // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject))
             {
                 _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache,
                     Loc.GetString("You see no useful way to use the {0} anymore.", Owner.Name));
+                return;
             }
 
             var target = targetObject as BodyPart;

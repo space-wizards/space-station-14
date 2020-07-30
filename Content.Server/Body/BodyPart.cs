@@ -4,8 +4,12 @@ using System.Linq;
 using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Surgery;
 using Content.Server.GameObjects.Components.Body;
-using Content.Shared.BodySystem;
-using Content.Shared.DamageSystem;
+using Content.Shared.Body;
+using Content.Shared.Body.BodyPart;
+using Content.Shared.Body.BodyPart.BodyPartProperties;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Damage.DamageContainer;
+using Content.Shared.Damage.ResistanceSet;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
@@ -314,18 +318,18 @@ namespace Content.Server.Body
             RSIPath = data.RSIPath;
             RSIState = data.RSIState;
             MaxDurability = data.Durability;
-            if (!prototypeManager.TryIndex(data.DamageContainerPresetID,
+            if (!prototypeManager.TryIndex(data.DamageContainerPresetId,
                 out DamageContainerPrototype damageContainerData))
             {
-                throw new InvalidOperationException("No DamageContainerPrototype was found with the name " +
-                                                    data.DamageContainerPresetID + "!");
+                throw new InvalidOperationException(
+                    $"No {nameof(DamageContainerPrototype)} found with name {data.DamageContainerPresetId}");
             }
 
             CurrentDamages = new DamageContainer(damageContainerData);
-            if (!prototypeManager.TryIndex(data.ResistanceSetID, out ResistanceSetPrototype resistancesData))
+            if (!prototypeManager.TryIndex(data.ResistanceSetId, out ResistanceSetPrototype resistancesData))
             {
-                throw new InvalidOperationException("No ResistanceSetPrototype was found with the name " +
-                                                    data.ResistanceSetID + "!");
+                throw new InvalidOperationException(
+                    $"No {nameof(ResistanceSetPrototype)} found with name {data.ResistanceSetId}");
             }
 
             Resistances = new ResistanceSet(resistancesData);
@@ -335,15 +339,13 @@ namespace Content.Server.Body
             var surgeryDataType = Type.GetType(data.SurgeryDataName);
             if (surgeryDataType == null)
             {
-                throw new InvalidOperationException("No SurgeryData was found with the name " + data.SurgeryDataName +
-                                                    "!");
+                throw new InvalidOperationException($"No {nameof(SurgeryData)} found with name {data.SurgeryDataName}");
             }
 
             if (!surgeryDataType.IsSubclassOf(typeof(SurgeryData)))
             {
-                throw new InvalidOperationException("Class " + data.SurgeryDataName +
-                                                    " is not a subtype of SurgeryData, but was provided as a SurgeryData for BodyPart prototype " +
-                                                    data.ID + "!");
+                throw new InvalidOperationException(
+                    $"Class {data.SurgeryDataName} is not a subtype of {nameof(SurgeryData)} with id {data.ID}");
             }
 
             _surgeryData = (SurgeryData) Activator.CreateInstance(surgeryDataType, this);

@@ -2,7 +2,7 @@ using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Content.Shared.DamageSystem;
+using Content.Shared.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;

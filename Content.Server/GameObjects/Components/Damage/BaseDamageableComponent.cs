@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Observer;
-using Content.Shared.DamageSystem;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
