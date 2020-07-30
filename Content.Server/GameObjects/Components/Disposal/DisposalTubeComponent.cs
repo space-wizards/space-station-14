@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             _connected = false;
 
-            foreach (var entity in Contents.ContainedEntities)
+            foreach (var entity in Contents.ContainedEntities.ToArray())
             {
                 if (!entity.TryGetComponent(out DisposalHolderComponent holder))
                 {
