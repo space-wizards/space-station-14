@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(generator.HasComponent<PowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
                 var powerComponent = generator.GetComponent<PowerReceiverComponent>();
-                Assert.AreEqual(generatorComponent.Status, GravityGeneratorStatus.Unpowered);
+                Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.Unpowered));
                 powerComponent.NeedsPower = false;
             });
             server.RunTicks(1);
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
 
-                Assert.AreEqual(generatorComponent.Status, GravityGeneratorStatus.On);
+                Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.On));
 
                 Assert.That(!grid1.HasGravity);
                 Assert.That(grid2.HasGravity);
