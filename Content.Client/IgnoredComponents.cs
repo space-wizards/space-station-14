@@ -139,7 +139,16 @@
             "Pullable",
             "CursedEntityStorage",
             "Listening",
-            "Radio"
+            "Radio",
+            "DisposalHolder",
+            "DisposalTransit",
+            "DisposalEntry",
+            "DisposalJunction",
+            "DisposalBend",
+            "Recycler",
+            "Conveyor",
+            "ConveyorSwitch",
+            "Flippable",
         };
     }
 }
