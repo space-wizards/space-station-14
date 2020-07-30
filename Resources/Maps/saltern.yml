@@ -21559,15 +21559,10 @@ entities:
 - uid: 2508
   type: BarSign
   components:
-  - name: The Net
-    desc: You just seem to get caught up in it for hours.
-    type: MetaData
   - parent: 15
     pos: 1,2.5
     rot: 1.5707963267948966 rad
     type: Transform
-  - current: TheNet
-    type: BarSign
 - uid: 2509
   type: Spoon
   components:
