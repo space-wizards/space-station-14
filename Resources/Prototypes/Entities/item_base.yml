@@ -13,7 +13,6 @@
       bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - Clickable
-
     IsScrapingFloor: true
   - type: Physics
     mass: 5

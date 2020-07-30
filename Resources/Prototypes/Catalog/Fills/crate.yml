@@ -118,4 +118,4 @@
   components:
   - type: StorageFill
     contents:
-      - CableStack
+      - CableStack1

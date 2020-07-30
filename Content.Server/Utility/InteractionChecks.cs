@@ -105,8 +105,7 @@ namespace Content.Server.Utility
         /// </summary>
         public static bool InRangeUnobstructed(IEntity user, MapCoordinates otherCoords,
             float range = SharedInteractionSystem.InteractionRange,
-            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null,
-            bool ignoreInsideBlocker = false)
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool ignoreInsideBlocker = false)
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
@@ -115,13 +114,11 @@ namespace Content.Server.Utility
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                 user.PopupMessage(user, localizationManager.GetString("You can't reach there!"));
+
                 return false;
             }
 
             return true;
         }
-
-
-
     }
 }
