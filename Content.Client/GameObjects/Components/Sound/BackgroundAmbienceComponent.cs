@@ -150,7 +150,7 @@ namespace Content.Client.GameObjects.Components.Sound
                 (int)(CollisionGroup.Opaque));
 
             var rayCastResults = IoCManager.Resolve<IPhysicsManager>()
-                .IntersectRay(entity.Transform.MapID, ray, 5.0f, entity);
+                .IntersectRay(entity.Transform.MapID, ray, (tilePos - entity.Transform.GridPosition.Position).Length, entity);
 
             if (rayCastResults.Count() >= 1)
             {
