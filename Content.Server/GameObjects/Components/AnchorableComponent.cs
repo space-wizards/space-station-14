@@ -14,19 +14,19 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<PhysicsComponent>();
+            Owner.EnsureComponent<CollidableComponent>();
         }
 
         public bool InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out IPhysicsComponent physics)
+            if (!Owner.TryGetComponent(out ICollidableComponent collidable)
                 || !eventArgs.Using.TryGetComponent(out ToolComponent tool))
                 return false;
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Anchoring))
                 return false;
 
-            physics.Anchored = !physics.Anchored;
+            collidable.Anchored = !collidable.Anchored;
 
             return true;
         }
