@@ -92,7 +92,7 @@ namespace Content.Client.GameObjects.Components.Sound
                 {
                     continue;
                 }
-                if (((ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId]).IsSubFloor)
+                if (((ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId]).Name == "plating")
                 {
                     maintTiles++;
                 }
@@ -100,7 +100,7 @@ namespace Content.Client.GameObjects.Components.Sound
 
 
 
-            bool isInMaint = (float) maintTiles / validTiles.Count() >= 0.5f;
+            bool isInMaint = (float) maintTiles / validTiles.Count() >= 0.2f;
 
 
             Logger.Debug(((float)maintTiles / validTiles.Count()).ToString());
@@ -137,12 +137,18 @@ namespace Content.Client.GameObjects.Components.Sound
 
         private bool IsVisible(TileRef tile, IEntity entity)
         {
+            Vector2 tilePos = new Vector2(tile.X, tile.Y);
+
             if (tile.GridIndex != entity.Transform.GridID)
             {
                 return false;
             }
 
-            Vector2 tilePos = new Vector2(tile.X, tile.Y);
+            if ((tilePos - entity.Transform.GridPosition.Position).Length <= 1.0f)
+            {
+                return true;
+            }
+
             var angle = new Angle(tilePos - entity.Transform.GridPosition.Position);
             var ray = new CollisionRay(
                 entity.Transform.GridPosition.Position,
