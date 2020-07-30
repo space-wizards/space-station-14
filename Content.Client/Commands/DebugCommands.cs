@@ -58,7 +58,7 @@ namespace Content.Client.Commands
                 .EnableAll = true;
 
             var components = IoCManager.Resolve<IEntityManager>().ComponentManager
-                .GetAllComponents<SubFloorHideComponent>();
+                .EntityQuery<SubFloorHideComponent>();
 
             foreach (var component in components)
             {
