@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Disposal;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using NUnit.Framework;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -85,10 +86,13 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Assert.True(disposalTrunk.TryGetComponent(out entry));
 
                 // Can't insert, unanchored and unpowered
+                var disposalUnitAnchorable = disposalUnit.GetComponent<AnchorableComponent>();
+                disposalUnitAnchorable.TryUnAnchor(human, null, true);
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
                 Assert.False(unit.Anchored);
 
                 // Anchor the disposal unit
+                disposalUnitAnchorable.TryAnchor(human, null, true);
                 Assert.True(disposalUnit.TryGetComponent(out AnchorableComponent anchorableUnit));
                 Assert.True(anchorableUnit.TryAnchor(human, wrench));
                 Assert.True(unit.Anchored);
