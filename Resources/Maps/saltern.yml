@@ -3739,7 +3739,7 @@ entities:
   - parent: 2784
     type: Transform
 - uid: 289
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -19.5,-3.5
@@ -4340,7 +4340,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 340
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -30.5,8.5
@@ -4353,7 +4353,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 341
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -22.5,10.5
@@ -5835,7 +5835,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 459
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 0.5,27.5
@@ -5848,7 +5848,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 460
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 7.5,27.5
@@ -6420,7 +6420,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 504
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 1.5,11.5
@@ -6617,7 +6617,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 521
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -9.5,26.5
@@ -6643,7 +6643,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 523
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -15.5,15.5
@@ -9490,7 +9490,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 763
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 37.5,8.5
@@ -9724,7 +9724,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 792
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -20.5,-8.5
@@ -12968,7 +12968,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1249
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -34.5,-5.5
@@ -16649,7 +16649,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1764
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -11.5,2.5
@@ -17481,7 +17481,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 1881
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -33.5,7.5
@@ -17905,7 +17905,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 1936
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 43.5,10.5
@@ -17970,7 +17970,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 1941
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 41.5,1.5
@@ -18253,7 +18253,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 1968
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 29.5,9.5
@@ -18304,7 +18304,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 1972
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 36.5,-1.5
@@ -18555,7 +18555,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 1994
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 27.5,-0.5
@@ -18772,7 +18772,7 @@ entities:
         type: Content.Server.GameObjects.ContainerSlot
     type: ContainerContainer
 - uid: 2014
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 20.5,-4.5
@@ -18811,7 +18811,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2017
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 23.5,-11.5
@@ -18876,7 +18876,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2022
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 16.5,-18.5
@@ -18928,7 +18928,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2026
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 8.5,-17.5
@@ -19277,7 +19277,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2059
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 5.5,-3.5
@@ -19358,7 +19358,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2066
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 17.5,2.5
@@ -19539,7 +19539,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2082
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 14.5,13.5
@@ -19604,7 +19604,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2087
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 5.5,10.5
@@ -19979,7 +19979,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2122
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 9.5,15.5
@@ -20044,7 +20044,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2127
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -2.5,19.5
@@ -20452,7 +20452,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2165
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -10.5,21.5
@@ -20862,7 +20862,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2204
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -6.5,-8.5
@@ -21132,7 +21132,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2228
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -28.5,-3.5
@@ -21156,7 +21156,7 @@ entities:
     pos: -8.5,20.5
     type: Transform
 - uid: 2231
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -33.5,2.5
@@ -21176,7 +21176,7 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2233
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -12.5,-13.5
@@ -21189,7 +21189,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2234
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -1.5,-18.5
@@ -21202,7 +21202,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2235
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -7.5,-21.5
@@ -21215,7 +21215,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2236
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -12.5,-18.5
@@ -21228,7 +21228,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2237
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 0.5,-26.5
@@ -23079,7 +23079,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2436
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: -18.5,-19.5
@@ -25407,7 +25407,7 @@ entities:
       - AdjacentNode
     type: NodeContainer
 - uid: 2707
-  type: APC
+  type: DebugApc
   components:
   - parent: 0
     pos: 50.5,-1.5
