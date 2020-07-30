@@ -32,12 +32,12 @@ namespace Content.Server.Mobs
                 return false;
             }
 
-            var newState = SharedSpeciesComponent.MobState.Down;
-            appearance.TryGetData<SharedSpeciesComponent.MobState>(SharedSpeciesComponent.MobVisuals.RotationState, out var oldState);
+            var newState = SpeciesComponent.MobState.Down;
+            appearance.TryGetData<SpeciesComponent.MobState>(SpeciesComponent.MobVisuals.RotationState, out var oldState);
 
             if (newState != oldState)
             {
-                appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+                appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newState);
             }
 
             if (playSound)
@@ -62,12 +62,12 @@ namespace Content.Server.Mobs
         public static bool Standing(IEntity entity)
         {
             if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
-            appearance.TryGetData<SharedSpeciesComponent.MobState>(SharedSpeciesComponent.MobVisuals.RotationState, out var oldState);
-            var newState = SharedSpeciesComponent.MobState.Standing;
+            appearance.TryGetData<SpeciesComponent.MobState>(SpeciesComponent.MobVisuals.RotationState, out var oldState);
+            var newState = SpeciesComponent.MobState.Standing;
             if (newState == oldState)
                 return false;
 
-            appearance.SetData(SharedSpeciesComponent.MobVisuals.RotationState, newState);
+            appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newState);
 
             return true;
         }

@@ -4,7 +4,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Mobs
 {
-    public abstract class SharedSpeciesComponent : Component
+    [RegisterComponent]
+    public class SpeciesComponent : Component
     {
         public sealed override string Name => "Species";
 
