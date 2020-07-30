@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameTicking;
@@ -13,7 +14,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Content.Server.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -127,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var dead =
-                Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
+                Owner.TryGetComponent<BaseDamageableComponent>(out var damageable) &&
                 damageable.CurrentDamageState == DamageState.Dead;
 
             if (!HasMind)

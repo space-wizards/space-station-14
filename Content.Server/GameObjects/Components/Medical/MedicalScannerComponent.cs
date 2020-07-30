@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -10,7 +11,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.DamageSystem;
 using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Medical
@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.Medical
             }
 
             //TODO: make work with BodyManagerComponent
-            var damageable = body.GetComponent<IDamageableComponent>();
+            var damageable = body.GetComponent<BaseDamageableComponent>();
             //if(damageable.CurrentDamageState == DamageState.Dead)
                 return EmptyUIState;
 
@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components.Medical
             var body = _bodyContainer.ContainedEntity;
             return body == null
                 ? MedicalScannerStatus.Open
-                : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+                : GetStatusFromDamageState(body.GetComponent<BaseDamageableComponent>().CurrentDamageState);
         }
 
         private void UpdateAppearance()

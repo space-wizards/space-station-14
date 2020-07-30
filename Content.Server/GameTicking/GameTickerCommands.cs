@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.BodySystem;
+using Content.Server.Body;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.BodySystem;

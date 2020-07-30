@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
@@ -223,7 +223,7 @@ namespace Content.Server.GameObjects
                 foreach (var e in collidesWith)
                 {
                     if (!e.TryGetComponent(out StunnableComponent stun)
-                        || !e.TryGetComponent(out IDamageableComponent damage)
+                        || !e.TryGetComponent(out BaseDamageableComponent damage)
                         || !e.TryGetComponent(out ICollidableComponent otherBody)
                         || !Owner.TryGetComponent(out ICollidableComponent body))
                         continue;

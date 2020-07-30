@@ -1,4 +1,4 @@
-﻿using Content.Server.DamageSystem;
+﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;

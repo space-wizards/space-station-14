@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.DamageSystem;
 using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
@@ -78,7 +78,7 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+                    || !playerSession.AttachedEntity.TryGetComponent(out BaseDamageableComponent damageable))
                 {
                     continue;
                 }

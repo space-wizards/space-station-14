@@ -1,5 +1,5 @@
 using System;
-using Content.Server.DamageSystem;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 soundSystem.PlayAtCoords("/Audio/Weapons/Guns/Gunshots/bang.ogg",
                     Owner.Transform.GridPosition, AudioParams.Default, 5);
 
-                if (user.TryGetComponent(out IDamageableComponent health))
+                if (user.TryGetComponent(out BaseDamageableComponent health))
                 {
                     health.ChangeDamage(DamageType.Blunt, 10, user, false);
                     health.ChangeDamage(DamageType.Heat, 5, user, false);

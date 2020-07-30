@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.DamageSystem;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects;
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects
 
             _secondsSinceLastDamageUpdate += frameTime;
 
-            Owner.TryGetComponent(out IDamageableComponent component);
+            Owner.TryGetComponent(out BaseDamageableComponent component);
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {

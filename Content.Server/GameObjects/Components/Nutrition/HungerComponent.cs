@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.DamageSystem;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.DamageSystem;
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables(VVAccess.ReadOnly)]
         public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
         private HungerThreshold _currentHungerThreshold;
-        
+
         private HungerThreshold _lastHungerThreshold;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             }
             if (_currentHungerThreshold == HungerThreshold.Dead)
             {
-                if (Owner.TryGetComponent(out IDamageableComponent damageable))
+                if (Owner.TryGetComponent(out BaseDamageableComponent damageable))
                 {
                     if (damageable.CurrentDamageState != DamageState.Dead)
                     {

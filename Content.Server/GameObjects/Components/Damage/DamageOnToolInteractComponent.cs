@@ -1,16 +1,15 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Interactable;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using System.Collections.Generic;
-using Content.Server.DamageSystem;
-using Content.Shared.DamageSystem;
-using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
     [RegisterComponent]
-    class DamageOnToolInteractComponent : Component, IInteractUsing
+    public class DamageOnToolInteractComponent : Component, IInteractUsing
     {
         public override string Name => "DamageOnToolInteract";
 

@@ -1,5 +1,4 @@
-﻿﻿using Content.Server.DamageSystem;
-using Content.Server.DamageSystem;
+﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.DamageSystem;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -42,7 +41,7 @@ namespace Content.Server.GameObjects.Components
 
                 _shouldStop = true; // hit something hard => stop after this collision
             }
-            if (entity.TryGetComponent(out IDamageableComponent damage))
+            if (entity.TryGetComponent(out BaseDamageableComponent damage))
             {
                 damage.ChangeDamage(DamageType.Blunt, 10, Owner, false);
             }

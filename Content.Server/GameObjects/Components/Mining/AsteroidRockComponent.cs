@@ -1,4 +1,4 @@
-﻿using Content.Server.DamageSystem;
+﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Shared.DamageSystem;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Mining
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
 
-            Owner.GetComponent<IDamageableComponent>().ChangeDamage(DamageType.Blunt, meleeWeaponComponent.Damage, item, false);
+            Owner.GetComponent<BaseDamageableComponent>().ChangeDamage(DamageType.Blunt, meleeWeaponComponent.Damage, item, false);
 
             if (!item.TryGetComponent(out PickaxeComponent pickaxeComponent)) return true;
             if (!string.IsNullOrWhiteSpace(pickaxeComponent.MiningSound))

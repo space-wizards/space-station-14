@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.DamageSystem;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
+            if (!eventArgs.User.TryGetComponent(out BaseDamageableComponent damageableComponent))
             {
                 Eject();
                 return false;

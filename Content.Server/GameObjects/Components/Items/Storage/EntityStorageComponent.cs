@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Content.Server.BodySystem;
+using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
