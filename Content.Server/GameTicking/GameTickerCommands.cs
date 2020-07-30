@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameTicking;
+using System.Linq;
+using Content.Server.BodySystem;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
+using Content.Shared.BodySystem;
 using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Log;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
 {
@@ -291,6 +295,101 @@ namespace Content.Server.GameTicking
 
             ticker.SetStartPreset(type, true);
             shell.SendText(player, $"Forced the game to start with preset {name}.");
+        }
+    }
+
+    class MappingCommand : IClientCommand
+    {
+        public string Command => "mapping";
+        public string Description => "Creates and teleports you to a new uninitialized map for mapping.";
+        public string Help => $"Usage: {Command} <id> <mapname>";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                shell.SendText(player, "Only players can use this command");
+                return;
+            }
+
+            if (args.Length != 2)
+            {
+                shell.SendText(player, Help);
+                return;
+            }
+
+            shell.ExecuteCommand(player, $"addmap {args[0]} false");
+            shell.ExecuteCommand(player, $"loadbp {args[0]} \"{CommandParsing.Escape(args[1])}\"");
+            shell.ExecuteCommand(player, $"aghost");
+            shell.ExecuteCommand(player, $"tp 0 0 {args[0]}");
+
+            shell.SendText(player, $"Created unloaded map from file {args[1]} with id {args[0]}. Use \"savebp 4 foo.yml\" to save it.");
+        }
+    }
+
+    class AddHandCommand : IClientCommand
+    {
+        public string Command => "addhand";
+        public string Description => "Adds a hand to your entity.";
+        public string Help => $"Usage: {Command}";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                shell.SendText((IPlayerSession) null, "Only a player can run this command.");
+                return;
+            }
+
+            if (player.AttachedEntity == null)
+            {
+                shell.SendText(player, "You have no entity.");
+                return;
+            }
+
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            {
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+
+                shell.SendText(player, text);
+                return;
+            }
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.TryIndex("bodyPart.Hand.BasicHuman", out BodyPartPrototype prototype);
+
+            var part = new BodyPart(prototype);
+            var slot = part.GetHashCode().ToString();
+
+            body.Template.Slots.Add(slot, BodyPartType.Hand);
+            body.InstallBodyPart(part, slot);
+        }
+    }
+
+    class RemoveHandCommand : IClientCommand
+    {
+        public string Command => "removehand";
+        public string Description => "Removes a hand from your entity.";
+        public string Help => $"Usage: {Command}";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            if (player == null)
+            {
+                shell.SendText(player, "Only a player can run this command.");
+                return;
+            }
+
+            if (player.AttachedEntity == null)
+            {
+                shell.SendText(player, "You have no entity.");
+                return;
+            }
+
+            var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
+            var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
+            manager.DisconnectBodyPart(hand.Value, true);
         }
     }
 }

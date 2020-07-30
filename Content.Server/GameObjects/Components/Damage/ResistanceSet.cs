@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects
 {
@@ -8,49 +11,31 @@ namespace Content.Server.GameObjects
     /// Resistance set used by damageable objects.
     /// For each damage type, has a coefficient, damage reduction and "included in total" value.
     /// </summary>
-    public class ResistanceSet
+    public class ResistanceSet : IExposeData
     {
-        Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
-        static Dictionary<string, ResistanceSet> _resistanceSets = new Dictionary<string, ResistanceSet>();
+        public static ResistanceSet DefaultResistanceSet = new ResistanceSet();
 
-        //TODO: make it load from YAML instead of hardcoded like this
+        [ViewVariables]
+        private readonly Dictionary<DamageType, ResistanceSetSettings> _resistances = new Dictionary<DamageType, ResistanceSetSettings>();
+
         public ResistanceSet()
         {
-            _resistances.Add(DamageType.Total, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Acid, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Brute, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Heat, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Cold, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Toxic, new ResistanceSetSettings(1f, 0, true));
-            _resistances.Add(DamageType.Electric, new ResistanceSetSettings(1f, 0, true));
-        }
-
-        /// <summary>
-        /// Loads a resistance set with the given name.
-        /// </summary>
-        /// <param name="setName">Name of the resistance set.</param>
-        /// <returns>Resistance set by given name</returns>
-        public static ResistanceSet GetResistanceSet(string setName)
-        {
-            ResistanceSet resistanceSet = null;
-
-            if (!_resistanceSets.TryGetValue(setName, out resistanceSet))
+            foreach (DamageType damageType in Enum.GetValues(typeof(DamageType)))
             {
-                resistanceSet = Load(setName);
+                _resistances[damageType] = new ResistanceSetSettings();
             }
-
-            return resistanceSet;
         }
 
-        static ResistanceSet Load(string setName)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            //TODO: only creates a standard set RN, should be YAMLed
-
-            ResistanceSet resistanceSet = new ResistanceSet();
-
-            _resistanceSets.Add(setName, resistanceSet);
-
-            return resistanceSet;
+            foreach (DamageType damageType in Enum.GetValues(typeof(DamageType)))
+            {
+                var resistanceName = damageType.ToString().ToLower();
+                serializer.DataReadFunction(resistanceName, new ResistanceSetSettings(), resistanceSetting =>
+                {
+                    _resistances[damageType] = resistanceSetting;
+                });
+            } 
         }
 
         /// <summary>
@@ -78,23 +63,23 @@ namespace Content.Server.GameObjects
         {
             //Damage that goes straight to total (for whatever reason) never applies twice
 
-            return damageType == DamageType.Total ? false : _resistances[damageType].AppliesToTotal;
+            return damageType != DamageType.Total && _resistances[damageType].AppliesToTotal;
         }
 
         /// <summary>
         /// Settings for a specific damage type in a resistance set.
         /// </summary>
-        struct ResistanceSetSettings
+        public class ResistanceSetSettings : IExposeData
         {
-            public float Coefficient { get; private set; }
-            public int DamageReduction { get; private set; }
-            public bool AppliesToTotal { get; private set; }
+            public float Coefficient { get; private set; } = 1;
+            public int DamageReduction { get; private set; } = 0;
+            public bool AppliesToTotal { get; private set; } = true;
 
-            public ResistanceSetSettings(float coefficient, int damageReduction, bool appliesInTotal)
+            public void ExposeData(ObjectSerializer serializer)
             {
-                Coefficient = coefficient;
-                DamageReduction = damageReduction;
-                AppliesToTotal = appliesInTotal;
+                serializer.DataField(this, x => Coefficient, "coefficient", 1);
+                serializer.DataField(this, x => DamageReduction, "damageReduction", 0);
+                serializer.DataField(this, x => AppliesToTotal, "appliesToTotal", true);
             }
         }
     }

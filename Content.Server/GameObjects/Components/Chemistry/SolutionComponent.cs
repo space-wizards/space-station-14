@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.EntitySystems.Click;
@@ -496,7 +497,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
 
             //Play reaction sound client-side
-            _audioSystem.PlayAtCoords("/Audio/Effects/chemistry/bubbles.ogg", Owner.Transform.GridPosition);
+            _audioSystem.PlayAtCoords("/Audio/Effects/Chemistry/bubbles.ogg", Owner.Transform.GridPosition);
         }
 
         /// <summary>

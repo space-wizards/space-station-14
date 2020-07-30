@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
@@ -33,6 +35,8 @@ namespace Content.Server.GameObjects
 
         [ViewVariables]
         private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
+
+        private KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity;
 
         public override void Initialize()
         {
@@ -91,6 +95,11 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
+            if (!SlotContainers.ContainsKey(slot))
+            {
+                return null;
+            }
+
             var containedEntity = SlotContainers[slot].ContainedEntity;
             if (containedEntity?.Deleted == true)
             {
@@ -325,7 +334,7 @@ namespace Content.Server.GameObjects
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
-                        hands.Drop(hands.ActiveIndex);
+                        hands.Drop(hands.ActiveHand);
                         if (!Equip(msg.Inventoryslot, clothing, out var reason))
                         {
                             hands.PutInHand(clothing);
@@ -354,6 +363,20 @@ namespace Content.Server.GameObjects
                             hands.PutInHand(itemContainedInSlot);
                         }
                     }
+                    break;
+                }
+                case ClientInventoryUpdate.Hover:
+                {
+                    var hands = Owner.GetComponent<HandsComponent>();
+                    var activeHand = hands.GetActiveHand;
+                    if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
+                    {
+                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, out var reason);
+                        HoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
+
+                        Dirty();
+                    }
+
                     break;
                 }
             }
@@ -415,7 +438,11 @@ namespace Content.Server.GameObjects
                     list.Add(new KeyValuePair<Slots, EntityUid>(slot, container.ContainedEntity.Uid));
                 }
             }
-            return new InventoryComponentState(list);
+
+            var hover = HoverEntity;
+            HoverEntity = null;
+
+            return new InventoryComponentState(list, hover);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

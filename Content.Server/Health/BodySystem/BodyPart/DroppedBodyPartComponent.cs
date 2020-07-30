@@ -1,21 +1,16 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System;
 using System.Collections.Generic;
 using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
 using System.Globalization;
 using Robust.Server.GameObjects;
-using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
 using Content.Shared.Interfaces;
-using Robust.Shared.Interfaces.Random;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Localization;
 
 namespace Content.Server.BodySystem
@@ -109,7 +104,7 @@ namespace Content.Server.BodySystem
             }
             else //If surgery cannot be performed, show message saying so.
             {
-                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, Loc.GetString("You see no way to install the {0}.", Owner.Name));
+                _sharedNotifyManager.PopupMessage(eventArgs.Target, eventArgs.User, Loc.GetString("You see no way to install {0:theName}.", Owner));
             }
         }
 
@@ -122,7 +117,7 @@ namespace Content.Server.BodySystem
             //TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out object targetObject))
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to attach the {0} anymore.", Owner.Name));
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to attach {0:theName} anymore.", Owner));
             }
             string target = targetObject as string;
             if (!_bodyManagerComponentCache.InstallDroppedBodyPart(this, target))
@@ -131,7 +126,7 @@ namespace Content.Server.BodySystem
             }
             else
             {
-                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You attach the {0}.", ContainedBodyPart.Name));
+                _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You attach {0:theName}.", ContainedBodyPart));
             }
         }
 

@@ -1,0 +1,288 @@
+- type: entity
+  parent: Clothing
+  id: OuterclothingBase
+  abstract: true
+  components:
+  - type: Clothing
+    Slots:
+    - outerclothing
+  - type: Sprite
+    state: icon
+  - type: Icon
+    state: icon
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingArmorVest
+  name: armor vest
+  description: "A slim Type I armored vest that provides decent protection against most types of damage."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/armor.rsi
+    state: armor
+  - type: Icon
+    sprite: Clothing/OuterClothing/armor.rsi
+    state: armor
+  - type: Clothing
+    sprite: Clothing/OuterClothing/armor.rsi
+    ClothingPrefix: armor
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingArmorreflec
+  name: armor (reflective)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/armor_reflec.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/armor_reflec.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/armor_reflec.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBulletproof
+  name: bulletproof
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bulletproof.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bulletproof.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bulletproof.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingCaparmor
+  name: captain's armor
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/caparmor.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/caparmor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/caparmor.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingAcolyte
+  name: acolyte
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/acolyte.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/acolyte.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/acolyte.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingCultarmour
+  name: cult armor
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/cult_armour.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/cult_armour.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/cult_armour.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingCustodian
+  name: custodian
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/custodian.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/custodian.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/custodian.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingHeavy
+  name: heavy
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/heavy.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/heavy.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/heavy.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingHmarmorvest
+  name: HM armor vest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/hm_armorvest.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/hm_armorvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/hm_armorvest.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingHos
+  name: HoS armor vest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/hos.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/hos.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/hos.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingKvest
+  name: kvest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/kvest.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/kvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/kvest.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingMagusblue
+  name: magus blue
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/magusblue.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/magusblue.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/magusblue.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingMagusred
+  name: magus red
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/magusred.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/magusred.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/magusred.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingMercwebvest
+  name: merc web vest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/mercwebvest.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/mercwebvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/mercwebvest.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingReactive
+  name: reactive
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/reactive.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/reactive.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/reactive.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingReactiveoff
+  name: reactive (off)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/reactiveoff.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/reactiveoff.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/reactiveoff.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingRiot
+  name: riot
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/riot.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/riot.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/riot.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingScaf
+  name: scaf
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/scaf.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/scaf.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/scaf.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingSwat
+  name: swat
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/swat.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/swat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/swat.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingSninja
+  name: S ninja
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/s_ninja.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/s_ninja.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/s_ninja.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingWebvest
+  name: web vest
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/webvest.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/webvest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/webvest.rsi

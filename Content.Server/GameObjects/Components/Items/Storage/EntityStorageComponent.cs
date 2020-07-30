@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -24,7 +25,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Items.Storage
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -43,14 +44,16 @@ namespace Content.Server.GameObjects.Components
         [ViewVariables]
         private bool _isCollidableWhenOpen;
         [ViewVariables]
-        private Container _contents;
-        [ViewVariables]
         private IEntityQuery _entityQuery;
         private bool _showContents;
+        private bool _occludesLight;
         private bool _open;
         private bool _isWeldedShut;
         private int _collisionMaskStorage;
         private int _collisionLayerStorage;
+
+        [ViewVariables]
+        protected Container Contents;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -62,7 +65,18 @@ namespace Content.Server.GameObjects.Components
             set
             {
                 _showContents = value;
-                _contents.ShowContents = _showContents;
+                Contents.ShowContents = _showContents;
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool OccludesLight
+        {
+            get => _occludesLight;
+            set
+            {
+                _occludesLight = value;
+                Contents.OccludesLight = _occludesLight;
             }
         }
 
@@ -95,10 +109,11 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            _contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
+            Contents = ContainerManagerComponent.Ensure<Container>(nameof(EntityStorageComponent), Owner);
             _entityQuery = new IntersectingEntityQuery(Owner);
 
-            _contents.ShowContents = _showContents;
+            Contents.ShowContents = _showContents;
+            Contents.OccludesLight = _occludesLight;
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
@@ -114,6 +129,7 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _storageCapacityMax, "Capacity", 30);
             serializer.DataField(ref _isCollidableWhenOpen, "IsCollidableWhenOpen", false);
             serializer.DataField(ref _showContents, "showContents", false);
+            serializer.DataField(ref _occludesLight, "occludesLight", true);
             serializer.DataField(ref _open, "open", false);
             serializer.DataField(this, a => a.IsWeldedShut, "IsWeldedShut", false);
             serializer.DataField(this, a => a.CanWeldShut, "CanWeldShut", true);
@@ -124,7 +140,7 @@ namespace Content.Server.GameObjects.Components
             ToggleOpen(eventArgs.User);
         }
 
-        protected virtual void ToggleOpen(IEntity user)
+        private void ToggleOpen(IEntity user)
         {
             if (IsWeldedShut)
             {
@@ -142,7 +158,7 @@ namespace Content.Server.GameObjects.Components
             }
         }
 
-        private void CloseStorage()
+        public virtual void CloseStorage()
         {
             Open = false;
             var entities = Owner.EntityManager.GetEntities(_entityQuery);
@@ -154,7 +170,7 @@ namespace Content.Server.GameObjects.Components
                     continue;
 
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
-                if (!entity.HasComponent<StoreableComponent>() && !entity.HasComponent<SpeciesComponent>())
+                if (!entity.HasComponent<StorableComponent>() && !entity.HasComponent<SpeciesComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -240,7 +256,7 @@ namespace Content.Server.GameObjects.Components
                     entity.Transform.WorldPosition += new Vector2(0, collidableComponent.WorldAABB.Top - entityCollidableComponent.WorldAABB.Top);
                 }
             }
-            if (_contents.CanInsert(entity))
+            if (Contents.CanInsert(entity))
             {
                 // Because Insert sets the local position to (0,0), and we want to keep the contents spread out,
                 // we re-apply the world position after inserting.
@@ -253,7 +269,7 @@ namespace Content.Server.GameObjects.Components
                 {
                     worldPos = entity.Transform.WorldPosition;
                 }
-                _contents.Insert(entity);
+                Contents.Insert(entity);
                 entity.Transform.WorldPosition = worldPos;
                 if (entityCollidableComponent != null)
                 {
@@ -266,9 +282,9 @@ namespace Content.Server.GameObjects.Components
 
         private void EmptyContents()
         {
-            foreach (var contained in _contents.ContainedEntities.ToArray())
+            foreach (var contained in Contents.ContainedEntities.ToArray())
             {
-                if(_contents.Remove(contained))
+                if(Contents.Remove(contained))
                 {
                     if (contained.TryGetComponent<ICollidableComponent>(out var entityCollidableComponent))
                     {
@@ -315,7 +331,7 @@ namespace Content.Server.GameObjects.Components
         /// <inheritdoc />
         public bool Remove(IEntity entity)
         {
-            return _contents.CanRemove(entity);
+            return Contents.CanRemove(entity);
         }
 
         /// <inheritdoc />
@@ -328,7 +344,7 @@ namespace Content.Server.GameObjects.Components
                 return true;
             }
 
-            return _contents.Insert(entity);
+            return Contents.Insert(entity);
         }
 
         /// <inheritdoc />
@@ -339,12 +355,12 @@ namespace Content.Server.GameObjects.Components
                 return true;
             }
 
-            if (_contents.ContainedEntities.Count >= _storageCapacityMax)
+            if (Contents.ContainedEntities.Count >= _storageCapacityMax)
             {
                 return false;
             }
 
-            return _contents.CanInsert(entity);
+            return Contents.CanInsert(entity);
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -356,11 +372,18 @@ namespace Content.Server.GameObjects.Components
             if (!CanWeldShut)
                 return false;
 
+            if (Contents.Contains(eventArgs.User))
+            {
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("It's too Cramped!"));
+                return false;
+            }
+
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
             if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 1f))
                 return false;
+
 
             IsWeldedShut ^= true;
             return true;

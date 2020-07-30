@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
-using Content.Server.Observer;
-using Content.Server.Players;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Console;
@@ -14,6 +11,14 @@ using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using Content.Server.GameObjects.Components;
+using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.EntitySystems;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Robust.Shared.Interfaces.Map;
 
 namespace Content.Server.Chat
 {
@@ -25,6 +30,7 @@ namespace Content.Server.Chat
         private const int VoiceRange = 7; // how far voice goes in world units
 
 #pragma warning disable 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly ILocalizationManager _localizationManager;
@@ -71,6 +77,9 @@ namespace Content.Server.Chat
             msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
+
+            var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
+            listeners.PingListeners(source, pos, message);
         }
 
         public void EntityMe(IEntity source, string action)

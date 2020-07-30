@@ -3,10 +3,10 @@ using System.Threading;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
@@ -62,7 +62,6 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _boltsDown = value;
-                UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
         }
@@ -75,9 +74,16 @@ namespace Content.Server.GameObjects.Components.Doors
             set
             {
                 _boltLightsWirePulsed = value;
-                UpdateWiresStatus();
                 UpdateBoltLightStatus();
             }
+        }
+
+        private const float AutoCloseDelayFast = 1;
+        // True => AutoCloseDelay; False => AutoCloseDelayFast
+        private bool NormalCloseSpeed
+        {
+            get => CloseSpeed == AutoCloseDelay;
+            set => CloseSpeed = value ? AutoCloseDelay : AutoCloseDelayFast;
         }
 
         private void UpdateWiresStatus()
@@ -98,12 +104,21 @@ namespace Content.Server.GameObjects.Components.Doors
             var boltLightsStatus = new StatusLightData(Color.Lime,
                 _boltLightsWirePulsed ? StatusLightState.On : StatusLightState.Off, "BLTL");
 
+            var timingStatus =
+                new StatusLightData(Color.Orange,   !AutoClose ? StatusLightState.Off :
+                                                    !NormalCloseSpeed ? StatusLightState.BlinkingSlow :
+                                                    StatusLightState.On,
+                                                    "TIME");
+
+            var safetyStatus =
+                new StatusLightData(Color.Red, Safety ? StatusLightState.On : StatusLightState.Off, "SAFE");
+
             _wires.SetStatus(AirlockWireStatus.PowerIndicator, powerLight);
             _wires.SetStatus(AirlockWireStatus.BoltIndicator, boltStatus);
             _wires.SetStatus(AirlockWireStatus.BoltLightIndicator, boltLightsStatus);
-            _wires.SetStatus(3, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
-            _wires.SetStatus(4, new StatusLightData(Color.Orange, StatusLightState.Off, "TIME"));
-            _wires.SetStatus(5, new StatusLightData(Color.Red, StatusLightState.Off, "SAFE"));
+            _wires.SetStatus(AirlockWireStatus.AIControlIndicator, new StatusLightData(Color.Purple, StatusLightState.BlinkingSlow, "AICT"));
+            _wires.SetStatus(AirlockWireStatus.TimingIndicator, timingStatus);
+            _wires.SetStatus(AirlockWireStatus.SafetyIndicator, safetyStatus);
             /*
             _wires.SetStatus(6, powerLight);
             _wires.SetStatus(7, powerLight);
@@ -210,6 +225,23 @@ namespace Content.Server.GameObjects.Components.Doors
             /// Mending causes them to go on again
             /// </summary>
             BoltLight,
+
+            // Placeholder for when AI is implemented
+            AIControl,
+
+            /// <summary>
+            /// Pulsing causes door to close faster
+            /// Cutting disables door timer, causing door to stop closing automatically
+            /// Mending restores door timer
+            /// </summary>
+            Timing,
+
+            /// <summary>
+            /// Pulsing toggles safety
+            /// Cutting disables safety
+            /// Mending enables safety
+            /// </summary>
+            Safety,
         }
 
         public void RegisterWires(WiresComponent.WiresBuilder builder)
@@ -218,8 +250,8 @@ namespace Content.Server.GameObjects.Components.Doors
             builder.CreateWire(Wires.BackupPower);
             builder.CreateWire(Wires.Bolts);
             builder.CreateWire(Wires.BoltLight);
-            builder.CreateWire(4);
-            builder.CreateWire(5);
+            builder.CreateWire(Wires.Timing);
+            builder.CreateWire(Wires.Safety);
             /*
             builder.CreateWire(6);
             builder.CreateWire(7);
@@ -263,6 +295,12 @@ namespace Content.Server.GameObjects.Components.Doors
                         // we need to change the property here to set the appearance again
                         BoltLightsVisible = !_boltLightsWirePulsed;
                         break;
+                    case Wires.Timing:
+                        NormalCloseSpeed = !NormalCloseSpeed;
+                        break;
+                    case Wires.Safety:
+                        Safety = !Safety;
+                        break;
                 }
             }
 
@@ -279,6 +317,12 @@ namespace Content.Server.GameObjects.Components.Doors
                     case Wires.BoltLight:
                         BoltLightsVisible = true;
                         break;
+                    case Wires.Timing:
+                        AutoClose = true;
+                        break;
+                    case Wires.Safety:
+                        Safety = true;
+                        break;
                 }
             }
 
@@ -291,6 +335,12 @@ namespace Content.Server.GameObjects.Components.Doors
                         break;
                     case Wires.BoltLight:
                         BoltLightsVisible = false;
+                        break;
+                    case Wires.Timing:
+                        AutoClose = false;
+                        break;
+                    case Wires.Safety:
+                        Safety = false;
                         break;
                 }
             }

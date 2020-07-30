@@ -1,0 +1,84 @@
+- type: entity
+  id: SLMagnumBase
+  name: "speed loader (.40 magnum)"
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: SpeedLoader
+    caliber: Magnum
+    capacity: 6
+  - type: Icon
+    state: icon
+  - type: Sprite
+    netsync: false
+    layers:
+    - state: base
+      map: ["enum.RangedBarrelVisualLayers.Base"]
+    - state: mag-6
+      map: ["enum.RangedBarrelVisualLayers.Mag"]
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 7
+      zeroVisible: false
+
+- type: entity
+  id: SLMagnum
+  name: "speed loader (.40 magnum)"
+  parent: SLMagnumBase
+  components:
+  - type: SpeedLoader
+    fillPrototype: CartridgeMagnum
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi
+
+- type: entity
+  id: SLMagnumFlash
+  name: "speed loader (.40 magnum flash)"
+  parent: SLMagnumBase
+  components:
+  - type: SpeedLoader
+    fillPrototype: CartridgeMagnumFlash
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_flash.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_flash.rsi
+
+- type: entity
+  id: SLMagnumHV
+  name: "speed loader (.40 magnum high-velocity)"
+  parent: SLMagnumBase
+  components:
+  - type: SpeedLoader
+    fillPrototype: CartridgeMagnumHV
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_hv.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_hv.rsi
+
+- type: entity
+  id: SLMagnumPractice
+  name: "speed loader (.40 magnum practice)"
+  parent: SLMagnumBase
+  components:
+  - type: SpeedLoader
+    fillPrototype: CartridgeMagnumPractice
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_practice.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_practice.rsi
+
+- type: entity
+  id: SLMagnumRubber
+  name: "speed loader (.40 magnum rubber)"
+  parent: SLMagnumBase
+  components:
+  - type: SpeedLoader
+    fillPrototype: CartridgeMagnumRubber
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_rubber.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl_rubber.rsi

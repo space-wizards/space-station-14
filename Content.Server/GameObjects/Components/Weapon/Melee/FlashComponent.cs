@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -31,7 +31,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         public override string Name => "Flash";
 
         [ViewVariables(VVAccess.ReadWrite)] private int _flashDuration = 5000;
-        [ViewVariables(VVAccess.ReadWrite)] private float _flashFalloffExp = 8f;
         [ViewVariables(VVAccess.ReadWrite)] private int _uses = 5;
         [ViewVariables(VVAccess.ReadWrite)] private float _range = 3f;
         [ViewVariables(VVAccess.ReadWrite)] private int _aoeFlashDuration = 5000 / 3;
@@ -55,9 +54,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             base.ExposeData(serializer);
 
             serializer.DataField(ref _flashDuration, "duration", 5000);
-            serializer.DataField(ref _flashFalloffExp, "flashFalloffExp", 8f);
             serializer.DataField(ref _uses, "uses", 5);
-            serializer.DataField(ref _range, "range", 3f);
+            serializer.DataField(ref _range, "range", 7f);
             serializer.DataField(ref _aoeFlashDuration, "aoeFlashDuration", _flashDuration / 3);
             serializer.DataField(ref _slowTo, "slowTo", 0.75f);
         }
@@ -106,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 {
                     sprite.LayerSetState(0, "burnt");
 
-                    _notifyManager.PopupMessage(Owner, user, "The flash burns out!");
+                    _notifyManager.PopupMessage(Owner, user, Loc.GetString("The flash burns out!"));
                 }
                 else if (!_flashing)
                 {
@@ -139,9 +137,18 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
         {
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent))
             {
-                var container = new TimedOverlayContainer(nameof(OverlayType.FlashOverlay), flashDuration);
-                overlayEffectsComponent.AddOverlay(container);
-                container.StartTimer(() => overlayEffectsComponent.RemoveOverlay(container));
+                if (!overlayEffectsComponent.TryModifyOverlay(nameof(SharedOverlayID.FlashOverlay),
+                    overlay =>
+                    {
+                        if (overlay.TryGetOverlayParameter<TimedOverlayParameter>(out var timed))
+                        {
+                            timed.Length += flashDuration;
+                        }
+                    }))
+                {
+                    var container = new OverlayContainer(SharedOverlayID.FlashOverlay, new TimedOverlayParameter(flashDuration));
+                    overlayEffectsComponent.AddOverlay(container);
+                }
             }
 
             if (entity.TryGetComponent(out StunnableComponent stunnableComponent))
@@ -151,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (entity != user)
             {
-                _notifyManager.PopupMessage(user, entity, $"{user.Name} blinds you with the {Owner.Name}");
+                _notifyManager.PopupMessage(user, entity, Loc.GetString("{0:TheName} blinds you with {1:theName}", user, Owner));
             }
         }
 
@@ -165,8 +172,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
             if (inDetailsRange)
             {
-                message.AddMarkup(_localizationManager.GetString(
-                    $"The flash has [color=green]{Uses}[/color] uses remaining."));
+                message.AddMarkup(
+                    _localizationManager.GetString(
+                        "The flash has [color=green]{0}[/color] {1} remaining.",
+                        Uses,
+                        _localizationManager.GetPluralString("use", "uses", Uses)
+                    )
+                );
             }
         }
     }

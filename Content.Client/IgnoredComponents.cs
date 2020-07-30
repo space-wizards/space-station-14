@@ -31,7 +31,7 @@
             "Wrench",
             "Crowbar",
             "MeleeWeapon",
-            "Storeable",
+            "Storable",
             "Dice",
             "Construction",
             "Door",
@@ -103,7 +103,7 @@
             "EmergencyClosetFill",
             "Tool",
             "TilePrying",
-            "RandomToolColor",
+            "RandomSpriteColor",
             "ConditionalSpawner",
             "PottedPlantHide",
             "SecureEntityStorage",
@@ -128,13 +128,18 @@
             "StressTestMovement",
             "Toys",
             "SurgeryTool",
-            "Slippery",
             "EmitSoundOnThrow",
             "Flash",
             "DamageOnToolInteract",
             "CustodialClosetFill",
             "NoSlip",
             "TrashSpawner",
+            "Pill",
+            "RCD",
+            "Pullable",
+            "CursedEntityStorage",
+            "Listening",
+            "Radio"
         };
     }
 }

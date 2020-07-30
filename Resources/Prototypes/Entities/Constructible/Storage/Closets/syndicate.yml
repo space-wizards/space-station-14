@@ -1,0 +1,13 @@
+# Base syndicate closet
+- type: entity
+  id: LockerSyndicateBase
+  name: armory closet
+  parent: LockerGeneric
+  abstract: true
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: syndicate
+  - type: Icon
+    state: syndicate_door

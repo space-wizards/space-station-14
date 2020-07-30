@@ -1,0 +1,165 @@
+- type: entity
+  name: retro laser gun
+  parent: BaseItem
+  id: LaserGun
+  description: A weapon using light amplified by the stimulated emission of radiation. Ancient inefficient model.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    minAngle: 10
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    powerCellPrototype: PowerCellSmallStandard
+    ammoPrototype: RedLaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
+  name: laser cannon
+  parent: BaseItem
+  id: LaserCannon
+  description: With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallSuper
+    ammoPrototype: RedHeavyLaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: x-ray cannon
+  parent: BaseItem
+  id: XrayCannon
+  description: Blah blah blah
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallSuper
+    base_fire_cost: 600
+    ammoPrototype: XrayLaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true
+
+- type: entity
+  name: taser
+  parent: BaseItem
+  id: TaserGun
+  description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Icon
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/taser.rsi
+    prefix: icon
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 5
+    maxAngle: 45
+    angleIncrease: 20
+    angleDecay: 15
+    powerCellPrototype: PowerCellSmallStandard
+    ammoPrototype: BulletTaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: true

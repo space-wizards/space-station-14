@@ -125,7 +125,7 @@ namespace Content.Shared.GameObjects.Components.Sound
 
         public void ExposeData(ObjectSerializer serializer)
         {
-            if (!serializer.Reading)
+            if (serializer.Writing)
                 return;
 
             Filename = serializer.ReadDataField("filename", "");

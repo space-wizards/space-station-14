@@ -1,0 +1,24 @@
+﻿- type: entity
+  id: Arcade
+  name: arcade
+  parent: ComputerBase
+  components:
+  - type: Icon
+    state: arcade
+  - type: PowerReceiver
+  - type: Sprite
+    layers:
+    - state: arcade
+      map: ["enum.ComputerVisualizer+Layers.Body"]
+    - state: invaders
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.Screen"]
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      screen: invaders
+      key: ""
+      body: arcade
+      bodyBroken: arcade
+  - type: Anchorable
+  - type: Pullable

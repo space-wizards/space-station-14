@@ -17,7 +17,7 @@ namespace Content.Client.Graphics.Overlays
 #pragma warning restore 649
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
-        public GradientCircleMaskOverlay() : base(nameof(OverlayType.GradientCircleMaskOverlay))
+        public GradientCircleMaskOverlay() : base(nameof(SharedOverlayID.GradientCircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
             Shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();

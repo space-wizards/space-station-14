@@ -1,9 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Power;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Interfaces.GameTicking;
-using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Command;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;

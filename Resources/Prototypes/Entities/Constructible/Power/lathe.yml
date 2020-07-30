@@ -1,0 +1,132 @@
+﻿- type: entity
+  id: BaseLathe
+  name: "lathe"
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.25,0.4,0.25"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 25
+    anchored: true
+  - type: SnapGrid
+    offset: Center
+  - type: Lathe
+  - type: MaterialStorage
+  - type: Anchorable
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+  - type: PowerReceiver
+
+- type: entity
+  parent: BaseLathe
+  id: Autolathe
+  name: "autolathe"
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/autolathe.rsi
+    layers:
+    - state: autolathe
+      map: ["enum.AutolatheVisualLayers.Base"]
+    - state: autolathe_unlit
+      shader: unshaded
+      map: ["enum.AutolatheVisualLayers.BaseUnlit"]
+  - type: Icon
+    sprite: Constructible/Power/autolathe.rsi
+    state: autolathe
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: Lathe
+  - type: LatheDatabase
+    static: true
+    recipes:
+      - Brutepack
+      - Ointment
+      - LightTube
+      - LightBulb
+      - MetalStack
+      - GlassStack
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - CableStack
+      - Crowbar
+      - Multitool
+  - type: Appearance
+    visuals:
+    - type: AutolatheVisualizer
+
+- type: entity
+  parent: BaseLathe
+  id: Protolathe
+  name: "protolathe"
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/protolathe.rsi
+    layers:
+    - state: protolathe
+      map: ["enum.ProtolatheVisualLayers.Base"]
+    - state: protolathe_unlit
+      shader: unshaded
+      map: ["enum.ProtolatheVisualLayers.BaseUnlit"]
+    - state: protolathe
+      map: ["enum.ProtolatheVisualLayers.AnimationLayer"]
+  - type: Icon
+    sprite: Constructible/Power/protolathe.rsi
+    state: protolathe
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: SnapGrid
+    offset: Center
+  - type: ResearchClient
+  - type: TechnologyDatabase
+  - type: ProtolatheDatabase
+    protolatherecipes:
+      - Brutepack
+      - Ointment
+      - LightTube
+      - LightBulb
+      - MetalStack
+      - GlassStack
+      - Wirecutter
+      - Screwdriver
+      - Welder
+      - Wrench
+      - CableStack
+      - Crowbar
+      - Multitool
+  - type: UserInterface
+    interfaces:
+    - key: enum.LatheUiKey.Key
+      type: LatheBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ProtolatheVisualizer

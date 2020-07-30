@@ -1,0 +1,221 @@
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBio
+  name: bio
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBiocmo
+  name: bio suit (CMO)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio_cmo.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio_cmo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio_cmo.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBiogeneral
+  name: bio suit 
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio_general.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio_general.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio_general.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBiojanitor
+  name: bio suit (janitor)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio_janitor.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio_janitor.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBioscientist
+  name: bio suit (scientist)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio_scientist.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio_scientist.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio_scientist.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBiosecurity
+  name: bio suit (security)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio_security.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio_security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio_security.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBiovirology
+  name: bio suit (virology)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bio_virology.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bio_virology.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bio_virology.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBombsuit
+  name: bombsuit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bombsuit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bombsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bombsuit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBombsuitsec
+  name: bombsuit (security)
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bombsuitsec.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bombsuitsec.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bombsuitsec.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingBombsuitwhite
+  name: bombsuit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/bombsuit_white.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/bombsuit_white.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/bombsuit_white.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingAnomalysuit
+  name: anomaly suit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/anomaly_suit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/anomaly_suit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/anomaly_suit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingEmergencysuit
+  name: emergency suit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/emergency_suit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/emergency_suit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/emergency_suit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingFiresuit
+  name: fire suit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/firesuit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/firesuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/firesuit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingRadSuit
+  name: rad suit
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/radsuit.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/radsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/radsuit.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingSkub
+  name: Skub Suit
+  description: 'Skub is crudely written on the outside of this cylindrical suit.'
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/skubbody.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/skubbody.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/skubbody.rsi
+
+# I think this is a suit? Looks baggy enough
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingSyndicate
+  name: syndicate
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/syndicate.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/syndicate.rsi
+
+- type: entity
+  parent: OuterclothingBase
+  id: OuterclothingVoid
+  name: void
+  description: ''
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/void.rsi
+  - type: Icon
+    sprite: Clothing/OuterClothing/void.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/void.rsi

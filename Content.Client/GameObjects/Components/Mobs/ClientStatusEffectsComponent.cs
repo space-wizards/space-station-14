@@ -1,29 +1,26 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
-using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {
     /// <inheritdoc/>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStatusEffectsComponent))]
     public sealed class ClientStatusEffectsComponent : SharedStatusEffectsComponent
     {
 #pragma warning disable 649
@@ -65,7 +62,12 @@ namespace Content.Client.GameObjects.Components.Mobs
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
             base.HandleComponentState(curState, nextState);
-            if (!(curState is StatusEffectComponentState state) || _status == state.StatusEffects) return;
+
+            if (!(curState is StatusEffectComponentState state) || _status == state.StatusEffects)
+            {
+                return;
+            }
+
             _status = state.StatusEffects;
             UpdateStatusEffects();
         }
@@ -85,6 +87,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         {
             _ui?.Dispose();
             _ui = null;
+            _cooldown.Clear();
         }
 
         public void UpdateStatusEffects()
@@ -152,6 +155,17 @@ namespace Content.Client.GameObjects.Components.Mobs
                 cooldownGraphic.Progress = (float)ratio.Clamp(-1, 1);
                 cooldownGraphic.Visible = ratio > -1f;
             }
+        }
+
+        public override void ChangeStatusEffect(StatusEffect effect, string icon, (TimeSpan, TimeSpan)? cooldown)
+        {
+            _status[effect] = new StatusEffectStatus()
+            {
+                Icon = icon,
+                Cooldown = cooldown
+            };
+
+            Dirty();
         }
     }
 }

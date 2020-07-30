@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             // This will blow up an entity it's attached to
             base.OnAdd();
-            if (Owner.TryGetComponent<CollidableComponent>(out var collide))
+            if (Owner.TryGetComponent<ICollidableComponent>(out var collide))
             {
                 //collide.IsHardCollidable = false;
             }
@@ -204,7 +204,7 @@ namespace Content.Server.GameObjects.Components.Movement
             // Departure
             // Do we need to rate-limit sounds to stop ear BLAST?
             soundPlayer.PlayAtCoords(_departureSound, entity.Transform.GridPosition);
-            entity.Transform.DetachParent();
+            entity.Transform.AttachToGridOrMap();
             entity.Transform.GridPosition = position;
             soundPlayer.PlayAtCoords(_arrivalSound, entity.Transform.GridPosition);
             TryChangeState(PortalState.RecentlyTeleported);

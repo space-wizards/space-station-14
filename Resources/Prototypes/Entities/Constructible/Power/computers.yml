@@ -1,0 +1,221 @@
+﻿- type: entity
+  id: ComputerBase
+  name: computer
+  abstract: true
+  components:
+  - type: Physics
+    mass: 25
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    IsScrapingFloor: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.25,0.5,0.25"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - Opaque
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+  - type: Icon
+    sprite: Constructible/Power/computers.rsi
+    state: computer
+  - type: Computer
+  - type: PowerReceiver
+  - type: Anchorable
+
+  - type: Sprite
+    sprite: Constructible/Power/computers.rsi
+    layers:
+    - state: computer
+      map: ["enum.ComputerVisualizer+Layers.Body"]
+    - state: generic_key_off
+      map: ["enum.ComputerVisualizer+Layers.Keyboard"]
+    - state: generic
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - state: generic_key
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.KeyboardOn"]
+
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: generic
+
+
+- type: entity
+  id: ComputerAlert
+  parent: ComputerBase
+  name: alerts computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: atmos_key
+      screen: "alert-2"
+
+
+- type: entity
+  id: ComputerPowerMonitoring
+  parent: ComputerBase
+  name: power monitoring computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: power_key
+      screen: power_monitor
+
+
+- type: entity
+  id: ComputerSupplyOrdering
+  parent: ComputerBase
+  name: cargo ordering computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: supply
+  - type: CargoConsole
+  - type: CargoOrderDatabase
+  - type: GalacticMarket
+    static: true
+    products:
+      - cargo.dice
+      - cargo.Medkit
+      - cargo.flashlight
+      - cargo.lightblub
+      - cargo.fireextinguisher
+      - cargo.pen
+      - cargo.bikehorn
+      - cargo.cleaver
+      - cargo.fueltank
+      - cargo.medscanner
+      - cargo.glass
+      - cargo.cable
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Key
+      type: CargoConsoleBoundUserInterface
+
+- type: entity
+  id: ComputerSupplyRequest
+  parent: ComputerSupplyOrdering
+  name: cargo request computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: request
+  - type: CargoConsole
+    requestOnly: true
+
+- type: entity
+  id: ComputerMedicalRecords
+  parent: ComputerBase
+  name: medical records computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: med_key
+      screen: medcomp
+
+
+- type: entity
+  id: ComputerResearchAndDevelopment
+  parent: ComputerBase
+  name: R&D computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: rd_key
+      screen: rdcomp
+  - type: ResearchClient
+  - type: ResearchConsole
+  - type: TechnologyDatabase
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchConsoleUiKey.Key
+      type: ResearchConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: PowerReceiver
+    load: 200
+    priority: Low
+
+- type: entity
+  id: ComputerId
+  parent: ComputerBase
+  name: ID card computer
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+  - type: IdCardConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.IdCardConsoleUiKey.Key
+      type: IdCardConsoleBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: id_key
+      screen: id
+
+- type: entity
+  id: computerBodyScanner
+  parent: ComputerBase
+  name: body scanner computer
+  components:
+  - type: BodyScanner
+  - type: UserInterface
+    interfaces:
+    - key: enum.BodyScannerUiKey.Key
+      type: BodyScannerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: generic
+
+- type: entity
+  id: ComputerComms
+  parent: ComputerBase
+  name: communications computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: comm
+  - type: CommunicationsConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.CommunicationsConsoleUiKey.Key
+      type: CommunicationsConsoleBoundUserInterface
+
+- type: entity
+  id: ComputerSolarControl
+  parent: ComputerBase
+  name: Solar Control Computer
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: generic_key
+      screen: solar_screen
+  - type: SolarControlConsole
+  - type: UserInterface
+    interfaces:
+    - key: enum.SolarControlConsoleUiKey.Key
+      type: SolarControlConsoleBoundUserInterface

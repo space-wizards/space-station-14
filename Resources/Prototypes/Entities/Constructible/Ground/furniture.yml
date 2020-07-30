@@ -1,0 +1,118 @@
+- type: entity
+  name: stool
+  id: Stool
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: stool_base
+    color: "#8e9799"
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: stool_base
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: bar stool
+  id: StoolBar
+  parent: Stool
+  components:
+  - type: Sprite
+    state: bar_stool
+    color: "white"
+  - type: Icon
+    state: bar_stool
+
+- type: entity
+  name: white office chair
+  id: ChairOfficeLight
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_white
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_white
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: dark office chair
+  id: ChairOfficeDark
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_dark
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_dark
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: chair
+  id: Chair
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: chair
+    color: "#8e9799"
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: chair
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: wooden chair
+  id: ChairWood
+  parent: Chair
+  components:
+  - type: Sprite
+    state: wooden_chair
+    color: "white"
+  - type: Icon
+    state: wooden_chair
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: bed
+  id: Bed
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: bed
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: bed
+  - type: Strap
+    position: Down
+    rotation: -90
+  placement:
+    mode: SnapgridCenter
