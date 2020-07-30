@@ -129,11 +129,9 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(1, 0, false)]
         [TestCase(0, 0, true)]
         [TestCase(-1, 0, false)]
-        [TestCase(null, 0, true)]
         [TestCase(1, 1, true)]
         [TestCase(0, 1, false)]
         [TestCase(-1, 1, false)]
-        [TestCase(null, 1, false)]
         public void ReagentUnitEquals(int a, int b, bool expected)
         {
             var parameter = ReagentUnit.New(a);
