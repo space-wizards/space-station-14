@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -338,7 +339,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 tile.EqualizePressureInZone(UpdateCounter);
 
                 // Process the rest next time.
-                if (watch.Elapsed.Seconds >= 0.1f)
+                if (watch.Elapsed.TotalMilliseconds >= 1f)
                     break;
             }
         }
@@ -353,7 +354,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 tile.ProcessCell(UpdateCounter);
 
                 // Process the rest of tiles next time.
-                if (watch.Elapsed.Seconds >= 0.1f)
+                if (watch.Elapsed.TotalMilliseconds >= 1f)
                     break;
             }
         }
@@ -375,7 +376,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     excitedGroup.Dismantle();
 
                 // Process the rest of excited groups next time.
-                if (watch.Elapsed.Seconds >= 0.1f)
+                if (watch.Elapsed.TotalMilliseconds >= 1f)
                     break;
             }
         }
