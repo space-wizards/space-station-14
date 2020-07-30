@@ -1,28 +1,24 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorSwitchComponent : Component, IInteractHand, IExamine, IInteractUsing, IActivate
+    public class ConveyorSwitchComponent : Component, IInteractHand, IInteractUsing, IActivate
     {
         public override string Name => "ConveyorSwitch";
-
-        [ViewVariables]
-        private uint _id;
 
         private ConveyorState _state;
 
@@ -44,13 +40,11 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private ConveyorGroup? Group => _id == 0
-            ? null
-            : EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id);
+        private ConveyorGroup? _group;
 
         public void Sync(ConveyorGroup group)
         {
-            _id = group.Id;
+            _group = group;
 
             if (State == ConveyorState.Loose)
             {
@@ -62,26 +56,31 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 : group.State;
         }
 
-        public void Disconnect()
+        /// <summary>
+        ///     Disconnects this switch from any conveyors and other switches.
+        /// </summary>
+        private void Disconnect()
         {
-            _id = 0;
+            _group?.RemoveSwitch(this);
+            _group = null;
             State = ConveyorState.Off;
         }
 
-        public void ChangeId(uint id)
+        /// <summary>
+        ///     Connects a conveyor to this switch.
+        /// </summary>
+        /// <param name="conveyor">The conveyor to be connected.</param>
+        /// <param name="user">The user doing the connecting, if any.</param>
+        public void Connect(ConveyorComponent conveyor, IEntity? user = null)
         {
-            EntitySystem.Get<ConveyorSystem>().ChangeId(this, _id, id);
-        }
-
-        public void Connect(IEntity user, ConveyorComponent conveyor)
-        {
-            if (_id == 0)
+            if (_group == null)
             {
-                return;
+                _group = new ConveyorGroup();
+                _group.AddSwitch(this);
             }
 
-            Group!.AddConveyor(conveyor);
-            user.PopupMessage(user, Loc.GetString("Conveyor linked with id {0}.", _id));
+            _group.AddConveyor(conveyor);
+            user?.PopupMessage(user, Loc.GetString("Conveyor linked."));
         }
 
         /// <summary>
@@ -93,11 +92,6 @@ namespace Content.Server.GameObjects.Components.Conveyor
         /// </returns>
         private bool NextState()
         {
-            if (_id == 0)
-            {
-                return false;
-            }
-
             State = State switch
             {
                 ConveyorState.Off => ConveyorState.Forward,
@@ -107,50 +101,81 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            Group!.SetState(this);
+            _group?.SetState(this);
 
             return true;
         }
 
-        private void SyncWith(IEntity user, ConveyorSwitchComponent other)
+        /// <summary>
+        ///     Moves this switch to the group of another.
+        /// </summary>
+        /// <param name="other">The conveyor switch to synchronize with.</param>
+        /// <param name="user">The user doing the syncing, if any.</param>
+        private void SyncWith(ConveyorSwitchComponent other, IEntity? user = null)
         {
-            _id = other._id;
+            other._group?.AddSwitch(this);
 
-            Owner.PopupMessage(user, _id == 0
-                ? Loc.GetString("Switch id erased.")
-                : Loc.GetString("Switch changed to id {0}.", _id));
+            if (user == null)
+            {
+                return;
+            }
+
+            Owner.PopupMessage(user, Loc.GetString("Switches synchronized."));
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
-            serializer.DataReadWriteFunction<uint>(
-                "id",
-                0,
-                id => _id = id == 0
-                    ? EntitySystem.Get<ConveyorSystem>().NextId()
-                    : id,
-                () => _id);
-        }
+            serializer.DataReadWriteFunction(
+                "conveyors",
+                new List<IEntity>(),
+                conveyors =>
+                {
+                    if (conveyors == null)
+                    {
+                        return;
+                    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
+                    foreach (var conveyor in conveyors)
+                    {
+                        if (!conveyor.TryGetComponent(out ConveyorComponent component))
+                        {
+                            continue;
+                        }
 
-            if (_id == 0)
-            {
-                return;
-            }
+                        Connect(component);
+                    }
+                },
+                () => _group?.Conveyors.Select(conveyor => conveyor.Owner));
 
-            EntitySystem.Get<ConveyorSystem>().EnsureGroup(_id).AddSwitch(this);
+            serializer.DataReadWriteFunction(
+                "switches",
+                new List<IEntity>(),
+                switches =>
+                {
+                    if (switches == null)
+                    {
+                        return;
+                    }
+
+                    foreach (var @switch in switches)
+                    {
+                        if (!@switch.TryGetComponent(out ConveyorSwitchComponent component))
+                        {
+                            continue;
+                        }
+
+                        component.SyncWith(this);
+                    }
+                },
+                () => _group?.Switches.Select(@switch => @switch.Owner));
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-
-            Group?.RemoveSwitch(this);
+            Disconnect();
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
@@ -158,24 +183,17 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return NextState();
         }
 
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddMarkup(_id == 0
-                ? Loc.GetString("It doesn't have an id.")
-                : Loc.GetString("It has an id of {0}.", _id));
-        }
-
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
             {
-                Connect(eventArgs.User, conveyor);
+                Connect(conveyor, eventArgs.User);
                 return true;
             }
 
             if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent otherSwitch))
             {
-                SyncWith(eventArgs.User, otherSwitch);
+                SyncWith(otherSwitch, eventArgs.User);
                 return true;
             }
 
