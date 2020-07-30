@@ -18,7 +18,7 @@
     qualities:
       - Cutting
     useSound: /Audio/Items/wirecutter.ogg
-  - type: RandomToolColor
+  - type: RandomSpriteColor
     state: cutters
     colors:
       blue: "#1861d5"
@@ -55,7 +55,7 @@
     qualities:
       - Screwing
     useSoundCollection: Screwdriver
-  - type: RandomToolColor
+  - type: RandomSpriteColor
     state: screwdriver
     colors:
       blue: "#1861d5"
