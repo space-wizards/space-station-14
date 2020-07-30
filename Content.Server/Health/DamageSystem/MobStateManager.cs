@@ -30,6 +30,8 @@ namespace Content.Server.DamageSystem
         private DamageState _currentDamageState;
         private IMobState _currentMobState = new NormalState();
 
+        public IMobState CurrentMobState => _currentMobState;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -270,7 +272,7 @@ namespace Content.Server.DamageSystem
                 statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health, "/Textures/Interface/StatusEffects/Human/humancrit-0.png"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
-                overlayComponent.AddOverlay(OverlayType.GradientCircleMaskOverlay);
+                overlayComponent.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
 
             if (entity.TryGetComponent(out StunnableComponent stun))
                 stun.CancelAll();
@@ -363,7 +365,7 @@ namespace Content.Server.DamageSystem
                 statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health, "/Textures/Interface/StatusEffects/Human/humandead.png");
 
             if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
-                overlayComponent.AddOverlay(OverlayType.CircleMaskOverlay);
+                overlayComponent.AddOverlay(SharedOverlayID.CircleMaskOverlay);
 
             if (entity.TryGetComponent(out StunnableComponent stun))
                 stun.CancelAll();

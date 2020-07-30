@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
@@ -353,9 +354,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 StandingStateHelper.Standing(Owner);
             }
 
-            if (Owner.TryGetComponent(out SpeciesComponent species))
+            if (Owner.TryGetComponent(out MobStateManagerComponent stateManager))
             {
-                species.CurrentDamageState.EnterState(Owner);
+                stateManager.CurrentMobState.EnterState(Owner);
             }
 
             BuckleStatus();

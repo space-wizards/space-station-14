@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -221,7 +223,7 @@ namespace Content.Server.GameObjects
                 foreach (var e in collidesWith)
                 {
                     if (!e.TryGetComponent(out StunnableComponent stun)
-                        || !e.TryGetComponent(out DamageableComponent damage)
+                        || !e.TryGetComponent(out IDamageableComponent damage)
                         || !e.TryGetComponent(out ICollidableComponent otherBody)
                         || !Owner.TryGetComponent(out ICollidableComponent body))
                         continue;
@@ -231,7 +233,7 @@ namespace Content.Server.GameObjects
                     if (percentage < 0.1f)
                         continue;
 
-                    damage.TakeDamage(Shared.GameObjects.DamageType.Brute, DoorCrushDamage);
+                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, Owner, false);
                     stun.Paralyze(DoorStunTime);
                     hitSomeone = true;
                 }

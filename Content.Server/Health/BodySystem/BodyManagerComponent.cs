@@ -11,6 +11,7 @@ using System.Linq;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.DamageSystem;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.DamageSystem;
 using Content.Server.Mobs;
 
@@ -118,24 +119,6 @@ namespace Content.Server.BodySystem {
                 },
                 () => _presetName);
         }
-
-        /// <summary>
-        ///     Loads the given <see cref="BodyPreset"/> - forcefully changes all limbs found in both the preset and this template!
-        /// </summary>
-        public void LoadBodyPreset(BodyPreset preset) {
-            foreach (var (slotName, type) in _template.Slots) {
-                if (!preset.PartIDs.TryGetValue(slotName, out string partID)) { //For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
-                    continue; //If the preset doesn't define anything for it, continue.
-                }
-                if (!_prototypeManager.TryIndex(partID, out BodyPartPrototype newPartData)) { //Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
-                    throw new InvalidOperationException("BodyPart prototype with ID " + partID + " could not be found!");
-                }
-                _partDictionary.Remove(slotName); //Try and remove an existing limb if that exists.
-                _partDictionary.Add(slotName, new BodyPart(newPartData)); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
-            }
-            OnBodyChanged();
-        }
-
 
         public void LoadBodyPreset(BodyPreset preset)
         {
