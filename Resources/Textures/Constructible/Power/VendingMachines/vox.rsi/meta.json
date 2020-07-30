@@ -1,1 +1,21 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "broken", "directions": 1, "delays": [[1.0]]}, {"name": "normal", "directions": 1, "delays": [[1.0]]}, {"name": "off", "directions": 1, "delays": [[1.0]]}]}
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "broken",
+            "directions": 1
+        },
+        {
+            "name": "normal-unshaded",
+            "directions": 1
+        },
+        {
+            "name": "off",
+            "directions": 1
+        }
+    ]
+}

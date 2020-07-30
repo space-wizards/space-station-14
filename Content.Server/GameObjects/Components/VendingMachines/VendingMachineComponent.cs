@@ -9,8 +9,11 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -42,6 +45,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private bool Powered => _powerReceiver.Powered;
         private bool _broken = false;
 
+        private string _soundVend;
+
         public void Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out IActorComponent actor))
@@ -66,6 +71,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             base.ExposeData(serializer);
 
             serializer.DataField(ref _packPrototypeId, "pack", string.Empty);
+            // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
+            serializer.DataField(ref _soundVend, "soundVend", "/Audio/Machines/machine_vend.ogg");
         }
 
         private void InitializeFromPrototype()
@@ -177,6 +184,8 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 TrySetVisualState(VendingMachineVisualState.Normal);
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
             });
+
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-5f));
         }
 
         private void FlickDenyAnimation()
