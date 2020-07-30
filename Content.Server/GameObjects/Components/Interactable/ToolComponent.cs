@@ -108,11 +108,18 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void PlayUseSound(float volume=-5f)
         {
-            if(string.IsNullOrEmpty(UseSoundCollection))
-                EntitySystem.Get<AudioSystem>()
-                    .PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+            if (string.IsNullOrEmpty(UseSoundCollection))
+            {
+                if (!string.IsNullOrEmpty(UseSound))
+                {
+                    EntitySystem.Get<AudioSystem>()
+                        .PlayFromEntity(UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
+                }
+            }
             else
+            {
                 PlaySoundCollection(UseSoundCollection, volume);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-meta:
+﻿meta:
   format: 2
   name: DemoStation
   author: Space-Wizards
@@ -28998,7 +28998,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#FFA500FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3029
   type: Wrench
   components:
@@ -29028,7 +29028,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#D58C18FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3033
   type: UtilityBeltClothing
   components:
@@ -29075,7 +29075,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#FFA500FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3038
   type: Welder
   components:
@@ -29100,7 +29100,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#D58C18FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3041
   type: GlovesYellow
   components:
@@ -29125,7 +29125,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#FFA500FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3044
   type: Crowbar
   components:
@@ -29145,7 +29145,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#D58C18FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3046
   type: CableStack1
   components:
@@ -29193,7 +29193,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#FFA500FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3052
   type: Wrench
   components:
@@ -29223,7 +29223,7 @@ entities:
       green: '#0E7F1BFF'
       cyan: '#18A2D5FF'
       yellow: '#D58C18FF'
-    type: RandomToolColor
+    type: RandomSpriteColor
 - uid: 3056
   type: BreathMaskClothing
   components:

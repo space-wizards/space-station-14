@@ -103,7 +103,7 @@
             "EmergencyClosetFill",
             "Tool",
             "TilePrying",
-            "RandomToolColor",
+            "RandomSpriteColor",
             "ConditionalSpawner",
             "PottedPlantHide",
             "SecureEntityStorage",
