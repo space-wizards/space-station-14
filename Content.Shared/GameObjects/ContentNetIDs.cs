@@ -3,7 +3,7 @@
     // Starting from 1000 to avoid crossover with engine.
     public static class ContentNetIDs
     {
-        public const uint DAMAGEABLE = 1000;
+        // 1000
         public const uint DESTRUCTIBLE = 1001;
         public const uint MAGAZINE_BARREL = 1002;
         public const uint HANDS = 1003;

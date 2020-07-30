@@ -107,10 +107,8 @@ namespace Content.Server.GameObjects
             {
                 return;
             }
-            if (entity.HasComponent(typeof(SpeciesComponent)))
+            if (entity.TryGetComponent<IMoverComponent>(out var mover))
             {
-                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
-
                 // TODO: temporary hack to fix the physics system raising collision events akwardly.
                 // E.g. when moving parallel to a door by going off the side of a wall.
                 var (walking, sprinting) = mover.VelocityDir;

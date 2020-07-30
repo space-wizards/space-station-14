@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -70,9 +71,11 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 return;
             }
             else
+            {
                 _deleteOnCollide = true;
+            }
 
-            if (_soundHitSpecies != null && entity.HasComponent<SpeciesComponent>())
+            if (_soundHitSpecies != null && entity.HasComponent<IDamageableComponent>())
             {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitSpecies, entity.Transform.GridPosition);
             } else if (_soundHit != null)
@@ -80,13 +83,13 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHit, entity.Transform.GridPosition);
             }
 
-            if (entity.TryGetComponent(out DamageableComponent damage))
+            if (entity.TryGetComponent(out IDamageableComponent damage))
             {
                 Owner.EntityManager.TryGetEntity(_shooter, out var shooter);
 
                 foreach (var (damageType, amount) in _damages)
                 {
-                    damage.TakeDamage(damageType, amount, Owner, shooter);
+                    damage.ChangeDamage(damageType, amount, shooter, false);
                 }
             }
 

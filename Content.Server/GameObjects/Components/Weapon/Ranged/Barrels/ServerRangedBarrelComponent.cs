@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -427,16 +428,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var distance = result.HitEntity != null ? result.Distance : hitscan.MaxLength;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
 
-                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out DamageableComponent damageable))
+                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     return;
                 }
 
-                damageable.TakeDamage(
-                    hitscan.DamageType,
-                    (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero),
-                    Owner,
-                    shooter);
+                damageable.ChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), Owner, false);
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
                 //even numbers if halfway between two numbers, rather than rounding to nearest
             }

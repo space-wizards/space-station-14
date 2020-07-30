@@ -19,6 +19,8 @@ using CannyFastMath;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
+using Content.Server.DamageSystem;
+using Content.Shared.DamageSystem;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {
@@ -116,9 +118,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out DamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
                 {
-                    damageComponent.TakeDamage(DamageType.Brute, Damage, Owner, eventArgs.User);
+                    damageComponent.ChangeDamage(DamageType.Blunt, Damage, Owner, false);
                     hitEntities.Add(entity);
                 }
             }

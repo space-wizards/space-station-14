@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Content.Shared.GameObjects;
+using Content.Shared.DamageSystem;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -39,17 +39,16 @@ namespace Content.Server.Observer
 
             var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
 
-            if (canReturn && player.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+            if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
             {
-                switch (species.CurrentDamageState)
+                switch (damageable.CurrentDamageState)
                 {
-                    case DeadState _:
+                    case DamageState.Dead:
                         canReturn = true;
                         break;
-                    case CriticalState _:
+                    case DamageState.Critical:
                         canReturn = true;
-                        if (!player.AttachedEntity.TryGetComponent(out DamageableComponent damageable)) break;
-                        damageable.TakeDamage(DamageType.Total, 100); // TODO: Use airloss/oxyloss instead
+                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, null, true); //todo: what if they dont breathe lol
                         break;
                     default:
                         canReturn = false;

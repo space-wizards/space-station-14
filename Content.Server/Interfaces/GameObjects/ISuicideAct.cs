@@ -16,11 +16,13 @@ namespace Content.Server.Interfaces.GameObjects
         Special, //Doesn't damage the mob, used for "weird" suicides like gibbing
 
         //Damage type suicides
-        Brute,
+        Blunt,
+        Piercing,
         Heat,
-        Cold,
-        Acid,
-        Toxic,
-        Electric
+        Disintegration,
+        Cellular,
+        DNA,
+        Asphyxiation
+
     }
 }

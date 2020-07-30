@@ -1,13 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Content.Server.GameObjects;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Robust.Server.AI;
@@ -114,41 +113,29 @@ namespace Content.Server.AI.Utility.AiLogic
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(SelfEntity);
             _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
-            if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed += DamageThresholdHandle;
+                damageableComponent.HealthChangedEvent += DeathHandle;
             }
         }
 
         public override void Shutdown()
         {
             // TODO: If DamageableComponent removed still need to unsubscribe?
-            if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed -= DamageThresholdHandle;
+                damageableComponent.HealthChangedEvent -= DeathHandle;
             }
 
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
         }
 
-        private void DamageThresholdHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
+        private void DeathHandle(HealthChangedEventArgs eventArgs)
         {
-            if (!SelfEntity.TryGetComponent(out SpeciesComponent speciesComponent))
-            {
-                return;
-            }
-
-            if (speciesComponent.CurrentDamageState is DeadState)
-            {
-                _isDead = true;
-            }
-            else
-            {
-                _isDead = false;
-            }
+            _isDead = eventArgs.DamageableComponent.CurrentDamageState == DamageState.Dead || eventArgs.DamageableComponent.CurrentDamageState == DamageState.Critical;
         }
-        
+
         private void ReceivedAction()
         {
             switch (_actionRequest.Exception)
@@ -167,7 +154,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 return;
             }
-            
+
             var currentOp = CurrentAction?.ActionOperators.Peek();
             if (currentOp != null && currentOp.HasStartup)
             {

@@ -39,9 +39,8 @@
     anchored: false
   - type: EntityStorage
   - type: PlaceableSurface
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
   - type: Appearance
     visuals:
     - type: StorageVisualizer

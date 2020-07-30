@@ -211,7 +211,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return SuicideKind.Heat;
             }
             chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
-            return SuicideKind.Brute;
+            return SuicideKind.Heat;
         }
 
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)

@@ -1,8 +1,10 @@
-﻿using Content.Server.GameObjects;
+﻿using Content.Server.DamageSystem;
+using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Players;
+using Content.Shared.DamageSystem;
 using Content.Shared.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
@@ -105,24 +107,25 @@ namespace Content.Server.Chat
             "If that fails, it will attempt to use an object in the environment.\n" +
             "Finally, if neither of the above worked, you will die by biting your tongue.";
 
-        private void DealDamage(ISuicideAct suicide, IChatManager chat, DamageableComponent damageableComponent, IEntity source, IEntity target)
+        private void DealDamage(ISuicideAct suicide, IChatManager chat, IDamageableComponent damageableComponent, IEntity source, IEntity target)
         {
             SuicideKind kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
-                damageableComponent.TakeDamage(kind switch
+                damageableComponent.ChangeDamage(kind switch
                 {
-                    SuicideKind.Brute    => DamageType.Brute,
-                    SuicideKind.Heat     => DamageType.Heat,
-                    SuicideKind.Cold     => DamageType.Cold,
-                    SuicideKind.Acid     => DamageType.Acid,
-                    SuicideKind.Toxic    => DamageType.Toxic,
-                    SuicideKind.Electric => DamageType.Electric,
-                                       _ => DamageType.Brute
+                    SuicideKind.Blunt => DamageType.Blunt,
+                    SuicideKind.Piercing => DamageType.Piercing,
+                    SuicideKind.Heat => DamageType.Heat,
+                    SuicideKind.Disintegration => DamageType.Disintegration,
+                    SuicideKind.Cellular => DamageType.Cellular,
+                    SuicideKind.DNA => DamageType.DNA,
+                    SuicideKind.Asphyxiation => DamageType.Asphyxiation,
+                    _ => DamageType.Blunt
                 },
-                500, //TODO: needs to be a max damage of some sorts
+                500, //TODO: find a way to get max HP or something
                 source,
-                target);
+                true);
             }
         }
 
@@ -133,7 +136,7 @@ namespace Content.Server.Chat
 
             var chat = IoCManager.Resolve<IChatManager>();
             var owner = player.ContentData().Mind.OwnedMob.Owner;
-            var dmgComponent = owner.GetComponent<DamageableComponent>();
+            var dmgComponent = owner.GetComponent<IDamageableComponent>();
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent ressurection?
 
@@ -167,7 +170,7 @@ namespace Content.Server.Chat
             }
             // Default suicide, bite your tongue
             chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
-            dmgComponent.TakeDamage(DamageType.Brute, 500, owner, owner); //TODO: dmg value needs to be a max damage of some sorts
+            dmgComponent.ChangeDamage(DamageType.Piercing, 500, owner, true);
         }
     }
 }

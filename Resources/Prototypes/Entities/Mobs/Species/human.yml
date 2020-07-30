@@ -24,7 +24,7 @@
     digestionDelay: 20
   # StatusEffects
   - type: Stunnable
-  # EndStatusEffects
+  # Other
   - type: Inventory
   - type: Clickable
   - type: InteractionOutline
@@ -113,14 +113,12 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Species
-    Template: Human
-    HeatResistance: 323
+
   - type: BodyManager
     BaseTemplate: bodyTemplate.Humanoid
     BasePreset: bodyPreset.BasicHuman
+  - type: MobStateManager
   - type: HeatResistance
-  - type: Damageable
   - type: Appearance
     visuals:
     - type: SpeciesVisualizer
@@ -152,7 +150,6 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
-
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
         color: "#e8b59b"
@@ -181,17 +178,14 @@
         color: "#e8b59b"
         sprite: Mobs/Species/human.rsi
         state: human_l_leg
-
       - shader: StencilClear
       - shader: StencilMask
         map: ["enum.HumanoidVisualLayers.StencilMask"]
         sprite: Mobs/Customization/masking_helpers.rsi
         state: female_full
         visible: false
-
       - map: ["enum.Slots.INNERCLOTHING"]
         shader: StencilDraw
-
       - map: ["enum.HumanoidVisualLayers.LHand"]
         color: "#e8b59b"
         sprite: Mobs/Species/human.rsi
@@ -200,7 +194,6 @@
         color: "#e8b59b"
         sprite: Mobs/Species/human.rsi
         state: human_r_hand
-
       - map: ["enum.Slots.IDCARD"]
       - map: ["enum.Slots.GLOVES"]
       - map: ["enum.Slots.SHOES"]
@@ -220,14 +213,11 @@
       - map: ["enum.Slots.HEAD"]
       - map: ["hand-left"]
       - map: ["hand-right"]
-
     - type: Icon
       sprite: Mobs/Species/human.rsi
       state: human_basic
-
     - type: Physics
       mass: 85
-
     - type: Collidable
       shapes:
         - !type:PhysShapeAabb
@@ -239,17 +229,14 @@
           - SmallImpassable
           layer:
           - MobImpassable
-
-    - type: Species
-      Template: Human
-      HeatResistance: 323
+    - type: BodyManager
+      BaseTemplate: bodyTemplate.Humanoid
+      BasePreset: bodyPreset.BasicHuman
+    - type: MobStateManager
     - type: Damageable
-
     - type: Appearance
       visuals:
         - type: SpeciesVisualizer
-
     - type: HumanoidAppearance
-
     - type: Grammar
       proper: true

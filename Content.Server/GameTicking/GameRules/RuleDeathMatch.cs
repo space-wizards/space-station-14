@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Content.Server.DamageSystem;
 using Content.Server.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
@@ -33,22 +34,13 @@ namespace Content.Server.GameTicking.GameRules
         public override void Added()
         {
             _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
-
-            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
         public override void Removed()
         {
             base.Removed();
-
-            _entityManager.EventBus.UnsubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
-        }
-
-        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
-        {
-            _runDelayedCheck();
         }
 
         private void _checkForWinner()
@@ -59,12 +51,12 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     continue;
                 }
 
-                if (!species.CurrentDamageState.IsConscious)
+                if (damageable.CurrentDamageState != DamageState.Alive)
                 {
                     continue;
                 }

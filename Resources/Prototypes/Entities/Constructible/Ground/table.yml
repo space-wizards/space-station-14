@@ -22,10 +22,9 @@
   - type: IconSmooth
     key: generic
     base: solid_
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 50
-    spawnondestroy: SteelSheet1
+    maxHP: 50
+    spawnOnDestroy: SteelSheet1
 
 # TODO: drop wood instead of steel when destroyed when that's added
 - type: entity
@@ -38,7 +37,6 @@
   - type: IconSmooth
     key: wood
     base: wood_
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 50
-    spawnondestroy: SteelSheet1
+    maxHP: 50
+    spawnOnDestroy: SteelSheet1

@@ -1,4 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Projectiles;
+﻿﻿using Content.Server.DamageSystem;
+using Content.Server.DamageSystem;
+using Content.Server.GameObjects.Components.Projectiles;
+using Content.Shared.DamageSystem;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects;
 using Content.Shared.Physics;
@@ -39,9 +42,9 @@ namespace Content.Server.GameObjects.Components
 
                 _shouldStop = true; // hit something hard => stop after this collision
             }
-            if (entity.TryGetComponent(out DamageableComponent damage))
+            if (entity.TryGetComponent(out IDamageableComponent damage))
             {
-                damage.TakeDamage(DamageType.Brute, 10, Owner, User);
+                damage.ChangeDamage(DamageType.Blunt, 10, Owner, false);
             }
 
             // Stop colliding with mobs, this mimics not having enough velocity to do damage

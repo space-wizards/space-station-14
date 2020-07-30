@@ -23,9 +23,8 @@
     shapes:
     - !type:PhysShapeAabb
       layer: [SmallImpassable, MobImpassable]
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
 
   - type: SnapGrid
     offset: Center

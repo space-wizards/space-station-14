@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Damage;
+﻿using Content.Server.DamageSystem;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
@@ -18,7 +18,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Gravity
 {
     [RegisterComponent]
-    public class GravityGeneratorComponent: SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
+    public class GravityGeneratorComponent : SharedGravityGeneratorComponent, IInteractUsing, IBreakAct, IInteractHand
     {
         private BoundUserInterface _userInterface;
 
@@ -106,10 +106,8 @@ namespace Content.Server.GameObjects.Components.Gravity
                 return false;
 
             // Repair generator
-            var damageable = Owner.GetComponent<DamageableComponent>();
             var breakable = Owner.GetComponent<BreakableComponent>();
-            damageable.HealAllDamage();
-            breakable.broken = false;
+            breakable.FixAllDamage();
             _intact = true;
 
             var notifyManager = IoCManager.Resolve<IServerNotifyManager>();
@@ -130,13 +128,16 @@ namespace Content.Server.GameObjects.Components.Gravity
             if (!Intact)
             {
                 MakeBroken();
-            } else if (!Powered)
+            }
+            else if (!Powered)
             {
                 MakeUnpowered();
-            } else if (!SwitchedOn)
+            }
+            else if (!SwitchedOn)
             {
                 MakeOff();
-            } else
+            }
+            else
             {
                 MakeOn();
             }

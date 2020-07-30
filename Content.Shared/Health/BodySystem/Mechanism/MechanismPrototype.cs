@@ -22,7 +22,6 @@ namespace Content.Shared.BodySystem
         private string _name;
         private string _description;
         private string _examineMessage;
-        private string _spritePath;
         private string _rsiPath;
         private string _rsiState;
         private int _durability;
@@ -30,6 +29,7 @@ namespace Content.Shared.BodySystem
         private int _resistance;
         private int _size;
         private BodyPartCompatibility _compatibility;
+        private List<string> _behaviorClasses;
 
         [ViewVariables]
         public string ID => _id;
@@ -64,6 +64,9 @@ namespace Content.Shared.BodySystem
         [ViewVariables]
         public BodyPartCompatibility Compatibility => _compatibility;
 
+        [ViewVariables]
+        public List<string> BehaviorClasses => _behaviorClasses;
+
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -79,6 +82,7 @@ namespace Content.Shared.BodySystem
             serializer.DataField(ref _resistance, "resistance", 0);
             serializer.DataField(ref _size, "size", 2);
             serializer.DataField(ref _compatibility, "compatibility", BodyPartCompatibility.Universal);
+            serializer.DataField(ref _behaviorClasses, "behaviors", new List<string>());
         }
     }
 }
