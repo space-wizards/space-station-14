@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: VendingMachine
   name: vending machine
+  abstract: true
   components:
   - type: Physics
     anchored: true
