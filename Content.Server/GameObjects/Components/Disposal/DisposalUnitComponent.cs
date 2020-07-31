@@ -192,11 +192,20 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _pressure >= 1 && Powered && Anchored;
         }
 
+        private void ToggleEngage()
+        {
+            Engaged ^= true;
+
+            if (Engaged)
+            {
+                TryFlush();
+            }
+        }
+
         public bool TryFlush()
         {
             if (!CanFlush())
             {
-                Engaged = true;
                 return false;
             }
 
@@ -302,7 +311,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    TryFlush();
+                    ToggleEngage();
                     break;
                 case UiButton.Power:
                     TogglePower();
@@ -586,6 +595,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
+                component.Engaged = true;
                 component.TryFlush();
             }
         }
