@@ -402,7 +402,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
-        private void PowerStateChanged(object sender, PowerStateEventArgs args)
+        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
         {
             UpdateVisualState();
         }
