@@ -2,31 +2,31 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Mobs
+namespace Content.Shared.GameObjects.Components.Rotation
 {
     [RegisterComponent]
-    public class SpeciesComponent : Component
+    public class RotationComponent : Component
     {
-        public sealed override string Name => "Species";
+        public sealed override string Name => "Rotation";
 
         [Serializable, NetSerializable]
-        public enum MobVisuals
+        public enum RotationVisuals
         {
             RotationState
         }
 
         [Serializable, NetSerializable]
-        public enum MobState
+        public enum RotationState
         {
             /// <summary>
-            ///     Mob is standing up
+            ///     Standing up
             /// </summary>
-            Standing,
+            Vertical,
 
             /// <summary>
-            ///     Mob is laying down
+            ///     Laying down
             /// </summary>
-            Down,
+            Horizontal,
         }
     }
 }

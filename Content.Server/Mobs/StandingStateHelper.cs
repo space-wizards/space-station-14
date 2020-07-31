@@ -2,6 +2,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Rotation;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
@@ -32,12 +33,12 @@ namespace Content.Server.Mobs
                 return false;
             }
 
-            var newState = SpeciesComponent.MobState.Down;
-            appearance.TryGetData<SpeciesComponent.MobState>(SpeciesComponent.MobVisuals.RotationState, out var oldState);
+            var newState = RotationComponent.RotationState.Horizontal;
+            appearance.TryGetData<RotationComponent.RotationState>(RotationComponent.RotationVisuals.RotationState, out var oldState);
 
             if (newState != oldState)
             {
-                appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newState);
+                appearance.SetData(RotationComponent.RotationVisuals.RotationState, newState);
             }
 
             if (playSound)
@@ -62,12 +63,12 @@ namespace Content.Server.Mobs
         public static bool Standing(IEntity entity)
         {
             if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
-            appearance.TryGetData<SpeciesComponent.MobState>(SpeciesComponent.MobVisuals.RotationState, out var oldState);
-            var newState = SpeciesComponent.MobState.Standing;
+            appearance.TryGetData<RotationComponent.RotationState>(RotationComponent.RotationVisuals.RotationState, out var oldState);
+            var newState = RotationComponent.RotationState.Vertical;
             if (newState == oldState)
                 return false;
 
-            appearance.SetData(SpeciesComponent.MobVisuals.RotationState, newState);
+            appearance.SetData(RotationComponent.RotationVisuals.RotationState, newState);
 
             return true;
         }

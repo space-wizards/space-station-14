@@ -46,11 +46,11 @@ namespace Content.Shared.Body.Surgery
     [NetSerializable]
     public class ReceiveBodyPartSurgeryUIMessage : BoundUserInterfaceMessage
     {
-        public int SelectedOptionID;
+        public int SelectedOptionId;
 
-        public ReceiveBodyPartSurgeryUIMessage(int selectedOptionID)
+        public ReceiveBodyPartSurgeryUIMessage(int selectedOptionId)
         {
-            SelectedOptionID = selectedOptionID;
+            SelectedOptionId = selectedOptionId;
         }
     }
 
@@ -58,11 +58,11 @@ namespace Content.Shared.Body.Surgery
     [NetSerializable]
     public class ReceiveMechanismSurgeryUIMessage : BoundUserInterfaceMessage
     {
-        public int SelectedOptionID;
+        public int SelectedOptionId;
 
-        public ReceiveMechanismSurgeryUIMessage(int selectedOptionID)
+        public ReceiveMechanismSurgeryUIMessage(int selectedOptionId)
         {
-            SelectedOptionID = selectedOptionID;
+            SelectedOptionId = selectedOptionId;
         }
     }
 
@@ -70,11 +70,11 @@ namespace Content.Shared.Body.Surgery
     [NetSerializable]
     public class ReceiveBodyPartSlotSurgeryUIMessage : BoundUserInterfaceMessage
     {
-        public int SelectedOptionID;
+        public int SelectedOptionId;
 
-        public ReceiveBodyPartSlotSurgeryUIMessage(int selectedOptionID)
+        public ReceiveBodyPartSlotSurgeryUIMessage(int selectedOptionId)
         {
-            SelectedOptionID = selectedOptionID;
+            SelectedOptionId = selectedOptionId;
         }
     }
 

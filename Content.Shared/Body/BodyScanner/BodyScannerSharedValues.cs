@@ -5,15 +5,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.BodyScanner
 {
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public enum BodyScannerUiKey
     {
         Key
     }
 
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class BodyScannerInterfaceState : BoundUserInterfaceState
     {
         public readonly Dictionary<string, BodyScannerBodyPartData> Parts;
@@ -27,8 +25,7 @@ namespace Content.Shared.Body.BodyScanner
         }
     }
 
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class BodyScannerBodyPartData
     {
         public readonly int CurrentDurability;
@@ -50,8 +47,7 @@ namespace Content.Shared.Body.BodyScanner
         }
     }
 
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class BodyScannerMechanismData
     {
         public readonly int CurrentDurability;
@@ -73,8 +69,7 @@ namespace Content.Shared.Body.BodyScanner
         }
     }
 
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class BodyScannerTemplateData
     {
         public readonly string Name;

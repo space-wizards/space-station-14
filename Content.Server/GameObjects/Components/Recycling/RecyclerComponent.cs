@@ -5,6 +5,7 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Recycling;
+using Content.Shared.GameObjects.Components.Rotation;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -64,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
-            return entity.HasComponent<SpeciesComponent>() &&
+            return entity.HasComponent<RotationComponent>() &&
                    !_safe &&
                    Powered;
         }

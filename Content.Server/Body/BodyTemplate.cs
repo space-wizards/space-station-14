@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.Body;
 using Content.Shared.Body.BodyTemplate;
@@ -40,7 +41,7 @@ namespace Content.Server.Body
         ///     the humanoid template.
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, BodyPartType> Slots { get; set; }
+        public Dictionary<string, BodyPartType> Slots { get; private set; }
 
         /// <summary>
         ///     Maps limb name to the list of their connections to other limbs. For instance, on the humanoid template "torso" is
@@ -50,7 +51,7 @@ namespace Content.Server.Body
         ///     map "left arm" to "torso".
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, List<string>> Connections { get; set; }
+        public Dictionary<string, List<string>> Connections { get; private set; }
 
         public bool Equals(BodyTemplate other)
         {
@@ -62,15 +63,7 @@ namespace Content.Server.Body
         /// </summary>
         public bool SlotExists(string slotName)
         {
-            foreach (var slot in Slots.Keys)
-            {
-                if (slot == slotName) //string comparison xd
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return Slots.Keys.Any(slot => slot == slotName);
         }
 
         /// <summary>
@@ -86,7 +79,7 @@ namespace Content.Server.Body
             {
                 var slot = key.GetHashCode();
                 slot = HashCode.Combine(slot, value.GetHashCode());
-                slotsHash = slotsHash ^ slot;
+                slotsHash ^= slot;
             }
 
             var connections = new List<int>();
@@ -104,7 +97,7 @@ namespace Content.Server.Body
 
             foreach (var connection in connections)
             {
-                connectionsHash = connectionsHash ^ connection;
+                connectionsHash ^= connection;
             }
 
             // One of the unit tests considers 0 to be an error, but it will be 0 if the BodyTemplate is empty, so let's shift that up to 1.

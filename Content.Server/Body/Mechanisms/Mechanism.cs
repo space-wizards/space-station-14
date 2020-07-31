@@ -89,15 +89,15 @@ namespace Content.Server.Body.Mechanisms
         public List<MechanismBehavior> MechanismBehaviors { get; set; }
 
         /// <summary>
-        ///     This function is called by <see cref="BodyPart"/>'s Tick function, which is called by
-        ///     <see cref="BodyManagerComponent"/>'s Tick function,
-        ///     which is called by <see cref="BodySystem"/> every tick.
+        ///     This method is called by <see cref="BodyPart.Update"/>,
+        ///     which is called by <see cref="BodyManagerComponent.Update"/>',
+        ///     which is called by <see cref="BodySystem.Update"/>
         /// </summary>
-        public void Tick(float frameTime)
+        public void Update(float frameTime)
         {
             foreach (var behavior in MechanismBehaviors)
             {
-                behavior.Tick(frameTime);
+                behavior.Update(frameTime);
             }
         }
 

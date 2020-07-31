@@ -9,7 +9,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
     {
         public BrainBehavior(Mechanism parent) : base(parent) { }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
         }
 
@@ -29,7 +29,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         {
         }
 
-        public override void Tick(float frameTime)
+        public override void Update(float frameTime)
         {
         }
     }

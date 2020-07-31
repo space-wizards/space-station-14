@@ -51,6 +51,7 @@ namespace Content.Server.GameObjects.Components.Body
             foreach (var (slotName, part) in bodyParts)
             {
                 var mechanismData = new List<BodyScannerMechanismData>();
+
                 foreach (var mechanism in part.Mechanisms)
                 {
                     mechanismData.Add(new BodyScannerMechanismData(mechanism.Name, mechanism.Description,

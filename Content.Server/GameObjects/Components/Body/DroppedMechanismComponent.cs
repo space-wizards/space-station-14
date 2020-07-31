@@ -106,7 +106,9 @@ namespace Content.Server.GameObjects.Components.Body
             // the Mechanism prototypes
             var debugLoadMechanismData = "";
             base.ExposeData(serializer);
+
             serializer.DataField(ref debugLoadMechanismData, "debugLoadMechanismData", "");
+
             if (serializer.Reading && debugLoadMechanismData != "")
             {
                 _prototypeManager.TryIndex(debugLoadMechanismData, out MechanismPrototype data);
@@ -197,7 +199,7 @@ namespace Content.Server.GameObjects.Components.Body
             switch (message.Message)
             {
                 case ReceiveBodyPartSurgeryUIMessage msg:
-                    HandleReceiveBodyPart(msg.SelectedOptionID);
+                    HandleReceiveBodyPart(msg.SelectedOptionId);
                     break;
             }
         }

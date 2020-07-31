@@ -169,7 +169,7 @@ namespace Content.Server.GameObjects.Components.Body
             switch (message.Message)
             {
                 case ReceiveBodyPartSlotSurgeryUIMessage msg:
-                    HandleReceiveBodyPartSlot(msg.SelectedOptionID);
+                    HandleReceiveBodyPartSlot(msg.SelectedOptionId);
                     break;
             }
         }

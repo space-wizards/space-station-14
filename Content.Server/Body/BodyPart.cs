@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Mechanisms;
@@ -26,11 +27,6 @@ namespace Content.Server.Body
     public class BodyPart
     {
         /// <summary>
-        ///     List of <see cref="Mechanism">Mechanisms</see> currently held within this BodyPart.
-        /// </summary>
-        [ViewVariables] private readonly List<Mechanism> _mechanisms = new List<Mechanism>();
-
-        /// <summary>
         ///     How much space is currently taken up by Mechanisms in this BodyPart.
         /// </summary>
         [ViewVariables] private int _sizeUsed;
@@ -48,14 +44,15 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     List of <see cref="IExposeData"/> properties, allowing for additional data classes to be attached to a limb, such
-        ///     as a "length" class to an arm.
+        ///     List of <see cref="IExposeData"/> properties,allowing for additional
+        ///     data classes to be attached to a limb, such as a "length" class to an arm.
         /// </summary>
         [ViewVariables]
         private List<IExposeData> Properties { get; set; }
 
         /// <summary>
-        ///     The name of this BodyPart, often displayed to the user. For example, it could be named "advanced robotic arm".
+        ///     The name of this BodyPart, often displayed to the user.
+        ///     For example, it could be named "advanced robotic arm".
         /// </summary>
         [ViewVariables]
         public string Name { get; private set; }
@@ -79,14 +76,15 @@ namespace Content.Server.Body
         public string RSIState { get; private set; }
 
         /// <summary>
-        ///     <see cref="BodyPartType"/> that this BodyPart is considered to be. For example, BodyPartType.Arm.
+        ///     <see cref="BodyPartType"/> that this BodyPart is considered to be.
+        ///     For example, BodyPartType.Arm.
         /// </summary>
         [ViewVariables]
         public BodyPartType PartType { get; private set; }
 
         /// <summary>
-        ///     Determines many things: how many mechanisms can be fit inside this BodyPart, whether a body can fit through tiny
-        ///     crevices, etc.
+        ///     Determines many things: how many mechanisms can be fit inside this BodyPart,
+        ///     whether a body can fit through tiny crevices, etc.
         /// </summary>
         [ViewVariables]
         private int Size { get; set; }
@@ -122,34 +120,36 @@ namespace Content.Server.Body
         public int DestroyThreshold { get; private set; }
 
         /// <summary>
-        ///     What types of BodyParts this BodyPart can easily attach to. For the most part, most limbs aren't universal and
-        ///     require extra work to attach between types.
+        ///     What types of BodyParts this BodyPart can easily attach to.
+        ///     For the most part, most limbs aren't universal and require extra work to attach between types.
         /// </summary>
         [ViewVariables]
         public BodyPartCompatibility Compatibility { get; private set; }
 
         /// <summary>
-        ///     List of all <see cref="Mechanism">Mechanisms</see> currently inside this BodyPart.
+        ///     List of all <see cref="Mechanism"/> currently inside this BodyPart.
         /// </summary>
         [ViewVariables]
-        public List<Mechanism> Mechanisms => _mechanisms;
+        public List<Mechanism> Mechanisms { get; } = new List<Mechanism>();
 
         /// <summary>
-        ///     This function is called by <see cref="BodyManagerComponent"/>'s Tick function, which is called by
-        ///     <see cref="BodySystem"/> every tick.
+        ///     This method is called by <see cref="BodyManagerComponent.Update"/>,
+        ///     which is called by <see cref="BodySystem.Update"/>
         /// </summary>
-        public void Tick(float frameTime)
+        public void Update(float frameTime)
         {
             foreach (var mechanism in Mechanisms)
             {
-                mechanism.Tick(frameTime);
+                mechanism.Update(frameTime);
             }
         }
 
         /// <summary>
-        ///     Attempts to add the given <see cref="BodyPartProperty"/>. Returns true if successful, false if a BodyPartProperty
-        ///     of that type already exists.
+        ///     Attempts to add the given <see cref="BodyPartProperty"/>.
         /// </summary>
+        /// <returns>
+        ///     True if a BodyPartProperty of that type doesn't exist, false otherwise.
+        /// </returns>
         public bool TryAddProperty(BodyPartProperty property)
         {
             if (HasProperty(property.GetType()))
@@ -162,9 +162,12 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type. Returns true if successful, false otherwise.
+        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type.
         ///     The resulting BodyPartProperty will be null if unsuccessful.
         /// </summary>
+        /// <param name="property">The property if found, null otherwise.</param>
+        /// <typeparam name="T">The type of the property to find.</typeparam>
+        /// <returns>True if successful, false otherwise.</returns>
         public bool TryGetProperty<T>(out T property)
         {
             property = (T) Properties.First(x => x.GetType() == typeof(T));
@@ -172,9 +175,10 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type. Returns true if successful, false otherwise.
+        ///     Attempts to retrieve the given <see cref="BodyPartProperty"/> type.
         ///     The resulting BodyPartProperty will be null if unsuccessful.
         /// </summary>
+        /// <returns>True if successful, false otherwise.</returns>
         public bool TryGetProperty(Type propertyType, out BodyPartProperty property)
         {
             property = (BodyPartProperty) Properties.First(x => x.GetType() == propertyType);
@@ -208,12 +212,8 @@ namespace Content.Server.Body
         /// </summary>
         public bool CanInstallMechanism(Mechanism mechanism)
         {
-            if (_sizeUsed + mechanism.Size > Size)
-            {
-                return false; //No space
-            }
-
-            return _surgeryData.CanInstallMechanism(mechanism);
+            return _sizeUsed + mechanism.Size <= Size &&
+                   _surgeryData.CanInstallMechanism(mechanism);
         }
 
         /// <summary>
@@ -223,14 +223,15 @@ namespace Content.Server.Body
         /// </summary>
         private bool TryInstallMechanism(Mechanism mechanism)
         {
-            if (CanInstallMechanism(mechanism))
+            if (!CanInstallMechanism(mechanism))
             {
-                _mechanisms.Add(mechanism);
-                _sizeUsed += mechanism.Size;
-                return true;
+                return false;
             }
 
-            return false;
+            Mechanisms.Add(mechanism);
+            _sizeUsed += mechanism.Size;
+
+            return true;
         }
 
         /// <summary>
@@ -250,18 +251,21 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Tries to remove the given <see cref="Mechanism"/> reference from this BodyPart. Returns null if there was an error
-        ///     in spawning the entity or removing the mechanism, otherwise returns a reference to the
-        ///     <see cref="DroppedMechanismComponent"/> on the newly spawned entity.
+        ///     Tries to remove the given <see cref="Mechanism"/> reference from
+        ///     this <see cref="BodyPart"/>.
         /// </summary>
-        public DroppedMechanismComponent DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
+        /// <returns>
+        ///     The newly spawned <see cref="DroppedMechanismComponent"/>, or null
+        ///     if there was an error in spawning the entity or removing the mechanism.
+        /// </returns>
+        public DroppedMechanismComponent? DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
         {
-            if (!_mechanisms.Contains(mechanismTarget))
+            if (!Mechanisms.Contains(mechanismTarget))
             {
                 return null;
             }
 
-            _mechanisms.Remove(mechanismTarget);
+            Mechanisms.Remove(mechanismTarget);
             _sizeUsed -= mechanismTarget.Size;
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var mechanismEntity =
@@ -277,12 +281,12 @@ namespace Content.Server.Body
         /// </summary>
         public bool DestroyMechanism(BodyPart bodyPartTarget, Mechanism mechanismTarget)
         {
-            if (!_mechanisms.Contains(mechanismTarget))
+            if (!Mechanisms.Contains(mechanismTarget))
             {
                 return false;
             }
 
-            _mechanisms.Remove(mechanismTarget);
+            Mechanisms.Remove(mechanismTarget);
             _sizeUsed -= mechanismTarget.Size;
             return true;
         }
@@ -348,7 +352,10 @@ namespace Content.Server.Body
                     $"Class {data.SurgeryDataName} is not a subtype of {nameof(SurgeryData)} with id {data.ID}");
             }
 
-            _surgeryData = (SurgeryData) Activator.CreateInstance(surgeryDataType, this);
+            var surgeryData = (SurgeryData?) Activator.CreateInstance(surgeryDataType, this);
+
+            _surgeryData = surgeryData ?? throw new NullReferenceException();
+
             foreach (var id in data.Mechanisms)
             {
                 if (!prototypeManager.TryIndex(id, out MechanismPrototype mechanismData))
@@ -356,7 +363,7 @@ namespace Content.Server.Body
                     throw new InvalidOperationException($"No {nameof(MechanismPrototype)} found with name {id}");
                 }
 
-                _mechanisms.Add(new Mechanism(mechanismData));
+                Mechanisms.Add(new Mechanism(mechanismData));
             }
         }
     }

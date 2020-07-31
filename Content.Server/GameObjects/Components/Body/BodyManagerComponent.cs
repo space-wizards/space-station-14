@@ -197,13 +197,13 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     This function is called by <see cref="BodySystem"/> every tick.
+        ///     This method is called by <see cref="BodySystem.Update"/>
         /// </summary>
-        public void Tick(float frameTime)
+        public void Update(float frameTime)
         {
             foreach (var part in PartDictionary.Values)
             {
-                part.Tick(frameTime);
+                part.Update(frameTime);
             }
         }
 
@@ -234,44 +234,46 @@ namespace Content.Server.GameObjects.Components.Body
 
         private void CalculateSpeed()
         {
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent playerMover))
+            if (!Owner.TryGetComponent(out MovementSpeedModifierComponent playerMover))
             {
-                float speedSum = 0;
-                foreach (var part in _activeLegs.Keys)
-                {
-                    if (!part.HasProperty<LegProperty>())
-                    {
-                        _activeLegs.Remove(part);
-                    }
-                }
+                return;
+            }
 
-                foreach (var (key, value) in _activeLegs)
+            float speedSum = 0;
+            foreach (var part in _activeLegs.Keys)
+            {
+                if (!part.HasProperty<LegProperty>())
                 {
-                    if (key.TryGetProperty(out LegProperty legProperty))
-                    {
-                        // Speed of a leg = base speed * (1+log1024(leg length))
-                        speedSum += legProperty.Speed * (1 + (float) Math.Log(value, 1024.0));
-                    }
+                    _activeLegs.Remove(part);
                 }
+            }
 
-                // Case: no way of moving. Fall down.
-                if (speedSum <= 0.001f || _activeLegs.Count <= 0)
+            foreach (var (key, value) in _activeLegs)
+            {
+                if (key.TryGetProperty(out LegProperty legProperty))
                 {
-                    StandingStateHelper.Down(Owner);
-                    playerMover.BaseWalkSpeed = 0.8f;
-                    playerMover.BaseSprintSpeed = 2.0f;
+                    // Speed of a leg = base speed * (1+log1024(leg length))
+                    speedSum += legProperty.Speed * (1 + (float) Math.Log(value, 1024.0));
                 }
-                else // Case: have at least one leg. Set move speed.
-                {
-                    StandingStateHelper.Standing(Owner);
+            }
 
-                    // Extra legs stack diminishingly.
-                    // Final speed = speed sum/(leg count-log4(leg count))
-                    playerMover.BaseWalkSpeed =
-                        speedSum / (_activeLegs.Count - (float) Math.Log(_activeLegs.Count, 4.0));
+            // Case: no way of moving. Fall down.
+            if (speedSum <= 0.001f || _activeLegs.Count <= 0)
+            {
+                StandingStateHelper.Down(Owner);
+                playerMover.BaseWalkSpeed = 0.8f;
+                playerMover.BaseSprintSpeed = 2.0f;
+            }
+            else // Case: have at least one leg. Set move speed.
+            {
+                StandingStateHelper.Standing(Owner);
 
-                    playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
-                }
+                // Extra legs stack diminishingly.
+                // Final speed = speed sum/(leg count-log4(leg count))
+                playerMover.BaseWalkSpeed =
+                    speedSum / (_activeLegs.Count - (float) Math.Log(_activeLegs.Count, 4.0));
+
+                playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
             }
         }
 
@@ -380,15 +382,12 @@ namespace Content.Server.GameObjects.Components.Body
         private bool ConnectedToCenterPart(BodyPart target)
         {
             var searchedSlots = new List<string>();
-            if (!TryGetSlotName(target, out var result))
-            {
-                return false;
-            }
 
-            return ConnectedToCenterPartRecursion(searchedSlots, result);
+            return TryGetSlotName(target, out var result) &&
+                   ConnectedToCenterPartRecursion(searchedSlots, result);
         }
 
-        private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName)
+        private bool ConnectedToCenterPartRecursion(ICollection<string> searchedSlots, string slotName)
         {
             TryGetBodyPart(slotName, out var part);
 
@@ -404,15 +403,17 @@ namespace Content.Server.GameObjects.Components.Body
 
             searchedSlots.Add(slotName);
 
-            if (TryGetBodyPartConnections(slotName, out List<string> connections))
+            if (!TryGetBodyPartConnections(slotName, out List<string> connections))
             {
-                foreach (var connection in connections)
+                return false;
+            }
+
+            foreach (var connection in connections)
+            {
+                if (!searchedSlots.Contains(connection) &&
+                    ConnectedToCenterPartRecursion(searchedSlots, connection))
                 {
-                    if (!searchedSlots.Contains(connection) &&
-                        ConnectedToCenterPartRecursion(searchedSlots, connection))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -522,12 +523,9 @@ namespace Content.Server.GameObjects.Components.Body
         private bool TryGetBodyPartConnections(BodyPart part, out List<BodyPart> result)
         {
             result = null;
-            if (TryGetSlotName(part, out var slotName))
-            {
-                return TryGetBodyPartConnections(slotName, out result);
-            }
 
-            return false;
+            return TryGetSlotName(part, out var slotName) &&
+                   TryGetBodyPartConnections(slotName, out result);
         }
 
         /// <summary>
@@ -600,31 +598,32 @@ namespace Content.Server.GameObjects.Components.Body
                 return null;
             }
 
-            if (part != null)
+            if (part == null)
             {
-                var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
-                PartDictionary.Remove(slotName);
-
-                // Call disconnect on all limbs that were hanging off this limb.
-                if (TryGetBodyPartConnections(slotName, out List<string> connections))
-                {
-                    // This loop is an unoptimized travesty. TODO: optimize to be less shit
-                    foreach (var connectionName in connections)
-                    {
-                        if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
-                        {
-                            DisconnectBodyPartByName(connectionName, true);
-                        }
-                    }
-                }
-
-                var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                OnBodyChanged();
-                return partEntity;
+                return null;
             }
 
-            return null;
+            var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
+            PartDictionary.Remove(slotName);
+
+            // Call disconnect on all limbs that were hanging off this limb.
+            if (TryGetBodyPartConnections(slotName, out List<string> connections))
+            {
+                // This loop is an unoptimized travesty. TODO: optimize to be less shit
+                foreach (var connectionName in connections)
+                {
+                    if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
+                    {
+                        DisconnectBodyPartByName(connectionName, true);
+                    }
+                }
+            }
+
+            var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+            partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+            OnBodyChanged();
+            return partEntity;
+
         }
 
         /// <summary>
@@ -638,40 +637,43 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            if (part != null)
+            if (part == null)
             {
-                var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
-                if (PartDictionary.Remove(slotName, out var partRemoved))
-                {
-                    BodyPartRemoved(partRemoved, slotName);
-                }
+                return;
+            }
 
-                // Call disconnect on all limbs that were hanging off this limb.
-                if (TryGetBodyPartConnections(slotName, out List<string> connections))
+            var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
+            if (PartDictionary.Remove(slotName, out var partRemoved))
+            {
+                BodyPartRemoved(partRemoved, slotName);
+            }
+
+            // Call disconnect on all limbs that were hanging off this limb.
+            if (TryGetBodyPartConnections(slotName, out List<string> connections))
+            {
+                // This loop is an unoptimized travesty. TODO: optimize to be less shit
+                foreach (var connectionName in connections)
                 {
-                    // This loop is an unoptimized travesty. TODO: optimize to be less shit
-                    foreach (var connectionName in connections)
+                    if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                     {
-                        if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
-                        {
-                            DisconnectBodyPartByName(connectionName, dropEntity);
-                        }
+                        DisconnectBodyPartByName(connectionName, dropEntity);
                     }
                 }
-
-                if (dropEntity)
-                {
-                    var partEntity =
-                        Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                    partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                }
-
-                OnBodyChanged();
             }
+
+            if (dropEntity)
+            {
+                var partEntity =
+                    Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+            }
+
+            OnBodyChanged();
         }
 
         /// <summary>
-        ///     Internal string version of DisconnectBodyPart for performance purposes. Yes, it is actually more performant.
+        ///     Internal string version of DisconnectBodyPart for performance purposes.
+        ///     Yes, it is actually more performant.
         /// </summary>
         private void DisconnectBodyPartByName(string name, bool dropEntity)
         {
@@ -680,33 +682,34 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            if (part != null)
+            if (part == null)
             {
-                if (PartDictionary.Remove(name, out var partRemoved))
-                {
-                    BodyPartRemoved(partRemoved, name);
-                }
+                return;
+            }
 
-                if (TryGetBodyPartConnections(name, out List<string> connections))
+            if (PartDictionary.Remove(name, out var partRemoved))
+            {
+                BodyPartRemoved(partRemoved, name);
+            }
+
+            if (TryGetBodyPartConnections(name, out List<string> connections))
+            {
+                foreach (var connectionName in connections)
                 {
-                    foreach (var connectionName in connections)
+                    if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                     {
-                        if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
-                        {
-                            DisconnectBodyPartByName(connectionName, dropEntity);
-                        }
+                        DisconnectBodyPartByName(connectionName, dropEntity);
                     }
                 }
-
-                if (dropEntity)
-                {
-                    var partEntity =
-                        Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                    partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
-                }
-
-                OnBodyChanged();
             }
+
+            if (dropEntity)
+            {
+                var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
+                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+            }
+
+            OnBodyChanged();
         }
 
         #endregion
@@ -724,22 +727,23 @@ namespace Content.Server.GameObjects.Components.Body
                 return false;
             }
 
-            if (!_networks.ContainsKey(networkType))
+            if (_networks.ContainsKey(networkType))
             {
-                var newNetwork = (BodyNetwork) Activator.CreateInstance(networkType);
-
-                if (newNetwork == null)
-                {
-                    return false;
-                }
-
-                _networks.Add(networkType, newNetwork);
-                newNetwork.OnCreate();
-
-                return true;
+                return false;
             }
 
-            return false;
+            var newNetwork = (BodyNetwork) Activator.CreateInstance(networkType);
+
+            if (newNetwork == null)
+            {
+                return false;
+            }
+
+            _networks.Add(networkType, newNetwork);
+            newNetwork.OnCreate();
+
+            return true;
+
         }
 
         /// <summary>
@@ -783,51 +787,54 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         private static float LookForFootRecursion(BodyManagerComponent body, BodyPart current,
-            List<BodyPart> searchedParts)
+            ICollection<BodyPart> searchedParts)
         {
-            // This function is quite messy but it works as intended.
-            if (current.TryGetProperty<ExtensionProperty>(out var extProperty))
+            if (!current.TryGetProperty<ExtensionProperty>(out var extProperty))
             {
-                // Get all connected parts if the current part has an extension property
-                if (body.TryGetBodyPartConnections(current, out var connections))
-                {
-                    // If a connected BodyPart is a foot, return this BodyPart's length.
-                    foreach (var connection in connections)
-                    {
-                        if (!searchedParts.Contains(connection) && connection.HasProperty<FootProperty>())
-                        {
-                            return extProperty.ReachDistance;
-                        }
-                    }
-
-                    // Otherwise, get the recursion values of all connected BodyParts and store them in a list.
-                    var distances = new List<float>();
-                    foreach (var connection in connections)
-                    {
-                        if (searchedParts.Contains(connection))
-                        {
-                            var result = LookForFootRecursion(body, connection, searchedParts);
-                            if (Math.Abs(result - float.MinValue) > 0.001f)
-                            {
-                                distances.Add(result);
-                            }
-                        }
-                    }
-
-                    // If one or more of the searches found a foot, return the smallest one and add this ones length.
-                    if (distances.Count > 0)
-                    {
-                        return distances.Min<float>() + extProperty.ReachDistance;
-                    }
-
-                    return float.MinValue;
-                }
-
                 return float.MinValue;
             }
 
-            // No extension property, no go.
+            // Get all connected parts if the current part has an extension property
+            if (!body.TryGetBodyPartConnections(current, out var connections))
+            {
+                return float.MinValue;
+            }
+
+            // If a connected BodyPart is a foot, return this BodyPart's length.
+            foreach (var connection in connections)
+            {
+                if (!searchedParts.Contains(connection) && connection.HasProperty<FootProperty>())
+                {
+                    return extProperty.ReachDistance;
+                }
+            }
+
+            // Otherwise, get the recursion values of all connected BodyParts and store them in a list.
+            var distances = new List<float>();
+            foreach (var connection in connections)
+            {
+                if (!searchedParts.Contains(connection))
+                {
+                    continue;
+                }
+
+                var result = LookForFootRecursion(body, connection, searchedParts);
+
+                if (Math.Abs(result - float.MinValue) > 0.001f)
+                {
+                    distances.Add(result);
+                }
+            }
+
+            // If one or more of the searches found a foot, return the smallest one and add this ones length.
+            if (distances.Count > 0)
+            {
+                return distances.Min<float>() + extProperty.ReachDistance;
+            }
+
             return float.MinValue;
+
+            // No extension property, no go.
         }
 
         #endregion

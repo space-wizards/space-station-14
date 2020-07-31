@@ -120,7 +120,7 @@
   - type: HeatResistance
   - type: Appearance
     visuals:
-    - type: SpeciesVisualizer
+    - type: RotationVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
   - type: Teleportable
@@ -235,7 +235,7 @@
     - type: Damageable
     - type: Appearance
       visuals:
-        - type: SpeciesVisualizer
+        - type: RotationVisualizer
     - type: HumanoidAppearance
     - type: Grammar
       proper: true

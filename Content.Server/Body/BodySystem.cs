@@ -8,17 +8,11 @@ namespace Content.Server.Body
     [UsedImplicitly]
     public class BodySystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(BodyManagerComponent));
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var body in EntityManager.ComponentManager.EntityQuery<BodyManagerComponent>())
             {
-                var bodyManager = entity.GetComponent<BodyManagerComponent>(); // TODO
+                // TODO
             }
         }
     }

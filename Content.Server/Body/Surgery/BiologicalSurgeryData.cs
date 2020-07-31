@@ -38,35 +38,34 @@ namespace Content.Server.Body.Surgery
             }
             else if (!_vesselsClamped) //Case: skin is opened, but not clamped.
             {
-                if (toolType == SurgeryType.VesselCompression)
+                switch (toolType)
                 {
-                    return ClampVesselsSurgery;
-                }
-
-                if (toolType == SurgeryType.Cauterization)
-                {
-                    return CauterizeIncisionSurgery;
+                    case SurgeryType.VesselCompression:
+                        return ClampVesselsSurgery;
+                    case SurgeryType.Cauterization:
+                        return CauterizeIncisionSurgery;
                 }
             }
             else if (!_skinRetracted) //Case: skin is opened and clamped, but not retracted.
             {
-                if (toolType == SurgeryType.Retraction)
+                switch (toolType)
                 {
-                    return RetractSkinSurgery;
-                }
-
-                if (toolType == SurgeryType.Cauterization)
-                {
-                    return CauterizeIncisionSurgery;
+                    case SurgeryType.Retraction:
+                        return RetractSkinSurgery;
+                    case SurgeryType.Cauterization:
+                        return CauterizeIncisionSurgery;
                 }
             }
-            else //Case: skin is fully open.
+            else // Case: skin is fully open.
             {
-                if (Parent.Mechanisms.Count > 0 && toolType == SurgeryType.VesselCompression &&
-                    (_disconnectedOrgans.Except(Parent.Mechanisms).Count() != 0 ||
-                     Parent.Mechanisms.Except(_disconnectedOrgans).Count() != 0))
+                if (Parent.Mechanisms.Count > 0 &&
+                    toolType == SurgeryType.VesselCompression)
                 {
-                    return LoosenOrganSurgery;
+                    if (_disconnectedOrgans.Except(Parent.Mechanisms).Count() != 0 ||
+                        Parent.Mechanisms.Except(_disconnectedOrgans).Count() != 0)
+                    {
+                        return LoosenOrganSurgery;
+                    }
                 }
 
                 if (_disconnectedOrgans.Count > 0 && toolType == SurgeryType.Incision)
@@ -86,19 +85,21 @@ namespace Content.Server.Body.Surgery
         public override string GetDescription(IEntity target)
         {
             var toReturn = "";
-            if (_skinOpened && !_vesselsClamped) //Case: skin is opened, but not clamped.
+            if (_skinOpened && !_vesselsClamped)
             {
+                // Case: skin is opened, but not clamped.
                 toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is prone to bleeding.\n",
                     target, Parent.Name);
             }
-            else if (_skinOpened && _vesselsClamped && !_skinRetracted
-            ) //Case: skin is opened and clamped, but not retracted.
+            else if (_skinOpened && _vesselsClamped && !_skinRetracted)
             {
+                // Case: skin is opened and clamped, but not retracted.
                 toReturn += Loc.GetString("The skin on {0:their} {1} has an incision, but it is not retracted.\n",
                     target, Parent.Name);
             }
-            else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
+            else if (_skinOpened && _vesselsClamped && _skinRetracted)
             {
+                // Case: skin is fully open.
                 toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", target, Parent.Name);
                 foreach (var mechanism in _disconnectedOrgans)
                 {
@@ -117,7 +118,7 @@ namespace Content.Server.Body.Surgery
         public override bool CanAttachBodyPart(BodyPart toBeConnected)
         {
             return true;
-            //TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
+            // TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
         }
 
         private void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
@@ -176,12 +177,15 @@ namespace Content.Server.Body.Surgery
             ISurgeon surgeon,
             IEntity performer)
         {
-            if (target != null && Parent.Mechanisms.Contains(target))
+            if (target == null || !Parent.Mechanisms.Contains(target))
             {
-                performer.PopupMessage(performer, Loc.GetString("Loosen the organ..."));
-                //Delay?
-                _disconnectedOrgans.Add(target);
+                return;
             }
+
+            performer.PopupMessage(performer, Loc.GetString("Loosen the organ..."));
+
+            //Delay?
+            _disconnectedOrgans.Add(target);
         }
 
         private void RemoveOrganSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
@@ -205,13 +209,16 @@ namespace Content.Server.Body.Surgery
             ISurgeon surgeon,
             IEntity performer)
         {
-            if (target != null && Parent.Mechanisms.Contains(target))
+            if (target == null || !Parent.Mechanisms.Contains(target))
             {
-                performer.PopupMessage(performer, Loc.GetString("Remove the organ..."));
-                //Delay?
-                Parent.DropMechanism(performer, target);
-                _disconnectedOrgans.Remove(target);
+                return;
             }
+
+            performer.PopupMessage(performer, Loc.GetString("Remove the organ..."));
+
+            //Delay?
+            Parent.DropMechanism(performer, target);
+            _disconnectedOrgans.Remove(target);
         }
 
         private void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)

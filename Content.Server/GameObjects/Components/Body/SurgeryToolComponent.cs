@@ -109,27 +109,28 @@ namespace Content.Server.GameObjects.Components.Body
                 }
 
                 // If surgery can be performed...
-                if (droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryType))
-                {
-                    //...do the surgery.
-                    if (!droppedBodyPart.ContainedBodyPart.AttemptSurgery(_surgeryType, droppedBodyPart, this,
-                        eventArgs.User))
-                    {
-                        // Log error if the surgery fails somehow.
-                        Logger.Debug($"Error when trying to perform surgery on bodypart {eventArgs.User.Name}!");
-                        throw new InvalidOperationException();
-                    }
-                }
-                else // If surgery cannot be performed, show message saying so.
+                if (!droppedBodyPart.ContainedBodyPart.SurgeryCheck(_surgeryType))
                 {
                     SendNoUsefulWayToUsePopup();
+                    return;
                 }
+
+                //...do the surgery.
+                if (droppedBodyPart.ContainedBodyPart.AttemptSurgery(_surgeryType, droppedBodyPart, this,
+                    eventArgs.User))
+                {
+                    return;
+                }
+
+                // Log error if the surgery fails somehow.
+                Logger.Debug($"Error when trying to perform surgery on bodypart {eventArgs.User.Name}!");
+                throw new InvalidOperationException();
             }
         }
 
         public float BaseOperationTime { get => _baseOperateTime; set => _baseOperateTime = value; }
 
-        public void RequestMechanism(List<Mechanism> options, ISurgeon.MechanismRequestCallback callback)
+        public void RequestMechanism(IEnumerable<Mechanism> options, ISurgeon.MechanismRequestCallback callback)
         {
             var toSend = new Dictionary<string, int>();
             foreach (var mechanism in options)
@@ -155,6 +156,7 @@ namespace Content.Server.GameObjects.Components.Body
         public override void Initialize()
         {
             base.Initialize();
+
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(GenericSurgeryUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
@@ -190,10 +192,10 @@ namespace Content.Server.GameObjects.Components.Body
             switch (message.Message)
             {
                 case ReceiveBodyPartSurgeryUIMessage msg:
-                    HandleReceiveBodyPart(msg.SelectedOptionID);
+                    HandleReceiveBodyPart(msg.SelectedOptionId);
                     break;
                 case ReceiveMechanismSurgeryUIMessage msg:
-                    HandleReceiveMechanism(msg.SelectedOptionID);
+                    HandleReceiveMechanism(msg.SelectedOptionId);
                     break;
             }
         }

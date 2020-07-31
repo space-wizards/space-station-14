@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -7,24 +6,25 @@ using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
+using static Content.Shared.GameObjects.Components.Rotation.RotationComponent;
 
-namespace Content.Client.GameObjects.Components.Mobs
+namespace Content.Client.GameObjects.Components.Rotation
 {
     [UsedImplicitly]
-    public class SpeciesVisualizer : AppearanceVisualizer
+    public class RotationVisualizer : AppearanceVisualizer
     {
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData<SpeciesComponent.MobState>(SpeciesComponent.MobVisuals.RotationState, out var state))
+            if (component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
             {
                 switch (state)
                 {
-                    case SpeciesComponent.MobState.Standing:
+                    case RotationState.Vertical:
                         SetRotation(component, 0);
                         break;
-                    case SpeciesComponent.MobState.Down:
+                    case RotationState.Horizontal:
                         SetRotation(component, Angle.FromDegrees(90));
                         break;
                 }
@@ -42,7 +42,9 @@ namespace Content.Client.GameObjects.Components.Mobs
             }
 
             if (animation.HasRunningAnimation("rotate"))
+            {
                 animation.Stop("rotate");
+            }
 
             animation.Play(new Animation
             {

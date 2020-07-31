@@ -1,6 +1,7 @@
 #nullable enable
 using System.Linq;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Rotation;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -48,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SpeciesComponent>();
+                   entity.HasComponent<RotationComponent>();
         }
 
         public bool TryInsert(IEntity entity)
