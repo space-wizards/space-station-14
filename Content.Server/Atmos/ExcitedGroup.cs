@@ -12,7 +12,7 @@ namespace Content.Server.Atmos
         private bool _disposed = false;
 
         [ViewVariables]
-        private readonly HashSet<TileAtmosphere> _tile = new HashSet<TileAtmosphere>(Atmospherics.ZumosTileLimit);
+        private readonly HashSet<TileAtmosphere> _tile = new HashSet<TileAtmosphere>();
 
         [ViewVariables]
         private GridAtmosphereComponent _gridAtmosphereComponent;

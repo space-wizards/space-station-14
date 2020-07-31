@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
@@ -10,14 +9,13 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
     /// <summary>
-    ///     A general-purposes, variable volume gas mixture.
+    ///     A general-purpose, variable volume gas mixture.
     /// </summary>
     [Serializable]
     public class GasMixture : IExposeData, IEquatable<GasMixture>, ICloneable
@@ -220,9 +218,7 @@ namespace Content.Server.Atmos
             if (ratio > 1)
                 ratio = 1;
 
-            var removed = new GasMixture();
-            removed.Volume = Volume;
-            removed.Temperature = Temperature;
+            var removed = new GasMixture {Volume = Volume, Temperature = Temperature};
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -268,31 +264,29 @@ namespace Content.Server.Atmos
             var movedMoles = 0f;
             var absMovedMoles = 0f;
 
-            for(int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var thisValue = _moles[i];
                 var sharerValue = sharer._moles[i];
                 var delta = (thisValue - sharerValue) / (atmosAdjacentTurfs + 1);
-                if (MathF.Abs(delta) >= Atmospherics.GasMinMoles)
+                if (!(MathF.Abs(delta) >= Atmospherics.GasMinMoles)) continue;
+                if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
                 {
-                    if (absTemperatureDelta > Atmospherics.MinimumTemperatureDeltaToConsider)
+                    var gasHeatCapacity = delta * Atmospherics.GetGas(i).SpecificHeat;
+                    if (delta > 0)
                     {
-                        var gasHeatCapacity = delta * Atmospherics.GetGas(i).SpecificHeat;
-                        if (delta > 0)
-                        {
-                            heatCapacityToSharer += gasHeatCapacity;
-                        }
-                        else
-                        {
-                            heatCapacitySharerToThis -= gasHeatCapacity;
-                        }
+                        heatCapacityToSharer += gasHeatCapacity;
                     }
-
-                    if (!Immutable) _moles[i] -= delta;
-                    if (!sharer.Immutable) sharer._moles[i] += delta;
-                    movedMoles += delta;
-                    absMovedMoles += MathF.Abs(delta);
+                    else
+                    {
+                        heatCapacitySharerToThis -= gasHeatCapacity;
+                    }
                 }
+
+                if (!Immutable) _moles[i] -= delta;
+                if (!sharer.Immutable) sharer._moles[i] += delta;
+                movedMoles += delta;
+                absMovedMoles += MathF.Abs(delta);
             }
 
             LastShare = absMovedMoles;
@@ -324,15 +318,13 @@ namespace Content.Server.Atmos
                 }
             }
 
-            if (temperatureDelta > Atmospherics.MinimumTemperatureToMove || MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)
-            {
-                var moles = TotalMoles;
-                var theirMoles = sharer.TotalMoles;
+            if (!(temperatureDelta > Atmospherics.MinimumTemperatureToMove) &&
+                !(MathF.Abs(movedMoles) > Atmospherics.MinimumMolesDeltaToMove)) return 0f;
+            var moles = TotalMoles;
+            var theirMoles = sharer.TotalMoles;
 
-                return (TemperatureArchived * (moles + movedMoles)) - (sharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / Volume;
-            }
+            return (TemperatureArchived * (moles + movedMoles)) - (sharer.TemperatureArchived * (theirMoles - movedMoles)) * Atmospherics.R / Volume;
 
-            return 0f;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -491,7 +483,7 @@ namespace Content.Server.Atmos
         public void Multiply(float multiplier)
         {
             if (Immutable) return;
-            for(int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 _moles[i] *= multiplier;
             }

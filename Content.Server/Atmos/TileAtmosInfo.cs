@@ -41,7 +41,7 @@ namespace Content.Server.Atmos
                     Direction.West => TransferDirectionWest,
                     Direction.North => TransferDirectionNorth,
                     Direction.South => TransferDirectionSouth,
-                    _ => throw new ArgumentOutOfRangeException("Direction out of range!")
+                    _ => throw new ArgumentOutOfRangeException(nameof(direction))
                 };
 
             set
@@ -61,7 +61,7 @@ namespace Content.Server.Atmos
                         TransferDirectionSouth = value;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException("Direction out of range!");
+                        throw new ArgumentOutOfRangeException(nameof(direction));
                 }
             }
         }

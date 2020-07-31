@@ -203,6 +203,7 @@ namespace Content.Server.Atmos
             {
                 if (i > Atmospherics.ZumosHardTileLimit) break;
                 var exploring = tiles[i];
+                exploring._tileAtmosInfo.DistanceScore = 0f;
 
                 if (i < Atmospherics.ZumosTileLimit)
                 {
@@ -289,31 +290,29 @@ namespace Content.Server.Atmos
                 foreach (var tile in tiles)
                 {
                     tile._tileAtmosInfo.FastDone = true;
-                    if (tile._tileAtmosInfo.MoleDelta > 0)
+                    if (!(tile._tileAtmosInfo.MoleDelta > 0)) continue;
+                    Direction eligibleAdjBits = 0;
+                    var amtEligibleAdj = 0;
+                    foreach (var direction in Cardinal)
                     {
-                        Direction eligibleAdjBits = 0;
-                        int amtEligibleAdj = 0;
-                        foreach (var direction in Cardinal)
-                        {
-                            if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
 
-                            // skip anything that isn't part of our current processing block. Original one didn't do this unfortunately, which probably cause some massive lag.
-                            if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.FastDone ||
-                                tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                        // skip anything that isn't part of our current processing block. Original one didn't do this unfortunately, which probably cause some massive lag.
+                        if (tile2._tileAtmosInfo.FastDone || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
+                            continue;
 
-                            eligibleAdjBits |= direction;
-                            amtEligibleAdj++;
-                        }
+                        eligibleAdjBits |= direction;
+                        amtEligibleAdj++;
+                    }
 
-                        if (amtEligibleAdj <= 0) continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
-                        var molesToMove = tile._tileAtmosInfo.MoleDelta / amtEligibleAdj;
-                        foreach (var direction in Cardinal)
-                        {
-                            if((eligibleAdjBits & direction) == 0 || !tile._adjacentTiles.TryGetValue(direction, out var tile2) || tile2?._tileAtmosInfo == null) continue;
-                            tile.AdjustEqMovement(direction, molesToMove);
-                            tile._tileAtmosInfo.MoleDelta -= molesToMove;
-                            tile2._tileAtmosInfo.MoleDelta += molesToMove;
-                        }
+                    if (amtEligibleAdj <= 0) continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
+                    var molesToMove = tile._tileAtmosInfo.MoleDelta / amtEligibleAdj;
+                    foreach (var direction in Cardinal)
+                    {
+                        if((eligibleAdjBits & direction) == 0 || !tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        tile.AdjustEqMovement(direction, molesToMove);
+                        tile._tileAtmosInfo.MoleDelta -= molesToMove;
+                        tile2._tileAtmosInfo.MoleDelta += molesToMove;
                     }
                 }
 
