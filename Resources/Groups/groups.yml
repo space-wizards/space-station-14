@@ -88,6 +88,10 @@
   - mapping
   - addhand
   - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
   CanViewVar: true
   CanAdminPlace: true
 
@@ -163,6 +167,10 @@
   - mapping
   - addhand
   - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
   - addatmos
   - addgas
   - fillgas

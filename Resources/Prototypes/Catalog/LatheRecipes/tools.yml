@@ -40,7 +40,7 @@
   id: CableStack
   name: cable coil
   icon: Objects/Tools/cable_coil.png
-  result: CableStack
+  result: CableStack1
   completetime: 500
   materials:
     steel: 50
