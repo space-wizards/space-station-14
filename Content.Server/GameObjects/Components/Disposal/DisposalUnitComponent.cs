@@ -253,7 +253,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, Loc.GetString($"{State}"), _pressure, Powered);
+            var state = Loc.GetString($"{State}");
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, state, _pressure, Powered, Engaged);
         }
 
         private void UpdateInterface()
