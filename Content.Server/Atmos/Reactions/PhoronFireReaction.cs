@@ -1,11 +1,12 @@
 ﻿using CannyFastMath;
-using Content.Server.GameObjects.Components.Doors;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Atmos
+namespace Content.Server.Atmos.Reactions
 {
+    [UsedImplicitly]
     public class PhoronFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder)

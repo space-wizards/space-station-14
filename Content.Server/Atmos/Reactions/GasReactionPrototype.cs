@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.Atmos
+namespace Content.Server.Atmos.Reactions
 {
     [Flags]
     public enum ReactionResult : byte

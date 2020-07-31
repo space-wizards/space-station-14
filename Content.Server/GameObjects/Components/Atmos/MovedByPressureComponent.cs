@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.Atmos
+namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
     public class MovedByPressureComponent : Component
