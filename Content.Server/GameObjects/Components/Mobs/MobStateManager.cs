@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -11,7 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Server.GameObjects.Components.Mobs
 {
     /// <summary>
-    ///     When attacked to an <see cref="BaseDamageableComponent"/>, this component will handle critical and death behaviors
+    ///     When attacked to an <see cref="IDamageableComponent"/>, this component will handle critical and death behaviors
     ///     for mobs.
     ///     Additionally, it handles sending effects to clients (such as blur effect for unconsciousness) and managing the
     ///     health HUD.
@@ -172,11 +173,11 @@ namespace Content.Server.GameObjects.Components.Mobs
                 return;
             }
 
-            if (entity.TryGetComponent(out BaseDamageableComponent damageableComponent))
+            if (entity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                if (damageableComponent is BasicRuinableComponent basicRuinableComponent)
+                if (damageableComponent is RuinableComponent basicRuinableComponent)
                 {
-                    if (basicRuinableComponent.TotalDamage > basicRuinableComponent.MaxHP)
+                    if (basicRuinableComponent.TotalDamage > basicRuinableComponent.MaxHp)
                     {
                         statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
                             "/Textures/Interface/StatusEffects/Human/humandead.png");
@@ -184,7 +185,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                     else
                     {
                         var modifier =
-                            (int) (basicRuinableComponent.TotalDamage / (basicRuinableComponent.MaxHP / 7f));
+                            (int) (basicRuinableComponent.TotalDamage / (basicRuinableComponent.MaxHp / 7f));
                         statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
                             "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
                     }

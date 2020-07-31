@@ -11,6 +11,7 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
@@ -92,7 +93,7 @@ namespace Content.Server.GameObjects.Components
                 return false;
             }
 
-            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
+            if (Owner.TryGetComponent(out IPhysicsComponent physics) &&
                 physics.Anchored)
             {
                 return false;

@@ -1,4 +1,6 @@
 ﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -14,8 +16,8 @@ namespace Content.Server.GameObjects.Components.Damage
     ///     enough damage.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(BaseDamageableComponent))]
-    public class BreakableComponent : BasicRuinableComponent, IExAct
+    [ComponentReference(typeof(IDamageableComponent))]
+    public class BreakableComponent : RuinableComponent, IExAct
     {
         //TODO: Repair needs to set CurrentDamageState to DamageState.Alive, but it doesn't exist... should be easy enough if it's just an interface you can slap on BreakableComponent
 
@@ -63,10 +65,10 @@ namespace Content.Server.GameObjects.Components.Damage
         protected override void DestructionBehavior()
         {
             _actSystem.HandleBreakage(Owner);
-            if (!Owner.Deleted && _destroySound != string.Empty)
+            if (!Owner.Deleted && DestroySound != string.Empty)
             {
                 var pos = Owner.Transform.GridPosition;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_destroySound, pos);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
             }
         }
     }

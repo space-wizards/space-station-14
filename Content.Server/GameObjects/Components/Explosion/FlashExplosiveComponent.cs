@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

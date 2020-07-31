@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;

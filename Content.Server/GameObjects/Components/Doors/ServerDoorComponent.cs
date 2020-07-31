@@ -6,6 +6,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -223,7 +224,7 @@ namespace Content.Server.GameObjects
                 foreach (var e in collidesWith)
                 {
                     if (!e.TryGetComponent(out StunnableComponent stun)
-                        || !e.TryGetComponent(out BaseDamageableComponent damage)
+                        || !e.TryGetComponent(out IDamageableComponent damage)
                         || !e.TryGetComponent(out ICollidableComponent otherBody)
                         || !Owner.TryGetComponent(out ICollidableComponent body))
                         continue;

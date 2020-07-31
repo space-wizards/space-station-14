@@ -29,6 +29,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects.Components.Damage;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -428,7 +429,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var distance = result.HitEntity != null ? result.Distance : hitscan.MaxLength;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
 
-                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out BaseDamageableComponent damageable))
+                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     return;
                 }

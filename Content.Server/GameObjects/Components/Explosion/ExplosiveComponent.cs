@@ -1,5 +1,6 @@
 ﻿using Content.Server.Explosions;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 

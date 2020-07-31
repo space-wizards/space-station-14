@@ -96,7 +96,6 @@
             "BarSign",
             "DroppedBodyPart",
             "DroppedMechanism",
-            "BodyManager",
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",

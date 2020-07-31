@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.Animations;

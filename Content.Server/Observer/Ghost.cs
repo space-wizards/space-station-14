@@ -1,8 +1,9 @@
-using Content.Server.GameObjects.Components.Damage;
+﻿using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -39,7 +40,7 @@ namespace Content.Server.Observer
 
             var position = player.AttachedEntity?.Transform.GridPosition ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint();
 
-            if (canReturn && player.AttachedEntity.TryGetComponent(out BaseDamageableComponent damageable))
+            if (canReturn && player.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
             {
                 switch (damageable.CurrentDamageState)
                 {

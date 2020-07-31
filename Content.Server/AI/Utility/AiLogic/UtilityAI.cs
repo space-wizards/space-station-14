@@ -9,6 +9,7 @@ using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.AI;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -113,7 +114,7 @@ namespace Content.Server.AI.Utility.AiLogic
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(SelfEntity);
             _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
-            if (SelfEntity.TryGetComponent(out BaseDamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
                 damageableComponent.HealthChangedEvent += DeathHandle;
             }
@@ -122,7 +123,7 @@ namespace Content.Server.AI.Utility.AiLogic
         public override void Shutdown()
         {
             // TODO: If DamageableComponent removed still need to unsubscribe?
-            if (SelfEntity.TryGetComponent(out BaseDamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
                 damageableComponent.HealthChangedEvent -= DeathHandle;
             }

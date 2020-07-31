@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -75,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Power
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out BaseDamageableComponent damageableComponent))
+            if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
             {
                 Eject();
                 return false;

@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Shared.GameObjects.EntitySystems
 {
     /// <summary>
     /// This interface gives components behavior on getting destoyed.
@@ -100,6 +100,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             }
         }
     }
+
     public enum ExplosionSeverity
     {
         Light,

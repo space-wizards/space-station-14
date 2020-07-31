@@ -8,6 +8,7 @@ using Content.Server.AI.WorldState.States;
 using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -25,7 +26,7 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
                 throw new InvalidOperationException();
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(BaseDamageableComponent),
+            foreach (var entity in Visibility.GetEntitiesInRange(owner.Transform.GridPosition, typeof(IDamageableComponent),
                 controller.VisionRadius))
             {
                 if (entity.HasComponent<BasicActorComponent>() && entity != owner)

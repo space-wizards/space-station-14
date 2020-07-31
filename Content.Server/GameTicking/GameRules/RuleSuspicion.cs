@@ -8,6 +8,7 @@ using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
+using Content.Shared.GameObjects.Components.Damage;
 using NFluidsynth;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
@@ -78,7 +79,7 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out BaseDamageableComponent damageable))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     continue;
                 }

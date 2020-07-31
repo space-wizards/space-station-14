@@ -18,6 +18,7 @@ using Robust.Shared.ViewVariables;
 using CannyFastMath;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
@@ -118,7 +119,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out BaseDamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
                 {
                     damageComponent.ChangeDamage(DamageType.Blunt, Damage, Owner, false);
                     hitEntities.Add(entity);

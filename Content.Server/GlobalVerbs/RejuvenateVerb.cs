@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -28,7 +29,7 @@ namespace Content.Server.GlobalVerbs
 
             if (user.TryGetComponent<IActorComponent>(out var player))
             {
-                if (!target.HasComponent<BaseDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
+                if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
                 {
                     return;
@@ -52,7 +53,7 @@ namespace Content.Server.GlobalVerbs
         }
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out BaseDamageableComponent damage))
+            if (target.TryGetComponent(out IDamageableComponent damage))
             {
                 damage.HealAllDamage();
             }

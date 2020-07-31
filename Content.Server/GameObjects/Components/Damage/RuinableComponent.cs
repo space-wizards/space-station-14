@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -11,24 +12,18 @@ namespace Content.Server.GameObjects.Components.Damage
     ///     When attached to an <see cref="IEntity"/>, allows it to take damage and "ruins" or "destroys"
     ///     it after enough damage is taken.
     /// </summary>
-    [ComponentReference(typeof(BaseDamageableComponent))]
-    public abstract class BasicRuinableComponent : GameObjects.Components.Damage.DamageableComponent
+    [ComponentReference(typeof(IDamageableComponent))]
+    public abstract class RuinableComponent : DamageableComponent
     {
-        public override string Name => "BasicRuinable";
-
-        protected string _destroySound;
-
-        private int _maxHP;
-
         /// <summary>
         ///     How much HP this component can sustain before triggering <see cref="PerformDestruction"/>.
         /// </summary>
-        public int MaxHP => _maxHP;
+        public int MaxHp { get; private set; }
 
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
-        public string DestroySound => _destroySound;
+        protected string DestroySound { get; private set; }
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
@@ -42,29 +37,36 @@ namespace Content.Server.GameObjects.Components.Damage
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _maxHP, "maxHP", 100);
-            serializer.DataField(ref _destroySound, "destroySound", string.Empty);
+
+            serializer.DataField(this, ruinable => ruinable.MaxHp, "maxHP", 100);
+            serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            HealthChangedEvent -= OnHealthChanged;
         }
 
         private void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (CurrentDamageState != DamageState.Dead && TotalDamage >= MaxHP)
+            if (CurrentDamageState != DamageState.Dead && TotalDamage >= MaxHp)
             {
                 PerformDestruction();
             }
         }
 
         /// <summary>
-        ///     Destroys the Owner <see cref="IEntity"/>, setting <see cref="BaseDamageableComponent.CurrentDamageState"/> to
+        ///     Destroys the Owner <see cref="IEntity"/>, setting <see cref="IDamageableComponent.CurrentDamageState"/> to
         ///     <see cref="DamageState.Dead"/>
         /// </summary>
         protected void PerformDestruction()
         {
             CurrentDamageState = DamageState.Dead;
-            if (!Owner.Deleted && _destroySound != string.Empty)
+            if (!Owner.Deleted && DestroySound != string.Empty)
             {
                 var pos = Owner.Transform.GridPosition;
-                EntitySystem.Get<AudioSystem>().PlayAtCoords(_destroySound, pos);
+                EntitySystem.Get<AudioSystem>().PlayAtCoords(DestroySound, pos);
             }
 
             DestructionBehavior();

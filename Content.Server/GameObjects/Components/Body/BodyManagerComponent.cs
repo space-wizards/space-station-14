@@ -4,9 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body;
 using Content.Server.Body.Network;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
+using Content.Server.Observer;
 using Content.Shared.Body;
 using Content.Shared.Body.BodyPart;
 using Content.Shared.Body.BodyPart.BodyPartProperties.Movement;
@@ -14,10 +14,14 @@ using Content.Shared.Body.BodyPart.BodyPartProperties.Other;
 using Content.Shared.Body.BodyPreset;
 using Content.Shared.Body.BodyTemplate;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
+using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -25,13 +29,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.Body
 {
     /// <summary>
-    ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
+    ///     Component representing a collection of <see cref="BodyPart"></see>
+    ///     attached to each other.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(BaseDamageableComponent))]
-    public class BodyManagerComponent : BaseDamageableComponent, IBodyPartContainer
+    [ComponentReference(typeof(IDamageableComponent))]
+    [ComponentReference(typeof(SharedBodyManagerComponent))]
+    public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer
     {
-        public sealed override string Name => "BodyManager";
 #pragma warning disable CS0649
         [Dependency] private IPrototypeManager _prototypeManager;
 #pragma warning restore
@@ -41,20 +46,30 @@ namespace Content.Server.GameObjects.Components.Body
         [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networks = new Dictionary<Type, BodyNetwork>();
 
         /// <summary>
-        ///     All <see cref="BodyPart">BodyParts</see> with <see cref="LegProperty">LegProperties</see>
-        ///     that are currently affecting move speed, mapped to how big that leg they're on is.
+        ///     All <see cref="BodyPart"></see> with <see cref="LegProperty"></see>
+        ///     that are currently affecting move speed, mapped to how big that leg
+        ///     they're on is.
         /// </summary>
         [ViewVariables]
         private readonly Dictionary<BodyPart, float> _activeLegs = new Dictionary<BodyPart, float>();
 
         /// <summary>
-        ///     The <see cref="BodyTemplate"/> that this BodyManagerComponent is adhering to.
+        ///     The <see cref="BodyTemplate"/> that this <see cref="BodyManagerComponent"/>
+        ///     is adhering to.
         /// </summary>
         [ViewVariables]
         public BodyTemplate Template { get; private set; }
 
         /// <summary>
-        ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="BodyPart"/> object filling it (if there is one).
+        ///     The <see cref="BodyPreset"/> that this <see cref="BodyManagerComponent"/>
+        ///     is adhering to.
+        /// </summary>
+        [ViewVariables]
+        public BodyPreset Preset { get; private set; }
+
+        /// <summary>
+        ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="BodyPart"/>
+        ///     object filling it (if there is one).
         /// </summary>
         [ViewVariables]
         public Dictionary<string, BodyPart> PartDictionary { get; } = new Dictionary<string, BodyPart>();
@@ -70,7 +85,8 @@ namespace Content.Server.GameObjects.Components.Body
         public IEnumerable<string> OccupiedSlots => PartDictionary.Keys;
 
         /// <summary>
-        ///     List of all <see cref="BodyPart">BodyParts</see> in this body, taken from the keys of _parts.
+        ///     List of all <see cref="BodyPart">BodyParts</see> in this body, taken from
+        ///     the keys of _parts.
         /// </summary>
         private IEnumerable<BodyPart> Parts => PartDictionary.Values;
 
@@ -79,7 +95,7 @@ namespace Content.Server.GameObjects.Components.Body
             base.ExposeData(serializer);
 
             serializer.DataReadWriteFunction(
-                "BaseTemplate",
+                "baseTemplate",
                 "bodyTemplate.Humanoid",
                 template =>
                 {
@@ -95,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Body
                 () => Template.Name);
 
             serializer.DataReadWriteFunction(
-                "BasePreset",
+                "basePreset",
                 "bodyPreset.BasicHuman",
                 preset =>
                 {
@@ -106,9 +122,29 @@ namespace Content.Server.GameObjects.Components.Body
                             $"No {nameof(BodyPresetPrototype)} found with name {preset}");
                     }
 
-                    LoadBodyPreset(new BodyPreset(presetData));
+                    Preset = new BodyPreset(presetData);
                 },
                 () => _presetName);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            LoadBodyPreset(Preset);
+
+            foreach (var behavior in Owner.GetAllComponents<IOnHealthChangedBehavior>())
+            {
+                HealthChangedEvent += behavior.OnHealthChanged;
+            }
+        }
+
+        protected override void Startup()
+        {
+            base.Startup();
+
+            // Just in case something activates at default health.
+            ForceHealthChangedEvent();
         }
 
         private void LoadBodyPreset(BodyPreset preset)
@@ -117,10 +153,11 @@ namespace Content.Server.GameObjects.Components.Body
 
             foreach (var slot in Template.Slots.Keys)
             {
+                // For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
                 if (!preset.PartIDs.TryGetValue(slot, out var partId))
                 {
-                    // For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
-                    continue; // If the preset doesn't define anything for it, continue.
+                    // If the preset doesn't define anything for it, continue.
+                    continue;
                 }
 
                 // Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
@@ -175,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private void OnBodyChanged()
         {
-            // Calculate movespeed based on this body.
+            // Calculate move speed based on this body.
             if (Owner.HasComponent<MovementSpeedModifierComponent>())
             {
                 _activeLegs.Clear();
@@ -212,13 +249,13 @@ namespace Content.Server.GameObjects.Components.Body
                 {
                     if (key.TryGetProperty(out LegProperty legProperty))
                     {
-                        speedSum += legProperty.Speed *
-                                    (1 + (float) Math.Log(value,
-                                        1024.0)); // Speed of a leg = base speed * (1+log1024(leg length))
+                        // Speed of a leg = base speed * (1+log1024(leg length))
+                        speedSum += legProperty.Speed * (1 + (float) Math.Log(value, 1024.0));
                     }
                 }
 
-                if (speedSum <= 0.001f || _activeLegs.Count <= 0) // Case: no way of moving. Fall down.
+                // Case: no way of moving. Fall down.
+                if (speedSum <= 0.001f || _activeLegs.Count <= 0)
                 {
                     StandingStateHelper.Down(Owner);
                     playerMover.BaseWalkSpeed = 0.8f;
@@ -228,7 +265,8 @@ namespace Content.Server.GameObjects.Components.Body
                 {
                     StandingStateHelper.Standing(Owner);
 
-                    // Extra legs stack diminishingly. Final speed = speed sum/(leg count-log4(leg count))
+                    // Extra legs stack diminishingly.
+                    // Final speed = speed sum/(leg count-log4(leg count))
                     playerMover.BaseWalkSpeed =
                         speedSum / (_activeLegs.Count - (float) Math.Log(_activeLegs.Count, 4.0));
 
@@ -267,7 +305,8 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, 0, 0)};
-            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
+            OnHealthChanged(new HealthChangedEventArgs(this, data));
+
             return true;
         }
 
@@ -289,7 +328,8 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, 0, 0)};
-            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
+            OnHealthChanged(new HealthChangedEventArgs(this, data));
+
             return true;
         }
 
@@ -303,7 +343,7 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, TempDamageThing, 1)};
-            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
+            OnHealthChanged(new HealthChangedEventArgs(this, data));
 
             return true;
         }
@@ -313,10 +353,18 @@ namespace Content.Server.GameObjects.Components.Body
             TempDamageThing = 0;
         }
 
-        protected override void ForceHealthChangedEvent()
+        public override void ForceHealthChangedEvent()
         {
             var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, 0, 0)};
-            TryInvokeHealthChangedEvent(new HealthChangedEventArgs(this, data));
+            OnHealthChanged(new HealthChangedEventArgs(this, data));
+        }
+
+        public void MoveInputPressed(ICommonSession session)
+        {
+            if (CurrentDamageState == DamageState.Dead)
+            {
+                new Ghost().Execute(null, (IPlayerSession) session, null);
+            }
         }
 
         #endregion
@@ -483,7 +531,7 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Grabs all <see cref="BodyPart">BodyParts</see> of the given type in this body.
+        ///     Grabs all <see cref="BodyPart"/> of the given type in this body.
         /// </summary>
         public List<BodyPart> GetBodyPartsOfType(BodyPartType type)
         {

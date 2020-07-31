@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Recycling;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;

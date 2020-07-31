@@ -36,10 +36,10 @@
       - MobImpassable
 
   - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+    baseTemplate: bodyTemplate.Humanoid
+    basePreset: bodyPreset.BasicHuman
   - type: MobStateManager
-    
+
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

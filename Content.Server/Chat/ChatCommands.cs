@@ -15,6 +15,7 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 
 namespace Content.Server.Chat
 {
@@ -107,7 +108,7 @@ namespace Content.Server.Chat
             "If that fails, it will attempt to use an object in the environment.\n" +
             "Finally, if neither of the above worked, you will die by biting your tongue.";
 
-        private void DealDamage(ISuicideAct suicide, IChatManager chat, BaseDamageableComponent damageableComponent, IEntity source, IEntity target)
+        private void DealDamage(ISuicideAct suicide, IChatManager chat, IDamageableComponent damageableComponent, IEntity source, IEntity target)
         {
             SuicideKind kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
@@ -136,7 +137,7 @@ namespace Content.Server.Chat
 
             var chat = IoCManager.Resolve<IChatManager>();
             var owner = player.ContentData().Mind.OwnedMob.Owner;
-            var dmgComponent = owner.GetComponent<BaseDamageableComponent>();
+            var dmgComponent = owner.GetComponent<IDamageableComponent>();
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent ressurection?
 

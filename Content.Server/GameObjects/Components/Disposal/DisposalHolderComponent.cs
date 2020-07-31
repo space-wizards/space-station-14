@@ -1,5 +1,6 @@
 #nullable enable
 using System.Linq;
+using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

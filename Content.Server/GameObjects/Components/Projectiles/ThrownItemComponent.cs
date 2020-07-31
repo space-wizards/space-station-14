@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -41,7 +42,7 @@ namespace Content.Server.GameObjects.Components
 
                 _shouldStop = true; // hit something hard => stop after this collision
             }
-            if (entity.TryGetComponent(out BaseDamageableComponent damage))
+            if (entity.TryGetComponent(out IDamageableComponent damage))
             {
                 damage.ChangeDamage(DamageType.Blunt, 10, Owner, false);
             }
