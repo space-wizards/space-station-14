@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool CanInsert(IEntity entity)
         {
-            if (!Powered || !Anchored)
+            if (!Anchored)
             {
                 return false;
             }
