@@ -65,7 +65,11 @@ namespace Content.Client.GameObjects.Components.Disposal
                         Children =
                         {
                             new Label {Text = Loc.GetString("Handle:")},
-                            (Engage = new Button {Text = Loc.GetString("Engage")})
+                            (Engage = new Button
+                            {
+                                Text = Loc.GetString("Engage"),
+                                ToggleMode = true
+                            })
                         }
                     },
                     new Control {CustomMinimumSize = (0, 10)},
@@ -135,6 +139,7 @@ namespace Content.Client.GameObjects.Components.Disposal
             _unitState.Text = state.UnitState;
             UpdatePressureBar(state.Pressure);
             Power.Pressed = state.Powered;
+            Engage.Pressed = state.Engaged;
         }
     }
 }

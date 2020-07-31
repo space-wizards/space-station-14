@@ -63,13 +63,16 @@ namespace Content.Shared.GameObjects.Components.Disposal
             public readonly string UnitState;
             public readonly float Pressure;
             public readonly bool Powered;
+            public readonly bool Engaged;
 
-            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered)
+            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered,
+                bool engaged)
             {
                 UnitName = unitName;
                 UnitState = unitState;
                 Pressure = pressure;
                 Powered = powered;
+                Engaged = engaged;
             }
         }
 
