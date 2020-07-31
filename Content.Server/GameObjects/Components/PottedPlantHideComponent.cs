@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             _itemContainer =
-                ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out _);
+                ContainerManagerComponent.Ensure<ContainerSlot>("potted_plant_hide", Owner, out _);
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
