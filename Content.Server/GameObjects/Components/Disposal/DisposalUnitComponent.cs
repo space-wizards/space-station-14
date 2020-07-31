@@ -38,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 #pragma warning restore 649
 
         public override string Name => "DisposalUnit";
@@ -132,6 +133,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AfterInsert(IEntity entity)
         {
+            Engaged = true;
+
             _automaticEngageToken = new CancellationTokenSource();
 
             Timer.Spawn(_automaticEngageTime, () => TryFlush(), _automaticEngageToken.Token);
@@ -393,7 +396,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void PowerStateChanged(object sender, PowerStateEventArgs args)
         {
-
+            UpdateVisualState();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -482,15 +485,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             switch (message)
             {
                 case RelayMovementEntityMessage msg:
-                    var timing = IoCManager.Resolve<IGameTiming>();
                     if (Engaged ||
                         !msg.Entity.HasComponent<HandsComponent>() ||
-                        timing.CurTime < _lastExitAttempt + ExitAttemptDelay)
+                        _gameTiming.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
                         break;
                     }
 
-                    _lastExitAttempt = timing.CurTime;
+                    _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
                     break;
             }
