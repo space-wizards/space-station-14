@@ -2,7 +2,7 @@
   save: false
   name: monkey
   id: MonkeyMob_Content
-  description:
+  description: A description.
   drawdepth: Mobs
   suffix: AI
   components:
