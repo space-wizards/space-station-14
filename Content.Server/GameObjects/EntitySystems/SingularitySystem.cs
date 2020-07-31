@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             curTime += frameTime;
 
-            if (curTime >= 10f)
+            if (curTime >= 1f)
             {
                 curTime = 0f;
                 foreach (var singulo in ComponentManager.EntityQuery<SingularityComponent>()) {
