@@ -1,3 +1,4 @@
+#nullable enable
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;

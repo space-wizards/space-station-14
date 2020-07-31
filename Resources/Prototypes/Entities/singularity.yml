@@ -6,12 +6,12 @@
   - type: Collidable
     anchored: false
     shapes:
-   - !type:PhysShapeCircle
+    - !type:PhysShapeCircle
       radius: 2.5
       layer:
       - Clickable
       mask:
-      - AllMask
+      - MobMask
   - type: Physics
     mass: 5
   - type: Singularity
