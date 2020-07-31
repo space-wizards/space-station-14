@@ -185,7 +185,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.GridPosition);
             });
 
-            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-5f));
+            EntitySystem.Get<AudioSystem>().PlayFromEntity(_soundVend, Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void FlickDenyAnimation()
