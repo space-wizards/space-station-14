@@ -208,16 +208,21 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             serializer.DataReadWriteFunction(
                 "switches",
-                new List<IEntity>(),
-                switches =>
+                new List<EntityUid>(),
+                ids =>
                 {
-                    if (switches == null)
+                    if (ids == null)
                     {
                         return;
                     }
 
-                    foreach (var @switch in switches)
+                    foreach (var id in ids)
                     {
+                        if (!Owner.EntityManager.TryGetEntity(id, out var @switch))
+                        {
+                            continue;
+                        }
+
                         if (!@switch.TryGetComponent(out ConveyorSwitchComponent component))
                         {
                             continue;
@@ -226,7 +231,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                         component.Connect(this);
                     }
                 },
-                () => _group?.Switches.Select(@switch => @switch.Owner));
+                () => _group?.Switches.Select(@switch => @switch.Owner.Uid).ToList());
 
             serializer.DataField(ref _angle, "angle", 0);
             serializer.DataField(ref _speed, "speed", 2);
