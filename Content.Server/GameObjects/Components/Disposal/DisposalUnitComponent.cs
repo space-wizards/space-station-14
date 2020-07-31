@@ -391,6 +391,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             UpdateInterface();
         }
 
+        private void PowerStateChanged(object sender, PowerStateEventArgs args)
+        {
+
+        }
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -431,14 +436,30 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Startup();
 
             Owner.EnsureComponent<AnchorableComponent>();
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
 
+            var collidable = Owner.EnsureComponent<CollidableComponent>();
             collidable.AnchoredChanged += UpdateVisualState;
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged += PowerStateChanged;
+            }
+
             UpdateVisualState();
         }
 
         public override void OnRemove()
         {
+            if (Owner.TryGetComponent(out ICollidableComponent collidable))
+            {
+                collidable.AnchoredChanged -= UpdateVisualState;
+            }
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged -= PowerStateChanged;
+            }
+
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
                 _container.ForceRemove(entity);
