@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.Pathfinding;
@@ -450,11 +451,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// Add this node to the relevant region.
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="existingRegions"></param>
+        /// <param name="existingRegions">The cached region for each node</param>
+        /// <param name="chunkRegions">The existing regions in the chunk</param>
         /// <param name="x">This is already calculated in advance so may as well re-use it</param>
         /// <param name="y">This is already calculated in advance so may as well re-use it</param>
         /// <returns></returns>
-        private PathfindingRegion CalculateNode(PathfindingNode node, Dictionary<PathfindingNode, PathfindingRegion> existingRegions, int x, int y)
+        private PathfindingRegion CalculateNode(
+            PathfindingNode node, 
+            Dictionary<PathfindingNode, PathfindingRegion> existingRegions,
+            HashSet<PathfindingRegion> chunkRegions,
+            int x, int y)
         {
             DebugTools.Assert(_regions.ContainsKey(node.ParentChunk.GridId));
             DebugTools.Assert(_regions[node.ParentChunk.GridId].ContainsKey(node.ParentChunk));
@@ -491,12 +497,25 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 !leftRegion.IsDoor)
             {
                 // We'll try and connect the left node's region to the bottom region if they're separate (yay merge)
-                if (bottomNeighbor != null && existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) &&
+                if (bottomNeighbor != null && 
+                    existingRegions.TryGetValue(bottomNeighbor, out bottomRegion) &&
+                    bottomRegion != leftRegion && 
                     !bottomRegion.IsDoor)
                 {
                     bottomRegion.Add(node);
                     existingRegions.Add(node, bottomRegion);
                     MergeInto(leftRegion, bottomRegion);
+                    
+                    // Cleanup leftRegion
+                    // MergeInto will remove it from the overall region chunk cache while we need to remove it from
+                    // our short-term ones (chunkRegions and existingRegions)
+                    chunkRegions.Remove(leftRegion);
+
+                    foreach (var leftNode in leftRegion.Nodes)
+                    {
+                        existingRegions[leftNode] = bottomRegion;
+                    }
+                    
                     return bottomRegion;
                 }
 
@@ -522,7 +541,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _regions[parentChunk.GridId][parentChunk].Add(newRegion);
             existingRegions.Add(node, newRegion);
             UpdateRegionEdge(newRegion, node);
-
+            
             return newRegion;
         }
 
@@ -531,10 +550,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private void MergeInto(PathfindingRegion source, PathfindingRegion target)
+        private void MergeInto(PathfindingRegion source, PathfindingRegion target) 
         {
             DebugTools.AssertNotNull(source);
             DebugTools.AssertNotNull(target);
+            DebugTools.Assert(source != target);
             foreach (var node in source.Nodes)
             {
                 target.Add(node);
@@ -620,20 +640,21 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 for (var x = 0; x < PathfindingChunk.ChunkSize; x++)
                 {
                     var node = chunk.Nodes[x, y];
-                    var region = CalculateNode(node, nodeRegions, x, y);
+                    var region = CalculateNode(node, nodeRegions, chunkRegions, x, y);
                     // Currently we won't store a separate region for each mask / space / whatever because muh effort
                     // Long-term you'll want to account for it probably
                     if (region == null)
                     {
                         continue;
                     }
-
+                    
                     chunkRegions.Add(region);
                 }
             }
 #if DEBUG
             SendRegionsDebugMessage(chunk.GridId);
 #endif
+            DebugTools.Assert(chunkRegions.Count(region => region.Deleted) == 0);
         }
 
 #if DEBUG
