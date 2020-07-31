@@ -2,13 +2,12 @@
   name: "SinguloTest"
   id: SinguloTest
   components:
-  - type: Clickable
   - type: InteractionOutline
   - type: Collidable
     anchored: false
     shapes:
-    - !type:PhysShapeAabb
-      bounds: "-0.25,-0.25,0.25,0.25"
+    - !type:PhysShapeCircle
+      radius: 4.5
       layer:
       - Clickable
   - type: Physics

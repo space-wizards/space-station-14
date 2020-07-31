@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "size": {
+    "x": 160,
+    "y": 160
+  },
+  "license": "cc-by-nc-sa",
+  "copyright": "https://github.com/goonstation/goonstation/blob/master/icons/effects/160x160.dmi",
+  "states": [
+    {
+      "name": "singularity2",
+      "directions": 1,
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

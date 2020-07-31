@@ -17,13 +17,14 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class SingularityComponent : Component
+    public class SingularityComponent : Component, ICollideBehavior
     {
         public override string Name => "Singularity";
 
@@ -32,6 +33,10 @@ namespace Content.Server.GameObjects.Components
         private CancellationToken token = new CancellationToken();
 
         private Random rand = new Random();
+
+        private float _range;
+
+        private EntityManager _entityManager;
 
         private SingularityController _singularityController;
 
@@ -43,11 +48,30 @@ namespace Content.Server.GameObjects.Components
             _collidableComponent.Hard = false;
             _singularityController = _collidableComponent.EnsureController<SingularityController>();
             _singularityController.ControlledComponent = _collidableComponent;
+            _entityManager = IoCManager.Resolve<EntityManager>();
+
+            _collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            _collidableComponent.Hard = false;
+
+            _singularityController = _collidableComponent.EnsureController<SingularityController>();
+            _singularityController.ControlledComponent = _collidableComponent;
+
         }
 
         public void Update()
         {
             _singularityController.Push(new Vector2((rand.Next()), rand.Next()).Normalized, 5f);
+
+            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
+            {
+
+            }
         }
+
+        void ICollideBehavior.CollideWith(IEntity entity)
+        {
+            entity.Delete();
+        }
+
     }
 }
