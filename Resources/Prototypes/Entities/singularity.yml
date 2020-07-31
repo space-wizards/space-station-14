@@ -1,0 +1,24 @@
+- type: entity
+  name: "SinguloTest"
+  id: SinguloTest
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    anchored: false
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      layer:
+      - Clickable
+  - type: Physics
+    mass: 5
+  - type: Singularity
+  - type: CollidableComponent
+  - type: Sprite
+    sprite: Constructible/Misc/potted_plants.rsi
+    state: random
+  - type: Icon
+    sprite: Constructible/Misc/potted_plants.rsi
+    state: random
+    drawdepth: Items

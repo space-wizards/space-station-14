@@ -27,23 +27,6 @@
   - type: RandomPottedPlant
 
 - type: entity
-  id: SinguloTest
-  name: SinguloTest
-  description: A test.
-  components:
-  - type: Singularity
-  - type: Collidable
-  - type: Physics
-    anchored: false
-  - type: Sprite
-    sprite: Constructible/Misc/potted_plants.rsi
-    state: random
-  - type: Icon
-    sprite: Constructible/Misc/potted_plants.rsi
-    state: random
-
-
-- type: entity
   id: PottedPlantRandomPlastic
   parent: PottedPlantBase
   name: plastic potted plant
