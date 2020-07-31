@@ -246,6 +246,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         private void OnHealthChanged(HealthChangedEventArgs e)
         {
+            Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
             HealthChangedEvent?.Invoke(e);
         }
     }

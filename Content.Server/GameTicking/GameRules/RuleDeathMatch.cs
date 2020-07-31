@@ -35,13 +35,22 @@ namespace Content.Server.GameTicking.GameRules
         public override void Added()
         {
             _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
+
+            _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
         public override void Removed()
         {
             base.Removed();
+
+            _entityManager.EventBus.UnsubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
+        }
+
+        private void OnHealthChanged(HealthChangedEventArgs message)
+        {
+            _runDelayedCheck();
         }
 
         private void _checkForWinner()

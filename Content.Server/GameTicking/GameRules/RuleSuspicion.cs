@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
-using NFluidsynth;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Logger = Robust.Shared.Log.Logger;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules
@@ -42,16 +35,25 @@ namespace Content.Server.GameTicking.GameRules
         {
             _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
 
-            //_entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
+            _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
 
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
 
-        /*private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
+        public override void Removed()
         {
-            var owner = message.Species.Owner;
+            base.Removed();
 
-            if (!(message.Species.CurrentDamageState is DeadState))
+            _entityManager.EventBus.UnsubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this);
+            _checkTimerCancel.Cancel();
+        }
+
+        private void OnHealthChanged(HealthChangedEventArgs message)
+        {
+            var damage = message.DamageableComponent;
+            var owner = damage.Owner;
+
+            if (damage.CurrentDamageState != DamageState.Dead)
                 return;
 
             if (!owner.TryGetComponent<MindComponent>(out var mind))
@@ -60,15 +62,9 @@ namespace Content.Server.GameTicking.GameRules
             if (!mind.HasMind)
                 return;
 
-            message.Species.Owner.Description +=
-                mind.Mind.HasRole<SuspicionTraitorRole>() ? "\nThey were a traitor!" : "\nThey were an innocent!";
-        }*/
-
-        public override void Removed()
-        {
-            base.Removed();
-
-            _checkTimerCancel.Cancel();
+            owner.Description += mind.Mind!.HasRole<SuspicionTraitorRole>()
+                ? "\nThey were a traitor!"
+                : "\nThey were an innocent!";
         }
 
         private void _checkWinConditions()

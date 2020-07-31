@@ -224,8 +224,9 @@ namespace Content.Server.GameObjects.Components.Interactable
                 chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim)); //TODO: theyre macro
                 return SuicideKind.Heat;
             }
+
             chat.EntityMe(victim, Loc.GetString("bashes {0:themselves} with the {1}!", victim, Owner.Name));
-            return SuicideKind.Heat;
+            return SuicideKind.Blunt;
         }
 
         public void SolutionChanged(SolutionChangeEventArgs eventArgs)

@@ -10,5 +10,10 @@ namespace Content.Shared.GameObjects.Components.Damage
     ///     <see cref="DamageState.Alive"/> and <see cref="DamageState.Dead"/>,
     ///     as inanimate objects don't go into crit.
     /// </summary>
-    public enum DamageState { Alive, Critical, Dead }
+    public enum DamageState
+    {
+        Alive,
+        Critical,
+        Dead
+    }
 }
