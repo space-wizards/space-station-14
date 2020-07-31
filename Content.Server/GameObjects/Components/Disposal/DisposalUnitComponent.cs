@@ -324,9 +324,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            appearance.SetData(Visuals.Handle, Engaged
-                ? HandleState.Engaged
-                : HandleState.Normal);
 
             if (!Anchored)
             {
@@ -335,26 +332,37 @@ namespace Content.Server.GameObjects.Components.Disposal
                 appearance.SetData(Visuals.Light, LightState.Off);
                 return;
             }
+            else
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
+            }
+
+            appearance.SetData(Visuals.Handle, Engaged
+                ? HandleState.Engaged
+                : HandleState.Normal);
+
+            if (!Powered)
+            {
+                appearance.SetData(Visuals.Light, LightState.Off);
+                return;
+            }
 
             if (flush)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Flushing);
                 appearance.SetData(Visuals.Light, LightState.Off);
+                return;
             }
-            else
+
+            if (ContainedEntities.Count > 0)
             {
-                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
-
-                if (ContainedEntities.Count > 0)
-                {
-                    appearance.SetData(Visuals.Light, LightState.Full);
-                    return;
-                }
-
-                appearance.SetData(Visuals.Light, _pressure < 1
-                    ? LightState.Charging
-                    : LightState.Ready);
+                appearance.SetData(Visuals.Light, LightState.Full);
+                return;
             }
+
+            appearance.SetData(Visuals.Light, _pressure < 1
+                ? LightState.Charging
+                : LightState.Ready);
         }
 
         public void Update(float frameTime)
