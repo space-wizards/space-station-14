@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             {
                 return _radiation;
             }
-            private set
+            set
             {
                 _radiation = value;
                 if (_radiation >= 100 && enabled)

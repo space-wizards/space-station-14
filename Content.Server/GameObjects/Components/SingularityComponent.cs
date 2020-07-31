@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -45,7 +46,6 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             _collidableComponent = Owner.GetComponent<ICollidableComponent>();
-            _collidableComponent.Hard = false;
             _singularityController = _collidableComponent.EnsureController<SingularityController>();
             _singularityController.ControlledComponent = _collidableComponent;
             _entityManager = IoCManager.Resolve<IEntityManager>();
@@ -58,12 +58,16 @@ namespace Content.Server.GameObjects.Components
 
             foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
             {
-
+                if (entity.HasComponent<RadiationPanel>())
+                {
+                    entity.GetComponent<RadiationPanel>().Radiation += 200;
+                }
             }
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+
             entity.Delete();
         }
 
