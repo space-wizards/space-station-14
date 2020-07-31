@@ -27,6 +27,7 @@ namespace Content.Client.Graphics.Overlays
 #pragma warning restore 649
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        private readonly ShaderInstance _shader;
         private double _startTime;
         private int lastsFor = 5000;
         private Texture _screenshotTexture;
@@ -34,7 +35,7 @@ namespace Content.Client.Graphics.Overlays
         public FlashOverlay() : base(nameof(SharedOverlayID.FlashOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
+            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").Instance().Duplicate();
 
             _startTime = _gameTiming.CurTime.TotalMilliseconds;
             _displayManager.Screenshot(ScreenshotType.BeforeUI, image =>
@@ -44,10 +45,11 @@ namespace Content.Client.Graphics.Overlays
             });
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
+            handle.UseShader(_shader);
             var percentComplete = (float) ((_gameTiming.CurTime.TotalMilliseconds - _startTime) / lastsFor);
-            Shader?.SetParameter("percentComplete", percentComplete);
+            _shader?.SetParameter("percentComplete", percentComplete);
 
             var screenSpaceHandle = handle as DrawingHandleScreen;
             var screenSize = UIBox2.FromDimensions((0, 0), _displayManager.ScreenSize);

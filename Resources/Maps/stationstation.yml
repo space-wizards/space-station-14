@@ -3465,14 +3465,14 @@ entities:
   - parent: 384
     type: Transform
 - uid: 386
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 0
     pos: -15.5,-0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 387
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 0
     pos: -15.5,-0.5
@@ -3756,14 +3756,14 @@ entities:
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 413
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 0
     pos: -15.5,0.5
     rot: -1.5707963267949 rad
     type: Transform
 - uid: 414
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 0
     pos: -15.5,0.5
@@ -8567,13 +8567,13 @@ entities:
     pos: 9.654155,21.628613
     type: Transform
 - uid: 947
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 0
     pos: 10.561831,21.767809
     type: Transform
 - uid: 948
-  type: CableStack
+  type: CableStack1
   components:
   - parent: 0
     pos: 10.577456,21.424059

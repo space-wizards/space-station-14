@@ -33,6 +33,12 @@ namespace Content.Client.Interfaces.GameObjects.Components.Interaction
 
     public class CanDropEventArgs : EventArgs
     {
+        /// <summary>
+        ///     Creates a new instance of <see cref="CanDropEventArgs"/>.
+        /// </summary>
+        /// <param name="user">The entity doing the drag and drop.</param>
+        /// <param name="dragged">The entity that is being dragged and dropped.</param>
+        /// <param name="target">The entity that <see cref="dragged"/> is being dropped onto.</param>
         public CanDropEventArgs(IEntity user, IEntity dragged, IEntity target)
         {
             User = user;
@@ -40,20 +46,43 @@ namespace Content.Client.Interfaces.GameObjects.Components.Interaction
             Target = target;
         }
 
+        /// <summary>
+        ///     The entity doing the drag and drop.
+        /// </summary>
         public IEntity User { get; }
+
+        /// <summary>
+        ///     The entity that is being dragged and dropped.
+        /// </summary>
         public IEntity Dragged { get; }
+
+        /// <summary>
+        ///     The entity that <see cref="Dragged"/> is being dropped onto.
+        /// </summary>
         public IEntity Target { get; }
     }
 
     public class CanDragEventArgs : EventArgs
     {
+        /// <summary>
+        ///     Creates a new instance of <see cref="CanDragEventArgs"/>.
+        /// </summary>
+        /// <param name="user">The entity doing the drag and drop.</param>
+        /// <param name="dragged">The entity that is being dragged and dropped.</param>
         public CanDragEventArgs(IEntity user, IEntity dragged)
         {
             User = user;
             Dragged = dragged;
         }
 
+        /// <summary>
+        ///     The entity doing the drag and drop.
+        /// </summary>
         public IEntity User { get; }
+
+        /// <summary>
+        ///     The entity that is being dragged and dropped.
+        /// </summary>
         public IEntity Dragged { get; }
     }
 }

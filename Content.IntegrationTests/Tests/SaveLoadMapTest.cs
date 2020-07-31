@@ -55,15 +55,15 @@ namespace Content.IntegrationTests.Tests
                 if(!mapManager.TryFindGridAt(new MapId(10), new Vector2(10,10), out var mapGrid))
                     Assert.Fail();
 
-                Assert.AreEqual(new Vector2(10, 10), mapGrid.WorldPosition);
-                Assert.AreEqual(new Tile(1, 512), mapGrid.GetTileRef(new MapIndices(0, 0)).Tile);
+                Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
+                Assert.That(mapGrid.GetTileRef(new MapIndices(0, 0)).Tile, Is.EqualTo(new Tile(1, 512)));
             }
             {
                 if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
                     Assert.Fail();
 
-                Assert.AreEqual(new Vector2(-8, -8), mapGrid.WorldPosition);
-                Assert.AreEqual(new Tile(2, 511), mapGrid.GetTileRef(new MapIndices(0, 0)).Tile);
+                Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                Assert.That(mapGrid.GetTileRef(new MapIndices(0, 0)).Tile, Is.EqualTo(new Tile(2, 511)));
             }
 
         }

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Strap;
@@ -159,19 +160,10 @@ namespace Content.Server.GameObjects.Components.Buckle
             }
         }
 
-        /// <summary>
-        ///     Tries to make an entity buckle the owner of this component to another.
-        /// </summary>
-        /// <param name="user">
-        ///     The entity buckling the owner of this component, can be the owner itself.
-        /// </param>
-        /// <param name="to">The entity to buckle the owner of this component to.</param>
-        /// <returns>
-        ///     true if the owner was buckled, otherwise false even if the owner was
-        ///     previously already buckled.
-        /// </returns>
-        public bool TryBuckle(IEntity user, IEntity to)
+        private bool CanBuckle(IEntity user, IEntity to, [MaybeNullWhen(false)] out StrapComponent strap)
         {
+            strap = null;
+
             if (user == null || user == to)
             {
                 return false;
@@ -181,22 +173,25 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 _notifyManager.PopupMessage(user, user,
                     Loc.GetString("You can't do that!"));
+
                 return false;
             }
 
-            if (!to.TryGetComponent(out StrapComponent strap))
+            if (!to.TryGetComponent(out strap))
             {
                 _notifyManager.PopupMessage(Owner, user,
                     Loc.GetString(Owner == user
                         ? "You can't buckle yourself there!"
                         : "You can't buckle {0:them} there!", Owner));
+
                 return false;
             }
 
             var ownerPosition = Owner.Transform.MapPosition;
             var strapPosition = strap.Owner.Transform.MapPosition;
             var interaction = EntitySystem.Get<SharedInteractionSystem>();
-            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == strap.Owner;
+            var component = strap;
+            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
 
             if (!interaction.InRangeUnobstructed(ownerPosition, strapPosition, _range, predicate: Ignored))
             {
@@ -213,8 +208,8 @@ namespace Content.Server.GameObjects.Components.Buckle
                 if (!ContainerHelpers.TryGetContainer(strap.Owner, out var strapContainer) ||
                     ownerContainer != strapContainer)
                 {
-                    _notifyManager.PopupMessage(strap.Owner, user,
-                        Loc.GetString("You can't reach there!"));
+                    _notifyManager.PopupMessage(strap.Owner, user, Loc.GetString("You can't reach there!"));
+
                     return false;
                 }
             }
@@ -223,6 +218,7 @@ namespace Content.Server.GameObjects.Components.Buckle
             {
                 _notifyManager.PopupMessage(user, user,
                     Loc.GetString("You don't have hands!"));
+
                 return false;
             }
 
@@ -232,6 +228,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                     Loc.GetString(Owner == user
                         ? "You are already buckled in!"
                         : "{0:They} are already buckled in!", Owner));
+
                 return false;
             }
 
@@ -244,6 +241,7 @@ namespace Content.Server.GameObjects.Components.Buckle
                         Loc.GetString(Owner == user
                             ? "You can't buckle yourself there!"
                             : "You can't buckle {0:them} there!", Owner));
+
                     return false;
                 }
 
@@ -256,6 +254,28 @@ namespace Content.Server.GameObjects.Components.Buckle
                     Loc.GetString(Owner == user
                         ? "You can't fit there!"
                         : "{0:They} can't fit there!", Owner));
+
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Tries to make an entity buckle the owner of this component to another.
+        /// </summary>
+        /// <param name="user">
+        ///     The entity buckling the owner of this component, can be the owner itself.
+        /// </param>
+        /// <param name="to">The entity to buckle the owner of this component to.</param>
+        /// <returns>
+        ///     true if the owner was buckled, otherwise false even if the owner was
+        ///     previously already buckled.
+        /// </returns>
+        public bool TryBuckle(IEntity user, IEntity to)
+        {
+            if (!CanBuckle(user, to, out var strap))
+            {
                 return false;
             }
 
@@ -543,6 +563,11 @@ namespace Content.Server.GameObjects.Components.Buckle
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUnbuckle(eventArgs.User);
+        }
+
+        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
+        {
+            return eventArgs.Target.HasComponent<StrapComponent>();
         }
 
         bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
