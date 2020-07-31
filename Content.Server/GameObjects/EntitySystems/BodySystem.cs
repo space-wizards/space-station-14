@@ -2,14 +2,14 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Body
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     public class BodySystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
-            foreach (var body in EntityManager.ComponentManager.EntityQuery<BodyManagerComponent>())
+            foreach (var body in ComponentManager.EntityQuery<BodyManagerComponent>())
             {
                 // TODO
                 body.Update(frameTime);

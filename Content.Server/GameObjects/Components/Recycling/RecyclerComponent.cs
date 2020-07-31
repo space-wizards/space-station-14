@@ -3,6 +3,7 @@ using Content.Server.GameObjects.Components.Conveyor;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Recycling;
 using Content.Shared.GameObjects.Components.Rotation;
@@ -65,9 +66,7 @@ namespace Content.Server.GameObjects.Components.Recycling
 
         private bool CanGib(IEntity entity)
         {
-            return entity.HasComponent<RotationComponent>() &&
-                   !_safe &&
-                   Powered;
+            return entity.HasComponent<IBodyManagerComponent>() && !_safe && Powered;
         }
 
         private bool CanRecycle(IEntity entity, [MaybeNullWhen(false)] out ConstructionPrototype prototype)

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body;
 using Content.Server.Body.Network;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
 using Content.Server.Observer;
@@ -34,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Body
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
-    [ComponentReference(typeof(SharedBodyManagerComponent))]
+    [ComponentReference(typeof(IBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer
     {
 #pragma warning disable CS0649

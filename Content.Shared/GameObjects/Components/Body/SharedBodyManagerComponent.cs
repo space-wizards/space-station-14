@@ -7,7 +7,7 @@ using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyManagerComponent : Component, IDamageableComponent
+    public abstract class SharedBodyManagerComponent : Component, IBodyManagerComponent
     {
         public sealed override string Name => "BodyManager";
 
@@ -32,7 +32,7 @@ namespace Content.Shared.GameObjects.Components.Body
 
         public abstract void ForceHealthChangedEvent();
 
-        public void OnHealthChanged(HealthChangedEventArgs e)
+        protected void OnHealthChanged(HealthChangedEventArgs e)
         {
             HealthChangedEvent?.Invoke(e);
         }

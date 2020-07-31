@@ -1,7 +1,5 @@
-using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Rotation;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
@@ -33,12 +31,12 @@ namespace Content.Server.Mobs
                 return false;
             }
 
-            var newState = RotationComponent.RotationState.Horizontal;
-            appearance.TryGetData<RotationComponent.RotationState>(RotationComponent.RotationVisuals.RotationState, out var oldState);
+            var newState = RotationState.Horizontal;
+            appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var oldState);
 
             if (newState != oldState)
             {
-                appearance.SetData(RotationComponent.RotationVisuals.RotationState, newState);
+                appearance.SetData(RotationVisuals.RotationState, newState);
             }
 
             if (playSound)
@@ -63,12 +61,12 @@ namespace Content.Server.Mobs
         public static bool Standing(IEntity entity)
         {
             if (!entity.TryGetComponent(out AppearanceComponent appearance)) return false;
-            appearance.TryGetData<RotationComponent.RotationState>(RotationComponent.RotationVisuals.RotationState, out var oldState);
-            var newState = RotationComponent.RotationState.Vertical;
+            appearance.TryGetData<RotationState>(RotationVisuals.RotationState, out var oldState);
+            var newState = RotationState.Vertical;
             if (newState == oldState)
                 return false;
 
-            appearance.SetData(RotationComponent.RotationVisuals.RotationState, newState);
+            appearance.SetData(RotationVisuals.RotationState, newState);
 
             return true;
         }

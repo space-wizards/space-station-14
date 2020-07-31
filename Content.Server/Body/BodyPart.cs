@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Surgery;
 using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Body;
 using Content.Shared.Body.BodyPart;
 using Content.Shared.Body.BodyPart.BodyPartProperties;

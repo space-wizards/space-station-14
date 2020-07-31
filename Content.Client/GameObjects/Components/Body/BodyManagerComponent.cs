@@ -10,6 +10,8 @@ using Robust.Shared.Interfaces.GameObjects;
 namespace Content.Client.GameObjects.Components.Body
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IDamageableComponent))]
+    [ComponentReference(typeof(IBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IClientDraggable
     {
         // TODO
