@@ -133,8 +133,6 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AfterInsert(IEntity entity)
         {
-            Engaged = true;
-
             _automaticEngageToken = new CancellationTokenSource();
 
             Timer.Spawn(_automaticEngageTime, () => TryFlush(), _automaticEngageToken.Token);
