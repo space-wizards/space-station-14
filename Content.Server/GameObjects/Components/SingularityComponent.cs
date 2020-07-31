@@ -12,7 +12,6 @@ using Content.Shared.Physics;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
-
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -44,16 +43,11 @@ namespace Content.Server.GameObjects.Components
             _collidableComponent.Hard = false;
             _singularityController = _collidableComponent.EnsureController<SingularityController>();
             _singularityController.ControlledComponent = _collidableComponent;
+        }
 
-            Timer.SpawnRepeating(1000, () =>
-            {
-                _singularityController.Push(new Vector2((rand.Next()), rand.Next()).Normalized, 5f);
-                Logger.Debug(_collidableComponent.LinearVelocity.X.ToString() + " " + _collidableComponent.LinearVelocity.Y.ToString() + "CollideableComponent");
-                Logger.Debug(_singularityController.LinearVelocity.X.ToString() + " " + _singularityController.LinearVelocity.Y.ToString() + "Controller");
-            }, token);
-
-
-
+        public void Update()
+        {
+            _singularityController.Push(new Vector2((rand.Next()), rand.Next()).Normalized, 5f);
         }
     }
 }
