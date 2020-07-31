@@ -7,7 +7,7 @@
     anchored: false
     shapes:
     - !type:PhysShapeCircle
-      radius: 4.5
+      radius: 2.5
       layer:
       - Clickable
   - type: Physics

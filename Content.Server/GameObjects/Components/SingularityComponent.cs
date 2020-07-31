@@ -36,7 +36,7 @@ namespace Content.Server.GameObjects.Components
 
         private float _range;
 
-        private EntityManager _entityManager;
+        private IEntityManager _entityManager;
 
         private SingularityController _singularityController;
 
@@ -48,19 +48,13 @@ namespace Content.Server.GameObjects.Components
             _collidableComponent.Hard = false;
             _singularityController = _collidableComponent.EnsureController<SingularityController>();
             _singularityController.ControlledComponent = _collidableComponent;
-            _entityManager = IoCManager.Resolve<EntityManager>();
-
-            _collidableComponent = Owner.GetComponent<ICollidableComponent>();
-            _collidableComponent.Hard = false;
-
-            _singularityController = _collidableComponent.EnsureController<SingularityController>();
-            _singularityController.ControlledComponent = _collidableComponent;
+            _entityManager = IoCManager.Resolve<IEntityManager>();
 
         }
 
         public void Update()
         {
-            _singularityController.Push(new Vector2((rand.Next()), rand.Next()).Normalized, 5f);
+            _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
 
             foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
             {
