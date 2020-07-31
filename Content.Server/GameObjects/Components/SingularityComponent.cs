@@ -28,18 +28,14 @@ namespace Content.Server.GameObjects.Components
     public class SingularityComponent : Component, ICollideBehavior
     {
         public override string Name => "Singularity";
-
-        private ICollidableComponent _collidableComponent;
-
-        private CancellationToken token = new CancellationToken();
+        private float _range;
 
         private Random rand = new Random();
 
-        private float _range;
-
+        private SingularityController _singularityController;
         private IEntityManager _entityManager;
 
-        private SingularityController _singularityController;
+        private ICollidableComponent _collidableComponent;
 
         public override void Initialize()
         {
