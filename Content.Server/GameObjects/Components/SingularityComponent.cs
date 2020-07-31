@@ -42,6 +42,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             _collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            _collidableComponent.Hard = false;
             _singularityController = _collidableComponent.EnsureController<SingularityController>();
             _singularityController.ControlledComponent = _collidableComponent;
             _entityManager = IoCManager.Resolve<IEntityManager>();
