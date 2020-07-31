@@ -16,15 +16,17 @@ namespace Content.Client.Graphics.Overlays
         [Dependency] private readonly IEyeManager _eyeManager;
 #pragma warning restore 649
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        private readonly ShaderInstance _shader;
 
         public GradientCircleMaskOverlay() : base(nameof(SharedOverlayID.GradientCircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
+            _shader = _prototypeManager.Index<ShaderPrototype>("GradientCircleMask").Instance();
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
+            handle.UseShader(_shader);
             var worldHandle = (DrawingHandleWorld)handle;
             var viewport = _eyeManager.GetWorldViewport();
             worldHandle.DrawRect(viewport, Color.White);

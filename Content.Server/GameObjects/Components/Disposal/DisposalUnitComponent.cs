@@ -38,6 +38,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 #pragma warning restore 649
 
         public override string Name => "DisposalUnit";
@@ -116,7 +117,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public bool CanInsert(IEntity entity)
         {
-            if (!Powered || !Anchored)
+            if (!Anchored)
             {
                 return false;
             }
@@ -191,11 +192,20 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _pressure >= 1 && Powered && Anchored;
         }
 
+        private void ToggleEngage()
+        {
+            Engaged ^= true;
+
+            if (Engaged)
+            {
+                TryFlush();
+            }
+        }
+
         public bool TryFlush()
         {
             if (!CanFlush())
             {
-                Engaged = true;
                 return false;
             }
 
@@ -252,7 +262,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private DisposalUnitBoundUserInterfaceState GetInterfaceState()
         {
-            return new DisposalUnitBoundUserInterfaceState(Owner.Name, Loc.GetString($"{State}"), _pressure, Powered);
+            var state = Loc.GetString($"{State}");
+            return new DisposalUnitBoundUserInterfaceState(Owner.Name, state, _pressure, Powered, Engaged);
         }
 
         private void UpdateInterface()
@@ -300,7 +311,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    TryFlush();
+                    ToggleEngage();
                     break;
                 case UiButton.Power:
                     TogglePower();
@@ -324,9 +335,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return;
             }
 
-            appearance.SetData(Visuals.Handle, Engaged
-                ? HandleState.Engaged
-                : HandleState.Normal);
 
             if (!Anchored)
             {
@@ -335,26 +343,37 @@ namespace Content.Server.GameObjects.Components.Disposal
                 appearance.SetData(Visuals.Light, LightState.Off);
                 return;
             }
+            else
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
+            }
+
+            appearance.SetData(Visuals.Handle, Engaged
+                ? HandleState.Engaged
+                : HandleState.Normal);
+
+            if (!Powered)
+            {
+                appearance.SetData(Visuals.Light, LightState.Off);
+                return;
+            }
 
             if (flush)
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Flushing);
                 appearance.SetData(Visuals.Light, LightState.Off);
+                return;
             }
-            else
+
+            if (ContainedEntities.Count > 0)
             {
-                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
-
-                if (ContainedEntities.Count > 0)
-                {
-                    appearance.SetData(Visuals.Light, LightState.Full);
-                    return;
-                }
-
-                appearance.SetData(Visuals.Light, _pressure < 1
-                    ? LightState.Charging
-                    : LightState.Ready);
+                appearance.SetData(Visuals.Light, LightState.Full);
+                return;
             }
+
+            appearance.SetData(Visuals.Light, _pressure < 1
+                ? LightState.Charging
+                : LightState.Ready);
         }
 
         public void Update(float frameTime)
@@ -381,6 +400,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             UpdateInterface();
+        }
+
+        private void PowerStateChanged(object? sender, PowerStateEventArgs args)
+        {
+            UpdateVisualState();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -423,14 +447,30 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Startup();
 
             Owner.EnsureComponent<AnchorableComponent>();
-            var collidable = Owner.EnsureComponent<CollidableComponent>();
 
+            var collidable = Owner.EnsureComponent<CollidableComponent>();
             collidable.AnchoredChanged += UpdateVisualState;
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged += PowerStateChanged;
+            }
+
             UpdateVisualState();
         }
 
         public override void OnRemove()
         {
+            if (Owner.TryGetComponent(out ICollidableComponent collidable))
+            {
+                collidable.AnchoredChanged -= UpdateVisualState;
+            }
+
+            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            {
+                receiver.OnPowerStateChanged -= PowerStateChanged;
+            }
+
             foreach (var entity in _container.ContainedEntities.ToArray())
             {
                 _container.ForceRemove(entity);
@@ -453,15 +493,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             switch (message)
             {
                 case RelayMovementEntityMessage msg:
-                    var timing = IoCManager.Resolve<IGameTiming>();
                     if (Engaged ||
                         !msg.Entity.HasComponent<HandsComponent>() ||
-                        timing.CurTime < _lastExitAttempt + ExitAttemptDelay)
+                        _gameTiming.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
                         break;
                     }
 
-                    _lastExitAttempt = timing.CurTime;
+                    _lastExitAttempt = _gameTiming.CurTime;
                     Remove(msg.Entity);
                     break;
             }
@@ -556,6 +595,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
+                component.Engaged = true;
                 component.TryFlush();
             }
         }
