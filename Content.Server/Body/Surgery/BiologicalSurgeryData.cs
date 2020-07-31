@@ -217,7 +217,7 @@ namespace Content.Server.Body.Surgery
             performer.PopupMessage(performer, Loc.GetString("Remove the organ..."));
 
             //Delay?
-            Parent.DropMechanism(performer, target);
+            Parent.TryDropMechanism(performer, target, out _);
             _disconnectedOrgans.Remove(target);
         }
 

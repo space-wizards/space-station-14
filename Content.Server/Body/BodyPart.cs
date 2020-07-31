@@ -1,6 +1,6 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Surgery;
@@ -258,21 +258,27 @@ namespace Content.Server.Body
         ///     The newly spawned <see cref="DroppedMechanismComponent"/>, or null
         ///     if there was an error in spawning the entity or removing the mechanism.
         /// </returns>
-        public DroppedMechanismComponent? DropMechanism(IEntity dropLocation, Mechanism mechanismTarget)
+        public bool TryDropMechanism(IEntity dropLocation, Mechanism mechanismTarget,
+            [NotNullWhen(true)] out DroppedMechanismComponent dropped)
         {
+            dropped = null!;
+
             if (!Mechanisms.Contains(mechanismTarget))
             {
-                return null;
+                return false;
             }
 
             Mechanisms.Remove(mechanismTarget);
             _sizeUsed -= mechanismTarget.Size;
+
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mechanismEntity =
-                entityManager.SpawnEntity("BaseDroppedMechanism", dropLocation.Transform.GridPosition);
-            var droppedMechanism = mechanismEntity.GetComponent<DroppedMechanismComponent>();
-            droppedMechanism.InitializeDroppedMechanism(mechanismTarget);
-            return droppedMechanism;
+            var position = dropLocation.Transform.GridPosition;
+            var mechanismEntity = entityManager.SpawnEntity("BaseDroppedMechanism", position);
+
+            dropped = mechanismEntity.GetComponent<DroppedMechanismComponent>();
+            dropped.InitializeDroppedMechanism(mechanismTarget);
+
+            return true;
         }
 
         /// <summary>
@@ -322,6 +328,7 @@ namespace Content.Server.Body
             RSIPath = data.RSIPath;
             RSIState = data.RSIState;
             MaxDurability = data.Durability;
+
             if (!prototypeManager.TryIndex(data.DamageContainerPresetId,
                 out DamageContainerPrototype damageContainerData))
             {
@@ -330,6 +337,7 @@ namespace Content.Server.Body
             }
 
             CurrentDamages = new DamageContainer(damageContainerData);
+
             if (!prototypeManager.TryIndex(data.ResistanceSetId, out ResistanceSetPrototype resistancesData))
             {
                 throw new InvalidOperationException(
@@ -341,6 +349,7 @@ namespace Content.Server.Body
             Compatibility = data.Compatibility;
             Properties = data.Properties;
             var surgeryDataType = Type.GetType(data.SurgeryDataName);
+
             if (surgeryDataType == null)
             {
                 throw new InvalidOperationException($"No {nameof(SurgeryData)} found with name {data.SurgeryDataName}");
@@ -352,7 +361,7 @@ namespace Content.Server.Body
                     $"Class {data.SurgeryDataName} is not a subtype of {nameof(SurgeryData)} with id {data.ID}");
             }
 
-            var surgeryData = (SurgeryData?) Activator.CreateInstance(surgeryDataType, this);
+            var surgeryData = Activator.CreateInstance(surgeryDataType, this) as SurgeryData;
 
             _surgeryData = surgeryData ?? throw new NullReferenceException();
 
