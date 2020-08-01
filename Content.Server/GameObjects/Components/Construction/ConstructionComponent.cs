@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            EntitySystem.Get<ConstructionSystem>().DoExamine(message, Prototype, Stage, inDetailsRange);
+            EntitySystem.Get<SharedConstructionSystem>().DoExamine(message, Prototype, Stage, inDetailsRange);
         }
     }
 }

@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.EntitySystems
 {
-    public class ConstructionSystem : EntitySystem
+    public class SharedConstructionSystem : EntitySystem
     {
 #pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _loc;

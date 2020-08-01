@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Construction
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddText(_loc.GetString("Building: {0}\n", Prototype.Name));
-            EntitySystem.Get<ConstructionSystem>().DoExamine(message, Prototype, 0, inDetailsRange);
+            EntitySystem.Get<SharedConstructionSystem>().DoExamine(message, Prototype, 0, inDetailsRange);
         }
     }
 }
