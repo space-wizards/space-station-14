@@ -91,7 +91,11 @@
   components:
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
-
+  - type: Destructible
+  - type: Breakable
+    thresholdvalue: 100
+  - type: SubFloorHide
+  
 - type: entity
   id: Generator
   name: Depriciated Generator
@@ -100,4 +104,3 @@
   - type: PowerSupplier
     voltage: High
     supplyRate: 100000
-
