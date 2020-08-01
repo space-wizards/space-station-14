@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.ConstructionSystem
+    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.SharedConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -461,9 +461,9 @@ namespace Content.Server.GameObjects.EntitySystems
                         return false;
                     }
                     if (matStep.Material == ConstructionStepMaterial.MaterialType.Cable)
-                        sound.PlayAtCoords("/Audio/items/zip.ogg", gridCoords);
+                        sound.PlayAtCoords("/Audio/Items/zip.ogg", gridCoords);
                     else
-                        sound.PlayAtCoords("/Audio/items/deconstruct.ogg", gridCoords);
+                        sound.PlayAtCoords("/Audio/Items/deconstruct.ogg", gridCoords);
                     return true;
                 case ConstructionStepTool toolStep:
                     if (!slapped.TryGetComponent<ToolComponent>(out var tool))
