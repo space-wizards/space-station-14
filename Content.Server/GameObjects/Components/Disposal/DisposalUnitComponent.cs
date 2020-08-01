@@ -423,7 +423,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _automaticEngageToken = null;
             }
 
-            if (Engaged && !TryFlush() && ContainedEntities.Count > 0)
+            if (Engaged && !TryFlush())
             {
                 TryQueueEngage();
             }
