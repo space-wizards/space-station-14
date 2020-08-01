@@ -493,7 +493,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             switch (message)
             {
                 case RelayMovementEntityMessage msg:
-                    if (!msg.Entity.HasComponent<HandsComponent>() ||
+                    if (!msg.Entity.TryGetComponent(out HandsComponent hands) ||
+                        hands.Count == 0 ||
                         _gameTiming.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
                         break;
