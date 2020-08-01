@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
@@ -25,14 +24,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             var directions = ConnectableDirections();
             var previousTube = holder.PreviousTube;
             var forward = directions[0];
-            if (previousTube == null || !Connected.ContainsValue(previousTube))
+
+            if (previousTube == null)
             {
                 return forward;
             }
 
-            var forwardTube = Connected.GetValueOrDefault(forward);
             var backward = directions[1];
-            return previousTube == forwardTube ? backward : forward;
+            return DirectionTo(previousTube) == forward ? backward : forward;
         }
     }
 }

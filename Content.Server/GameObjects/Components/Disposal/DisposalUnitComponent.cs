@@ -62,9 +62,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool _engaged;
 
         [ViewVariables]
-        private TimeSpan _engageTime;
-
-        [ViewVariables]
         private TimeSpan _automaticEngageTime;
 
         /// <summary>
@@ -131,11 +128,27 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _container.CanInsert(entity);
         }
 
-        private void AfterInsert(IEntity entity)
+        private void TryQueueEngage()
         {
+            if (!Powered && ContainedEntities.Count == 0)
+            {
+                return;
+            }
+
             _automaticEngageToken = new CancellationTokenSource();
 
-            Timer.Spawn(_automaticEngageTime, () => TryFlush(), _automaticEngageToken.Token);
+            Timer.Spawn(_automaticEngageTime, () =>
+            {
+                if (!TryFlush())
+                {
+                    TryQueueEngage();
+                }
+            }, _automaticEngageToken.Token);
+        }
+
+        private void AfterInsert(IEntity entity)
+        {
+            TryQueueEngage();
 
             if (entity.TryGetComponent(out IActorComponent actor))
             {
@@ -404,7 +417,18 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void PowerStateChanged(object? sender, PowerStateEventArgs args)
         {
+            if (!args.Powered)
+            {
+                _automaticEngageToken?.Cancel();
+                _automaticEngageToken = null;
+            }
+
             UpdateVisualState();
+
+            if (Engaged && !TryFlush())
+            {
+                TryQueueEngage();
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -418,10 +442,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => _pressure);
 
             serializer.DataReadWriteFunction(
-                "engageTime",
-                2,
-                seconds => _engageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _engageTime.TotalSeconds);
+                "automaticEngageTime",
+                30,
+                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
+                () => (int) _automaticEngageTime.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "automaticEngageTime",
@@ -493,8 +517,8 @@ namespace Content.Server.GameObjects.Components.Disposal
             switch (message)
             {
                 case RelayMovementEntityMessage msg:
-                    if (Engaged ||
-                        !msg.Entity.HasComponent<HandsComponent>() ||
+                    if (!msg.Entity.TryGetComponent(out HandsComponent hands) ||
+                        hands.Count == 0 ||
                         _gameTiming.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
                         break;

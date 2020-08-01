@@ -35,16 +35,16 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
-            var next = Owner.Transform.LocalRotation;
+            var next = Owner.Transform.LocalRotation.GetDir();
             var directions = ConnectableDirections().Skip(1).ToArray();
 
-            if (Connected.TryGetValue(next.GetDir(), out var forwardTube) &&
-                holder.PreviousTube == forwardTube)
+            if (holder.PreviousTube == null ||
+                DirectionTo(holder.PreviousTube) == next)
             {
                 return _random.Pick(directions);
             }
 
-            return next.GetDir();
+            return next;
         }
 
         public override void ExposeData(ObjectSerializer serializer)
