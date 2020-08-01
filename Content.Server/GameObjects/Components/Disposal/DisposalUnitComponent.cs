@@ -128,11 +128,27 @@ namespace Content.Server.GameObjects.Components.Disposal
             return _container.CanInsert(entity);
         }
 
-        private void AfterInsert(IEntity entity)
+        private void TryQueueEngage()
         {
+            if (!Powered)
+            {
+                return;
+            }
+
             _automaticEngageToken = new CancellationTokenSource();
 
-            Timer.Spawn(_automaticEngageTime, () => TryFlush(), _automaticEngageToken.Token);
+            Timer.Spawn(_automaticEngageTime, () =>
+            {
+                if (!TryFlush())
+                {
+                    TryQueueEngage();
+                }
+            }, _automaticEngageToken.Token);
+        }
+
+        private void AfterInsert(IEntity entity)
+        {
+            TryQueueEngage();
 
             if (entity.TryGetComponent(out IActorComponent actor))
             {
@@ -401,12 +417,18 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void PowerStateChanged(object? sender, PowerStateEventArgs args)
         {
-            UpdateVisualState();
-
-            if (Engaged)
+            if (!args.Powered)
             {
-                TryFlush();
+                _automaticEngageToken?.Cancel();
+                _automaticEngageToken = null;
             }
+
+            if (Engaged && !TryFlush() && ContainedEntities.Count > 0)
+            {
+                TryQueueEngage();
+            }
+
+            UpdateVisualState();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
