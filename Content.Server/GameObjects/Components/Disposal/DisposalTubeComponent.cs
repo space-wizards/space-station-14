@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
+using System;
 using System.Linq;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
@@ -35,20 +35,13 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool _connected;
         private bool _broken;
-        private string _clangSound;
+        private string _clangSound = default!;
 
         /// <summary>
         ///     Container of entities that are currently inside this tube
         /// </summary>
         [ViewVariables]
-        public Container Contents { get; private set; }
-
-        /// <summary>
-        ///     Dictionary of tubes connecting to this one mapped by their direction
-        /// </summary>
-        [ViewVariables]
-        protected Dictionary<Direction, IDisposalTubeComponent> Connected { get; } =
-            new Dictionary<Direction, IDisposalTubeComponent>();
+        public Container Contents { get; private set; } = default!;
 
         [ViewVariables]
         private bool Anchored =>
@@ -68,10 +61,32 @@ namespace Content.Server.GameObjects.Components.Disposal
             return NextDirection(holder).ToVec();
         }
 
-        public IDisposalTubeComponent NextTube(DisposalHolderComponent holder)
+        protected Direction DirectionTo(IDisposalTubeComponent other)
+        {
+            return (other.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).GetDir();
+        }
+
+        public IDisposalTubeComponent? NextTube(DisposalHolderComponent holder)
         {
             var nextDirection = NextDirection(holder);
-            return Connected.GetValueOrDefault(nextDirection);
+            var snapGrid = Owner.GetComponent<SnapGridComponent>();
+            var tube = snapGrid
+                .GetInDir(nextDirection)
+                .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
+                .FirstOrDefault(x => x != null && x != this);
+
+            if (tube == null)
+            {
+                return null;
+            }
+
+            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
+            if (!tube.CanConnect(oppositeDirection, this))
+            {
+                return null;
+            }
+
+            return tube;
         }
 
         public bool Remove(DisposalHolderComponent holder)
@@ -106,45 +121,25 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             _connected = true;
-
-            var snapGrid = Owner.GetComponent<SnapGridComponent>();
-
-            foreach (var direction in ConnectableDirections())
-            {
-                var tube = snapGrid
-                    .GetInDir(direction)
-                    .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
-                    .FirstOrDefault(x => x != null && x != this);
-
-                if (tube == null)
-                {
-                    continue;
-                }
-
-                var oppositeDirection = new Angle(direction.ToAngle().Theta + Math.PI).GetDir();
-                if (!tube.AdjacentConnected(oppositeDirection, this))
-                {
-                    continue;
-                }
-
-                Connected.Add(direction, tube);
-            }
         }
 
-        public bool AdjacentConnected(Direction direction, IDisposalTubeComponent tube)
+        public bool CanConnect(Direction direction, IDisposalTubeComponent with)
         {
+            if (!_connected)
+            {
+                return false;
+            }
+
             if (_broken)
             {
                 return false;
             }
 
-            if (Connected.ContainsKey(direction) ||
-                !ConnectableDirections().Contains(direction))
+            if (!ConnectableDirections().Contains(direction))
             {
                 return false;
             }
 
-            Connected.Add(direction, tube);
             return true;
         }
 
@@ -165,64 +160,6 @@ namespace Content.Server.GameObjects.Components.Disposal
                 }
 
                 holder.ExitDisposals();
-            }
-
-            foreach (var connected in Connected.Values)
-            {
-                connected.AdjacentDisconnected(this);
-            }
-
-            Connected.Clear();
-        }
-
-        public void AdjacentDisconnected(IDisposalTubeComponent adjacent)
-        {
-            foreach (var pair in Connected)
-            {
-                foreach (var entity in Contents.ContainedEntities)
-                {
-                    if (!entity.TryGetComponent(out DisposalHolderComponent holder))
-                    {
-                        continue;
-                    }
-
-                    if (holder.PreviousTube == adjacent)
-                    {
-                        holder.PreviousTube = null;
-                    }
-
-                    if (holder.NextTube == adjacent)
-                    {
-                        holder.NextTube = null;
-                    }
-                }
-
-                if (pair.Value == adjacent)
-                {
-                    Connected.Remove(pair.Key);
-                }
-            }
-        }
-
-        public void MoveEvent(MoveEvent moveEvent)
-        {
-            if (!_connected)
-            {
-                return;
-            }
-
-            foreach (var tube in Connected.Values)
-            {
-                var distance = (tube.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).Length;
-
-                // Disconnect distance threshold
-                if (distance < 1.25)
-                {
-                    continue;
-                }
-
-                AdjacentDisconnected(tube);
-                tube.AdjacentDisconnected(this);
             }
         }
 
@@ -300,7 +237,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             base.Startup();
 
-            if (!Owner.GetComponent<CollidableComponent>().Anchored)
+            if (!Owner.EnsureComponent<CollidableComponent>().Anchored)
             {
                 return;
             }
@@ -319,7 +256,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             Disconnect();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
