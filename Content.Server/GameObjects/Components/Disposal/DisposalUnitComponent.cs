@@ -130,7 +130,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void TryQueueEngage()
         {
-            if (!Powered)
+            if (!Powered && ContainedEntities.Count == 0)
             {
                 return;
             }
