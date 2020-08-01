@@ -461,9 +461,9 @@ namespace Content.Server.GameObjects.EntitySystems
                         return false;
                     }
                     if (matStep.Material == ConstructionStepMaterial.MaterialType.Cable)
-                        sound.PlayAtCoords("/Audio/items/zip.ogg", gridCoords);
+                        sound.PlayAtCoords("/Audio/Items/zip.ogg", gridCoords);
                     else
-                        sound.PlayAtCoords("/Audio/items/deconstruct.ogg", gridCoords);
+                        sound.PlayAtCoords("/Audio/Items/deconstruct.ogg", gridCoords);
                     return true;
                 case ConstructionStepTool toolStep:
                     if (!slapped.TryGetComponent<ToolComponent>(out var tool))
