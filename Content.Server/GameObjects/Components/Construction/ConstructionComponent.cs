@@ -1,6 +1,8 @@
 ﻿using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
@@ -47,25 +49,7 @@ namespace Content.Server.GameObjects.Components.Construction
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            var stages = Prototype.Stages;
-            if (Stage > 0 && Stage < stages.Count)
-            {
-                var curStage = stages[Stage];
-                if (curStage.Backward != null && curStage.Backward is ConstructionStepTool)
-                {
-                    var backward = (ConstructionStepTool) curStage.Backward;
-                    message.AddText(_loc.GetString("To deconstruct: {0}x {1} Tool", backward.Amount, backward.ToolQuality));
-                }
-                if (curStage.Forward != null && curStage.Forward is ConstructionStepMaterial)
-                {
-                    if (curStage.Backward != null)
-                    {
-                        message.AddText("\n");
-                    }
-                    var forward = (ConstructionStepMaterial) curStage.Forward;
-                    message.AddText(_loc.GetString("To construct: {0}x {1}", forward.Amount, forward.Material));
-                }
-            }
+            EntitySystem.Get<ConstructionSystem>().DoExamine(message, Prototype, Stage, inDetailsRange);
         }
     }
 }
