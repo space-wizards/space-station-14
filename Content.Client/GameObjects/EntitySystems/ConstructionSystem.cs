@@ -21,7 +21,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public class ConstructionSystem : Shared.GameObjects.EntitySystems.ConstructionSystem
+    public class ConstructionSystem : Shared.GameObjects.EntitySystems.SharedConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;

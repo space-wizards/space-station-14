@@ -32,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.ConstructionSystem
+    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.SharedConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
