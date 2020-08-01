@@ -29,9 +29,20 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
 
+        /// <summary>
+        ///     Check current execution time every n instances processed.
+        /// </summary>
+        private const int LagCheckIterations = 15;
+
+        /// <summary>
+        ///     Max milliseconds allowed for atmos updates.
+        /// </summary>
+        private const float LagCheckMaxMilliseconds = 5f;
+
         public override string Name => "GridAtmosphere";
 
         private int _timer = 0;
+        private Stopwatch _stopwatch = new Stopwatch();
         public int UpdateCounter { get; private set; } = 0;
         private IMapGrid _grid;
 
@@ -330,39 +341,43 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void ProcessTileEqualize()
         {
-            var watch = new Stopwatch();
-            watch.Start();
+            _stopwatch.Restart();
 
+            var number = 0;
             foreach (var tile in _activeTiles.ToArray())
             {
                 tile.EqualizePressureInZone(UpdateCounter);
 
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
                 // Process the rest next time.
-                if (watch.Elapsed.TotalMilliseconds >= 1f)
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     break;
             }
         }
 
         public void ProcessActiveTiles()
         {
-            var watch = new Stopwatch();
-            watch.Start();
+            _stopwatch.Restart();
 
+            var number = 0;
             foreach (var tile in _activeTiles.ToArray())
             {
                 tile.ProcessCell(UpdateCounter);
 
-                // Process the rest of tiles next time.
-                if (watch.Elapsed.TotalMilliseconds >= 1f)
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     break;
             }
         }
 
         public void ProcessExcitedGroups()
         {
-            var watch = new Stopwatch();
-            watch.Start();
+            _stopwatch.Restart();
 
+            var number = 0;
             foreach (var excitedGroup in _excitedGroups.ToArray())
             {
                 excitedGroup.BreakdownCooldown++;
@@ -374,28 +389,48 @@ namespace Content.Server.GameObjects.Components.Atmos
                 else if(excitedGroup.DismantleCooldown > Atmospherics.ExcitedGroupsDismantleCycles)
                     excitedGroup.Dismantle();
 
-                // Process the rest of excited groups next time.
-                if (watch.Elapsed.TotalMilliseconds >= 1f)
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     break;
             }
         }
 
         public void ProcessHighPressureDelta()
         {
+            _stopwatch.Restart();
+
+            var number = 0;
             foreach (var tile in _highPressureDelta.ToArray())
             {
                 tile.HighPressureMovements();
                 tile.PressureDifference = 0f;
                 tile.PressureSpecificTarget = null;
                 _highPressureDelta.Remove(tile);
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    break;
             }
         }
 
         private void ProcessHotspots()
         {
+            _stopwatch.Restart();
+
+            var number = 0;
             foreach (var hotspot in _hotspotTiles.ToArray())
             {
                 hotspot.ProcessHotspot();
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    break;
             }
         }
 
