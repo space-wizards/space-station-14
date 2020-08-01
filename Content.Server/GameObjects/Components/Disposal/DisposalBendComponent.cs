@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 
@@ -26,13 +25,13 @@ namespace Content.Server.GameObjects.Components.Disposal
             var directions = ConnectableDirections();
             var previousTube = holder.PreviousTube;
 
-            if (previousTube == null || !Connected.ContainsValue(previousTube))
+            if (previousTube == null)
             {
                 return directions[0];
             }
 
-            var first = Connected.GetValueOrDefault(directions[0]);
-            return previousTube == first ? directions[1] : directions[0];
+            var previousDirection = DirectionTo(previousTube);
+            return previousDirection == directions[0] ? directions[1] : directions[0];
         }
 
         public override void ExposeData(ObjectSerializer serializer)
