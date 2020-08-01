@@ -405,6 +405,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void PowerStateChanged(object? sender, PowerStateEventArgs args)
         {
             UpdateVisualState();
+
+            if (Engaged)
+            {
+                TryFlush();
+            }
         }
 
         public override void ExposeData(ObjectSerializer serializer)
