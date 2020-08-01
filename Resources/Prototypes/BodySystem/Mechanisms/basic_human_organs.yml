@@ -11,7 +11,7 @@
     state: heart_human
   - type: DroppedMechanism
     debugLoadMechanismData: mechanism.Heart.BasicHuman
-    
+
 - type: mechanism
   id: mechanism.Brain.BasicHuman
   name: "human brain"
@@ -22,7 +22,7 @@
   size: 1
   compatibility: Biological
   behaviors:
-    - Content.Server.Body.Mechanisms.Behaviors.BrainBehavior
+  - Content.Server.Body.Mechanisms.Behaviors.BrainBehavior
 
 - type: mechanism
   id: mechanism.Eyes.BasicHuman

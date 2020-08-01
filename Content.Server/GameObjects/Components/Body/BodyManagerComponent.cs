@@ -39,12 +39,15 @@ namespace Content.Server.GameObjects.Components.Body
     public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer
     {
 #pragma warning disable CS0649
-        [Dependency] private IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory;
 #pragma warning restore
 
         [ViewVariables] private string _presetName;
 
-        [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networks = new Dictionary<Type, BodyNetwork>();
+        [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networkTypes = new Dictionary<Type, BodyNetwork>();
+
+        [ViewVariables] private readonly Dictionary<string, BodyNetwork> _networkNames = new Dictionary<string, BodyNetwork>();
 
         /// <summary>
         ///     All <see cref="BodyPart"></see> with <see cref="LegProperty"></see>
@@ -76,18 +79,20 @@ namespace Content.Server.GameObjects.Components.Body
         public Dictionary<string, BodyPart> PartDictionary { get; } = new Dictionary<string, BodyPart>();
 
         /// <summary>
-        ///     List of all occupied slots in this body, taken from the values of _parts.
+        ///     List of all slots in this body, taken from the keys of
+        ///     <see cref="Template"/> slots.
         /// </summary>
         public IEnumerable<string> AllSlots => Template.Slots.Keys;
 
         /// <summary>
-        ///     List of all occupied slots in this body, taken from the values of _parts.
+        ///     List of all occupied slots in this body, taken from the values of
+        ///     <see cref="PartDictionary"/>.
         /// </summary>
         public IEnumerable<string> OccupiedSlots => PartDictionary.Keys;
 
         /// <summary>
-        ///     List of all <see cref="BodyPart">BodyParts</see> in this body, taken from
-        ///     the keys of _parts.
+        ///     List of all <see cref="BodyPart"/> in this body, taken from the keys of
+        ///     <see cref="PartDictionary"/>.
         /// </summary>
         private IEnumerable<BodyPart> Parts => PartDictionary.Values;
 
@@ -154,7 +159,8 @@ namespace Content.Server.GameObjects.Components.Body
 
             foreach (var slot in Template.Slots.Keys)
             {
-                // For each slot in our BodyManagerComponent's template, try and grab what the ID of what the preset says should be inside it.
+                // For each slot in our BodyManagerComponent's template,
+                // try and grab what the ID of what the preset says should be inside it.
                 if (!preset.PartIDs.TryGetValue(slot, out var partId))
                 {
                     // If the preset doesn't define anything for it, continue.
@@ -173,10 +179,17 @@ namespace Content.Server.GameObjects.Components.Body
                     BodyPartRemoved(removedPart, slot);
                 }
 
-                // Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
+                // Add a new BodyPart with the BodyPartPrototype as a baseline to our
+                // BodyComponent.
                 var addedPart = new BodyPart(newPartData);
                 PartDictionary.Add(slot, addedPart);
                 BodyPartAdded(addedPart, slot);
+            }
+
+            foreach (var networkName in Template.Networks)
+            {
+                RemoveNetwork(networkName);
+                TryAddNetwork(networkName);
             }
 
             OnBodyChanged(); // TODO: Duplicate code
@@ -205,6 +218,11 @@ namespace Content.Server.GameObjects.Components.Body
             foreach (var part in PartDictionary.Values)
             {
                 part.Update(frameTime);
+            }
+
+            foreach (var network in _networkTypes.Values)
+            {
+                network.Update(frameTime);
             }
         }
 
@@ -376,7 +394,8 @@ namespace Content.Server.GameObjects.Components.Body
 
         /// <summary>
         ///    Recursively searches for if <see cref="target"/> is connected ot the center.
-        ///    Not efficient (O(n^2)), but most bodies don't have a ton of <see cref="BodyPart">BodyParts</see>.
+        ///    Not efficient (O(n^2)), but most bodies don't have a ton of
+        ///     <see cref="BodyPart"/>.
         /// </summary>
         /// <param name="target">The body part to find the center for.</param>
         /// <returns>True if it is connected to the center, false otherwise.</returns>
@@ -422,8 +441,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Finds the central <see cref="BodyPart"/>, if any, of this body based on the <see cref="BodyTemplate"/>.
-        ///     For humans, this is the torso.
+        ///     Finds the central <see cref="BodyPart"/>, if any, of this body based on
+        ///     the <see cref="BodyTemplate"/>. For humans, this is the torso.
         /// </summary>
         /// <returns>The <see cref="BodyPart"/> if one exists, null otherwise.</returns>
         private BodyPart GetCenterBodyPart()
@@ -433,7 +452,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Returns whether the given slot name exists within the current <see cref="BodyTemplate"/>.
+        ///     Returns whether the given slot name exists within the current
+        ///     <see cref="BodyTemplate"/>.
         /// </summary>
         private bool SlotExists(string slotName)
         {
@@ -441,7 +461,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///    Finds the <see cref="BodyPart"/> in the given <see cref="slotName"/> if one exists.
+        ///     Finds the <see cref="BodyPart"/> in the given <see cref="slotName"/> if
+        ///     one exists.
         /// </summary>
         /// <param name="slotName">The slot to search in.</param>
         /// <param name="result">The body part in that slot, if any.</param>
@@ -452,7 +473,7 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///    Finds the slotName that the given <see cref="BodyPart"/> resides in.
+        ///     Finds the slotName that the given <see cref="BodyPart"/> resides in.
         /// </summary>
         /// <param name="part">The <see cref="BodyPart"/> to find the slot for.</param>
         /// <param name="result">The slot found, if any.</param>
@@ -466,10 +487,13 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Finds the <see cref="BodyPartType"/> in the given <see cref="slotName"/> if one exists.
+        ///     Finds the <see cref="BodyPartType"/> in the given <see cref="slotName"/> if
+        ///     one exists.
         /// </summary>
         /// <param name="slotName">The slot to search in.</param>
-        /// <param name="result">The <see cref="BodyPartType"/> of that slot, if any.</param>
+        /// <param name="result">
+        ///     The <see cref="BodyPartType"/> of that slot, if any.
+        /// </param>
         /// <returns>True if found, false otherwise.</returns>
         public bool TryGetSlotType(string slotName, out BodyPartType result)
         {
@@ -477,7 +501,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///    Finds the names of all slots connected to the given <see cref="slotName"/> for the template.
+        ///     Finds the names of all slots connected to the given <see cref="slotName"/>
+        ///     for the template.
         /// </summary>
         /// <param name="slotName">The slot to search in.</param>
         /// <param name="connections">The connections found, if any.</param>
@@ -488,10 +513,14 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Grabs all occupied slots connected to the given slot, regardless of whether the given slotName is occupied. Returns
-        ///     true if successful, false if there was an error or no connected BodyParts were found.
+        ///     Grabs all occupied slots connected to the given slot,
+        ///     regardless of whether the given slotName is occupied.
         /// </summary>
-        public bool TryGetBodyPartConnections(string slotName, out List<BodyPart> result)
+        /// <returns>
+        ///     True if successful, false if there was an error or no connected BodyParts
+        ///     were found.
+        /// </returns>
+        public bool TryGetBodyPartConnections(string slotName, [NotNullWhen(true)] out List<BodyPart> result)
         {
             result = null;
             if (!Template.Connections.TryGetValue(slotName, out var connections))
@@ -548,8 +577,9 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Installs the given <see cref="BodyPart"/> into the given slot. Returns true if successful, false otherwise.
+        ///     Installs the given <see cref="BodyPart"/> into the given slot.
         /// </summary>
+        /// <returns>True if successful, false otherwise.</returns>
         public bool InstallBodyPart(BodyPart part, string slotName)
         {
             // Make sure the given slot exists
@@ -572,9 +602,10 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Installs the given <see cref="DroppedBodyPartComponent"/> into the given slot, deleting the <see cref="IEntity"/>
-        ///     afterwards. Returns true if successful, false otherwise.
+        ///     Installs the given <see cref="DroppedBodyPartComponent"/> into the
+        ///     given slot, deleting the <see cref="IEntity"/> afterwards.
         /// </summary>
+        /// <returns>True if successful, false otherwise.</returns>
         public bool InstallDroppedBodyPart(DroppedBodyPartComponent part, string slotName)
         {
             if (!InstallBodyPart(part.ContainedBodyPart, slotName))
@@ -586,12 +617,14 @@ namespace Content.Server.GameObjects.Components.Body
             return true;
         }
 
-
         /// <summary>
-        ///     Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other
-        ///     <see cref="BodyPart">BodyParts</see>
-        ///     if they were hanging off it. Returns the IEntity representing the dropped BodyPart.
+        ///     Disconnects the given <see cref="BodyPart"/> reference, potentially
+        ///     dropping other <see cref="BodyPart">BodyParts</see> if they were hanging
+        ///     off of it.
         /// </summary>
+        /// <returns>
+        ///     The <see cref="IEntity"/> representing the dropped <see cref="BodyPart"/>.
+        /// </returns>
         public IEntity DropBodyPart(BodyPart part)
         {
             if (!PartDictionary.ContainsValue(part))
@@ -628,8 +661,9 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other
-        ///     <see cref="BodyPart">BodyParts</see> if they were hanging off it.
+        ///     Disconnects the given <see cref="BodyPart"/> reference, potentially
+        ///     dropping other <see cref="BodyPart">BodyParts</see> if they were hanging
+        ///     off of it.
         /// </summary>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
@@ -717,53 +751,87 @@ namespace Content.Server.GameObjects.Components.Body
 
         #region BodyNetwork Functions
 
-        /// <summary>
-        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to this body. Returns true if successful, false
-        ///     if there was an error (such as passing in an invalid type or a network of that type already existing).
-        /// </summary>
-        public bool AddBodyNetwork(Type networkType)
+        private bool TryAddNetwork(BodyNetwork network)
         {
-            if (!networkType.IsSubclassOf(typeof(BodyNetwork)))
+            if (_networkTypes.ContainsKey(network.GetType()) ||
+                _networkNames.ContainsKey(network.Name))
             {
                 return false;
             }
 
-            if (_networks.ContainsKey(networkType))
-            {
-                return false;
-            }
+            _networkTypes.Add(network.GetType(), network);
+            _networkNames.Add(network.Name, network);
 
-            var newNetwork = (BodyNetwork) Activator.CreateInstance(networkType);
-
-            if (newNetwork == null)
-            {
-                return false;
-            }
-
-            _networks.Add(networkType, newNetwork);
-            newNetwork.OnCreate();
+            network.OnAdd(Owner);
 
             return true;
-
         }
 
         /// <summary>
-        ///     Deletes the <see cref="BodyNetwork"/> of the given type in this body, if there is one.
+        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to this body.
         /// </summary>
-        public void DeleteBodyNetwork(Type networkType)
+        /// <returns>
+        ///     True if successful, false if there was an error
+        ///     (such as passing in an invalid type or a network of that type already
+        ///     existing)
+        /// </returns>
+        public bool TryAddNetwork(Type networkType)
         {
-            _networks.Remove(networkType);
+            var network = _bodyNetworkFactory.GetNetwork(networkType);
+            return TryAddNetwork(network);
         }
 
         /// <summary>
-        ///    Attempts to get the <see cref="BodyNetwork"/> of the given type in this body.
+        ///     Attempts to add a <see cref="BodyNetwork"/> of the given name to this body.
+        /// </summary>
+        /// <returns>
+        ///     True if successful, false if there was an error
+        ///     (such as passing in an invalid type or a network of that type already
+        ///     existing)
+        /// </returns>
+        private bool TryAddNetwork(string networkName)
+        {
+            var network = _bodyNetworkFactory.GetNetwork(networkName);
+            return TryAddNetwork(network);
+        }
+
+        /// <summary>
+        ///     Removes the <see cref="BodyNetwork"/> of the given type in this body,
+        ///     if there is one.
+        /// </summary>
+        public void RemoveNetwork(Type networkType)
+        {
+            if (_networkTypes.Remove(networkType, out var network))
+            {
+                _networkNames.Remove(network.Name);
+                network.OnRemove();
+            }
+        }
+
+        /// <summary>
+        ///     Removes the <see cref="BodyNetwork"/> with the given name in this body,
+        ///     if there is one.
+        /// </summary>
+        private void RemoveNetwork(string networkName)
+        {
+            if (_networkNames.Remove(networkName, out var network))
+            {
+                _networkTypes.Remove(network.GetType());
+                network.OnRemove();
+            }
+        }
+
+        /// <summary>
+        ///     Attempts to get the <see cref="BodyNetwork"/> of the given type in this body.
         /// </summary>
         /// <param name="networkType">The type to search for.</param>
-        /// <param name="result">The <see cref="BodyNetwork"/> if found, null otherwise.</param>
+        /// <param name="result">
+        ///     The <see cref="BodyNetwork"/> if found, null otherwise.
+        /// </param>
         /// <returns>True if found, false otherwise.</returns>
-        public bool TryGetBodyNetwork(Type networkType, [NotNullWhen(true)] out BodyNetwork result)
+        public bool TryGetNetwork(Type networkType, [NotNullWhen(true)] out BodyNetwork result)
         {
-            return _networks.TryGetValue(networkType, out result);
+            return _networkTypes.TryGetValue(networkType, out result);
         }
 
         #endregion

@@ -6,8 +6,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body
 {
     /// <summary>
-    ///     Stores data on what <see cref="BodyPartPrototype">BodyPartPrototypes</see> should fill a BodyTemplate. Used for
-    ///     loading complete body presets, like a "basic human" with all human limbs.
+    ///     Stores data on what <see cref="BodyPartPrototype"></see> should
+    ///     fill a BodyTemplate.
+    ///     Used for loading complete body presets, like a "basic human" with all human limbs.
     /// </summary>
     public class BodyPreset
     {
@@ -19,8 +20,8 @@ namespace Content.Server.Body
         [ViewVariables] public string Name { get; private set; }
 
         /// <summary>
-        ///     Maps a template slot to the ID of the
-        ///     <see cref="BodyPart"/> that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
+        ///     Maps a template slot to the ID of the <see cref="BodyPart"/> that should
+        ///     fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
         /// </summary>
         [ViewVariables]
         public Dictionary<string, string> PartIDs { get; private set; }

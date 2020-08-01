@@ -1,21 +1,56 @@
-﻿using Content.Server.GameObjects.Components.Body;
-using Content.Server.GameObjects.EntitySystems;
+﻿using System;
+using Content.Server.GameObjects.Components.Body;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body.Network
 {
     /// <summary>
-    ///     Represents a "network" such as a bloodstream or electrical power that is coordinated throughout an entire
-    ///     <see cref="BodyManagerComponent"/>.
+    ///     Represents a "network" such as a bloodstream or electrical power that
+    ///     is coordinated throughout an entire <see cref="BodyManagerComponent"/>.
     /// </summary>
-    public abstract class BodyNetwork
+    public abstract class BodyNetwork : IExposeData
     {
-        public abstract void OnCreate();
+        [ViewVariables]
+        public abstract string Name { get; }
 
-        public abstract void OnDelete();
+        protected IEntity Owner { get; private set; }
+
+        public virtual void ExposeData(ObjectSerializer serializer) { }
+
+        public void OnAdd(IEntity entity)
+        {
+            Owner = entity;
+            OnAdd();
+        }
+
+        protected abstract void OnAdd();
+
+        public abstract void OnRemove();
 
         /// <summary>
-        ///     Called every frame by <see cref="BodySystem"/>.
+        ///     Called every update by <see cref="BodyManagerComponent.Update"/>.
         /// </summary>
-        public abstract void OnTick(float frameTime);
+        public abstract void Update(float frameTime);
+    }
+
+    public static class BodyNetworkExtensions
+    {
+        public static bool TryGetBodyNetwork(this IEntity entity, Type type, out BodyNetwork network)
+        {
+            network = null;
+
+            return entity.TryGetComponent(out BodyManagerComponent body) &&
+                   body.TryGetNetwork(type, out network);
+        }
+
+        public static bool TryGetBodyNetwork<T>(this IEntity entity, out T network) where T : BodyNetwork
+        {
+            entity.TryGetBodyNetwork(typeof(T), out var unCastNetwork);
+            network = (T) unCastNetwork;
+            return network != null;
+        }
     }
 }

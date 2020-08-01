@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Body.Network;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
@@ -15,7 +15,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     /// <summary>
     /// Where reagents go when ingested. Tracks ingested reagents over time, and
-    /// eventually transfers them to <see cref="BloodstreamComponent"/> once digested.
+    /// eventually transfers them to <see cref="BloodstreamBodyNetwork"/> once digested.
     /// </summary>
     [RegisterComponent]
     public class StomachComponent : SharedStomachComponent
@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private ReagentUnit _initialMaxVolume;
 
         /// <summary>
-        /// Time in seconds between reagents being ingested and them being transferred to <see cref="BloodstreamComponent"/>
+        /// Time in seconds between reagents being ingested and them being transferred to <see cref="BloodstreamBodyNetwork"/>
         /// </summary>
         [ViewVariables]
         private float _digestionDelay;
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         /// <summary>
         /// Reference to bloodstream where digested reagents are transferred to
         /// </summary>
-        private BloodstreamComponent _bloodstream;
+        private BloodstreamBodyNetwork _bloodstream;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -72,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         {
             _stomachContents = Owner.GetComponent<SolutionComponent>();
             _stomachContents.MaxVolume = _initialMaxVolume;
-            if (!Owner.TryGetComponent<BloodstreamComponent>(out _bloodstream))
+            if (!Owner.TryGetBodyNetwork(out _bloodstream))
             {
                 Logger.Warning(_localizationManager.GetString(
                     "StomachComponent entity does not have a BloodstreamComponent, which is required for it to function. Owner entity name: {0}",

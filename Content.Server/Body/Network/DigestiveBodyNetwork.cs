@@ -5,15 +5,17 @@
     /// </summary>
     public class DigestiveBodyNetwork : BodyNetwork
     {
-        public override void OnCreate()
+        public override string Name => "Digestive";
+
+        protected override void OnAdd()
         {
         }
 
-        public override void OnDelete()
+        public override void OnRemove()
         {
         }
 
-        public override void OnTick(float frameTime)
+        public override void Update(float frameTime)
         {
         }
     }

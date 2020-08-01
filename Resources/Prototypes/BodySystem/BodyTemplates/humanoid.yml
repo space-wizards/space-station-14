@@ -15,19 +15,19 @@
     right foot: Foot
   connections:
     head:
-      - torso
+    - torso
     torso:
-      - left arm
-      - right arm
-      - left leg
-      - right leg
+    - left arm
+    - right arm
+    - left leg
+    - right leg
     left arm:
-      - left hand
+    - left hand
     right arm:
-      - right hand
+    - right hand
     left leg:
-      - left foot
+    - left foot
     right leg:
-      - right foot
-
-
+    - right foot
+  networks:
+  - Bloodstream

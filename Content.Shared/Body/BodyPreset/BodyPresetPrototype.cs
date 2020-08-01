@@ -11,8 +11,7 @@ namespace Content.Shared.Body.BodyPreset
     ///     Prototype for the BodyPreset class.
     /// </summary>
     [Prototype("bodyPreset")]
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class BodyPresetPrototype : IPrototype, IIndexedPrototype
     {
         private string _id;

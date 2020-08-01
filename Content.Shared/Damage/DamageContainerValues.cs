@@ -2,9 +2,24 @@
 
 namespace Content.Shared.Damage
 {
-    public enum DamageClass { Brute, Burn, Toxin, Airloss }
+    public enum DamageClass
+    {
+        Brute,
+        Burn,
+        Toxin,
+        Airloss
+    }
 
-    public enum DamageType { Blunt, Piercing, Heat, Disintegration, Cellular, DNA, Asphyxiation }
+    public enum DamageType
+    {
+        Blunt,
+        Piercing,
+        Heat,
+        Disintegration,
+        Cellular,
+        DNA,
+        Asphyxiation
+    }
 
     public static class DamageContainerValues
     {

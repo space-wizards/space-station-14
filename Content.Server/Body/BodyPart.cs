@@ -134,8 +134,7 @@ namespace Content.Server.Body
         public List<Mechanism> Mechanisms { get; } = new List<Mechanism>();
 
         /// <summary>
-        ///     This method is called by <see cref="BodyManagerComponent.Update"/>,
-        ///     which is called by <see cref="BodySystem.Update"/>
+        ///     This method is called by <see cref="BodyManagerComponent.Update"/>
         /// </summary>
         public void Update(float frameTime)
         {

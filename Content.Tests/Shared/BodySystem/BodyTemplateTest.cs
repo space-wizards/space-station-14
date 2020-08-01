@@ -1,24 +1,22 @@
-﻿using NUnit.Framework;
-using Robust.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Shared.Body;
+using NUnit.Framework;
+using Robust.UnitTesting;
 
-namespace Content.Tests.Shared
+namespace Content.Tests.Shared.BodySystem
 {
     [TestFixture, Parallelizable, TestOf(typeof(BodyTemplate))]
     public class BodyTemplateTest : RobustUnitTest
     {
         [Test]
-        public void CheckBodyTemplateHashingWorks()
+        public void BodyTemplateHashCodeTest()
         {
-
-            BodyTemplate a = new BodyTemplate();
-            BodyTemplate b = new BodyTemplate();
-            BodyTemplate c = new BodyTemplate();
-            BodyTemplate d = new BodyTemplate();
-            BodyTemplate e = new BodyTemplate();
+            var a = new BodyTemplate();
+            var b = new BodyTemplate();
+            var c = new BodyTemplate();
+            var d = new BodyTemplate();
+            var e = new BodyTemplate();
 
             a.Slots.Add("torso", BodyPartType.Torso);
             a.Slots.Add("left arm", BodyPartType.Arm);

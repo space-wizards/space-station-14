@@ -1,5 +1,6 @@
 ﻿using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
+using Content.Server.Body.Network;
 using Content.Server.Cargo;
 using Content.Server.Chat;
 using Content.Server.GameTicking;
@@ -41,6 +42,7 @@ namespace Content.Server
             IoCManager.Register<INodeFactory, NodeFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
+            IoCManager.Register<IBodyNetworkFactory, BodyNetworkFactory>();
         }
     }
 }

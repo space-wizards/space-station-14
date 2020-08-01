@@ -90,9 +90,7 @@ namespace Content.Server.Body.Mechanisms
         public List<MechanismBehavior> MechanismBehaviors { get; set; }
 
         /// <summary>
-        ///     This method is called by <see cref="BodyPart.Update"/>,
-        ///     which is called by <see cref="BodyManagerComponent.Update"/>',
-        ///     which is called by <see cref="BodySystem.Update"/>
+        ///     This method is called by <see cref="BodyPart.Update"/>
         /// </summary>
         public void Update(float frameTime)
         {
