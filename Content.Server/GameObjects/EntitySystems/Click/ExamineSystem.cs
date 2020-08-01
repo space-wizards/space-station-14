@@ -9,16 +9,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
 {
-    public interface IExamine
-    {
-        /// <summary>
-        /// Returns a status examine value for components appended to the end of the description of the entity
-        /// </summary>
-        /// <param name="message">The message to append to which will be displayed.</param>
-        /// <param name="inDetailsRange">Whether the examiner is within the 'Details' range, allowing you to show information logically only availabe when close to the examined entity.</param>
-        void Examine(FormattedMessage message, bool inDetailsRange);
-    }
-
     public class ExamineSystem : ExamineSystemShared
     {
 #pragma warning disable 649
@@ -26,8 +16,6 @@ namespace Content.Server.GameObjects.EntitySystems.Click
 #pragma warning restore 649
 
         private static readonly FormattedMessage _entityNotFoundMessage;
-
-        private const float ExamineDetailsRange = 3f;
 
         static ExamineSystem()
         {
