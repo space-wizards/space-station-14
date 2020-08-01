@@ -62,9 +62,6 @@ namespace Content.Server.GameObjects.Components.Disposal
         private bool _engaged;
 
         [ViewVariables]
-        private TimeSpan _engageTime;
-
-        [ViewVariables]
         private TimeSpan _automaticEngageTime;
 
         /// <summary>
@@ -423,10 +420,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 () => _pressure);
 
             serializer.DataReadWriteFunction(
-                "engageTime",
-                2,
-                seconds => _engageTime = TimeSpan.FromSeconds(seconds),
-                () => (int) _engageTime.TotalSeconds);
+                "automaticEngageTime",
+                30,
+                seconds => _automaticEngageTime = TimeSpan.FromSeconds(seconds),
+                () => (int) _automaticEngageTime.TotalSeconds);
 
             serializer.DataReadWriteFunction(
                 "automaticEngageTime",
