@@ -423,12 +423,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 _automaticEngageToken = null;
             }
 
+            UpdateVisualState();
+
             if (Engaged && !TryFlush())
             {
                 TryQueueEngage();
             }
-
-            UpdateVisualState();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
