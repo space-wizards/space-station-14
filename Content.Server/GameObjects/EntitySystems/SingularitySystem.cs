@@ -25,16 +25,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 }
             }
 
-            foreach (var singulo in ComponentManager.EntityQuery<SingularityComponent>())
-            {
-                foreach(var entity in singulo.DeleteList)
-                {
-                    entity.Delete();
-                }
-
-                singulo.DeleteList.Clear();
-            }
-
             if (tick == 4)
             {
                 tick = 0;

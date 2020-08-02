@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -51,8 +52,6 @@ namespace Content.Server.GameObjects.Components
 
         private SpriteComponent _spriteComponent;
 
-        public List<IEntity> DeleteList = new List<IEntity>();
-
 
         public override void Initialize()
         {
@@ -80,7 +79,7 @@ namespace Content.Server.GameObjects.Components
 
             foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
             {
-                if (entity.IsValid())
+                if (entity.IsValid() && !entity.HasComponent<IMapGridComponent>())
                 {
                     if (entity.HasComponent<RadiationPanel>())
                     {
@@ -161,9 +160,7 @@ namespace Content.Server.GameObjects.Components
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             Energy++;
-
-            //This avoids a peculiar bug with getting components on deleted entities
-            DeleteList.Add(entity);
+            entity.Delete();
         }
 
     }
