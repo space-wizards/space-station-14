@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.AI;
@@ -174,6 +174,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
         
         // TODO: Add a box like the debug one and show the most recent path stuff
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        private readonly ShaderInstance _shader;
 
         public PathfindingDebugMode Modes { get; set; } = PathfindingDebugMode.None;
 
@@ -202,7 +203,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         public DebugPathfindingOverlay() : base(nameof(DebugPathfindingOverlay))
         {
-            Shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
+            _shader = IoCManager.Resolve<IPrototypeManager>().Index<ShaderPrototype>("unshaded").Instance();
             _eyeManager = IoCManager.Resolve<IEyeManager>();
             _playerManager = IoCManager.Resolve<IPlayerManager>();
         }
@@ -455,13 +456,14 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
         #endregion
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             if (Modes == 0)
             {
                 return;
             }
 
+            handle.UseShader(_shader);
             var screenHandle = (DrawingHandleScreen) handle;
             var viewport = _eyeManager.GetWorldViewport();
 

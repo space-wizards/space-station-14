@@ -48,13 +48,13 @@ namespace Content.IntegrationTests.Tests.Disposal
             UnitContains(unit, result, entities);
         }
 
-        private void Flush(DisposalUnitComponent unit, bool result, DisposalEntryComponent? entry = null, IDisposalTubeComponent? next = null, params IEntity[] entities)
+        private void Flush(DisposalUnitComponent unit, bool result, DisposalEntryComponent? entry = null, params IEntity[] entities)
         {
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
-            Assert.AreEqual(unit.ContainedEntities.Count, entities.Length);
+            Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
 
-            Assert.AreEqual(unit.TryFlush(), result);
-            Assert.AreEqual(unit.ContainedEntities.Count == 0, entry != null || entities.Length == 0);
+            Assert.That(result, Is.EqualTo(unit.TryFlush()));
+            Assert.That(result || entities.Length == 0, Is.EqualTo(unit.ContainedEntities.Count == 0));
         }
 
         [Test]
@@ -62,10 +62,10 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             var server = StartServerDummyTicker();
 
-            IEntity human = null!;
-            IEntity wrench = null!;
-            DisposalUnitComponent unit = null!;
-            DisposalEntryComponent entry = null!;
+            IEntity human;
+            IEntity wrench;
+            DisposalUnitComponent unit;
+            DisposalEntryComponent entry;
 
             server.Assert(() =>
             {
@@ -88,8 +88,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Can't insert, unanchored and unpowered
                 var disposalUnitAnchorable = disposalUnit.GetComponent<AnchorableComponent>();
                 disposalUnitAnchorable.TryUnAnchor(human, null, true);
-                UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
                 Assert.False(unit.Anchored);
+                UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit
                 disposalUnitAnchorable.TryAnchor(human, null, true);
@@ -97,14 +97,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Assert.True(anchorableUnit.TryAnchor(human, wrench));
                 Assert.True(unit.Anchored);
 
-                // Can't insert, unpowered
-                UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
+                // No power
                 Assert.False(unit.Powered);
-
-                // Remove power need
-                Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent power));
-                power.NeedsPower = false;
-                Assert.True(unit.Powered);
 
                 // Can't insert the trunk or the unit into itself
                 UnitInsertContains(unit, false, disposalUnit, disposalTrunk);
@@ -116,13 +110,21 @@ namespace Content.IntegrationTests.Tests.Disposal
                 disposalTrunk.Transform.WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
-                Flush(unit, false, null, null, human, wrench);
+                Flush(unit, false, null, human, wrench);
 
                 // Move the disposal trunk back
                 disposalTrunk.Transform.WorldPosition -= (1, 0);
 
+                // Fail to flush with a mob and an item, no power
+                Flush(unit, false, entry, human, wrench);
+
+                // Remove power need
+                Assert.True(disposalUnit.TryGetComponent(out PowerReceiverComponent power));
+                power.NeedsPower = false;
+                Assert.True(unit.Powered);
+
                 // Flush with a mob and an item
-                Flush(unit, true, entry, null, human, wrench);
+                Flush(unit, true, entry, human, wrench);
 
                 // Re-pressurizing
                 Flush(unit, false, entry);

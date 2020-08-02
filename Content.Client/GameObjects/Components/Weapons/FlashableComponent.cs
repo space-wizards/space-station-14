@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using Content.Shared.GameObjects.Components.Weapons;
 using Robust.Client.Graphics.Drawing;
@@ -116,7 +116,7 @@ namespace Content.Client.GameObjects.Components.Weapons
             Duration = duration;
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             var elapsedTime = (_timer.CurTime - StartTime).TotalSeconds;
             if (elapsedTime > Duration)

@@ -26,11 +26,12 @@ namespace Content.Client.Parallax
         private Texture _parallaxTexture;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpaceBelowWorld;
+        private readonly ShaderInstance _shader;
 
         public ParallaxOverlay() : base(nameof(ParallaxOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
+            _shader = _prototypeManager.Index<ShaderPrototype>("unshaded").Instance();
 
             if (_parallaxManager.ParallaxTexture == null)
             {
@@ -42,13 +43,14 @@ namespace Content.Client.Parallax
             }
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             if (_parallaxTexture == null)
             {
                 return;
             }
 
+            handle.UseShader(_shader);
             var screenHandle = (DrawingHandleScreen) handle;
 
             var (sizeX, sizeY) = _parallaxTexture.Size;
