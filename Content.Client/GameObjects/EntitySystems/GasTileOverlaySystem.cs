@@ -24,7 +24,6 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private readonly Dictionary<float, Color> _fireCache = new Dictionary<float, Color>();
@@ -49,8 +48,6 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-
-            _overlayManager.AddOverlay(new GasTileOverlay());
 
             SubscribeNetworkEvent(new EntityEventHandler<GasTileOverlayMessage>(OnTileOverlayMessage));
 

@@ -140,6 +140,7 @@
   - type: Grammar
     proper: true
   - type: Pullable
+  - type: CanSeeGases
 
 - type: entity
   save: false
