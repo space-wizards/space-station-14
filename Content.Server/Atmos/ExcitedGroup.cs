@@ -43,6 +43,7 @@ namespace Content.Server.Atmos
                     _tile.Add(tile);
                 }
                 other._tile.Clear();
+                other.Dispose();
                 ResetCooldowns();
             }
             else
@@ -53,6 +54,7 @@ namespace Content.Server.Atmos
                     other._tile.Add(tile);
                 }
                 _tile.Clear();
+                Dispose();
                 other.ResetCooldowns();
             }
         }
