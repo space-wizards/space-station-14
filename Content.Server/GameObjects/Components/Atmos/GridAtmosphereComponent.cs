@@ -40,6 +40,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// </summary>
         private const float LagCheckMaxMilliseconds = 5f;
 
+        /// <summary>
+        ///     How many ticks before atmos updates are ran.
+        /// </summary>
+        private const int AtmosTicks = 2;
+
         public override string Name => "GridAtmosphere";
 
         private int _timer = 0;
@@ -308,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
 
-            if (_timer < 2)
+            if (_timer < AtmosTicks)
                 return;
 
             _timer = 0;
@@ -316,31 +321,31 @@ namespace Content.Server.GameObjects.Components.Atmos
             switch (_state)
             {
                 case ProcessState.TileEqualize:
-                    ProcessTileEqualize();
-                    _state = ProcessState.ActiveTiles;
+                    if(ProcessTileEqualize())
+                        _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
-                    ProcessActiveTiles();
-                    _state = ProcessState.ExcitedGroups;
+                    if(ProcessActiveTiles())
+                        _state = ProcessState.ExcitedGroups;
                     return;
                 case ProcessState.ExcitedGroups:
-                    ProcessExcitedGroups();
-                    _state = ProcessState.HighPressureDelta;
+                    if(ProcessExcitedGroups())
+                        _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
-                    ProcessHighPressureDelta();
-                    _state = ProcessState.Hotspots;
+                    if(ProcessHighPressureDelta())
+                        _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
-                    ProcessHotspots();
-                    _state = ProcessState.TileEqualize;
+                    if(ProcessHotspots())
+                        _state = ProcessState.TileEqualize;
                     break;
             }
 
             UpdateCounter++;
         }
 
-        public void ProcessTileEqualize()
+        public bool ProcessTileEqualize()
         {
             _stopwatch.Restart();
 
@@ -353,11 +358,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
-        public void ProcessActiveTiles()
+        public bool ProcessActiveTiles()
         {
             _stopwatch.Restart();
 
@@ -370,11 +377,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
-        public void ProcessExcitedGroups()
+        public bool ProcessExcitedGroups()
         {
             _stopwatch.Restart();
 
@@ -394,11 +403,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
-        public void ProcessHighPressureDelta()
+        public bool ProcessHighPressureDelta()
         {
             _stopwatch.Restart();
 
@@ -414,11 +425,13 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
-        private void ProcessHotspots()
+        private bool ProcessHotspots()
         {
             _stopwatch.Restart();
 
@@ -431,8 +444,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)

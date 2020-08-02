@@ -575,7 +575,7 @@ namespace Content.Server.Atmos
 
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
-            foreach (var (direction, enemyTile) in _adjacentTiles)
+            foreach (var (_, enemyTile) in _adjacentTiles)
             {
                 // If the tile is null or has no air, we don't do anything
                 if(enemyTile?.Air == null) continue;
