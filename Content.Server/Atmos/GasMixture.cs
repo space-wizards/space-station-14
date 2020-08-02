@@ -102,11 +102,8 @@ namespace Content.Server.Atmos
             get => _temperature;
             set
             {
-                if(value < Atmospherics.TCMB)
-                    throw new Exception($"Tried to set gas temperature below CMB! Value: {value}");
-
                 if (Immutable) return;
-                _temperature = value;
+                _temperature = MathF.Max(value, Atmospherics.TCMB);
             }
         }
 
