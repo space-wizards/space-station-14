@@ -1,5 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Atmos;
-using NFluidsynth;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Atmos;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;

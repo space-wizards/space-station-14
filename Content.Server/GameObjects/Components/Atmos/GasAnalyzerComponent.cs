@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿#nullable enable
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
