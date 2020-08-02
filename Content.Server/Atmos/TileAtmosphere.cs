@@ -467,7 +467,7 @@ namespace Content.Server.Atmos
                     foreach (var direction in Cardinal)
                     {
                         if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
-                        if (tile2?.Air.Compare(Air) == GasMixture.GasCompareResult.NoExchange) continue;
+                        if (tile2?.Air?.Compare(Air) == GasMixture.GasCompareResult.NoExchange) continue;
                         _gridAtmosphereComponent.AddActiveTile(tile2);
                         break;
                     }
