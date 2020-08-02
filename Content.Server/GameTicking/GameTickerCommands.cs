@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.BodySystem;
@@ -388,8 +388,16 @@ namespace Content.Server.GameTicking
             }
 
             var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
-            var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
-            manager.DisconnectBodyPart(hand.Value, true);
+            var hand = manager.PartDictionary.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
+            if (hand.Value == null)
+            {
+                shell.SendText(player, "You have no hands.");
+                return;
+            }
+            else
+            {
+                manager.DisconnectBodyPart(hand.Value, true);
+            }
         }
     }
 }
