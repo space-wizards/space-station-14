@@ -149,6 +149,8 @@
             "Conveyor",
             "ConveyorSwitch",
             "Flippable",
+            "Airtight",
+            "MovedByPressure",
         };
     }
 }

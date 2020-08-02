@@ -866,7 +866,7 @@
 
 - type: entity
   parent: UniformBase
-  id: UniformHop
+  id: UniformHoP
   name: hop jumpsuit
   description:
   components:
@@ -880,8 +880,8 @@
     sprite: Clothing/Uniforms/uniform_hop.rsi
 
 - type: entity
-  parent: UniformHop
-  id: UniformHopSkirt
+  parent: UniformHoP
+  id: UniformHoPSkirt
   name: hop jumpskirt
   components:
   - type: Sprite
