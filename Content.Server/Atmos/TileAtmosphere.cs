@@ -270,15 +270,8 @@ namespace Content.Server.Atmos
             if (giverTiles.Count > logN && takerTiles.Count > logN)
             {
                 // Even if it fails, it will speed up the next part.
-                Array.Sort(tiles, (a, b) =>
-                {
-                    var aMoleDelta = a._tileAtmosInfo.MoleDelta;
-                    var bMoleDelta = b._tileAtmosInfo.MoleDelta;
-
-                    return Math.Abs(aMoleDelta - bMoleDelta) > Atmospherics.MinimumMolesDeltaToMove
-                        ? aMoleDelta.CompareTo(bMoleDelta)
-                        : a._tileAtmosInfo.CurrentTransferAmount.CompareTo(b._tileAtmosInfo.CurrentTransferAmount);
-                });
+                Array.Sort(tiles, (a, b)
+                    => a._tileAtmosInfo.MoleDelta.CompareTo(b._tileAtmosInfo.MoleDelta));
 
                 foreach (var tile in tiles)
                 {
@@ -544,7 +537,7 @@ namespace Content.Server.Atmos
         private void AdjustEqMovement(Direction direction, float molesToMove)
         {
             _tileAtmosInfo[direction] += molesToMove;
-            if(direction != (Direction)(-1) && _adjacentTiles.TryGetValue(direction, out var adj) && adj?._tileAtmosInfo != null)
+            if(direction != (Direction)(-1) && _adjacentTiles.TryGetValue(direction, out var adj))
                 _adjacentTiles[direction]._tileAtmosInfo[direction.GetOpposite()] -= molesToMove;
         }
 
