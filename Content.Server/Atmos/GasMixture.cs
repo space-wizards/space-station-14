@@ -508,7 +508,7 @@ namespace Content.Server.Atmos
             return false;
         }
 
-        public bool Equals(GasMixture other)
+        public bool Equals(GasMixture? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
