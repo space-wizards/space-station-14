@@ -36,6 +36,8 @@ namespace Content.Client.Chat
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
 
+        public bool ClearOnEnter { get; set; } = true;
+
         public ChatBox()
         {
             /*MarginLeft = -475.0f;
@@ -167,12 +169,18 @@ namespace Content.Client.Chat
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
+            // We set it there to true so it's set to false by TextSubmitted.Invoke if necessary
+            ClearOnEnter = true;
+
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 TextSubmitted?.Invoke(this, args.Text);
             }
 
-            Input.Clear();
+            if (ClearOnEnter)
+            {
+                Input.Clear();
+            }
 
             if (ReleaseFocusOnEnter)
             {
