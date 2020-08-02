@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -25,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             }
             set
             {
-                _radiation = value;
+                _radiation = Math.Clamp(value, 0, 2000);
                 if (_radiation >= 100 && enabled)
                 {
                     SupplyRate = _radiation;
@@ -67,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             SupplyRate = _radiation;
             Timer.SpawnRepeating(1000, () =>
             {
-                Radiation -= 100;
+                Radiation -= Math.Clamp(Radiation / 10, 10, int.MaxValue);
             }, tokenSource.Token);
         }
 
