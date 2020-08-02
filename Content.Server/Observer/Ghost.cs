@@ -30,15 +30,6 @@ namespace Content.Server.Observer
                 return;
             }
 
-            var gam = EntitySystem.Get<AtmosphereSystem>()
-                .GetGridAtmosphere(player.AttachedEntity.Transform.GridID);
-
-            var indices = player.AttachedEntity.Transform.GridPosition.ToMapIndices(IoCManager.Resolve<IMapManager>());
-
-            var tile = gam?.GetTile(indices);
-            tile?.Air?.AdjustMoles(Gas.Phoron, Atmospherics.MolesCellStandard*1000);
-            gam?.Invalidate(indices);
-
             var mind = player.ContentData().Mind;
             var canReturn = player.AttachedEntity != null;
             var name = player.AttachedEntity?.Name ?? player.Name;
