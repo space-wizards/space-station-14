@@ -55,6 +55,7 @@ namespace Content.Server.GlobalVerbs
         {
             if (!user.TryGetComponent(out ICollidableComponent userCollidable) ||
                 !target.TryGetComponent(out ICollidableComponent targetCollidable) ||
+                targetCollidable.Anchored ||
                 !target.TryGetComponent(out PullableComponent pullable) ||
                 !user.TryGetComponent(out HandsComponent hands))
             {

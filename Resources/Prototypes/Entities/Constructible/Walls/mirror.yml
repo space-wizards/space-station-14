@@ -16,7 +16,7 @@
   - type: InteractionOutline
   - type: Physics
     mass: 25
-    Anchored: true
+    anchored: true
   - type: SnapGrid
     offset: Center
   - type: MagicMirror

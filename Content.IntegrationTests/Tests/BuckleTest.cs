@@ -60,7 +60,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.False(ActionBlockerSystem.CanMove(human));
                 Assert.False(ActionBlockerSystem.CanChangeDirection(human));
                 Assert.False(EffectBlockerSystem.CanFall(human));
-                Assert.AreEqual(human.Transform.WorldPosition, chair.Transform.WorldPosition);
+                Assert.That(human.Transform.WorldPosition, Is.EqualTo(chair.Transform.WorldPosition));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));

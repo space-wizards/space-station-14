@@ -106,37 +106,43 @@ namespace Content.Client.GameObjects.EntitySystems
 
             _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos, size));
 
+            FormattedMessage message;
             if (entity.Uid.IsClientSide())
             {
-                return;
+                message = ExamineSystem.GetExamineText(entity, _playerManager.LocalPlayer.ControlledEntity);
+            }
+            else
+            {
+
+                // Ask server for extra examine info.
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity.Uid));
+
+                ExamineSystemMessages.ExamineInfoResponseMessage response;
+                try
+                {
+                    _requestCancelTokenSource = new CancellationTokenSource();
+                    response =
+                        await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
+                            .Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    return;
+                }
+                finally
+                {
+                    _requestCancelTokenSource = null;
+                }
+
+                message = response.Message;
             }
 
-            // Ask server for extra examine info.
-            RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity.Uid));
-
-            ExamineSystemMessages.ExamineInfoResponseMessage response;
-            try
-            {
-                _requestCancelTokenSource = new CancellationTokenSource();
-                response =
-                    await AwaitNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(_requestCancelTokenSource
-                        .Token);
-            }
-            catch (TaskCanceledException)
-            {
-                return;
-            }
-            finally
-            {
-                _requestCancelTokenSource = null;
-            }
-
-            foreach (var msg in response.Message.Tags.OfType<FormattedMessage.TagText>())
+            foreach (var msg in message.Tags.OfType<FormattedMessage.TagText>())
             {
                 if (!string.IsNullOrWhiteSpace(msg.Text))
                 {
                     var richLabel = new RichTextLabel();
-                    richLabel.SetMessage(response.Message);
+                    richLabel.SetMessage(message);
                     vBox.AddChild(richLabel);
                     break;
                 }
