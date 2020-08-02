@@ -1,25 +1,27 @@
 - type: entity
-  name: "SinguloTest"
-  id: SinguloTest
+  name: "Gravitational Singularity"
+  description: "A mesmerizing swirl of darkness that sucks in everything.\nIf it's moving towards you, run."
+  id: Singularityt
   components:
   - type: InteractionOutline
   - type: Collidable
     anchored: false
     shapes:
     - !type:PhysShapeCircle
-      radius: 2.5
+      radius: 0.5
       layer:
       - Clickable
       mask:
       - MobMask
+      - Clickable
   - type: Physics
     mass: 5
   - type: Singularity
   - type: CollidableComponent
   - type: Sprite
-    sprite: Constructible/Misc/potted_plants.rsi
-    state: random
+    sprite: Effects/Singularity/singularity_1.rsi
+    state: singularity_1
   - type: Icon
-    sprite: Constructible/Misc/potted_plants.rsi
-    state: random
+    sprite: Effects/Singularity/singularity_1.rsi
+    state: singularity_1
     drawdepth: Items
