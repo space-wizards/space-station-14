@@ -171,6 +171,12 @@
   - anchor
   - unanchor
   - tubeconnections
+  - addatmos
+  - addgas
+  - fillgas
+  - listgases
+  - removegas
+  - settemp
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
