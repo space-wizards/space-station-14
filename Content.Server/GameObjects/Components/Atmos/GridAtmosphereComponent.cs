@@ -41,13 +41,13 @@ namespace Content.Server.GameObjects.Components.Atmos
         private const float LagCheckMaxMilliseconds = 5f;
 
         /// <summary>
-        ///     How many ticks before atmos updates are ran.
+        ///     How much time before atmos updates are ran.
         /// </summary>
-        private const int AtmosTicks = 2;
+        private const float AtmosTime = 1/24f;
 
         public override string Name => "GridAtmosphere";
 
-        private int _timer = 0;
+        private float _timer = 0f;
         private Stopwatch _stopwatch = new Stopwatch();
         public int UpdateCounter { get; private set; } = 0;
         private IMapGrid _grid;
@@ -308,15 +308,16 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public void Update(float frameTime)
         {
-            _timer += 1;
+            _timer += frameTime;
 
             if (_invalidatedCoords.Count != 0)
                 Revalidate();
 
-            if (_timer < AtmosTicks)
+            if (_timer < AtmosTime)
                 return;
 
-            _timer = 0;
+            // We subtract it so it takes lost time into account.
+            _timer -= AtmosTime;
 
             switch (_state)
             {
