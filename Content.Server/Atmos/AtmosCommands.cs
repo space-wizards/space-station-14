@@ -255,7 +255,7 @@ namespace Content.Server.Atmos
     {
         public string Command => "settemp";
         public string Description => "Sets a tile's temperature.";
-        public string Help => "Usage: settemp <X> <Y> <GridId> <moles>";
+        public string Help => "Usage: settemp <X> <Y> <GridId> <Temperature>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
             if (args.Length < 4) return;
