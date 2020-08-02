@@ -97,6 +97,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var (gridId, indices) in _invalid)
             {
+                if (!mapMan.GridExists(gridId))
+                {
+                    _invalid.Remove(gridId);
+                    return;
+                }
                 var grid = entityMan.GetEntity(mapMan.GetGrid(gridId).GridEntityId);
                 if (!grid.TryGetComponent(out GridAtmosphereComponent gam)) continue;
 

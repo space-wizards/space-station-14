@@ -90,7 +90,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Minimum amount of air that has to move before a group processing can be suspended
         /// </summary>
-        public const float MinimumAirToSuspend = (MolesCellStandard*MinimumAirRatioToSuspend);
+        public const float MinimumAirToSuspend = (MolesCellStandard * MinimumAirRatioToSuspend);
 
         public const float MinimumTemperatureToMove = (T20C + 100f);
 
