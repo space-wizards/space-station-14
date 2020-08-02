@@ -25,7 +25,7 @@ namespace Content.Client.Atmos
 {
     public class GasTileOverlay : Overlay
     {
-        private GasTileOverlaySystem _gasTileOverlaySystem;
+        private readonly GasTileOverlaySystem _gasTileOverlaySystem;
 
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -40,7 +40,7 @@ namespace Content.Client.Atmos
             _gasTileOverlaySystem = EntitySystem.Get<GasTileOverlaySystem>();
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace overlay)
         {
             var drawHandle = (DrawingHandleWorld) handle;
 
