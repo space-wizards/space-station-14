@@ -138,6 +138,7 @@
             "RCD",
             "Pullable",
             "Spray",
+            "Vapor",
         };
     }
 }

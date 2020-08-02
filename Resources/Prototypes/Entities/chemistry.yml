@@ -6,3 +6,14 @@
   components:
   - type: Solution
     maxVol: 5
+
+- type: entity
+  id: Vapor
+  name: "vapor"
+  abstract: true
+  components:
+  - type: SnapGrid
+    offset: Center
+  - type: Solution
+    maxVol: 50
+  - type: Vapor

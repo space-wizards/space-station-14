@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 {
                     if (ent.TryGetComponent(out ICollidableComponent coll))
                     {
-                        if ((coll.CollisionLayer & (int)Content.Shared.Physics.CollisionGroup.MobImpassable) != 0 && coll.Hard)
+                        if ((coll.CollisionLayer & (int)Content.Shared.Physics.CollisionGroup.Impassable) != 0 && coll.Hard)
                         {
                             unobstructed = false;
                             break;
@@ -141,8 +141,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 }
                 if (unobstructed)
                 {
-                    //TODO: maybe remove the puddle overflow?
-                    SpillHelper.SpillAt(tile, _contents.SplitSolution(amount), "PuddleSmear", false); //make non PuddleSmear?
+                    VaporHelper.SpillAt(tile, _contents.SplitSolution(amount));
                     amount = amount * 0.5;
                 }
                 else // found wall and that stops the spray
