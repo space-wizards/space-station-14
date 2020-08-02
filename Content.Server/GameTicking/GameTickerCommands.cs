@@ -389,7 +389,15 @@ namespace Content.Server.GameTicking
 
             var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
             var hand = manager.PartDictionary.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
-            manager.DisconnectBodyPart(hand.Value, true);
+            if (hand.Value == null)
+            {
+                shell.SendText(player, "You have no hands.");
+                return;
+            }
+            else
+            {
+                manager.DisconnectBodyPart(hand.Value, true);
+            }
         }
     }
 }
