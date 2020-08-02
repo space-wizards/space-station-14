@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -32,7 +33,7 @@ namespace Content.Server.Observer
             var gam = EntitySystem.Get<AtmosphereSystem>()
                 .GetGridAtmosphere(player.AttachedEntity.Transform.GridID);
 
-            var indices = player.AttachedEntity.Transform.GridPosition.ToMapIndices();
+            var indices = player.AttachedEntity.Transform.GridPosition.ToMapIndices(IoCManager.Resolve<IMapManager>());
 
             var tile = gam?.GetTile(indices);
             tile?.Air?.AdjustMoles(Gas.Phoron, Atmospherics.MolesCellStandard*1000);

@@ -28,6 +28,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
         [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
+        [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
         /// <summary>
         ///     Check current execution time every n instances processed.
@@ -243,7 +244,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <inheritdoc />
         public TileAtmosphere GetTile(GridCoordinates coordinates)
         {
-            return GetTile(coordinates.ToMapIndices());
+            return GetTile(coordinates.ToMapIndices(_mapManager));
         }
 
         /// <inheritdoc />
