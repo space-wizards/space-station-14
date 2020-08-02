@@ -52,13 +52,13 @@ namespace Content.Server.Atmos
 
                 if (maxForce > ThrowForce && throwTarget != GridCoordinates.InvalidGrid)
                 {
-                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 25f);
+                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 50f);
                     var pos = throwTarget.Position - transform.GridPosition.Position;
                     LinearVelocity = pos * moveForce;
                 }
                 else
                 {
-                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 10f);
+                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 25f);
                     LinearVelocity = direction.ToVec() * moveForce;
                 }
 
