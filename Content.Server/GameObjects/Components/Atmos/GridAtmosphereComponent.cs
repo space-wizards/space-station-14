@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     How much time before atmos updates are ran.
         /// </summary>
-        private const float AtmosTime = 1/24f;
+        private const float AtmosTime = 1/26f;
 
         public override string Name => "GridAtmosphere";
 

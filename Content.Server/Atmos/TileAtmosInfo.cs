@@ -69,9 +69,6 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public float CurrentTransferAmount;
 
-        [ViewVariables]
-        public float DistanceScore;
-
         public Direction CurrentTransferDirection;
 
         [ViewVariables]
