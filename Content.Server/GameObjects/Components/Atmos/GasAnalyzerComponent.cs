@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Atmos;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
