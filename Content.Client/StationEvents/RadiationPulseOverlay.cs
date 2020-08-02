@@ -2,76 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.StationEvents;
+using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.ClientEye;
-using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Color = Robust.Shared.Maths.Color;
 
-namespace Content.Client.GameObjects.EntitySystems.StationEvents
+namespace Content.Client.StationEvents
 {
-    /// <summary>
-    /// Handles showing the RadiationPulse event entities on the client side (using an overlay)
-    /// </summary>
     [UsedImplicitly]
-    public sealed class ClientRadiationSystem : EntitySystem
-    {
-        // All of this just to use the overlay and get smooth circles
-        private RadiationPulseOverlay _overlay;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(ClientRadiationPulseComponent));
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            // TODO: There's gotta be a better way to do this and have it sync with new-join clients?
-            foreach (var _ in RelevantEntities)
-            {
-                EnableOverlay();
-                return;
-            }
-            
-            DisableOverlay();
-        }
-
-        private void EnableOverlay()
-        {
-            if (_overlay != null)
-            {
-                return;
-            }
-            
-            _overlay = new RadiationPulseOverlay();
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.AddOverlay(_overlay);
-        }
-
-        private void DisableOverlay()
-        {
-            if (_overlay == null)
-            {
-                return;
-            }
-            
-            var overlayManager = IoCManager.Resolve<IOverlayManager>();
-            overlayManager.RemoveOverlay(nameof(RadiationPulseOverlay));
-            _overlay = null;
-        }
-    }
-
     public sealed class RadiationPulseOverlay : Overlay
     {
         [Dependency] private IEntityManager _entityManager = default!;
@@ -101,7 +47,7 @@ namespace Content.Client.GameObjects.EntitySystems.StationEvents
         // TODO: When worldHandle can do DrawCircle change this.
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-        public RadiationPulseOverlay() : base(nameof(RadiationPulseOverlay))
+        public RadiationPulseOverlay() : base(nameof(SharedOverlayID.FlashOverlay))
         {
             IoCManager.InjectDependencies(this);
             _lastTick = _gameTiming.CurTime;

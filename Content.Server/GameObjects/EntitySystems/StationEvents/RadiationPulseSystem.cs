@@ -10,7 +10,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
-    public sealed class ServerRadiationPulseSystem : EntitySystem
+    public sealed class RadiationPulseSystem : EntitySystem
     {
         // Rather than stuffing around with collidables and checking entities on initialize etc. we'll just tick over
         // for each entity in range. Seemed easier than checking entities on spawn, then checking collidables, etc.
@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         private TypeEntityQuery _speciesQuery;
 
         /// <summary>
-        /// Damage works with ints so we'll just accumulate damage and once we hit this threshold we'll apply it.
+        ///     Damage works with ints so we'll just accumulate damage and once we hit this threshold we'll apply it.
         /// </summary>
         /// This also server to stop spamming the damagethreshold with 1 damage continuously.
         private const int DamageThreshold = 10;
@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public override void Initialize()
         {
             base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(ServerRadiationPulseComponent));
+            EntityQuery = new TypeEntityQuery(typeof(RadiationPulseComponent));
             _speciesQuery = new TypeEntityQuery(typeof(SpeciesComponent));
         }
         
@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             foreach (var entity in RelevantEntities)
             {
                 anyPulses = true;
-                var comp = entity.GetComponent<ServerRadiationPulseComponent>();
+                var comp = entity.GetComponent<RadiationPulseComponent>();
                 
                 foreach (var species in _entityManager.GetEntities(_speciesQuery))
                 {

@@ -1,3 +1,5 @@
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
@@ -51,6 +53,13 @@ namespace Content.Server.StationEvents
 
             _timeElapsed = 0.0f;
             _pulsesRemaining = _robustRandom.Next(30, 100);
+
+            var componentManager = IoCManager.Resolve<IComponentManager>();
+
+            foreach (var overlay in componentManager.GetAllComponents<ServerOverlayEffectsComponent>())
+            {
+                overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
+            }
         }
 
         public override void Shutdown()
@@ -61,6 +70,13 @@ namespace Content.Server.StationEvents
             _entityManager = null;
             _mapManager = null;
             _robustRandom = null;
+            
+            var componentManager = IoCManager.Resolve<IComponentManager>();
+
+            foreach (var overlay in componentManager.GetAllComponents<ServerOverlayEffectsComponent>())
+            {
+                overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
+            }
         }
         
         public override void Update(float frameTime)

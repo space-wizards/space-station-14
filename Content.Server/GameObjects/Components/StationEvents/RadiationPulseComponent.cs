@@ -13,7 +13,7 @@ using Robust.Shared.Timers;
 namespace Content.Server.GameObjects.Components.StationEvents
 {
     [RegisterComponent]
-    public sealed class ServerRadiationPulseComponent : SharedRadiationPulseComponent
+    public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
         private const float MinPulseLifespan = 0.8f;
         private const float MaxPulseLifespan = 2.5f;

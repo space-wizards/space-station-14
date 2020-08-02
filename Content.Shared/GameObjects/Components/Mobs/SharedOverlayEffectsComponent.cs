@@ -121,6 +121,7 @@ namespace Content.Shared.GameObjects.Components.Mobs
     {
         GradientCircleMaskOverlay,
         CircleMaskOverlay,
-        FlashOverlay
+        FlashOverlay,
+        RadiationPulseOverlay,
     }
 }
