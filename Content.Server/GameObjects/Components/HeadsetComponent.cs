@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chat;
+﻿using Content.Server.Interfaces;
+using Content.Shared.Chat;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NFluidsynth;
 using Robust.Server.Interfaces.GameObjects;
@@ -14,7 +15,7 @@ using System.Text;
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    public class HeadsetComponent : Component
+    public class HeadsetComponent : Component, IListen
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
@@ -23,17 +24,26 @@ namespace Content.Server.GameObjects.Components
 
         public override string Name => "Headset";
 
-        public void Test(IEntity source, string message)
+        private int _listenRange = 0;
+
+        public int GetListenRange()
         {
-            if (source.TryGetComponent<IActorComponent>(out IActorComponent actor))
+            return _listenRange;
+        }
+
+        public void HeardSpeech(string speech, IEntity source)
+        {
+            if (speech.StartsWith(';') && source.TryGetComponent<IActorComponent>(out IActorComponent actor))
             {
+                speech = speech.Substring(1);
+
                 var playerChannel = actor.playerSession.ConnectedClient;
                 if (playerChannel == null) { return; }
 
                 var msg = _netManager.CreateNetMessage<MsgChatMessage>();
-            
+
                 msg.Channel = ChatChannel.Radio;
-                msg.Message = message;
+                msg.Message = speech;
                 msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
                 msg.SenderEntity = source.Uid;
                 _netManager.ServerSendMessage(msg, playerChannel);

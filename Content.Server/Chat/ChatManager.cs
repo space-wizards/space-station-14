@@ -75,25 +75,12 @@ namespace Content.Server.Chat
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);
 
-            if (message.StartsWith(';') && source.TryGetComponent<InventoryComponent>(out InventoryComponent inventory))
-            {
-                message = message.Substring(1);
-                if (inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
-                {
-                    if (item.Owner.TryGetComponent<HeadsetComponent>(out HeadsetComponent headset))
-                    {
-                        headset.Test(source, message);
-                    }
-                }
-            }
-
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
             msg.Channel = ChatChannel.Local;
             msg.Message = message;
             msg.MessageWrap = $"{source.Name} says, \"{{0}}\"";
             msg.SenderEntity = source.Uid;
             _netManager.ServerSendToMany(msg, clients.ToList());
-
 
             var listeners = _entitySystemManager.GetEntitySystem<ListeningSystem>();
             listeners.PingListeners(source, pos, message);
