@@ -82,11 +82,10 @@ namespace Content.Client.GameObjects
 
             foreach (var (slot, entityUid) in cast.Entities)
             {
-                if (!Owner.EntityManager.TryGetEntity(entityUid, out var ent))
+                if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
                 {
                     continue;
                 }
-                var entity = Owner.EntityManager.GetEntity(entityUid);
                 if (!_slots.ContainsKey(slot) || _slots[slot] != entity)
                 {
                     _slots[slot] = entity;
