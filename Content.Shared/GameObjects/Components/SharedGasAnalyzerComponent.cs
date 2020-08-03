@@ -23,10 +23,10 @@ namespace Content.Shared.GameObjects.Components
         {
             public float Pressure;
             public float Temperature;
-            public StatusEntry[] Gases;
+            public GasEntry[] Gases;
             public string Error;
 
-            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, StatusEntry[] gases, string error = null)
+            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, GasEntry[] gases, string error = null)
             {
                 Pressure = pressure;
                 Temperature = temperature;
@@ -36,20 +36,20 @@ namespace Content.Shared.GameObjects.Components
         }
 
         [Serializable, NetSerializable]
-        public struct StatusEntry
+        public struct GasEntry
         {
-            public readonly object Key;
-            public readonly object Value;
+            public readonly string Name;
+            public readonly float Amount;
 
-            public StatusEntry(object key, object value)
+            public GasEntry(string name, float amount)
             {
-                Key = key;
-                Value = value;
+                Name = name;
+                Amount = amount;
             }
 
             public override string ToString()
             {
-                return Loc.GetString("{0}: {1} mol", Key, Value);
+                return Loc.GetString("{0}: {1} mol", Name, Amount);
             }
         }
 

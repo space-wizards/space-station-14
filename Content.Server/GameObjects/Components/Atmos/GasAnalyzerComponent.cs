@@ -66,14 +66,14 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
-            var gases = new List<StatusEntry>();
+            var gases = new List<GasEntry>();
             for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gas = Atmospherics.GetGas(i);
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 
-                gases.Add(new StatusEntry(gas.Name, tile.Gases[i]));
+                gases.Add(new GasEntry(gas.Name, tile.Gases[i]));
             }
 
             _userInterface.SetState(

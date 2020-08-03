@@ -25,9 +25,9 @@ namespace Content.Client.GameObjects.Components.Atmos
     {
         public GasAnalyzerBoundUserInterface Owner { get; }
 
-        private readonly Control _wiresHBox;
         private readonly Control _topContainer;
         private readonly Control _statusContainer;
+        private readonly Control _gasBar;
 
         private readonly Label _nameLabel;
 
@@ -194,56 +194,44 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Pressure, TemperatureHelpers.KelvinToCelsius(state.Pressure))
             });
+
+            // This is the whole gas bar thingy
+            var height = 50;
+            var minSize = 10; // This basically allows gases which are too small, to be shown properly
+            var _gasBar = new HBoxContainer
+            {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                CustomMinimumSize = new Vector2(0, height)
+            };
+            //TODO: properly add the colors to the gas prototype
+            System.Collections.Generic.Dictionary<string, Color> tab = new System.Collections.Generic.Dictionary<string, Color>
+            {
+                ["oxygen"]= Color.Yellow,
+                ["nitrogen"]=Color.Orange,
+                ["phoron"]=Color.Purple
+            };
             foreach (var gas in state.Gases)
             {
+                //TODO: remove the gas label list?
                 _statusContainer.AddChild(new Label
                 {
                     Text = gas.ToString()
                 });
-            }
-            /*_nameLabel.Text = state.BoardName;
-            _serialLabel.Text = state.SerialNumber;
 
-            _wiresHBox.RemoveAllChildren();
-            var random = new Random(state.WireSeed);
-            foreach (var wire in state.WiresList)
-            {
-                var mirror = random.Next(2) == 0;
-                var flip = random.Next(2) == 0;
-                var type = random.Next(2);
-                var control = new WireControl(wire.Color, wire.Letter, wire.IsCut, flip, mirror, type)
+                _gasBar.AddChild(new PanelContainer
                 {
-                    SizeFlagsVertical = SizeFlags.ShrinkEnd
-                };
-                _wiresHBox.AddChild(control);
-
-                control.WireClicked += () =>
-                {
-                    Owner.PerformAction(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
-                };
-
-                control.ContactsClicked += () =>
-                {
-                    Owner.PerformAction(wire.Id, WiresAction.Pulse);
-                };
-            }
-
-
-            _statusContainer.RemoveAllChildren();
-            foreach (var status in state.Statuses)
-            {
-                if (status.Value is StatusLightData statusLightData)
-                {
-                    _statusContainer.AddChild(new StatusLight(statusLightData));
-                }
-                else
-                {
-                    _statusContainer.AddChild(new Label
+                    ToolTip = gas.ToString(),
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    SizeFlagsStretchRatio = gas.Amount,
+                    MouseFilter = MouseFilterMode.Pass,
+                    PanelOverride = new StyleBoxFlat
                     {
-                        Text = status.ToString()
-                    });
-                }
-            }*/
+                        BackgroundColor = tab[gas.Name.ToLower()]
+                    },
+                    CustomMinimumSize = new Vector2(minSize, 0)
+                });
+            }
+            _statusContainer.AddChild(_gasBar);
         }
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
