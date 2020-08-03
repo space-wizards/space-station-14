@@ -99,47 +99,25 @@ namespace Content.Server.GameObjects.Components
         public void UpdateLevel()
         {
             int prevLevel = Level;
-            float radius = 0.5f;
+            float radius;
 
             if (Energy == 0)
             {
                 //collapse
             }
-
-            if (Energy < 200)
+            else
             {
-                Level = 1;
+                Level = Energy switch
+                {
+                    var n when n >= 1500 => 6,
+                    var n when n >= 1000 => 5,
+                    var n when n >= 600 => 4,
+                    var n when n >= 300 => 3,
+                    var n when n >= 200 => 2,
+                };
             }
 
-            if (Energy >= 200)
-            {
-                Level = 2;
-                radius = 1.5f;
-            }
-
-            if (Energy >= 300)
-            {
-                Level = 3;
-                radius = 2.5f;
-            }
-
-            if (Energy >= 600)
-            {
-                Level = 4;
-                radius = 3.5f;
-            }
-
-            if (Energy >= 1000)
-            {
-                Level = 5;
-                radius = 4.5f;
-            }
-
-            if (Energy >= 1500)
-            {
-                Level = 6;
-                radius = 5.5f;
-            }
+            radius = Level - 0.5f;
 
             if (Level != prevLevel)
             {
