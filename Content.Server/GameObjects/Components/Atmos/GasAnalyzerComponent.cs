@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : Component, IExamine, IAfterInteract
+    public class GasAnalyzerComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private IServerNotifyManager _notifyManager = default!;
@@ -24,13 +24,21 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (!eventArgs.CanReach) return;
+            if (!eventArgs.CanReach)
+            {
+                _notifyManager.PopupMessage(eventArgs.ClickLocation, eventArgs.User, "Can't reach");
+                return;
+            }
 
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
 
             var tile = gam?.GetTile(eventArgs.ClickLocation).Air;
 
-            if (tile == null) return;
+            if (tile == null)
+            {
+                _notifyManager.PopupMessage(eventArgs.ClickLocation, eventArgs.User, "No atmosphere!");
+                return;
+            }
 
             string message = "";
             message += $"Pressure: {tile.Pressure:0.##} kPa\n";
@@ -44,31 +52,8 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 message += $"{gas.Name}: {tile.Gases[i]} mol \n";
             }
-            _notifyManager.PopupMessageCursor(eventArgs.User, message);
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (!inDetailsRange) return;
-
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-
-            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
-
-            if (tile == null) return;
-
-            message.AddText($"Pressure: {tile.Pressure}\n");
-            message.AddText($"Temperature: {tile.Temperature}\n");
-
-            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gas = Atmospherics.GetGas(i);
-
-                if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
-
-                message.AddText(gas.Name);
-                message.AddText($"\n Moles: {tile.Gases[i]}\n");
-            }
+            message = message.TrimEnd(); // Remove annoying newline
+            _notifyManager.PopupMessage(eventArgs.ClickLocation, eventArgs.User, message);
         }
     }
 }
