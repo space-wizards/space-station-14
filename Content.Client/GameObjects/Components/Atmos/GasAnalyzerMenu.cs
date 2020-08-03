@@ -4,6 +4,7 @@ using Content.Client.GameObjects.EntitySystems;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.Utility;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
@@ -29,7 +30,6 @@ namespace Content.Client.GameObjects.Components.Atmos
         private readonly Control _statusContainer;
 
         private readonly Label _nameLabel;
-        private readonly Label _serialLabel;
 
         public TextureButton CloseButton { get; set; }
 
@@ -60,59 +60,6 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 Name = "BottomWrap"
             };
-            var bottomPanel = new PanelContainer
-            {
-                PanelOverride = back,
-                MouseFilter = MouseFilterMode.Pass
-            };
-
-            var shadow = new HBoxContainer
-            {
-                Children =
-                {
-                    new PanelContainer
-                    {
-                        CustomMinimumSize = (2, 0),
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
-                    },
-                    new PanelContainer
-                    {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand,
-                        MouseFilter = MouseFilterMode.Stop,
-                        Name = "Shadow",
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.Black.WithAlpha(0.5f)}
-                    },
-                    new PanelContainer
-                    {
-                        CustomMinimumSize = (2, 0),
-                        PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
-                    },
-                }
-            };
-
-            var wrappingHBox = new HBoxContainer();
-            _wiresHBox = new HBoxContainer { SeparationOverride = 4, SizeFlagsVertical = SizeFlags.ShrinkEnd };
-
-            wrappingHBox.AddChild(new Control { CustomMinimumSize = (20, 0) });
-            wrappingHBox.AddChild(_wiresHBox);
-            wrappingHBox.AddChild(new Control { CustomMinimumSize = (20, 0) });
-
-            bottomWrap.AddChild(bottomPanel);
-
-            LayoutContainer.SetAnchorPreset(bottomPanel, LayoutContainer.LayoutPreset.BottomWide);
-            LayoutContainer.SetMarginTop(bottomPanel, -55);
-
-            bottomWrap.AddChild(shadow);
-
-            LayoutContainer.SetAnchorPreset(shadow, LayoutContainer.LayoutPreset.BottomWide);
-            LayoutContainer.SetMarginBottom(shadow, -55);
-            LayoutContainer.SetMarginTop(shadow, -80);
-            LayoutContainer.SetMarginLeft(shadow, 12);
-            LayoutContainer.SetMarginRight(shadow, -12);
-
-            bottomWrap.AddChild(wrappingHBox);
-            LayoutContainer.SetAnchorPreset(wrappingHBox, LayoutContainer.LayoutPreset.Wide);
-            LayoutContainer.SetMarginBottom(wrappingHBox, -4);
 
             rootContainer.AddChild(topPanel);
             rootContainer.AddChild(bottomWrap);
@@ -139,7 +86,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             var font = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
             var fontSmall = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
-            Button helpButton;
+            Button refreshButton;
             var topRow = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -154,20 +101,9 @@ namespace Content.Client.GameObjects.Components.Atmos
                         {
                             (_nameLabel = new Label
                             {
-                                Text = Loc.GetString("Wires"),
+                                Text = Loc.GetString("Gas Analyzer"),
                                 FontOverride = font,
                                 FontColorOverride = StyleNano.NanoGold,
-                                SizeFlagsVertical = SizeFlags.ShrinkCenter
-                            }),
-                            new Control
-                            {
-                                CustomMinimumSize = (8, 0),
-                            },
-                            (_serialLabel = new Label
-                            {
-                                Text = Loc.GetString("DEAD-BEEF"),
-                                FontOverride = fontSmall,
-                                FontColorOverride = Color.Gray,
                                 SizeFlagsVertical = SizeFlags.ShrinkCenter
                             }),
                             new Control
@@ -175,7 +111,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                 CustomMinimumSize = (20, 0),
                                 SizeFlagsHorizontal = SizeFlags.Expand
                             },
-                            (helpButton = new Button {Text = "?"}),
+                            (refreshButton = new Button {Text = "Refresh"}), //TODO: refresh icon?
                             new Control
                             {
                                 CustomMinimumSize = (2, 0),
@@ -190,13 +126,9 @@ namespace Content.Client.GameObjects.Components.Atmos
                 }
             };
 
-            helpButton.OnPressed += a =>
+            refreshButton.OnPressed += a =>
             {
-                /*var popup = new HelpPopup();
-                UserInterfaceManager.ModalRoot.AddChild(popup);
-
-                popup.Open(UIBox2.FromDimensions(a.Event.PointerLocation.Position, (400, 200)));*/
-                //TODO: refresh button?
+                Owner.Refresh();
             };
 
             var middle = new PanelContainer
@@ -216,11 +148,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                                 MarginBottomOverride = 4,
                                 Children =
                                 {
-                                    (_statusContainer = new GridContainer
-                                    {
-                                        // TODO: automatically change columns count.
-                                        Columns = 3
-                                    })
+                                    (_statusContainer = new VBoxContainer())
                                 }
                             }
                         }
@@ -247,6 +175,32 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         public void Populate(GasAnalyzerBoundUserInterfaceState state)
         {
+            _statusContainer.RemoveAllChildren();
+            if (state.Error != null)
+            {
+                _statusContainer.AddChild(new Label
+                {
+                    Text = Loc.GetString("Error: {0}", state.Error),
+                    FontColorOverride = Color.Red
+                });
+                return;
+            }
+            
+            _statusContainer.AddChild(new Label
+            {
+                Text = Loc.GetString("Pressure: {0:0.##}", state.Pressure)
+            });
+            _statusContainer.AddChild(new Label
+            {
+                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Pressure, TemperatureHelpers.KelvinToCelsius(state.Pressure))
+            });
+            foreach (var gas in state.Gases)
+            {
+                _statusContainer.AddChild(new Label
+                {
+                    Text = gas.ToString()
+                });
+            }
             /*_nameLabel.Text = state.BoardName;
             _serialLabel.Text = state.SerialNumber;
 

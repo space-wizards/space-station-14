@@ -30,11 +30,10 @@ namespace Content.Client.GameObjects.Components.Atmos
             _menu.Populate((GasAnalyzerBoundUserInterfaceState) state);
         }
 
-        //TODO: add refresh action here and in shared
-        /*public void PerformAction(int id, WiresAction action)
+        public void Refresh()
         {
-            SendMessage(new WiresActionMessage(id, action));
-        }*/
+            SendMessage(new GasAnalyzerRefreshMessage());
+        }
 
         protected override void Dispose(bool disposing)
         {

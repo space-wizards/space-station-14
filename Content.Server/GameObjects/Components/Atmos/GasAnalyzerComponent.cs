@@ -17,6 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -45,9 +46,51 @@ namespace Content.Server.GameObjects.Components.Atmos
             _userInterface.Open(session);
         }
 
-        private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        private void UpdateUserInterface()
         {
-            throw new NotImplementedException();
+            string? error = null;
+            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
+
+            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
+            if (tile == null)
+            {
+                error = "No Atmosphere!";
+                _userInterface.SetState(
+                new GasAnalyzerBoundUserInterfaceState(
+                    0,
+                    0,
+                    null,
+                    error));
+                return;
+            }
+
+            var gases = new List<StatusEntry>();
+            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var gas = Atmospherics.GetGas(i);
+
+                if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
+
+                gases.Add(new StatusEntry(gas.Name, tile.Gases[i]));
+            }
+
+            _userInterface.SetState(
+                new GasAnalyzerBoundUserInterfaceState(
+                    tile.Pressure,
+                    tile.Temperature,
+                    gases.ToArray(),
+                    error));
+        }
+
+        private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
+        {
+            var message = serverMsg.Message;
+            switch (message)
+            {
+                case GasAnalyzerRefreshMessage msg:
+                    UpdateUserInterface();
+                    break;
+            }
         }
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -55,40 +98,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 OpenInterface(actor.playerSession);
-                return;
+                //TODO: show other sprite when ui open?
             }
-            
-
-            if (!eventArgs.CanReach)
-            {
-                _notifyManager.PopupMessage(eventArgs.ClickLocation, eventArgs.User, Loc.GetString("You can't reach there!"));
-                return;
-            }
-
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
-
-            var tile = gam?.GetTile(eventArgs.ClickLocation).Air;
-
-            if (tile == null)
-            {
-                _notifyManager.PopupMessage(eventArgs.ClickLocation, eventArgs.User, Loc.GetString("No atmosphere there!"));
-                return;
-            }
-
-            string message = "";
-            message += Loc.GetString("Pressure: {0:0.##} kPa\n", tile.Pressure);
-            message += Loc.GetString("Temperature: {0}K ({1}°C)", tile.Temperature, TemperatureHelpers.KelvinToCelsius(tile.Temperature));
-
-            for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
-            {
-                var gas = Atmospherics.GetGas(i);
-
-                if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
-
-                message += Loc.GetString("\n{0}: {1} mol", gas.Name, tile.Gases[i]);
-            }
-
-            _notifyManager.PopupMessage(eventArgs.ClickLocation, eventArgs.User, message);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using System;
 using System.Collections.Generic;
@@ -20,23 +21,44 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class GasAnalyzerBoundUserInterfaceState : BoundUserInterfaceState
         {
-            //float Temperature
-            //float Pressure
-            //[]Gases
-            /*public string BoardName { get; }
-            public string SerialNumber { get; }
-            public ClientWire[] WiresList { get; }
-            public StatusEntry[] Statuses { get; }
-            public int WireSeed { get; }
+            public float Pressure;
+            public float Temperature;
+            public StatusEntry[] Gases;
+            public string Error;
 
-            public WiresBoundUserInterfaceState(ClientWire[] wiresList, StatusEntry[] statuses, string boardName, string serialNumber, int wireSeed)
+            public GasAnalyzerBoundUserInterfaceState(float pressure, float temperature, StatusEntry[] gases, string error = null)
             {
-                BoardName = boardName;
-                SerialNumber = serialNumber;
-                WireSeed = wireSeed;
-                WiresList = wiresList;
-                Statuses = statuses;
-            }*/
+                Pressure = pressure;
+                Temperature = temperature;
+                Gases = gases;
+                Error = error;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public struct StatusEntry
+        {
+            public readonly object Key;
+            public readonly object Value;
+
+            public StatusEntry(object key, object value)
+            {
+                Key = key;
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return Loc.GetString("{0}: {1} mol", Key, Value);
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
+        {
+            public GasAnalyzerRefreshMessage()
+            {
+            }
         }
     }
 }
