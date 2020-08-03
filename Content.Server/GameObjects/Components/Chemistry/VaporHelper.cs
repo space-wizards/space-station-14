@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry;
+﻿#nullable enable
+using Content.Shared.Chemistry;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -17,10 +18,10 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="entity">Entity to spawn the vapor at</param>
         /// <param name="solution">Initial solution for the prototype</param>
-        internal static void SpillAt(IEntity entity, Solution solution)
+        internal static VaporComponent? SpillAt(IEntity entity, Solution solution)
         {
             var entityLocation = entity.Transform.GridPosition;
-            SpillAt(entityLocation, solution);
+            return SpillAt(entityLocation, solution);
         }
 
         /// <summary>
