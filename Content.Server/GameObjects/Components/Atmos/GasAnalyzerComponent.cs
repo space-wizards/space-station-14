@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
@@ -44,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void OpenInterface(IPlayerSession session)
         {
             _userInterface.Open(session);
+            UpdateUserInterface();
         }
 
         private void UpdateUserInterface()
@@ -88,6 +90,28 @@ namespace Content.Server.GameObjects.Components.Atmos
             switch (message)
             {
                 case GasAnalyzerRefreshMessage msg:
+                    var player = serverMsg.Session.AttachedEntity;
+                    if (player == null)
+                    {
+                        return;
+                    }
+
+                    if (!player.TryGetComponent(out IHandsComponent handsComponent))
+                    {
+                        _notifyManager.PopupMessage(Owner.Transform.GridPosition, player,
+                            Loc.GetString("You have no hands."));
+                        return;
+                    }
+
+                    var activeHandEntity = handsComponent.GetActiveHand?.Owner;
+                    if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent gasAnalyzer))
+                    {
+                        _notifyManager.PopupMessage(serverMsg.Session.AttachedEntity,
+                            serverMsg.Session.AttachedEntity,
+                            Loc.GetString("You need a Gas Analyzer in your hand!"));
+                        return;
+                    }
+
                     UpdateUserInterface();
                     break;
             }

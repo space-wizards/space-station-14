@@ -56,9 +56,7 @@ namespace Content.Shared.GameObjects.Components
         [Serializable, NetSerializable]
         public class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
         {
-            public GasAnalyzerRefreshMessage()
-            {
-            }
+            public GasAnalyzerRefreshMessage() {}
         }
     }
 }
