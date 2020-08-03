@@ -95,7 +95,8 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            if (!SlotContainers.ContainsKey(slot))
+
+            if (!SlotContainers.TryGetValue(slot, out var containerSlot) || containerSlot == null)
             {
                 return null;
             }
@@ -433,7 +434,7 @@ namespace Content.Server.GameObjects
             var list = new List<KeyValuePair<Slots, EntityUid>>();
             foreach (var (slot, container) in SlotContainers)
             {
-                if (container.ContainedEntity != null)
+                if (container != null && container.ContainedEntity != null)
                 {
                     list.Add(new KeyValuePair<Slots, EntityUid>(slot, container.ContainedEntity.Uid));
                 }

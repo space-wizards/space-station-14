@@ -15,6 +15,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Map;
@@ -38,8 +39,6 @@ namespace Content.Server.GameObjects.Components
 
         public int Energy = 100;
         public int Level = 1;
-
-        private float _range;
 
         private Random rand = new Random();
 
@@ -77,14 +76,11 @@ namespace Content.Server.GameObjects.Components
 
             _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
 
-            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, _range))
+            foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, 15))
             {
-                if (entity.IsValid() && !entity.HasComponent<IMapGridComponent>())
+                if (entity.HasComponent<RadiationPanel>())
                 {
-                    if (entity.HasComponent<RadiationPanel>())
-                    {
-                        entity.GetComponent<RadiationPanel>().Radiation += 200;
-                    }
+                    entity.GetComponent<RadiationPanel>().Radiation += Level * 100;
                 }
             }
 
@@ -151,17 +147,17 @@ namespace Content.Server.GameObjects.Components
                 _spriteComponent.LayerSetState(0, "singularity_" + Level.ToString());
 
                 (_collidableComponent.PhysicsShapes[0] as PhysShapeCircle).Radius = radius;
-
-                _range = radius * 2;
             }
 
         }
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
-            Energy++;
-            entity.Delete();
+            if (!ContainerHelpers.IsInContainer(entity))
+            {
+                Energy++;
+                entity.Delete();
+            }
         }
-
     }
 }
