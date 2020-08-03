@@ -4,6 +4,7 @@
   name: headset radio
   description: The radio to keep up to date in real time with fun onboard station activities
   components:
+  - type: Headset
   - type: Sprite
     sprite: Clothing/Earpieces/headset.rsi
     state: headset
@@ -14,4 +15,3 @@
     Slots:
     - ears
     sprite: Clothing/Earpieces/headset.rsi
-  - type: Headset

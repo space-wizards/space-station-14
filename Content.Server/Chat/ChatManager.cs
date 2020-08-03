@@ -82,7 +82,7 @@ namespace Content.Server.Chat
                 {
                     if (item.Owner.TryGetComponent<HeadsetComponent>(out HeadsetComponent headset))
                     {
-                        headset.Test();
+                        headset.Test(source, message);
                     }
                 }
             }
