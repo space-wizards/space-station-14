@@ -78,9 +78,9 @@ namespace Content.Server.GameObjects.Components
 
             foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, 15))
             {
-                if (entity.HasComponent<RadiationPanel>())
+                if (entity.TryGetComponent<RadiationPanel>(out var radPanel))
                 {
-                    entity.GetComponent<RadiationPanel>().Radiation += Level * 100;
+                    radPanel.Radiation += Level * 100;
                 }
             }
 
