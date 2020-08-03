@@ -1,4 +1,4 @@
-﻿using Content.Server.Interfaces;
+using Content.Server.Interfaces;
 using Content.Shared;
 using Content.Shared.Interfaces;
 using Robust.Server.Interfaces.Console;
@@ -28,9 +28,6 @@ namespace Content.Server
             _netManager.RegisterNetMessage<MsgDoNotifyCursor>(nameof(MsgDoNotifyCursor));
             _netManager.RegisterNetMessage<MsgDoNotifyCoordinates>(nameof(MsgDoNotifyCoordinates));
             _netManager.RegisterNetMessage<MsgDoNotifyEntity>(nameof(MsgDoNotifyEntity));
-            _netManager.RegisterNetMessage<MsgDoNotifyTooltipCursor>(nameof(MsgDoNotifyTooltipCursor));
-            _netManager.RegisterNetMessage<MsgDoNotifyTooltipCoordinates>(nameof(MsgDoNotifyTooltipCoordinates));
-            _netManager.RegisterNetMessage<MsgDoNotifyTooltipEntity>(nameof(MsgDoNotifyTooltipEntity));
 
             _initialized = true;
         }
@@ -71,50 +68,6 @@ namespace Content.Server
             }
 
             var netMessage = _netManager.CreateNetMessage<MsgDoNotifyCursor>();
-            netMessage.Message = message;
-
-            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
-        }
-
-        public override void PopupTooltip(IEntity source, IEntity viewer, string title, string message)
-        {
-            if (!viewer.TryGetComponent(out IActorComponent actor))
-            {
-                return;
-            }
-
-            var netMessage = _netManager.CreateNetMessage<MsgDoNotifyTooltipEntity>();
-            netMessage.Title = title;
-            netMessage.Entity = source.Uid;
-            netMessage.Message = message;
-
-            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
-        }
-
-        public override void PopupTooltip(GridCoordinates coordinates, IEntity viewer, string title, string message)
-        {
-            if (!viewer.TryGetComponent(out IActorComponent actor))
-            {
-                return;
-            }
-
-            var netMessage = _netManager.CreateNetMessage<MsgDoNotifyTooltipCoordinates>();
-            netMessage.Title = title;
-            netMessage.Coordinates = coordinates;
-            netMessage.Message = message;
-
-            _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
-        }
-
-        public override void PopupTooltipCursor(IEntity viewer, string title, string message)
-        {
-            if (!viewer.TryGetComponent(out IActorComponent actor))
-            {
-                return;
-            }
-
-            var netMessage = _netManager.CreateNetMessage<MsgDoNotifyTooltipCursor>();
-            netMessage.Title = title;
             netMessage.Message = message;
 
             _netManager.ServerSendMessage(netMessage, actor.playerSession.ConnectedClient);
