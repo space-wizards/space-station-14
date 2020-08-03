@@ -114,6 +114,7 @@ namespace Content.Server.GameObjects.Components
                     var n when n >= 600 => 4,
                     var n when n >= 300 => 3,
                     var n when n >= 200 => 2,
+                    var n when n <  200 => 1
                 };
             }
 
