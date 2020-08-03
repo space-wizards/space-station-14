@@ -1,0 +1,13 @@
+﻿- type: entity
+  name: gas analyzer
+  parent: BaseItem
+  id: GasAnalyzer
+  description: TODO
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    state: icon
+  - type: Icon
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    state: icon
+  - type: GasAnalyzer
