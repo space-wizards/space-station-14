@@ -1,4 +1,4 @@
-using Content.Shared.Interfaces;
+﻿using Content.Shared.Interfaces;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -86,6 +86,96 @@ namespace Content.Shared
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
+                buffer.Write(Message);
+                buffer.Write(Entity);
+            }
+        }
+
+        public abstract void PopupTooltip(IEntity source, IEntity viewer, string title, string message);
+
+        public abstract void PopupTooltip(GridCoordinates coordinates, IEntity viewer, string title, string message);
+
+        public abstract void PopupTooltipCursor(IEntity viewer, string title, string message);
+
+        protected class MsgDoNotifyTooltipCursor : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgDoNotifyTooltipCursor);
+            public MsgDoNotifyTooltipCursor(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string Title { get; set; }
+            public string Message { get; set; }
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Title = buffer.ReadString();
+                Message = buffer.ReadString();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Title);
+                buffer.Write(Message);
+            }
+        }
+
+        protected class MsgDoNotifyTooltipCoordinates : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgDoNotifyTooltipCoordinates);
+            public MsgDoNotifyTooltipCoordinates(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string Title { get; set; }
+            public string Message { get; set; }
+            public GridCoordinates Coordinates;
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Title = buffer.ReadString();
+                Message = buffer.ReadString();
+                Coordinates = buffer.ReadGridLocalCoordinates();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Title);
+                buffer.Write(Message);
+                buffer.Write(Coordinates);
+            }
+        }
+
+        protected class MsgDoNotifyTooltipEntity : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgDoNotifyTooltipEntity);
+            public MsgDoNotifyTooltipEntity(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public string Title { get; set; }
+            public string Message { get; set; }
+            public EntityUid Entity;
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Title = buffer.ReadString();
+                Message = buffer.ReadString();
+                Entity = buffer.ReadEntityUid();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Title);
                 buffer.Write(Message);
                 buffer.Write(Entity);
             }

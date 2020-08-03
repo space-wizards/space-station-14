@@ -31,6 +31,29 @@ namespace Content.Shared.Interfaces
         /// <param name="viewer">The client attached entity that the message is being sent to.</param>
         /// <param name="message">Text contents of the message.</param>
         void PopupMessageCursor(IEntity viewer, string message);
+
+        /// <summary>
+        /// Makes a tooltip popup from an entity.
+        /// </summary>
+        /// <param name="source">The entity at which location the tooltip popups</param>
+        /// <param name="viewer">The client attached entity that the message is being sent to.</param>
+        /// <param name="message">Text contents of the message.</param>
+        void PopupTooltip(IEntity source, IEntity viewer, string title, string message);
+
+        /// <summary>
+        /// Makes a tooltip popup from a location on a grid.
+        /// </summary>
+        /// <param name="coordinates">Location on a grid at which the tooltip popups</param>
+        /// <param name="viewer">The client attached entity that the message is being sent to.</param>
+        /// <param name="message">Text contents of the message.</param>
+        void PopupTooltip(GridCoordinates coordinates, IEntity viewer, string title, string message);
+
+        /// <summary>
+        /// Makes a tooltip popup from a client's cursor.
+        /// </summary>
+        /// <param name="viewer">The client attached entity that the message is being sent to.</param>
+        /// <param name="message">Text contents of the message.</param>
+        void PopupTooltipCursor(IEntity viewer, string title, string message);
     }
 
     public static class NotifyManagerExt
