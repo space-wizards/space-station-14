@@ -28,7 +28,7 @@ namespace Content.Shared.Chat
 
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
-            MaxMessageLength = buffer.ReadInt16();
+            MaxMessageLength = buffer.ReadInt32();
         }
 
         public override void WriteToBuffer(NetOutgoingMessage buffer)
