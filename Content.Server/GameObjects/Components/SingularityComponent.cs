@@ -9,7 +9,9 @@ using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Sound;
+using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -35,6 +37,8 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
     {
+        public override uint? NetID => ContentNetIDs.SINGULARITY;
+
         public override string Name => "Singularity";
 
         public int Energy = 100;
@@ -51,6 +55,7 @@ namespace Content.Server.GameObjects.Components
 
         private SpriteComponent _spriteComponent;
 
+        private bool transition = true;
 
         public override void Initialize()
         {
@@ -66,12 +71,43 @@ namespace Content.Server.GameObjects.Components
 
             _entityManager = IoCManager.Resolve<IEntityManager>();
             _mapManager = IoCManager.Resolve<IMapManager>();
+        }
 
-
+        protected override void Startup()
+        {
+            SendNetworkMessage(new SingularitySoundMessage(true));
+            Timer.Spawn(5421, () => transition = false);
         }
 
         public void Update()
         {
+            if (transition)
+            {
+                return;
+            }
+
+            switch (Level)
+            {
+                case 6:
+                    Energy -= 20;
+                    break;
+                case 5:
+                    Energy -= 15;
+                    break;
+                case 4:
+                    Energy -= 10;
+                    break;
+                case 3:
+                    Energy -= 5;
+                    break;
+                case 2:
+                    Energy -= 2;
+                    break;
+                case 1:
+                    Energy -= 1;
+                    break;
+            }
+
             Energy--;
 
             _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
@@ -101,9 +137,17 @@ namespace Content.Server.GameObjects.Components
             int prevLevel = Level;
             float radius;
 
-            if (Energy == 0)
+            if (Energy <= 0)
             {
-                //collapse
+
+                SendNetworkMessage(new SingularitySoundMessage(false));
+
+                _singularityController.LinearVelocity = Vector2.Zero;
+                transition = true;
+                _spriteComponent.LayerSetVisible(0, false);
+
+                Timer.Spawn(7500, () => Owner.Delete());
+
             }
             else
             {
@@ -132,6 +176,10 @@ namespace Content.Server.GameObjects.Components
 
         void ICollideBehavior.CollideWith(IEntity entity)
         {
+            if (transition)
+            {
+                return;
+            }
             if (!ContainerHelpers.IsInContainer(entity))
             {
                 Energy++;

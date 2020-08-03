@@ -68,13 +68,14 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             SupplyRate = _radiation;
             Timer.SpawnRepeating(1000, () =>
             {
-                Radiation -= Math.Clamp(Radiation / 10, 10, int.MaxValue);
+                Radiation -= Math.Clamp(Radiation / 2, 100, int.MaxValue);
             }, tokenSource.Token);
         }
 
         void DisableCollection()
         {
             enabled = false;
+            Radiation = 0;
             tokenSource.Cancel();
         }
     }

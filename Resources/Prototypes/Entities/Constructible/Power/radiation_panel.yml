@@ -17,10 +17,10 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    texture: Constructible/Power/radiation_panel.rsi
+    sprite: Constructible/Power/radiation_panel.rsi
     state: ca_active
   - type: Icon
-    texture: Constructible/Power/radiation_panel.rsi
+    sprite: Constructible/Power/radiation_panel.rsi
     state: ca_active
   - type: NodeContainer
     nodeTypes: { HVPower : ["AdjacentNode"] }

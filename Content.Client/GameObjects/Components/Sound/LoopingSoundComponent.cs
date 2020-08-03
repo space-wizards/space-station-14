@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Sound;
 using Content.Shared.Physics;
 using Robust.Client.GameObjects.EntitySystems;
@@ -12,6 +14,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Client.GameObjects.Components.Sound
 {
@@ -58,7 +61,15 @@ namespace Content.Client.GameObjects.Components.Sound
                 {
                     if (!schedule.Play) return; // We make sure this hasn't changed.
                     if (_audioSystem == null) _audioSystem = EntitySystem.Get<AudioSystem>();
-                    _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
+
+                    if (!_audioStreams.ContainsKey(schedule))
+                    {
+                        _audioStreams.Add(schedule,_audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams));
+                    }
+                    else
+                    {
+                        _audioStreams[schedule] = _audioSystem.Play(schedule.Filename, Owner, schedule.AudioParams);
+                    }
 
                     if (schedule.Times == 0) return;
 
