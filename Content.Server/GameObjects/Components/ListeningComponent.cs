@@ -15,7 +15,6 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class ListeningComponent : Component
     {
-
         public override string Name => "Listening";
 
         public void PassSpeechData(string speech, IEntity source, float distance)
