@@ -12,6 +12,7 @@ using Content.Server.GameObjects.EntitySystems.Click;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 {

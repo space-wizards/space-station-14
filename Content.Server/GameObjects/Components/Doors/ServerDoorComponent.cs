@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
@@ -44,6 +45,7 @@ namespace Content.Server.GameObjects
         protected const float AutoCloseDelay = 5;
         protected float CloseSpeed = AutoCloseDelay;
 
+        private AirtightComponent airtightComponent;
         private ICollidableComponent _collidableComponent;
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
@@ -72,6 +74,7 @@ namespace Content.Server.GameObjects
         {
             base.Initialize();
 
+            airtightComponent = Owner.GetComponent<AirtightComponent>();
             _collidableComponent = Owner.GetComponent<ICollidableComponent>();
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _cancellationTokenSource = new CancellationTokenSource();
@@ -177,6 +180,7 @@ namespace Content.Server.GameObjects
 
             Timer.Spawn(OpenTimeOne, async () =>
             {
+                airtightComponent.AirBlocked = false;
                 _collidableComponent.Hard = false;
 
                 await Timer.Delay(OpenTimeTwo, _cancellationTokenSource.Token);
@@ -273,6 +277,7 @@ namespace Content.Server.GameObjects
                     CheckCrush();
                 }
 
+                airtightComponent.AirBlocked = true;
                 _collidableComponent.Hard = true;
 
                 await Timer.Delay(CloseTimeTwo, _cancellationTokenSource.Token);

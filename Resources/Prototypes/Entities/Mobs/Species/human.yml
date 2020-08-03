@@ -11,6 +11,7 @@
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
+  - type: MovedByPressure
   - type: Hunger
   - type: Thirst
   # Organs
@@ -136,6 +137,7 @@
   - type: Grammar
     proper: true
   - type: Pullable
+  - type: CanSeeGases
 
 - type: entity
   save: false

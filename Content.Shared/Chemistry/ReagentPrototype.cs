@@ -5,6 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Shared.Chemistry
@@ -12,6 +13,8 @@ namespace Content.Shared.Chemistry
     [Prototype("reagent")]
     public class ReagentPrototype : IPrototype, IIndexedPrototype
     {
+        private const float CelsiusToKelvin = 273.15f;
+
 #pragma warning disable 649
         [Dependency] private readonly IModuleManager _moduleManager;
 #pragma warning restore 649
@@ -29,7 +32,6 @@ namespace Content.Shared.Chemistry
         public Color SubstanceColor => _substanceColor;
         //List of metabolism effects this reagent has, should really only be used server-side.
         public List<IMetabolizable> Metabolism => _metabolism;
-
         public string SpriteReplacementPath => _spritePath;
 
         public ReagentPrototype()

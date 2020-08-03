@@ -20,12 +20,12 @@ namespace Content.Client.Construction
         }
 
         /// <inheritdoc />
-        public override bool HijackPlacementRequest(GridCoordinates coords)
+        public override bool HijackPlacementRequest(GridCoordinates coordinates)
         {
             if (_prototype != null)
             {
                 var dir = Manager.Direction;
-                _constructionSystem.SpawnGhost(_prototype, coords, dir);
+                _constructionSystem.SpawnGhost(_prototype, coordinates, dir);
             }
             return true;
         }

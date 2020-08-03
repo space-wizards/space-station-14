@@ -32,6 +32,8 @@
     sizeY: 32
   - type: SnapGrid
     offset: Center
+  - type: Airtight
+
   - type: IconSmooth
     key: walls
     base: solid

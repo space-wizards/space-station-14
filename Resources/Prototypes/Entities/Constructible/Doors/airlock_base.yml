@@ -51,6 +51,8 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: Airtight
+    adjacentAtmosphere: true
   - type: Occluder
   - type: SnapGrid
     offset: Center

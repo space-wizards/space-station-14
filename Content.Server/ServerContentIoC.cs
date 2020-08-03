@@ -1,4 +1,4 @@
-﻿using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.Body.Network;
 using Content.Server.Cargo;

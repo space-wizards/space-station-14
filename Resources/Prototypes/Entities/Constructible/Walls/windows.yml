@@ -30,6 +30,7 @@
     maxHP: 100
   - type: SnapGrid
     offset: Center
+  - type: Airtight
   - type: Window
     base: window
 
