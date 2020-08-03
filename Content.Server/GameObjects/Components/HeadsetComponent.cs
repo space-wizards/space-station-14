@@ -9,5 +9,16 @@ namespace Content.Server.GameObjects.Components
     public class HeadsetComponent : Component
     {
         public override string Name => "Headset";
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+        }
+
+        public void Test()
+        {
+            Console.WriteLine("Test functional.");
+        }
     }
 }
