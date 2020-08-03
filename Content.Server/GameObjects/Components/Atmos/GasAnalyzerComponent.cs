@@ -33,8 +33,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (tile == null) return;
 
             string message = "";
-            message += $"Pressure: {tile.Pressure} kPa\n";
-            message += $"Temperature: {tile.Temperature} K/{TemperatureHelpers.KelvinToCelsius(tile.Temperature)} °C\n";
+            message += $"Pressure: {tile.Pressure:0.##} kPa\n";
+            message += $"Temperature: {tile.Temperature}K ({TemperatureHelpers.KelvinToCelsius(tile.Temperature)}°C)\n";
 
             for (int i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 
-                message += $"{tile.Gases[i]} mol {gas.Name}\n";
+                message += $"{gas.Name}: {tile.Gases[i]} mol \n";
             }
             _notifyManager.PopupMessageCursor(eventArgs.User, message);
         }
