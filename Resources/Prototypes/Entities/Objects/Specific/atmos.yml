@@ -11,3 +11,7 @@
     sprite: Objects/Specific/Atmos/gasanalyzer.rsi
     state: icon
   - type: GasAnalyzer
+  - type: UserInterface
+    interfaces:
+    - key: enum.GasAnalyzerUiKey.Key
+      type: GasAnalyzerBoundUserInterface

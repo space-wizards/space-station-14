@@ -151,7 +151,6 @@
             "Flippable",
             "Airtight",
             "MovedByPressure",
-            "GasAnalyzer"
         };
     }
 }
