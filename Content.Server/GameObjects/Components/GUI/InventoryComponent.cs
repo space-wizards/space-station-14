@@ -101,7 +101,7 @@ namespace Content.Server.GameObjects
                 return null;
             }
 
-            var containedEntity = SlotContainers[slot].ContainedEntity;
+            var containedEntity = containerSlot.ContainedEntity;
             if (containedEntity?.Deleted == true)
             {
                 SlotContainers[slot] = null;
