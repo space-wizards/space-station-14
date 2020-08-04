@@ -1,14 +1,17 @@
 using System;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
-    public class ContainmentFieldGeneratorComponent : Component
+    public class ContainmentFieldGeneratorComponent : Component, IExamine
     {
         public override string Name => "Containment Field Generator";
 
@@ -24,11 +27,24 @@ namespace Content.Server.GameObjects.Components.Singularity
             _entityManager = IoCManager.Resolve<IEntityManager>();
         }
 
+        public void Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            var localPos = Owner.Transform.GridPosition;
+            if (localPos.X % 0.5f != 0 || localPos.Y % 0.5f != 0)
+            {
+                message.AddMarkup(Loc.GetString("It appears to be [color=darkred]improperly aligned with the tile.[/color]"));
+            }
+        }
+
         public void Update()
         {
+            var _pos = Owner.Transform.GridPosition;
+
             if (Power == 0) return;
 
             if (generated) return;
+
+            if (_pos.X % 0.5f != 0 || _pos.Y % 0.5f != 0)
 
             foreach (IEntity ent in _entityManager.GetEntitiesInRange(Owner, 5f))
             {
