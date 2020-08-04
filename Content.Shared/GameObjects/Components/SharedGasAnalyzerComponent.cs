@@ -40,11 +40,13 @@ namespace Content.Shared.GameObjects.Components
         {
             public readonly string Name;
             public readonly float Amount;
+            public readonly string Color;
 
-            public GasEntry(string name, float amount)
+            public GasEntry(string name, float amount, string color)
             {
                 Name = name;
                 Amount = amount;
+                Color = color;
             }
 
             public override string ToString()

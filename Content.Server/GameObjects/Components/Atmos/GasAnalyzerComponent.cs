@@ -73,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
                 if (tile.Gases[i] <= Atmospherics.GasMinMoles) continue;
 
-                gases.Add(new GasEntry(gas.Name, tile.Gases[i]));
+                gases.Add(new GasEntry(gas.Name, tile.Gases[i], gas.Color));
             }
 
             _userInterface.SetState(

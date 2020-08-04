@@ -27,7 +27,6 @@ namespace Content.Client.GameObjects.Components.Atmos
 
         private readonly Control _topContainer;
         private readonly Control _statusContainer;
-        private readonly Control _gasBar;
 
         private readonly Label _nameLabel;
 
@@ -198,17 +197,10 @@ namespace Content.Client.GameObjects.Components.Atmos
             // This is the whole gas bar thingy
             var height = 50;
             var minSize = 10; // This basically allows gases which are too small, to be shown properly
-            var _gasBar = new HBoxContainer
+            var gasBar = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 CustomMinimumSize = new Vector2(0, height)
-            };
-            //TODO: properly add the colors to the gas prototype
-            System.Collections.Generic.Dictionary<string, Color> tab = new System.Collections.Generic.Dictionary<string, Color>
-            {
-                ["oxygen"]= Color.Yellow,
-                ["nitrogen"]=Color.Orange,
-                ["phoron"]=Color.Purple
             };
             foreach (var gas in state.Gases)
             {
@@ -218,7 +210,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                     Text = gas.ToString()
                 });
 
-                _gasBar.AddChild(new PanelContainer
+                gasBar.AddChild(new PanelContainer
                 {
                     ToolTip = gas.ToString(),
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
@@ -226,12 +218,12 @@ namespace Content.Client.GameObjects.Components.Atmos
                     MouseFilter = MouseFilterMode.Pass,
                     PanelOverride = new StyleBoxFlat
                     {
-                        BackgroundColor = tab[gas.Name.ToLower()]
+                        BackgroundColor = Color.FromHex($"#{gas.Color}", Color.White)
                     },
                     CustomMinimumSize = new Vector2(minSize, 0)
                 });
             }
-            _statusContainer.AddChild(_gasBar);
+            _statusContainer.AddChild(gasBar);
         }
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)

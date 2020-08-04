@@ -2,16 +2,19 @@
   id: 0
   name: Oxygen
   specificHeat: 20
+  color: 2887E8
 
 - type: gas
   id: 1
   name: Nitrogen
   specificHeat: 30
+  color: DA1010
 
 - type: gas
   id: 2
   name: Carbon Dioxide
   specificHeat: 30
+  color: 4e4e4e
 
 - type: gas
   id: 3
@@ -19,6 +22,7 @@
   specificHeat: 200
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: phoron
+  color: FF3300
 
 - type: gas
   id: 4
@@ -26,3 +30,4 @@
   specificHeat: 10
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: tritium
+  color: 13FF4B
