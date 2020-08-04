@@ -26,7 +26,7 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Server.Interfaces.Chat;
 using Robust.Shared.GameObjects.Systems;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Shared.Body;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 
@@ -454,7 +454,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            int headCount = 0;
+            var headCount = 0;
             if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
             {
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);

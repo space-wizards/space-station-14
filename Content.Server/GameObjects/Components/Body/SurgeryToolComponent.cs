@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Content.Server.Body;
 using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Surgery;
-using Content.Shared.Body;
 using Content.Shared.Body.Surgery;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -23,7 +24,8 @@ namespace Content.Server.GameObjects.Components.Body
     // TODO: add checks to close UI if user walks too far away from tool or target.
 
     /// <summary>
-    ///     Server-side component representing a generic tool capable of performing surgery. For instance, the scalpel.
+    ///     Server-side component representing a generic tool capable of performing surgery.
+    ///     For instance, the scalpel.
     /// </summary>
     [RegisterComponent]
     public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
@@ -47,8 +49,6 @@ namespace Content.Server.GameObjects.Components.Body
 
         private IEntity _performerCache;
 
-        private HashSet<IPlayerSession> _subscribedSessions = new HashSet<IPlayerSession>(); // TODO
-
         private SurgeryType _surgeryType;
 
         private BoundUserInterface _userInterface;
@@ -60,8 +60,14 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
+            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                return;
+            }
+
             CloseAllSurgeryUIs();
             _optionsCache.Clear();
+
             _performerCache = null;
             _bodyManagerComponentCache = null;
             _callbackCache = null;
@@ -84,9 +90,8 @@ namespace Content.Server.GameObjects.Components.Body
 
                 if (_optionsCache.Count > 0)
                 {
-                    OpenSurgeryUI(eventArgs.User.GetComponent<BasicActorComponent>().playerSession);
-                    UpdateSurgeryUIBodyPartRequest(eventArgs.User.GetComponent<BasicActorComponent>().playerSession,
-                        toSend);
+                    OpenSurgeryUI(actor.playerSession);
+                    UpdateSurgeryUIBodyPartRequest(actor.playerSession, toSend);
                     _performerCache = eventArgs.User; // Also, cache the data.
                     _bodyManagerComponentCache = body;
                 }
@@ -123,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Body
                 }
 
                 // Log error if the surgery fails somehow.
-                Logger.Debug($"Error when trying to perform surgery on bodypart {eventArgs.User.Name}!");
+                Logger.Debug($"Error when trying to perform surgery on ${nameof(BodyPart)} {eventArgs.User.Name}");
                 throw new InvalidOperationException();
             }
         }
@@ -201,8 +206,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible <see cref="BodyPart"/>
-        ///     that can be operated on.
+        ///     Called after the client chooses from a list of possible
+        ///     <see cref="BodyPart"/> that can be operated on.
         /// </summary>
         private void HandleReceiveBodyPart(int key)
         {
@@ -222,7 +227,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Called after the client chooses from a list of possible <see cref="Mechanism">Mechanisms</see> to choose from.
+        ///     Called after the client chooses from a list of possible
+        ///     <see cref="Mechanism"/> to choose from.
         /// </summary>
         private void HandleReceiveMechanism(int key)
         {
@@ -233,25 +239,31 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var target = targetObject as Mechanism;
+
             CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
             _callbackCache(target, _bodyManagerComponentCache, this, _performerCache);
         }
 
         private void SendNoUsefulWayToUsePopup()
         {
-            _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache,
+            _sharedNotifyManager.PopupMessage(
+                _bodyManagerComponentCache.Owner,
+                _performerCache,
                 Loc.GetString("You see no useful way to use {0:theName}.", Owner));
         }
 
         private void SendNoUsefulWayToUseAnymorePopup()
         {
-            _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache,
+            _sharedNotifyManager.PopupMessage(
+                _bodyManagerComponentCache.Owner,
+                _performerCache,
                 Loc.GetString("You see no useful way to use {0:theName} anymore.", Owner));
         }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _surgeryType, "surgeryType", SurgeryType.Incision);
             serializer.DataField(ref _baseOperateTime, "baseOperateTime", 5);
         }

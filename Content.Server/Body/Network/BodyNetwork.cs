@@ -26,14 +26,14 @@ namespace Content.Server.Body.Network
             OnAdd();
         }
 
-        protected abstract void OnAdd();
+        protected virtual void OnAdd() { }
 
-        public abstract void OnRemove();
+        public virtual void OnRemove() { }
 
         /// <summary>
         ///     Called every update by <see cref="BodyManagerComponent.Update"/>.
         /// </summary>
-        public abstract void Update(float frameTime);
+        public virtual void Update(float frameTime) { }
     }
 
     public static class BodyNetworkExtensions

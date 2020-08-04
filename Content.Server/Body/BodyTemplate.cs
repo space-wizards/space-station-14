@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Body;
-using Content.Shared.Body;
-using Content.Shared.Body.BodyTemplate;
+using Content.Shared.Body.Template;
+using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body

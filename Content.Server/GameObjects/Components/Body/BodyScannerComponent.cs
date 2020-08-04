@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Body;
-using Content.Shared.Body.BodyScanner;
+using Content.Shared.Body.Scanner;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;

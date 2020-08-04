@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.Body.Network;
+using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;
@@ -134,7 +134,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else //Handle injecting into bloodstream
             {
-                if (targetEntity.TryGetBodyNetwork(out BloodstreamBodyNetwork bloodstream) &&
+                if (targetEntity.TryGetComponent(out BloodstreamComponent bloodstream) &&
                     _toggleState == InjectorToggleMode.Inject)
                 {
                     TryInjectIntoBloodstream(bloodstream, eventArgs.User);
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             return true;
         }
 
-        private void TryInjectIntoBloodstream(BloodstreamBodyNetwork targetBloodstream, IEntity user)
+        private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
         {
             if (_internalContents.CurrentVolume == 0)
             {

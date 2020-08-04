@@ -1,5 +1,5 @@
 ﻿using Content.Server.Body.Mechanisms;
-using Content.Shared.Body;
+using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Body.Surgery

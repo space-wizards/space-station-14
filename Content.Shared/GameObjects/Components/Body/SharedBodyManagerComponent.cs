@@ -4,6 +4,7 @@ using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
@@ -36,5 +37,47 @@ namespace Content.Shared.GameObjects.Components.Body
         {
             HealthChangedEvent?.Invoke(e);
         }
+    }
+
+    /// <summary>
+    ///     Used to determine whether a BodyPart can connect to another BodyPart.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum BodyPartCompatibility
+    {
+        Universal = 0,
+        Biological,
+        Mechanical
+    }
+
+    /// <summary>
+    ///     Each BodyPart has a BodyPartType used to determine a variety of things.
+    ///     For instance, what slots it can fit into.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum BodyPartType
+    {
+        Other = 0,
+        Torso,
+        Head,
+        Arm,
+        Hand,
+        Leg,
+        Foot
+    }
+
+    /// <summary>
+    ///     Defines a surgery operation that can be performed.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public enum SurgeryType
+    {
+        None = 0,
+        Incision,
+        Retraction,
+        Cauterization,
+        VesselCompression,
+        Drilling,
+        Amputation
     }
 }
