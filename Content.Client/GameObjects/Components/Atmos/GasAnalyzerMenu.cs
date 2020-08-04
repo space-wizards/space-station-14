@@ -135,21 +135,15 @@ namespace Content.Client.GameObjects.Components.Atmos
                 PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202025") },
                 Children =
                 {
-                    new HBoxContainer
+                    new MarginContainer
                     {
+                        MarginLeftOverride = 8,
+                        MarginRightOverride = 8,
+                        MarginTopOverride = 4,
+                        MarginBottomOverride = 4,
                         Children =
                         {
-                            new MarginContainer
-                            {
-                                MarginLeftOverride = 8,
-                                MarginRightOverride = 8,
-                                MarginTopOverride = 4,
-                                MarginBottomOverride = 4,
-                                Children =
-                                {
-                                    (_statusContainer = new VBoxContainer())
-                                }
-                            }
+                            (_statusContainer = new VBoxContainer())
                         }
                     }
                 }
@@ -193,23 +187,54 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Pressure, TemperatureHelpers.KelvinToCelsius(state.Pressure))
             });
+            // Seperator
+            _statusContainer.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(0, 10)
+            });
 
-            // This is the whole gas bar thingy
-            var height = 50;
-            var minSize = 10; // This basically allows gases which are too small, to be shown properly
+            // Add a table with all the gases
+            var tableKey = new VBoxContainer();
+            var tableVal = new VBoxContainer();
+            _statusContainer.AddChild(new HBoxContainer
+            {
+                Children =
+                {
+                    tableKey,
+                    new Control
+                    {
+                        CustomMinimumSize = new Vector2(20, 0)
+                    },
+                    tableVal
+                }
+            });
+            // This is the gas bar thingy
+            var height = 30;
+            var minSize = 24; // This basically allows gases which are too small, to be shown properly
             var gasBar = new HBoxContainer
             {
                 SizeFlagsHorizontal = SizeFlags.FillExpand,
                 CustomMinimumSize = new Vector2(0, height)
             };
+            // Seperator
+            _statusContainer.AddChild(new Control
+            {
+                CustomMinimumSize = new Vector2(0, 10)
+            });
             foreach (var gas in state.Gases)
             {
-                //TODO: remove the gas label list?
-                _statusContainer.AddChild(new Label
+                var color = Color.FromHex($"#{gas.Color}", Color.White);
+                // Add to the table
+                tableKey.AddChild(new Label
                 {
-                    Text = gas.ToString()
+                    Text = Loc.GetString(gas.Name)
+                });
+                tableVal.AddChild(new Label
+                {
+                    Text = Loc.GetString("{0:0.##} mol", gas.Amount)
                 });
 
+                // Add to the gas bar
                 gasBar.AddChild(new PanelContainer
                 {
                     ToolTip = gas.ToString(),
@@ -218,7 +243,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                     MouseFilter = MouseFilterMode.Pass,
                     PanelOverride = new StyleBoxFlat
                     {
-                        BackgroundColor = Color.FromHex($"#{gas.Color}", Color.White)
+                        BackgroundColor = color
                     },
                     CustomMinimumSize = new Vector2(minSize, 0)
                 });
