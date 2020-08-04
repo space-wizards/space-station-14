@@ -23,7 +23,7 @@ using System.Collections.Generic;
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract
+    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped
     {
 #pragma warning disable 649
         [Dependency] private IServerNotifyManager _notifyManager = default!;
@@ -40,12 +40,17 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <summary>
-        /// Call this from other components to open the wires UI.
+        /// Call this from other components to open the gas analyzer UI.
         /// </summary>
         public void OpenInterface(IPlayerSession session)
         {
             _userInterface.Open(session);
             UpdateUserInterface();
+        }
+
+        public void CloseInterface(IPlayerSession session)
+        {
+            _userInterface.Close(session);
         }
 
         private void UpdateUserInterface()
@@ -123,6 +128,15 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 OpenInterface(actor.playerSession);
                 //TODO: show other sprite when ui open?
+            }
+        }
+
+        void IDropped.Dropped(DroppedEventArgs eventArgs)
+        {
+            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                CloseInterface(actor.playerSession);
+                //TODO: if other sprite is shown, change again
             }
         }
     }
