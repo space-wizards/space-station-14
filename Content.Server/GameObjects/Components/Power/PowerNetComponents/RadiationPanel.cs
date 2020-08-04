@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     [RegisterComponent]
     public class RadiationPanel : PowerSupplierComponent, IInteractHand
     {
-        public override string Name => "RadiationPanel";
+        public override string Name => "Radiation Panel";
 
         private int _radiation;
         private bool enabled;

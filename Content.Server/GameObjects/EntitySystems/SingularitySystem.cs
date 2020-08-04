@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Singularity;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Log;
@@ -22,6 +23,11 @@ namespace Content.Server.GameObjects.EntitySystems
                 foreach (var singulo in ComponentManager.EntityQuery<SingularityComponent>())
                 {
                     singulo.Update();
+                }
+
+                foreach (var containment in ComponentManager.EntityQuery<ContainmentFieldGeneratorComponent>())
+                {
+                    containment.Update();
                 }
             }
 
