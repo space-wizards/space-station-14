@@ -51,7 +51,7 @@ namespace Content.Shared.GameObjects.Components
 
             public override string ToString()
             {
-                return Loc.GetString("{0}: {1} mol", Name, Amount);
+                return Loc.GetString("{0}: {1:0.##} mol", Name, Amount);
             }
         }
 
