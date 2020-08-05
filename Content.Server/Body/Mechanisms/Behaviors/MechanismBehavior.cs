@@ -1,5 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Body;
-using Robust.Shared.Interfaces.GameObjects;
+﻿#nullable enable
+using System;
+using Content.Server.GameObjects.Components.Body;
 
 namespace Content.Server.Body.Mechanisms.Behaviors
 {
@@ -8,48 +9,91 @@ namespace Content.Server.Body.Mechanisms.Behaviors
     /// </summary>
     public abstract class MechanismBehavior
     {
-        /// <summary>
-        ///     Upward reference to the parent <see cref="Mechanism"/> that this
-        ///     behavior is attached to.
-        ///     This reference must exist and cannot be changed after creation.
-        /// </summary>
-        protected readonly Mechanism ParentMechanism;
+        private bool Initialized { get; set; }
 
-        protected MechanismBehavior(Mechanism parent)
+        private bool Removed { get; set; }
+
+        /// <summary>
+        ///     Upward reference to the parent <see cref="Mechanisms.Mechanism"/> that this
+        ///     behavior is attached to.
+        /// </summary>
+        protected Mechanism Mechanism { get; private set; } = null!;
+
+        /// <summary>
+        ///     Called by a <see cref="Mechanism"/> to initialize this behavior.
+        /// </summary>
+        /// <param name="mechanism">The mechanism that owns this behavior.</param>
+        /// <exception cref="InvalidOperationException">
+        ///     If the mechanism has already been initialized.
+        /// </exception>
+        public void Initialize(Mechanism mechanism)
         {
-            ParentMechanism = parent;
+            if (Initialized)
+            {
+                throw new InvalidOperationException("This mechanism has already been initialized.");
+            }
+
+            Mechanism = mechanism;
+
             Initialize();
+
+            if (Mechanism.Body != null)
+            {
+                InstalledIntoBody();
+            }
+
+            if (Mechanism.Part != null)
+            {
+                InstalledIntoPart();
+            }
+
+            Initialized = true;
         }
 
-        protected abstract void Initialize();
+        /// <summary>
+        ///     Called when a behavior is removed from a <see cref="Mechanism"/>.
+        /// </summary>
+        public void Remove()
+        {
+            OnRemove();
+            Mechanism = null!;
+            Removed = true;
+        }
+
+        /// <summary>
+        ///     Called by <see cref="Initialize"/> when this behavior is first initialized.
+        /// </summary>
+        protected virtual void Initialize() { }
+
+        protected virtual void OnRemove() { }
 
         /// <summary>
         ///     Called when the containing <see cref="BodyPart"/> is attached to a
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
-        public abstract void OnInstallIntoBodyPartManager(IEntity attachedEntity);
+        public virtual void InstalledIntoBody() { }
 
         /// <summary>
-        ///     Called when the parent <see cref="Mechanism"/> is installed into a
-        ///     <see cref="BodyPart"/>.
+        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
+        ///     installed into a <see cref="BodyPart"/>.
         ///     For instance, putting a brain into an empty head.
         /// </summary>
-        public abstract void OnInstallIntoBodyPart(IEntity attachedEntity);
+        public virtual void InstalledIntoPart() { }
 
         /// <summary>
         ///     Called when the containing <see cref="BodyPart"/> is removed from a
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
-        public abstract void OnRemoveFromBodyPartManager(IEntity attachedEntity);
+        public virtual void RemovedFromBody(BodyManagerComponent old) { }
 
         /// <summary>
-        ///     Called when the parent <see cref="Mechanism"/> is removed from a
+        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is removed from a
         ///     <see cref="BodyPart"/>.
         ///     For instance, taking a brain out of ones head.
         /// </summary>
-        public abstract void OnRemoveFromBodyPart(IEntity attachedEntity);
+        public virtual void RemovedFromPart(BodyPart old) { }
 
         /// <summary>
         ///     Called every update when this behavior is connected to a
@@ -57,6 +101,6 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         ///     <see cref="DroppedMechanismComponent"/> or
         ///     <see cref="DroppedBodyPartComponent"/>.
         /// </summary>
-        public abstract void Update(float frameTime);
+        public virtual void Update(float frameTime) { }
     }
 }

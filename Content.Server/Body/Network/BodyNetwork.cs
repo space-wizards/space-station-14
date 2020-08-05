@@ -38,6 +38,26 @@ namespace Content.Server.Body.Network
 
     public static class BodyNetworkExtensions
     {
+        public static void TryAddNetwork(this IEntity entity, Type type)
+        {
+            if (!entity.TryGetComponent(out BodyManagerComponent body))
+            {
+                return;
+            }
+
+            body.EnsureNetwork(type);
+        }
+
+        public static void TryAddNetwork<T>(this IEntity entity) where T : BodyNetwork
+        {
+            if (!entity.TryGetComponent(out BodyManagerComponent body))
+            {
+                return;
+            }
+
+            body.EnsureNetwork<T>();
+        }
+
         public static bool TryGetBodyNetwork(this IEntity entity, Type type, out BodyNetwork network)
         {
             network = null;

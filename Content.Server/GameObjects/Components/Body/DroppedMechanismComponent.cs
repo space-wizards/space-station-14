@@ -82,6 +82,7 @@ namespace Content.Server.GameObjects.Components.Body
         public override void Initialize()
         {
             base.Initialize();
+            
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(GenericSurgeryUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
@@ -122,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Body
             // Create dictionary to send to client (text to be shown : data sent back if selected)
             var toSend = new Dictionary<string, int>();
 
-            foreach (var (key, value) in bodyManager.PartDictionary)
+            foreach (var (key, value) in bodyManager.Parts)
             {
                 // For each limb in the target, add it to our cache if it is a valid option.
                 if (value.CanInstallMechanism(ContainedMechanism))

@@ -12,8 +12,6 @@ namespace Content.Server.Body.Network
     {
         public override string Name => "Digestive";
 
-        private float _accumulatedFrameTime;
-
         protected override void OnAdd()
         {
             Owner.EnsureComponent<StomachComponent>();
@@ -24,18 +22,6 @@ namespace Content.Server.Body.Network
             if (Owner.HasComponent<StomachComponent>())
             {
                 Owner.RemoveComponent<StomachComponent>();
-            }
-        }
-
-        public override void Update(float frameTime)
-        {
-            // Update at most once per second
-            _accumulatedFrameTime += frameTime;
-
-            if (_accumulatedFrameTime > 1)
-            {
-                Owner.GetComponent<StomachComponent>().Update(_accumulatedFrameTime);
-                _accumulatedFrameTime = 0;
             }
         }
     }

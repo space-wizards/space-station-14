@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt))
             {
-                _userInterface.SetState(InterfaceState(attempt.Template, attempt.PartDictionary));
+                _userInterface.SetState(InterfaceState(attempt.Template, attempt.Parts));
             }
 
             _userInterface.Open(actor.playerSession);

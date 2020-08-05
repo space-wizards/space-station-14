@@ -8,7 +8,8 @@ namespace Content.Server.Body
     /// <summary>
     ///     Stores data on what <see cref="BodyPartPrototype"></see> should
     ///     fill a BodyTemplate.
-    ///     Used for loading complete body presets, like a "basic human" with all human limbs.
+    ///     Used for loading complete body presets, like a "basic human" with all
+    ///     human limbs.
     /// </summary>
     public class BodyPreset
     {

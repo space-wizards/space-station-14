@@ -12,8 +12,7 @@ namespace Content.Shared.Body.Mechanism
     ///     Prototype for the Mechanism class.
     /// </summary>
     [Prototype("mechanism")]
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class MechanismPrototype : IPrototype, IIndexedPrototype
     {
         private List<string> _behaviorClasses;

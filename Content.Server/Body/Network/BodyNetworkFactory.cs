@@ -27,7 +27,7 @@ namespace Content.Server.Body.Network
                 throw new InvalidOperationException($"{type} is not a subclass of {nameof(BodyNetwork)}");
             }
 
-            var dummy = (BodyNetwork) Activator.CreateInstance(type);
+            var dummy = _typeFactory.CreateInstance<BodyNetwork>(type);
 
             if (dummy == null)
             {

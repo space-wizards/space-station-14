@@ -44,9 +44,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables] private string _presetName;
 
-        [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networkTypes = new Dictionary<Type, BodyNetwork>();
-
-        [ViewVariables] private readonly Dictionary<string, BodyNetwork> _networkNames = new Dictionary<string, BodyNetwork>();
+        [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networks = new Dictionary<Type, BodyNetwork>();
 
         /// <summary>
         ///     All <see cref="BodyPart"></see> with <see cref="LegProperty"></see>
@@ -75,7 +73,7 @@ namespace Content.Server.GameObjects.Components.Body
         ///     object filling it (if there is one).
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, BodyPart> PartDictionary { get; } = new Dictionary<string, BodyPart>();
+        public Dictionary<string, BodyPart> Parts { get; } = new Dictionary<string, BodyPart>();
 
         /// <summary>
         ///     List of all slots in this body, taken from the keys of
@@ -85,15 +83,9 @@ namespace Content.Server.GameObjects.Components.Body
 
         /// <summary>
         ///     List of all occupied slots in this body, taken from the values of
-        ///     <see cref="PartDictionary"/>.
+        ///     <see cref="Parts"/>.
         /// </summary>
-        public IEnumerable<string> OccupiedSlots => PartDictionary.Keys;
-
-        /// <summary>
-        ///     List of all <see cref="BodyPart"/> in this body, taken from the keys of
-        ///     <see cref="PartDictionary"/>.
-        /// </summary>
-        private IEnumerable<BodyPart> Parts => PartDictionary.Values;
+        public IEnumerable<string> OccupiedSlots => Parts.Keys;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -156,11 +148,11 @@ namespace Content.Server.GameObjects.Components.Body
         {
             _presetName = preset.Name;
 
-            foreach (var slot in Template.Slots.Keys)
+            foreach (var slotName in Template.Slots.Keys)
             {
                 // For each slot in our BodyManagerComponent's template,
                 // try and grab what the ID of what the preset says should be inside it.
-                if (!preset.PartIDs.TryGetValue(slot, out var partId))
+                if (!preset.PartIDs.TryGetValue(slotName, out var partId))
                 {
                     // If the preset doesn't define anything for it, continue.
                     continue;
@@ -169,39 +161,37 @@ namespace Content.Server.GameObjects.Components.Body
                 // Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                 if (!_prototypeManager.TryIndex(partId, out BodyPartPrototype newPartData))
                 {
-                    throw new InvalidOperationException($"No {nameof(BodyPart)} prototype found with ID {partId}");
+                    throw new InvalidOperationException($"No {nameof(BodyPartPrototype)} prototype found with ID {partId}");
                 }
 
                 // Try and remove an existing limb if that exists.
-                if (PartDictionary.Remove(slot, out var removedPart))
-                {
-                    BodyPartRemoved(removedPart, slot);
-                }
+                RemoveBodyPart(slotName);
 
                 // Add a new BodyPart with the BodyPartPrototype as a baseline to our
                 // BodyComponent.
                 var addedPart = new BodyPart(newPartData);
-                PartDictionary.Add(slot, addedPart);
-                BodyPartAdded(addedPart, slot);
+                AddBodyPart(addedPart, slotName);
             }
 
+            // TODO
             foreach (var networkName in Template.Networks)
             {
                 RemoveNetwork(networkName);
-                TryAddNetwork(networkName);
+                EnsureNetwork(networkName);
             }
 
             OnBodyChanged(); // TODO: Duplicate code
         }
 
         /// <summary>
-        ///     Changes the current <see cref="BodyTemplate"/> to the given <see cref="BodyTemplate"/>. Attempts to keep previous
-        ///     <see cref="BodyPart">BodyParts</see>
-        ///     if there is a slot for them in both <see cref="BodyTemplate"/>.
+        ///     Changes the current <see cref="BodyTemplate"/> to the given
+        ///     <see cref="BodyTemplate"/>.
+        ///     Attempts to keep previous <see cref="BodyPart"/> if there is a slot for
+        ///     them in both <see cref="BodyTemplate"/>.
         /// </summary>
         public void ChangeBodyTemplate(BodyTemplatePrototype newTemplate)
         {
-            foreach (var part in PartDictionary)
+            foreach (var part in Parts)
             {
                 // TODO: Make this work.
             }
@@ -214,12 +204,12 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public void Update(float frameTime)
         {
-            foreach (var part in PartDictionary.Values)
+            foreach (var part in Parts.Values)
             {
                 part.Update(frameTime);
             }
 
-            foreach (var network in _networkTypes.Values)
+            foreach (var network in _networks.Values)
             {
                 network.Update(frameTime);
             }
@@ -234,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Body
             if (Owner.HasComponent<MovementSpeedModifierComponent>())
             {
                 _activeLegs.Clear();
-                var legParts = Parts.Where(x => x.HasProperty(typeof(LegProperty)));
+                var legParts = Parts.Values.Where(x => x.HasProperty(typeof(LegProperty)));
 
                 foreach (var part in legParts)
                 {
@@ -446,7 +436,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>The <see cref="BodyPart"/> if one exists, null otherwise.</returns>
         private BodyPart GetCenterBodyPart()
         {
-            PartDictionary.TryGetValue(Template.CenterSlot, out var center);
+            Parts.TryGetValue(Template.CenterSlot, out var center);
             return center;
         }
 
@@ -468,7 +458,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if found, false otherwise.</returns>
         private bool TryGetBodyPart(string slotName, [NotNullWhen(true)] out BodyPart result)
         {
-            return PartDictionary.TryGetValue(slotName, out result);
+            return Parts.TryGetValue(slotName, out result);
         }
 
         /// <summary>
@@ -481,7 +471,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             // We enforce that there is only one of each value in the dictionary,
             // so we can iterate through the dictionary values to get the key from there.
-            result = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
+            result = Parts.FirstOrDefault(x => x.Value == part).Key;
             return result != null;
         }
 
@@ -564,7 +554,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             var toReturn = new List<BodyPart>();
 
-            foreach (var part in PartDictionary.Values)
+            foreach (var part in Parts.Values)
             {
                 if (part.PartType == type)
                 {
@@ -593,8 +583,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return false;
             }
 
-            PartDictionary.Add(slotName, part);
-            BodyPartAdded(part, slotName); // TODO: Sort this duplicate out
+            AddBodyPart(part, slotName); // TODO: Sort this duplicate out
             OnBodyChanged();
 
             return true;
@@ -626,7 +615,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </returns>
         public IEntity DropBodyPart(BodyPart part)
         {
-            if (!PartDictionary.ContainsValue(part))
+            if (!Parts.ContainsValue(part))
             {
                 return null;
             }
@@ -636,8 +625,8 @@ namespace Content.Server.GameObjects.Components.Body
                 return null;
             }
 
-            var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
-            PartDictionary.Remove(slotName);
+            var slotName = Parts.FirstOrDefault(x => x.Value == part).Key;
+            Parts.Remove(slotName);
 
             // Call disconnect on all limbs that were hanging off this limb.
             if (TryGetBodyPartConnections(slotName, out List<string> connections))
@@ -647,7 +636,7 @@ namespace Content.Server.GameObjects.Components.Body
                 {
                     if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                     {
-                        DisconnectBodyPartByName(connectionName, true);
+                        DisconnectBodyPart(connectionName, true);
                     }
                 }
             }
@@ -666,7 +655,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
-            if (!PartDictionary.ContainsValue(part))
+            if (!Parts.ContainsValue(part))
             {
                 return;
             }
@@ -676,11 +665,8 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            var slotName = PartDictionary.FirstOrDefault(x => x.Value == part).Key;
-            if (PartDictionary.Remove(slotName, out var partRemoved))
-            {
-                BodyPartRemoved(partRemoved, slotName);
-            }
+            var slotName = Parts.FirstOrDefault(x => x.Value == part).Key;
+            RemoveBodyPart(slotName);
 
             // Call disconnect on all limbs that were hanging off this limb.
             if (TryGetBodyPartConnections(slotName, out List<string> connections))
@@ -690,7 +676,7 @@ namespace Content.Server.GameObjects.Components.Body
                 {
                     if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                     {
-                        DisconnectBodyPartByName(connectionName, dropEntity);
+                        DisconnectBodyPart(connectionName, dropEntity);
                     }
                 }
             }
@@ -706,12 +692,16 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Internal string version of DisconnectBodyPart for performance purposes.
-        ///     Yes, it is actually more performant.
+        ///     Disconnects a body part in the given slot if one exists,
+        ///     optionally dropping it.
         /// </summary>
-        private void DisconnectBodyPartByName(string name, bool dropEntity)
+        /// <param name="slotName">The slot to remove the body part from</param>
+        /// <param name="dropEntity">
+        ///     Whether or not to drop the body part as an entity if it exists.
+        /// </param>
+        private void DisconnectBodyPart(string slotName, bool dropEntity)
         {
-            if (!TryGetBodyPart(name, out var part))
+            if (!TryGetBodyPart(slotName, out var part))
             {
                 return;
             }
@@ -721,18 +711,15 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            if (PartDictionary.Remove(name, out var partRemoved))
-            {
-                BodyPartRemoved(partRemoved, name);
-            }
+            RemoveBodyPart(slotName);
 
-            if (TryGetBodyPartConnections(name, out List<string> connections))
+            if (TryGetBodyPartConnections(slotName, out List<string> connections))
             {
                 foreach (var connectionName in connections)
                 {
                     if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
                     {
-                        DisconnectBodyPartByName(connectionName, dropEntity);
+                        DisconnectBodyPart(connectionName, dropEntity);
                     }
                 }
             }
@@ -746,21 +733,56 @@ namespace Content.Server.GameObjects.Components.Body
             OnBodyChanged();
         }
 
-        #endregion
-
-        #region BodyNetwork Functions
-
-        private bool TryAddNetwork(BodyNetwork network)
+        private void AddBodyPart(BodyPart part, string slotName)
         {
-            if (_networkTypes.ContainsKey(network.GetType()) ||
-                _networkNames.ContainsKey(network.Name))
+            Parts.Add(slotName, part);
+            part.Body = this;
+
+            var argsAdded = new BodyPartAddedEventArgs(part, slotName);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
+            {
+                component.BodyPartAdded(argsAdded);
+            }
+        }
+
+        /// <summary>
+        ///     Removes the body part in slot <see cref="slotName"/> from this body,
+        ///     if one exists.
+        /// </summary>
+        /// <param name="slotName">The slot to remove it from.</param>
+        /// <returns></returns>
+        private bool RemoveBodyPart(string slotName)
+        {
+            if (!Parts.Remove(slotName, out var part))
             {
                 return false;
             }
 
-            _networkTypes.Add(network.GetType(), network);
-            _networkNames.Add(network.Name, network);
+            part.Body = null;
 
+            var args = new BodyPartRemovedEventArgs(part, slotName);
+
+            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
+            {
+                component.BodyPartRemoved(args);
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        #region BodyNetwork Functions
+
+        private bool EnsureNetwork(BodyNetwork network)
+        {
+            if (_networks.ContainsKey(network.GetType()))
+            {
+                return false;
+            }
+
+            _networks.Add(network.GetType(), network);
             network.OnAdd(Owner);
 
             return true;
@@ -772,12 +794,26 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>
         ///     True if successful, false if there was an error
         ///     (such as passing in an invalid type or a network of that type already
-        ///     existing)
+        ///     existing).
         /// </returns>
-        public bool TryAddNetwork(Type networkType)
+        public bool EnsureNetwork(Type networkType)
         {
             var network = _bodyNetworkFactory.GetNetwork(networkType);
-            return TryAddNetwork(network);
+            return EnsureNetwork(network);
+        }
+
+        /// <summary>
+        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to this body.
+        /// </summary>
+        /// <typeparam name="T">The type of network to add.</typeparam>
+        /// <returns>
+        ///     True if successful, false if there was an error
+        ///     (such as passing in an invalid type or a network of that type already
+        ///     existing).
+        /// </returns>
+        public bool EnsureNetwork<T>() where T : BodyNetwork
+        {
+            return EnsureNetwork(typeof(T));
         }
 
         /// <summary>
@@ -786,25 +822,35 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>
         ///     True if successful, false if there was an error
         ///     (such as passing in an invalid type or a network of that type already
-        ///     existing)
+        ///     existing).
         /// </returns>
-        private bool TryAddNetwork(string networkName)
+        private bool EnsureNetwork(string networkName)
         {
             var network = _bodyNetworkFactory.GetNetwork(networkName);
-            return TryAddNetwork(network);
+            return EnsureNetwork(network);
         }
 
         /// <summary>
         ///     Removes the <see cref="BodyNetwork"/> of the given type in this body,
         ///     if there is one.
         /// </summary>
-        public void RemoveNetwork(Type networkType)
+        /// <param name="type">The type of the network to remove.</param>
+        public void RemoveNetwork(Type type)
         {
-            if (_networkTypes.Remove(networkType, out var network))
+            if (_networks.Remove(type, out var network))
             {
-                _networkNames.Remove(network.Name);
                 network.OnRemove();
             }
+        }
+
+        /// <summary>
+        ///     Removes the <see cref="BodyNetwork"/> of the given type in this body,
+        ///     if one exists.
+        /// </summary>
+        /// <typeparam name="T">The type of the network to remove.</typeparam>
+        public void RemoveNetwork<T>() where T : BodyNetwork
+        {
+            RemoveNetwork(typeof(T));
         }
 
         /// <summary>
@@ -813,9 +859,10 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         private void RemoveNetwork(string networkName)
         {
-            if (_networkNames.Remove(networkName, out var network))
+            var type = _bodyNetworkFactory.GetNetwork(networkName).GetType();
+
+            if (_networks.Remove(type, out var network))
             {
-                _networkTypes.Remove(network.GetType());
                 network.OnRemove();
             }
         }
@@ -830,7 +877,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if found, false otherwise.</returns>
         public bool TryGetNetwork(Type networkType, [NotNullWhen(true)] out BodyNetwork result)
         {
-            return _networkTypes.TryGetValue(networkType, out result);
+            return _networks.TryGetValue(networkType, out result);
         }
 
         #endregion
@@ -906,26 +953,6 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         #endregion
-
-        private void BodyPartAdded(BodyPart part, string slotName)
-        {
-            var argsAdded = new BodyPartAddedEventArgs(part, slotName);
-
-            foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
-            {
-                component.BodyPartAdded(argsAdded);
-            }
-        }
-
-        private void BodyPartRemoved(BodyPart part, string slotName)
-        {
-            var args = new BodyPartRemovedEventArgs(part, slotName);
-
-            foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
-            {
-                component.BodyPartRemoved(args);
-            }
-        }
     }
 
     public class BodyManagerHealthChangeParams : HealthChangeParams

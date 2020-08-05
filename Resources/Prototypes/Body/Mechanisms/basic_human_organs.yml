@@ -11,6 +11,8 @@
     state: heart_human
   - type: DroppedMechanism
     debugLoadMechanismData: mechanism.Heart.BasicHuman
+    behaviors:
+    - Content.Server.Body.Mechanisms.Behaviors.HeartBehavior
 
 - type: mechanism
   id: mechanism.Brain.BasicHuman
@@ -43,6 +45,8 @@
   durability: 10
   size: 1
   compatibility: Biological
+  behaviors:
+  - Content.Server.Body.Mechanisms.Behaviors.HeartBehavior
 
 - type: mechanism
   id: mechanism.Lungs.BasicHuman
