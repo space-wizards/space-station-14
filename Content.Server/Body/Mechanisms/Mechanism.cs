@@ -120,14 +120,14 @@ namespace Content.Server.Body.Mechanisms
                 {
                     foreach (var behavior in Behaviors)
                     {
-                        behavior.RemovedFromPart(old);
+                        behavior.OnRemovedFromPart(old);
                     }
                 }
                 else
                 {
                     foreach (var behavior in Behaviors)
                     {
-                        behavior.InstalledIntoPart();
+                        behavior.OnInstalledIntoPart();
                     }
                 }
             }
@@ -194,7 +194,7 @@ namespace Content.Server.Body.Mechanisms
         {
             foreach (var behavior in Behaviors)
             {
-                behavior.InstalledIntoBody();
+                behavior.OnInstalledIntoBody();
             }
         }
 
@@ -202,7 +202,7 @@ namespace Content.Server.Body.Mechanisms
         {
             foreach (var behavior in Behaviors)
             {
-                behavior.RemovedFromBody(old);
+                behavior.OnRemovedFromBody(old);
             }
         }
 

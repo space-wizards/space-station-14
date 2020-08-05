@@ -1,5 +1,6 @@
+#nullable enable
+using System;
 using Content.Server.Body.Network;
-using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.Components.Body.Digestive;
 using JetBrains.Annotations;
 
@@ -10,30 +11,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
     {
         private float _accumulatedFrameTime;
 
-        protected override void OnRemove()
-        {
-            Mechanism.Body?.RemoveNetwork<DigestiveNetwork>();
-        }
-
-        public override void InstalledIntoBody()
-        {
-            Mechanism.Body?.EnsureNetwork<DigestiveNetwork>();
-        }
-
-        public override void RemovedFromBody(BodyManagerComponent old)
-        {
-            old.RemoveNetwork<DigestiveNetwork>();
-        }
-
-        public override void InstalledIntoPart()
-        {
-            Mechanism.Part?.Body?.EnsureNetwork<DigestiveNetwork>();
-        }
-
-        public override void RemovedFromPart(BodyPart old)
-        {
-            old.Body?.RemoveNetwork<DigestiveNetwork>();
-        }
+        protected override Type? Network => typeof(DigestiveNetwork);
 
         public override void Update(float frameTime)
         {

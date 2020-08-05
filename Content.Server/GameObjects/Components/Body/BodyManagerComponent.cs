@@ -24,6 +24,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body
@@ -826,6 +827,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// </returns>
         private bool EnsureNetwork(string networkName)
         {
+            DebugTools.AssertNotNull(networkName);
+
             var network = _bodyNetworkFactory.GetNetwork(networkName);
             return EnsureNetwork(network);
         }
@@ -837,6 +840,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// <param name="type">The type of the network to remove.</param>
         public void RemoveNetwork(Type type)
         {
+            DebugTools.AssertNotNull(type);
+
             if (_networks.Remove(type, out var network))
             {
                 network.OnRemove();

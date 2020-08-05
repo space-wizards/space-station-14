@@ -14,6 +14,12 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         private bool Removed { get; set; }
 
         /// <summary>
+        ///     The network, if any, that this behavior forms when its mechanism is
+        ///     added and destroys when its mechanism is removed.
+        /// </summary>
+        protected virtual Type? Network { get; } = null;
+
+        /// <summary>
         ///     Upward reference to the parent <see cref="Mechanisms.Mechanism"/> that this
         ///     behavior is attached to.
         /// </summary>
@@ -39,12 +45,12 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
             if (Mechanism.Body != null)
             {
-                InstalledIntoBody();
+                OnInstalledIntoBody();
             }
 
             if (Mechanism.Part != null)
             {
-                InstalledIntoPart();
+                OnInstalledIntoPart();
             }
 
             Initialized = true;
@@ -56,8 +62,70 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         public void Remove()
         {
             OnRemove();
+            TryRemoveNetwork(Mechanism.Body);
+
             Mechanism = null!;
             Removed = true;
+        }
+
+        /// <summary>
+        ///     Called when the containing <see cref="BodyPart"/> is attached to a
+        ///     <see cref="BodyManagerComponent"/>.
+        ///     For instance, attaching a head to a body will call this on the brain inside.
+        /// </summary>
+        public void InstalledIntoBody()
+        {
+            TryAddNetwork();
+            OnInstalledIntoBody();
+        }
+
+        /// <summary>
+        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
+        ///     installed into a <see cref="BodyPart"/>.
+        ///     For instance, putting a brain into an empty head.
+        /// </summary>
+        public void InstalledIntoPart()
+        {
+            TryAddNetwork();
+            OnInstalledIntoPart();
+        }
+
+        /// <summary>
+        ///     Called when the containing <see cref="BodyPart"/> is removed from a
+        ///     <see cref="BodyManagerComponent"/>.
+        ///     For instance, cutting off ones head will call this on the brain inside.
+        /// </summary>
+        public void RemovedFromBody(BodyManagerComponent old)
+        {
+            OnRemovedFromBody(old);
+            TryRemoveNetwork(old);
+        }
+
+        /// <summary>
+        ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is removed from a
+        ///     <see cref="BodyPart"/>.
+        ///     For instance, taking a brain out of ones head.
+        /// </summary>
+        public void RemovedFromPart(BodyPart old)
+        {
+            OnRemovedFromPart(old);
+            TryRemoveNetwork(old.Body);
+        }
+
+        private void TryAddNetwork()
+        {
+            if (Network != null)
+            {
+                Mechanism.Body?.EnsureNetwork(Network);
+            }
+        }
+
+        private void TryRemoveNetwork(BodyManagerComponent? body)
+        {
+            if (Network != null)
+            {
+                body?.RemoveNetwork(Network);
+            }
         }
 
         /// <summary>
@@ -72,28 +140,28 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
-        public virtual void InstalledIntoBody() { }
+        public virtual void OnInstalledIntoBody() { }
 
         /// <summary>
         ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
         ///     installed into a <see cref="BodyPart"/>.
         ///     For instance, putting a brain into an empty head.
         /// </summary>
-        public virtual void InstalledIntoPart() { }
+        public virtual void OnInstalledIntoPart() { }
 
         /// <summary>
         ///     Called when the containing <see cref="BodyPart"/> is removed from a
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
-        public virtual void RemovedFromBody(BodyManagerComponent old) { }
+        public virtual void OnRemovedFromBody(BodyManagerComponent old) { }
 
         /// <summary>
         ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is removed from a
         ///     <see cref="BodyPart"/>.
         ///     For instance, taking a brain out of ones head.
         /// </summary>
-        public virtual void RemovedFromPart(BodyPart old) { }
+        public virtual void OnRemovedFromPart(BodyPart old) { }
 
         /// <summary>
         ///     Called every update when this behavior is connected to a
