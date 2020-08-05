@@ -1,6 +1,7 @@
-- type: entity
+﻿- type: entity
   id: Table
   name: "table"
+  description: A square piece of metal standing on four metal legs. It can not move.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -32,6 +33,7 @@
   id: TableWood
   parent: Table
   name: "wood table"
+  description: Do not apply fire to this. Rumour says it burns easily.
   components:
   - type: Sprite
     sprite: Constructible/Structures/Tables/wood.rsi
