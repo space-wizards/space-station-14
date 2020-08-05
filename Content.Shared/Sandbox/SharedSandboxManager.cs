@@ -85,5 +85,24 @@ namespace Content.Shared.Sandbox
             }
 
         }
+
+        protected sealed class MsgSandboxSuicide : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgSandboxSuicide);
+            public MsgSandboxSuicide(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+            }
+
+        }
     }
 }

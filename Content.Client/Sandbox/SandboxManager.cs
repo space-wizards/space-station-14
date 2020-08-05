@@ -52,6 +52,8 @@ namespace Content.Client.Sandbox
 
             _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost));
 
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide));
+
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
@@ -118,6 +120,7 @@ namespace Content.Client.Sandbox
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnPressed += OnToggleLightButtonClicked;
+            _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
 
             _window.OpenCentered();
         }
@@ -159,6 +162,11 @@ namespace Content.Client.Sandbox
         private void OnGiveAghostButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAghost>());
+        }
+
+        private void OnSuicideButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxSuicide>());
         }
 
         private void ToggleEntitySpawnWindow()

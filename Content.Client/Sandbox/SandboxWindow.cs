@@ -13,6 +13,7 @@ namespace Content.Client.Sandbox
         public Button GiveFullAccessButton { get; } //A button that just puts a captain's ID in your hands.
         public Button GiveAghostButton { get; }
         public Button ToggleLightButton { get; }
+        public Button SuicideButton { get; }
 
         public SandboxWindow(ILocalizationManager loc)
         {
@@ -48,6 +49,11 @@ namespace Content.Client.Sandbox
                 Text = loc.GetString("Toggle Lights")
             };
 
+            SuicideButton = new Button
+            {
+                Text = loc.GetString("Suicide")
+            };
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =
@@ -57,7 +63,8 @@ namespace Content.Client.Sandbox
                     SpawnTilesButton,
                     GiveFullAccessButton,
                     GiveAghostButton,
-                    ToggleLightButton
+                    ToggleLightButton,
+                    SuicideButton
 
                 }
             });

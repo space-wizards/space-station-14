@@ -48,6 +48,7 @@ namespace Content.Server.Sandbox
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn), SandboxRespawnReceived);
             _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessReceived);
             _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost), SandboxGiveAghostReceived);
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide), SandboxSuicideReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _gameTicker.OnRunLevelChanged += GameTickerOnOnRunLevelChanged;
@@ -121,6 +122,17 @@ namespace Content.Server.Sandbox
         }
 
         private void SandboxGiveAghostReceived(MsgSandboxGiveAghost message)
+        {
+            if (!IsSandboxEnabled)
+            {
+                return;
+            }
+
+            var player = _playerManager.GetSessionByChannel(message.MsgChannel);
+            _shell.ExecuteCommand(player, $"aghost");
+        }
+
+        private void SandboxSuicideReceived(MsgSandboxSuicide message)
         {
             if (!IsSandboxEnabled)
             {
