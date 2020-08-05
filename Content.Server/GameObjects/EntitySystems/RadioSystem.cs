@@ -33,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 if (radio != source && radio.GetChannels().Contains(channel))
                 {
-                    //TODO: once voice identity gets added, pass into receiver via radio.GetSpeakerVoice()
+                    //TODO: once voice identity gets added, pass into receiver via source.GetSpeakerVoice()
                     radio.Receiver(message);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Chat;
+using Content.Shared.GameObjects.Components.Items;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NFluidsynth;
 using Robust.Server.Interfaces.GameObjects;
@@ -31,8 +32,9 @@ namespace Content.Server.GameObjects.Components
         public override string Name => "Headset";
 
         private int _listenRange = 0;
-        private List<int> _channels;
+        private List<int> _channels = new List<int>();
         private RadioSystem _radioSystem = default!;
+        public bool RadioRequested = false;
 
         public override void Initialize()
         {
@@ -49,7 +51,11 @@ namespace Content.Server.GameObjects.Components
 
         public void HeardSpeech(string speech, IEntity source)
         {
-            Broadcast(speech);
+            if (RadioRequested)
+            {
+                Broadcast(speech);
+            }
+            RadioRequested = false;
         }
 
         public GridCoordinates GetListenerPosition()

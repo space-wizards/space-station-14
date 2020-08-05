@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private bool _radioOn;
         private int _listenRange = 7;
-        private List<int> _channels;
+        private List<int> _channels = new List<int>();
         private RadioSystem _radioSystem = default!;
 
         [ViewVariables]
