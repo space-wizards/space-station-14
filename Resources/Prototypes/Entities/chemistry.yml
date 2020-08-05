@@ -17,3 +17,9 @@
   - type: Solution
     maxVol: 50
   - type: Vapor
+  - type: Physics
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      mask:
+      - Impassable

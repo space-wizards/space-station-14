@@ -192,6 +192,6 @@
     transferAmount: 5.0
   - type: CanSpill
   - type: Spray
-    transferAmount: 5
-    sprayRange: 3
+    transferAmount: 10
+    sprayVelocity: 5
     spraySound: /Audio/Effects/spray.ogg
