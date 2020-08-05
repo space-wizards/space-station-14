@@ -73,6 +73,7 @@ namespace Content.Client
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            prototypes.RegisterIgnore("gasReaction");
             prototypes.RegisterIgnore("barSign");
 
             ClientContentIoC.Register();
