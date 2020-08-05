@@ -21,5 +21,6 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
       mask:
       - Impassable

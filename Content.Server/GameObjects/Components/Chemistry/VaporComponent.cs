@@ -1,7 +1,9 @@
 ﻿using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Chemistry;
 using Content.Shared.Physics;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Update.Internal;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -15,6 +17,7 @@ using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -25,6 +28,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     class VaporComponent : Component, ICollideBehavior
     {
+#pragma warning disable 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
+#pragma warning enable 649
         public override string Name => "Vapor";
 
         [ViewVariables]
@@ -67,7 +73,20 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!_running)
                 return;
 
-            SpillHelper.SpillAt(Owner.Transform.GridPosition, _contents.SplitSolution(_transferAmount), "PuddleSmear", false); //make non PuddleSmear?
+            // Get all intersecting tiles with the vapor and spray the divided solution on there
+            if (Owner.TryGetComponent(out ICollidableComponent collidable))
+            {
+                var worldBounds = collidable.WorldAABB;
+                var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
+                
+                var tiles = mapGrid.GetTilesIntersecting(worldBounds);
+                var amount = _transferAmount / ReagentUnit.New(tiles.Count());
+                foreach (var tile in tiles)
+                {
+                    var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
+                    SpillHelper.SpillAt(pos, _contents.SplitSolution(amount), "PuddleSmear", false); //make non PuddleSmear?
+                }
+            }
 
             if (_contents.CurrentVolume == 0)
             {

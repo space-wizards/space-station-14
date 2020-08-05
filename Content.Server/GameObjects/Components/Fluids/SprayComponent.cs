@@ -86,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Fluids
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
             var solution = _contents.SplitSolution(_transferAmount);
 
-            playerPos = playerPos.Offset(direction); // Move a bit so we don't hit the
+            playerPos = playerPos.Offset(direction); // Move a bit so we don't hit the player
+            //TODO: check for wall?
             var vapor = _serverEntityManager.SpawnEntity("Vapor", playerPos);
             // Add the solution to the vapor and actually send the thing
             var vaporComponent = vapor.GetComponent<VaporComponent>();
