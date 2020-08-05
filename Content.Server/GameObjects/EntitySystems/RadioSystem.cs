@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.Interfaces;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.GameObjects;
@@ -19,30 +20,20 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            EntityQuery = new TypeEntityQuery(typeof(RadioComponent));
             _messages = new List<string>();
         }
 
-        public void SpreadMessage(IEntity source, string message)
+        public void SpreadMessage(IRadio source, string message)
         {
-            if (_messages.Contains(message))
-            {
-                return;
-            }
+            if (_messages.Contains(message)) { return; }
 
             _messages.Add(message);
 
-            foreach (var radioEntity in RelevantEntities)
+            foreach (var radio in ComponentManager.EntityQuery<IRadio>())
             {
-                var radio = radioEntity.GetComponent<RadioComponent>();
-                if (radioEntity == source || !radio.RadioOn)
-                {
-                    continue;
-                }
-
-                radio.Speaker(message);
+                if (radio == source) { continue; }
+                radio.Receiver(message);
             }
-
             _messages.Remove(message);
         }
     }

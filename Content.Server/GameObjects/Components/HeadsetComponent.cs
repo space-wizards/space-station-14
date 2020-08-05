@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -48,6 +49,11 @@ namespace Content.Server.GameObjects.Components
                 msg.SenderEntity = source.Uid;
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
+        }
+
+        public GridCoordinates GetListenerPosition()
+        {
+            return Owner.Transform.GridPosition;
         }
     }
 }

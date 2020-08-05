@@ -10,9 +10,8 @@
   parent: BaseRadio
   id: handrad
   components:
+  - type: Radio
   - type: Sprite
     texture: Objects/Devices/radio.png
   - type: Icon
     texture: Objects/Devices/radio.png
-  - type: Listening
-  - type: Radio

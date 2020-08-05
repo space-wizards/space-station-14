@@ -11,12 +11,15 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
     [RegisterComponent]
-    class RadioComponent : Component, IUse, IListen
+    [ComponentReference(typeof(IRadio))]
+    [ComponentReference(typeof(IListen))]
+    class RadioComponent : Component, IUse, IListen, IRadio
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -49,14 +52,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             RadioOn = false;
         }
 
-        public void PassOnMessage(string message)
-        {
-            if(RadioOn)
-            {
-                _radioSystem.SpreadMessage(Owner, message);
-            }
-        }
-
         public void Speaker(string message)
         {
             var chat = IoCManager.Resolve<IChatManager>();
@@ -79,12 +74,35 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void HeardSpeech(string speech, IEntity source)
         {
-            PassOnMessage(speech);
+            if (RadioOn)
+            {
+                Broadcast(this, speech);
+            }
         }
 
         public int GetListenRange()
         {
             return _listenRange;
+        }
+
+        public void Receiver(string message)
+        {
+            //do nothing
+        }
+
+        public void Broadcast(IRadio source, string message)
+        {
+            _radioSystem.SpreadMessage(source, message);
+        }
+
+        public int GetChannel()
+        {
+            throw new NotImplementedException();
+        }
+
+        public GridCoordinates GetListenerPosition()
+        {
+            return Owner.Transform.GridPosition;
         }
     }
 }
