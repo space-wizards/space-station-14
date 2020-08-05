@@ -147,7 +147,7 @@ namespace Content.Server.Body
         ///     Attempts to add the given <see cref="BodyPartProperty"/>.
         /// </summary>
         /// <returns>
-        ///     True if a BodyPartProperty of that type doesn't exist, false otherwise.
+        ///     True if a <see cref="BodyPartProperty"/> of that type doesn't exist, false otherwise.
         /// </returns>
         public bool TryAddProperty(BodyPartProperty property)
         {
@@ -185,7 +185,8 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Returns whether the given <see cref="BodyPartProperty"/> type is on this BodyPart.
+        ///     Returns whether the given <see cref="BodyPartProperty"/> type is on
+        ///     this <see cref="BodyPart"/>.
         /// </summary>
         public bool HasProperty<T>()
         {
@@ -193,7 +194,8 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Returns whether the given <see cref="BodyPartProperty"/> type is on this BodyPart.
+        ///     Returns whether the given <see cref="BodyPartProperty"/> type is on
+        ///     this <see cref="BodyPart"/>.
         /// </summary>
         public bool HasProperty(Type propertyType)
         {
@@ -207,7 +209,8 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Returns whether the given <see cref="Mechanism"/> can be installed on this BodyPart.
+        ///     Returns whether the given <see cref="Mechanism"/> can be installed on
+        ///     this <see cref="BodyPart"/>.
         /// </summary>
         public bool CanInstallMechanism(Mechanism mechanism)
         {
@@ -216,10 +219,14 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Attempts to add a <see cref="Mechanism"/>. Returns true if successful, false if there was an error (e.g. not
-        ///     enough room in BodyPart). Call InstallDroppedMechanism instead if you want to easily install an IEntity with a
-        ///     DroppedMechanismComponent.
+        ///     Attempts to add a <see cref="Mechanism"/>.
+        ///     Call <see cref="TryInstallDroppedMechanism"/> instead if you want to
+        ///     easily install an IEntity with a <see cref="DroppedMechanismComponent"/>.
         /// </summary>
+        /// <returns>
+        ///     True if successful, false if there was an error (e.g. not enough room in
+        ///     <see cref="BodyPart"/>).
+        /// </returns>
         private bool TryInstallMechanism(Mechanism mechanism)
         {
             if (!CanInstallMechanism(mechanism))
@@ -234,10 +241,10 @@ namespace Content.Server.Body
         }
 
         /// <summary>
-        ///     Attempts to install a <see cref="DroppedMechanismComponent"/> into the given limb, potentially deleting the
-        ///     dropped <see cref="IEntity"/>. Returns true if successful, false if there was an error (e.g. not enough room in
-        ///     BodyPart).
+        ///     Attempts to install a <see cref="DroppedMechanismComponent"/> into the
+        ///     given limb, potentially deleting the dropped <see cref="IEntity"/>. Returns 
         /// </summary>
+        /// <returns>True if successful, false if there was an error (e.g. not enough room in <see cref="BodyPart"/>).</returns>
         public bool TryInstallDroppedMechanism(DroppedMechanismComponent droppedMechanism)
         {
             if (!TryInstallMechanism(droppedMechanism.ContainedMechanism))

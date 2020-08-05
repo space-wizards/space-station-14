@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Body.Mechanisms;
 using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Body.Surgery;
 using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Body.Surgery

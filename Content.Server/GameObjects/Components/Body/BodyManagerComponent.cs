@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body;
+using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Network;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
 using Content.Server.Observer;
+using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Part.Properties.Movement;
 using Content.Shared.Body.Part.Properties.Other;
@@ -15,6 +17,7 @@ using Content.Shared.Body.Preset;
 using Content.Shared.Body.Template;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Body.Conduit;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Interfaces.Player;
@@ -42,6 +45,7 @@ namespace Content.Server.GameObjects.Components.Body
         [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory;
 #pragma warning restore
 
+        [ViewVariables] private string _presetId;
         [ViewVariables] private string _presetName;
 
         [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networkTypes = new Dictionary<Type, BodyNetwork>();
@@ -76,6 +80,15 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         [ViewVariables]
         public Dictionary<string, BodyPart> PartDictionary { get; } = new Dictionary<string, BodyPart>();
+
+        [ViewVariables]
+        public Dictionary<Mechanism, string> Mechanisms { get; } = new Dictionary<Mechanism, string>();
+
+        [ViewVariables]
+        public List<IBodyConduit> Conduits { get; } = new List<IBodyConduit>();
+        
+        [ViewVariables]
+        public List<string> ConduitNames { get; } = new List<string>();
 
         /// <summary>
         ///     List of all slots in this body, taken from the keys of
@@ -154,6 +167,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private void LoadBodyPreset(BodyPreset preset)
         {
+            _presetId = preset.Id;
             _presetName = preset.Name;
 
             foreach (var slot in Template.Slots.Keys)
@@ -169,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Body
                 // Get the BodyPartPrototype corresponding to the BodyPart ID we grabbed.
                 if (!_prototypeManager.TryIndex(partId, out BodyPartPrototype newPartData))
                 {
-                    throw new InvalidOperationException($"No {nameof(BodyPart)} prototype found with ID {partId}");
+                    throw new InvalidOperationException($"No {nameof(BodyPartPrototype)} found with ID {partId}");
                 }
 
                 // Try and remove an existing limb if that exists.
@@ -184,7 +198,27 @@ namespace Content.Server.GameObjects.Components.Body
                 PartDictionary.Add(slot, addedPart);
                 BodyPartAdded(addedPart, slot);
             }
+            
+            Mechanisms.Clear();
+            
+            foreach (var (id, part) in preset.Mechanisms)
+            {
+                if (!_prototypeManager.TryIndex(id, out MechanismPrototype mechanismPrototype))
+                {
+                    throw new InvalidOperationException($"No {nameof(MechanismPrototype)} found with ID {id}");
+                }
 
+                var mechanism = new Mechanism(mechanismPrototype);
+                Mechanisms.Add(mechanism, part);
+            }
+
+            Conduits.Clear();
+            Conduits.AddRange(preset.Conduits);
+            
+            ConduitNames.Clear();
+            ConduitNames.AddRange(preset.Conduits.Select(c => c.ConduitName));
+
+            // TODO
             foreach (var networkName in Template.Networks)
             {
                 RemoveNetwork(networkName);
