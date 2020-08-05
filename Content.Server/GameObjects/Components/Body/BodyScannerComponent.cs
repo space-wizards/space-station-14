@@ -6,7 +6,7 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Body.Scanner
+namespace Content.Server.GameObjects.Components.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

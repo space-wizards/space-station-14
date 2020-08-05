@@ -19,7 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Body.Surgery
+namespace Content.Server.GameObjects.Components.Body
 {
     // TODO: add checks to close UI if user walks too far away from tool or target.
 

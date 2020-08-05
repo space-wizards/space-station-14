@@ -14,7 +14,8 @@ namespace Content.Shared.Body.Part
     ///     Prototype for the BodyPart class.
     /// </summary>
     [Prototype("bodyPart")]
-    [Serializable, NetSerializable]
+    [NetSerializable]
+    [Serializable]
     public class BodyPartPrototype : IPrototype, IIndexedPrototype
     {
         private BodyPartCompatibility _compatibility;
@@ -92,7 +93,7 @@ namespace Content.Shared.Body.Part
                 if (_properties.Count(x => x.GetType() == property.GetType()) > 1)
                 {
                     throw new InvalidOperationException(
-                        $"More than one {nameof(BodyPartPrototype)} of the same type was defined in the prototype " + ID);
+                        "More than one BodyPartProperty of the same type was defined in the prototype " + ID + "!");
                 }
             }
         }
