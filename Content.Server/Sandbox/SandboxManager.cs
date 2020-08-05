@@ -4,7 +4,6 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Sandbox;
-using Robust.Client.UserInterface.Controls;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Placement;
@@ -129,8 +128,7 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _shell.ExecuteCommand(player, $"aghost");
-
+            _shell.ExecuteCommand(player, $"suicide");
         }
 
         private void UpdateSandboxStatusForAll()

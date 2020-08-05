@@ -2,7 +2,9 @@
 using Content.Client.UserInterface;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
+using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.Graphics.Lighting;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -115,6 +117,7 @@ namespace Content.Client.Sandbox
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
+            _window.ToggleLightButton.OnPressed += OnToggleLightButtonClicked;
 
             _window.OpenCentered();
         }
@@ -143,6 +146,11 @@ namespace Content.Client.Sandbox
             ToggleTilesWindow();
         }
 
+        private void OnToggleLightButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleLight();
+        }
+
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
@@ -152,9 +160,10 @@ namespace Content.Client.Sandbox
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAghost>());
         }
+
         private void ToggleEntitySpawnWindow()
         {
-            if(_spawnWindow == null)
+            if (_spawnWindow == null)
                 _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
 
             if (_spawnWindow.IsOpen)
@@ -170,7 +179,7 @@ namespace Content.Client.Sandbox
 
         private void ToggleTilesWindow()
         {
-            if(_tilesSpawnWindow == null)
+            if (_tilesSpawnWindow == null)
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
 
             if (_tilesSpawnWindow.IsOpen)
@@ -182,6 +191,13 @@ namespace Content.Client.Sandbox
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
                 _tilesSpawnWindow.OpenToLeft();
             }
+        }
+
+        private bool ToggleLight()
+        {
+            var mgr = IoCManager.Resolve<ILightManager>();
+            mgr.Enabled = !mgr.Enabled;
+            return false;
         }
     }
 }
