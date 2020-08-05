@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -17,9 +18,12 @@ namespace Content.Server.GameObjects.Components.Singularity
 
         public int Power = 5;
 
+        public HashSet<IEntity> OwnedFields = new HashSet<IEntity>();
+
         private IEntityManager _entityManager;
 
         private bool generated = false;
+
 
         public override void Initialize()
         {
@@ -44,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             if (generated) return;
 
-            if (_pos.X % 0.5f != 0 || _pos.Y % 0.5f != 0)
+            if (_pos.X % 0.5f != 0 || _pos.Y % 0.5f != 0) return;
 
             foreach (IEntity ent in _entityManager.GetEntitiesInRange(Owner, 5f))
             {
@@ -57,27 +61,38 @@ namespace Content.Server.GameObjects.Components.Singularity
 
                     if(localPos.Y == toPos.Y)
                     {
-                        do
+                        while (true)
                         {
                             var off = new Vector2(MathF.Round(toPos.X - localPos.X), 0).Normalized;
                             localPos = localPos.Offset(off);
 
+                            if (localPos == toPos)
+                            {
+                                break;
+                            }
+
                             var newEnt = _entityManager.SpawnEntity("ContainmentField", localPos);
                             newEnt.Transform.WorldRotation = off.ToAngle();
-
-                        } while (localPos != toPos);
+                            OwnedFields.Add(newEnt);
+                        }
                     }
                     else if (localPos.X == toPos.X)
                     {
-                        do
+                        while (true)
                         {
                             var off = new Vector2(0, MathF.Round(toPos.Y - localPos.Y)).Normalized;
                             localPos = localPos.Offset(off);
 
+                            if (localPos == toPos)
+                            {
+                                break;
+                            }
+
                             var newEnt = _entityManager.SpawnEntity("ContainmentField", localPos);
                             newEnt.Transform.WorldRotation = off.ToAngle();
+                            OwnedFields.Add(newEnt);
 
-                        } while (localPos != toPos);
+                        }
                     }
                 }
             }
