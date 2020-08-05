@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;

@@ -17,6 +17,7 @@
     sprite: Constructible/Structures/closet.rsi
     state: generic_door
   - type: Clickable
+  - type: MovedByPressure
   - type: InteractionOutline
   - type: Collidable
     shapes:
@@ -36,7 +37,7 @@
     IsScrapingFloor: true
   - type: Physics
     mass: 25
-    Anchored: false
+    anchored: false
   - type: EntityStorage
   - type: PlaceableSurface
   - type: Damageable

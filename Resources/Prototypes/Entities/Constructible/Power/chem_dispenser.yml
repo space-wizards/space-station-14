@@ -11,7 +11,9 @@
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
   - type: PowerReceiver
-
+  - type: Anchorable
+  - type: Pullable
+  
 - type: reagentDispenserInventory
   id: ChemDispenserStandardInventory
   inventory:

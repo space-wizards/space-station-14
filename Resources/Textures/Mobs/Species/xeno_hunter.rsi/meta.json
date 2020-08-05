@@ -16,6 +16,10 @@
             "directions": 4
         },
         {
+            "name": "crit",
+            "directions": 1
+        },
+        {
             "name": "dead",
             "directions": 1
         },

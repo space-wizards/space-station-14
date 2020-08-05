@@ -3,7 +3,7 @@
   name: vending machine
   components:
   - type: Physics
-    Anchored: true
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -50,6 +50,7 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: Pullable
 
 - type: entity
   parent: VendingMachine

@@ -503,6 +503,12 @@ namespace Content.Server.GameObjects.Components.Items.Storage
             }
         }
 
+        bool IDragDrop.CanDragDrop(DragDropEventArgs eventArgs)
+        {
+            return eventArgs.Target.TryGetComponent(out PlaceableSurfaceComponent placeable) &&
+                   placeable.IsPlaceable;
+        }
+
         bool IDragDrop.DragDrop(DragDropEventArgs eventArgs)
         {
             if (!ActionBlockerSystem.CanInteract(eventArgs.User))
@@ -523,7 +529,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            foreach (var storedEntity in storedEntities)
+            // empty everything out
+            foreach (var storedEntity in StoredEntities.ToList())
             {
                 if (Remove(storedEntity))
                 {

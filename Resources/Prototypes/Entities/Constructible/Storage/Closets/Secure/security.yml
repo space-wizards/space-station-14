@@ -36,3 +36,16 @@
       state: sec
   - type: Icon
     state: sec_door
+
+# Detective
+- type: entity
+  id: LockerDetective
+  parent: LockerSecureBase
+  name: "detective's cabinet"
+  components:
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: cabinet
+    - type: Icon
+      state: cabinet_door

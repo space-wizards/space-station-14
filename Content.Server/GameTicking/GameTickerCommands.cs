@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.BodySystem;
@@ -8,9 +8,11 @@ using Content.Shared.BodySystem;
 using Content.Shared.Jobs;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
@@ -335,7 +337,7 @@ namespace Content.Server.GameTicking
         {
             if (player == null)
             {
-                shell.SendText(player, "Only a player can run this command.");
+                shell.SendText((IPlayerSession) null, "Only a player can run this command.");
                 return;
             }
 
@@ -345,9 +347,23 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
-            var hand = manager.PartDictionary.First(x => x.Key == string.Join(" ", args));
-            manager.InstallBodyPart(hand.Value, hand.Key + new Random());
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            {
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+
+                shell.SendText(player, text);
+                return;
+            }
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.TryIndex("bodyPart.Hand.BasicHuman", out BodyPartPrototype prototype);
+
+            var part = new BodyPart(prototype);
+            var slot = part.GetHashCode().ToString();
+
+            body.Template.Slots.Add(slot, BodyPartType.Hand);
+            body.InstallBodyPart(part, slot);
         }
     }
 
@@ -372,8 +388,16 @@ namespace Content.Server.GameTicking
             }
 
             var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
-            var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
-            manager.DisconnectBodyPart(hand.Value, true);
+            var hand = manager.PartDictionary.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
+            if (hand.Value == null)
+            {
+                shell.SendText(player, "You have no hands.");
+                return;
+            }
+            else
+            {
+                manager.DisconnectBodyPart(hand.Value, true);
+            }
         }
     }
 }

@@ -7,13 +7,13 @@
     size: 5
   - type: Clickable
   - type: InteractionOutline
+  - type: MovedByPressure
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.25,-0.25,0.25,0.25"
       layer:
       - Clickable
-
     IsScrapingFloor: true
   - type: Physics
     mass: 5
