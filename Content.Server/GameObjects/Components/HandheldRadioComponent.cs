@@ -30,7 +30,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private bool _radioOn;
         private int _listenRange = 7;
-        private int _channel = 1;
+        private List<int> _channels;
         private RadioSystem _radioSystem = default!;
 
         [ViewVariables]
@@ -49,6 +49,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.Initialize();
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
+            _channels.Add(1457);
 
             RadioOn = false;
         }
@@ -96,12 +97,13 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void Broadcast(string message)
         {
-            _radioSystem.SpreadMessage(this, message, _channel);
+            int channel = 1457;
+            _radioSystem.SpreadMessage(this, message, channel);
         }
 
-        public int GetChannel()
+        public List<int> GetChannels()
         {
-            return _channel;
+            return _channels;
         }
 
         public GridCoordinates GetListenerPosition()

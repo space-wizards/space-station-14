@@ -10,6 +10,6 @@ namespace Content.Server.Interfaces
 
         void Broadcast(string message);
 
-        int GetChannel();
+        List<int> GetChannels();
     }
 }

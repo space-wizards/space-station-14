@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var radio in ComponentManager.EntityQuery<IRadio>())
             {
-                if (radio != source && channel == radio.GetChannel())
+                if (radio != source && radio.GetChannels().Contains(channel))
                 {
                     //TODO: once voice identity gets added, pass into receiver via radio.GetSpeakerVoice()
                     radio.Receiver(message);

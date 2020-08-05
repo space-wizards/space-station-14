@@ -26,13 +26,12 @@ namespace Content.Server.GameObjects.Components
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override string Name => "Headset";
 
         private int _listenRange = 0;
-        private int _channel = 2;
+        private List<int> _channels;
         private RadioSystem _radioSystem = default!;
 
         public override void Initialize()
@@ -40,6 +39,7 @@ namespace Content.Server.GameObjects.Components
             base.Initialize();
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
+            _channels.Add(1457);
         }
 
         public int GetListenRange()
@@ -77,12 +77,13 @@ namespace Content.Server.GameObjects.Components
 
         public void Broadcast(string message)
         {
-            _radioSystem.SpreadMessage(this, message, _channel);
+            int channel = 1457;
+            _radioSystem.SpreadMessage(this, message, channel);
         }
 
-        public int GetChannel()
+        public List<int> GetChannels()
         {
-            return _channel;
+            return _channels;
         }
     }
 }
