@@ -1,4 +1,4 @@
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
 
@@ -55,6 +55,25 @@ namespace Content.Shared.Sandbox
             public const MsgGroups GROUP = MsgGroups.Command;
             public const string NAME = nameof(MsgSandboxGiveAccess);
             public MsgSandboxGiveAccess(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+            }
+
+        }
+
+        protected sealed class MsgSandboxGiveAghost : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgSandboxGiveAghost);
+            public MsgSandboxGiveAghost(INetChannel channel) : base(NAME, GROUP) { }
 
             #endregion
             public override void ReadFromBuffer(NetIncomingMessage buffer)

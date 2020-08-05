@@ -1,4 +1,4 @@
-using Robust.Client.UserInterface.Controls;
+﻿using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
 
@@ -12,6 +12,7 @@ namespace Content.Client.Sandbox
 
         public Button GiveFullAccessButton { get; } //A button that just puts a captain's ID in your hands.
 
+        public Button GiveAghostButton { get; }
         public SandboxWindow(ILocalizationManager loc)
         {
             Title = loc.GetString("Sandbox Panel");
@@ -36,6 +37,11 @@ namespace Content.Client.Sandbox
                 Text = loc.GetString("Give Full Access ID")
             };
 
+            GiveAghostButton = new Button
+            {
+                Text = loc.GetString("Ghost")
+            };
+
             Contents.AddChild(new VBoxContainer
             {
                 Children =
@@ -43,7 +49,8 @@ namespace Content.Client.Sandbox
                     RespawnButton,
                     SpawnEntitiesButton,
                     SpawnTilesButton,
-                    GiveFullAccessButton
+                    GiveFullAccessButton,
+                    GiveAghostButton
                 }
             });
         }

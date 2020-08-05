@@ -48,6 +48,8 @@ namespace Content.Client.Sandbox
 
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
 
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost));
+
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 
             _inputManager.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
@@ -112,6 +114,7 @@ namespace Content.Client.Sandbox
             _window.SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
+            _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
 
             _window.OpenCentered();
         }
@@ -143,6 +146,11 @@ namespace Content.Client.Sandbox
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
+        }
+
+        private void OnGiveAghostButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAghost>());
         }
         private void ToggleEntitySpawnWindow()
         {
