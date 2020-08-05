@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
-    class RadioComponent : Component, IUse, IListen, IRadio
+    class HandheldRadioComponent : Component, IUse, IListen, IRadio
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
