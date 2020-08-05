@@ -30,6 +30,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private bool _radioOn;
         private int _listenRange = 7;
+        private int _channel = 1;
         private RadioSystem _radioSystem = default!;
 
         [ViewVariables]
@@ -76,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (RadioOn)
             {
-                Broadcast(this, speech);
+                Broadcast(speech);
             }
         }
 
@@ -87,17 +88,20 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void Receiver(string message)
         {
-            //do nothing
+            if(RadioOn)
+            {
+                Speaker(message);
+            }
         }
 
-        public void Broadcast(IRadio source, string message)
+        public void Broadcast(string message)
         {
-            _radioSystem.SpreadMessage(source, message);
+            _radioSystem.SpreadMessage(this, message, _channel);
         }
 
         public int GetChannel()
         {
-            throw new NotImplementedException();
+            return _channel;
         }
 
         public GridCoordinates GetListenerPosition()

@@ -8,7 +8,7 @@ namespace Content.Server.Interfaces
     {
         void Receiver(string message);
 
-        void Broadcast(IRadio source, string message);
+        void Broadcast(string message);
 
         int GetChannel();
     }

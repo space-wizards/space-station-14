@@ -28,7 +28,8 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var listener in ComponentManager.EntityQuery<IListen>())
             {
                 var listenerPos = listener.GetListenerPosition();
-                if (listenerPos.Distance(_mapManager, sourcePos) <= listener.GetListenRange())
+                var dist = listenerPos.Distance(_mapManager, sourcePos);
+                if (dist <= listener.GetListenRange())
                 {
                     listener.HeardSpeech(message, source);
                 }

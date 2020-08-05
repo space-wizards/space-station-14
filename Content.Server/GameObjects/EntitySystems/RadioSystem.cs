@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems
             _messages = new List<string>();
         }
 
-        public void SpreadMessage(IRadio source, string message)
+        public void SpreadMessage(IRadio source, string message, int channel)
         {
             if (_messages.Contains(message)) { return; }
 
@@ -31,9 +31,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             foreach (var radio in ComponentManager.EntityQuery<IRadio>())
             {
-                if (radio == source) { continue; }
-                radio.Receiver(message);
+                if (radio != source && channel == radio.GetChannel())
+                {
+                    //TODO: once voice identity gets added, pass into receiver via radio.GetSpeakerVoice()
+                    radio.Receiver(message);
+                }
             }
+
             _messages.Remove(message);
         }
     }
