@@ -60,6 +60,8 @@
   name: Containment Field Generator
   description: "A machine that generates a containment field when powered by an emitter.\nKeeps the Singularity docile."
   id: ContainmentFieldGenerator
+  placement:
+    mode: SnapgridCenter
   components:
   - type: InteractionOutline
   - type: Clickable
@@ -73,11 +75,11 @@
   - type: SnapGrid
     offset: Center
   - type: Sprite
-    sprite: Constructible/Power/radiation_panel.rsi
-    state: ca_active
+    sprite: Constructible/Power/field_generator.rsi
+    state: Field_Gen
   - type: Icon
-    sprite: Constructible/Power/radiation_panel.rsi
-    state: ca_active
+    sprite: Constructible/Power/field_generator.rsi
+    state: Field_Gen
   - type: Containment Field Generator
   - type: Anchorable
 
@@ -85,6 +87,8 @@
   name: Containment Field
   description: "A containment field that repels gravitational singularities."
   id: ContainmentField
+  placement:
+    mode: SnapgridCenter
   components:
   - type: InteractionOutline
   - type: Clickable
