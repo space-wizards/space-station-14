@@ -81,6 +81,11 @@ namespace Content.Server.Atmos
                || !(int.TryParse(args[3], out gasId) || Enum.TryParse(args[3], out gas))
                || !float.TryParse(args[4], out var moles)) return;
 
+            if (gas != (Gas) (-1))
+            {
+                gasId = (int)gas;
+            }
+
             var gridId = new GridId(id);
 
             var mapMan = IoCManager.Resolve<IMapManager>();
