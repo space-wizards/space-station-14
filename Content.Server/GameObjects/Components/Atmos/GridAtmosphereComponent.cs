@@ -330,14 +330,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 case ProcessState.ActiveTiles:
                     if(ProcessActiveTiles())
                         _state = ProcessState.ExcitedGroups;
-                    else
-                        Logger.Info($"{_state} FAIL");
                     return;
                 case ProcessState.ExcitedGroups:
                     if(ProcessExcitedGroups())
                         _state = ProcessState.HighPressureDelta;
-                    else
-                        Logger.Info($"{_state} FAIL");
                     return;
                 case ProcessState.HighPressureDelta:
                     ProcessHighPressureDelta();
@@ -346,8 +342,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 case ProcessState.Hotspots:
                     if(ProcessHotspots())
                         _state = ProcessState.TileEqualize;
-                    else
-                        Logger.Info($"{_state} FAIL");
                     break;
             }
 
