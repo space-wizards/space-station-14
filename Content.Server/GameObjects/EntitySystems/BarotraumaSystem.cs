@@ -14,9 +14,6 @@ namespace Content.Server.GameObjects.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            // TODO ATMOS: Remove this return once saltern is pressurized by default.
-            return;
-
             _timer += frameTime;
 
             if (_timer < TimePerUpdate) return;

@@ -56,7 +56,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                     if(pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.TakeDamage(DamageType.Brute, Atmospherics.LowPressureDamage, Owner, null);
+                    // TODO ATMOS Uncomment this when saltern is pressurized
+                    //damageable.TakeDamage(DamageType.Brute, Atmospherics.LowPressureDamage, Owner, null);
 
                     if (status == null) break;
 
@@ -77,7 +78,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                         goto default;
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
-                    damageable.TakeDamage(DamageType.Brute, damage, Owner, null);
+
+                    // TODO ATMOS Uncomment this when saltern is pressurized
+                    //damageable.TakeDamage(DamageType.Brute, damage, Owner, null);
 
                     if (status == null) break;
 
