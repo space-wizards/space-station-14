@@ -33,9 +33,9 @@ namespace Content.Client.Sandbox
         public Button ToggleLightButton;
         public Button SuicideButton;
         public Button ToggleSubfloorButton;
-        public Button ShowMarkersButton;
-        public Button ShowBbButton;
-        public Button ClientConsoleButton; 
+        public Button ShowMarkersButton; //Shows spawn points
+        public Button ShowBbButton; //Shows bounding boxes
+        public Button ClientConsoleButton; //Opens C# client console
 
         public SandboxWindow(ILocalizationManager loc)
         {
