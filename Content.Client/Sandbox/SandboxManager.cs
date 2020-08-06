@@ -22,6 +22,64 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox
 {
+    // Layout for the SandboxWindow
+    public class SandboxWindow : SS14Window
+    {
+        public Button RespawnButton;
+        public Button SpawnEntitiesButton;
+        public Button SpawnTilesButton;
+        public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
+        public Button GiveAghostButton;
+        public Button ToggleLightButton;
+        public Button SuicideButton;
+        public Button ToggleSubfloorButton;
+        public Button ShowMarkersButton;
+        public Button ShowBbButton;
+        public Button ClientConsoleButton; 
+
+        public SandboxWindow(ILocalizationManager loc)
+        {
+            Resizable = false;
+
+            Title = "Sandbox Panel";
+
+            var vBox = new VBoxContainer { SeparationOverride = 4 };
+            Contents.AddChild(vBox);
+
+            RespawnButton = new Button { Text = loc.GetString("Respawn") };
+            vBox.AddChild(RespawnButton);
+
+            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities"), ToggleMode = true };
+            vBox.AddChild(SpawnEntitiesButton);
+
+            SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
+            vBox.AddChild(SpawnTilesButton);
+
+            GiveFullAccessButton = new Button { Text = loc.GetString("Give AA Id") };
+            vBox.AddChild(GiveFullAccessButton);
+
+            GiveAghostButton = new Button { Text = loc.GetString("Ghost") };
+            vBox.AddChild(GiveAghostButton);
+
+            ToggleLightButton = new Button { Text = loc.GetString("Toggle Lights"), ToggleMode = true };
+            vBox.AddChild(ToggleLightButton);
+
+            ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor"), ToggleMode = true };
+            vBox.AddChild(ToggleSubfloorButton);
+
+            SuicideButton = new Button { Text = loc.GetString("Suicide") };
+            vBox.AddChild(SuicideButton);
+
+            ShowMarkersButton = new Button { Text = loc.GetString("Show Spawns"), ToggleMode = true };
+            vBox.AddChild(ShowMarkersButton);
+
+            ShowBbButton = new Button { Text = loc.GetString("Show Bb"), ToggleMode = true };
+            vBox.AddChild(ShowBbButton);
+
+            ClientConsoleButton = new Button { Text = loc.GetString("Client C# Console") };
+            vBox.AddChild(ClientConsoleButton);
+        }
+    }
     internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
     {
 #pragma warning disable 649
@@ -123,16 +181,15 @@ namespace Content.Client.Sandbox
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
-            _window.ToggleLightButton.OnPressed += OnToggleLightButtonClicked;
+            _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
             _window.ShowBbButton.OnPressed += OnShowBbButtonClicked;
+            _window.ClientConsoleButton.OnPressed += OnClientConsoleButtonClicked;
 
             _window.OpenCenteredMinSize();
         }
-
-
 
         private void WindowOnOnClose()
         {
@@ -174,6 +231,11 @@ namespace Content.Client.Sandbox
         private void OnShowBbButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ShowBb();
+        }
+
+        private void OnClientConsoleButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ClientConsole();
         }
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
@@ -240,6 +302,11 @@ namespace Content.Client.Sandbox
         private void ShowBb()
         {
             _console.ProcessCommand("showbb");
+        }
+
+        private void ClientConsole()
+        {
+            _console.ProcessCommand("csi");
         }
     }
 }
