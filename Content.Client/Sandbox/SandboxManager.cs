@@ -126,6 +126,7 @@ namespace Content.Client.Sandbox
             _window.ToggleLightButton.OnPressed += OnToggleLightButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
+            _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
 
             _window.OpenCentered();
         }
@@ -162,6 +163,11 @@ namespace Content.Client.Sandbox
         private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ToggleSubfloor();
+        }
+
+        private void OnShowMarkersButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ShowMarkers();
         }
 
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
@@ -219,6 +225,11 @@ namespace Content.Client.Sandbox
         private void ToggleSubfloor()
         {
             _console.ProcessCommand("showsubfloor");
+        }
+
+        private void ShowMarkers()
+        {
+            _console.ProcessCommand("showmarkers");
         }
     }
 }
