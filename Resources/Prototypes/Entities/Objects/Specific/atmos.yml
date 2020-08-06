@@ -2,7 +2,7 @@
   name: gas analyzer
   parent: BaseItem
   id: GasAnalyzer
-  description: TODO
+  description: A hand-held environmental scanner which reports current gas levels.
   components:
   - type: Sprite
     sprite: Objects/Specific/Atmos/gasanalyzer.rsi
