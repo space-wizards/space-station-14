@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Mechanisms;
 using Content.Server.GameObjects.Components.Body;
@@ -22,7 +23,7 @@ namespace Content.Server.Body.Surgery
 
         public BiologicalSurgeryData(BodyPart parent) : base(parent) { }
 
-        protected override SurgeryAction GetSurgeryStep(SurgeryType toolType)
+        protected override SurgeryAction? GetSurgeryStep(SurgeryType toolType)
         {
             if (toolType == SurgeryType.Amputation)
             {

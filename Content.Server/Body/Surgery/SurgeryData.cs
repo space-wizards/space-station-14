@@ -1,4 +1,5 @@
-﻿using Content.Server.Body.Mechanisms;
+﻿#nullable enable
+using Content.Server.Body.Mechanisms;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Interfaces.GameObjects;
 
@@ -14,8 +15,9 @@ namespace Content.Server.Body.Surgery
 
         /// <summary>
         ///     The <see cref="BodyPart"/> this surgeryData is attached to.
-        ///     The <see cref="SurgeryData"/> class should not exist without a <see cref="BodyPart"/>
-        ///     that it represents, and will throw errors if it is null.
+        ///     The <see cref="SurgeryData"/> class should not exist without a
+        ///     <see cref="BodyPart"/> that it represents, and will throw errors if it
+        ///     is null.
         /// </summary>
         protected readonly BodyPart Parent;
 
@@ -30,27 +32,31 @@ namespace Content.Server.Body.Surgery
         protected BodyPartType ParentType => Parent.PartType;
 
         /// <summary>
-        ///     Returns the description of this current <see cref="BodyPart"/> to be shown upon observing the given entity.
+        ///     Returns the description of this current <see cref="BodyPart"/> to be shown
+        ///     upon observing the given entity.
         /// </summary>
         public abstract string GetDescription(IEntity target);
 
         /// <summary>
-        ///     Returns whether a <see cref="Mechanism"/> can be installed into the <see cref="BodyPart"/> this SurgeryData
-        ///     represents.
+        ///     Returns whether a <see cref="Mechanism"/> can be installed into the
+        ///     <see cref="BodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
-        public abstract bool CanInstallMechanism(Mechanism toBeInstalled);
+        public abstract bool CanInstallMechanism(Mechanism mechanism);
 
         /// <summary>
-        ///     Returns whether the given <see cref="BodyPart"/> can be connected to the <see cref="BodyPart"/> this SurgeryData
-        ///     represents.
+        ///     Returns whether the given <see cref="BodyPart"/> can be connected to the
+        ///     <see cref="BodyPart"/> this <see cref="SurgeryData"/> represents.
         /// </summary>
-        public abstract bool CanAttachBodyPart(BodyPart toBeConnected);
+        public abstract bool CanAttachBodyPart(BodyPart part);
 
         /// <summary>
-        ///     Gets the delegate corresponding to the surgery step using the given <see cref="SurgeryType"/>. Returns null if no
-        ///     surgery step can be performed.
+        ///     Gets the delegate corresponding to the surgery step using the given
+        ///     <see cref="SurgeryType"/>.
         /// </summary>
-        protected abstract SurgeryAction GetSurgeryStep(SurgeryType toolType);
+        /// <returns>
+        ///     The corresponding surgery action or null if no step can be performed.
+        /// </returns>
+        protected abstract SurgeryAction? GetSurgeryStep(SurgeryType toolType);
 
         /// <summary>
         ///     Returns whether the given <see cref="SurgeryType"/> can be used to perform a surgery on the BodyPart this
@@ -72,6 +78,7 @@ namespace Content.Server.Body.Surgery
             IEntity performer)
         {
             var step = GetSurgeryStep(surgeryType);
+
             if (step == null)
             {
                 return false;

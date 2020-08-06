@@ -23,6 +23,7 @@ namespace Content.Server.Body
             CenterSlot = "";
             Slots = new Dictionary<string, BodyPartType>();
             Connections = new Dictionary<string, List<string>>();
+            Layers = new Dictionary<string, string>();
         }
 
         public BodyTemplate(BodyTemplatePrototype data)
@@ -58,23 +59,30 @@ namespace Content.Server.Body
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; private set; }
 
+        [ViewVariables]
+        public Dictionary<string, string> Layers { get; private set; }
+
         public bool Equals(BodyTemplate other)
         {
             return GetHashCode() == other.GetHashCode();
         }
 
         /// <summary>
-        ///     Returns whether the given slot exists in this BodyTemplate.
+        ///     Checks if the given slot exists in this <see cref="BodyTemplate"/>.
         /// </summary>
+        /// <returns>True if it does, false otherwise.</returns>
         public bool SlotExists(string slotName)
         {
             return Slots.Keys.Any(slot => slot == slotName);
         }
 
         /// <summary>
-        ///     Returns an integer unique to this BodyTemplate's layout.
+        ///     Calculates the hash code for this instance of <see cref="BodyTemplate"/>.
         ///     It does not matter in which order the Connections or Slots are defined.
         /// </summary>
+        /// <returns>
+        ///     An integer unique to this <see cref="BodyTemplate"/>'s layout.
+        /// </returns>
         public override int GetHashCode()
         {
             var slotsHash = 0;
@@ -105,7 +113,8 @@ namespace Content.Server.Body
                 connectionsHash ^= connection;
             }
 
-            // One of the unit tests considers 0 to be an error, but it will be 0 if the BodyTemplate is empty, so let's shift that up to 1.
+            // One of the unit tests considers 0 to be an error, but it will be 0 if
+            // the BodyTemplate is empty, so let's shift that up to 1.
             var hash = HashCode.Combine(
                 CenterSlot.GetHashCode(),
                 slotsHash,
@@ -125,6 +134,7 @@ namespace Content.Server.Body
             CenterSlot = data.CenterSlot;
             Slots = data.Slots;
             Connections = data.Connections;
+            Layers = data.Layers;
         }
     }
 }

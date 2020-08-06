@@ -61,6 +61,7 @@
         public const uint THROWN_ITEM = 1054;
         public const uint STRAP = 1055;
         public const uint DISPOSABLE = 1056;
+        public const uint BODY_MANAGER = 1057;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

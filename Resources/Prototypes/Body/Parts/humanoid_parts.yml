@@ -2,7 +2,7 @@
   id: bodyPart.Torso.BasicHuman
   name: "human torso"
   plural: "human torsos"
-  rsiPath: Mobs/Parts/Human/body.rsi
+  rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: "torso_m"
   partType: Torso
   durability: 100
@@ -23,7 +23,7 @@
   id: bodyPart.Head.BasicHuman
   name: "human head"
   plural: "human heads"
-  rsiPath: Mobs/Parts/Human/body.rsi
+  rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: head_m
   partType: Head
   durability: 50
@@ -38,10 +38,29 @@
   - mechanism.Eyes.BasicHuman
 
 - type: bodyPart
-  id: bodyPart.Arm.BasicHuman
-  name: "human arm"
-  plural: "human arms"
-  rsiPath: Mobs/Parts/Human/body.rsi
+  id: bodyPart.LArm.BasicHuman
+  name: "left human arm"
+  plural: "left human arms"
+  rsiPath: Mobs/Species/Human/parts.rsi
+  rsiState: l_arm
+  partType: Arm
+  durability: 40
+  destroyThreshold: -80
+  size: 5
+  compatibility: Biological
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  properties:
+  - !type:ExtensionProperty
+    active: true
+    reachDistance: 2.4
+
+- type: bodyPart
+  id: bodyPart.RArm.BasicHuman
+  name: "right human arm"
+  plural: "right human arms"
+  rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: r_arm
   partType: Arm
   durability: 40
@@ -57,10 +76,28 @@
     reachDistance: 2.4
 
 - type: bodyPart
-  id: bodyPart.Hand.BasicHuman
-  name: "human hand"
-  plural: "human hands"
-  rsiPath: Mobs/Parts/Human/body.rsi
+  id: bodyPart.LHand.BasicHuman
+  name: "left human hand"
+  plural: "left human hands"
+  rsiPath: Mobs/Species/Human/parts.rsi
+  rsiState: l_hand
+  partType: Hand
+  durability: 30
+  destroyThreshold: -60
+  size: 3
+  compatibility: Biological
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  properties:
+  - !type:GraspProperty
+    active: true
+
+- type: bodyPart
+  id: bodyPart.RHand.BasicHuman
+  name: "right human hand"
+  plural: "right human hands"
+  rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: r_hand
   partType: Hand
   durability: 30
@@ -75,10 +112,32 @@
     active: true
 
 - type: bodyPart
-  id: bodyPart.Leg.BasicHuman
-  name: "human leg"
-  plural: "human legs"
-  rsiPath: Mobs/Parts/Human/body.rsi
+  id: bodyPart.LLeg.BasicHuman
+  name: "left human leg"
+  plural: "left human legs"
+  rsiPath: Mobs/Species/Human/parts.rsi
+  rsiState: l_leg
+  partType: Leg
+  durability: 45
+  destroyThreshold: -90
+  size: 6
+  compatibility: Biological
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  properties:
+  - !type:ExtensionProperty
+    active: true
+    reachDistance: 3.0
+  - !type:LegProperty
+    active: true
+    speed: 2.6
+
+- type: bodyPart
+  id: bodyPart.RLeg.BasicHuman
+  name: "right human leg"
+  plural: "right human legs"
+  rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: r_leg
   partType: Leg
   durability: 45
@@ -97,10 +156,28 @@
     speed: 2.6
 
 - type: bodyPart
-  id: bodyPart.Foot.BasicHuman
-  name: "human foot"
-  plural: "human feet"
-  rsiPath: Mobs/Parts/Human/body.rsi
+  id: bodyPart.LFoot.BasicHuman
+  name: "left human foot"
+  plural: "left human feet"
+  rsiPath: Mobs/Species/Human/parts.rsi
+  rsiState: l_foot
+  partType: Foot
+  durability: 30
+  destroyThreshold: -60
+  size: 2
+  compatibility: Biological
+  damageContainer: biologicalDamageContainer
+  resistances: defaultResistances
+  surgeryDataType: Content.Server.Body.Surgery.BiologicalSurgeryData
+  properties:
+  - !type:FootProperty
+    active: true
+
+- type: bodyPart
+  id: bodyPart.RFoot.BasicHuman
+  name: "right human foot"
+  plural: "right human feet"
+  rsiPath: Mobs/Species/Human/parts.rsi
   rsiState: r_foot
   partType: Foot
   durability: 30

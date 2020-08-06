@@ -10,7 +10,9 @@ namespace Content.Shared.GameObjects.Components.Body
 {
     public abstract class SharedBodyManagerComponent : Component, IBodyManagerComponent
     {
-        public sealed override string Name => "BodyManager";
+        public override string Name => "BodyManager";
+
+        public override uint? NetID => ContentNetIDs.BODY_MANAGER;
 
         public event Action<HealthChangedEventArgs> HealthChangedEvent;
 
@@ -36,6 +38,34 @@ namespace Content.Shared.GameObjects.Components.Body
         protected void OnHealthChanged(HealthChangedEventArgs e)
         {
             HealthChangedEvent?.Invoke(e);
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class BodyPartAddedMessage : ComponentMessage
+    {
+        public readonly string RSIPath;
+        public readonly string RSIState;
+        public readonly Enum RSIMap;
+
+        public BodyPartAddedMessage(string rsiPath, string rsiState, Enum rsiMap)
+        {
+            Directed = true;
+            RSIPath = rsiPath;
+            RSIState = rsiState;
+            RSIMap = rsiMap;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class BodyPartRemovedMessage : ComponentMessage
+    {
+        public readonly Enum RSIMap;
+
+        public BodyPartRemovedMessage(Enum rsiMap)
+        {
+            Directed = true;
+            RSIMap = rsiMap;
         }
     }
 

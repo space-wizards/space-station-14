@@ -20,7 +20,9 @@ using Content.Shared.GameObjects.Components.Movement;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -41,6 +43,7 @@ namespace Content.Server.GameObjects.Components.Body
 #pragma warning disable CS0649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
         [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory;
+        [Dependency] private readonly IReflectionManager _reflectionManager;
 #pragma warning restore
 
         [ViewVariables] private string _presetName;
@@ -730,6 +733,7 @@ namespace Content.Server.GameObjects.Components.Body
         private void AddBodyPart(BodyPart part, string slotName)
         {
             Parts.Add(slotName, part);
+
             part.Body = this;
 
             var argsAdded = new BodyPartAddedEventArgs(part, slotName);
@@ -738,6 +742,21 @@ namespace Content.Server.GameObjects.Components.Body
             {
                 component.BodyPartAdded(argsAdded);
             }
+
+            var mapString = Template.Layers.GetValueOrDefault(slotName);
+
+            if (mapString == null ||
+                !_reflectionManager.TryParseEnumReference(mapString, out var @enum))
+            {
+                Logger.Warning($"Template {Template.Name} has an invalid RSI map key {mapString} for body part {part.Name}.");
+                return;
+            }
+
+            part.RSIMap = @enum;
+
+            var message = new BodyPartAddedMessage(part.RSIPath, part.RSIState, @enum);
+
+            SendNetworkMessage(message);
         }
 
         /// <summary>
@@ -760,6 +779,12 @@ namespace Content.Server.GameObjects.Components.Body
             foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
             {
                 component.BodyPartRemoved(args);
+            }
+
+            if (part.RSIMap != null)
+            {
+                var message = new BodyPartRemovedMessage(part.RSIMap);
+                SendNetworkMessage(message);
             }
 
             return true;

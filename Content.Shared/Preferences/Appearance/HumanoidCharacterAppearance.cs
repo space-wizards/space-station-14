@@ -1,5 +1,9 @@
+using System;
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.Preferences.Appearance
 {
+    [Serializable, NetSerializable]
     public enum HumanoidVisualLayers
     {
         Hair,
@@ -12,6 +16,8 @@ namespace Content.Shared.Preferences.Appearance
         LHand,
         RLeg,
         LLeg,
+        RFoot,
+        LFoot,
         StencilMask
     }
 }

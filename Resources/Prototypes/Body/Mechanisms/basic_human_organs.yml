@@ -4,10 +4,10 @@
   name: "human heart (debug)"
   components:
   - type: Sprite
-    sprite: Mobs/Parts/Human/organs.rsi
+    sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: Icon
-    sprite: Mobs/Parts/Human/organs.rsi
+    sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   - type: DroppedMechanism
     debugLoadMechanismData: mechanism.Heart.BasicHuman
@@ -17,7 +17,7 @@
 - type: mechanism
   id: mechanism.Brain.BasicHuman
   name: "human brain"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "brain_human"
   description: "The source of incredible, unending intelligence. Honk."
   durability: 10
@@ -29,7 +29,7 @@
 - type: mechanism
   id: mechanism.Eyes.BasicHuman
   name: "human eyes"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "eyeballs"
   description: "Ocular organ capable of turning light into a colorful visual."
   durability: 10
@@ -39,7 +39,7 @@
 - type: mechanism
   id: mechanism.Heart.BasicHuman
   name: "human heart"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "heart-on"
   description: "Pumps blood throughout a body. Essential for any entity with blood."
   durability: 10
@@ -51,7 +51,7 @@
 - type: mechanism
   id: mechanism.Lungs.BasicHuman
   name: "human lungs"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "lungs"
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   durability: 13
@@ -61,7 +61,7 @@
 - type: mechanism
   id: mechanism.Stomach.BasicHuman
   name: "human stomach"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "stomach"
   description: "Gross. This is hard to stomach."
   durability: 13
@@ -73,7 +73,7 @@
 - type: mechanism
   id: mechanism.Liver.BasicHuman
   name: "human liver"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "liver"
   description: "Filters impurities out of a bloodstream and provides other important functionality to a human."
   durability: 15
@@ -83,7 +83,7 @@
 - type: mechanism
   id: mechanism.Kidneys.BasicHuman
   name: "human kidneys"
-  rsiPath: Mobs/Parts/Human/organs.rsi
+  rsiPath: Mobs/Species/Human/organs.rsi
   rsiState: "kidneys"
   description: "Filters toxins out of a bloodstream."
   durability: 20

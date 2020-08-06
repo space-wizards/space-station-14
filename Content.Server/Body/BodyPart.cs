@@ -49,6 +49,7 @@ namespace Content.Server.Body
             Plural = null!;
             RSIPath = null!;
             RSIState = null!;
+            RSIMap = null!;
             CurrentDamages = null!;
             Resistances = null!;
 
@@ -126,6 +127,12 @@ namespace Content.Server.Body
         /// </summary>
         [ViewVariables]
         public string RSIState { get; private set; }
+
+        /// <summary>
+        ///     RSI map keys that this body part changes on the sprite.
+        /// </summary>
+        [ViewVariables]
+        public Enum? RSIMap { get; set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="BodyPart"/> is considered
