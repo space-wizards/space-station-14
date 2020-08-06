@@ -24,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public DamageType Damage { get; set; } = DamageType.Brute;
         public float MinimumSpeed { get; set; } = 20f;
-        public int BaseDamage { get; set; } = 2;
+        public int BaseDamage { get; set; } = 5;
         public float Factor { get; set; } = 0.75f;
         public string SoundHit { get; set; } = "";
         public float StunChance { get; set; } = 0.25f;
@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
             serializer.DataField(this, x => Damage, "damage", DamageType.Brute);
             serializer.DataField(this, x => MinimumSpeed, "minimumSpeed", 20f);
-            serializer.DataField(this, x => BaseDamage, "baseDamage", 2);
+            serializer.DataField(this, x => BaseDamage, "baseDamage", 5);
             serializer.DataField(this, x => Factor, "factor", 1f);
             serializer.DataField(this, x => SoundHit, "soundHit", "");
             serializer.DataField(this, x => StunChance, "stunChance", 0.25f);
