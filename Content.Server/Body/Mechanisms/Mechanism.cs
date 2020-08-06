@@ -17,7 +17,6 @@ namespace Content.Server.Body.Mechanisms
     /// </summary>
     public class Mechanism
     {
-        private BodyManagerComponent? _body;
         private BodyPart? _part;
 
         public Mechanism(MechanismPrototype data)
@@ -120,14 +119,14 @@ namespace Content.Server.Body.Mechanisms
                 {
                     foreach (var behavior in Behaviors)
                     {
-                        behavior.OnRemovedFromPart(old);
+                        behavior.RemovedFromPart(old);
                     }
                 }
                 else
                 {
                     foreach (var behavior in Behaviors)
                     {
-                        behavior.OnInstalledIntoPart();
+                        behavior.InstalledIntoPart();
                     }
                 }
             }
@@ -194,7 +193,7 @@ namespace Content.Server.Body.Mechanisms
         {
             foreach (var behavior in Behaviors)
             {
-                behavior.OnInstalledIntoBody();
+                behavior.InstalledIntoBody();
             }
         }
 
@@ -202,7 +201,7 @@ namespace Content.Server.Body.Mechanisms
         {
             foreach (var behavior in Behaviors)
             {
-                behavior.OnRemovedFromBody(old);
+                behavior.RemovedFromBody(old);
             }
         }
 

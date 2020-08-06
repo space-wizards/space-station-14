@@ -140,28 +140,28 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, attaching a head to a body will call this on the brain inside.
         /// </summary>
-        public virtual void OnInstalledIntoBody() { }
+        protected virtual void OnInstalledIntoBody() { }
 
         /// <summary>
         ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is
         ///     installed into a <see cref="BodyPart"/>.
         ///     For instance, putting a brain into an empty head.
         /// </summary>
-        public virtual void OnInstalledIntoPart() { }
+        protected virtual void OnInstalledIntoPart() { }
 
         /// <summary>
         ///     Called when the containing <see cref="BodyPart"/> is removed from a
         ///     <see cref="BodyManagerComponent"/>.
         ///     For instance, cutting off ones head will call this on the brain inside.
         /// </summary>
-        public virtual void OnRemovedFromBody(BodyManagerComponent old) { }
+        protected virtual void OnRemovedFromBody(BodyManagerComponent old) { }
 
         /// <summary>
         ///     Called when the parent <see cref="Mechanisms.Mechanism"/> is removed from a
         ///     <see cref="BodyPart"/>.
         ///     For instance, taking a brain out of ones head.
         /// </summary>
-        public virtual void OnRemovedFromPart(BodyPart old) { }
+        protected virtual void OnRemovedFromPart(BodyPart old) { }
 
         /// <summary>
         ///     Called every update when this behavior is connected to a

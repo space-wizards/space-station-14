@@ -174,13 +174,6 @@ namespace Content.Server.GameObjects.Components.Body
                 AddBodyPart(addedPart, slotName);
             }
 
-            // TODO
-            foreach (var networkName in Template.Networks)
-            {
-                RemoveNetwork(networkName);
-                EnsureNetwork(networkName);
-            }
-
             OnBodyChanged(); // TODO: Duplicate code
         }
 
@@ -804,7 +797,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to this body.
+        ///     Attempts to add a <see cref="BodyNetwork"/> of the given type to
+        ///     this body.
         /// </summary>
         /// <typeparam name="T">The type of network to add.</typeparam>
         /// <returns>
@@ -818,7 +812,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Attempts to add a <see cref="BodyNetwork"/> of the given name to this body.
+        ///     Attempts to add a <see cref="BodyNetwork"/> of the given name to
+        ///     this body.
         /// </summary>
         /// <returns>
         ///     True if successful, false if there was an error

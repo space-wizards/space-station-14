@@ -23,7 +23,6 @@ namespace Content.Server.Body
             CenterSlot = "";
             Slots = new Dictionary<string, BodyPartType>();
             Connections = new Dictionary<string, List<string>>();
-            Networks = new List<string>();
         }
 
         public BodyTemplate(BodyTemplatePrototype data)
@@ -59,12 +58,6 @@ namespace Content.Server.Body
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; private set; }
 
-        /// <summary>
-        ///     Lists all of the networks that this template possesses.
-        /// </summary>
-        [ViewVariables]
-        public List<string> Networks { get; private set; }
-
         public bool Equals(BodyTemplate other)
         {
             return GetHashCode() == other.GetHashCode();
@@ -86,7 +79,6 @@ namespace Content.Server.Body
         {
             var slotsHash = 0;
             var connectionsHash = 0;
-            var networksHash = 0;
 
             foreach (var (key, value) in Slots)
             {
@@ -113,17 +105,11 @@ namespace Content.Server.Body
                 connectionsHash ^= connection;
             }
 
-            foreach (var network in Networks)
-            {
-                networksHash ^= network.GetHashCode();
-            }
-
             // One of the unit tests considers 0 to be an error, but it will be 0 if the BodyTemplate is empty, so let's shift that up to 1.
             var hash = HashCode.Combine(
                 CenterSlot.GetHashCode(),
                 slotsHash,
-                connectionsHash,
-                networksHash);
+                connectionsHash);
 
             if (hash == 0)
             {
@@ -139,7 +125,6 @@ namespace Content.Server.Body
             CenterSlot = data.CenterSlot;
             Slots = data.Slots;
             Connections = data.Connections;
-            Networks = data.Networks;
         }
     }
 }

@@ -20,7 +20,6 @@ namespace Content.Shared.Body.Template
         private string _centerSlot;
         private Dictionary<string, BodyPartType> _slots;
         private Dictionary<string, List<string>> _connections;
-        private List<string> _networks;
 
         [ViewVariables] public string ID => _id;
 
@@ -32,8 +31,6 @@ namespace Content.Shared.Body.Template
 
         [ViewVariables] public Dictionary<string, List<string>> Connections => _connections;
 
-        [ViewVariables] public List<string> Networks => _networks;
-
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -42,7 +39,6 @@ namespace Content.Shared.Body.Template
             serializer.DataField(ref _centerSlot, "centerSlot", string.Empty);
             serializer.DataField(ref _slots, "slots", new Dictionary<string, BodyPartType>());
             serializer.DataField(ref _connections, "connections", new Dictionary<string, List<string>>());
-            serializer.DataField(ref _networks, "networks", new List<string>());
 
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.

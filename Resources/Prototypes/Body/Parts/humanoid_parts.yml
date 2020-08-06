@@ -2,7 +2,7 @@
   id: bodyPart.Torso.BasicHuman
   name: "human torso"
   plural: "human torsos"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/Human/body.rsi
   rsiState: "torso_m"
   partType: Torso
   durability: 100
@@ -15,6 +15,7 @@
   mechanisms:
   - mechanism.Heart.BasicHuman
   - mechanism.Lungs.BasicHuman
+  - mechanism.Stomach.BasicHuman
   - mechanism.Liver.BasicHuman
   - mechanism.Kidneys.BasicHuman
 
@@ -22,7 +23,7 @@
   id: bodyPart.Head.BasicHuman
   name: "human head"
   plural: "human heads"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/Human/body.rsi
   rsiState: head_m
   partType: Head
   durability: 50
@@ -40,7 +41,7 @@
   id: bodyPart.Arm.BasicHuman
   name: "human arm"
   plural: "human arms"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/Human/body.rsi
   rsiState: r_arm
   partType: Arm
   durability: 40
@@ -59,7 +60,7 @@
   id: bodyPart.Hand.BasicHuman
   name: "human hand"
   plural: "human hands"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/Human/body.rsi
   rsiState: r_hand
   partType: Hand
   durability: 30
@@ -77,7 +78,7 @@
   id: bodyPart.Leg.BasicHuman
   name: "human leg"
   plural: "human legs"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/Human/body.rsi
   rsiState: r_leg
   partType: Leg
   durability: 45
@@ -99,7 +100,7 @@
   id: bodyPart.Foot.BasicHuman
   name: "human foot"
   plural: "human feet"
-  rsiPath: Objects/BodySystem/BodyParts/basic_human.rsi
+  rsiPath: Mobs/Parts/Human/body.rsi
   rsiState: r_foot
   partType: Foot
   durability: 30
