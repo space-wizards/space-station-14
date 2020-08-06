@@ -24,6 +24,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// <summary>
     ///     This is our SSAir equivalent.
     /// </summary>
+    [ComponentReference(typeof(IGridAtmosphereComponent))]
     [RegisterComponent, Serializable]
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {

@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
@@ -27,14 +28,14 @@ namespace Content.Server.GameObjects.EntitySystems
             base.Initialize();
 
             _mapManager.TileChanged += OnTileChanged;
-            EntityQuery = new MultipleTypeEntityQuery(new List<Type>(){typeof(GridAtmosphereComponent)});
+            EntityQuery = new MultipleTypeEntityQuery(new List<Type>(){typeof(IGridAtmosphereComponent)});
         }
 
-        public GridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
+        public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
             var grid = _mapManager.GetGrid(gridId);
             var gridEnt = _entityManager.GetEntity(grid.GridEntityId);
-            return gridEnt.TryGetComponent(out GridAtmosphereComponent atmos) ? atmos : null;
+            return gridEnt.TryGetComponent(out IGridAtmosphereComponent atmos) ? atmos : null;
         }
 
         public override void Update(float frameTime)
@@ -47,7 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (_pauseManager.IsGridPaused(grid.GridIndex))
                     continue;
 
-                gridEnt.GetComponent<GridAtmosphereComponent>().Update(frameTime);
+                gridEnt.GetComponent<IGridAtmosphereComponent>().Update(frameTime);
             }
         }
 
