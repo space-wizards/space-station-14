@@ -16,6 +16,7 @@ namespace Content.Client.Sandbox
         public Button SuicideButton { get; }
         public Button ToggleSubfloorButton { get; }
         public Button ShowMarkersButton { get; }
+        public Button ShowBbButton { get; }
 
         public SandboxWindow(ILocalizationManager loc)
         {
@@ -52,6 +53,9 @@ namespace Content.Client.Sandbox
 
             ShowMarkersButton = new Button { Text = loc.GetString("Show Spawns") };
             vBox.AddChild(ShowMarkersButton);
+
+            ShowBbButton = new Button { Text = loc.GetString("Show Bb") };
+            vBox.AddChild(ShowBbButton);
         }
     }
 }

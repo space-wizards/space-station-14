@@ -127,6 +127,7 @@ namespace Content.Client.Sandbox
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
+            _window.ShowBbButton.OnPressed += OnShowBbButtonClicked;
 
             _window.OpenCentered();
         }
@@ -170,6 +171,10 @@ namespace Content.Client.Sandbox
             ShowMarkers();
         }
 
+        private void OnShowBbButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ShowBb();
+        }
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
@@ -230,6 +235,11 @@ namespace Content.Client.Sandbox
         private void ShowMarkers()
         {
             _console.ProcessCommand("showmarkers");
+        }
+
+        private void ShowBb()
+        {
+            _console.ProcessCommand("showbb");
         }
     }
 }
