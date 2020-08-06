@@ -60,7 +60,7 @@ namespace Content.Client.Sandbox
                 Text = loc.GetString("Suicide")
             };
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new VBoxContainer 
             {
                 Children =
                 {

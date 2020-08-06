@@ -3,6 +3,7 @@ using Content.Client.UserInterface;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.Graphics.Lighting;
@@ -24,6 +25,7 @@ namespace Content.Client.Sandbox
     internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
     {
 #pragma warning disable 649
+        [Dependency] private readonly IClientConsole _console;
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IClientNetManager _netManager;
         [Dependency] private readonly ILocalizationManager _localization;
@@ -209,18 +211,14 @@ namespace Content.Client.Sandbox
             }
         }
 
-        private bool ToggleLight()
+        private void ToggleLight()
         {
-            var mgr = IoCManager.Resolve<ILightManager>();
-            mgr.Enabled = !mgr.Enabled;
-            return false;
+            _console.ProcessCommand("togglelight");
         }
-        private bool ToggleSubfloor()
-        {
-            EntitySystem.Get<SubFloorHideSystem>()
-                .EnableAll ^= true;
 
-            return false;
+        private void ToggleSubfloor()
+        {
+            _console.ProcessCommand("showsubfloor");
         }
 
     }
