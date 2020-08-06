@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -323,31 +324,37 @@ namespace Content.Server.GameObjects.Components.Atmos
             switch (_state)
             {
                 case ProcessState.TileEqualize:
-                    if(ProcessTileEqualize())
-                        _state = ProcessState.ActiveTiles;
+                    ProcessTileEqualize();
+                    _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
                     if(ProcessActiveTiles())
                         _state = ProcessState.ExcitedGroups;
+                    else
+                        Logger.Info($"{_state} FAIL");
                     return;
                 case ProcessState.ExcitedGroups:
                     if(ProcessExcitedGroups())
                         _state = ProcessState.HighPressureDelta;
+                    else
+                        Logger.Info($"{_state} FAIL");
                     return;
                 case ProcessState.HighPressureDelta:
-                    if(ProcessHighPressureDelta())
-                        _state = ProcessState.Hotspots;
+                    ProcessHighPressureDelta();
+                    _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
                     if(ProcessHotspots())
                         _state = ProcessState.TileEqualize;
+                    else
+                        Logger.Info($"{_state} FAIL");
                     break;
             }
 
             UpdateCounter++;
         }
 
-        public bool ProcessTileEqualize()
+        public void ProcessTileEqualize()
         {
             _stopwatch.Restart();
 
@@ -360,10 +367,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return false;
+                    return;
             }
 
-            return true;
+            return;
         }
 
         public bool ProcessActiveTiles()
@@ -411,7 +418,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             return true;
         }
 
-        public bool ProcessHighPressureDelta()
+        public void ProcessHighPressureDelta()
         {
             _stopwatch.Restart();
 
@@ -427,10 +434,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return false;
+                    return;
             }
 
-            return true;
+            return;
         }
 
         private bool ProcessHotspots()
