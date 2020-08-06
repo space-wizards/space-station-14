@@ -35,7 +35,7 @@ namespace Content.Client.Sandbox
             SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
             vBox.AddChild(SpawnTilesButton);
 
-            GiveFullAccessButton = new Button { Text = loc.GetString("Give Full Access ID") };
+            GiveFullAccessButton = new Button { Text = loc.GetString("Give AA Id") };
             vBox.AddChild(GiveFullAccessButton);
 
             GiveAghostButton = new Button { Text = loc.GetString("Ghost") };
@@ -50,7 +50,7 @@ namespace Content.Client.Sandbox
             SuicideButton = new Button { Text = loc.GetString("Suicide") };
             vBox.AddChild(SuicideButton);
 
-            ShowMarkersButton = new Button { Text = loc.GetString("Show Markers") };
+            ShowMarkersButton = new Button { Text = loc.GetString("Show Spawns") };
             vBox.AddChild(ShowMarkersButton);
         }
     }
