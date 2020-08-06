@@ -77,11 +77,11 @@ namespace Content.Server.Chat
 
             if (message.StartsWith(';') && source.TryGetComponent<InventoryComponent>(out InventoryComponent inventory))
             {
+                message = message.Substring(1);
                 if (inventory.TryGetSlotItem<ItemComponent>(EquipmentSlotDefines.Slots.EARS, out ItemComponent item))
                 {
                     if (item.Owner.TryGetComponent<HeadsetComponent>(out HeadsetComponent headset))
                     {
-                        message = message.Substring(1);
                         headset.RadioRequested = true;
                     }
                 }
