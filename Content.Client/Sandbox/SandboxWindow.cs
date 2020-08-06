@@ -14,6 +14,7 @@ namespace Content.Client.Sandbox
         public Button GiveAghostButton { get; }
         public Button ToggleLightButton { get; }
         public Button SuicideButton { get; }
+        public Button ToggleSubfloorButton { get; }
 
         public SandboxWindow(ILocalizationManager loc)
         {
@@ -49,6 +50,11 @@ namespace Content.Client.Sandbox
                 Text = loc.GetString("Toggle Lights")
             };
 
+            ToggleSubfloorButton = new Button
+            {
+                Text = loc.GetString("Toggle Subfloor")
+            };
+
             SuicideButton = new Button
             {
                 Text = loc.GetString("Suicide")
@@ -64,6 +70,7 @@ namespace Content.Client.Sandbox
                     GiveFullAccessButton,
                     GiveAghostButton,
                     ToggleLightButton,
+                    ToggleSubfloorButton,
                     SuicideButton
 
                 }

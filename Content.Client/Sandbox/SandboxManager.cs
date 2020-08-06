@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Client.UserInterface;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
 using Robust.Client.Interfaces.Console;
@@ -9,6 +10,7 @@ using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.Map;
@@ -121,6 +123,7 @@ namespace Content.Client.Sandbox
             _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
             _window.ToggleLightButton.OnPressed += OnToggleLightButtonClicked;
             _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
+            _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
 
             _window.OpenCentered();
         }
@@ -152,6 +155,11 @@ namespace Content.Client.Sandbox
         private void OnToggleLightButtonClicked(BaseButton.ButtonEventArgs args)
         {
             ToggleLight();
+        }
+
+        private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleSubfloor();
         }
 
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
@@ -207,5 +215,13 @@ namespace Content.Client.Sandbox
             mgr.Enabled = !mgr.Enabled;
             return false;
         }
+        private bool ToggleSubfloor()
+        {
+            EntitySystem.Get<SubFloorHideSystem>()
+                .EnableAll ^= true;
+
+            return false;
+        }
+
     }
 }
