@@ -18,63 +18,36 @@ namespace Content.Client.Sandbox
 
         public SandboxWindow(ILocalizationManager loc)
         {
-            Title = loc.GetString("Sandbox Panel");
+            Resizable = false;
 
-            RespawnButton = new Button
-            {
-                Text = loc.GetString("Respawn")
-            };
+            Title = "Sandbox Panel";
 
-            SpawnEntitiesButton = new Button
-            {
-                Text = loc.GetString("Spawn Entities")
-            };
+            var vBox = new VBoxContainer { SeparationOverride = 4 };
+            Contents.AddChild(vBox);
 
-            SpawnTilesButton = new Button
-            {
-                Text = loc.GetString("Spawn Tiles")
-            };
+            RespawnButton = new Button { Text = loc.GetString("Respawn") };
+            vBox.AddChild(RespawnButton);
 
-            GiveFullAccessButton = new Button
-            {
-                Text = loc.GetString("Give Full Access ID")
-            };
+            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities") };
+            vBox.AddChild(SpawnEntitiesButton);
 
-            GiveAghostButton = new Button
-            {
-                Text = loc.GetString("Ghost")
-            };
+            SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
+            vBox.AddChild(SpawnTilesButton);
 
-            ToggleLightButton = new Button
-            {
-                Text = loc.GetString("Toggle Lights")
-            };
+            GiveFullAccessButton = new Button { Text = loc.GetString("Give Full Access ID") };
+            vBox.AddChild(GiveFullAccessButton);
 
-            ToggleSubfloorButton = new Button
-            {
-                Text = loc.GetString("Toggle Subfloor")
-            };
+            GiveAghostButton = new Button { Text = loc.GetString("Ghost") };
+            vBox.AddChild(GiveAghostButton);
 
-            SuicideButton = new Button
-            {
-                Text = loc.GetString("Suicide")
-            };
+            ToggleLightButton = new Button { Text = loc.GetString("Toggle Lights") };
+            vBox.AddChild(ToggleLightButton);
 
-            Contents.AddChild(new VBoxContainer 
-            {
-                Children =
-                {
-                    RespawnButton,
-                    SpawnEntitiesButton,
-                    SpawnTilesButton,
-                    GiveFullAccessButton,
-                    GiveAghostButton,
-                    ToggleLightButton,
-                    ToggleSubfloorButton,
-                    SuicideButton
+            ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor") };
+            vBox.AddChild(ToggleSubfloorButton);
 
-                }
-            });
+            SuicideButton = new Button { Text = loc.GetString("Suicide") };
+            vBox.AddChild(SuicideButton);
         }
     }
 }

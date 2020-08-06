@@ -220,6 +220,5 @@ namespace Content.Client.Sandbox
         {
             _console.ProcessCommand("showsubfloor");
         }
-
     }
 }
