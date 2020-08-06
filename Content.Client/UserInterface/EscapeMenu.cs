@@ -29,8 +29,6 @@ namespace Content.Client.UserInterface
         private BaseButton DisconnectButton;
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
-        private BaseButton SpawnEntitiesButton;
-        private BaseButton SpawnTilesButton;
         private OptionsMenu optionsMenu;
 
         public EscapeMenu(IClientConsole console,
@@ -50,12 +48,7 @@ namespace Content.Client.UserInterface
 
             IoCManager.InjectDependencies(this);
 
-            _sandboxManager.AllowedChanged += AllowedChanged;
-            _conGroupController.ConGroupUpdated += UpdateSpawnButtonStates;
-
             PerformLayout();
-
-            UpdateSpawnButtonStates();
         }
 
         private void PerformLayout()
@@ -64,31 +57,20 @@ namespace Content.Client.UserInterface
 
             Resizable = false;
 
-            Title = "Menu";
+            Title = "Esc Menu";
 
             var vBox = new VBoxContainer {SeparationOverride = 4};
             Contents.AddChild(vBox);
 
-            SpawnEntitiesButton = new Button {Text = "Spawn Entities"};
-            SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
-            vBox.AddChild(SpawnEntitiesButton);
-
-            SpawnTilesButton = new Button {Text = "Spawn Tiles"};
-            SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
-            vBox.AddChild(SpawnTilesButton);
-
-            // Add a spacer.
-            //vBox.AddChild(new Control { CustomMinimumSize = (0, 5)});
-
-            OptionsButton = new Button {Text = "Options"};
+            OptionsButton = new Button {Text = _localizationManager.GetString("Options")};
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             vBox.AddChild(OptionsButton);
 
-            DisconnectButton = new Button {Text = "Disconnect"};
+            DisconnectButton = new Button {Text = _localizationManager.GetString("Disconnect")};
             DisconnectButton.OnPressed += OnDisconnectButtonClicked;
             vBox.AddChild(DisconnectButton);
 
-            QuitButton = new Button { Text = "Quit Game" };
+            QuitButton = new Button {Text = _localizationManager.GetString("Quit Game")};
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
         }
@@ -110,33 +92,6 @@ namespace Content.Client.UserInterface
             optionsMenu.OpenCentered();
         }
 
-        private void OnSpawnEntitiesButtonClicked(BaseButton.ButtonEventArgs args)
-        {
-            var window = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache,
-                _localizationManager);
-            window.OpenToLeft();
-        }
-
-        private void OnSpawnTilesButtonClicked(BaseButton.ButtonEventArgs args)
-        {
-            var window = new TileSpawnWindow(__tileDefinitionManager, _placementManager, _resourceCache);
-            window.OpenToLeft();
-        }
-
-        private void UpdateSpawnButtonStates()
-        {
-            if (_conGroupController.CanAdminPlace() || _sandboxManager.SandboxAllowed)
-            {
-                SpawnEntitiesButton.Disabled = false;
-                SpawnTilesButton.Disabled = false;
-            }
-            else
-            {
-                SpawnEntitiesButton.Disabled = true;
-                SpawnTilesButton.Disabled = true;
-            }
-        }
-
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -149,11 +104,6 @@ namespace Content.Client.UserInterface
         public override void Close()
         {
             base.Close();
-
-            _sandboxManager.AllowedChanged -= AllowedChanged;
-            _conGroupController.ConGroupUpdated -= UpdateSpawnButtonStates;
         }
-
-        private void AllowedChanged(bool newAllowed) => UpdateSpawnButtonStates();
     }
 }
