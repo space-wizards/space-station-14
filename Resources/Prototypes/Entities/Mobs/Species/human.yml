@@ -12,6 +12,7 @@
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
+  - type: Barotrauma
   - type: Hunger
   - type: Thirst
   # Organs

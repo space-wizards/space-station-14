@@ -8,6 +8,7 @@ using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
@@ -26,7 +27,7 @@ using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventory
 namespace Content.Server.GameObjects
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -48,6 +49,52 @@ namespace Content.Server.GameObjects
                 {
                     AddSlot(slotName);
                 }
+            }
+        }
+
+        // Optimization: Cache this
+        [ViewVariables]
+        public float HighPressureMultiplier
+        {
+            get
+            {
+                var multiplier = 1f;
+
+                foreach (var (slot, containerSlot) in SlotContainers)
+                {
+                    foreach (var entity in containerSlot.ContainedEntities)
+                    {
+                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
+                        {
+                            multiplier *= protection.HighPressureMultiplier;
+                        }
+                    }
+                }
+
+                return multiplier;
+            }
+        }
+
+        // Optimization: Cache this
+        [ViewVariables]
+        public float LowPressureMultiplier
+        {
+            get
+            {
+                var multiplier = 1f;
+
+                foreach (var (slot, containerSlot) in SlotContainers)
+                {
+                    foreach (var entity in containerSlot.ContainedEntities)
+                    {
+                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
+                        {
+                            multiplier *= protection.LowPressureMultiplier;
+                        }
+                    }
+                }
+
+                return multiplier;
             }
         }
 
