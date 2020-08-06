@@ -179,7 +179,6 @@ namespace Content.Server.GameObjects.Components.Singularity
                             var newEnt = _entityManager.SpawnEntity("ContainmentField", localPos);
                             newEnt.Transform.WorldRotation = off.ToAngle();
                             OwnedFields.Add(newEnt, ent);
-
                         }
                     }
 

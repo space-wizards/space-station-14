@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
@@ -32,7 +33,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Singularity
 {
     [RegisterComponent]
     public class SingularityComponent : Component, ICollideBehavior
@@ -57,6 +58,8 @@ namespace Content.Server.GameObjects.Components
 
         private bool transition = true;
 
+        private bool repelled = false;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -76,7 +79,8 @@ namespace Content.Server.GameObjects.Components
         protected override void Startup()
         {
             SendNetworkMessage(new SingularitySoundMessage(true));
-            Timer.Spawn(5421, () => transition = false);
+            //Timer.Spawn(5421, () => transition = false);
+            transition = false;
         }
 
         public void Update()
@@ -110,7 +114,10 @@ namespace Content.Server.GameObjects.Components
 
             Energy--;
 
-            _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
+            if (!repelled)
+            {
+                _singularityController.Push(new Vector2((rand.Next(-10, 10)), rand.Next(-10, 10)).Normalized, 5f);
+            }
 
             foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, 15))
             {
@@ -180,6 +187,61 @@ namespace Content.Server.GameObjects.Components
             {
                 return;
             }
+
+            if (repelled)
+            {
+                return;
+            }
+
+            if (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.Power >= 1)
+            {
+                return;
+            }
+
+            if (entity.HasComponent<ContainmentFieldComponent>())
+            {
+                repelled = true;
+                Timer.Spawn(50, () => repelled = false);
+
+                if (entity.Transform.WorldRotation.Degrees == -90f ||
+                    entity.Transform.WorldRotation.Degrees == 90f)
+                {
+                    Vector2 normal = new Vector2(0.05f * Math.Sign(Owner.Transform.WorldPosition.X - entity.Transform.WorldPosition.X), 0);
+
+                    if (normal == Vector2.Zero)
+                    {
+                        normal = new Vector2(0.05f, 0);
+                    }
+
+                    _singularityController.LinearVelocity = new Vector2(_singularityController.LinearVelocity.X * -1, _singularityController.LinearVelocity.Y);
+
+                    while (_entityManager.GetEntitiesIntersecting(Owner).Contains(entity))
+                    {
+                        Owner.Transform.WorldPosition += normal;
+                    }
+
+                }
+
+                else
+                {
+                    Vector2 normal = new Vector2(0, 0.05f * Math.Sign(Owner.Transform.WorldPosition.Y - entity.Transform.WorldPosition.Y));
+
+                    if (normal == Vector2.Zero)
+                    {
+                        normal = new Vector2(0, 0.05f);
+                    }
+
+                    _singularityController.LinearVelocity = new Vector2(_singularityController.LinearVelocity.X, _singularityController.LinearVelocity.Y * -1);
+
+                    while (_entityManager.GetEntitiesIntersecting(Owner).Contains(entity))
+                    {
+                        Owner.Transform.WorldPosition += normal;
+                    }
+                }
+
+                return;
+            }
+
             if (!ContainerHelpers.IsInContainer(entity))
             {
                 Energy++;
