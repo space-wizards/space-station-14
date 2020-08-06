@@ -26,6 +26,7 @@ namespace Content.Client.UserInterface
         [Dependency] private readonly IClientConGroupController _conGroupController;
 #pragma warning restore 649
 
+        private BaseButton DisconnectButton;
         private BaseButton QuitButton;
         private BaseButton OptionsButton;
         private BaseButton SpawnEntitiesButton;
@@ -65,7 +66,7 @@ namespace Content.Client.UserInterface
 
             Title = "Menu";
 
-            var vBox = new VBoxContainer {SeparationOverride = 6};
+            var vBox = new VBoxContainer {SeparationOverride = 4};
             Contents.AddChild(vBox);
 
             SpawnEntitiesButton = new Button {Text = "Spawn Entities"};
@@ -83,12 +84,22 @@ namespace Content.Client.UserInterface
             OptionsButton.OnPressed += OnOptionsButtonClicked;
             vBox.AddChild(OptionsButton);
 
-            QuitButton = new Button {Text = "Quit"};
+            DisconnectButton = new Button {Text = "Disconnect"};
+            DisconnectButton.OnPressed += OnDisconnectButtonClicked;
+            vBox.AddChild(DisconnectButton);
+
+            QuitButton = new Button { Text = "Quit Game" };
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
         }
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _console.ProcessCommand("quit");
+            Dispose();
+        }
+
+        private void OnDisconnectButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _console.ProcessCommand("disconnect");
             Dispose();
