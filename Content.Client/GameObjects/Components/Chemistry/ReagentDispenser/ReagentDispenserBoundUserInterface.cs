@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 Title = _localizationManager.GetString("Reagent dispenser"),
             };
 
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
             _window.OnClose += Close;
 
             //Setup static button actions.

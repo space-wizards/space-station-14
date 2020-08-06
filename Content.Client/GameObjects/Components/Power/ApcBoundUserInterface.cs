@@ -24,7 +24,7 @@ namespace Content.Client.GameObjects.Components.Power
 
             _window = new ApcWindow();
             _window.OnClose += Close;
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
 
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());
