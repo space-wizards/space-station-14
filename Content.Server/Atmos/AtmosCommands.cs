@@ -78,7 +78,7 @@ namespace Content.Server.Atmos
             if(!int.TryParse(args[0], out var x)
                || !int.TryParse(args[1], out var y)
                || !int.TryParse(args[2], out var id)
-               || !(int.TryParse(args[3], out gasId) || Enum.TryParse(args[3], out gas))
+               || !(int.TryParse(args[3], out gasId) || Enum.TryParse(args[3], true, out gas))
                || !float.TryParse(args[4], out var moles)) return;
 
             if (gas != (Gas) (-1))
@@ -149,8 +149,11 @@ namespace Content.Server.Atmos
             var gas = (Gas) (-1);
             if (args.Length < 3) return;
             if(!int.TryParse(args[0], out var id)
-               || !(int.TryParse(args[1], out gasId) || Enum.TryParse(args[1], out gas))
+               || !(int.TryParse(args[1], out gasId) || Enum.TryParse(args[1], true, out gas))
                || !float.TryParse(args[2], out var moles)) return;
+
+            if (gas != (Gas) (-1))
+                gasId = (int)gas;
 
             var gridId = new GridId(id);
 
