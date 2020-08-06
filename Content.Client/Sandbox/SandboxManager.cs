@@ -129,7 +129,7 @@ namespace Content.Client.Sandbox
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
             _window.ShowBbButton.OnPressed += OnShowBbButtonClicked;
 
-            _window.OpenCentered();
+            _window.OpenCenteredMinSize();
         }
 
 
