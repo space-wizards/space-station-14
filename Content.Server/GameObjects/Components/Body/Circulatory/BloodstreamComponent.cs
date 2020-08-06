@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         {
             base.Initialize();
 
-            _internalSolution = Owner.GetComponent<SolutionComponent>();
+            _internalSolution = Owner.EnsureComponent<SolutionComponent>();
             _internalSolution.MaxVolume = _initialMaxVolume;
         }
 

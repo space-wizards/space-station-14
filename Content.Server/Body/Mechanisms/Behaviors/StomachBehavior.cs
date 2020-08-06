@@ -16,7 +16,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         public override void Update(float frameTime)
         {
             if (Mechanism.Body == null ||
-                !Mechanism.Body.Owner.TryGetComponent(out StomachComponent bloodstream))
+                !Mechanism.Body.Owner.TryGetComponent(out StomachComponent stomach))
             {
                 return;
             }
@@ -26,7 +26,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
             if (_accumulatedFrameTime >= 1)
             {
-                bloodstream.Update(_accumulatedFrameTime);
+                stomach.Update(_accumulatedFrameTime);
                 _accumulatedFrameTime = 0;
             }
         }
