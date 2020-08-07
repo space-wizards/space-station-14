@@ -152,6 +152,7 @@
             "Airtight",
             "MovedByPressure",
             "Headset",
+            "DamageOnHighSpeedImpact",
         };
     }
 }

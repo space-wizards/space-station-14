@@ -49,10 +49,7 @@ namespace Content.Server.Atmos.Reactions
                     mixture.SetMoles(Gas.Phoron, mixture.GetMoles(Gas.Phoron) - phoronBurnRate);
                     mixture.SetMoles(Gas.Oxygen, mixture.GetMoles(Gas.Oxygen) - (phoronBurnRate * oxygenBurnRate));
 
-                    if(superSaturation)
-                        mixture.AdjustMoles(Gas.Tritium, phoronBurnRate);
-                    else
-                        mixture.AdjustMoles(Gas.CarbonDioxide, phoronBurnRate);
+                    mixture.AdjustMoles(superSaturation ? Gas.Tritium : Gas.CarbonDioxide, phoronBurnRate);
 
                     energyReleased += Atmospherics.FirePhoronEnergyReleased * (phoronBurnRate);
 

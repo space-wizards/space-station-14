@@ -462,7 +462,7 @@ namespace Content.Server.Atmos
                         continue;
 
                     reaction = prototype.React(this, holder);
-                    if(reaction.HasFlag(ReactionResult.NoReaction))
+                    if(reaction.HasFlag(ReactionResult.StopReactions))
                         break;
                 }
             }
