@@ -27,6 +27,15 @@
       ]
     },
     {
+      "name": "headset",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "cargo_headset",
       "directions": 1,
       "delays": [
