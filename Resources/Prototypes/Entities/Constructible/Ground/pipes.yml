@@ -1,0 +1,69 @@
+﻿- type: entity
+  abstract: true
+  id: PipeBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: SnapGrid
+    offset: Center
+  - type: Icon
+    texture: Constructible/Power/eightdirwire.png
+  - type: Sprite
+    sprite: Constructible/Power/hv_cable.rsi
+  - type: Destructible
+    thresholdvalue: 100
+
+- type: entity
+  parent: PipeBase
+  id: FourwayPipe
+  name: Fourway Pipe
+  components:
+  - type: Sprite
+    state: hvcable_15
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Default
+      pipeDirection: All
+
+- type: entity
+  parent: PipeBase
+  id: VerticalPipe
+  name: Vertical Pipe
+  components:
+  - type: Sprite
+    state: hvcable_3
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Default
+      pipeDirection: Vertical
+      
+- type: entity
+  parent: PipeBase
+  id: UpLeftBendPipe
+  name: Up-Left Bend Pipe
+  components:
+  - type: Sprite
+    state: hvcable_9
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Default
+      pipeDirection: ULBend
+      
+- type: entity
+  parent: PipeBase
+  id: TUpPipe
+  name: T-Up Pipe
+  components:
+  - type: Sprite
+    state: hvcable_13
+  - type: NodeContainer
+    nodes:
+    - !type:PipeNode
+      nodeGroupID: Default
+      pipeDirection: TUp
