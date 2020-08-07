@@ -80,7 +80,7 @@
   id: ComputerSupplyOrdering
   parent: ComputerBase
   name: Cargo ordering computer
-  description: Used to order supplies , approve requests, and control the shuttle.
+  description: Used to order supplies, approve requests, and control the shuttle.
   components:
   - type: Appearance
     visuals:
