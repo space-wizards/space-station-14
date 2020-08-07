@@ -4,15 +4,9 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NFluidsynth;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Logger = Robust.Shared.Log.Logger;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
@@ -50,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             switch (pressure)
             {
                 // Low pressure.
-                case var _ when pressure <= Atmospherics.WarningLowPressure:
+                case var p when p <= Atmospherics.WarningLowPressure:
                     pressure *= lowPressureMultiplier;
 
                     if(pressure > Atmospherics.WarningLowPressure)
@@ -71,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
 
                 // High pressure.
-                case var _ when pressure >= Atmospherics.WarningHighPressure:
+                case var p when p >= Atmospherics.WarningHighPressure:
                     pressure *= highPressureMultiplier;
 
                     if(pressure < Atmospherics.WarningHighPressure)
