@@ -45,12 +45,12 @@ namespace Content.Server.GameObjects.Components.Items
 
             if (rcdComponent.maxAmmo - rcdComponent._ammo < refillAmmo)
             {
-                _serverNotifyManager.PopupMessage(rcdComponent.Owner, eventArgs.User, $"The RCD is full!");
+                _serverNotifyManager.PopupMessage(rcdComponent.Owner, eventArgs.User, "The RCD is full!");
                 return;
             }
 
             rcdComponent._ammo = Math.Min(rcdComponent.maxAmmo, rcdComponent._ammo + refillAmmo);
-            _serverNotifyManager.PopupMessage(rcdComponent.Owner, eventArgs.User, $"You refill the RCD.");
+            _serverNotifyManager.PopupMessage(rcdComponent.Owner, eventArgs.User, "You refill the RCD.");
 
             //Deleting a held item causes a lot of errors
             hands.Drop(Owner, false);
