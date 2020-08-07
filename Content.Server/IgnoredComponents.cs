@@ -19,6 +19,7 @@
             "Marker",
             "EmergencyLight",
             "Clickable",
+            "CanSeeGases",
         };
 
     }

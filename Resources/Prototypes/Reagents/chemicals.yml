@@ -35,8 +35,8 @@
   boilingPoint: 100.0
 
 - type: reagent
-  id: chem.Plasma
-  name: plasma
+  id: chem.Phoron
+  name: phoron
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   color: "#500064"
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2

@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 ClearCache(region);
             }
-            
+
             _queuedCacheDeletions.Clear();
         }
 
@@ -228,7 +228,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         public HashSet<PathfindingRegion> GetReachableRegions(ReachableArgs reachableArgs, PathfindingRegion region)
         {
             // if we're on a node that's not tracked at all atm then region will be null
-            if (region == null || region.Deleted)
+            if (region == null)
             {
                 return new HashSet<PathfindingRegion>();
             }
@@ -357,7 +357,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
                 foreach (var neighbor in region.Neighbors)
                 {
-                    if (closedSet.Contains(neighbor) || neighbor.Deleted)
+                    if (closedSet.Contains(neighbor))
                     {
                         continue;
                     }
@@ -504,7 +504,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 {
                     bottomRegion.Add(node);
                     existingRegions.Add(node, bottomRegion);
-                    MergeInto(leftRegion, bottomRegion);
+                    MergeInto(leftRegion, bottomRegion, existingRegions);
                     
                     // Cleanup leftRegion
                     // MergeInto will remove it from the overall region chunk cache while we need to remove it from
@@ -541,7 +541,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             _regions[parentChunk.GridId][parentChunk].Add(newRegion);
             existingRegions.Add(node, newRegion);
             UpdateRegionEdge(newRegion, node);
-            
             return newRegion;
         }
 
@@ -550,7 +549,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private void MergeInto(PathfindingRegion source, PathfindingRegion target) 
+        private void MergeInto(PathfindingRegion source, PathfindingRegion target, Dictionary<PathfindingNode, PathfindingRegion> existingRegions = null) 
         {
             DebugTools.AssertNotNull(source);
             DebugTools.AssertNotNull(target);
@@ -558,6 +557,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             foreach (var node in source.Nodes)
             {
                 target.Add(node);
+            }
+
+            if (existingRegions != null)
+            {
+                foreach (var node in source.Nodes)
+                {
+                    existingRegions[node] = target;
+                }
             }
 
             source.Shutdown();
@@ -578,6 +585,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// <param name="region"></param>
         private void ClearCache(PathfindingRegion region)
         {
+            DebugTools.Assert(region.Deleted);
+            
             // Need to forcibly clear cache for ourself and anything that includes us
             foreach (var (_, cachedRegions) in _cachedAccessible)
             {
@@ -604,6 +613,14 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     cachedRegions.Remove(otherRegion);
                 }
             }
+            
+#if DEBUG
+            if (_regions.TryGetValue(region.ParentChunk.GridId, out var chunks) && 
+                chunks.TryGetValue(region.ParentChunk, out var regions))
+            {
+                DebugTools.Assert(!regions.Contains(region));
+            }
+#endif
         }
 
         /// <summary>
@@ -647,14 +664,19 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                     {
                         continue;
                     }
-                    
+
                     chunkRegions.Add(region);
                 }
             }
 #if DEBUG
+            foreach (var region in chunkRegions)
+            {
+                DebugTools.Assert(!region.Deleted);
+            }
+            
+            DebugTools.Assert(chunkRegions.Count < Math.Pow(PathfindingChunk.ChunkSize, 2));
             SendRegionsDebugMessage(chunk.GridId);
 #endif
-            DebugTools.Assert(chunkRegions.Count(region => region.Deleted) == 0);
         }
 
 #if DEBUG

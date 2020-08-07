@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 
         public bool IsDoor { get; }
         public HashSet<PathfindingNode> Nodes => _nodes;
-        private HashSet<PathfindingNode> _nodes;
+        private readonly HashSet<PathfindingNode> _nodes;
 
         public bool Deleted { get; private set; }
 
@@ -55,6 +55,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
                 var neighbor = neighbors[i];
                 neighbor.Neighbors.Remove(this);
             }
+            
+            _nodes.Clear();
+            Neighbors.Clear();
 
             Deleted = true;
         }
@@ -127,7 +130,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         {
             if (other == null) return false;
             if (ReferenceEquals(this, other)) return true;
-            return GetHashCode() == other.GetHashCode();
+            if (_nodes.Count != other.Nodes.Count) return false;
+            if (Deleted != other.Deleted) return false;
+            if (OriginNode != other.OriginNode) return false;
+            return true;
         }
 
         public override int GetHashCode()
