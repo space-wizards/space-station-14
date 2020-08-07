@@ -12,6 +12,8 @@
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
