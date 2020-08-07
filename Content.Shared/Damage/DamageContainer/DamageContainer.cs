@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Serialization;
@@ -47,7 +48,7 @@ namespace Content.Shared.Damage.DamageContainer
                 var toReturn = new List<DamageType>();
                 foreach (var @class in SupportedClasses)
                 {
-                    toReturn.AddRange(@class.ToType());
+                    toReturn.AddRange(@class.ToTypes());
                 }
 
                 return toReturn;
@@ -60,14 +61,19 @@ namespace Content.Shared.Damage.DamageContainer
         [ViewVariables]
         public int TotalDamage => _damageList.Values.Sum();
 
-        public bool SupportsDamageClass(DamageClass damageClass)
+        public IReadOnlyDictionary<DamageClass, int> DamageClasses =>
+            DamageTypeExtensions.ToClassDictionary(DamageTypes);
+
+        public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
+
+        public bool SupportsDamageClass(DamageClass @class)
         {
-            return SupportedClasses.Contains(damageClass);
+            return SupportedClasses.Contains(@class);
         }
 
-        public bool SupportsDamageType(DamageType damageType)
+        public bool SupportsDamageType(DamageType type)
         {
-            return SupportedClasses.Contains(damageType.ToClass());
+            return SupportedClasses.Contains(type.ToClass());
         }
 
         /// <summary>
@@ -76,7 +82,7 @@ namespace Content.Shared.Damage.DamageContainer
         /// <returns>
         ///     False if the container does not support that type, true otherwise.
         /// </returns>
-        public bool TryGetDamageValue(DamageType type, out int damage)
+        public bool TryGetDamageValue(DamageType type, [NotNullWhen(true)] out int damage)
         {
             return _damageList.TryGetValue(type, out damage);
         }
@@ -91,18 +97,20 @@ namespace Content.Shared.Damage.DamageContainer
 
         /// <summary>
         ///     Attempts to grab the sum of damage values for the given
-        ///     <see cref="DamageClass"/>.
+        ///     <see cref="DamageClasses"/>.
         /// </summary>
+        /// <param name="class">The class to get the sum for.</param>
+        /// <param name="damage">The resulting amount of damage, if any.</param>
         /// <returns>
         ///     True if the class is supported in this container, false otherwise.
         /// </returns>
-        public bool TryGetDamageClassSum(DamageClass damageClass, out int damage)
+        public bool TryGetDamageClassSum(DamageClass @class, [NotNullWhen(true)] out int damage)
         {
             damage = 0;
 
-            if (SupportsDamageClass(damageClass))
+            if (SupportsDamageClass(@class))
             {
-                foreach (var type in damageClass.ToType())
+                foreach (var type in @class.ToTypes())
                 {
                     damage += GetDamageValue(type);
                 }
@@ -114,13 +122,13 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Grabs the sum of damage values for the given <see cref="DamageClass"/>.
+        ///     Grabs the sum of damage values for the given <see cref="DamageClasses"/>.
         /// </summary>
         public int GetDamageClassSum(DamageClass damageClass)
         {
             var sum = 0;
 
-            foreach (var type in damageClass.ToType())
+            foreach (var type in damageClass.ToTypes())
             {
                 sum += GetDamageValue(type);
             }

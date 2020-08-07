@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
 {
+    [Serializable, NetSerializable]
     public enum DamageClass
     {
         Brute,
@@ -22,9 +26,16 @@ namespace Content.Shared.Damage
                 {DamageClass.Airloss, new List<DamageType> {DamageType.Asphyxiation}}
             }.ToImmutableDictionary();
 
-        public static List<DamageType> ToType(this DamageClass @class)
+        public static List<DamageType> ToTypes(this DamageClass @class)
         {
             return ClassToType[@class];
+        }
+
+        public static Dictionary<DamageClass, int> ToDictionary()
+        {
+            return Enum.GetValues(typeof(DamageClass))
+                .Cast<DamageClass>()
+                .ToDictionary(@class => @class, type => 0);
         }
     }
 }

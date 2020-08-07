@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.EntitySystems;
@@ -33,6 +34,26 @@ namespace Content.Shared.GameObjects.Components.Damage
         ///     Sum of all damages taken.
         /// </summary>
         int TotalDamage { get; }
+
+        /// <summary>
+        ///     The amount of damage mapped by <see cref="DamageClass"/>.
+        /// </summary>
+        IReadOnlyDictionary<DamageClass, int> DamageClasses { get; }
+
+        /// <summary>
+        ///     The amount of damage mapped by <see cref="DamageType"/>.
+        /// </summary>
+        IReadOnlyDictionary<DamageType, int> DamageTypes { get; }
+
+        /// <summary>
+        ///     Gets the amount of damage of a type.
+        /// </summary>
+        /// <param name="type">The type to get the damage of.</param>
+        /// <param name="damage">The amount of damage of that type.</param>
+        /// <returns>
+        ///     True if the given <see cref="type"/> is supported, false otherwise.
+        /// </returns>
+        bool TryGetDamage(DamageType type, [NotNullWhen(true)] out int damage);
 
         /// <summary>
         ///     Changes the specified <see cref="DamageType"/>, applying

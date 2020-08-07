@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Damage
 {
+    [Serializable, NetSerializable]
     public enum DamageType
     {
         Blunt,
@@ -41,6 +43,24 @@ namespace Content.Shared.Damage
             return Enum.GetValues(typeof(DamageType))
                 .Cast<DamageType>()
                 .ToDictionary(type => type, type => 0);
+        }
+
+        public static Dictionary<DamageClass, int> ToClassDictionary(IReadOnlyDictionary<DamageType, int> types)
+        {
+            var classes = DamageClassExtensions.ToDictionary();
+
+            foreach (var @class in classes.Keys.ToList())
+            foreach (var type in @class.ToTypes())
+            {
+                if (!types.TryGetValue(type, out var damage))
+                {
+                    continue;
+                }
+
+                classes[@class] += damage;
+            }
+
+            return classes;
         }
     }
 }

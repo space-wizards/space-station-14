@@ -38,6 +38,10 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public int TotalDamage => Damage.TotalDamage;
 
+        public IReadOnlyDictionary<DamageClass, int> DamageClasses => Damage.DamageClasses;
+
+        public IReadOnlyDictionary<DamageType, int> DamageTypes => Damage.DamageTypes;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -70,6 +74,11 @@ namespace Content.Shared.GameObjects.Components.Damage
             }
         }
 
+        public bool TryGetDamage(DamageType type, out int damage)
+        {
+            return Damage.TryGetDamageValue(type, out damage);
+        }
+
         public bool ChangeDamage(DamageType type, int amount, bool ignoreResistances,
             IEntity? source = null,
             HealthChangeParams? extraParams = null)
@@ -96,7 +105,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         {
             if (Damage.SupportsDamageClass(@class))
             {
-                var types = @class.ToType();
+                var types = @class.ToTypes();
 
                 if (amount < 0)
                 {

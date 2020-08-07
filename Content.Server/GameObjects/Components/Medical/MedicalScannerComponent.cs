@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Medical;
@@ -11,8 +14,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Medical
 {
@@ -32,19 +37,21 @@ namespace Content.Server.GameObjects.Components.Medical
         public override void Initialize()
         {
             base.Initialize();
+
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MedicalScannerUiKey.Key);
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+
             UpdateUserInterface();
         }
 
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new MedicalScannerBoundUserInterfaceState(
-                0,
-                0,
-                null);
+                null,
+                new Dictionary<DamageClass, int>(),
+                new Dictionary<DamageType, int>());
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
         {
@@ -55,35 +62,25 @@ namespace Content.Server.GameObjects.Components.Medical
                 return EmptyUIState;
             }
 
-            //TODO: make work with BodyManagerComponent
-            var damageable = body.GetComponent<IDamageableComponent>();
-            //if(damageable.CurrentDamageState == DamageState.Dead)
-                return EmptyUIState;
-
-            /*
-            var currentHealth = damageable.CurrentDamage[DamageType.Total];
-
-            var dmgDict = new Dictionary<string, int>();
-
-            foreach (var dmgType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
+            if (!body.TryGetComponent(out IDamageableComponent damageable) ||
+                damageable.CurrentDamageState == DamageState.Dead)
             {
-                if (damageable.CurrentDamage.TryGetValue(dmgType, out var amount))
-                {
-                    dmgDict[dmgType.ToString()] = amount;
-                }
+                return EmptyUIState;
             }
 
-            return new MedicalScannerBoundUserInterfaceState(
-                deathThresholdValue - currentHealth,
-                deathThresholdValue,
-                dmgDict);
-            */
+            var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
+            var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
+
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types);
         }
 
         private void UpdateUserInterface()
         {
             if (!Powered)
+            {
                 return;
+            }
+
             var newState = GetUserInterfaceState();
             _userInterface.SetState(newState);
         }
@@ -135,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     return;
                 }
 
-                data.Text = "Enter";
+                data.Text = Loc.GetString("Enter");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
             }
 
@@ -156,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     return;
                 }
 
-                data.Text = "Eject";
+                data.Text = Loc.GetString("Eject");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
             }
 
@@ -189,6 +186,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 // There's no need to update if there's no one inside
                 return;
             }
+
             UpdateUserInterface();
             UpdateAppearance();
         }
