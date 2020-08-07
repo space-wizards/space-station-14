@@ -49,7 +49,7 @@ namespace Content.Client.Sandbox
             RespawnButton = new Button { Text = loc.GetString("Respawn") };
             vBox.AddChild(RespawnButton);
 
-            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities"), ToggleMode = true };
+            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities") };
             vBox.AddChild(SpawnEntitiesButton);
 
             SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
@@ -80,7 +80,7 @@ namespace Content.Client.Sandbox
             vBox.AddChild(ClientConsoleButton);
         }
     }
-    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
+    internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
 #pragma warning disable 649
         [Dependency] private readonly IClientConsole _console;
@@ -102,6 +102,7 @@ namespace Content.Client.Sandbox
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
+        bool SpawnEntitiesButton { get; set; }
 
         public void Initialize()
         {
