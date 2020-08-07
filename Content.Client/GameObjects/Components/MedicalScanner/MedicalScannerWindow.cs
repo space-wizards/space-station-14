@@ -1,4 +1,5 @@
 using System.Text;
+using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.GameObjects;
@@ -28,16 +29,21 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
             {
                 text.Append($"{entity.Name}{Loc.GetString("'s health:")}\n");
 
-                foreach (var (@class, amount) in state.DamageClasses)
+                foreach (var (@class, classAmount) in state.DamageClasses)
                 {
-                    text.Append($"\n{Loc.GetString("{0}: {1}", @class, amount)}");
-                }
+                    text.Append($"\n{Loc.GetString("{0}: {1}", @class, classAmount)}");
 
-                text.Append("\n");
+                    foreach (var type in @class.ToTypes())
+                    {
+                        if (!state.DamageTypes.TryGetValue(type, out var typeAmount))
+                        {
+                            continue;
+                        }
 
-                foreach (var (dmgType, amount) in state.DamageTypes)
-                {
-                    text.Append($"\n{Loc.GetString("{0}: {1}", dmgType, amount)}");
+                        text.Append($"\n- {Loc.GetString("{0}: {1}", type, typeAmount)}");
+                    }
+
+                    text.Append("\n");
                 }
             }
 
