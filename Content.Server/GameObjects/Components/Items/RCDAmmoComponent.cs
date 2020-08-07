@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.Items
                 return;
             }
 
-            if (rcdComponent.maxAmmo - rcdComponent._ammo > refillAmmo)
+            if (rcdComponent.maxAmmo - rcdComponent._ammo < refillAmmo)
             {
                 _serverNotifyManager.PopupMessage(rcdComponent.Owner, eventArgs.User, $"The RCD is full!");
                 return;
