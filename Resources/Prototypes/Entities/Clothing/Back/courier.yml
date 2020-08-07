@@ -2,6 +2,7 @@
   parent: BackpackClothing
   id: MessengerBag
   name: messenger bag
+  description: A sturdy backpack worn over one shoulder.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier.rsi
@@ -17,6 +18,7 @@
   parent: BackpackClothing
   id: MessengerBagChemistry
   name: chemistry messenger bag
+  description: A sterile backpack worn over one shoulder, in Chemsitry colors.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_chemistry.rsi
@@ -33,6 +35,7 @@
   parent: BackpackClothing
   id: MessengerBagMedical
   name: medical messenger bag
+  description: A sterile backpack worn over one shoulder used in medical departments.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_medical.rsi
@@ -49,6 +52,7 @@
   parent: BackpackClothing
   id: MessengerBagVirology
   name: virology messenger bag
+  description: A sterile backpack worn over one shoulder. This one is in Virology colors.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_virology.rsi
@@ -65,6 +69,7 @@
   parent: BackpackClothing
   id: MessengerBagEngineering
   name: engineering messenger bag
+  description: A strong backpack worn over one shoulder. This one is designed for Industrial work.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_engineering.rsi
@@ -81,6 +86,7 @@
   parent: BackpackClothing
   id: MessengerBagScience
   name: science messenger bag
+  description: A sterile backpack worn over one shoulder used in scientific departments.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_science.rsi
@@ -96,6 +102,7 @@
   parent: BackpackClothing
   id: MessengerBagCaptain
   name: captain's messenger bag
+  description: A special backpack worn over one shoulder. This one is made specifically for officers.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_captain.rsi
@@ -112,6 +119,7 @@
   parent: BackpackClothing
   id: MessengerBagHydroponics
   name: hydroponics messenger bag
+  description: A backpack worn over one shoulder. This one is designed for plant-related work.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_hydroponics.rsi
@@ -127,6 +135,7 @@
   parent: BackpackClothing
   id: MessengerBagSecurity
   name: security messenger bag
+  description: A tactical backpack worn over one shoulder. This one is in Security colors.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_security.rsi
