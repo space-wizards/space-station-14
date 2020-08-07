@@ -31,7 +31,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         public void Initialize()
         {
-            var nodeGroupTypes = _reflectionManager.GetAllChildren<BaseNodeGroup>();
+            var nodeGroupTypes = _reflectionManager.GetAllChildren<INodeGroup>();
             foreach (var nodeGroupType in nodeGroupTypes)
             {
                 var att = nodeGroupType.GetCustomAttribute<NodeGroupAttribute>();
