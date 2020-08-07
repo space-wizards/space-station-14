@@ -102,7 +102,7 @@ namespace Content.Server.GameObjects.Components
         public override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponent<PhysicsComponent>();
+            Owner.EnsureComponent<CollidableComponent>();
         }
 
         bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
