@@ -1353,7 +1353,7 @@
   parent: DrinkGlassBase
   id: DrinkScrewdriverGlass
   name: screwdriver glass
-  description: 'Vodka, mixed with plain ol'' orange juice. The result is surprisingly delicious.'
+  description: "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
   components:
   - type: Drink
   - type: Sprite
