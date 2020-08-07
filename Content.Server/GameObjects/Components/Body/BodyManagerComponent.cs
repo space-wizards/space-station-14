@@ -891,7 +891,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if found, false otherwise.</returns>
         public bool TryGetNetwork(Type networkType, [NotNullWhen(true)] out BodyNetwork result)
         {
-            return _networks.TryGetValue(networkType, out result);
+            return _networks.TryGetValue(networkType, out result!);
         }
 
         #endregion
