@@ -50,8 +50,8 @@ namespace Content.Server.GameObjects.Components.Interactable
             base.Initialize();
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
-            _channels.Add(1457);
-            _broadcastChannel = 1457;
+            _channels.Add(1459);
+            _broadcastChannel = 1459;
 
             RadioOn = false;
         }
