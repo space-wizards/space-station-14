@@ -2,7 +2,7 @@
   parent: OuterclothingBase
   id: OuterclothingDeathsquad
   name: deathsquad
-  description: ''
+  description: An advanced hardsuit favored by commandos for use in special operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/deathsquad.rsi
@@ -15,7 +15,7 @@
   parent: OuterclothingBase
   id: OuterclothingIhvoidsuit
   name: IH voidsuit
-  description: ''
+  description: A special void suit that protects against hazardous, low pressure environments.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/ihvoidsuit.rsi
@@ -28,7 +28,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitatmos
   name: hardsuit atmos
-  description: ''
+  description: A special suit that protects against hazardous, low pressure environments. Has thermal shielding.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_atmos.rsi
@@ -41,7 +41,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitengineering
   name: hardsuit engineering
-  description: ''
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_engineering.rsi
@@ -54,7 +54,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuithazardhardsuit
   name: hardsuit hazard hardsuit
-  description: ''
+  description: A robust hardsuit made for dangerous and hazardous situations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_hazardhardsuit.rsi
@@ -67,7 +67,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitmedical
   name: hardsuit medical
-  description: ''
+  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_medical.rsi
@@ -80,7 +80,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitmining
   name: hardsuit mining
-  description: ''
+  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_mining.rsi
@@ -93,7 +93,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitsectg
   name: hardsuit sectg
-  description: ''
+  description: A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_sectg.rsi
@@ -106,7 +106,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitsyndie
   name: hardsuit syndie
-  description: ''
+  description: A dual-mode advanced hardsuit designed for work in special operations.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_syndie.rsi
@@ -120,7 +120,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitce
   name: hardsuit ce
-  description: ''
+  description: A special hardsuit that protects against hazardous, low pressure environments, made for the chief engineer of the station.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_ce.rsi
@@ -133,7 +133,7 @@
   parent: OuterclothingBase
   id: OuterClothingHardsuitwiz
   name: hardsuit wiz
-  description: ''
+  description: A bizarre gem-encrusted suit that radiates magical energies.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hardsuit_wiz.rsi
@@ -146,7 +146,7 @@
   parent: OuterclothingBase
   id: OuterclothingSpace
   name: space
-  description: ''
+  description: A basic space suit.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/space.rsi
@@ -160,7 +160,7 @@
   parent: OuterclothingBase
   id: OuterclothingTdgreen
   name: td green
-  description: ''
+  description: Heavily armored black and green suit for long combat situations, also provides protection from low-pressure/vacuum damage.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/tdgreen.rsi
@@ -173,7 +173,7 @@
   parent: OuterclothingBase
   id: OuterclothingTdred
   name: td red
-  description: ''
+  description: Heavily armored black and red suit for long combat situations, also provides protection from low-pressure/vacuum damage
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/tdred.rsi
