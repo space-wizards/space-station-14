@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public void CollideWith(IEntity collidedWith)
         {
-            if (!Owner.TryGetComponent(out ICollidableComponent collidable) || !Owner.TryGetComponent(out DamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out ICollidableComponent collidable) || !Owner.TryGetComponent(out IDamageableComponent damageable)) return;
 
             var speed = collidable.LinearVelocity.Length;
 
