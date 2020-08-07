@@ -949,7 +949,8 @@ namespace Content.Server.GameObjects.Components.Body
                 }
             }
 
-            // Otherwise, get the recursion values of all connected BodyParts and store them in a list.
+            // Otherwise, get the recursion values of all connected BodyParts and
+            // store them in a list.
             var distances = new List<float>();
             foreach (var connection in connections)
             {
@@ -966,7 +967,8 @@ namespace Content.Server.GameObjects.Components.Body
                 }
             }
 
-            // If one or more of the searches found a foot, return the smallest one and add this ones length.
+            // If one or more of the searches found a foot, return the smallest one
+            // and add this ones length.
             if (distances.Count > 0)
             {
                 return distances.Min<float>() + extProperty.ReachDistance;

@@ -82,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Body
         public override void Initialize()
         {
             base.Initialize();
-            
+
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(GenericSurgeryUiKey.Key);
             _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
@@ -113,10 +113,13 @@ namespace Content.Server.GameObjects.Components.Body
             if (serializer.Reading && debugLoadMechanismData != "")
             {
                 _prototypeManager.TryIndex(debugLoadMechanismData, out MechanismPrototype data);
-                InitializeDroppedMechanism(new Mechanism(data));
+
+                var mechanism = new Mechanism(data);
+                mechanism.EnsureInitialize();
+
+                InitializeDroppedMechanism(mechanism);
             }
         }
-
 
         private void SendBodyPartListToUser(AfterInteractEventArgs eventArgs, BodyManagerComponent bodyManager)
         {
