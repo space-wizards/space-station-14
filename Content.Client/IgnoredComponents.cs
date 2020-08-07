@@ -150,6 +150,7 @@
             "Flippable",
             "Airtight",
             "MovedByPressure",
+            "DamageOnHighSpeedImpact",
             "MobStateManager",
         };
     }

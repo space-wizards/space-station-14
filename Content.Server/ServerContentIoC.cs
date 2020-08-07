@@ -16,7 +16,6 @@ using Content.Shared.Interfaces;
 using Content.Shared.Kitchen;
 using Robust.Shared.IoC;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 
 namespace Content.Server
@@ -39,7 +38,6 @@ namespace Content.Server
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<INodeGroupManager, NodeGroupManager>();
             IoCManager.Register<IPowerNetManager, PowerNetManager>();
-            IoCManager.Register<INodeFactory, NodeFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
             IoCManager.Register<IBodyNetworkFactory, BodyNetworkFactory>();

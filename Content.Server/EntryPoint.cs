@@ -64,7 +64,6 @@ namespace Content.Server
 
             IoCManager.Resolve<IServerPreferencesManager>().StartInit();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<INodeFactory>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
         }
 

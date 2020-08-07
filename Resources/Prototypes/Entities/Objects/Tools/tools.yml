@@ -70,7 +70,7 @@
   name: welding tool
   parent: BaseItem
   id: Welder
-  description: Melts anything as long as it's fueled, don't forget your eye protection!
+  description: 'Melts anything as long as it''s fueled, don''t forget your eye protection!'
   components:
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
