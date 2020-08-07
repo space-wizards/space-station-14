@@ -50,7 +50,7 @@ namespace Content.Server.GameTicking.GameRules
 
         private void OnHealthChanged(HealthChangedEventArgs message)
         {
-            var damage = message.DamageableComponent;
+            var damage = message.Damageable;
             var owner = damage.Owner;
 
             if (damage.CurrentDamageState != DamageState.Dead)

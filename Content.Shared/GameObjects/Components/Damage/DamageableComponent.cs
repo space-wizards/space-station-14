@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
@@ -25,7 +24,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 #pragma warning restore 649
 
-        public override string Name => "BasicDamageable";
+        public override string Name => "Damageable";
 
         public event Action<HealthChangedEventArgs> HealthChangedEvent = default!;
 
@@ -59,7 +58,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                         $"No {nameof(DamageContainerPrototype)} found with name {containerId}");
                 }
 
-                Damage = new DamageContainer(damage);
+                Damage = new DamageContainer(OnHealthChanged, damage);
 
                 if (!_prototypeManager.TryIndex(resistanceId!, out ResistanceSetPrototype resistance))
                 {
@@ -72,7 +71,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         }
 
         public bool ChangeDamage(DamageType type, int amount, bool ignoreResistances,
-            IEntity? source,
+            IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
             if (Damage.SupportsDamageType(type))
@@ -85,15 +84,6 @@ namespace Content.Shared.GameObjects.Components.Damage
 
                 Damage.ChangeDamageValue(type, finalDamage);
 
-                var oldDamage = Damage.GetDamageValue(type);
-                var damage = Damage.GetDamageValue(type);
-                var delta = oldDamage - Damage.GetDamageValue(type);
-                var datum = new HealthChangeData(type, damage, delta);
-                var data = new List<HealthChangeData> {datum};
-                var args = new HealthChangedEventArgs(this, data);
-
-                OnHealthChanged(args);
-
                 return true;
             }
 
@@ -101,24 +91,17 @@ namespace Content.Shared.GameObjects.Components.Damage
         }
 
         public bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances,
-            IEntity? source,
+            IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
             if (Damage.SupportsDamageClass(@class))
             {
-                var damageTypes = @class.ToType();
-                var data = new HealthChangeData[damageTypes.Count];
+                var types = @class.ToType();
 
                 if (amount < 0)
                 {
                     // Changing multiple types is a bit more complicated. Might be a better way (formula?) to do this,
                     // but essentially just loops between each damage category until all healing is used up.
-                    for (var i = 0; i < damageTypes.Count; i++)
-                    {
-                        var damage = Damage.GetDamageValue(damageTypes[i]);
-                        data[i] = new HealthChangeData(damageTypes[i], damage, 0);
-                    }
-
                     var healingLeft = amount;
                     var healThisCycle = 1;
 
@@ -130,7 +113,7 @@ namespace Content.Shared.GameObjects.Components.Damage
                         healThisCycle = 0;
 
                         int healPerType;
-                        if (healingLeft > -damageTypes.Count && healingLeft < 0)
+                        if (healingLeft > -types.Count && healingLeft < 0)
                         {
                             // Say we were to distribute 2 healing between 3
                             // this will distribute 1 to each (and stop after 2 are given)
@@ -140,36 +123,22 @@ namespace Content.Shared.GameObjects.Components.Damage
                         {
                             // Say we were to distribute 62 healing between 3
                             // this will distribute 20 to each, leaving 2 for next loop
-                            healPerType = healingLeft / damageTypes.Count;
+                            healPerType = healingLeft / types.Count;
                         }
 
-                        for (var j = 0; j < damageTypes.Count; j++)
+                        foreach (var type in types)
                         {
                             var healAmount =
-                                Math.Max(Math.Max(healPerType, -Damage.GetDamageValue(damageTypes[j])),
+                                Math.Max(Math.Max(healPerType, -Damage.GetDamageValue(type)),
                                     healingLeft);
 
-                            Damage.ChangeDamageValue(damageTypes[j], healAmount);
+                            Damage.ChangeDamageValue(type, healAmount);
                             healThisCycle += healAmount;
                             healingLeft -= healAmount;
-
-                            data[j].NewValue = Damage.GetDamageValue(damageTypes[j]);
-                            data[j].Delta += healAmount;
                         }
                     }
 
-                    var heal = new HealthChangedEventArgs(this, data.ToList());
-
-                    OnHealthChanged(heal);
-
                     return true;
-                }
-
-                // Similar to healing code above but simpler since we don't have to
-                // account for damage being less than zero.
-                for (var i = 0; i < damageTypes.Count; i++)
-                {
-                    data[i] = new HealthChangeData(damageTypes[i], Damage.GetDamageValue(damageTypes[i]), 0);
                 }
 
                 var damageLeft = amount;
@@ -178,28 +147,22 @@ namespace Content.Shared.GameObjects.Components.Damage
                 {
                     int damagePerType;
 
-                    if (damageLeft < damageTypes.Count && damageLeft > 0)
+                    if (damageLeft < types.Count && damageLeft > 0)
                     {
                         damagePerType = 1;
                     }
                     else
                     {
-                        damagePerType = damageLeft / damageTypes.Count;
+                        damagePerType = damageLeft / types.Count;
                     }
 
-                    for (var j = 0; j < damageTypes.Count; j++)
+                    foreach (var type in types)
                     {
                         var damageAmount = Math.Min(damagePerType, damageLeft);
-                        Damage.ChangeDamageValue(damageTypes[j], damageAmount);
+                        Damage.ChangeDamageValue(type, damageAmount);
                         damageLeft -= damageAmount;
-
-                        data[j].NewValue = Damage.GetDamageValue(damageTypes[j]);
-                        data[j].Delta += damageAmount;
                     }
                 }
-
-                var args = new HealthChangedEventArgs(this, data.ToList());
-                OnHealthChanged(args);
 
                 return true;
             }
@@ -207,18 +170,12 @@ namespace Content.Shared.GameObjects.Components.Damage
             return false;
         }
 
-        public bool SetDamage(DamageType type, int newValue, IEntity source,
+        public bool SetDamage(DamageType type, int newValue, IEntity? source = null,
             HealthChangeParams? extraParams = null)
         {
             if (Damage.SupportsDamageType(type))
             {
-                var delta = newValue - Damage.GetDamageValue(type);
-                var data = new HealthChangeData(type, newValue, delta);
                 Damage.SetDamageValue(type, newValue);
-                var dataList = new List<HealthChangeData> {data};
-                var args = new HealthChangedEventArgs(this, dataList);
-
-                OnHealthChanged(args);
 
                 return true;
             }
@@ -226,36 +183,28 @@ namespace Content.Shared.GameObjects.Components.Damage
             return false;
         }
 
-        public void HealAllDamage()
+        public void Heal()
         {
-            var data = new List<HealthChangeData>();
-
-            foreach (var type in Damage.SupportedDamageTypes)
-            {
-                var delta = -Damage.GetDamageValue(type);
-                var datum = new HealthChangeData(type, 0, delta);
-                data.Add(datum);
-                Damage.SetDamageValue(type, 0);
-            }
-
-            var args = new HealthChangedEventArgs(this, data);
-
-            OnHealthChanged(args);
+            Damage.Heal();
         }
 
         public void ForceHealthChangedEvent()
         {
             var data = new List<HealthChangeData>();
 
-            foreach (var type in Damage.SupportedDamageTypes)
+            foreach (var type in Damage.SupportedTypes)
             {
                 var damage = Damage.GetDamageValue(type);
                 var datum = new HealthChangeData(type, damage, 0);
                 data.Add(datum);
             }
 
-            var args = new HealthChangedEventArgs(this, data);
+            OnHealthChanged(data);
+        }
 
+        private void OnHealthChanged(List<HealthChangeData> changes)
+        {
+            var args = new HealthChangedEventArgs(this, changes);
             OnHealthChanged(args);
         }
 

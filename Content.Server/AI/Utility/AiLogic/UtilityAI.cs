@@ -134,7 +134,7 @@ namespace Content.Server.AI.Utility.AiLogic
 
         private void DeathHandle(HealthChangedEventArgs eventArgs)
         {
-            _isDead = eventArgs.DamageableComponent.CurrentDamageState == DamageState.Dead || eventArgs.DamageableComponent.CurrentDamageState == DamageState.Critical;
+            _isDead = eventArgs.Damageable.CurrentDamageState == DamageState.Dead || eventArgs.Damageable.CurrentDamageState == DamageState.Critical;
         }
 
         private void ReceivedAction()

@@ -48,7 +48,7 @@ namespace Content.Shared.GameObjects
 
     /// <inheritdoc />
     /// <summary>
-    ///     Sub class of <see cref="T:Content.Shared.GameObjects.Verb" /> that works on a specific type of component,
+    ///     Sub class of <see cref="T:Content.Shared.GameObjects.Verb"/> that works on a specific type of component,
     ///     to reduce casting boiler plate for implementations.
     /// </summary>
     /// <typeparam name="T">The type of component that this verb will run on.</typeparam>

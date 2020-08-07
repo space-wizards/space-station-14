@@ -105,7 +105,7 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <summary>
         ///     Sets all damage values to zero.
         /// </summary>
-        void HealAllDamage();
+        void Heal();
 
         /// <summary>
         ///     Invokes the HealthChangedEvent with the current values of health.
@@ -147,17 +147,27 @@ namespace Content.Shared.GameObjects.Components.Damage
         /// <summary>
         ///     Reference to the <see cref="IDamageableComponent"/> that invoked the event.
         /// </summary>
-        public readonly IDamageableComponent DamageableComponent;
+        public readonly IDamageableComponent Damageable;
 
         /// <summary>
         ///     List containing data on each <see cref="DamageType"/> that was changed.
         /// </summary>
-        public readonly List<HealthChangeData> HealthData;
+        public readonly List<HealthChangeData> Data;
 
-        public HealthChangedEventArgs(IDamageableComponent damageableComponent, List<HealthChangeData> healthData)
+        public HealthChangedEventArgs(IDamageableComponent damageable, List<HealthChangeData> data)
         {
-            DamageableComponent = damageableComponent;
-            HealthData = healthData;
+            Damageable = damageable;
+            Data = data;
+        }
+
+        public HealthChangedEventArgs(IDamageableComponent damageable, DamageType type, int newValue, int delta)
+        {
+            Damageable = damageable;
+
+            var datum = new HealthChangeData(type, newValue, delta);
+            var data = new List<HealthChangeData> {datum};
+
+            Data = data;
         }
     }
 

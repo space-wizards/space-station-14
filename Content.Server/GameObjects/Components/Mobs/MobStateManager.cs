@@ -95,9 +95,9 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public void OnHealthChanged(HealthChangedEventArgs e)
         {
-            if (e.DamageableComponent.CurrentDamageState != _currentDamageState)
+            if (e.Damageable.CurrentDamageState != _currentDamageState)
             {
-                _currentDamageState = e.DamageableComponent.CurrentDamageState;
+                _currentDamageState = e.Damageable.CurrentDamageState;
                 CurrentMobState.ExitState(Owner);
                 CurrentMobState = _behavior[_currentDamageState];
                 CurrentMobState.EnterState(Owner);

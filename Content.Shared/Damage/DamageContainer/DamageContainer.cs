@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -15,29 +16,38 @@ namespace Content.Shared.Damage.DamageContainer
     {
         private Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToDictionary();
 
-        public DamageContainer(DamageContainerPrototype data)
+        public delegate void HealthChangedDelegate(List<HealthChangeData> changes);
+
+        [NonSerialized] public readonly HealthChangedDelegate OnHealthChanged;
+
+        public DamageContainer(HealthChangedDelegate onHealthChanged, DamageContainerPrototype data)
         {
-            SupportedDamageClasses = data.ActiveDamageClasses;
+            OnHealthChanged = onHealthChanged;
+            SupportedClasses = data.ActiveDamageClasses;
         }
 
-        public DamageContainer(List<DamageClass> supportedClasses)
+        public DamageContainer(HealthChangedDelegate onHealthChanged, List<DamageClass> supportedClasses)
         {
-            SupportedDamageClasses = supportedClasses;
+            OnHealthChanged = onHealthChanged;
+            SupportedClasses = supportedClasses;
         }
 
-        public DamageContainer() { }
+        public DamageContainer(HealthChangedDelegate onHealthChanged)
+        {
+            OnHealthChanged = onHealthChanged;
+        }
 
-        [ViewVariables] public virtual List<DamageClass> SupportedDamageClasses { get; }
+        [ViewVariables] public virtual List<DamageClass> SupportedClasses { get; }
 
         [ViewVariables]
-        public virtual List<DamageType> SupportedDamageTypes
+        public virtual List<DamageType> SupportedTypes
         {
             get
             {
                 var toReturn = new List<DamageType>();
-                foreach (var damageClass in SupportedDamageClasses)
+                foreach (var @class in SupportedClasses)
                 {
-                    toReturn.AddRange(damageClass.ToType());
+                    toReturn.AddRange(@class.ToType());
                 }
 
                 return toReturn;
@@ -52,25 +62,27 @@ namespace Content.Shared.Damage.DamageContainer
 
         public bool SupportsDamageClass(DamageClass damageClass)
         {
-            return SupportedDamageClasses.Contains(damageClass);
+            return SupportedClasses.Contains(damageClass);
         }
 
         public bool SupportsDamageType(DamageType damageType)
         {
-            return SupportedDamageClasses.Contains(damageType.ToClass());
+            return SupportedClasses.Contains(damageType.ToClass());
         }
 
         /// <summary>
-        ///     Attempts to grab the damage value for the given <see cref="DamageType" />. Returns false if the container does not
-        ///     support that type.
+        ///     Attempts to grab the damage value for the given <see cref="DamageType"/>.
         /// </summary>
+        /// <returns>
+        ///     False if the container does not support that type, true otherwise.
+        /// </returns>
         public bool TryGetDamageValue(DamageType type, out int damage)
         {
             return _damageList.TryGetValue(type, out damage);
         }
 
         /// <summary>
-        ///     Grabs the damage value for the given <see cref="DamageType" />.
+        ///     Grabs the damage value for the given <see cref="DamageType"/>.
         /// </summary>
         public int GetDamageValue(DamageType type)
         {
@@ -107,6 +119,7 @@ namespace Content.Shared.Damage.DamageContainer
         public int GetDamageClassSum(DamageClass damageClass)
         {
             var sum = 0;
+
             foreach (var type in damageClass.ToType())
             {
                 sum += GetDamageValue(type);
@@ -126,13 +139,22 @@ namespace Content.Shared.Damage.DamageContainer
         {
             var damageClass = type.ToClass();
 
-            if (SupportedDamageClasses.Contains(damageClass))
+            if (SupportsDamageClass(damageClass))
             {
-                _damageList[type] = _damageList[type] + delta;
+                var current = _damageList[type];
+                current = _damageList[type] = current + delta;
+
                 if (_damageList[type] < 0)
                 {
                     _damageList[type] = 0;
+                    delta = -current;
+                    current = 0;
                 }
+
+                var datum = new HealthChangeData(type, current, delta);
+                var data = new List<HealthChangeData> {datum};
+
+                OnHealthChanged(data);
 
                 return true;
             }
@@ -143,10 +165,15 @@ namespace Content.Shared.Damage.DamageContainer
         /// <summary>
         ///     Changes the damage value for the given <see cref="DamageType"/>.
         /// </summary>
+        /// <param name="type">The type of damage to change.</param>
+        /// <param name="delta">The amount to change it by.</param>
+        /// <param name="quiet">
+        ///     Whether or not to suppress the health change event.
+        /// </param>
         /// <returns>
         ///     True if successful, false if this container does not support that type.
         /// </returns>
-        public bool ChangeDamageValue(DamageType type, int delta)
+        public bool ChangeDamageValue(DamageType type, int delta, bool quiet = false)
         {
             if (!_damageList.TryGetValue(type, out var current))
             {
@@ -158,14 +185,21 @@ namespace Content.Shared.Damage.DamageContainer
             if (_damageList[type] < 0)
             {
                 _damageList[type] = 0;
+                delta = -current;
             }
+
+            current = _damageList[type];
+
+            var datum = new HealthChangeData(type, current, delta);
+            var data = new List<HealthChangeData> {datum};
+
+            OnHealthChanged(data);
 
             return true;
         }
 
         /// <summary>
-        ///     Attempts to set the damage value for the given <see cref="DamageType" />. Returns false if the container does not
-        ///     support that type, or if there was an error.
+        ///     Attempts to set the damage value for the given <see cref="DamageType"/>.
         /// </summary>
         /// <returns>
         ///     True if successful, false if this container does not support that type.
@@ -179,9 +213,17 @@ namespace Content.Shared.Damage.DamageContainer
 
             var damageClass = type.ToClass();
 
-            if (SupportedDamageClasses.Contains(damageClass))
+            if (SupportedClasses.Contains(damageClass))
             {
+                var old = _damageList[type] = newValue;
                 _damageList[type] = newValue;
+
+                var delta = newValue - old;
+                var datum = new HealthChangeData(type, newValue, delta);
+                var data = new List<HealthChangeData> {datum};
+
+                OnHealthChanged(data);
+
                 return true;
             }
 
@@ -189,10 +231,15 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Tries to set the damage value for the given <see cref="DamageType" />.
+        ///     Tries to set the damage value for the given <see cref="DamageType"/>.
         /// </summary>
+        /// <param name="type">The type of damage to set.</param>
+        /// <param name="newValue">The value to set it to.</param>
+        /// <param name="quiet">
+        ///     Whether or not to suppress the health changed event.
+        /// </param>
         /// <returns>True if successful, false otherwise.</returns>
-        public bool SetDamageValue(DamageType type, int newValue)
+        public bool SetDamageValue(DamageType type, int newValue, bool quiet = false)
         {
             if (newValue < 0)
             {
@@ -204,9 +251,35 @@ namespace Content.Shared.Damage.DamageContainer
                 return false;
             }
 
+            var old = _damageList[type];
             _damageList[type] = newValue;
 
+            if (!quiet)
+            {
+                var delta = newValue - old;
+                var datum = new HealthChangeData(type, 0, delta);
+                var data = new List<HealthChangeData> {datum};
+
+                OnHealthChanged(data);
+            }
+
             return true;
+        }
+
+        public void Heal()
+        {
+            var data = new List<HealthChangeData>();
+
+            foreach (var type in SupportedTypes)
+            {
+                var delta = -GetDamageValue(type);
+                var datum = new HealthChangeData(type, 0, delta);
+
+                data.Add(datum);
+                SetDamageValue(type, 0, true);
+            }
+
+            OnHealthChanged(data);
         }
     }
 }

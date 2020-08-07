@@ -65,7 +65,7 @@ namespace Content.Server.GameObjects.Components.Damage
         // Might want to move this down and have a more standardized method of revival
         public void FixAllDamage()
         {
-            HealAllDamage();
+            Heal();
             _currentDamageState = DamageState.Alive;
         }
 

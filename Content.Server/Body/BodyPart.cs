@@ -12,6 +12,7 @@ using Content.Shared.Body.Part.Properties;
 using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
@@ -50,7 +51,7 @@ namespace Content.Server.Body
             RSIPath = null!;
             RSIState = null!;
             RSIMap = null!;
-            CurrentDamages = null!;
+            Damage = null!;
             Resistances = null!;
 
             LoadFromPrototype(data);
@@ -159,13 +160,14 @@ namespace Content.Server.Body
         ///     Current HP of this <see cref="BodyPart"/> based on sum of all damage types.
         /// </summary>
         [ViewVariables]
-        public int CurrentDurability => MaxDurability - CurrentDamages.TotalDamage;
+        public int CurrentDurability => MaxDurability - Damage.TotalDamage;
 
+        // TODO: Individual body part damage
         /// <summary>
         ///     Current damage dealt to this <see cref="BodyPart"/>.
         /// </summary>
         [ViewVariables]
-        public DamageContainer CurrentDamages { get; private set; }
+        public DamageContainer Damage { get; private set; }
 
         /// <summary>
         ///     Armor of this <see cref="BodyPart"/> against damages.
@@ -456,7 +458,7 @@ namespace Content.Server.Body
                     $"No {nameof(DamageContainerPrototype)} found with id {data.DamageContainerPresetId}");
             }
 
-            CurrentDamages = new DamageContainer(damageContainerData);
+            Damage = new DamageContainer(OnHealthChanged, damageContainerData);
 
             if (!prototypeManager.TryIndex(data.ResistanceSetId, out ResistanceSetPrototype resistancesData))
             {
@@ -497,6 +499,11 @@ namespace Content.Server.Body
 
                 AddMechanism(mechanism);
             }
+        }
+
+        private void OnHealthChanged(List<HealthChangeData> changes)
+        {
+            // TODO
         }
     }
 }

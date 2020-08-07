@@ -51,20 +51,24 @@ namespace Content.Server.GlobalVerbs
                     PerformRejuvenate(target);
             }
         }
+
         public static void PerformRejuvenate(IEntity target)
         {
             if (target.TryGetComponent(out IDamageableComponent damage))
             {
-                damage.HealAllDamage();
+                damage.Heal();
             }
+
             if (target.TryGetComponent(out HungerComponent hunger))
             {
                 hunger.ResetFood();
             }
+
             if (target.TryGetComponent(out ThirstComponent thirst))
             {
                 thirst.ResetThirst();
             }
+
             if (target.TryGetComponent(out StunnableComponent stun))
             {
                 stun.ResetStuns();
