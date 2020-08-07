@@ -18,7 +18,7 @@
   parent: BackpackClothing
   id: MessengerBagChemistry
   name: chemistry messenger bag
-  description: A sterile backpack worn over one shoulder, in Chemsitry colors.
+  description: A sterile backpack worn over one shoulder, in Chemistry colors.
   components:
   - type: Sprite
     sprite: Clothing/Back/Couriers/courier_chemistry.rsi
