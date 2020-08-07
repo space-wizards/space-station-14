@@ -226,8 +226,14 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 CustomMinimumSize = new Vector2(0, 10)
             });
+            var totalGasAmount = 0f;
             foreach (var gas in state.Gases)
             {
+                totalGasAmount += gas.Amount;
+            }
+            for (int i = 0; i < state.Gases.Length; i++)
+            {
+                var gas = state.Gases[i];
                 var color = Color.FromHex($"#{gas.Color}", Color.White);
                 // Add to the table
                 tableKey.AddChild(new Label
@@ -239,16 +245,20 @@ namespace Content.Client.GameObjects.Components.Atmos
                     Text = Loc.GetString("{0:0.##} mol", gas.Amount)
                 });
 
-                // Add to the gas bar
+                // Add to the gas bar //TODO: highlight the currently hover one
+                var left = (i == 0) ? 0f : 2f;
+                var right = (i == state.Gases.Length - 1) ? 0f : 2f;
                 gasBar.AddChild(new PanelContainer
                 {
-                    ToolTip = gas.ToString(),
+                    ToolTip = Loc.GetString("{0}: {1:0.##} mol ({2:0.#}%)", gas.Name, gas.Amount, (gas.Amount / totalGasAmount) * 100),
                     SizeFlagsHorizontal = SizeFlags.FillExpand,
                     SizeFlagsStretchRatio = gas.Amount,
                     MouseFilter = MouseFilterMode.Pass,
                     PanelOverride = new StyleBoxFlat
                     {
-                        BackgroundColor = color
+                        BackgroundColor = color,
+                        PaddingLeft = left,
+                        PaddingRight = right
                     },
                     CustomMinimumSize = new Vector2(minSize, 0)
                 });
