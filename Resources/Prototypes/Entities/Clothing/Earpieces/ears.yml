@@ -1,17 +1,255 @@
+## Earpiece Headsets
+
 - type: entity
   parent: Clothing
-  id: RadioHeadsetEars
-  name: headset radio
+  id: HeadsetRadioEars
+  name: headset
   description: The radio to keep up to date in real time with fun onboard station activities
   components:
   - type: Headset
   - type: Sprite
-    sprite: Clothing/Earpieces/headset.rsi
+    sprite: Objects/Devices/communication.rsi
     state: headset
   - type: Icon
-    sprite: Clothing/Earpieces/headset.rsi
+    sprite: Objects/Devices/communication.rsi
     state: headset
   - type: Clothing
     Slots:
     - ears
-    sprite: Clothing/Earpieces/headset.rsi
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioCargoEars
+  name: cargo headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: cargo_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: cargo_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioCentEars
+  name: centcomm headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: cent_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: cent_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioComEars
+  name: command headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: com_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: com_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioEngEars
+  name: engineering headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: eng_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: eng_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioMedEars
+  name: medical headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: med_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: med_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioSciEars
+  name: science headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: sci_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: sci_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioSecEars
+  name: security headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    state: sec_headset
+  - type: Icon
+    sprite: Objects/Devices/communication.rsi
+    state: sec_headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/communication.rsi
+
+## Overear Headset
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioSecOverEars
+  name: security overear-headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/Headsets/sec_headset_alt.rsi
+    state: headset
+  - type: Icon
+    sprite: Objects/Devices/Headsets/sec_headset_alt.rsi
+    state: headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/Headsets/sec_headset_alt.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioCargoOverEars
+  name: cargo overear-headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/Headsets/cargo_headset_alt.rsi
+    state: headset
+  - type: Icon
+    sprite: Objects/Devices/Headsets/cargo_headset_alt.rsi
+    state: headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/Headsets/cargo_headset_alt.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioComOverEars
+  name: command overear-headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/Headsets/command_headset_alt.rsi
+    state: headset
+  - type: Icon
+    sprite: Objects/Devices/Headsets/command_headset_alt.rsi
+    state: headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/Headsets/command_headset_alt.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioEngOverEars
+  name: engeering overear-headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/Headsets/eng_headset_alt.rsi
+    state: headset
+  - type: Icon
+    sprite: Objects/Devices/Headsets/eng_headset_alt.rsi
+    state: headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/Headsets/eng_headset_alt.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioMedOverEars
+  name: medical overear-headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/Headsets/med_headset_alt.rsi
+    state: headset
+  - type: Icon
+    sprite: Objects/Devices/Headsets/med_headset_alt.rsi
+    state: headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/Headsets/med_headset_alt.rsi
+
+- type: entity
+  parent: Clothing
+  id: HeadsetRadioSynOverEars
+  name: syndicate overear-headset
+  description:
+  components:
+  - type: Headset
+  - type: Sprite
+    sprite: Objects/Devices/Headsets/syndie_headset.rsi
+    state: headset
+  - type: Icon
+    sprite: Objects/Devices/Headsets/syndie_headset.rsi
+    state: headset
+  - type: Clothing
+    Slots:
+    - ears
+    sprite: Objects/Devices/Headsets/syndie_headset.rsi

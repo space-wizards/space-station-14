@@ -12,6 +12,8 @@
   components:
   - type: Radio
   - type: Sprite
-    texture: Objects/Devices/radio.png
+    sprite: Objects/Devices/communication.rsi
+    state: walkietalkie
   - type: Icon
-    texture: Objects/Devices/radio.png
+    sprite: Objects/Devices/communication.rsi
+    state: walkietalkie
