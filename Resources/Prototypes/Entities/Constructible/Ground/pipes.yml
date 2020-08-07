@@ -26,7 +26,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Default
+      nodeGroupID: Gas
       pipeDirection: All
 
 - type: entity
@@ -39,7 +39,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Default
+      nodeGroupID: Gas
       pipeDirection: Vertical
       
 - type: entity
@@ -52,7 +52,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Default
+      nodeGroupID: Gas
       pipeDirection: ULBend
       
 - type: entity
@@ -65,5 +65,5 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Default
+      nodeGroupID: Gas
       pipeDirection: TUp
