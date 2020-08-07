@@ -114,19 +114,18 @@ namespace Content.Server.Chat
             if (kind != SuicideKind.Special)
             {
                 damageableComponent.ChangeDamage(kind switch
-                {
-                    SuicideKind.Blunt => DamageType.Blunt,
-                    SuicideKind.Piercing => DamageType.Piercing,
-                    SuicideKind.Heat => DamageType.Heat,
-                    SuicideKind.Disintegration => DamageType.Disintegration,
-                    SuicideKind.Cellular => DamageType.Cellular,
-                    SuicideKind.DNA => DamageType.DNA,
-                    SuicideKind.Asphyxiation => DamageType.Asphyxiation,
-                    _ => DamageType.Blunt
-                },
-                500, //TODO: find a way to get max HP or something
-                source,
-                true);
+                    {
+                        SuicideKind.Blunt => DamageType.Blunt,
+                        SuicideKind.Piercing => DamageType.Piercing,
+                        SuicideKind.Heat => DamageType.Heat,
+                        SuicideKind.Disintegration => DamageType.Disintegration,
+                        SuicideKind.Cellular => DamageType.Cellular,
+                        SuicideKind.DNA => DamageType.DNA,
+                        SuicideKind.Asphyxiation => DamageType.Asphyxiation,
+                        _ => DamageType.Blunt
+                    },
+                500,
+                true, source);
             }
         }
 
@@ -171,7 +170,7 @@ namespace Content.Server.Chat
             }
             // Default suicide, bite your tongue
             chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
-            dmgComponent.ChangeDamage(DamageType.Piercing, 500, owner, true);
+            dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
         }
     }
 }

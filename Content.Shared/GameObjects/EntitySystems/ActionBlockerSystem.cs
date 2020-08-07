@@ -26,8 +26,11 @@ namespace Content.Shared.GameObjects.EntitySystems
         bool CanEmote() => true;
 
         bool CanAttack() => true;
+
         bool CanEquip() => true;
+
         bool CanUnequip() => true;
+
         bool CanChangeDirection() => true;
     }
 

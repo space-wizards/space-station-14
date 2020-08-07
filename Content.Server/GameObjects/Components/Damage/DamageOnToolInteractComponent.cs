@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Damage
                 damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
                         ? DamageType.Heat
                         : DamageType.Blunt,
-                    Damage, eventArgs.User, false);
+                    Damage, false, eventArgs.User);
 
                 return true;
             }

@@ -13,7 +13,6 @@ using Content.Shared.Body.Part.Properties.Movement;
 using Content.Shared.Body.Part.Properties.Other;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Template;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
@@ -38,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
     [ComponentReference(typeof(IBodyManagerComponent))]
-    public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer
+    public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput
     {
 #pragma warning disable CS0649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -282,99 +281,13 @@ namespace Content.Server.GameObjects.Components.Body
             }
         }
 
-        #region DamageableComponent Implementation
-
-        // TODO: all of this
-
-        public override int TotalDamage => 0;
-
-        public override List<DamageState> SupportedDamageStates => null;
-
-        public override DamageState CurrentDamageState { get; protected set; }
-
-        public int TempDamageThing;
-
-        public override bool ChangeDamage(DamageType damageType, int amount, IEntity source, bool ignoreResistances,
-            HealthChangeParams extraParams = null)
-        {
-            if (amount > 0)
-            {
-                TempDamageThing++;
-            }
-            else if (amount < 0)
-            {
-                TempDamageThing--;
-            }
-
-            if (TempDamageThing >= 10)
-            {
-                CurrentDamageState = DamageState.Dead;
-            }
-
-            var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, 0, 0)};
-            OnHealthChanged(new HealthChangedEventArgs(this, data));
-
-            return true;
-        }
-
-        public override bool ChangeDamage(DamageClass damageClass, int amount, IEntity source, bool ignoreResistances,
-            HealthChangeParams extraParams = null)
-        {
-            if (amount > 0)
-            {
-                TempDamageThing++;
-            }
-            else if (amount < 0)
-            {
-                TempDamageThing--;
-            }
-
-            if (TempDamageThing >= 10)
-            {
-                CurrentDamageState = DamageState.Dead;
-            }
-
-            var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, 0, 0)};
-            OnHealthChanged(new HealthChangedEventArgs(this, data));
-
-            return true;
-        }
-
-        public override bool SetDamage(DamageType damageType, int newValue, IEntity source,
-            HealthChangeParams extraParams = null)
-        {
-            TempDamageThing = newValue;
-            if (TempDamageThing > 10)
-            {
-                CurrentDamageState = DamageState.Dead;
-            }
-
-            var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, TempDamageThing, 1)};
-            OnHealthChanged(new HealthChangedEventArgs(this, data));
-
-            return true;
-        }
-
-        public override void HealAllDamage()
-        {
-            TempDamageThing = 0;
-        }
-
-        public override void ForceHealthChangedEvent()
-        {
-            var data = new List<HealthChangeData> {new HealthChangeData(DamageType.Blunt, 0, 0)};
-            OnHealthChanged(new HealthChangedEventArgs(this, data));
-        }
-
-        public void MoveInputPressed(ICommonSession session)
+        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
         {
             if (CurrentDamageState == DamageState.Dead)
             {
                 new Ghost().Execute(null, (IPlayerSession) session, null);
             }
         }
-
-        #endregion
 
         #region BodyPart Functions
 
@@ -568,6 +481,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if successful, false otherwise.</returns>
         public bool InstallBodyPart(BodyPart part, string slotName)
         {
+            DebugTools.AssertNotNull(part);
+
             // Make sure the given slot exists
             if (!SlotExists(slotName))
             {
@@ -593,6 +508,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if successful, false otherwise.</returns>
         public bool InstallDroppedBodyPart(DroppedBodyPartComponent part, string slotName)
         {
+            DebugTools.AssertNotNull(part);
+
             if (!InstallBodyPart(part.ContainedBodyPart, slotName))
             {
                 return false;
@@ -612,6 +529,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// </returns>
         public IEntity DropBodyPart(BodyPart part)
         {
+            DebugTools.AssertNotNull(part);
+
             if (!Parts.ContainsValue(part))
             {
                 return null;
@@ -652,6 +571,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public void DisconnectBodyPart(BodyPart part, bool dropEntity)
         {
+            DebugTools.AssertNotNull(part);
+
             if (!Parts.ContainsValue(part))
             {
                 return;
@@ -698,6 +619,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// </param>
         private void DisconnectBodyPart(string slotName, bool dropEntity)
         {
+            DebugTools.AssertNotNull(slotName);
+
             if (!TryGetBodyPart(slotName, out var part))
             {
                 return;
@@ -732,6 +655,9 @@ namespace Content.Server.GameObjects.Components.Body
 
         private void AddBodyPart(BodyPart part, string slotName)
         {
+            DebugTools.AssertNotNull(part);
+            DebugTools.AssertNotNull(slotName);
+
             Parts.Add(slotName, part);
 
             part.Body = this;
@@ -767,6 +693,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns></returns>
         private bool RemoveBodyPart(string slotName)
         {
+            DebugTools.AssertNotNull(slotName);
+
             if (!Parts.Remove(slotName, out var part))
             {
                 return false;
@@ -796,6 +724,8 @@ namespace Content.Server.GameObjects.Components.Body
 
         private bool EnsureNetwork(BodyNetwork network)
         {
+            DebugTools.AssertNotNull(network);
+
             if (_networks.ContainsKey(network.GetType()))
             {
                 return false;
@@ -817,6 +747,8 @@ namespace Content.Server.GameObjects.Components.Body
         /// </returns>
         public bool EnsureNetwork(Type networkType)
         {
+            DebugTools.Assert(networkType.IsSubclassOf(typeof(BodyNetwork)));
+
             var network = _bodyNetworkFactory.GetNetwork(networkType);
             return EnsureNetwork(network);
         }
@@ -982,7 +914,18 @@ namespace Content.Server.GameObjects.Components.Body
         #endregion
     }
 
-    public class BodyManagerHealthChangeParams : HealthChangeParams
+    public interface IBodyManagerHealthChangeParams
     {
+        BodyPartType Part { get; }
+    }
+
+    public class BodyManagerHealthChangeParams : HealthChangeParams, IBodyManagerHealthChangeParams
+    {
+        public BodyManagerHealthChangeParams(BodyPartType part)
+        {
+            Part = part;
+        }
+
+        public BodyPartType Part { get; }
     }
 }

@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
 
                 if (entity.TryGetComponent(out IDamageableComponent damageComponent))
                 {
-                    damageComponent.ChangeDamage(DamageType.Blunt, Damage, Owner, false);
+                    damageComponent.ChangeDamage(DamageType.Blunt, Damage, false, Owner);
                     hitEntities.Add(entity);
                 }
             }

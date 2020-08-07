@@ -5,6 +5,7 @@ using Content.Server.Body.Mechanisms;
 using Content.Server.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces;
+using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 
@@ -13,6 +14,7 @@ namespace Content.Server.Body.Surgery
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.
     /// </summary>
+    [UsedImplicitly]
     public class BiologicalSurgeryData : SurgeryData
     {
         private readonly List<Mechanism> _disconnectedOrgans = new List<Mechanism>();
@@ -30,15 +32,17 @@ namespace Content.Server.Body.Surgery
                 return RemoveBodyPartSurgery;
             }
 
-            if (!_skinOpened) //Case: skin is normal.
+            if (!_skinOpened)
             {
+                // Case: skin is normal.
                 if (toolType == SurgeryType.Incision)
                 {
                     return OpenSkinSurgery;
                 }
             }
-            else if (!_vesselsClamped) //Case: skin is opened, but not clamped.
+            else if (!_vesselsClamped)
             {
+                // Case: skin is opened, but not clamped.
                 switch (toolType)
                 {
                     case SurgeryType.VesselCompression:
@@ -47,8 +51,9 @@ namespace Content.Server.Body.Surgery
                         return CauterizeIncisionSurgery;
                 }
             }
-            else if (!_skinRetracted) //Case: skin is opened and clamped, but not retracted.
+            else if (!_skinRetracted)
             {
+                // Case: skin is opened and clamped, but not retracted.
                 switch (toolType)
                 {
                     case SurgeryType.Retraction:
@@ -57,8 +62,9 @@ namespace Content.Server.Body.Surgery
                         return CauterizeIncisionSurgery;
                 }
             }
-            else // Case: skin is fully open.
+            else
             {
+                // Case: skin is fully open.
                 if (Parent.Mechanisms.Count > 0 &&
                     toolType == SurgeryType.VesselCompression)
                 {
@@ -86,6 +92,7 @@ namespace Content.Server.Body.Surgery
         public override string GetDescription(IEntity target)
         {
             var toReturn = "";
+
             if (_skinOpened && !_vesselsClamped)
             {
                 // Case: skin is opened, but not clamped.
@@ -111,12 +118,12 @@ namespace Content.Server.Body.Surgery
             return toReturn;
         }
 
-        public override bool CanInstallMechanism(Mechanism toBeInstalled)
+        public override bool CanInstallMechanism(Mechanism mechanism)
         {
             return _skinOpened && _vesselsClamped && _skinRetracted;
         }
 
-        public override bool CanAttachBodyPart(BodyPart toBeConnected)
+        public override bool CanAttachBodyPart(BodyPart part)
         {
             return true;
             // TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
@@ -125,28 +132,32 @@ namespace Content.Server.Body.Surgery
         private void OpenSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             performer.PopupMessage(performer, Loc.GetString("Cut open the skin..."));
-            //Delay?
+
+            // TODO do_after: Delay
             _skinOpened = true;
         }
 
         private void ClampVesselsSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             performer.PopupMessage(performer, Loc.GetString("Clamp the vessels..."));
-            //Delay?
+
+            // TODO do_after: Delay
             _vesselsClamped = true;
         }
 
         private void RetractSkinSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             performer.PopupMessage(performer, Loc.GetString("Retract the skin..."));
-            //Delay?
+
+            // TODO do_after: Delay
             _skinRetracted = true;
         }
 
         private void CauterizeIncisionSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             performer.PopupMessage(performer, Loc.GetString("Cauterize the incision..."));
-            //Delay?
+
+            // TODO do_after: Delay
             _skinOpened = false;
             _vesselsClamped = false;
             _skinRetracted = false;
@@ -174,8 +185,7 @@ namespace Content.Server.Body.Surgery
             }
         }
 
-        private void LoosenOrganSurgeryCallback(Mechanism target, IBodyPartContainer container,
-            ISurgeon surgeon,
+        private void LoosenOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon,
             IEntity performer)
         {
             if (target == null || !Parent.Mechanisms.Contains(target))
@@ -185,7 +195,7 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(performer, Loc.GetString("Loosen the organ..."));
 
-            //Delay?
+            // TODO do_after: Delay
             _disconnectedOrgans.Add(target);
         }
 
@@ -217,21 +227,23 @@ namespace Content.Server.Body.Surgery
 
             performer.PopupMessage(performer, Loc.GetString("Remove the organ..."));
 
-            //Delay?
+            // TODO do_after: Delay
             Parent.TryDropMechanism(performer, target, out _);
             _disconnectedOrgans.Remove(target);
         }
 
         private void RemoveBodyPartSurgery(IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
-            if (!(container is BodyManagerComponent)) //This surgery requires a DroppedBodyPartComponent.
+            // This surgery requires a DroppedBodyPartComponent.
+            if (!(container is BodyManagerComponent))
             {
                 return;
             }
 
             var bmTarget = (BodyManagerComponent) container;
             performer.PopupMessage(performer, Loc.GetString("Saw off the limb!"));
-            //Delay?
+
+            // TODO do_after: Delay
             bmTarget.DisconnectBodyPart(Parent, true);
         }
     }

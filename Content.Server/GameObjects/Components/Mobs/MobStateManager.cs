@@ -27,11 +27,11 @@ namespace Content.Server.GameObjects.Components.Mobs
             {DamageState.Dead, new DeadState()}
         };
 
-        private DamageState _currentDamageState;
         public override string Name => "MobStateManager";
 
-        public IMobState CurrentMobState { get; private set; } = new NormalState();
+        private DamageState _currentDamageState;
 
+        public IMobState CurrentMobState { get; private set; } = new NormalState();
 
         bool IActionBlocker.CanInteract()
         {
@@ -121,17 +121,22 @@ namespace Content.Server.GameObjects.Components.Mobs
             // TODO: Might want to add an OnRemove() to IMobState since those are where these components are being used
             base.OnRemove();
 
-            Owner.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent);
-            statusEffectsComponent?.RemoveStatusEffect(StatusEffect.Health);
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            {
+                status.RemoveStatusEffect(StatusEffect.Health);
+            }
 
-            Owner.TryGetComponent(out ServerOverlayEffectsComponent overlayEffectsComponent);
-            overlayEffectsComponent?.ClearOverlays();
+            if (Owner.TryGetComponent(out ServerOverlayEffectsComponent overlay))
+            {
+                overlay.ClearOverlays();
+            }
         }
     }
 
     /// <summary>
-    ///     Defines the blocking effects of an associated <see cref="DamageState"/> (i.e. Normal, Crit, Dead) and what effects
-    ///     to apply upon entering or exiting the state.
+    ///     Defines the blocking effects of an associated <see cref="DamageState"/>
+    ///     (i.e. Normal, Critical, Dead) and what effects to apply upon entering or
+    ///     exiting the state.
     /// </summary>
     public interface IMobState : IActionBlocker
     {
@@ -161,64 +166,52 @@ namespace Content.Server.GameObjects.Components.Mobs
             UpdateState(entity);
         }
 
-        public void ExitState(IEntity entity)
-        {
-        }
+        public void ExitState(IEntity entity) { }
 
         public void UpdateState(IEntity entity)
         {
-            // Setup HUD icon
-            if (!entity.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent))
+            if (!entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
                 return;
             }
 
-            if (entity.TryGetComponent(out IDamageableComponent damageableComponent))
+            if (!entity.TryGetComponent(out IDamageableComponent damageable))
             {
-                if (damageableComponent is RuinableComponent basicRuinableComponent)
-                {
-                    if (basicRuinableComponent.TotalDamage > basicRuinableComponent.MaxHp)
-                    {
-                        statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
-                            "/Textures/Interface/StatusEffects/Human/humandead.png");
-                    }
-                    else
-                    {
-                        var modifier =
-                            (int) (basicRuinableComponent.TotalDamage / (basicRuinableComponent.MaxHp / 7f));
-                        statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
-                            "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
-                    }
-                }
-                else if (damageableComponent is BodyManagerComponent bodyManagerComponent)
-                {
-                    //Temporary 10 hits = die system
-                    if (bodyManagerComponent.TempDamageThing >= 10)
-                    {
-                        statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
-                            "/Textures/Interface/StatusEffects/Human/humandead.png");
-                    }
-                    else
-                    {
-                        var modifier = (int) (bodyManagerComponent.TempDamageThing / (10f / 7f));
-                        statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
-                            "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
-                    }
-                }
-                else
-                {
-                    statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
-                        "/Textures/Interface/StatusEffects/Human/human0.png");
-                }
-            }
-            else
-            {
-                statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
+                status.ChangeStatusEffectIcon(StatusEffect.Health,
                     "/Textures/Interface/StatusEffects/Human/human0.png");
+                return;
+            }
+
+            // TODO
+            switch (damageable)
+            {
+                case RuinableComponent ruinable:
+                {
+                    var modifier = (int) (ruinable.TotalDamage / (ruinable.MaxHp / 7f));
+
+                    status.ChangeStatusEffectIcon(StatusEffect.Health,
+                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+
+                    break;
+                }
+                case BodyManagerComponent body:
+                {
+                    // TODO: Declare body max normal damage (currently 100)
+                    var modifier = (int) (body.TotalDamage / (100f / 7f));
+
+                    status.ChangeStatusEffectIcon(StatusEffect.Health,
+                        "/Textures/Interface/StatusEffects/Human/human" + modifier + ".png");
+
+                    break;
+                }
+                default:
+                {
+                    status.ChangeStatusEffectIcon(StatusEffect.Health,
+                        "/Textures/Interface/StatusEffects/Human/human0.png");
+                    break;
+                }
             }
         }
-
-        public bool IsConscious => true;
 
         bool IActionBlocker.CanInteract()
         {
@@ -288,15 +281,15 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
-            if (entity.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent))
+            if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
-                statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
+                status.ChangeStatusEffectIcon(StatusEffect.Health,
                     "/Textures/Interface/StatusEffects/Human/humancrit-0.png"); //Todo: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
+            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
-                overlayComponent.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
+                overlay.AddOverlay(SharedOverlayID.GradientCircleMaskOverlay);
             }
 
             if (entity.TryGetComponent(out StunnableComponent stun))
@@ -311,9 +304,9 @@ namespace Content.Server.GameObjects.Components.Mobs
         {
             StandingStateHelper.Standing(entity);
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
+            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
-                overlayComponent.ClearOverlays();
+                overlay.ClearOverlays();
             }
         }
 
@@ -389,9 +382,9 @@ namespace Content.Server.GameObjects.Components.Mobs
     {
         public void EnterState(IEntity entity)
         {
-            if (entity.TryGetComponent(out ServerStatusEffectsComponent statusEffectsComponent))
+            if (entity.TryGetComponent(out ServerStatusEffectsComponent status))
             {
-                statusEffectsComponent.ChangeStatusEffectIcon(StatusEffect.Health,
+                status.ChangeStatusEffectIcon(StatusEffect.Health,
                     "/Textures/Interface/StatusEffects/Human/humandead.png");
             }
 
@@ -422,9 +415,9 @@ namespace Content.Server.GameObjects.Components.Mobs
                 collidable.CanCollide = true;
             }
 
-            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
+            if (entity.TryGetComponent(out ServerOverlayEffectsComponent overlay))
             {
-                overlayComponent.ClearOverlays();
+                overlay.ClearOverlays();
             }
         }
 

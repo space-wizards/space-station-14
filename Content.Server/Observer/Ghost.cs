@@ -49,7 +49,7 @@ namespace Content.Server.Observer
                         break;
                     case DamageState.Critical:
                         canReturn = true;
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, null, true); //todo: what if they dont breathe lol
+                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true, null); //todo: what if they dont breathe lol
                         break;
                     default:
                         canReturn = false;

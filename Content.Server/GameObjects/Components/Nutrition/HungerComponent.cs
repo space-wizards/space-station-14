@@ -187,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 {
                     if (damageable.CurrentDamageState != DamageState.Dead)
                     {
-                        damageable.ChangeDamage(DamageType.Blunt, 2, null, true);
+                        damageable.ChangeDamage(DamageType.Blunt, 2, true, null);
                     }
                 }
             }

@@ -238,7 +238,7 @@ namespace Content.Server.GameObjects
                     if (percentage < 0.1f)
                         continue;
 
-                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, Owner, false);
+                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                     stun.Paralyze(DoorStunTime);
                     hitSomeone = true;
                 }

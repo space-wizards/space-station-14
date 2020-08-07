@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Damage;
@@ -34,37 +35,72 @@ namespace Content.Shared.GameObjects.Components.Damage
         int TotalDamage { get; }
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageType"/>, applying resistance values only if it is damage.
+        ///     Changes the specified <see cref="DamageType"/>, applying
+        ///     resistance values only if it is damage.
         /// </summary>
-        /// <param name="damageType">Type of damage being changed.</param>
-        /// <param name="amount">Amount of damage being received (positive for damage, negative for heals).</param>
-        /// <param name="source">Entity that dealt or healed the damage.</param>
-        /// <param name="ignoreResistances">Whether to ignore resistances. Healing always ignores resistances, regardless of this input.</param>
-        /// <param name="extraParams">Extra parameters that some components may require, such as a specific limb to target.</param>
-        /// <returns>False if the given damageType is not supported or improper HealthChangeParams were provided; true otherwise.</returns>
-        bool ChangeDamage(DamageType damageType, int amount, IEntity source, bool ignoreResistances, HealthChangeParams extraParams = null);
+        /// <param name="type">Type of damage being changed.</param>
+        /// <param name="amount">
+        ///     Amount of damage being received (positive for damage, negative for heals).
+        /// </param>
+        /// <param name="ignoreResistances">
+        ///     Whether or not to ignore resistances.
+        ///     Healing always ignores resistances, regardless of this input.
+        /// </param>
+        /// <param name="source">
+        ///     The entity that dealt or healed the damage, if any.
+        /// </param>
+        /// <param name="extraParams">
+        ///     Extra parameters that some components may require, such as a specific limb to target.
+        /// </param>
+        /// <returns>
+        ///     False if the given type is not supported or improper
+        ///     <see cref="HealthChangeParams"/> were provided; true otherwise.
+        /// </returns>
+        bool ChangeDamage(DamageType type, int amount, bool ignoreResistances, IEntity? source = null,
+            HealthChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageClass"/>, applying resistance values only if it is damage.
-        ///     Spreads amount evenly between the <see cref="DamageType">DamageTypes</see> represented by that class.
+        ///     Changes the specified <see cref="DamageClass"/>, applying
+        ///     resistance values only if it is damage.
+        ///     Spreads amount evenly between the <see cref="DamageType"></see>s
+        ///     represented by that class.
         /// </summary>
-        /// <param name="damageClass">Class of damage being changed.</param>
-        /// <param name="amount">Amount of damage being received (positive for damage, negative for heals).</param>
-        /// <param name="source">Entity that dealt or healed the damage.</param>
-        /// <param name="ignoreResistances">Whether to ignore resistances. Healing always ignores resistances, regardless of this input.</param>
-        /// <param name="extraParams">Extra parameters that some components may require, such as a specific limb to target.</param>
-        /// <returns>Returns false if the given damageClass is not supported or improper HealthChangeParams were provided; true otherwise.</returns>
-        bool ChangeDamage(DamageClass damageClass, int amount, IEntity source, bool ignoreResistances, HealthChangeParams extraParams = null);
+        /// <param name="class">Class of damage being changed.</param>
+        /// <param name="amount">
+        ///     Amount of damage being received (positive for damage, negative for heals).
+        /// </param>
+        /// <param name="ignoreResistances">
+        ///     Whether to ignore resistances.
+        ///     Healing always ignores resistances, regardless of this input.
+        /// </param>
+        /// <param name="source">Entity that dealt or healed the damage, if any.</param>
+        /// <param name="extraParams">
+        ///     Extra parameters that some components may require,
+        ///     such as a specific limb to target.
+        /// </param>
+        /// <returns>
+        ///     Returns false if the given class is not supported or improper
+        ///     <see cref="HealthChangeParams"/> were provided; true otherwise.
+        /// </returns>
+        bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances, IEntity? source = null,
+            HealthChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Forcefully sets the specified <see cref="DamageType"/> to the given value, ignoring resistance values.
+        ///     Forcefully sets the specified <see cref="DamageType"/> to the given
+        ///     value, ignoring resistance values.
         /// </summary>
-        /// <param name="damageType">Type of damage being changed.</param>
+        /// <param name="type">Type of damage being changed.</param>
         /// <param name="newValue">New damage value to be set.</param>
         /// <param name="source">Entity that set the new damage value.</param>
-        /// <param name="extraParams">Extra parameters that some components may require, such as a specific limb to target.</param>
-        /// <returns>Returns false if the given damageType is not supported or improper HealthChangeParams were provided; true otherwise.</returns>
-        bool SetDamage(DamageType damageType, int newValue, IEntity source, HealthChangeParams extraParams = null);
+        /// <param name="extraParams">
+        ///     Extra parameters that some components may require,
+        ///     such as a specific limb to target.
+        /// </param>
+        /// <returns>
+        ///     Returns false if the given type is not supported or improper
+        ///     <see cref="HealthChangeParams"/> were provided; true otherwise.
+        /// </returns>
+        bool SetDamage(DamageType type, int newValue, IEntity? source = null, HealthChangeParams? extraParams = null);
 
         /// <summary>
         ///     Sets all damage values to zero.
@@ -86,13 +122,14 @@ namespace Content.Shared.GameObjects.Components.Damage
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            ChangeDamage(DamageType.Piercing, damage, null, false);
-            ChangeDamage(DamageType.Heat, damage, null, false);
+            ChangeDamage(DamageType.Piercing, damage, false, null);
+            ChangeDamage(DamageType.Heat, damage, false, null);
         }
     }
 
     /// <summary>
-    ///     Data class with information on how to damage a <see cref="IDamageableComponent"/>.
+    ///     Data class with information on how to damage a
+    ///     <see cref="IDamageableComponent"/>.
     ///     While not necessary to damage for all instances, classes such as
     ///     <see cref="SharedBodyManagerComponent"/> may require it for extra data
     ///     (such as selecting which limb to target).

@@ -99,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             void Burn()
             {
-                damageableComponent.ChangeDamage(DamageType.Heat, 20, Owner, false);
+                damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 var audioSystem = EntitySystem.Get<AudioSystem>();
                 audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
             }

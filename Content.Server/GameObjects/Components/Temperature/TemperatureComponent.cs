@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {
-                component?.ChangeDamage(DamageType.Heat, fireDamage, null, false);
+                component?.ChangeDamage(DamageType.Heat, fireDamage, false, null);
                 _secondsSinceLastDamageUpdate -= 1;
             }
         }

@@ -1,44 +1,25 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyManagerComponent : Component, IBodyManagerComponent
+    public abstract class SharedBodyManagerComponent : DamageableComponent, IBodyManagerComponent
     {
         public override string Name => "BodyManager";
 
         public override uint? NetID => ContentNetIDs.BODY_MANAGER;
 
-        public event Action<HealthChangedEventArgs> HealthChangedEvent;
+        public override List<DamageState> SupportedDamageStates => new List<DamageState> {DamageState.Alive, DamageState.Critical, DamageState.Dead};
 
-        public abstract List<DamageState> SupportedDamageStates { get; }
-
-        public abstract DamageState CurrentDamageState { get; protected set; }
-
-        public abstract int TotalDamage { get; }
-
-        public abstract bool ChangeDamage(DamageType damageType, int amount, IEntity source, bool ignoreResistances,
-            HealthChangeParams extraParams = null);
-
-        public abstract bool ChangeDamage(DamageClass damageClass, int amount, IEntity source, bool ignoreResistances,
-            HealthChangeParams extraParams = null);
-
-        public abstract bool SetDamage(DamageType damageType, int newValue, IEntity source,
-            HealthChangeParams extraParams = null);
-
-        public abstract void HealAllDamage();
-
-        public abstract void ForceHealthChangedEvent();
-
-        protected void OnHealthChanged(HealthChangedEventArgs e)
-        {
-            HealthChangedEvent?.Invoke(e);
-        }
+        public override DamageState CurrentDamageState =>
+            CurrentDamageState = TotalDamage > 200
+                ? DamageState.Dead
+                : TotalDamage > 100
+                    ? DamageState.Critical
+                    : DamageState.Alive;
     }
 
     [Serializable, NetSerializable]

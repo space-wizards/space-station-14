@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
                 foreach (var (damageType, amount) in _damages)
                 {
-                    damage.ChangeDamage(damageType, amount, shooter, false);
+                    damage.ChangeDamage(damageType, amount, false, shooter);
                 }
             }
 

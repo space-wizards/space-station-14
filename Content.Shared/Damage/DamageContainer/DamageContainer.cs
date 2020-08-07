@@ -7,31 +7,25 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Damage.DamageContainer
 {
     /// <summary>
-    ///     Holds the information regarding the various forms of damage an object has taken
-    ///     (i.e. brute, burn, or toxic damage).
+    ///     Holds the information regarding the various forms of damage an object has
+    ///     taken (i.e. brute, burn, or toxic damage).
     /// </summary>
-    [NetSerializable]
-    [Serializable]
+    [Serializable, NetSerializable]
     public class DamageContainer
     {
-        private Dictionary<DamageType, int> _damageList = new Dictionary<DamageType, int>();
+        private Dictionary<DamageType, int> _damageList = DamageTypeExtensions.ToDictionary();
 
         public DamageContainer(DamageContainerPrototype data)
         {
             SupportedDamageClasses = data.ActiveDamageClasses;
-            SetupDamageContainer();
         }
 
         public DamageContainer(List<DamageClass> supportedClasses)
         {
             SupportedDamageClasses = supportedClasses;
-            SetupDamageContainer();
         }
 
-        public DamageContainer()
-        {
-            SetupDamageContainer();
-        }
+        public DamageContainer() { }
 
         [ViewVariables] public virtual List<DamageClass> SupportedDamageClasses { get; }
 
@@ -43,32 +37,18 @@ namespace Content.Shared.Damage.DamageContainer
                 var toReturn = new List<DamageType>();
                 foreach (var damageClass in SupportedDamageClasses)
                 {
-                    toReturn.AddRange(DamageContainerValues.DamageClassToType(damageClass));
+                    toReturn.AddRange(damageClass.ToType());
                 }
 
                 return toReturn;
             }
         }
 
-        public IReadOnlyDictionary<DamageType, int> DamageList => _damageList;
-
         /// <summary>
         ///     Sum of all damages kept on record.
         /// </summary>
         [ViewVariables]
-        public int TotalDamage => _damageList.Sum(x => x.Value);
-
-        private void SetupDamageContainer()
-        {
-            foreach (var damageClass in SupportedDamageClasses)
-            {
-                var childrenDamageTypes = DamageContainerValues.DamageClassToType(damageClass);
-                foreach (var damageType in childrenDamageTypes)
-                {
-                    _damageList.Add(damageType, 0);
-                }
-            }
-        }
+        public int TotalDamage => _damageList.Values.Sum();
 
         public bool SupportsDamageClass(DamageClass damageClass)
         {
@@ -77,7 +57,7 @@ namespace Content.Shared.Damage.DamageContainer
 
         public bool SupportsDamageType(DamageType damageType)
         {
-            return SupportedDamageClasses.Contains(DamageContainerValues.DamageTypeToClass(damageType));
+            return SupportedDamageClasses.Contains(damageType.ToClass());
         }
 
         /// <summary>
@@ -90,24 +70,27 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Grabs the damage value for the given <see cref="DamageType" />. Does not check whether the type is supported, and
-        ///     so will throw an error if an invalid type is given.
+        ///     Grabs the damage value for the given <see cref="DamageType" />.
         /// </summary>
         public int GetDamageValue(DamageType type)
         {
-            return _damageList[type];
+            return TryGetDamageValue(type, out var damage) ? damage : 0;
         }
 
         /// <summary>
-        ///     Attempts to grab the sum of damage values for the given <see cref="DamageClass" />. Returns false if the container
-        ///     does not support that class.
+        ///     Attempts to grab the sum of damage values for the given
+        ///     <see cref="DamageClass"/>.
         /// </summary>
+        /// <returns>
+        ///     True if the class is supported in this container, false otherwise.
+        /// </returns>
         public bool TryGetDamageClassSum(DamageClass damageClass, out int damage)
         {
             damage = 0;
+
             if (SupportsDamageClass(damageClass))
             {
-                foreach (var type in DamageContainerValues.DamageClassToType(damageClass))
+                foreach (var type in damageClass.ToType())
                 {
                     damage += GetDamageValue(type);
                 }
@@ -119,13 +102,12 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Grabs the sum of damage values for the given <see cref="DamageClass" />. Does not check whether the class is
-        ///     supported, and so will throw an error if an invalid type is given.
+        ///     Grabs the sum of damage values for the given <see cref="DamageClass"/>.
         /// </summary>
         public int GetDamageClassSum(DamageClass damageClass)
         {
             var sum = 0;
-            foreach (var type in DamageContainerValues.DamageClassToType(damageClass))
+            foreach (var type in damageClass.ToType())
             {
                 sum += GetDamageValue(type);
             }
@@ -134,13 +116,17 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Attempts to change the damage value for the given <see cref="DamageType" /> - returns false if the container does
-        ///     not support that type.
+        ///     Attempts to change the damage value for the given
+        ///     <see cref="DamageType"/>
         /// </summary>
+        /// <returns>
+        ///     True if successful, false if this container does not support that type.
+        /// </returns>
         public bool TryChangeDamageValue(DamageType type, int delta)
         {
-            var classType = DamageContainerValues.DamageTypeToClass(type);
-            if (SupportedDamageClasses.Contains(classType))
+            var damageClass = type.ToClass();
+
+            if (SupportedDamageClasses.Contains(damageClass))
             {
                 _damageList[type] = _damageList[type] + delta;
                 if (_damageList[type] < 0)
@@ -155,22 +141,35 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Changes the damage value for the given <see cref="DamageType" />. Does not check whether the value is supported,
-        ///     and so will throw an error if an invalid type is given.
+        ///     Changes the damage value for the given <see cref="DamageType"/>.
         /// </summary>
-        public void ChangeDamageValue(DamageType type, int delta)
+        /// <returns>
+        ///     True if successful, false if this container does not support that type.
+        /// </returns>
+        public bool ChangeDamageValue(DamageType type, int delta)
         {
-            _damageList[type] = _damageList[type] + delta;
+            if (!_damageList.TryGetValue(type, out var current))
+            {
+                return false;
+            }
+
+            _damageList[type] = current + delta;
+
             if (_damageList[type] < 0)
             {
                 _damageList[type] = 0;
             }
+
+            return true;
         }
 
         /// <summary>
         ///     Attempts to set the damage value for the given <see cref="DamageType" />. Returns false if the container does not
         ///     support that type, or if there was an error.
         /// </summary>
+        /// <returns>
+        ///     True if successful, false if this container does not support that type.
+        /// </returns>
         public bool TrySetDamageValue(DamageType type, int newValue)
         {
             if (newValue < 0)
@@ -178,8 +177,9 @@ namespace Content.Shared.Damage.DamageContainer
                 return false;
             }
 
-            var classType = DamageContainerValues.DamageTypeToClass(type);
-            if (SupportedDamageClasses.Contains(classType))
+            var damageClass = type.ToClass();
+
+            if (SupportedDamageClasses.Contains(damageClass))
             {
                 _damageList[type] = newValue;
                 return true;
@@ -189,17 +189,24 @@ namespace Content.Shared.Damage.DamageContainer
         }
 
         /// <summary>
-        ///     Sets the damage value for the given <see cref="DamageType" />. Does not check whether the value is supported, and
-        ///     so will throw an error if an invalid type is given.
+        ///     Tries to set the damage value for the given <see cref="DamageType" />.
         /// </summary>
-        public void SetDamageValue(DamageType type, int newValue)
+        /// <returns>True if successful, false otherwise.</returns>
+        public bool SetDamageValue(DamageType type, int newValue)
         {
             if (newValue < 0)
             {
-                return;
+                return false;
+            }
+
+            if (!_damageList.ContainsKey(type))
+            {
+                return false;
             }
 
             _damageList[type] = newValue;
+
+            return true;
         }
     }
 }

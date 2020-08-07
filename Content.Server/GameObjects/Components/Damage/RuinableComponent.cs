@@ -9,14 +9,17 @@ using Robust.Shared.Serialization;
 namespace Content.Server.GameObjects.Components.Damage
 {
     /// <summary>
-    ///     When attached to an <see cref="IEntity"/>, allows it to take damage and "ruins" or "destroys"
-    ///     it after enough damage is taken.
+    ///     When attached to an <see cref="IEntity"/>, allows it to take damage and
+    ///     "ruins" or "destroys" it after enough damage is taken.
     /// </summary>
     [ComponentReference(typeof(IDamageableComponent))]
     public abstract class RuinableComponent : DamageableComponent
     {
+        private DamageState _currentDamageState;
+
         /// <summary>
-        ///     How much HP this component can sustain before triggering <see cref="PerformDestruction"/>.
+        ///     How much HP this component can sustain before triggering
+        ///     <see cref="PerformDestruction"/>.
         /// </summary>
         public int MaxHp { get; private set; }
 
@@ -27,6 +30,8 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override List<DamageState> SupportedDamageStates =>
             new List<DamageState> {DamageState.Alive, DamageState.Dead};
+
+        public override DamageState CurrentDamageState => _currentDamageState;
 
         public override void Initialize()
         {
@@ -57,12 +62,14 @@ namespace Content.Server.GameObjects.Components.Damage
         }
 
         /// <summary>
-        ///     Destroys the Owner <see cref="IEntity"/>, setting <see cref="IDamageableComponent.CurrentDamageState"/> to
+        ///     Destroys the Owner <see cref="IEntity"/>, setting
+        ///     <see cref="IDamageableComponent.CurrentDamageState"/> to
         ///     <see cref="DamageState.Dead"/>
         /// </summary>
         protected void PerformDestruction()
         {
-            CurrentDamageState = DamageState.Dead;
+            _currentDamageState = DamageState.Dead;
+
             if (!Owner.Deleted && DestroySound != string.Empty)
             {
                 var pos = Owner.Transform.GridPosition;
