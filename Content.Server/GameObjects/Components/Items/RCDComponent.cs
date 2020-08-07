@@ -116,11 +116,7 @@ namespace Content.Server.GameObjects.Components.Items
                 _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is out of ammo!");
                 return;
             }
-            if (!InteractionChecks.InRangeUnobstructed(eventArgs))
-            {
-                return;
-            }
-            if (coordinates == GridCoordinates.InvalidGrid)
+            if (coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
             {
                 return;
             }
