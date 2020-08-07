@@ -25,7 +25,8 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt))
             {
-                _userInterface.SetState(InterfaceState(attempt.Template, attempt.Parts));
+                var state = InterfaceState(attempt.Template, attempt.Parts);
+                _userInterface.SetState(state);
             }
 
             _userInterface.Open(actor.playerSession);
@@ -44,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <summary>
         ///     Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState InterfaceState(BodyTemplate template, Dictionary<string, BodyPart> bodyParts)
+        private BodyScannerInterfaceState InterfaceState(BodyTemplate template, IReadOnlyDictionary<string, BodyPart> bodyParts)
         {
             var partsData = new Dictionary<string, BodyScannerBodyPartData>();
 

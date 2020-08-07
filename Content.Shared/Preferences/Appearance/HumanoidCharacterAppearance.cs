@@ -10,6 +10,7 @@ namespace Content.Shared.Preferences.Appearance
         FacialHair,
         Chest,
         Head,
+        Eyes,
         RArm,
         LArm,
         RHand,

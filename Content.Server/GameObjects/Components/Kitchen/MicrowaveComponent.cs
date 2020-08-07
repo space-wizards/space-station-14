@@ -460,7 +460,13 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DropBodyPart(head);
+                    var droppedHead = bodyManagerComponent.DropPart(head);
+
+                    if (droppedHead == null)
+                    {
+                        continue;
+                    }
+
                     _storage.Insert(droppedHead);
                     headCount++;
                 }

@@ -24,6 +24,7 @@ namespace Content.Server.Body
             Slots = new Dictionary<string, BodyPartType>();
             Connections = new Dictionary<string, List<string>>();
             Layers = new Dictionary<string, string>();
+            MechanismLayers = new Dictionary<string, string>();
         }
 
         public BodyTemplate(BodyTemplatePrototype data)
@@ -61,6 +62,9 @@ namespace Content.Server.Body
 
         [ViewVariables]
         public Dictionary<string, string> Layers { get; private set; }
+
+        [ViewVariables]
+        public Dictionary<string, string> MechanismLayers { get; private set; }
 
         public bool Equals(BodyTemplate other)
         {
@@ -135,6 +139,7 @@ namespace Content.Server.Body
             Slots = data.Slots;
             Connections = data.Connections;
             Layers = data.Layers;
+            MechanismLayers = data.MechanismLayers;
         }
     }
 }

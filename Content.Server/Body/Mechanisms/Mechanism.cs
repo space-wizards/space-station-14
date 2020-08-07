@@ -22,6 +22,7 @@ namespace Content.Server.Body.Mechanisms
         public Mechanism(MechanismPrototype data)
         {
             Data = data;
+            Id = null!;
             Name = null!;
             Description = null!;
             ExamineMessage = null!;
@@ -33,6 +34,8 @@ namespace Content.Server.Body.Mechanisms
         [ViewVariables] private bool Initialized { get; set; }
 
         [ViewVariables] private MechanismPrototype Data { get; set; }
+
+        [ViewVariables] public string Id { get; private set; }
 
         [ViewVariables] public string Name { get; set; }
 
@@ -150,6 +153,7 @@ namespace Content.Server.Body.Mechanisms
         private void LoadFromPrototype(MechanismPrototype data)
         {
             Data = data;
+            Id = data.ID;
             Name = data.Name;
             Description = data.Description;
             ExamineMessage = data.ExamineMessage;

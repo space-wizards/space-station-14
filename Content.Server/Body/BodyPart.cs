@@ -14,9 +14,12 @@ using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Body
@@ -417,23 +420,74 @@ namespace Content.Server.Body
 
         private void AddMechanism(Mechanism mechanism)
         {
+            DebugTools.AssertNotNull(mechanism);
+
             _mechanisms.Add(mechanism);
             SizeUsed += mechanism.Size;
             mechanism.Part = this;
 
             mechanism.EnsureInitialize();
+
+            if (Body == null)
+            {
+                return;
+            }
+
+            if (!Body.Template.MechanismLayers.TryGetValue(mechanism.Id, out var mapString))
+            {
+                return;
+            }
+
+            if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
+            {
+                Logger.Warning($"Template {Body.Template.Name} has an invalid RSI map key {mapString} for mechanism {mechanism.Id}.");
+                return;
+            }
+
+            var message = new MechanismSpriteAddedMessage(@enum);
+
+            Body.Owner.SendNetworkMessage(Body, message);
         }
 
+        /// <summary>
+        ///     Tries to remove the given <see cref="mechanism"/> from this
+        ///     <see cref="BodyPart"/>.
+        /// </summary>
+        /// <param name="mechanism">The mechanism to remove.</param>
+        /// <returns>True if it was removed, false otherwise.</returns>
         private bool RemoveMechanism(Mechanism mechanism)
         {
-            if (_mechanisms.Remove(mechanism))
+            DebugTools.AssertNotNull(mechanism);
+
+            if (!_mechanisms.Remove(mechanism))
             {
-                SizeUsed -= mechanism.Size;
-                mechanism.Part = null;
+                return false;
+            }
+
+            SizeUsed -= mechanism.Size;
+            mechanism.Part = null;
+
+            if (Body == null)
+            {
                 return true;
             }
 
-            return false;
+            if (!Body.Template.MechanismLayers.TryGetValue(mechanism.Id, out var mapString))
+            {
+                return true;
+            }
+
+            if (!IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(mapString, out var @enum))
+            {
+                Logger.Warning($"Template {Body.Template.Name} has an invalid RSI map key {mapString} for mechanism {mechanism.Id}.");
+                return true;
+            }
+
+            var message = new MechanismSpriteRemovedMessage(@enum);
+
+            Body.Owner.SendNetworkMessage(Body, message);
+
+            return true;
         }
 
         /// <summary>

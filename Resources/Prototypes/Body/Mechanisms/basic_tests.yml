@@ -6,8 +6,8 @@
   size: 4
   compatibility: Universal
   implantableParts:
-    - Arm
-    - Hand
+  - Arm
+  - Hand
 
 - type: mechanism
   id: mechanism.HonkModule

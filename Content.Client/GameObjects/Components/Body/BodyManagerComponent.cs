@@ -34,13 +34,19 @@ namespace Content.Client.GameObjects.Components.Body
 
             switch (message)
             {
-                case BodyPartAddedMessage added:
-                    sprite.LayerSetVisible(added.RSIMap, true);
-                    sprite.LayerSetRSI(added.RSIMap, added.RSIPath);
-                    sprite.LayerSetState(added.RSIMap, added.RSIState);
+                case BodyPartAddedMessage partAdded:
+                    sprite.LayerSetVisible(partAdded.RSIMap, true);
+                    sprite.LayerSetRSI(partAdded.RSIMap, partAdded.RSIPath);
+                    sprite.LayerSetState(partAdded.RSIMap, partAdded.RSIState);
                     break;
-                case BodyPartRemovedMessage removed:
-                    sprite.LayerSetVisible(removed.RSIMap, false);
+                case BodyPartRemovedMessage partRemoved:
+                    sprite.LayerSetVisible(partRemoved.RSIMap, false);
+                    break;
+                case MechanismSpriteAddedMessage mechanismAdded:
+                    sprite.LayerSetVisible(mechanismAdded.RSIMap, true);
+                    break;
+                case MechanismSpriteRemovedMessage mechanismRemoved:
+                    sprite.LayerSetVisible(mechanismRemoved.RSIMap, false);
                     break;
             }
         }

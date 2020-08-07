@@ -50,6 +50,30 @@ namespace Content.Shared.GameObjects.Components.Body
         }
     }
 
+    [Serializable, NetSerializable]
+    public sealed class MechanismSpriteAddedMessage : ComponentMessage
+    {
+        public readonly Enum RSIMap;
+
+        public MechanismSpriteAddedMessage(Enum rsiMap)
+        {
+            Directed = true;
+            RSIMap = rsiMap;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class MechanismSpriteRemovedMessage : ComponentMessage
+    {
+        public readonly Enum RSIMap;
+
+        public MechanismSpriteRemovedMessage(Enum rsiMap)
+        {
+            Directed = true;
+            RSIMap = rsiMap;
+        }
+    }
+
     /// <summary>
     ///     Used to determine whether a BodyPart can connect to another BodyPart.
     /// </summary>

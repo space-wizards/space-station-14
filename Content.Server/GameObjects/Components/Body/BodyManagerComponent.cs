@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -40,12 +41,14 @@ namespace Content.Server.GameObjects.Components.Body
     public class BodyManagerComponent : SharedBodyManagerComponent, IBodyPartContainer, IRelayMoveInput
     {
 #pragma warning disable CS0649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-        [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory;
-        [Dependency] private readonly IReflectionManager _reflectionManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IBodyNetworkFactory _bodyNetworkFactory = default!;
+        [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 #pragma warning restore
 
-        [ViewVariables] private string _presetName;
+        [ViewVariables] private string _presetName = default!;
+
+        private readonly Dictionary<string, BodyPart> _parts = new Dictionary<string, BodyPart>();
 
         [ViewVariables] private readonly Dictionary<Type, BodyNetwork> _networks = new Dictionary<Type, BodyNetwork>();
 
@@ -62,21 +65,21 @@ namespace Content.Server.GameObjects.Components.Body
         ///     is adhering to.
         /// </summary>
         [ViewVariables]
-        public BodyTemplate Template { get; private set; }
+        public BodyTemplate Template { get; private set; } = default!;
 
         /// <summary>
         ///     The <see cref="BodyPreset"/> that this <see cref="BodyManagerComponent"/>
         ///     is adhering to.
         /// </summary>
         [ViewVariables]
-        public BodyPreset Preset { get; private set; }
+        public BodyPreset Preset { get; private set; } = default!;
 
         /// <summary>
         ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="BodyPart"/>
         ///     object filling it (if there is one).
         /// </summary>
         [ViewVariables]
-        public Dictionary<string, BodyPart> Parts { get; } = new Dictionary<string, BodyPart>();
+        public IReadOnlyDictionary<string, BodyPart> Parts => _parts;
 
         /// <summary>
         ///     List of all slots in this body, taken from the keys of
@@ -261,15 +264,16 @@ namespace Content.Server.GameObjects.Components.Body
                 }
             }
 
-            // Case: no way of moving. Fall down.
             if (speedSum <= 0.001f || _activeLegs.Count <= 0)
             {
+                // Case: no way of moving. Fall down.
                 StandingStateHelper.Down(Owner);
                 playerMover.BaseWalkSpeed = 0.8f;
                 playerMover.BaseSprintSpeed = 2.0f;
             }
-            else // Case: have at least one leg. Set move speed.
+            else
             {
+                // Case: have at least one leg. Set move speed.
                 StandingStateHelper.Standing(Owner);
 
                 // Extra legs stack diminishingly.
@@ -292,9 +296,9 @@ namespace Content.Server.GameObjects.Components.Body
         #region BodyPart Functions
 
         /// <summary>
-        ///    Recursively searches for if <see cref="target"/> is connected ot the center.
-        ///    Not efficient (O(n^2)), but most bodies don't have a ton of
-        ///     <see cref="BodyPart"/>.
+        ///     Recursively searches for if <see cref="target"/> is connected to
+        ///     the center. Not efficient (O(n^2)), but most bodies don't have a ton
+        ///     of <see cref="BodyPart"/>s.
         /// </summary>
         /// <param name="target">The body part to find the center for.</param>
         /// <returns>True if it is connected to the center, false otherwise.</returns>
@@ -344,10 +348,10 @@ namespace Content.Server.GameObjects.Components.Body
         ///     the <see cref="BodyTemplate"/>. For humans, this is the torso.
         /// </summary>
         /// <returns>The <see cref="BodyPart"/> if one exists, null otherwise.</returns>
-        private BodyPart GetCenterBodyPart()
+        private BodyPart? GetCenterBodyPart()
         {
             Parts.TryGetValue(Template.CenterSlot, out var center);
-            return center;
+            return center!;
         }
 
         /// <summary>
@@ -368,7 +372,7 @@ namespace Content.Server.GameObjects.Components.Body
         /// <returns>True if found, false otherwise.</returns>
         private bool TryGetBodyPart(string slotName, [NotNullWhen(true)] out BodyPart result)
         {
-            return Parts.TryGetValue(slotName, out result);
+            return Parts.TryGetValue(slotName, out result!);
         }
 
         /// <summary>
@@ -386,8 +390,8 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Finds the <see cref="BodyPartType"/> in the given <see cref="slotName"/> if
-        ///     one exists.
+        ///     Finds the <see cref="BodyPartType"/> in the given
+        ///     <see cref="slotName"/> if one exists.
         /// </summary>
         /// <param name="slotName">The slot to search in.</param>
         /// <param name="result">
@@ -400,28 +404,31 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Finds the names of all slots connected to the given <see cref="slotName"/>
-        ///     for the template.
+        ///     Finds the names of all slots connected to the given
+        ///     <see cref="slotName"/> for the template.
         /// </summary>
         /// <param name="slotName">The slot to search in.</param>
         /// <param name="connections">The connections found, if any.</param>
         /// <returns>True if the connections are found, false otherwise.</returns>
         private bool TryGetBodyPartConnections(string slotName, [NotNullWhen(true)] out List<string> connections)
         {
-            return Template.Connections.TryGetValue(slotName, out connections);
+            return Template.Connections.TryGetValue(slotName, out connections!);
         }
 
         /// <summary>
         ///     Grabs all occupied slots connected to the given slot,
-        ///     regardless of whether the given slotName is occupied.
+        ///     regardless of whether the given <see cref="slotName"/> is occupied.
         /// </summary>
+        /// <param name="slotName">The slot name to find connections from.</param>
+        /// <param name="result">The connected body parts, if any.</param>
         /// <returns>
-        ///     True if successful, false if there was an error or no connected BodyParts
-        ///     were found.
+        ///     True if successful, false if there was an error or no connected
+        ///     <see cref="BodyPart"/>s were found.
         /// </returns>
         public bool TryGetBodyPartConnections(string slotName, [NotNullWhen(true)] out List<BodyPart> result)
         {
-            result = null;
+            result = null!;
+
             if (!Template.Connections.TryGetValue(slotName, out var connections))
             {
                 return false;
@@ -446,12 +453,16 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     Grabs all occupied slots connected to the given slot, regardless of whether the given slotName is occupied. Returns
-        ///     true if successful, false if there was an error or no connected BodyParts were found.
+        ///     Grabs all parts connected to the given <see cref="part"/>, regardless
+        ///     of whether the given <see cref="part"/> is occupied.
         /// </summary>
-        private bool TryGetBodyPartConnections(BodyPart part, out List<BodyPart> result)
+        /// <returns>
+        ///     True if successful, false if there was an error or no connected
+        ///     <see cref="BodyPart"/>s were found.
+        /// </returns>
+        private bool TryGetBodyPartConnections(BodyPart part, [NotNullWhen(true)] out List<BodyPart> result)
         {
-            result = null;
+            result = null!;
 
             return TryGetSlotName(part, out var slotName) &&
                    TryGetBodyPartConnections(slotName, out result);
@@ -525,24 +536,22 @@ namespace Content.Server.GameObjects.Components.Body
         ///     off of it.
         /// </summary>
         /// <returns>
-        ///     The <see cref="IEntity"/> representing the dropped <see cref="BodyPart"/>.
+        ///     The <see cref="IEntity"/> representing the dropped
+        ///     <see cref="BodyPart"/>, or null if none was dropped.
         /// </returns>
-        public IEntity DropBodyPart(BodyPart part)
+        public IEntity? DropPart(BodyPart part)
         {
             DebugTools.AssertNotNull(part);
 
-            if (!Parts.ContainsValue(part))
+            if (!_parts.ContainsValue(part))
             {
                 return null;
             }
 
-            if (part == null)
+            if (!RemoveBodyPart(part, out var slotName))
             {
                 return null;
             }
-
-            var slotName = Parts.FirstOrDefault(x => x.Value == part).Key;
-            Parts.Remove(slotName);
 
             // Call disconnect on all limbs that were hanging off this limb.
             if (TryGetBodyPartConnections(slotName, out List<string> connections))
@@ -561,7 +570,6 @@ namespace Content.Server.GameObjects.Components.Body
             partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
             OnBodyChanged();
             return partEntity;
-
         }
 
         /// <summary>
@@ -573,12 +581,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             DebugTools.AssertNotNull(part);
 
-            if (!Parts.ContainsValue(part))
-            {
-                return;
-            }
-
-            if (part == null)
+            if (!_parts.ContainsValue(part))
             {
                 return;
             }
@@ -658,7 +661,7 @@ namespace Content.Server.GameObjects.Components.Body
             DebugTools.AssertNotNull(part);
             DebugTools.AssertNotNull(slotName);
 
-            Parts.Add(slotName, part);
+            _parts.Add(slotName, part);
 
             part.Body = this;
 
@@ -669,20 +672,36 @@ namespace Content.Server.GameObjects.Components.Body
                 component.BodyPartAdded(argsAdded);
             }
 
-            var mapString = Template.Layers.GetValueOrDefault(slotName);
-
-            if (mapString == null ||
-                !_reflectionManager.TryParseEnumReference(mapString, out var @enum))
+            if (!Template.Layers.TryGetValue(slotName, out var partMap) ||
+                !_reflectionManager.TryParseEnumReference(partMap, out var partEnum))
             {
-                Logger.Warning($"Template {Template.Name} has an invalid RSI map key {mapString} for body part {part.Name}.");
+                Logger.Warning($"Template {Template.Name} has an invalid RSI map key {partMap} for body part {part.Name}.");
                 return;
             }
 
-            part.RSIMap = @enum;
+            part.RSIMap = partEnum;
 
-            var message = new BodyPartAddedMessage(part.RSIPath, part.RSIState, @enum);
+            var partMessage = new BodyPartAddedMessage(part.RSIPath, part.RSIState, partEnum);
 
-            SendNetworkMessage(message);
+            SendNetworkMessage(partMessage);
+
+            foreach (var mechanism in part.Mechanisms)
+            {
+                if (!Template.MechanismLayers.TryGetValue(mechanism.Id, out var mechanismMap))
+                {
+                    continue;
+                }
+
+                if (!_reflectionManager.TryParseEnumReference(mechanismMap, out var mechanismEnum))
+                {
+                    Logger.Warning($"Template {Template.Name} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Id}.");
+                    continue;
+                }
+
+                var mechanismMessage = new MechanismSpriteAddedMessage(mechanismEnum);
+
+                SendNetworkMessage(mechanismMessage);
+            }
         }
 
         /// <summary>
@@ -695,7 +714,7 @@ namespace Content.Server.GameObjects.Components.Body
         {
             DebugTools.AssertNotNull(slotName);
 
-            if (!Parts.Remove(slotName, out var part))
+            if (!_parts.Remove(slotName, out var part))
             {
                 return false;
             }
@@ -715,7 +734,45 @@ namespace Content.Server.GameObjects.Components.Body
                 SendNetworkMessage(message);
             }
 
+            foreach (var mechanism in part.Mechanisms)
+            {
+                if (!Template.MechanismLayers.TryGetValue(mechanism.Id, out var mechanismMap))
+                {
+                    continue;
+                }
+
+                if (!_reflectionManager.TryParseEnumReference(mechanismMap, out var mechanismEnum))
+                {
+                    Logger.Warning($"Template {Template.Name} has an invalid RSI map key {mechanismMap} for mechanism {mechanism.Id}.");
+                    continue;
+                }
+
+                var mechanismMessage = new MechanismSpriteRemovedMessage(mechanismEnum);
+
+                SendNetworkMessage(mechanismMessage);
+            }
+
             return true;
+        }
+
+        /// <summary>
+        ///     Removes the body part from this body, if one exists.
+        /// </summary>
+        /// <param name="part">The part to remove from this body.</param>
+        /// <param name="slotName">The slot that the part was in, if any.</param>
+        /// <returns>True if <see cref="part"/> was removed, false otherwise.</returns>
+        private bool RemoveBodyPart(BodyPart part, [NotNullWhen(true)] out string slotName)
+        {
+            DebugTools.AssertNotNull(part);
+
+            slotName = _parts.FirstOrDefault(pair => pair.Value == part).Key;
+
+            if (slotName == null)
+            {
+                return false;
+            }
+
+            return RemoveBodyPart(slotName);
         }
 
         #endregion

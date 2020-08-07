@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -21,6 +22,7 @@ namespace Content.Shared.Body.Template
         private Dictionary<string, BodyPartType> _slots;
         private Dictionary<string, List<string>> _connections;
         private Dictionary<string, string> _layers;
+        private Dictionary<string, string> _mechanismLayers;
 
         [ViewVariables] public string ID => _id;
 
@@ -28,11 +30,15 @@ namespace Content.Shared.Body.Template
 
         [ViewVariables] public string CenterSlot => _centerSlot;
 
-        [ViewVariables] public Dictionary<string, BodyPartType> Slots => _slots;
+        [ViewVariables] public Dictionary<string, BodyPartType> Slots => new Dictionary<string, BodyPartType>(_slots);
 
-        [ViewVariables] public Dictionary<string, List<string>> Connections => _connections;
+        [ViewVariables]
+        public Dictionary<string, List<string>> Connections =>
+            _connections.ToDictionary(x => x.Key, x => x.Value.ToList());
 
-        [ViewVariables] public Dictionary<string, string> Layers => _layers;
+        [ViewVariables] public Dictionary<string, string> Layers => new Dictionary<string, string>(_layers);
+
+        [ViewVariables] public Dictionary<string, string> MechanismLayers => new Dictionary<string, string>(_mechanismLayers);
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {
@@ -43,6 +49,7 @@ namespace Content.Shared.Body.Template
             serializer.DataField(ref _slots, "slots", new Dictionary<string, BodyPartType>());
             serializer.DataField(ref _connections, "connections", new Dictionary<string, List<string>>());
             serializer.DataField(ref _layers, "layers", new Dictionary<string, string>());
+            serializer.DataField(ref _mechanismLayers, "mechanismLayers", new Dictionary<string, string>());
 
             //Our prototypes don't force the user to define a BodyPart connection twice. E.g. Head: Torso v.s. Torso: Head.
             //The user only has to do one. We want it to be that way in the code, though, so this cleans that up.
