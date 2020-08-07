@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   abstract: true
   id: WireBase
   placement:
@@ -33,7 +33,9 @@
     base: hvcable_
     key: hv_cables
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
   - type: Wire
     wireDroppedOnCutPrototype: HVWireStack1
     wireType: HighVoltage
@@ -53,7 +55,9 @@
     base: mvcable_
     key: mv_cables
   - type: NodeContainer
-    nodeTypes: { MVPower : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
   - type: Wire
     wireDroppedOnCutPrototype: MVWireStack1
     wireType: MediumVoltage
@@ -73,7 +77,9 @@
     base: lvcable_
     key: lv_cables
   - type: NodeContainer
-    nodeTypes: { Apc : ["AdjacentNode"] }
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: Apc
   - type: PowerProvider
     voltage: Apc
   - type: Wire
@@ -90,14 +96,8 @@
   parent: ApcExtensionCable
   components:
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"], Apc : ["AdjacentNode"] }
-
-- type: entity
-  id: Generator
-  name: Depriciated Generator
-  parent: DebugGenerator
-  components:
-  - type: PowerSupplier
-    voltage: High
-    supplyRate: 100000
-
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+    - !type:AdjacentNode
+      nodeGroupID: Apc
