@@ -2,7 +2,7 @@
   parent: HatBase
   id: HatAtmosHelm
   name: atmos helm
-  description: ''
+  description: A helmet, designed for work in low-pressure enviroments.
   components:
   - type: Sprite
     sprite: Clothing/Head/atmos_helm.rsi
@@ -15,7 +15,7 @@
   parent: HatBase
   id: HatCultHelmet
   name: cult helmet
-  description: ''
+  description: A robust, evil-looking cult helmet.
   components:
   - type: Sprite
     sprite: Clothing/Head/cult_helmet.rsi
@@ -28,7 +28,7 @@
   parent: HatBase
   id: HatHardhatDblue
   name: hardhat dblue
-  description: ''
+  description: A hardhat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_dblue.rsi
@@ -41,7 +41,7 @@
   parent: HatBase
   id: HatHardhat Orange
   name: hardhat orange
-  description: ''
+  description: A hardhat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_orange.rsi
@@ -54,7 +54,7 @@
   parent: HatBase
   id: HatHardhatPumpkin
   name: hardhat pumpkin
-  description: ''
+  description: A jack o' lantern! Believed to ward off evil spirits.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_pumpkin.rsi
@@ -67,7 +67,7 @@
   parent: HatBase
   id: HatHardhatRed
   name: hardhat red
-  description: ''
+  description: A hardhat, painted in red, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_red.rsi
@@ -80,7 +80,7 @@
   parent: HatBase
   id: HatHardhatWhite
   name: hardhat white
-  description: ''
+  description: A hardhat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_white.rsi
@@ -93,7 +93,7 @@
   parent: HatBase
   id: HatHardhatYellow
   name: hardhat yellow
-  description: ''
+  description: A hardhat, painted in yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat0_yellow.rsi
@@ -106,7 +106,7 @@
   parent: HatBase
   id: HatHardhatPumpkinAlt
   name: hardhat pumpkin (alt)
-  description: ''
+  description: A jack o' lantern! Believed to ward off evil spirits.
   components:
   - type: Sprite
     sprite: Clothing/Head/hardhat1_pumpkin.rsi
@@ -120,7 +120,7 @@
   parent: HatBase
   id: HatLightRiot
   name: light riot
-  description: ''
+  description: It's a helmet specifically designed to protect against close range attacks.
   components:
   - type: Sprite
     sprite: Clothing/Head/light_riot.rsi
@@ -133,7 +133,7 @@
   parent: HatBase
   id: HatLightRiotOn
   name: light riot (on)
-  description: ''
+  description: It's a helmet specifically designed to protect against close range attacks.
   components:
   - type: Sprite
     sprite: Clothing/Head/light_riot_on.rsi
@@ -146,7 +146,7 @@
   parent: HatBase
   id: HatScaf
   name: scaf
-  description: ''
+  description: A robust, strong helmet.
   components:
   - type: Sprite
     sprite: Clothing/Head/scaf.rsi
@@ -159,7 +159,7 @@
   parent: HatBase
   id: HatSecurity
   name: security
-  description: ''
+  description: Standard issue security helmet.
   components:
   - type: Sprite
     sprite: Clothing/Head/security.rsi

@@ -151,6 +151,7 @@
             "Flippable",
             "Airtight",
             "MovedByPressure",
+            "DamageOnHighSpeedImpact",
         };
     }
 }
