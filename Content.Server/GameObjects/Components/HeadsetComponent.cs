@@ -31,8 +31,10 @@ namespace Content.Server.GameObjects.Components
 
         public override string Name => "Headset";
 
+        //only listens to speech in exact same position
         private int _listenRange = 0;
         private List<int> _channels = new List<int>();
+        private int _broadcastChannel;
         private RadioSystem _radioSystem = default!;
         public bool RadioRequested = false;
 
@@ -42,6 +44,7 @@ namespace Content.Server.GameObjects.Components
 
             _radioSystem = _entitySystemManager.GetEntitySystem<RadioSystem>();
             _channels.Add(1457);
+            _broadcastChannel = 1457;
         }
 
         public int GetListenRange()
@@ -53,7 +56,7 @@ namespace Content.Server.GameObjects.Components
         {
             if (RadioRequested)
             {
-                Broadcast(speech);
+                Broadcast(speech, source);
             }
             RadioRequested = false;
         }
@@ -63,7 +66,7 @@ namespace Content.Server.GameObjects.Components
             return Owner.Transform.GridPosition;
         }
 
-        public void Receiver(string message)
+        public void Receiver(string message, int channel, IEntity source)
         {
             if (ContainerHelpers.TryGetContainer(Owner, out IContainer container))
             {
@@ -76,15 +79,14 @@ namespace Content.Server.GameObjects.Components
 
                 msg.Channel = ChatChannel.Radio;
                 msg.Message = message;
-                msg.MessageWrap = $"From your headset, you hear: \"{{0}}\"";
+                msg.MessageWrap = $"[{channel.ToString()}] {source.Name} says, \"{{0}}\"";
                 _netManager.ServerSendMessage(msg, playerChannel);
             }
         }
 
-        public void Broadcast(string message)
+        public void Broadcast(string message, IEntity speaker)
         {
-            int channel = 1457;
-            _radioSystem.SpreadMessage(this, message, channel);
+            _radioSystem.SpreadMessage(this, speaker, message, _broadcastChannel);
         }
 
         public List<int> GetChannels()

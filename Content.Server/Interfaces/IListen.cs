@@ -7,7 +7,7 @@ using System.Text;
 namespace Content.Server.Interfaces
 {
     /// <summary>
-    ///     Interface for objects such as radios meant to have an effect when speech is heard. Requires ListeningComponent to be on the attached entity.
+    ///     Interface for objects such as radios meant to have an effect when speech is heard. Requires component reference.
     /// </summary>
     public interface IListen
     {

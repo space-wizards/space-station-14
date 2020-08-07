@@ -192,6 +192,9 @@ namespace Content.Client.Chat
                 case ChatChannel.Server:
                     color = Color.Orange;
                     break;
+                case ChatChannel.Radio:
+                    color = new Color(19, 255, 0);
+                    break;
                 case ChatChannel.OOC:
                     color = Color.LightSkyBlue;
                     break;
