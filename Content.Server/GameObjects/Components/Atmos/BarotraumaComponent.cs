@@ -4,6 +4,8 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Atmos;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -21,7 +23,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent(out DamageableComponent damageable)) return;
+            if (!Owner.TryGetComponent(out IDamageableComponent damageable)) return;
             Owner.TryGetComponent(out ServerStatusEffectsComponent status);
 
             var coordinates = Owner.Transform.GridPosition;
@@ -51,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                         goto default;
 
                     // TODO ATMOS Uncomment this when saltern is pressurized
-                    //damageable.TakeDamage(DamageType.Brute, Atmospherics.LowPressureDamage, Owner, null);
+                    //damageable.ChangeDamage(DamageType.Blunt, Atmospherics.LowPressureDamage, false, Owner);
 
                     if (status == null) break;
 
@@ -74,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
                     // TODO ATMOS Uncomment this when saltern is pressurized
-                    //damageable.TakeDamage(DamageType.Brute, damage, Owner, null);
+                    //damageable.ChangeDamage(DamageType.Blunt, damage, false, Owner);
 
                     if (status == null) break;
 

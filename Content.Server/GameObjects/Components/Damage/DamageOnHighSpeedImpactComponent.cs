@@ -1,7 +1,9 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Audio;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -22,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override string Name => "DamageOnHighSpeedImpact";
 
-        public DamageType Damage { get; set; } = DamageType.Brute;
+        public DamageType Damage { get; set; } = DamageType.Blunt;
         public float MinimumSpeed { get; set; } = 20f;
         public int BaseDamage { get; set; } = 5;
         public float Factor { get; set; } = 0.75f;
@@ -35,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             base.ExposeData(serializer);
 
-            serializer.DataField(this, x => Damage, "damage", DamageType.Brute);
+            serializer.DataField(this, x => Damage, "damage", DamageType.Blunt);
             serializer.DataField(this, x => MinimumSpeed, "minimumSpeed", 20f);
             serializer.DataField(this, x => BaseDamage, "baseDamage", 5);
             serializer.DataField(this, x => Factor, "factor", 1f);
@@ -61,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Damage
             if (Owner.TryGetComponent(out StunnableComponent stun) && _robustRandom.Prob(StunChance))
                 stun.Stun(StunSeconds);
 
-            damageable.TakeDamage(Damage, damage, collidedWith, Owner);
+            damageable.ChangeDamage(Damage, damage, false, collidedWith);
         }
     }
 }
