@@ -53,7 +53,7 @@ namespace Content.Server.Atmos.Reactions
 
                     energyReleased += Atmospherics.FirePhoronEnergyReleased * (phoronBurnRate);
 
-                    mixture.ReactionResultFire += (phoronBurnRate) * (1 + oxygenBurnRate);
+                    mixture.ReactionResults[GasReaction.Fire] += (phoronBurnRate) * (1 + oxygenBurnRate);
                 }
             }
 
@@ -69,15 +69,15 @@ namespace Content.Server.Atmos.Reactions
                 temperature = mixture.Temperature;
                 if (temperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    location.HotspotExpose(temperature, Atmospherics.CellVolume);
+                    location.HotspotExpose(temperature, mixture.Volume);
 
                     // TODO ATMOS Expose temperature all items on cell
 
-                    location.TemperatureExpose(mixture, temperature, Atmospherics.CellVolume);
+                    location.TemperatureExpose(mixture, temperature, mixture.Volume);
                 }
             }
 
-            return mixture.ReactionResultFire != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
+            return mixture.ReactionResults[GasReaction.Fire] != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
         }
 
         public void ExposeData(ObjectSerializer serializer)

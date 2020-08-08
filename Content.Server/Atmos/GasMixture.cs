@@ -36,6 +36,13 @@ namespace Content.Server.Atmos
         public float LastShare { get; private set; } = 0;
 
         [ViewVariables]
+        public readonly Dictionary<GasReaction, float> ReactionResults = new Dictionary<GasReaction, float>()
+        {
+            // We initialize the dictionary here.
+            { GasReaction.Fire, 0f }
+        };
+
+        [ViewVariables]
         public float HeatCapacity
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -106,8 +113,6 @@ namespace Content.Server.Atmos
                 _temperature = MathF.Max(value, Atmospherics.TCMB);
             }
         }
-
-        public float ReactionResultFire { get; set; }
 
         [ViewVariables]
         public float ThermalEnergy => Temperature * HeatCapacity;

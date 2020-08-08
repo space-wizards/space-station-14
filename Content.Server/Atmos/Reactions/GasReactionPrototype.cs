@@ -16,6 +16,11 @@ namespace Content.Server.Atmos.Reactions
         StopReactions = 2,
     }
 
+    public enum GasReaction : byte
+    {
+        Fire = 0,
+    }
+
     [Prototype("gasReaction")]
     public class GasReactionPrototype : IPrototype, IIndexedPrototype
     {
