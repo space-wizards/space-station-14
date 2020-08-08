@@ -1,10 +1,12 @@
 ﻿#nullable enable
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
+using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Reactions
 {
+    [UsedImplicitly]
     public class TritiumFireReaction : IGasReactionEffect
     {
         public void ExposeData(ObjectSerializer serializer)
