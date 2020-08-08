@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces;
+﻿#nullable enable
+using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization;
 
