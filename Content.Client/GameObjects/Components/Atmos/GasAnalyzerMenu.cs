@@ -181,7 +181,7 @@ namespace Content.Client.GameObjects.Components.Atmos
             
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Pressure: {0:0.##}", state.Pressure)
+                Text = Loc.GetString("Pressure: {0:0.##} kPa", state.Pressure)
             });
             _statusContainer.AddChild(new Label
             {
