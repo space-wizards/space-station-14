@@ -8,7 +8,16 @@
   "copyright": "Taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
   "states": [
     {
-      "name": "bee-0",
+      "name": "dead",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "0",
       "directions": 1,
       "delays": [
         [
@@ -25,7 +34,7 @@
       ]
     },
     {
-      "name": "bee-1",
+      "name": "1",
       "directions": 1,
       "delays": [
         [
@@ -42,7 +51,7 @@
       ]
     },
     {
-      "name": "bee-2",
+      "name": "2",
       "directions": 1,
       "delays": [
         [
@@ -59,7 +68,24 @@
       ]
     },
     {
-      "name": "bee-3",
+      "name": "3",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "4",
       "directions": 1,
       "delays": [
         [
