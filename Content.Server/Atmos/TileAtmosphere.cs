@@ -642,7 +642,7 @@ namespace Content.Server.Atmos
             ExcitedGroup?.ResetCooldowns();
 
             if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
-                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || Air.Gases[(int)Gas.Phoron] < 0.5f)
+                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Phoron] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 Hotspot = new Hotspot();
                 UpdateVisuals();
