@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -641,7 +642,7 @@ namespace Content.Server.Atmos
             ExcitedGroup?.ResetCooldowns();
 
             if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
-                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || Air.Gases[(int)Gas.Phoron] < 0.5f)
+                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Phoron] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 Hotspot = new Hotspot();
                 UpdateVisuals();
@@ -686,7 +687,7 @@ namespace Content.Server.Atmos
 
             if (Hotspot.Bypassing)
             {
-                Hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
+                Hotspot.Volume = Air.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Hotspot.Temperature = Air.Temperature;
             }
             else
@@ -697,7 +698,7 @@ namespace Content.Server.Atmos
                     affected.Temperature = Hotspot.Temperature;
                     affected.React(this);
                     Hotspot.Temperature = affected.Temperature;
-                    Hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
+                    Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                     AssumeAir(affected);
                 }
             }

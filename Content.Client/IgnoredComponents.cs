@@ -151,7 +151,10 @@
             "Flippable",
             "Airtight",
             "MovedByPressure",
+            "Spray",
+            "Vapor",
             "DamageOnHighSpeedImpact",
+            "Barotrauma",
         };
     }
 }

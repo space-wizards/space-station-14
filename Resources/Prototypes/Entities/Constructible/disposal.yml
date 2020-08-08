@@ -100,6 +100,14 @@
       layer:
       - Impassable
       - MobImpassable
+  - type: Collidable
+    anchored: true
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
   - type: SnapGrid
     offset: Center
   - type: Anchorable
