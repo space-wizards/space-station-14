@@ -66,7 +66,8 @@ namespace Content.Shared.GameObjects.Components
         public enum GasAnalyzerDanger
         {
             Nominal,
-            Danger
+            Warning,
+            Hazard
         }
 
         [Serializable, NetSerializable]

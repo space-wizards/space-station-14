@@ -74,6 +74,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         private void Resync()
         {
+            // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             var pressure = 0f;
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
             var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
@@ -81,12 +82,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             {
                 pressure = tile.Pressure;
             }
-            _pressureDanger = pressure > 5f ? GasAnalyzerDanger.Danger : GasAnalyzerDanger.Nominal;
+
+            if (pressure >= Atmospherics.HazardHighPressure || pressure <= Atmospherics.HazardLowPressure)
+            {
+                _pressureDanger = GasAnalyzerDanger.Hazard;
+            }
+            else if (pressure >= Atmospherics.WarningHighPressure || pressure <= Atmospherics.WarningLowPressure)
+            {
+                _pressureDanger = GasAnalyzerDanger.Warning;
+            }
+            else
+            {
+                _pressureDanger = GasAnalyzerDanger.Nominal;
+            }
+            
             Dirty();
             _timeSinceSync = 0f;
         }
-
-
 
         private void UpdateUserInterface()
         {
@@ -153,6 +165,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     }
 
                     UpdateUserInterface();
+                    Resync();
                     break;
             }
         }

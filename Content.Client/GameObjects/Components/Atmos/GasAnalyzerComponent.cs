@@ -58,11 +58,15 @@ namespace Content.Client.GameObjects.Components.Atmos
                 }
 
                 _parent._uiUpdateNeeded = false;
-
-                var danger = _parent.Danger == GasAnalyzerDanger.Danger;
+                var color = _parent.Danger switch
+                {
+                    GasAnalyzerDanger.Warning => "orange",
+                    GasAnalyzerDanger.Hazard => "red",
+                    _ => "green",
+                };
                 _label.SetMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color]",
-                    danger ? "red" : "green",
-                    danger ? "DANGER" : "NOMINAL"));
+                    color,
+                    Enum.GetName(typeof(GasAnalyzerDanger), _parent.Danger)));
             }
         }
     }
