@@ -154,6 +154,7 @@
             "Spray",
             "Vapor",
             "DamageOnHighSpeedImpact",
+            "Barotrauma",
         };
     }
 }
