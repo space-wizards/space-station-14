@@ -27,7 +27,7 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
                 }
 
-                conveyor.Update();
+                conveyor.Update(frameTime);
             }
         }
     }
