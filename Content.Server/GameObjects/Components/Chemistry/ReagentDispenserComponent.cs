@@ -80,6 +80,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
 
             InitializeFromPrototype();
             UpdateUserInterface();
@@ -103,6 +104,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 Inventory.Add(new ReagentDispenserInventoryEntry(entry));
             }
+        }
+
+        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        {
+            UpdateUserInterface();
         }
 
         /// <summary>
@@ -191,12 +197,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
-            return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
+            return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
                 beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 

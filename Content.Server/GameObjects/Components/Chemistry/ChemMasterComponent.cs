@@ -83,11 +83,17 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.Solution = new Solution();
             BufferSolution.MaxVolume = ReagentUnit.New(1000);
 
+            UpdateUserInterface();
+        }
+
+        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        {
             UpdateUserInterface();
         }
 
@@ -164,12 +170,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ChemMasterBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Owner.Name, null, BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
-            return new ChemMasterBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
+            return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
                 beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
         }
 
