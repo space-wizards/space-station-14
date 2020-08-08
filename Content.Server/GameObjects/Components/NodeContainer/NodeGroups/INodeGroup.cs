@@ -2,6 +2,7 @@
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -71,13 +72,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 node.ClearNodeGroup();
             }
+            var newGroups = new List<INodeGroup>();
             foreach (var node in Nodes)
             {
                 if (node.TryAssignGroupIfNeeded())
                 {
                     node.SpreadGroup();
+                    newGroups.Add(node.NodeGroup);
                 }
             }
+            AfterRemake(newGroups);
         }
 
         protected virtual void OnAddNode(Node node) { }
@@ -85,6 +89,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected virtual void OnRemoveNode(Node node) { }
 
         protected virtual void OnGivingNodesForRemake() { }
+
+        protected virtual void AfterRemake(IEnumerable<INodeGroup> newGroups) { }
 
         private class NullNodeGroup : INodeGroup
         {
