@@ -136,7 +136,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return true;
         }
 
-        public void Update()
+        public void Update(float frameTime)
         {
             if (!CanRun())
             {
@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
                 if (entity.TryGetComponent(out ICollidableComponent collidable))
                 {
                     var controller = collidable.EnsureController<ConveyedController>();
-                    controller.Move(direction, _speed);
+                    controller.Move(direction, _speed * frameTime);
                 }
             }
         }
