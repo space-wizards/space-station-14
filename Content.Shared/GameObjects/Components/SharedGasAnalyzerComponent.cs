@@ -11,6 +11,7 @@ namespace Content.Shared.GameObjects.Components
     public class SharedGasAnalyzerComponent : Component
     {
         public override string Name => "GasAnalyzer";
+        public override uint? NetID => ContentNetIDs.GAS_ANALYZER;
 
         [Serializable, NetSerializable]
         public enum GasAnalyzerUiKey
@@ -59,6 +60,24 @@ namespace Content.Shared.GameObjects.Components
         public class GasAnalyzerRefreshMessage : BoundUserInterfaceMessage
         {
             public GasAnalyzerRefreshMessage() {}
+        }
+
+        [Serializable, NetSerializable]
+        public enum GasAnalyzerDanger
+        {
+            Nominal,
+            Danger
+        }
+
+        [Serializable, NetSerializable]
+        public class GasAnalyzerComponentState : ComponentState
+        {
+            public GasAnalyzerDanger Danger;
+
+            public GasAnalyzerComponentState(GasAnalyzerDanger danger) : base(ContentNetIDs.GAS_ANALYZER)
+            {
+                Danger = danger;
+            }
         }
     }
 }

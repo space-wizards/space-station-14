@@ -1,0 +1,69 @@
+﻿using Content.Client.UserInterface.Stylesheets;
+using Content.Client.Utility;
+using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Content.Client.GameObjects.Components.Atmos
+{
+    [RegisterComponent]
+    class GasAnalyzerComponent : SharedGasAnalyzerComponent, IItemStatus
+    {
+        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
+        [ViewVariables] public GasAnalyzerDanger Danger { get; private set; }
+
+        Control IItemStatus.MakeControl()
+        {
+            return new StatusControl(this);
+        }
+
+        public override void HandleComponentState(ComponentState curState, ComponentState nextState)
+        {
+            if (!(curState is GasAnalyzerComponentState state))
+                return;
+
+            Danger = state.Danger;
+            _uiUpdateNeeded = true;
+        }
+
+        private sealed class StatusControl : Control
+        {
+            private readonly GasAnalyzerComponent _parent;
+            private readonly RichTextLabel _label;
+
+            public StatusControl(GasAnalyzerComponent parent)
+            {
+                _parent = parent;
+                _label = new RichTextLabel { StyleClasses = { StyleNano.StyleClassItemStatus } };
+                AddChild(_label);
+
+                parent._uiUpdateNeeded = true;
+            }
+
+            protected override void Update(FrameEventArgs args)
+            {
+                base.Update(args);
+
+                if (!_parent._uiUpdateNeeded)
+                {
+                    return;
+                }
+
+                _parent._uiUpdateNeeded = false;
+
+                var danger = _parent.Danger == GasAnalyzerDanger.Danger;
+                _label.SetMarkup(Loc.GetString("Pressure: [color={0}]{1}[/color]",
+                    danger ? "red" : "green",
+                    danger ? "DANGER" : "NOMINAL"));
+            }
+        }
+    }
+}

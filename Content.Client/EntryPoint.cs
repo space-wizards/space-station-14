@@ -63,7 +63,6 @@ namespace Content.Client
 
             factory.Register<SharedSolutionComponent>();
 
-            factory.Register<SharedGasAnalyzerComponent>();
             factory.Register<SharedVendingMachineComponent>();
             factory.Register<SharedWiresComponent>();
             factory.Register<SharedCargoConsoleComponent>();

@@ -30,6 +30,9 @@ namespace Content.Server.GameObjects.Components.Atmos
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface = default!;
+        private GasAnalyzerDanger _pressureDanger;
+        private float _timeSinceSync;
+        private const float TimeBetweenSyncs = 10f;
 
         public override void Initialize()
         {
@@ -39,6 +42,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
         }
 
+        public override ComponentState GetComponentState()
+        {
+            return new GasAnalyzerComponentState(_pressureDanger);
+        }
+
         /// <summary>
         /// Call this from other components to open the gas analyzer UI.
         /// </summary>
@@ -46,12 +54,39 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             _userInterface.Open(session);
             UpdateUserInterface();
+            Resync();
         }
 
         public void CloseInterface(IPlayerSession session)
         {
             _userInterface.Close(session);
+            Resync();
         }
+
+        public void Update(float frameTime)
+        {
+            _timeSinceSync += frameTime;
+            if (_timeSinceSync > TimeBetweenSyncs)
+            {
+                Resync();
+            }
+        }
+
+        private void Resync()
+        {
+            var pressure = 0f;
+            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
+            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
+            if (tile != null)
+            {
+                pressure = tile.Pressure;
+            }
+            _pressureDanger = pressure > 5f ? GasAnalyzerDanger.Danger : GasAnalyzerDanger.Nominal;
+            Dirty();
+            _timeSinceSync = 0f;
+        }
+
+
 
         private void UpdateUserInterface()
         {

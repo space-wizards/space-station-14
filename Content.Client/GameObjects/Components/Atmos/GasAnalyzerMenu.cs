@@ -226,11 +226,13 @@ namespace Content.Client.GameObjects.Components.Atmos
             {
                 CustomMinimumSize = new Vector2(0, 10)
             });
+
             var totalGasAmount = 0f;
             foreach (var gas in state.Gases)
             {
                 totalGasAmount += gas.Amount;
             }
+
             for (int i = 0; i < state.Gases.Length; i++)
             {
                 var gas = state.Gases[i];
