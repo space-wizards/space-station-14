@@ -10,7 +10,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.GameObjects.Components.Items.RCD
 {
     [RegisterComponent]
     public class RCDAmmoComponent : Component, IAfterInteract, IExamine

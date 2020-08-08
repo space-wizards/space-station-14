@@ -24,7 +24,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Items
+namespace Content.Server.GameObjects.Components.Items.RCD
 {
     [RegisterComponent]
     public class RCDComponent : Component, IAfterInteract, IUse, IExamine
@@ -148,9 +148,16 @@ namespace Content.Server.GameObjects.Components.Items
                     }
                     else //Delete what the user targeted
                     {
-                        //Don't delete mobs or puddles
-                        if (eventArgs.Target == null || eventArgs.Target.TryGetComponent(out PuddleComponent puddleComponent) || eventArgs.Target.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
+                        //They tried to decon a turf but the turf is blocked
+                        if (eventArgs.Target == null)
                         {
+                            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                            return;
+                        }
+
+                        if (!eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist rcd_decon))
+                        {
+                            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can't deconstruct that!");
                             return;
                         }
 
