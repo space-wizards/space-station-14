@@ -264,9 +264,15 @@ namespace Content.Server.GameObjects.Components.Chemistry
         {
             var random = IoCManager.Resolve<IRobustRandom>();
 
+            if (BufferSolution.CurrentVolume == 0)
+                return;
+
             if (action == UiAction.CreateBottles)
             {
                 var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(bottleAmount);
+                if (individualVolume < ReagentUnit.New(1))
+                    return;
+
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(30));
                 for (int i = 0; i < bottleAmount; i++)
                 {
@@ -301,6 +307,9 @@ namespace Content.Server.GameObjects.Components.Chemistry
             else //Pills
             {
                 var individualVolume = BufferSolution.CurrentVolume / ReagentUnit.New(pillAmount);
+                if (individualVolume < ReagentUnit.New(1))
+                    return;
+
                 var actualVolume = ReagentUnit.Min(individualVolume, ReagentUnit.New(50));
                 for (int i = 0; i < pillAmount; i++)
                 {
