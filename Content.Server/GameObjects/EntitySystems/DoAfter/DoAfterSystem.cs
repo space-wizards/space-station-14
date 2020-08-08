@@ -16,17 +16,14 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         [Dependency] private readonly IPauseManager _pauseManager = default!;
 
-        private TypeEntityQuery _entityQuery = new TypeEntityQuery(typeof(DoAfterComponent));
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
             
-            foreach (var entity in EntityManager.GetEntities(_entityQuery))
+            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>())
             {
-                if (_pauseManager.IsGridPaused(entity.Transform.GridID)) continue;
+                if (_pauseManager.IsGridPaused(comp.Owner.Transform.GridID)) continue;
                 
-                var comp = entity.GetComponent<DoAfterComponent>();
                 var cancelled = new List<DoAfter>(0);
                 var finished = new List<DoAfter>(0);
 
