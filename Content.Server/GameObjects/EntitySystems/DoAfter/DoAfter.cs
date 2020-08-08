@@ -1,6 +1,8 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
+using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -28,6 +30,10 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
         
+        // NeedHand
+        private string? _activeHand;
+        private ItemComponent? _activeItem;
+        
         public DoAfter(DoAfterEventArgs eventArgs)
         {
             EventArgs = eventArgs;
@@ -41,6 +47,14 @@ namespace Content.Server.GameObjects.EntitySystems
             if (eventArgs.BreakOnTargetMove)
             {
                 TargetGrid = eventArgs.Target.Transform.GridPosition;
+            }
+
+            // For this we need to stay on the same hand slot and need the same item in that hand slot
+            // (or if there is no item there we need to keep it free).
+            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            {
+                _activeHand = handsComponent.ActiveHand;
+                _activeItem = handsComponent.GetActiveHand;
             }
             
             Tcs = new TaskCompletionSource<DoAfterStatus>();
@@ -114,11 +128,31 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return true;
             }
-
-            // I didn't fully understand what this was doing in the original do_after code, if it's checking for any hand free?
+            
             if (EventArgs.NeedHand)
             {
-                // TODO:
+                if (!EventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+                {
+                    // If we had a hand but no longer have it that's still a paddlin'
+                    if (_activeHand != null)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    var currentActiveHand = handsComponent.ActiveHand;
+                    if (_activeHand != currentActiveHand)
+                    {
+                        return true;
+                    }
+
+                    var currentItem = handsComponent.GetActiveHand;
+                    if (_activeItem != currentItem)
+                    {
+                        return true;
+                    }
+                }
             }
 
             return false;

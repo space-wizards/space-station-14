@@ -28,6 +28,10 @@ namespace Content.Server.GameObjects.EntitySystems
         public CancellationToken CancelToken { get; }
         
         // Break the chains
+        /// <summary>
+        ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item).
+        ///     This also covers requiring the hand to be free (if applicable).
+        /// </summary>
         public bool NeedHand { get; }
         
         /// <summary>
