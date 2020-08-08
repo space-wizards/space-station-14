@@ -39,7 +39,7 @@ namespace Content.Client.GameObjects.Components
         }
 
         /// <summary>
-        /// Remove a DoAfter without showing a cancellation graphic.
+        ///     Remove a DoAfter without showing a cancellation graphic.
         /// </summary>
         /// <param name="doAfter"></param>
         public void Remove(DoAfterMessage doAfter)
@@ -64,9 +64,9 @@ namespace Content.Client.GameObjects.Components
         }
 
         /// <summary>
-        /// Mark a DoAfter as cancelled and show a cancellation graphic.
+        ///     Mark a DoAfter as cancelled and show a cancellation graphic.
         /// </summary>
-        /// Actual removal is handled by DoAfterEntitySystem.
+        ///     Actual removal is handled by DoAfterEntitySystem.
         /// <param name="id"></param>
         /// <param name="currentTime"></param>
         public void Cancel(byte id, TimeSpan? currentTime = null)

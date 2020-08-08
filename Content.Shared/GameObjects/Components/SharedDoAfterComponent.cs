@@ -26,7 +26,7 @@ namespace Content.Shared.GameObjects.Components
     }
 
     /// <summary>
-    ///     We send a trimmed-down version of the DoAfter for the client for its overlay to use.
+    ///     We send a trimmed-down version of the DoAfter for the client for it to use.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class DoAfterMessage : ComponentMessage

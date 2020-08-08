@@ -277,7 +277,6 @@ namespace Content.Server.GameObjects.EntitySystems
                 EventArgs.User.TryGetComponent(out StunnableComponent stunnableComponent) &&
                 stunnableComponent.Stunned)
             {
-                // Stunned or paralyzed on tgstation
                 return true;
             }
 
