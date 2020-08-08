@@ -457,19 +457,25 @@ namespace Content.Server.Atmos
                     temperature < prototype.MinimumTemperatureRequirement)
                     continue;
 
+                var breakLoop = false;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
                     if(i > Atmospherics.TotalNumberOfGases)
                         throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
 
                     var req = prototype.MinimumRequirements[i];
-                    if (GetMoles(i) < req)
-                        continue;
 
-                    reaction = prototype.React(this, holder);
-                    if(reaction.HasFlag(ReactionResult.StopReactions))
-                        break;
+                    if (!(GetMoles(i) < req)) continue;
+                    breakLoop = true;
+                    break;
                 }
+
+                if (breakLoop)
+                    break;
+
+                reaction = prototype.React(this, holder);
+                if(reaction.HasFlag(ReactionResult.StopReactions))
+                    break;
             }
 
             return reaction;
