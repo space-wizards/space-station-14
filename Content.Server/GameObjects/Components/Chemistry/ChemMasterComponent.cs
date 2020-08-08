@@ -98,10 +98,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity))
+            var msg = (UiActionMessage) obj.Message;
+            var needsPower = msg.action switch
+            {
+                UiAction.Eject => false,
+                _ => true,
+            };
+
+            if (!PlayerCanUseChemMaster(obj.Session.AttachedEntity, needsPower))
                 return;
 
-            var msg = (UiActionMessage) obj.Message;
             switch (msg.action)
             {
                 case UiAction.Eject:
@@ -134,7 +140,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the chem master, and false if it cannot.</returns>
-        private bool PlayerCanUseChemMaster(IEntity playerEntity)
+        private bool PlayerCanUseChemMaster(IEntity playerEntity, bool needsPower = true)
         {
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
@@ -143,7 +149,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
                 return false;
             //Check if device is powered
-            if (!Powered)
+            if (needsPower && !Powered)
                 return false;
 
             return true;
@@ -340,9 +346,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     _localizationManager.GetString("You have no hands."));
                 return;
             }
-
-            if (!Powered)
-                return;
 
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
