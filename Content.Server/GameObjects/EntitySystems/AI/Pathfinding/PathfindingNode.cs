@@ -269,7 +269,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             if (entity.TryGetComponent(out ICollidableComponent collidableComponent) && 
                 (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0)
             {
-                if (entity.TryGetComponent(out IPhysicsComponent physicsComponent) && !physicsComponent.Anchored)
+                if (!collidableComponent.Anchored)
                 {
                     _physicsLayers.Add(entity.Uid, collidableComponent.CollisionLayer);
                 }
