@@ -122,8 +122,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void RepopulateTiles()
         {
-            _tiles.Clear();
-
             foreach (var tile in _grid.GetAllTiles())
             {
                 if(!_tiles.ContainsKey(tile.GridIndices))
@@ -160,13 +158,14 @@ namespace Content.Server.GameObjects.Components.Atmos
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
+
                 } else if (IsAirBlocked(indices))
                 {
                     tile.Air = null;
                 }
                 else
                 {
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1));
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
                 }
 
                 tile.UpdateAdjacent();
@@ -475,6 +474,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture> uniqueMixes) ||
                     !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int> tiles))
                     return;
+
+                _tiles.Clear();
+
                 foreach (var (indices, mix) in tiles)
                 {
                     _tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes[mix].Clone()));
@@ -487,6 +489,21 @@ namespace Content.Server.GameObjects.Components.Atmos
                 foreach (var (indices, tile) in _tiles)
                 {
                     if (tile.Air == null) continue;
+
+                    var isUnique = true;
+                    for (var i = 0; i < uniqueMixes.Count; i++)
+                    {
+                        var mix = uniqueMixes[i];
+                        if (!mix.Equals(tile.Air)) continue;
+                        isUnique = false;
+                        tiles[indices] = i;
+                        Logger.Info($"FOUND MATCH! {i} ORIG: {indices}");
+                        break;
+                    }
+
+                    if(!isUnique)
+                        continue;
+
                     uniqueMixes.Add(tile.Air);
                     tiles[indices] = uniqueMixes.Count - 1;
                 }

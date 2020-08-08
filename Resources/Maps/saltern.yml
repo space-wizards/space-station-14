@@ -123,6 +123,10 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAA+AAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAPQAAAD0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAD0AAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAA9AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAA+AAAAPgAAAD4AAAA+AAAAPQAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAOAAAADgAAAA4AAAAPgAAAD0AAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAADgAAAA4AAAAOAAAADoAAAA9AAAAPQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAA4AAAAOAAAADgAAAA+AAAAPQAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4AAAA+AAAAPgAAADgAAAA4AAAAPgAAAD0AAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA4AAAAOAAAAD4AAAA9AAAAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAD4AAAA+AAAAOAAAADgAAAA+AAAAPQAAADoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAOAAAADgAAAA4AAAAPgAAAD0AAAA6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAADgAAAA4AAAAOAAAAD4AAAA9AAAAOgAAAA==
   - ind: "3,-1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAPgAAAD4AAAA+AAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPQAAAD0AAAA9AAAAPQAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADoAAAA6AAAAOgAAAD0AAAA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA6AAAAOgAAADoAAAA9AAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOgAAADoAAAA6AAAAPQAAAD4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0AAAA9AAAAPQAAAD0AAAA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+AAAAOgAAAD4AAAA+AAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAAAADgAAAA4AAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "2,1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  - ind: "-3,1"
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
   type: DisposalTrunk
@@ -221,12 +225,12 @@ entities:
     pos: -5.5,-14.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 8
   type: DisposalPipe
   components:
@@ -323,6 +327,10834 @@ entities:
     - !type:PhysShapeGrid
       grid: 0
     type: Collidable
+  - uniqueMixes:
+    - volume: 2500
+      moles:
+      - 20
+      - 80
+      - 0
+      - 0
+      - 0
+      - 0
+      molesArchived:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      temperature: 293.15
+    tiles:
+      ? X: -16
+        Y: -16
+      : 0
+      ? X: -16
+        Y: -15
+      : 0
+      ? X: -16
+        Y: -14
+      : 0
+      ? X: -16
+        Y: -13
+      : 0
+      ? X: -16
+        Y: -12
+      : 0
+      ? X: -16
+        Y: -11
+      : 0
+      ? X: -16
+        Y: -10
+      : 0
+      ? X: -16
+        Y: -9
+      : 0
+      ? X: -16
+        Y: -8
+      : 0
+      ? X: -16
+        Y: -7
+      : 0
+      ? X: -16
+        Y: -6
+      : 0
+      ? X: -16
+        Y: -5
+      : 0
+      ? X: -16
+        Y: -4
+      : 0
+      ? X: -16
+        Y: -3
+      : 0
+      ? X: -16
+        Y: -2
+      : 0
+      ? X: -16
+        Y: -1
+      : 0
+      ? X: -15
+        Y: -16
+      : 0
+      ? X: -15
+        Y: -15
+      : 0
+      ? X: -15
+        Y: -14
+      : 0
+      ? X: -15
+        Y: -13
+      : 0
+      ? X: -15
+        Y: -12
+      : 0
+      ? X: -15
+        Y: -11
+      : 0
+      ? X: -15
+        Y: -10
+      : 0
+      ? X: -15
+        Y: -9
+      : 0
+      ? X: -15
+        Y: -8
+      : 0
+      ? X: -15
+        Y: -7
+      : 0
+      ? X: -15
+        Y: -6
+      : 0
+      ? X: -15
+        Y: -5
+      : 0
+      ? X: -15
+        Y: -4
+      : 0
+      ? X: -15
+        Y: -3
+      : 0
+      ? X: -15
+        Y: -2
+      : 0
+      ? X: -15
+        Y: -1
+      : 0
+      ? X: -14
+        Y: -16
+      : 0
+      ? X: -14
+        Y: -15
+      : 0
+      ? X: -14
+        Y: -14
+      : 0
+      ? X: -14
+        Y: -13
+      : 0
+      ? X: -14
+        Y: -12
+      : 0
+      ? X: -14
+        Y: -11
+      : 0
+      ? X: -14
+        Y: -10
+      : 0
+      ? X: -14
+        Y: -9
+      : 0
+      ? X: -14
+        Y: -8
+      : 0
+      ? X: -14
+        Y: -7
+      : 0
+      ? X: -14
+        Y: -6
+      : 0
+      ? X: -14
+        Y: -5
+      : 0
+      ? X: -14
+        Y: -4
+      : 0
+      ? X: -14
+        Y: -3
+      : 0
+      ? X: -14
+        Y: -2
+      : 0
+      ? X: -14
+        Y: -1
+      : 0
+      ? X: -13
+        Y: -16
+      : 0
+      ? X: -13
+        Y: -15
+      : 0
+      ? X: -13
+        Y: -14
+      : 0
+      ? X: -13
+        Y: -13
+      : 0
+      ? X: -13
+        Y: -12
+      : 0
+      ? X: -13
+        Y: -11
+      : 0
+      ? X: -13
+        Y: -10
+      : 0
+      ? X: -13
+        Y: -9
+      : 0
+      ? X: -13
+        Y: -8
+      : 0
+      ? X: -13
+        Y: -7
+      : 0
+      ? X: -13
+        Y: -6
+      : 0
+      ? X: -13
+        Y: -5
+      : 0
+      ? X: -13
+        Y: -4
+      : 0
+      ? X: -13
+        Y: -3
+      : 0
+      ? X: -13
+        Y: -2
+      : 0
+      ? X: -13
+        Y: -1
+      : 0
+      ? X: -12
+        Y: -16
+      : 0
+      ? X: -12
+        Y: -15
+      : 0
+      ? X: -12
+        Y: -14
+      : 0
+      ? X: -12
+        Y: -13
+      : 0
+      ? X: -12
+        Y: -12
+      : 0
+      ? X: -12
+        Y: -11
+      : 0
+      ? X: -12
+        Y: -10
+      : 0
+      ? X: -12
+        Y: -9
+      : 0
+      ? X: -12
+        Y: -8
+      : 0
+      ? X: -12
+        Y: -7
+      : 0
+      ? X: -12
+        Y: -6
+      : 0
+      ? X: -12
+        Y: -5
+      : 0
+      ? X: -12
+        Y: -4
+      : 0
+      ? X: -12
+        Y: -3
+      : 0
+      ? X: -12
+        Y: -2
+      : 0
+      ? X: -12
+        Y: -1
+      : 0
+      ? X: -11
+        Y: -16
+      : 0
+      ? X: -11
+        Y: -15
+      : 0
+      ? X: -11
+        Y: -14
+      : 0
+      ? X: -11
+        Y: -13
+      : 0
+      ? X: -11
+        Y: -12
+      : 0
+      ? X: -11
+        Y: -11
+      : 0
+      ? X: -11
+        Y: -10
+      : 0
+      ? X: -11
+        Y: -9
+      : 0
+      ? X: -11
+        Y: -8
+      : 0
+      ? X: -11
+        Y: -7
+      : 0
+      ? X: -11
+        Y: -6
+      : 0
+      ? X: -11
+        Y: -5
+      : 0
+      ? X: -11
+        Y: -4
+      : 0
+      ? X: -11
+        Y: -3
+      : 0
+      ? X: -11
+        Y: -2
+      : 0
+      ? X: -11
+        Y: -1
+      : 0
+      ? X: -10
+        Y: -16
+      : 0
+      ? X: -10
+        Y: -15
+      : 0
+      ? X: -10
+        Y: -14
+      : 0
+      ? X: -10
+        Y: -13
+      : 0
+      ? X: -10
+        Y: -12
+      : 0
+      ? X: -10
+        Y: -11
+      : 0
+      ? X: -10
+        Y: -10
+      : 0
+      ? X: -10
+        Y: -9
+      : 0
+      ? X: -10
+        Y: -8
+      : 0
+      ? X: -10
+        Y: -7
+      : 0
+      ? X: -10
+        Y: -6
+      : 0
+      ? X: -10
+        Y: -5
+      : 0
+      ? X: -10
+        Y: -4
+      : 0
+      ? X: -10
+        Y: -3
+      : 0
+      ? X: -10
+        Y: -2
+      : 0
+      ? X: -10
+        Y: -1
+      : 0
+      ? X: -9
+        Y: -16
+      : 0
+      ? X: -9
+        Y: -15
+      : 0
+      ? X: -9
+        Y: -14
+      : 0
+      ? X: -9
+        Y: -13
+      : 0
+      ? X: -9
+        Y: -12
+      : 0
+      ? X: -9
+        Y: -11
+      : 0
+      ? X: -9
+        Y: -10
+      : 0
+      ? X: -9
+        Y: -9
+      : 0
+      ? X: -9
+        Y: -8
+      : 0
+      ? X: -9
+        Y: -7
+      : 0
+      ? X: -9
+        Y: -6
+      : 0
+      ? X: -9
+        Y: -5
+      : 0
+      ? X: -9
+        Y: -4
+      : 0
+      ? X: -9
+        Y: -3
+      : 0
+      ? X: -9
+        Y: -2
+      : 0
+      ? X: -9
+        Y: -1
+      : 0
+      ? X: -8
+        Y: -16
+      : 0
+      ? X: -8
+        Y: -15
+      : 0
+      ? X: -8
+        Y: -14
+      : 0
+      ? X: -8
+        Y: -13
+      : 0
+      ? X: -8
+        Y: -12
+      : 0
+      ? X: -8
+        Y: -11
+      : 0
+      ? X: -8
+        Y: -10
+      : 0
+      ? X: -8
+        Y: -9
+      : 0
+      ? X: -8
+        Y: -8
+      : 0
+      ? X: -8
+        Y: -7
+      : 0
+      ? X: -8
+        Y: -6
+      : 0
+      ? X: -8
+        Y: -5
+      : 0
+      ? X: -8
+        Y: -4
+      : 0
+      ? X: -8
+        Y: -3
+      : 0
+      ? X: -8
+        Y: -2
+      : 0
+      ? X: -8
+        Y: -1
+      : 0
+      ? X: -7
+        Y: -16
+      : 0
+      ? X: -7
+        Y: -15
+      : 0
+      ? X: -7
+        Y: -14
+      : 0
+      ? X: -7
+        Y: -13
+      : 0
+      ? X: -7
+        Y: -12
+      : 0
+      ? X: -7
+        Y: -11
+      : 0
+      ? X: -7
+        Y: -10
+      : 0
+      ? X: -7
+        Y: -9
+      : 0
+      ? X: -7
+        Y: -8
+      : 0
+      ? X: -7
+        Y: -7
+      : 0
+      ? X: -7
+        Y: -6
+      : 0
+      ? X: -7
+        Y: -5
+      : 0
+      ? X: -7
+        Y: -4
+      : 0
+      ? X: -7
+        Y: -3
+      : 0
+      ? X: -7
+        Y: -2
+      : 0
+      ? X: -7
+        Y: -1
+      : 0
+      ? X: -6
+        Y: -16
+      : 0
+      ? X: -6
+        Y: -15
+      : 0
+      ? X: -6
+        Y: -14
+      : 0
+      ? X: -6
+        Y: -13
+      : 0
+      ? X: -6
+        Y: -12
+      : 0
+      ? X: -6
+        Y: -11
+      : 0
+      ? X: -6
+        Y: -10
+      : 0
+      ? X: -6
+        Y: -9
+      : 0
+      ? X: -6
+        Y: -8
+      : 0
+      ? X: -6
+        Y: -7
+      : 0
+      ? X: -6
+        Y: -6
+      : 0
+      ? X: -6
+        Y: -5
+      : 0
+      ? X: -6
+        Y: -4
+      : 0
+      ? X: -6
+        Y: -3
+      : 0
+      ? X: -6
+        Y: -2
+      : 0
+      ? X: -6
+        Y: -1
+      : 0
+      ? X: -5
+        Y: -16
+      : 0
+      ? X: -5
+        Y: -15
+      : 0
+      ? X: -5
+        Y: -14
+      : 0
+      ? X: -5
+        Y: -13
+      : 0
+      ? X: -5
+        Y: -12
+      : 0
+      ? X: -5
+        Y: -11
+      : 0
+      ? X: -5
+        Y: -10
+      : 0
+      ? X: -5
+        Y: -9
+      : 0
+      ? X: -5
+        Y: -8
+      : 0
+      ? X: -5
+        Y: -7
+      : 0
+      ? X: -5
+        Y: -6
+      : 0
+      ? X: -5
+        Y: -5
+      : 0
+      ? X: -5
+        Y: -4
+      : 0
+      ? X: -5
+        Y: -3
+      : 0
+      ? X: -5
+        Y: -2
+      : 0
+      ? X: -5
+        Y: -1
+      : 0
+      ? X: -4
+        Y: -16
+      : 0
+      ? X: -4
+        Y: -15
+      : 0
+      ? X: -4
+        Y: -14
+      : 0
+      ? X: -4
+        Y: -13
+      : 0
+      ? X: -4
+        Y: -12
+      : 0
+      ? X: -4
+        Y: -11
+      : 0
+      ? X: -4
+        Y: -10
+      : 0
+      ? X: -4
+        Y: -9
+      : 0
+      ? X: -4
+        Y: -8
+      : 0
+      ? X: -4
+        Y: -7
+      : 0
+      ? X: -4
+        Y: -6
+      : 0
+      ? X: -4
+        Y: -5
+      : 0
+      ? X: -4
+        Y: -4
+      : 0
+      ? X: -4
+        Y: -3
+      : 0
+      ? X: -4
+        Y: -2
+      : 0
+      ? X: -4
+        Y: -1
+      : 0
+      ? X: -3
+        Y: -16
+      : 0
+      ? X: -3
+        Y: -15
+      : 0
+      ? X: -3
+        Y: -14
+      : 0
+      ? X: -3
+        Y: -13
+      : 0
+      ? X: -3
+        Y: -12
+      : 0
+      ? X: -3
+        Y: -11
+      : 0
+      ? X: -3
+        Y: -10
+      : 0
+      ? X: -3
+        Y: -9
+      : 0
+      ? X: -3
+        Y: -8
+      : 0
+      ? X: -3
+        Y: -7
+      : 0
+      ? X: -3
+        Y: -6
+      : 0
+      ? X: -3
+        Y: -5
+      : 0
+      ? X: -3
+        Y: -4
+      : 0
+      ? X: -3
+        Y: -3
+      : 0
+      ? X: -3
+        Y: -2
+      : 0
+      ? X: -3
+        Y: -1
+      : 0
+      ? X: -2
+        Y: -16
+      : 0
+      ? X: -2
+        Y: -15
+      : 0
+      ? X: -2
+        Y: -14
+      : 0
+      ? X: -2
+        Y: -13
+      : 0
+      ? X: -2
+        Y: -12
+      : 0
+      ? X: -2
+        Y: -11
+      : 0
+      ? X: -2
+        Y: -10
+      : 0
+      ? X: -2
+        Y: -9
+      : 0
+      ? X: -2
+        Y: -8
+      : 0
+      ? X: -2
+        Y: -7
+      : 0
+      ? X: -2
+        Y: -6
+      : 0
+      ? X: -2
+        Y: -5
+      : 0
+      ? X: -2
+        Y: -4
+      : 0
+      ? X: -2
+        Y: -3
+      : 0
+      ? X: -2
+        Y: -2
+      : 0
+      ? X: -2
+        Y: -1
+      : 0
+      ? X: -1
+        Y: -16
+      : 0
+      ? X: -1
+        Y: -15
+      : 0
+      ? X: -1
+        Y: -14
+      : 0
+      ? X: -1
+        Y: -13
+      : 0
+      ? X: -1
+        Y: -12
+      : 0
+      ? X: -1
+        Y: -11
+      : 0
+      ? X: -1
+        Y: -10
+      : 0
+      ? X: -1
+        Y: -9
+      : 0
+      ? X: -1
+        Y: -8
+      : 0
+      ? X: -1
+        Y: -7
+      : 0
+      ? X: -1
+        Y: -6
+      : 0
+      ? X: -1
+        Y: -5
+      : 0
+      ? X: -1
+        Y: -4
+      : 0
+      ? X: -1
+        Y: -3
+      : 0
+      ? X: -1
+        Y: -2
+      : 0
+      ? X: -1
+        Y: -1
+      : 0
+      ? X: -16
+        Y: 0
+      : 0
+      ? X: -16
+        Y: 1
+      : 0
+      ? X: -16
+        Y: 2
+      : 0
+      ? X: -16
+        Y: 3
+      : 0
+      ? X: -16
+        Y: 4
+      : 0
+      ? X: -16
+        Y: 5
+      : 0
+      ? X: -16
+        Y: 6
+      : 0
+      ? X: -16
+        Y: 7
+      : 0
+      ? X: -16
+        Y: 8
+      : 0
+      ? X: -16
+        Y: 9
+      : 0
+      ? X: -16
+        Y: 10
+      : 0
+      ? X: -16
+        Y: 11
+      : 0
+      ? X: -16
+        Y: 12
+      : 0
+      ? X: -16
+        Y: 13
+      : 0
+      ? X: -16
+        Y: 14
+      : 0
+      ? X: -16
+        Y: 15
+      : 0
+      ? X: -15
+        Y: 0
+      : 0
+      ? X: -15
+        Y: 1
+      : 0
+      ? X: -15
+        Y: 2
+      : 0
+      ? X: -15
+        Y: 3
+      : 0
+      ? X: -15
+        Y: 4
+      : 0
+      ? X: -15
+        Y: 5
+      : 0
+      ? X: -15
+        Y: 6
+      : 0
+      ? X: -15
+        Y: 7
+      : 0
+      ? X: -15
+        Y: 8
+      : 0
+      ? X: -15
+        Y: 9
+      : 0
+      ? X: -15
+        Y: 10
+      : 0
+      ? X: -15
+        Y: 11
+      : 0
+      ? X: -15
+        Y: 12
+      : 0
+      ? X: -15
+        Y: 13
+      : 0
+      ? X: -15
+        Y: 14
+      : 0
+      ? X: -15
+        Y: 15
+      : 0
+      ? X: -14
+        Y: 0
+      : 0
+      ? X: -14
+        Y: 1
+      : 0
+      ? X: -14
+        Y: 2
+      : 0
+      ? X: -14
+        Y: 3
+      : 0
+      ? X: -14
+        Y: 4
+      : 0
+      ? X: -14
+        Y: 5
+      : 0
+      ? X: -14
+        Y: 6
+      : 0
+      ? X: -14
+        Y: 7
+      : 0
+      ? X: -14
+        Y: 8
+      : 0
+      ? X: -14
+        Y: 9
+      : 0
+      ? X: -14
+        Y: 10
+      : 0
+      ? X: -14
+        Y: 11
+      : 0
+      ? X: -14
+        Y: 12
+      : 0
+      ? X: -14
+        Y: 13
+      : 0
+      ? X: -14
+        Y: 14
+      : 0
+      ? X: -14
+        Y: 15
+      : 0
+      ? X: -13
+        Y: 0
+      : 0
+      ? X: -13
+        Y: 1
+      : 0
+      ? X: -13
+        Y: 2
+      : 0
+      ? X: -13
+        Y: 3
+      : 0
+      ? X: -13
+        Y: 4
+      : 0
+      ? X: -13
+        Y: 5
+      : 0
+      ? X: -13
+        Y: 6
+      : 0
+      ? X: -13
+        Y: 7
+      : 0
+      ? X: -13
+        Y: 8
+      : 0
+      ? X: -13
+        Y: 9
+      : 0
+      ? X: -13
+        Y: 10
+      : 0
+      ? X: -13
+        Y: 11
+      : 0
+      ? X: -13
+        Y: 12
+      : 0
+      ? X: -13
+        Y: 13
+      : 0
+      ? X: -13
+        Y: 14
+      : 0
+      ? X: -13
+        Y: 15
+      : 0
+      ? X: -12
+        Y: 0
+      : 0
+      ? X: -12
+        Y: 1
+      : 0
+      ? X: -12
+        Y: 2
+      : 0
+      ? X: -12
+        Y: 3
+      : 0
+      ? X: -12
+        Y: 4
+      : 0
+      ? X: -12
+        Y: 5
+      : 0
+      ? X: -12
+        Y: 6
+      : 0
+      ? X: -12
+        Y: 7
+      : 0
+      ? X: -12
+        Y: 8
+      : 0
+      ? X: -12
+        Y: 9
+      : 0
+      ? X: -12
+        Y: 10
+      : 0
+      ? X: -12
+        Y: 11
+      : 0
+      ? X: -12
+        Y: 12
+      : 0
+      ? X: -12
+        Y: 13
+      : 0
+      ? X: -12
+        Y: 14
+      : 0
+      ? X: -12
+        Y: 15
+      : 0
+      ? X: -11
+        Y: 0
+      : 0
+      ? X: -11
+        Y: 1
+      : 0
+      ? X: -11
+        Y: 2
+      : 0
+      ? X: -11
+        Y: 3
+      : 0
+      ? X: -11
+        Y: 4
+      : 0
+      ? X: -11
+        Y: 5
+      : 0
+      ? X: -11
+        Y: 6
+      : 0
+      ? X: -11
+        Y: 7
+      : 0
+      ? X: -11
+        Y: 8
+      : 0
+      ? X: -11
+        Y: 9
+      : 0
+      ? X: -11
+        Y: 10
+      : 0
+      ? X: -11
+        Y: 11
+      : 0
+      ? X: -11
+        Y: 12
+      : 0
+      ? X: -11
+        Y: 13
+      : 0
+      ? X: -11
+        Y: 14
+      : 0
+      ? X: -11
+        Y: 15
+      : 0
+      ? X: -10
+        Y: 0
+      : 0
+      ? X: -10
+        Y: 1
+      : 0
+      ? X: -10
+        Y: 2
+      : 0
+      ? X: -10
+        Y: 3
+      : 0
+      ? X: -10
+        Y: 4
+      : 0
+      ? X: -10
+        Y: 5
+      : 0
+      ? X: -10
+        Y: 6
+      : 0
+      ? X: -10
+        Y: 7
+      : 0
+      ? X: -10
+        Y: 8
+      : 0
+      ? X: -10
+        Y: 9
+      : 0
+      ? X: -10
+        Y: 10
+      : 0
+      ? X: -10
+        Y: 11
+      : 0
+      ? X: -10
+        Y: 12
+      : 0
+      ? X: -10
+        Y: 13
+      : 0
+      ? X: -10
+        Y: 14
+      : 0
+      ? X: -10
+        Y: 15
+      : 0
+      ? X: -9
+        Y: 0
+      : 0
+      ? X: -9
+        Y: 1
+      : 0
+      ? X: -9
+        Y: 2
+      : 0
+      ? X: -9
+        Y: 3
+      : 0
+      ? X: -9
+        Y: 4
+      : 0
+      ? X: -9
+        Y: 5
+      : 0
+      ? X: -9
+        Y: 6
+      : 0
+      ? X: -9
+        Y: 7
+      : 0
+      ? X: -9
+        Y: 8
+      : 0
+      ? X: -9
+        Y: 9
+      : 0
+      ? X: -9
+        Y: 10
+      : 0
+      ? X: -9
+        Y: 11
+      : 0
+      ? X: -9
+        Y: 12
+      : 0
+      ? X: -9
+        Y: 13
+      : 0
+      ? X: -9
+        Y: 14
+      : 0
+      ? X: -9
+        Y: 15
+      : 0
+      ? X: -8
+        Y: 0
+      : 0
+      ? X: -8
+        Y: 1
+      : 0
+      ? X: -8
+        Y: 2
+      : 0
+      ? X: -8
+        Y: 3
+      : 0
+      ? X: -8
+        Y: 4
+      : 0
+      ? X: -8
+        Y: 5
+      : 0
+      ? X: -8
+        Y: 6
+      : 0
+      ? X: -8
+        Y: 7
+      : 0
+      ? X: -8
+        Y: 8
+      : 0
+      ? X: -8
+        Y: 9
+      : 0
+      ? X: -8
+        Y: 10
+      : 0
+      ? X: -8
+        Y: 11
+      : 0
+      ? X: -8
+        Y: 12
+      : 0
+      ? X: -8
+        Y: 13
+      : 0
+      ? X: -8
+        Y: 14
+      : 0
+      ? X: -8
+        Y: 15
+      : 0
+      ? X: -7
+        Y: 0
+      : 0
+      ? X: -7
+        Y: 1
+      : 0
+      ? X: -7
+        Y: 2
+      : 0
+      ? X: -7
+        Y: 3
+      : 0
+      ? X: -7
+        Y: 4
+      : 0
+      ? X: -7
+        Y: 5
+      : 0
+      ? X: -7
+        Y: 6
+      : 0
+      ? X: -7
+        Y: 7
+      : 0
+      ? X: -7
+        Y: 8
+      : 0
+      ? X: -7
+        Y: 9
+      : 0
+      ? X: -7
+        Y: 10
+      : 0
+      ? X: -7
+        Y: 11
+      : 0
+      ? X: -7
+        Y: 12
+      : 0
+      ? X: -7
+        Y: 13
+      : 0
+      ? X: -7
+        Y: 14
+      : 0
+      ? X: -7
+        Y: 15
+      : 0
+      ? X: -6
+        Y: 0
+      : 0
+      ? X: -6
+        Y: 1
+      : 0
+      ? X: -6
+        Y: 2
+      : 0
+      ? X: -6
+        Y: 3
+      : 0
+      ? X: -6
+        Y: 4
+      : 0
+      ? X: -6
+        Y: 5
+      : 0
+      ? X: -6
+        Y: 6
+      : 0
+      ? X: -6
+        Y: 7
+      : 0
+      ? X: -6
+        Y: 8
+      : 0
+      ? X: -6
+        Y: 9
+      : 0
+      ? X: -6
+        Y: 10
+      : 0
+      ? X: -6
+        Y: 11
+      : 0
+      ? X: -6
+        Y: 12
+      : 0
+      ? X: -6
+        Y: 13
+      : 0
+      ? X: -6
+        Y: 14
+      : 0
+      ? X: -6
+        Y: 15
+      : 0
+      ? X: -5
+        Y: 0
+      : 0
+      ? X: -5
+        Y: 1
+      : 0
+      ? X: -5
+        Y: 2
+      : 0
+      ? X: -5
+        Y: 3
+      : 0
+      ? X: -5
+        Y: 4
+      : 0
+      ? X: -5
+        Y: 5
+      : 0
+      ? X: -5
+        Y: 6
+      : 0
+      ? X: -5
+        Y: 7
+      : 0
+      ? X: -5
+        Y: 8
+      : 0
+      ? X: -5
+        Y: 9
+      : 0
+      ? X: -5
+        Y: 10
+      : 0
+      ? X: -5
+        Y: 11
+      : 0
+      ? X: -5
+        Y: 12
+      : 0
+      ? X: -5
+        Y: 13
+      : 0
+      ? X: -5
+        Y: 14
+      : 0
+      ? X: -5
+        Y: 15
+      : 0
+      ? X: -4
+        Y: 0
+      : 0
+      ? X: -4
+        Y: 1
+      : 0
+      ? X: -4
+        Y: 2
+      : 0
+      ? X: -4
+        Y: 3
+      : 0
+      ? X: -4
+        Y: 4
+      : 0
+      ? X: -4
+        Y: 5
+      : 0
+      ? X: -4
+        Y: 6
+      : 0
+      ? X: -4
+        Y: 7
+      : 0
+      ? X: -4
+        Y: 8
+      : 0
+      ? X: -4
+        Y: 9
+      : 0
+      ? X: -4
+        Y: 10
+      : 0
+      ? X: -4
+        Y: 11
+      : 0
+      ? X: -4
+        Y: 12
+      : 0
+      ? X: -4
+        Y: 13
+      : 0
+      ? X: -4
+        Y: 14
+      : 0
+      ? X: -4
+        Y: 15
+      : 0
+      ? X: -3
+        Y: 0
+      : 0
+      ? X: -3
+        Y: 1
+      : 0
+      ? X: -3
+        Y: 2
+      : 0
+      ? X: -3
+        Y: 3
+      : 0
+      ? X: -3
+        Y: 4
+      : 0
+      ? X: -3
+        Y: 5
+      : 0
+      ? X: -3
+        Y: 6
+      : 0
+      ? X: -3
+        Y: 7
+      : 0
+      ? X: -3
+        Y: 8
+      : 0
+      ? X: -3
+        Y: 9
+      : 0
+      ? X: -3
+        Y: 10
+      : 0
+      ? X: -3
+        Y: 11
+      : 0
+      ? X: -3
+        Y: 12
+      : 0
+      ? X: -3
+        Y: 13
+      : 0
+      ? X: -3
+        Y: 14
+      : 0
+      ? X: -3
+        Y: 15
+      : 0
+      ? X: -2
+        Y: 0
+      : 0
+      ? X: -2
+        Y: 1
+      : 0
+      ? X: -2
+        Y: 2
+      : 0
+      ? X: -2
+        Y: 3
+      : 0
+      ? X: -2
+        Y: 4
+      : 0
+      ? X: -2
+        Y: 5
+      : 0
+      ? X: -2
+        Y: 6
+      : 0
+      ? X: -2
+        Y: 7
+      : 0
+      ? X: -2
+        Y: 8
+      : 0
+      ? X: -2
+        Y: 9
+      : 0
+      ? X: -2
+        Y: 10
+      : 0
+      ? X: -2
+        Y: 11
+      : 0
+      ? X: -2
+        Y: 12
+      : 0
+      ? X: -2
+        Y: 13
+      : 0
+      ? X: -2
+        Y: 14
+      : 0
+      ? X: -2
+        Y: 15
+      : 0
+      ? X: -1
+        Y: 0
+      : 0
+      ? X: -1
+        Y: 1
+      : 0
+      ? X: -1
+        Y: 2
+      : 0
+      ? X: -1
+        Y: 3
+      : 0
+      ? X: -1
+        Y: 4
+      : 0
+      ? X: -1
+        Y: 5
+      : 0
+      ? X: -1
+        Y: 6
+      : 0
+      ? X: -1
+        Y: 7
+      : 0
+      ? X: -1
+        Y: 8
+      : 0
+      ? X: -1
+        Y: 9
+      : 0
+      ? X: -1
+        Y: 10
+      : 0
+      ? X: -1
+        Y: 11
+      : 0
+      ? X: -1
+        Y: 12
+      : 0
+      ? X: -1
+        Y: 13
+      : 0
+      ? X: -1
+        Y: 14
+      : 0
+      ? X: -1
+        Y: 15
+      : 0
+      ? X: 0
+        Y: -16
+      : 0
+      ? X: 0
+        Y: -15
+      : 0
+      ? X: 0
+        Y: -14
+      : 0
+      ? X: 0
+        Y: -13
+      : 0
+      ? X: 0
+        Y: -12
+      : 0
+      ? X: 0
+        Y: -11
+      : 0
+      ? X: 0
+        Y: -10
+      : 0
+      ? X: 0
+        Y: -9
+      : 0
+      ? X: 0
+        Y: -8
+      : 0
+      ? X: 0
+        Y: -7
+      : 0
+      ? X: 0
+        Y: -6
+      : 0
+      ? X: 0
+        Y: -5
+      : 0
+      ? X: 0
+        Y: -4
+      : 0
+      ? X: 0
+        Y: -3
+      : 0
+      ? X: 0
+        Y: -2
+      : 0
+      ? X: 0
+        Y: -1
+      : 0
+      ? X: 1
+        Y: -16
+      : 0
+      ? X: 1
+        Y: -15
+      : 0
+      ? X: 1
+        Y: -14
+      : 0
+      ? X: 1
+        Y: -13
+      : 0
+      ? X: 1
+        Y: -12
+      : 0
+      ? X: 1
+        Y: -11
+      : 0
+      ? X: 1
+        Y: -10
+      : 0
+      ? X: 1
+        Y: -9
+      : 0
+      ? X: 1
+        Y: -8
+      : 0
+      ? X: 1
+        Y: -7
+      : 0
+      ? X: 1
+        Y: -6
+      : 0
+      ? X: 1
+        Y: -5
+      : 0
+      ? X: 1
+        Y: -4
+      : 0
+      ? X: 1
+        Y: -3
+      : 0
+      ? X: 1
+        Y: -2
+      : 0
+      ? X: 1
+        Y: -1
+      : 0
+      ? X: 2
+        Y: -16
+      : 0
+      ? X: 2
+        Y: -15
+      : 0
+      ? X: 2
+        Y: -14
+      : 0
+      ? X: 2
+        Y: -13
+      : 0
+      ? X: 2
+        Y: -12
+      : 0
+      ? X: 2
+        Y: -11
+      : 0
+      ? X: 2
+        Y: -10
+      : 0
+      ? X: 2
+        Y: -9
+      : 0
+      ? X: 2
+        Y: -8
+      : 0
+      ? X: 2
+        Y: -7
+      : 0
+      ? X: 2
+        Y: -6
+      : 0
+      ? X: 2
+        Y: -5
+      : 0
+      ? X: 2
+        Y: -4
+      : 0
+      ? X: 2
+        Y: -3
+      : 0
+      ? X: 2
+        Y: -2
+      : 0
+      ? X: 2
+        Y: -1
+      : 0
+      ? X: 3
+        Y: -16
+      : 0
+      ? X: 3
+        Y: -15
+      : 0
+      ? X: 3
+        Y: -14
+      : 0
+      ? X: 3
+        Y: -13
+      : 0
+      ? X: 3
+        Y: -12
+      : 0
+      ? X: 3
+        Y: -11
+      : 0
+      ? X: 3
+        Y: -10
+      : 0
+      ? X: 3
+        Y: -9
+      : 0
+      ? X: 3
+        Y: -8
+      : 0
+      ? X: 3
+        Y: -7
+      : 0
+      ? X: 3
+        Y: -6
+      : 0
+      ? X: 3
+        Y: -5
+      : 0
+      ? X: 3
+        Y: -4
+      : 0
+      ? X: 3
+        Y: -3
+      : 0
+      ? X: 3
+        Y: -2
+      : 0
+      ? X: 3
+        Y: -1
+      : 0
+      ? X: 4
+        Y: -16
+      : 0
+      ? X: 4
+        Y: -15
+      : 0
+      ? X: 4
+        Y: -14
+      : 0
+      ? X: 4
+        Y: -13
+      : 0
+      ? X: 4
+        Y: -12
+      : 0
+      ? X: 4
+        Y: -11
+      : 0
+      ? X: 4
+        Y: -10
+      : 0
+      ? X: 4
+        Y: -9
+      : 0
+      ? X: 4
+        Y: -8
+      : 0
+      ? X: 4
+        Y: -7
+      : 0
+      ? X: 4
+        Y: -6
+      : 0
+      ? X: 4
+        Y: -5
+      : 0
+      ? X: 4
+        Y: -4
+      : 0
+      ? X: 4
+        Y: -3
+      : 0
+      ? X: 4
+        Y: -2
+      : 0
+      ? X: 4
+        Y: -1
+      : 0
+      ? X: 5
+        Y: -16
+      : 0
+      ? X: 5
+        Y: -15
+      : 0
+      ? X: 5
+        Y: -14
+      : 0
+      ? X: 5
+        Y: -13
+      : 0
+      ? X: 5
+        Y: -12
+      : 0
+      ? X: 5
+        Y: -11
+      : 0
+      ? X: 5
+        Y: -10
+      : 0
+      ? X: 5
+        Y: -9
+      : 0
+      ? X: 5
+        Y: -8
+      : 0
+      ? X: 5
+        Y: -7
+      : 0
+      ? X: 5
+        Y: -6
+      : 0
+      ? X: 5
+        Y: -5
+      : 0
+      ? X: 5
+        Y: -4
+      : 0
+      ? X: 5
+        Y: -3
+      : 0
+      ? X: 5
+        Y: -2
+      : 0
+      ? X: 5
+        Y: -1
+      : 0
+      ? X: 6
+        Y: -16
+      : 0
+      ? X: 6
+        Y: -15
+      : 0
+      ? X: 6
+        Y: -14
+      : 0
+      ? X: 6
+        Y: -13
+      : 0
+      ? X: 6
+        Y: -12
+      : 0
+      ? X: 6
+        Y: -11
+      : 0
+      ? X: 6
+        Y: -10
+      : 0
+      ? X: 6
+        Y: -9
+      : 0
+      ? X: 6
+        Y: -8
+      : 0
+      ? X: 6
+        Y: -7
+      : 0
+      ? X: 6
+        Y: -6
+      : 0
+      ? X: 6
+        Y: -5
+      : 0
+      ? X: 6
+        Y: -4
+      : 0
+      ? X: 6
+        Y: -3
+      : 0
+      ? X: 6
+        Y: -2
+      : 0
+      ? X: 6
+        Y: -1
+      : 0
+      ? X: 7
+        Y: -16
+      : 0
+      ? X: 7
+        Y: -15
+      : 0
+      ? X: 7
+        Y: -14
+      : 0
+      ? X: 7
+        Y: -13
+      : 0
+      ? X: 7
+        Y: -12
+      : 0
+      ? X: 7
+        Y: -11
+      : 0
+      ? X: 7
+        Y: -10
+      : 0
+      ? X: 7
+        Y: -9
+      : 0
+      ? X: 7
+        Y: -8
+      : 0
+      ? X: 7
+        Y: -7
+      : 0
+      ? X: 7
+        Y: -6
+      : 0
+      ? X: 7
+        Y: -5
+      : 0
+      ? X: 7
+        Y: -4
+      : 0
+      ? X: 7
+        Y: -3
+      : 0
+      ? X: 7
+        Y: -2
+      : 0
+      ? X: 7
+        Y: -1
+      : 0
+      ? X: 8
+        Y: -16
+      : 0
+      ? X: 8
+        Y: -15
+      : 0
+      ? X: 8
+        Y: -14
+      : 0
+      ? X: 8
+        Y: -13
+      : 0
+      ? X: 8
+        Y: -12
+      : 0
+      ? X: 8
+        Y: -11
+      : 0
+      ? X: 8
+        Y: -10
+      : 0
+      ? X: 8
+        Y: -9
+      : 0
+      ? X: 8
+        Y: -8
+      : 0
+      ? X: 8
+        Y: -7
+      : 0
+      ? X: 8
+        Y: -6
+      : 0
+      ? X: 8
+        Y: -5
+      : 0
+      ? X: 8
+        Y: -4
+      : 0
+      ? X: 8
+        Y: -3
+      : 0
+      ? X: 8
+        Y: -2
+      : 0
+      ? X: 8
+        Y: -1
+      : 0
+      ? X: 9
+        Y: -16
+      : 0
+      ? X: 9
+        Y: -15
+      : 0
+      ? X: 9
+        Y: -14
+      : 0
+      ? X: 9
+        Y: -13
+      : 0
+      ? X: 9
+        Y: -12
+      : 0
+      ? X: 9
+        Y: -11
+      : 0
+      ? X: 9
+        Y: -10
+      : 0
+      ? X: 9
+        Y: -9
+      : 0
+      ? X: 9
+        Y: -8
+      : 0
+      ? X: 9
+        Y: -7
+      : 0
+      ? X: 9
+        Y: -6
+      : 0
+      ? X: 9
+        Y: -5
+      : 0
+      ? X: 9
+        Y: -4
+      : 0
+      ? X: 9
+        Y: -3
+      : 0
+      ? X: 9
+        Y: -2
+      : 0
+      ? X: 9
+        Y: -1
+      : 0
+      ? X: 10
+        Y: -16
+      : 0
+      ? X: 10
+        Y: -15
+      : 0
+      ? X: 10
+        Y: -14
+      : 0
+      ? X: 10
+        Y: -13
+      : 0
+      ? X: 10
+        Y: -12
+      : 0
+      ? X: 10
+        Y: -11
+      : 0
+      ? X: 10
+        Y: -10
+      : 0
+      ? X: 10
+        Y: -9
+      : 0
+      ? X: 10
+        Y: -8
+      : 0
+      ? X: 10
+        Y: -7
+      : 0
+      ? X: 10
+        Y: -6
+      : 0
+      ? X: 10
+        Y: -5
+      : 0
+      ? X: 10
+        Y: -4
+      : 0
+      ? X: 10
+        Y: -3
+      : 0
+      ? X: 10
+        Y: -2
+      : 0
+      ? X: 10
+        Y: -1
+      : 0
+      ? X: 11
+        Y: -16
+      : 0
+      ? X: 11
+        Y: -15
+      : 0
+      ? X: 11
+        Y: -14
+      : 0
+      ? X: 11
+        Y: -13
+      : 0
+      ? X: 11
+        Y: -12
+      : 0
+      ? X: 11
+        Y: -11
+      : 0
+      ? X: 11
+        Y: -10
+      : 0
+      ? X: 11
+        Y: -9
+      : 0
+      ? X: 11
+        Y: -8
+      : 0
+      ? X: 11
+        Y: -7
+      : 0
+      ? X: 11
+        Y: -6
+      : 0
+      ? X: 11
+        Y: -5
+      : 0
+      ? X: 11
+        Y: -4
+      : 0
+      ? X: 11
+        Y: -3
+      : 0
+      ? X: 11
+        Y: -2
+      : 0
+      ? X: 11
+        Y: -1
+      : 0
+      ? X: 12
+        Y: -16
+      : 0
+      ? X: 12
+        Y: -15
+      : 0
+      ? X: 12
+        Y: -14
+      : 0
+      ? X: 12
+        Y: -13
+      : 0
+      ? X: 12
+        Y: -12
+      : 0
+      ? X: 12
+        Y: -11
+      : 0
+      ? X: 12
+        Y: -10
+      : 0
+      ? X: 12
+        Y: -9
+      : 0
+      ? X: 12
+        Y: -8
+      : 0
+      ? X: 12
+        Y: -7
+      : 0
+      ? X: 12
+        Y: -6
+      : 0
+      ? X: 12
+        Y: -5
+      : 0
+      ? X: 12
+        Y: -4
+      : 0
+      ? X: 12
+        Y: -3
+      : 0
+      ? X: 12
+        Y: -2
+      : 0
+      ? X: 12
+        Y: -1
+      : 0
+      ? X: 13
+        Y: -16
+      : 0
+      ? X: 13
+        Y: -15
+      : 0
+      ? X: 13
+        Y: -14
+      : 0
+      ? X: 13
+        Y: -13
+      : 0
+      ? X: 13
+        Y: -12
+      : 0
+      ? X: 13
+        Y: -11
+      : 0
+      ? X: 13
+        Y: -10
+      : 0
+      ? X: 13
+        Y: -9
+      : 0
+      ? X: 13
+        Y: -8
+      : 0
+      ? X: 13
+        Y: -7
+      : 0
+      ? X: 13
+        Y: -6
+      : 0
+      ? X: 13
+        Y: -5
+      : 0
+      ? X: 13
+        Y: -4
+      : 0
+      ? X: 13
+        Y: -3
+      : 0
+      ? X: 13
+        Y: -2
+      : 0
+      ? X: 13
+        Y: -1
+      : 0
+      ? X: 14
+        Y: -16
+      : 0
+      ? X: 14
+        Y: -15
+      : 0
+      ? X: 14
+        Y: -14
+      : 0
+      ? X: 14
+        Y: -13
+      : 0
+      ? X: 14
+        Y: -12
+      : 0
+      ? X: 14
+        Y: -11
+      : 0
+      ? X: 14
+        Y: -10
+      : 0
+      ? X: 14
+        Y: -9
+      : 0
+      ? X: 14
+        Y: -8
+      : 0
+      ? X: 14
+        Y: -7
+      : 0
+      ? X: 14
+        Y: -6
+      : 0
+      ? X: 14
+        Y: -5
+      : 0
+      ? X: 14
+        Y: -4
+      : 0
+      ? X: 14
+        Y: -3
+      : 0
+      ? X: 14
+        Y: -2
+      : 0
+      ? X: 14
+        Y: -1
+      : 0
+      ? X: 15
+        Y: -16
+      : 0
+      ? X: 15
+        Y: -15
+      : 0
+      ? X: 15
+        Y: -14
+      : 0
+      ? X: 15
+        Y: -13
+      : 0
+      ? X: 15
+        Y: -12
+      : 0
+      ? X: 15
+        Y: -11
+      : 0
+      ? X: 15
+        Y: -10
+      : 0
+      ? X: 15
+        Y: -9
+      : 0
+      ? X: 15
+        Y: -8
+      : 0
+      ? X: 15
+        Y: -7
+      : 0
+      ? X: 15
+        Y: -6
+      : 0
+      ? X: 15
+        Y: -5
+      : 0
+      ? X: 15
+        Y: -4
+      : 0
+      ? X: 15
+        Y: -3
+      : 0
+      ? X: 15
+        Y: -2
+      : 0
+      ? X: 15
+        Y: -1
+      : 0
+      ? X: 0
+        Y: 0
+      : 0
+      ? X: 0
+        Y: 1
+      : 0
+      ? X: 0
+        Y: 2
+      : 0
+      ? X: 0
+        Y: 3
+      : 0
+      ? X: 0
+        Y: 4
+      : 0
+      ? X: 0
+        Y: 5
+      : 0
+      ? X: 0
+        Y: 6
+      : 0
+      ? X: 0
+        Y: 7
+      : 0
+      ? X: 0
+        Y: 8
+      : 0
+      ? X: 0
+        Y: 9
+      : 0
+      ? X: 0
+        Y: 10
+      : 0
+      ? X: 0
+        Y: 11
+      : 0
+      ? X: 0
+        Y: 12
+      : 0
+      ? X: 0
+        Y: 13
+      : 0
+      ? X: 0
+        Y: 14
+      : 0
+      ? X: 0
+        Y: 15
+      : 0
+      ? X: 1
+        Y: 0
+      : 0
+      ? X: 1
+        Y: 1
+      : 0
+      ? X: 1
+        Y: 2
+      : 0
+      ? X: 1
+        Y: 3
+      : 0
+      ? X: 1
+        Y: 4
+      : 0
+      ? X: 1
+        Y: 5
+      : 0
+      ? X: 1
+        Y: 6
+      : 0
+      ? X: 1
+        Y: 7
+      : 0
+      ? X: 1
+        Y: 8
+      : 0
+      ? X: 1
+        Y: 9
+      : 0
+      ? X: 1
+        Y: 10
+      : 0
+      ? X: 1
+        Y: 11
+      : 0
+      ? X: 1
+        Y: 12
+      : 0
+      ? X: 1
+        Y: 13
+      : 0
+      ? X: 1
+        Y: 14
+      : 0
+      ? X: 1
+        Y: 15
+      : 0
+      ? X: 2
+        Y: 0
+      : 0
+      ? X: 2
+        Y: 1
+      : 0
+      ? X: 2
+        Y: 2
+      : 0
+      ? X: 2
+        Y: 3
+      : 0
+      ? X: 2
+        Y: 4
+      : 0
+      ? X: 2
+        Y: 5
+      : 0
+      ? X: 2
+        Y: 6
+      : 0
+      ? X: 2
+        Y: 7
+      : 0
+      ? X: 2
+        Y: 8
+      : 0
+      ? X: 2
+        Y: 9
+      : 0
+      ? X: 2
+        Y: 10
+      : 0
+      ? X: 2
+        Y: 11
+      : 0
+      ? X: 2
+        Y: 12
+      : 0
+      ? X: 2
+        Y: 13
+      : 0
+      ? X: 2
+        Y: 14
+      : 0
+      ? X: 2
+        Y: 15
+      : 0
+      ? X: 3
+        Y: 0
+      : 0
+      ? X: 3
+        Y: 1
+      : 0
+      ? X: 3
+        Y: 2
+      : 0
+      ? X: 3
+        Y: 3
+      : 0
+      ? X: 3
+        Y: 4
+      : 0
+      ? X: 3
+        Y: 5
+      : 0
+      ? X: 3
+        Y: 6
+      : 0
+      ? X: 3
+        Y: 7
+      : 0
+      ? X: 3
+        Y: 8
+      : 0
+      ? X: 3
+        Y: 9
+      : 0
+      ? X: 3
+        Y: 10
+      : 0
+      ? X: 3
+        Y: 11
+      : 0
+      ? X: 3
+        Y: 12
+      : 0
+      ? X: 3
+        Y: 13
+      : 0
+      ? X: 3
+        Y: 14
+      : 0
+      ? X: 3
+        Y: 15
+      : 0
+      ? X: 4
+        Y: 0
+      : 0
+      ? X: 4
+        Y: 1
+      : 0
+      ? X: 4
+        Y: 2
+      : 0
+      ? X: 4
+        Y: 3
+      : 0
+      ? X: 4
+        Y: 4
+      : 0
+      ? X: 4
+        Y: 5
+      : 0
+      ? X: 4
+        Y: 6
+      : 0
+      ? X: 4
+        Y: 7
+      : 0
+      ? X: 4
+        Y: 8
+      : 0
+      ? X: 4
+        Y: 9
+      : 0
+      ? X: 4
+        Y: 10
+      : 0
+      ? X: 4
+        Y: 11
+      : 0
+      ? X: 4
+        Y: 12
+      : 0
+      ? X: 4
+        Y: 13
+      : 0
+      ? X: 4
+        Y: 14
+      : 0
+      ? X: 4
+        Y: 15
+      : 0
+      ? X: 5
+        Y: 0
+      : 0
+      ? X: 5
+        Y: 1
+      : 0
+      ? X: 5
+        Y: 2
+      : 0
+      ? X: 5
+        Y: 3
+      : 0
+      ? X: 5
+        Y: 4
+      : 0
+      ? X: 5
+        Y: 5
+      : 0
+      ? X: 5
+        Y: 6
+      : 0
+      ? X: 5
+        Y: 7
+      : 0
+      ? X: 5
+        Y: 8
+      : 0
+      ? X: 5
+        Y: 9
+      : 0
+      ? X: 5
+        Y: 10
+      : 0
+      ? X: 5
+        Y: 11
+      : 0
+      ? X: 5
+        Y: 12
+      : 0
+      ? X: 5
+        Y: 13
+      : 0
+      ? X: 5
+        Y: 14
+      : 0
+      ? X: 5
+        Y: 15
+      : 0
+      ? X: 6
+        Y: 0
+      : 0
+      ? X: 6
+        Y: 1
+      : 0
+      ? X: 6
+        Y: 2
+      : 0
+      ? X: 6
+        Y: 3
+      : 0
+      ? X: 6
+        Y: 4
+      : 0
+      ? X: 6
+        Y: 5
+      : 0
+      ? X: 6
+        Y: 6
+      : 0
+      ? X: 6
+        Y: 7
+      : 0
+      ? X: 6
+        Y: 8
+      : 0
+      ? X: 6
+        Y: 9
+      : 0
+      ? X: 6
+        Y: 10
+      : 0
+      ? X: 6
+        Y: 11
+      : 0
+      ? X: 6
+        Y: 12
+      : 0
+      ? X: 6
+        Y: 13
+      : 0
+      ? X: 6
+        Y: 14
+      : 0
+      ? X: 6
+        Y: 15
+      : 0
+      ? X: 7
+        Y: 0
+      : 0
+      ? X: 7
+        Y: 1
+      : 0
+      ? X: 7
+        Y: 2
+      : 0
+      ? X: 7
+        Y: 3
+      : 0
+      ? X: 7
+        Y: 4
+      : 0
+      ? X: 7
+        Y: 5
+      : 0
+      ? X: 7
+        Y: 6
+      : 0
+      ? X: 7
+        Y: 7
+      : 0
+      ? X: 7
+        Y: 8
+      : 0
+      ? X: 7
+        Y: 9
+      : 0
+      ? X: 7
+        Y: 10
+      : 0
+      ? X: 7
+        Y: 11
+      : 0
+      ? X: 7
+        Y: 12
+      : 0
+      ? X: 7
+        Y: 13
+      : 0
+      ? X: 7
+        Y: 14
+      : 0
+      ? X: 7
+        Y: 15
+      : 0
+      ? X: 8
+        Y: 0
+      : 0
+      ? X: 8
+        Y: 1
+      : 0
+      ? X: 8
+        Y: 2
+      : 0
+      ? X: 8
+        Y: 3
+      : 0
+      ? X: 8
+        Y: 4
+      : 0
+      ? X: 8
+        Y: 5
+      : 0
+      ? X: 8
+        Y: 6
+      : 0
+      ? X: 8
+        Y: 7
+      : 0
+      ? X: 8
+        Y: 8
+      : 0
+      ? X: 8
+        Y: 9
+      : 0
+      ? X: 8
+        Y: 10
+      : 0
+      ? X: 8
+        Y: 11
+      : 0
+      ? X: 8
+        Y: 12
+      : 0
+      ? X: 8
+        Y: 13
+      : 0
+      ? X: 8
+        Y: 14
+      : 0
+      ? X: 8
+        Y: 15
+      : 0
+      ? X: 9
+        Y: 0
+      : 0
+      ? X: 9
+        Y: 1
+      : 0
+      ? X: 9
+        Y: 2
+      : 0
+      ? X: 9
+        Y: 3
+      : 0
+      ? X: 9
+        Y: 4
+      : 0
+      ? X: 9
+        Y: 5
+      : 0
+      ? X: 9
+        Y: 6
+      : 0
+      ? X: 9
+        Y: 7
+      : 0
+      ? X: 9
+        Y: 8
+      : 0
+      ? X: 9
+        Y: 9
+      : 0
+      ? X: 9
+        Y: 10
+      : 0
+      ? X: 9
+        Y: 11
+      : 0
+      ? X: 9
+        Y: 12
+      : 0
+      ? X: 9
+        Y: 13
+      : 0
+      ? X: 9
+        Y: 14
+      : 0
+      ? X: 9
+        Y: 15
+      : 0
+      ? X: 10
+        Y: 0
+      : 0
+      ? X: 10
+        Y: 1
+      : 0
+      ? X: 10
+        Y: 2
+      : 0
+      ? X: 10
+        Y: 3
+      : 0
+      ? X: 10
+        Y: 4
+      : 0
+      ? X: 10
+        Y: 5
+      : 0
+      ? X: 10
+        Y: 6
+      : 0
+      ? X: 10
+        Y: 7
+      : 0
+      ? X: 10
+        Y: 8
+      : 0
+      ? X: 10
+        Y: 9
+      : 0
+      ? X: 10
+        Y: 10
+      : 0
+      ? X: 10
+        Y: 11
+      : 0
+      ? X: 10
+        Y: 12
+      : 0
+      ? X: 10
+        Y: 13
+      : 0
+      ? X: 10
+        Y: 14
+      : 0
+      ? X: 10
+        Y: 15
+      : 0
+      ? X: 11
+        Y: 0
+      : 0
+      ? X: 11
+        Y: 1
+      : 0
+      ? X: 11
+        Y: 2
+      : 0
+      ? X: 11
+        Y: 3
+      : 0
+      ? X: 11
+        Y: 4
+      : 0
+      ? X: 11
+        Y: 5
+      : 0
+      ? X: 11
+        Y: 6
+      : 0
+      ? X: 11
+        Y: 7
+      : 0
+      ? X: 11
+        Y: 8
+      : 0
+      ? X: 11
+        Y: 9
+      : 0
+      ? X: 11
+        Y: 10
+      : 0
+      ? X: 11
+        Y: 11
+      : 0
+      ? X: 11
+        Y: 12
+      : 0
+      ? X: 11
+        Y: 13
+      : 0
+      ? X: 11
+        Y: 14
+      : 0
+      ? X: 11
+        Y: 15
+      : 0
+      ? X: 12
+        Y: 0
+      : 0
+      ? X: 12
+        Y: 1
+      : 0
+      ? X: 12
+        Y: 2
+      : 0
+      ? X: 12
+        Y: 3
+      : 0
+      ? X: 12
+        Y: 4
+      : 0
+      ? X: 12
+        Y: 5
+      : 0
+      ? X: 12
+        Y: 6
+      : 0
+      ? X: 12
+        Y: 7
+      : 0
+      ? X: 12
+        Y: 8
+      : 0
+      ? X: 12
+        Y: 9
+      : 0
+      ? X: 12
+        Y: 10
+      : 0
+      ? X: 12
+        Y: 11
+      : 0
+      ? X: 12
+        Y: 12
+      : 0
+      ? X: 12
+        Y: 13
+      : 0
+      ? X: 12
+        Y: 14
+      : 0
+      ? X: 12
+        Y: 15
+      : 0
+      ? X: 13
+        Y: 0
+      : 0
+      ? X: 13
+        Y: 1
+      : 0
+      ? X: 13
+        Y: 2
+      : 0
+      ? X: 13
+        Y: 3
+      : 0
+      ? X: 13
+        Y: 4
+      : 0
+      ? X: 13
+        Y: 5
+      : 0
+      ? X: 13
+        Y: 6
+      : 0
+      ? X: 13
+        Y: 7
+      : 0
+      ? X: 13
+        Y: 8
+      : 0
+      ? X: 13
+        Y: 9
+      : 0
+      ? X: 13
+        Y: 10
+      : 0
+      ? X: 13
+        Y: 11
+      : 0
+      ? X: 13
+        Y: 12
+      : 0
+      ? X: 13
+        Y: 13
+      : 0
+      ? X: 13
+        Y: 14
+      : 0
+      ? X: 13
+        Y: 15
+      : 0
+      ? X: 14
+        Y: 0
+      : 0
+      ? X: 14
+        Y: 1
+      : 0
+      ? X: 14
+        Y: 2
+      : 0
+      ? X: 14
+        Y: 3
+      : 0
+      ? X: 14
+        Y: 4
+      : 0
+      ? X: 14
+        Y: 5
+      : 0
+      ? X: 14
+        Y: 6
+      : 0
+      ? X: 14
+        Y: 7
+      : 0
+      ? X: 14
+        Y: 8
+      : 0
+      ? X: 14
+        Y: 9
+      : 0
+      ? X: 14
+        Y: 10
+      : 0
+      ? X: 14
+        Y: 11
+      : 0
+      ? X: 14
+        Y: 12
+      : 0
+      ? X: 14
+        Y: 13
+      : 0
+      ? X: 14
+        Y: 14
+      : 0
+      ? X: 14
+        Y: 15
+      : 0
+      ? X: 15
+        Y: 0
+      : 0
+      ? X: 15
+        Y: 1
+      : 0
+      ? X: 15
+        Y: 2
+      : 0
+      ? X: 15
+        Y: 3
+      : 0
+      ? X: 15
+        Y: 4
+      : 0
+      ? X: 15
+        Y: 5
+      : 0
+      ? X: 15
+        Y: 6
+      : 0
+      ? X: 15
+        Y: 7
+      : 0
+      ? X: 15
+        Y: 8
+      : 0
+      ? X: 15
+        Y: 9
+      : 0
+      ? X: 15
+        Y: 10
+      : 0
+      ? X: 15
+        Y: 11
+      : 0
+      ? X: 15
+        Y: 12
+      : 0
+      ? X: 15
+        Y: 13
+      : 0
+      ? X: 15
+        Y: 14
+      : 0
+      ? X: 15
+        Y: 15
+      : 0
+      ? X: 16
+        Y: 0
+      : 0
+      ? X: 16
+        Y: 1
+      : 0
+      ? X: 16
+        Y: 2
+      : 0
+      ? X: 16
+        Y: 3
+      : 0
+      ? X: 16
+        Y: 4
+      : 0
+      ? X: 16
+        Y: 5
+      : 0
+      ? X: 16
+        Y: 6
+      : 0
+      ? X: 16
+        Y: 7
+      : 0
+      ? X: 16
+        Y: 8
+      : 0
+      ? X: 16
+        Y: 9
+      : 0
+      ? X: 16
+        Y: 10
+      : 0
+      ? X: 16
+        Y: 11
+      : 0
+      ? X: 16
+        Y: 12
+      : 0
+      ? X: 16
+        Y: 13
+      : 0
+      ? X: 16
+        Y: 14
+      : 0
+      ? X: 16
+        Y: 15
+      : 0
+      ? X: 17
+        Y: 0
+      : 0
+      ? X: 17
+        Y: 1
+      : 0
+      ? X: 17
+        Y: 2
+      : 0
+      ? X: 17
+        Y: 3
+      : 0
+      ? X: 17
+        Y: 4
+      : 0
+      ? X: 17
+        Y: 5
+      : 0
+      ? X: 17
+        Y: 6
+      : 0
+      ? X: 17
+        Y: 7
+      : 0
+      ? X: 17
+        Y: 8
+      : 0
+      ? X: 17
+        Y: 9
+      : 0
+      ? X: 17
+        Y: 10
+      : 0
+      ? X: 17
+        Y: 11
+      : 0
+      ? X: 17
+        Y: 12
+      : 0
+      ? X: 17
+        Y: 13
+      : 0
+      ? X: 17
+        Y: 14
+      : 0
+      ? X: 17
+        Y: 15
+      : 0
+      ? X: 18
+        Y: 0
+      : 0
+      ? X: 18
+        Y: 1
+      : 0
+      ? X: 18
+        Y: 2
+      : 0
+      ? X: 18
+        Y: 3
+      : 0
+      ? X: 18
+        Y: 4
+      : 0
+      ? X: 18
+        Y: 5
+      : 0
+      ? X: 18
+        Y: 6
+      : 0
+      ? X: 18
+        Y: 7
+      : 0
+      ? X: 18
+        Y: 8
+      : 0
+      ? X: 18
+        Y: 9
+      : 0
+      ? X: 18
+        Y: 10
+      : 0
+      ? X: 18
+        Y: 11
+      : 0
+      ? X: 18
+        Y: 12
+      : 0
+      ? X: 18
+        Y: 13
+      : 0
+      ? X: 18
+        Y: 14
+      : 0
+      ? X: 19
+        Y: 0
+      : 0
+      ? X: 19
+        Y: 1
+      : 0
+      ? X: 19
+        Y: 2
+      : 0
+      ? X: 19
+        Y: 3
+      : 0
+      ? X: 19
+        Y: 4
+      : 0
+      ? X: 19
+        Y: 5
+      : 0
+      ? X: 19
+        Y: 6
+      : 0
+      ? X: 19
+        Y: 7
+      : 0
+      ? X: 19
+        Y: 8
+      : 0
+      ? X: 19
+        Y: 9
+      : 0
+      ? X: 19
+        Y: 10
+      : 0
+      ? X: 19
+        Y: 11
+      : 0
+      ? X: 19
+        Y: 12
+      : 0
+      ? X: 19
+        Y: 13
+      : 0
+      ? X: 19
+        Y: 14
+      : 0
+      ? X: 19
+        Y: 15
+      : 0
+      ? X: 20
+        Y: 0
+      : 0
+      ? X: 20
+        Y: 1
+      : 0
+      ? X: 20
+        Y: 2
+      : 0
+      ? X: 20
+        Y: 3
+      : 0
+      ? X: 20
+        Y: 4
+      : 0
+      ? X: 20
+        Y: 5
+      : 0
+      ? X: 20
+        Y: 6
+      : 0
+      ? X: 20
+        Y: 7
+      : 0
+      ? X: 20
+        Y: 8
+      : 0
+      ? X: 20
+        Y: 9
+      : 0
+      ? X: 20
+        Y: 10
+      : 0
+      ? X: 20
+        Y: 11
+      : 0
+      ? X: 20
+        Y: 12
+      : 0
+      ? X: 20
+        Y: 13
+      : 0
+      ? X: 20
+        Y: 14
+      : 0
+      ? X: 20
+        Y: 15
+      : 0
+      ? X: 21
+        Y: 0
+      : 0
+      ? X: 21
+        Y: 1
+      : 0
+      ? X: 21
+        Y: 2
+      : 0
+      ? X: 21
+        Y: 3
+      : 0
+      ? X: 21
+        Y: 4
+      : 0
+      ? X: 21
+        Y: 5
+      : 0
+      ? X: 21
+        Y: 6
+      : 0
+      ? X: 21
+        Y: 7
+      : 0
+      ? X: 21
+        Y: 8
+      : 0
+      ? X: 21
+        Y: 9
+      : 0
+      ? X: 21
+        Y: 10
+      : 0
+      ? X: 21
+        Y: 11
+      : 0
+      ? X: 21
+        Y: 12
+      : 0
+      ? X: 21
+        Y: 13
+      : 0
+      ? X: 21
+        Y: 14
+      : 0
+      ? X: 21
+        Y: 15
+      : 0
+      ? X: 22
+        Y: 0
+      : 0
+      ? X: 22
+        Y: 1
+      : 0
+      ? X: 22
+        Y: 2
+      : 0
+      ? X: 22
+        Y: 3
+      : 0
+      ? X: 22
+        Y: 4
+      : 0
+      ? X: 22
+        Y: 5
+      : 0
+      ? X: 22
+        Y: 6
+      : 0
+      ? X: 22
+        Y: 7
+      : 0
+      ? X: 22
+        Y: 8
+      : 0
+      ? X: 22
+        Y: 9
+      : 0
+      ? X: 22
+        Y: 10
+      : 0
+      ? X: 22
+        Y: 11
+      : 0
+      ? X: 22
+        Y: 12
+      : 0
+      ? X: 22
+        Y: 13
+      : 0
+      ? X: 22
+        Y: 14
+      : 0
+      ? X: 22
+        Y: 15
+      : 0
+      ? X: 23
+        Y: 0
+      : 0
+      ? X: 23
+        Y: 1
+      : 0
+      ? X: 23
+        Y: 2
+      : 0
+      ? X: 23
+        Y: 3
+      : 0
+      ? X: 23
+        Y: 4
+      : 0
+      ? X: 23
+        Y: 5
+      : 0
+      ? X: 23
+        Y: 6
+      : 0
+      ? X: 23
+        Y: 7
+      : 0
+      ? X: 23
+        Y: 8
+      : 0
+      ? X: 23
+        Y: 9
+      : 0
+      ? X: 23
+        Y: 10
+      : 0
+      ? X: 23
+        Y: 11
+      : 0
+      ? X: 23
+        Y: 12
+      : 0
+      ? X: 23
+        Y: 13
+      : 0
+      ? X: 23
+        Y: 14
+      : 0
+      ? X: 23
+        Y: 15
+      : 0
+      ? X: 24
+        Y: 0
+      : 0
+      ? X: 24
+        Y: 1
+      : 0
+      ? X: 24
+        Y: 2
+      : 0
+      ? X: 24
+        Y: 3
+      : 0
+      ? X: 24
+        Y: 4
+      : 0
+      ? X: 24
+        Y: 5
+      : 0
+      ? X: 24
+        Y: 6
+      : 0
+      ? X: 24
+        Y: 7
+      : 0
+      ? X: 24
+        Y: 8
+      : 0
+      ? X: 24
+        Y: 9
+      : 0
+      ? X: 24
+        Y: 10
+      : 0
+      ? X: 24
+        Y: 11
+      : 0
+      ? X: 24
+        Y: 12
+      : 0
+      ? X: 24
+        Y: 13
+      : 0
+      ? X: 24
+        Y: 14
+      : 0
+      ? X: 25
+        Y: 0
+      : 0
+      ? X: 25
+        Y: 1
+      : 0
+      ? X: 25
+        Y: 2
+      : 0
+      ? X: 25
+        Y: 3
+      : 0
+      ? X: 25
+        Y: 4
+      : 0
+      ? X: 25
+        Y: 5
+      : 0
+      ? X: 25
+        Y: 6
+      : 0
+      ? X: 25
+        Y: 7
+      : 0
+      ? X: 25
+        Y: 8
+      : 0
+      ? X: 25
+        Y: 9
+      : 0
+      ? X: 25
+        Y: 10
+      : 0
+      ? X: 25
+        Y: 11
+      : 0
+      ? X: 25
+        Y: 12
+      : 0
+      ? X: 25
+        Y: 13
+      : 0
+      ? X: 25
+        Y: 14
+      : 0
+      ? X: 26
+        Y: 0
+      : 0
+      ? X: 26
+        Y: 1
+      : 0
+      ? X: 26
+        Y: 2
+      : 0
+      ? X: 26
+        Y: 3
+      : 0
+      ? X: 26
+        Y: 4
+      : 0
+      ? X: 26
+        Y: 5
+      : 0
+      ? X: 26
+        Y: 6
+      : 0
+      ? X: 26
+        Y: 7
+      : 0
+      ? X: 26
+        Y: 8
+      : 0
+      ? X: 26
+        Y: 9
+      : 0
+      ? X: 26
+        Y: 10
+      : 0
+      ? X: 26
+        Y: 11
+      : 0
+      ? X: 26
+        Y: 12
+      : 0
+      ? X: 26
+        Y: 13
+      : 0
+      ? X: 26
+        Y: 14
+      : 0
+      ? X: 27
+        Y: 0
+      : 0
+      ? X: 27
+        Y: 1
+      : 0
+      ? X: 27
+        Y: 2
+      : 0
+      ? X: 27
+        Y: 3
+      : 0
+      ? X: 27
+        Y: 4
+      : 0
+      ? X: 27
+        Y: 5
+      : 0
+      ? X: 27
+        Y: 6
+      : 0
+      ? X: 27
+        Y: 7
+      : 0
+      ? X: 27
+        Y: 8
+      : 0
+      ? X: 27
+        Y: 9
+      : 0
+      ? X: 27
+        Y: 10
+      : 0
+      ? X: 27
+        Y: 11
+      : 0
+      ? X: 27
+        Y: 12
+      : 0
+      ? X: 27
+        Y: 13
+      : 0
+      ? X: 27
+        Y: 14
+      : 0
+      ? X: 28
+        Y: 0
+      : 0
+      ? X: 28
+        Y: 1
+      : 0
+      ? X: 28
+        Y: 2
+      : 0
+      ? X: 28
+        Y: 3
+      : 0
+      ? X: 28
+        Y: 4
+      : 0
+      ? X: 28
+        Y: 5
+      : 0
+      ? X: 28
+        Y: 6
+      : 0
+      ? X: 28
+        Y: 7
+      : 0
+      ? X: 28
+        Y: 8
+      : 0
+      ? X: 28
+        Y: 9
+      : 0
+      ? X: 28
+        Y: 10
+      : 0
+      ? X: 28
+        Y: 11
+      : 0
+      ? X: 28
+        Y: 12
+      : 0
+      ? X: 28
+        Y: 13
+      : 0
+      ? X: 28
+        Y: 14
+      : 0
+      ? X: 29
+        Y: 0
+      : 0
+      ? X: 29
+        Y: 1
+      : 0
+      ? X: 29
+        Y: 2
+      : 0
+      ? X: 29
+        Y: 3
+      : 0
+      ? X: 29
+        Y: 4
+      : 0
+      ? X: 29
+        Y: 5
+      : 0
+      ? X: 29
+        Y: 6
+      : 0
+      ? X: 29
+        Y: 7
+      : 0
+      ? X: 29
+        Y: 8
+      : 0
+      ? X: 29
+        Y: 9
+      : 0
+      ? X: 29
+        Y: 10
+      : 0
+      ? X: 29
+        Y: 11
+      : 0
+      ? X: 29
+        Y: 12
+      : 0
+      ? X: 29
+        Y: 13
+      : 0
+      ? X: 29
+        Y: 14
+      : 0
+      ? X: 30
+        Y: 0
+      : 0
+      ? X: 30
+        Y: 1
+      : 0
+      ? X: 30
+        Y: 2
+      : 0
+      ? X: 30
+        Y: 3
+      : 0
+      ? X: 30
+        Y: 4
+      : 0
+      ? X: 30
+        Y: 5
+      : 0
+      ? X: 30
+        Y: 6
+      : 0
+      ? X: 30
+        Y: 7
+      : 0
+      ? X: 30
+        Y: 8
+      : 0
+      ? X: 30
+        Y: 9
+      : 0
+      ? X: 30
+        Y: 10
+      : 0
+      ? X: 30
+        Y: 11
+      : 0
+      ? X: 30
+        Y: 12
+      : 0
+      ? X: 30
+        Y: 13
+      : 0
+      ? X: 30
+        Y: 14
+      : 0
+      ? X: 30
+        Y: 15
+      : 0
+      ? X: 31
+        Y: 0
+      : 0
+      ? X: 31
+        Y: 1
+      : 0
+      ? X: 31
+        Y: 2
+      : 0
+      ? X: 31
+        Y: 3
+      : 0
+      ? X: 31
+        Y: 4
+      : 0
+      ? X: 31
+        Y: 5
+      : 0
+      ? X: 31
+        Y: 6
+      : 0
+      ? X: 31
+        Y: 7
+      : 0
+      ? X: 31
+        Y: 8
+      : 0
+      ? X: 31
+        Y: 9
+      : 0
+      ? X: 31
+        Y: 10
+      : 0
+      ? X: 31
+        Y: 11
+      : 0
+      ? X: 31
+        Y: 12
+      : 0
+      ? X: 31
+        Y: 13
+      : 0
+      ? X: 31
+        Y: 14
+      : 0
+      ? X: 31
+        Y: 15
+      : 0
+      ? X: 0
+        Y: 16
+      : 0
+      ? X: 0
+        Y: 17
+      : 0
+      ? X: 0
+        Y: 18
+      : 0
+      ? X: 0
+        Y: 19
+      : 0
+      ? X: 0
+        Y: 20
+      : 0
+      ? X: 0
+        Y: 21
+      : 0
+      ? X: 0
+        Y: 22
+      : 0
+      ? X: 0
+        Y: 23
+      : 0
+      ? X: 0
+        Y: 24
+      : 0
+      ? X: 0
+        Y: 25
+      : 0
+      ? X: 0
+        Y: 26
+      : 0
+      ? X: 0
+        Y: 27
+      : 0
+      ? X: 0
+        Y: 28
+      : 0
+      ? X: 0
+        Y: 29
+      : 0
+      ? X: 0
+        Y: 30
+      : 0
+      ? X: 0
+        Y: 31
+      : 0
+      ? X: 1
+        Y: 16
+      : 0
+      ? X: 1
+        Y: 17
+      : 0
+      ? X: 1
+        Y: 18
+      : 0
+      ? X: 1
+        Y: 19
+      : 0
+      ? X: 1
+        Y: 20
+      : 0
+      ? X: 1
+        Y: 21
+      : 0
+      ? X: 1
+        Y: 22
+      : 0
+      ? X: 1
+        Y: 23
+      : 0
+      ? X: 1
+        Y: 24
+      : 0
+      ? X: 1
+        Y: 25
+      : 0
+      ? X: 1
+        Y: 26
+      : 0
+      ? X: 1
+        Y: 27
+      : 0
+      ? X: 1
+        Y: 28
+      : 0
+      ? X: 1
+        Y: 29
+      : 0
+      ? X: 1
+        Y: 30
+      : 0
+      ? X: 1
+        Y: 31
+      : 0
+      ? X: 2
+        Y: 16
+      : 0
+      ? X: 2
+        Y: 17
+      : 0
+      ? X: 2
+        Y: 18
+      : 0
+      ? X: 2
+        Y: 19
+      : 0
+      ? X: 2
+        Y: 20
+      : 0
+      ? X: 2
+        Y: 21
+      : 0
+      ? X: 2
+        Y: 22
+      : 0
+      ? X: 2
+        Y: 23
+      : 0
+      ? X: 2
+        Y: 24
+      : 0
+      ? X: 2
+        Y: 25
+      : 0
+      ? X: 2
+        Y: 26
+      : 0
+      ? X: 2
+        Y: 27
+      : 0
+      ? X: 2
+        Y: 28
+      : 0
+      ? X: 2
+        Y: 29
+      : 0
+      ? X: 2
+        Y: 30
+      : 0
+      ? X: 2
+        Y: 31
+      : 0
+      ? X: 3
+        Y: 16
+      : 0
+      ? X: 3
+        Y: 17
+      : 0
+      ? X: 3
+        Y: 18
+      : 0
+      ? X: 3
+        Y: 19
+      : 0
+      ? X: 3
+        Y: 20
+      : 0
+      ? X: 3
+        Y: 21
+      : 0
+      ? X: 3
+        Y: 22
+      : 0
+      ? X: 3
+        Y: 23
+      : 0
+      ? X: 3
+        Y: 24
+      : 0
+      ? X: 3
+        Y: 25
+      : 0
+      ? X: 3
+        Y: 26
+      : 0
+      ? X: 3
+        Y: 27
+      : 0
+      ? X: 3
+        Y: 28
+      : 0
+      ? X: 3
+        Y: 29
+      : 0
+      ? X: 3
+        Y: 30
+      : 0
+      ? X: 3
+        Y: 31
+      : 0
+      ? X: 4
+        Y: 16
+      : 0
+      ? X: 4
+        Y: 17
+      : 0
+      ? X: 4
+        Y: 18
+      : 0
+      ? X: 4
+        Y: 19
+      : 0
+      ? X: 4
+        Y: 20
+      : 0
+      ? X: 4
+        Y: 21
+      : 0
+      ? X: 4
+        Y: 22
+      : 0
+      ? X: 4
+        Y: 23
+      : 0
+      ? X: 4
+        Y: 24
+      : 0
+      ? X: 4
+        Y: 25
+      : 0
+      ? X: 4
+        Y: 26
+      : 0
+      ? X: 4
+        Y: 27
+      : 0
+      ? X: 4
+        Y: 28
+      : 0
+      ? X: 4
+        Y: 29
+      : 0
+      ? X: 4
+        Y: 30
+      : 0
+      ? X: 4
+        Y: 31
+      : 0
+      ? X: 5
+        Y: 16
+      : 0
+      ? X: 5
+        Y: 17
+      : 0
+      ? X: 5
+        Y: 18
+      : 0
+      ? X: 5
+        Y: 19
+      : 0
+      ? X: 5
+        Y: 20
+      : 0
+      ? X: 5
+        Y: 21
+      : 0
+      ? X: 5
+        Y: 22
+      : 0
+      ? X: 5
+        Y: 23
+      : 0
+      ? X: 5
+        Y: 24
+      : 0
+      ? X: 5
+        Y: 25
+      : 0
+      ? X: 5
+        Y: 26
+      : 0
+      ? X: 5
+        Y: 27
+      : 0
+      ? X: 5
+        Y: 28
+      : 0
+      ? X: 5
+        Y: 29
+      : 0
+      ? X: 5
+        Y: 30
+      : 0
+      ? X: 5
+        Y: 31
+      : 0
+      ? X: 6
+        Y: 16
+      : 0
+      ? X: 6
+        Y: 17
+      : 0
+      ? X: 6
+        Y: 18
+      : 0
+      ? X: 6
+        Y: 19
+      : 0
+      ? X: 6
+        Y: 20
+      : 0
+      ? X: 6
+        Y: 21
+      : 0
+      ? X: 6
+        Y: 22
+      : 0
+      ? X: 6
+        Y: 23
+      : 0
+      ? X: 6
+        Y: 24
+      : 0
+      ? X: 6
+        Y: 25
+      : 0
+      ? X: 6
+        Y: 26
+      : 0
+      ? X: 6
+        Y: 27
+      : 0
+      ? X: 6
+        Y: 28
+      : 0
+      ? X: 6
+        Y: 29
+      : 0
+      ? X: 6
+        Y: 30
+      : 0
+      ? X: 6
+        Y: 31
+      : 0
+      ? X: 7
+        Y: 16
+      : 0
+      ? X: 7
+        Y: 17
+      : 0
+      ? X: 7
+        Y: 18
+      : 0
+      ? X: 7
+        Y: 19
+      : 0
+      ? X: 7
+        Y: 20
+      : 0
+      ? X: 7
+        Y: 21
+      : 0
+      ? X: 7
+        Y: 22
+      : 0
+      ? X: 7
+        Y: 23
+      : 0
+      ? X: 7
+        Y: 24
+      : 0
+      ? X: 7
+        Y: 25
+      : 0
+      ? X: 7
+        Y: 26
+      : 0
+      ? X: 7
+        Y: 27
+      : 0
+      ? X: 7
+        Y: 28
+      : 0
+      ? X: 7
+        Y: 29
+      : 0
+      ? X: 7
+        Y: 30
+      : 0
+      ? X: 7
+        Y: 31
+      : 0
+      ? X: 8
+        Y: 16
+      : 0
+      ? X: 8
+        Y: 17
+      : 0
+      ? X: 8
+        Y: 18
+      : 0
+      ? X: 8
+        Y: 19
+      : 0
+      ? X: 8
+        Y: 20
+      : 0
+      ? X: 8
+        Y: 21
+      : 0
+      ? X: 8
+        Y: 22
+      : 0
+      ? X: 8
+        Y: 23
+      : 0
+      ? X: 8
+        Y: 24
+      : 0
+      ? X: 8
+        Y: 25
+      : 0
+      ? X: 8
+        Y: 26
+      : 0
+      ? X: 8
+        Y: 27
+      : 0
+      ? X: 8
+        Y: 28
+      : 0
+      ? X: 8
+        Y: 29
+      : 0
+      ? X: 8
+        Y: 30
+      : 0
+      ? X: 8
+        Y: 31
+      : 0
+      ? X: 9
+        Y: 16
+      : 0
+      ? X: 9
+        Y: 17
+      : 0
+      ? X: 9
+        Y: 18
+      : 0
+      ? X: 9
+        Y: 19
+      : 0
+      ? X: 9
+        Y: 20
+      : 0
+      ? X: 9
+        Y: 21
+      : 0
+      ? X: 9
+        Y: 22
+      : 0
+      ? X: 9
+        Y: 23
+      : 0
+      ? X: 9
+        Y: 24
+      : 0
+      ? X: 9
+        Y: 25
+      : 0
+      ? X: 9
+        Y: 26
+      : 0
+      ? X: 9
+        Y: 27
+      : 0
+      ? X: 9
+        Y: 28
+      : 0
+      ? X: 9
+        Y: 29
+      : 0
+      ? X: 9
+        Y: 30
+      : 0
+      ? X: 9
+        Y: 31
+      : 0
+      ? X: 10
+        Y: 16
+      : 0
+      ? X: 10
+        Y: 17
+      : 0
+      ? X: 10
+        Y: 18
+      : 0
+      ? X: 10
+        Y: 19
+      : 0
+      ? X: 10
+        Y: 20
+      : 0
+      ? X: 10
+        Y: 21
+      : 0
+      ? X: 10
+        Y: 22
+      : 0
+      ? X: 10
+        Y: 23
+      : 0
+      ? X: 10
+        Y: 24
+      : 0
+      ? X: 10
+        Y: 25
+      : 0
+      ? X: 10
+        Y: 26
+      : 0
+      ? X: 10
+        Y: 27
+      : 0
+      ? X: 10
+        Y: 28
+      : 0
+      ? X: 10
+        Y: 29
+      : 0
+      ? X: 10
+        Y: 30
+      : 0
+      ? X: 10
+        Y: 31
+      : 0
+      ? X: 11
+        Y: 16
+      : 0
+      ? X: 11
+        Y: 17
+      : 0
+      ? X: 11
+        Y: 18
+      : 0
+      ? X: 11
+        Y: 19
+      : 0
+      ? X: 11
+        Y: 20
+      : 0
+      ? X: 11
+        Y: 21
+      : 0
+      ? X: 11
+        Y: 22
+      : 0
+      ? X: 12
+        Y: 16
+      : 0
+      ? X: 12
+        Y: 17
+      : 0
+      ? X: 12
+        Y: 18
+      : 0
+      ? X: 12
+        Y: 19
+      : 0
+      ? X: 12
+        Y: 20
+      : 0
+      ? X: 12
+        Y: 21
+      : 0
+      ? X: 12
+        Y: 22
+      : 0
+      ? X: 13
+        Y: 16
+      : 0
+      ? X: 13
+        Y: 17
+      : 0
+      ? X: 13
+        Y: 18
+      : 0
+      ? X: 13
+        Y: 19
+      : 0
+      ? X: 13
+        Y: 20
+      : 0
+      ? X: 13
+        Y: 21
+      : 0
+      ? X: 13
+        Y: 22
+      : 0
+      ? X: 14
+        Y: 16
+      : 0
+      ? X: 14
+        Y: 17
+      : 0
+      ? X: 14
+        Y: 18
+      : 0
+      ? X: 14
+        Y: 19
+      : 0
+      ? X: 14
+        Y: 20
+      : 0
+      ? X: 14
+        Y: 21
+      : 0
+      ? X: 14
+        Y: 22
+      : 0
+      ? X: 15
+        Y: 16
+      : 0
+      ? X: -32
+        Y: 0
+      : 0
+      ? X: -32
+        Y: 1
+      : 0
+      ? X: -32
+        Y: 2
+      : 0
+      ? X: -32
+        Y: 3
+      : 0
+      ? X: -32
+        Y: 4
+      : 0
+      ? X: -32
+        Y: 5
+      : 0
+      ? X: -32
+        Y: 6
+      : 0
+      ? X: -32
+        Y: 7
+      : 0
+      ? X: -32
+        Y: 8
+      : 0
+      ? X: -32
+        Y: 9
+      : 0
+      ? X: -32
+        Y: 10
+      : 0
+      ? X: -32
+        Y: 11
+      : 0
+      ? X: -32
+        Y: 12
+      : 0
+      ? X: -32
+        Y: 13
+      : 0
+      ? X: -32
+        Y: 14
+      : 0
+      ? X: -32
+        Y: 15
+      : 0
+      ? X: -31
+        Y: 0
+      : 0
+      ? X: -31
+        Y: 1
+      : 0
+      ? X: -31
+        Y: 2
+      : 0
+      ? X: -31
+        Y: 3
+      : 0
+      ? X: -31
+        Y: 4
+      : 0
+      ? X: -31
+        Y: 5
+      : 0
+      ? X: -31
+        Y: 6
+      : 0
+      ? X: -31
+        Y: 7
+      : 0
+      ? X: -31
+        Y: 8
+      : 0
+      ? X: -31
+        Y: 9
+      : 0
+      ? X: -31
+        Y: 10
+      : 0
+      ? X: -31
+        Y: 11
+      : 0
+      ? X: -31
+        Y: 12
+      : 0
+      ? X: -31
+        Y: 13
+      : 0
+      ? X: -31
+        Y: 14
+      : 0
+      ? X: -31
+        Y: 15
+      : 0
+      ? X: -30
+        Y: 0
+      : 0
+      ? X: -30
+        Y: 1
+      : 0
+      ? X: -30
+        Y: 2
+      : 0
+      ? X: -30
+        Y: 3
+      : 0
+      ? X: -30
+        Y: 4
+      : 0
+      ? X: -30
+        Y: 5
+      : 0
+      ? X: -30
+        Y: 6
+      : 0
+      ? X: -30
+        Y: 7
+      : 0
+      ? X: -30
+        Y: 8
+      : 0
+      ? X: -30
+        Y: 9
+      : 0
+      ? X: -30
+        Y: 10
+      : 0
+      ? X: -30
+        Y: 11
+      : 0
+      ? X: -30
+        Y: 12
+      : 0
+      ? X: -30
+        Y: 13
+      : 0
+      ? X: -30
+        Y: 14
+      : 0
+      ? X: -30
+        Y: 15
+      : 0
+      ? X: -29
+        Y: 0
+      : 0
+      ? X: -29
+        Y: 1
+      : 0
+      ? X: -29
+        Y: 2
+      : 0
+      ? X: -29
+        Y: 3
+      : 0
+      ? X: -29
+        Y: 4
+      : 0
+      ? X: -29
+        Y: 5
+      : 0
+      ? X: -29
+        Y: 6
+      : 0
+      ? X: -29
+        Y: 7
+      : 0
+      ? X: -29
+        Y: 8
+      : 0
+      ? X: -29
+        Y: 9
+      : 0
+      ? X: -29
+        Y: 10
+      : 0
+      ? X: -29
+        Y: 11
+      : 0
+      ? X: -29
+        Y: 12
+      : 0
+      ? X: -29
+        Y: 13
+      : 0
+      ? X: -29
+        Y: 14
+      : 0
+      ? X: -29
+        Y: 15
+      : 0
+      ? X: -28
+        Y: 0
+      : 0
+      ? X: -28
+        Y: 1
+      : 0
+      ? X: -28
+        Y: 2
+      : 0
+      ? X: -28
+        Y: 3
+      : 0
+      ? X: -28
+        Y: 4
+      : 0
+      ? X: -28
+        Y: 5
+      : 0
+      ? X: -28
+        Y: 6
+      : 0
+      ? X: -28
+        Y: 7
+      : 0
+      ? X: -28
+        Y: 8
+      : 0
+      ? X: -28
+        Y: 9
+      : 0
+      ? X: -28
+        Y: 10
+      : 0
+      ? X: -28
+        Y: 11
+      : 0
+      ? X: -28
+        Y: 12
+      : 0
+      ? X: -28
+        Y: 13
+      : 0
+      ? X: -28
+        Y: 14
+      : 0
+      ? X: -28
+        Y: 15
+      : 0
+      ? X: -27
+        Y: 0
+      : 0
+      ? X: -27
+        Y: 1
+      : 0
+      ? X: -27
+        Y: 2
+      : 0
+      ? X: -27
+        Y: 3
+      : 0
+      ? X: -27
+        Y: 4
+      : 0
+      ? X: -27
+        Y: 5
+      : 0
+      ? X: -27
+        Y: 6
+      : 0
+      ? X: -27
+        Y: 7
+      : 0
+      ? X: -27
+        Y: 8
+      : 0
+      ? X: -27
+        Y: 9
+      : 0
+      ? X: -27
+        Y: 10
+      : 0
+      ? X: -27
+        Y: 11
+      : 0
+      ? X: -27
+        Y: 12
+      : 0
+      ? X: -27
+        Y: 13
+      : 0
+      ? X: -27
+        Y: 14
+      : 0
+      ? X: -27
+        Y: 15
+      : 0
+      ? X: -26
+        Y: 0
+      : 0
+      ? X: -26
+        Y: 1
+      : 0
+      ? X: -26
+        Y: 2
+      : 0
+      ? X: -26
+        Y: 3
+      : 0
+      ? X: -26
+        Y: 4
+      : 0
+      ? X: -26
+        Y: 5
+      : 0
+      ? X: -26
+        Y: 6
+      : 0
+      ? X: -26
+        Y: 7
+      : 0
+      ? X: -26
+        Y: 8
+      : 0
+      ? X: -26
+        Y: 9
+      : 0
+      ? X: -26
+        Y: 10
+      : 0
+      ? X: -26
+        Y: 11
+      : 0
+      ? X: -26
+        Y: 12
+      : 0
+      ? X: -26
+        Y: 13
+      : 0
+      ? X: -26
+        Y: 14
+      : 0
+      ? X: -26
+        Y: 15
+      : 0
+      ? X: -25
+        Y: 0
+      : 0
+      ? X: -25
+        Y: 1
+      : 0
+      ? X: -25
+        Y: 2
+      : 0
+      ? X: -25
+        Y: 3
+      : 0
+      ? X: -25
+        Y: 4
+      : 0
+      ? X: -25
+        Y: 5
+      : 0
+      ? X: -25
+        Y: 6
+      : 0
+      ? X: -25
+        Y: 7
+      : 0
+      ? X: -25
+        Y: 8
+      : 0
+      ? X: -25
+        Y: 9
+      : 0
+      ? X: -25
+        Y: 10
+      : 0
+      ? X: -25
+        Y: 11
+      : 0
+      ? X: -25
+        Y: 12
+      : 0
+      ? X: -25
+        Y: 13
+      : 0
+      ? X: -25
+        Y: 14
+      : 0
+      ? X: -25
+        Y: 15
+      : 0
+      ? X: -24
+        Y: 0
+      : 0
+      ? X: -24
+        Y: 1
+      : 0
+      ? X: -24
+        Y: 2
+      : 0
+      ? X: -24
+        Y: 3
+      : 0
+      ? X: -24
+        Y: 4
+      : 0
+      ? X: -24
+        Y: 5
+      : 0
+      ? X: -24
+        Y: 6
+      : 0
+      ? X: -24
+        Y: 7
+      : 0
+      ? X: -24
+        Y: 8
+      : 0
+      ? X: -24
+        Y: 9
+      : 0
+      ? X: -24
+        Y: 10
+      : 0
+      ? X: -24
+        Y: 11
+      : 0
+      ? X: -24
+        Y: 12
+      : 0
+      ? X: -24
+        Y: 13
+      : 0
+      ? X: -24
+        Y: 14
+      : 0
+      ? X: -24
+        Y: 15
+      : 0
+      ? X: -23
+        Y: 0
+      : 0
+      ? X: -23
+        Y: 1
+      : 0
+      ? X: -23
+        Y: 2
+      : 0
+      ? X: -23
+        Y: 3
+      : 0
+      ? X: -23
+        Y: 4
+      : 0
+      ? X: -23
+        Y: 5
+      : 0
+      ? X: -23
+        Y: 6
+      : 0
+      ? X: -23
+        Y: 7
+      : 0
+      ? X: -23
+        Y: 8
+      : 0
+      ? X: -23
+        Y: 9
+      : 0
+      ? X: -23
+        Y: 10
+      : 0
+      ? X: -23
+        Y: 11
+      : 0
+      ? X: -23
+        Y: 12
+      : 0
+      ? X: -23
+        Y: 13
+      : 0
+      ? X: -23
+        Y: 14
+      : 0
+      ? X: -23
+        Y: 15
+      : 0
+      ? X: -22
+        Y: 0
+      : 0
+      ? X: -22
+        Y: 1
+      : 0
+      ? X: -22
+        Y: 2
+      : 0
+      ? X: -22
+        Y: 3
+      : 0
+      ? X: -22
+        Y: 4
+      : 0
+      ? X: -22
+        Y: 5
+      : 0
+      ? X: -22
+        Y: 6
+      : 0
+      ? X: -22
+        Y: 7
+      : 0
+      ? X: -22
+        Y: 8
+      : 0
+      ? X: -22
+        Y: 9
+      : 0
+      ? X: -22
+        Y: 10
+      : 0
+      ? X: -22
+        Y: 11
+      : 0
+      ? X: -22
+        Y: 12
+      : 0
+      ? X: -22
+        Y: 13
+      : 0
+      ? X: -22
+        Y: 14
+      : 0
+      ? X: -22
+        Y: 15
+      : 0
+      ? X: -21
+        Y: 0
+      : 0
+      ? X: -21
+        Y: 1
+      : 0
+      ? X: -21
+        Y: 2
+      : 0
+      ? X: -21
+        Y: 3
+      : 0
+      ? X: -21
+        Y: 4
+      : 0
+      ? X: -21
+        Y: 5
+      : 0
+      ? X: -21
+        Y: 6
+      : 0
+      ? X: -21
+        Y: 7
+      : 0
+      ? X: -21
+        Y: 8
+      : 0
+      ? X: -21
+        Y: 9
+      : 0
+      ? X: -21
+        Y: 10
+      : 0
+      ? X: -21
+        Y: 11
+      : 0
+      ? X: -21
+        Y: 12
+      : 0
+      ? X: -21
+        Y: 13
+      : 0
+      ? X: -21
+        Y: 14
+      : 0
+      ? X: -21
+        Y: 15
+      : 0
+      ? X: -20
+        Y: 0
+      : 0
+      ? X: -20
+        Y: 1
+      : 0
+      ? X: -20
+        Y: 2
+      : 0
+      ? X: -20
+        Y: 3
+      : 0
+      ? X: -20
+        Y: 4
+      : 0
+      ? X: -20
+        Y: 5
+      : 0
+      ? X: -20
+        Y: 6
+      : 0
+      ? X: -20
+        Y: 7
+      : 0
+      ? X: -20
+        Y: 8
+      : 0
+      ? X: -20
+        Y: 9
+      : 0
+      ? X: -20
+        Y: 10
+      : 0
+      ? X: -20
+        Y: 11
+      : 0
+      ? X: -20
+        Y: 12
+      : 0
+      ? X: -20
+        Y: 13
+      : 0
+      ? X: -20
+        Y: 14
+      : 0
+      ? X: -20
+        Y: 15
+      : 0
+      ? X: -19
+        Y: 0
+      : 0
+      ? X: -19
+        Y: 1
+      : 0
+      ? X: -19
+        Y: 2
+      : 0
+      ? X: -19
+        Y: 3
+      : 0
+      ? X: -19
+        Y: 4
+      : 0
+      ? X: -19
+        Y: 5
+      : 0
+      ? X: -19
+        Y: 6
+      : 0
+      ? X: -19
+        Y: 7
+      : 0
+      ? X: -19
+        Y: 8
+      : 0
+      ? X: -19
+        Y: 9
+      : 0
+      ? X: -19
+        Y: 10
+      : 0
+      ? X: -19
+        Y: 11
+      : 0
+      ? X: -19
+        Y: 12
+      : 0
+      ? X: -19
+        Y: 13
+      : 0
+      ? X: -19
+        Y: 14
+      : 0
+      ? X: -19
+        Y: 15
+      : 0
+      ? X: -18
+        Y: 0
+      : 0
+      ? X: -18
+        Y: 1
+      : 0
+      ? X: -18
+        Y: 2
+      : 0
+      ? X: -18
+        Y: 3
+      : 0
+      ? X: -18
+        Y: 4
+      : 0
+      ? X: -18
+        Y: 5
+      : 0
+      ? X: -18
+        Y: 6
+      : 0
+      ? X: -18
+        Y: 7
+      : 0
+      ? X: -18
+        Y: 8
+      : 0
+      ? X: -18
+        Y: 9
+      : 0
+      ? X: -18
+        Y: 10
+      : 0
+      ? X: -18
+        Y: 11
+      : 0
+      ? X: -18
+        Y: 12
+      : 0
+      ? X: -18
+        Y: 13
+      : 0
+      ? X: -18
+        Y: 14
+      : 0
+      ? X: -18
+        Y: 15
+      : 0
+      ? X: -17
+        Y: 0
+      : 0
+      ? X: -17
+        Y: 1
+      : 0
+      ? X: -17
+        Y: 2
+      : 0
+      ? X: -17
+        Y: 3
+      : 0
+      ? X: -17
+        Y: 4
+      : 0
+      ? X: -17
+        Y: 5
+      : 0
+      ? X: -17
+        Y: 6
+      : 0
+      ? X: -17
+        Y: 7
+      : 0
+      ? X: -17
+        Y: 8
+      : 0
+      ? X: -17
+        Y: 9
+      : 0
+      ? X: -17
+        Y: 10
+      : 0
+      ? X: -17
+        Y: 11
+      : 0
+      ? X: -17
+        Y: 12
+      : 0
+      ? X: -17
+        Y: 13
+      : 0
+      ? X: -17
+        Y: 14
+      : 0
+      ? X: -17
+        Y: 15
+      : 0
+      ? X: 16
+        Y: -16
+      : 0
+      ? X: 16
+        Y: -15
+      : 0
+      ? X: 16
+        Y: -14
+      : 0
+      ? X: 16
+        Y: -13
+      : 0
+      ? X: 16
+        Y: -12
+      : 0
+      ? X: 16
+        Y: -11
+      : 0
+      ? X: 16
+        Y: -10
+      : 0
+      ? X: 16
+        Y: -9
+      : 0
+      ? X: 16
+        Y: -8
+      : 0
+      ? X: 16
+        Y: -7
+      : 0
+      ? X: 16
+        Y: -6
+      : 0
+      ? X: 16
+        Y: -5
+      : 0
+      ? X: 16
+        Y: -4
+      : 0
+      ? X: 16
+        Y: -3
+      : 0
+      ? X: 16
+        Y: -2
+      : 0
+      ? X: 16
+        Y: -1
+      : 0
+      ? X: 17
+        Y: -16
+      : 0
+      ? X: 17
+        Y: -15
+      : 0
+      ? X: 17
+        Y: -14
+      : 0
+      ? X: 17
+        Y: -13
+      : 0
+      ? X: 17
+        Y: -12
+      : 0
+      ? X: 17
+        Y: -11
+      : 0
+      ? X: 17
+        Y: -10
+      : 0
+      ? X: 17
+        Y: -9
+      : 0
+      ? X: 17
+        Y: -8
+      : 0
+      ? X: 17
+        Y: -7
+      : 0
+      ? X: 17
+        Y: -6
+      : 0
+      ? X: 17
+        Y: -5
+      : 0
+      ? X: 17
+        Y: -4
+      : 0
+      ? X: 17
+        Y: -3
+      : 0
+      ? X: 17
+        Y: -2
+      : 0
+      ? X: 17
+        Y: -1
+      : 0
+      ? X: 18
+        Y: -16
+      : 0
+      ? X: 18
+        Y: -15
+      : 0
+      ? X: 18
+        Y: -14
+      : 0
+      ? X: 18
+        Y: -13
+      : 0
+      ? X: 18
+        Y: -12
+      : 0
+      ? X: 18
+        Y: -11
+      : 0
+      ? X: 18
+        Y: -10
+      : 0
+      ? X: 18
+        Y: -9
+      : 0
+      ? X: 18
+        Y: -8
+      : 0
+      ? X: 18
+        Y: -7
+      : 0
+      ? X: 18
+        Y: -6
+      : 0
+      ? X: 18
+        Y: -5
+      : 0
+      ? X: 18
+        Y: -4
+      : 0
+      ? X: 18
+        Y: -3
+      : 0
+      ? X: 18
+        Y: -2
+      : 0
+      ? X: 18
+        Y: -1
+      : 0
+      ? X: 19
+        Y: -16
+      : 0
+      ? X: 19
+        Y: -15
+      : 0
+      ? X: 19
+        Y: -14
+      : 0
+      ? X: 19
+        Y: -13
+      : 0
+      ? X: 19
+        Y: -12
+      : 0
+      ? X: 19
+        Y: -11
+      : 0
+      ? X: 19
+        Y: -10
+      : 0
+      ? X: 19
+        Y: -9
+      : 0
+      ? X: 19
+        Y: -8
+      : 0
+      ? X: 19
+        Y: -7
+      : 0
+      ? X: 19
+        Y: -6
+      : 0
+      ? X: 19
+        Y: -5
+      : 0
+      ? X: 19
+        Y: -4
+      : 0
+      ? X: 19
+        Y: -3
+      : 0
+      ? X: 19
+        Y: -2
+      : 0
+      ? X: 19
+        Y: -1
+      : 0
+      ? X: 20
+        Y: -16
+      : 0
+      ? X: 20
+        Y: -15
+      : 0
+      ? X: 20
+        Y: -14
+      : 0
+      ? X: 20
+        Y: -13
+      : 0
+      ? X: 20
+        Y: -12
+      : 0
+      ? X: 20
+        Y: -11
+      : 0
+      ? X: 20
+        Y: -10
+      : 0
+      ? X: 20
+        Y: -9
+      : 0
+      ? X: 20
+        Y: -8
+      : 0
+      ? X: 20
+        Y: -7
+      : 0
+      ? X: 20
+        Y: -6
+      : 0
+      ? X: 20
+        Y: -5
+      : 0
+      ? X: 20
+        Y: -4
+      : 0
+      ? X: 20
+        Y: -3
+      : 0
+      ? X: 20
+        Y: -2
+      : 0
+      ? X: 20
+        Y: -1
+      : 0
+      ? X: 21
+        Y: -16
+      : 0
+      ? X: 21
+        Y: -15
+      : 0
+      ? X: 21
+        Y: -14
+      : 0
+      ? X: 21
+        Y: -13
+      : 0
+      ? X: 21
+        Y: -12
+      : 0
+      ? X: 21
+        Y: -11
+      : 0
+      ? X: 21
+        Y: -10
+      : 0
+      ? X: 21
+        Y: -9
+      : 0
+      ? X: 21
+        Y: -8
+      : 0
+      ? X: 21
+        Y: -7
+      : 0
+      ? X: 21
+        Y: -6
+      : 0
+      ? X: 21
+        Y: -5
+      : 0
+      ? X: 21
+        Y: -4
+      : 0
+      ? X: 21
+        Y: -3
+      : 0
+      ? X: 21
+        Y: -2
+      : 0
+      ? X: 21
+        Y: -1
+      : 0
+      ? X: 22
+        Y: -16
+      : 0
+      ? X: 22
+        Y: -15
+      : 0
+      ? X: 22
+        Y: -14
+      : 0
+      ? X: 22
+        Y: -13
+      : 0
+      ? X: 22
+        Y: -12
+      : 0
+      ? X: 22
+        Y: -11
+      : 0
+      ? X: 22
+        Y: -10
+      : 0
+      ? X: 22
+        Y: -9
+      : 0
+      ? X: 22
+        Y: -8
+      : 0
+      ? X: 22
+        Y: -7
+      : 0
+      ? X: 22
+        Y: -6
+      : 0
+      ? X: 22
+        Y: -5
+      : 0
+      ? X: 22
+        Y: -4
+      : 0
+      ? X: 22
+        Y: -3
+      : 0
+      ? X: 22
+        Y: -2
+      : 0
+      ? X: 22
+        Y: -1
+      : 0
+      ? X: 23
+        Y: -16
+      : 0
+      ? X: 23
+        Y: -15
+      : 0
+      ? X: 23
+        Y: -14
+      : 0
+      ? X: 23
+        Y: -13
+      : 0
+      ? X: 23
+        Y: -12
+      : 0
+      ? X: 23
+        Y: -11
+      : 0
+      ? X: 23
+        Y: -10
+      : 0
+      ? X: 23
+        Y: -9
+      : 0
+      ? X: 23
+        Y: -8
+      : 0
+      ? X: 23
+        Y: -7
+      : 0
+      ? X: 23
+        Y: -6
+      : 0
+      ? X: 23
+        Y: -5
+      : 0
+      ? X: 23
+        Y: -4
+      : 0
+      ? X: 23
+        Y: -3
+      : 0
+      ? X: 23
+        Y: -2
+      : 0
+      ? X: 23
+        Y: -1
+      : 0
+      ? X: 24
+        Y: -16
+      : 0
+      ? X: 24
+        Y: -15
+      : 0
+      ? X: 24
+        Y: -14
+      : 0
+      ? X: 24
+        Y: -13
+      : 0
+      ? X: 24
+        Y: -12
+      : 0
+      ? X: 24
+        Y: -11
+      : 0
+      ? X: 24
+        Y: -10
+      : 0
+      ? X: 24
+        Y: -9
+      : 0
+      ? X: 24
+        Y: -8
+      : 0
+      ? X: 24
+        Y: -7
+      : 0
+      ? X: 24
+        Y: -6
+      : 0
+      ? X: 24
+        Y: -5
+      : 0
+      ? X: 24
+        Y: -4
+      : 0
+      ? X: 24
+        Y: -3
+      : 0
+      ? X: 24
+        Y: -2
+      : 0
+      ? X: 24
+        Y: -1
+      : 0
+      ? X: 25
+        Y: -16
+      : 0
+      ? X: 25
+        Y: -15
+      : 0
+      ? X: 25
+        Y: -14
+      : 0
+      ? X: 25
+        Y: -13
+      : 0
+      ? X: 25
+        Y: -12
+      : 0
+      ? X: 25
+        Y: -11
+      : 0
+      ? X: 25
+        Y: -10
+      : 0
+      ? X: 25
+        Y: -9
+      : 0
+      ? X: 25
+        Y: -8
+      : 0
+      ? X: 25
+        Y: -7
+      : 0
+      ? X: 25
+        Y: -6
+      : 0
+      ? X: 25
+        Y: -5
+      : 0
+      ? X: 25
+        Y: -4
+      : 0
+      ? X: 25
+        Y: -3
+      : 0
+      ? X: 25
+        Y: -2
+      : 0
+      ? X: 25
+        Y: -1
+      : 0
+      ? X: 26
+        Y: -16
+      : 0
+      ? X: 26
+        Y: -15
+      : 0
+      ? X: 26
+        Y: -14
+      : 0
+      ? X: 26
+        Y: -13
+      : 0
+      ? X: 26
+        Y: -12
+      : 0
+      ? X: 26
+        Y: -11
+      : 0
+      ? X: 26
+        Y: -10
+      : 0
+      ? X: 26
+        Y: -9
+      : 0
+      ? X: 26
+        Y: -8
+      : 0
+      ? X: 26
+        Y: -7
+      : 0
+      ? X: 26
+        Y: -6
+      : 0
+      ? X: 26
+        Y: -5
+      : 0
+      ? X: 26
+        Y: -4
+      : 0
+      ? X: 26
+        Y: -3
+      : 0
+      ? X: 26
+        Y: -2
+      : 0
+      ? X: 26
+        Y: -1
+      : 0
+      ? X: 27
+        Y: -16
+      : 0
+      ? X: 27
+        Y: -15
+      : 0
+      ? X: 27
+        Y: -14
+      : 0
+      ? X: 27
+        Y: -13
+      : 0
+      ? X: 27
+        Y: -12
+      : 0
+      ? X: 27
+        Y: -11
+      : 0
+      ? X: 27
+        Y: -10
+      : 0
+      ? X: 27
+        Y: -9
+      : 0
+      ? X: 27
+        Y: -8
+      : 0
+      ? X: 27
+        Y: -7
+      : 0
+      ? X: 27
+        Y: -6
+      : 0
+      ? X: 27
+        Y: -5
+      : 0
+      ? X: 27
+        Y: -4
+      : 0
+      ? X: 27
+        Y: -3
+      : 0
+      ? X: 27
+        Y: -2
+      : 0
+      ? X: 27
+        Y: -1
+      : 0
+      ? X: 28
+        Y: -16
+      : 0
+      ? X: 28
+        Y: -15
+      : 0
+      ? X: 28
+        Y: -14
+      : 0
+      ? X: 28
+        Y: -13
+      : 0
+      ? X: 28
+        Y: -12
+      : 0
+      ? X: 28
+        Y: -11
+      : 0
+      ? X: 28
+        Y: -10
+      : 0
+      ? X: 28
+        Y: -9
+      : 0
+      ? X: 28
+        Y: -8
+      : 0
+      ? X: 28
+        Y: -7
+      : 0
+      ? X: 28
+        Y: -6
+      : 0
+      ? X: 28
+        Y: -5
+      : 0
+      ? X: 28
+        Y: -4
+      : 0
+      ? X: 28
+        Y: -3
+      : 0
+      ? X: 28
+        Y: -2
+      : 0
+      ? X: 28
+        Y: -1
+      : 0
+      ? X: 29
+        Y: -9
+      : 0
+      ? X: 29
+        Y: -8
+      : 0
+      ? X: 29
+        Y: -7
+      : 0
+      ? X: 29
+        Y: -6
+      : 0
+      ? X: 29
+        Y: -5
+      : 0
+      ? X: 29
+        Y: -4
+      : 0
+      ? X: 29
+        Y: -3
+      : 0
+      ? X: 29
+        Y: -2
+      : 0
+      ? X: 29
+        Y: -1
+      : 0
+      ? X: 30
+        Y: -9
+      : 0
+      ? X: 30
+        Y: -8
+      : 0
+      ? X: 30
+        Y: -7
+      : 0
+      ? X: 30
+        Y: -6
+      : 0
+      ? X: 30
+        Y: -5
+      : 0
+      ? X: 30
+        Y: -4
+      : 0
+      ? X: 30
+        Y: -3
+      : 0
+      ? X: 30
+        Y: -2
+      : 0
+      ? X: 30
+        Y: -1
+      : 0
+      ? X: 31
+        Y: -9
+      : 0
+      ? X: 31
+        Y: -8
+      : 0
+      ? X: 31
+        Y: -7
+      : 0
+      ? X: 31
+        Y: -6
+      : 0
+      ? X: 31
+        Y: -5
+      : 0
+      ? X: 31
+        Y: -4
+      : 0
+      ? X: 31
+        Y: -3
+      : 0
+      ? X: 31
+        Y: -2
+      : 0
+      ? X: 31
+        Y: -1
+      : 0
+      ? X: 0
+        Y: -29
+      : 0
+      ? X: 0
+        Y: -28
+      : 0
+      ? X: 0
+        Y: -27
+      : 0
+      ? X: 0
+        Y: -26
+      : 0
+      ? X: 0
+        Y: -25
+      : 0
+      ? X: 0
+        Y: -24
+      : 0
+      ? X: 0
+        Y: -23
+      : 0
+      ? X: 0
+        Y: -22
+      : 0
+      ? X: 0
+        Y: -21
+      : 0
+      ? X: 0
+        Y: -20
+      : 0
+      ? X: 0
+        Y: -19
+      : 0
+      ? X: 0
+        Y: -18
+      : 0
+      ? X: 0
+        Y: -17
+      : 0
+      ? X: 1
+        Y: -25
+      : 0
+      ? X: 1
+        Y: -24
+      : 0
+      ? X: 1
+        Y: -23
+      : 0
+      ? X: 1
+        Y: -22
+      : 0
+      ? X: 1
+        Y: -21
+      : 0
+      ? X: 1
+        Y: -20
+      : 0
+      ? X: 1
+        Y: -19
+      : 0
+      ? X: 1
+        Y: -18
+      : 0
+      ? X: 1
+        Y: -17
+      : 0
+      ? X: 2
+        Y: -25
+      : 0
+      ? X: 2
+        Y: -24
+      : 0
+      ? X: 2
+        Y: -23
+      : 0
+      ? X: 2
+        Y: -22
+      : 0
+      ? X: 2
+        Y: -21
+      : 0
+      ? X: 2
+        Y: -20
+      : 0
+      ? X: 2
+        Y: -19
+      : 0
+      ? X: 2
+        Y: -18
+      : 0
+      ? X: 2
+        Y: -17
+      : 0
+      ? X: 3
+        Y: -25
+      : 0
+      ? X: 3
+        Y: -24
+      : 0
+      ? X: 3
+        Y: -23
+      : 0
+      ? X: 3
+        Y: -22
+      : 0
+      ? X: 3
+        Y: -21
+      : 0
+      ? X: 3
+        Y: -20
+      : 0
+      ? X: 3
+        Y: -19
+      : 0
+      ? X: 3
+        Y: -18
+      : 0
+      ? X: 3
+        Y: -17
+      : 0
+      ? X: 4
+        Y: -25
+      : 0
+      ? X: 4
+        Y: -24
+      : 0
+      ? X: 4
+        Y: -23
+      : 0
+      ? X: 4
+        Y: -22
+      : 0
+      ? X: 4
+        Y: -21
+      : 0
+      ? X: 4
+        Y: -20
+      : 0
+      ? X: 4
+        Y: -19
+      : 0
+      ? X: 4
+        Y: -18
+      : 0
+      ? X: 4
+        Y: -17
+      : 0
+      ? X: 5
+        Y: -25
+      : 0
+      ? X: 5
+        Y: -24
+      : 0
+      ? X: 5
+        Y: -23
+      : 0
+      ? X: 5
+        Y: -22
+      : 0
+      ? X: 5
+        Y: -21
+      : 0
+      ? X: 5
+        Y: -20
+      : 0
+      ? X: 5
+        Y: -19
+      : 0
+      ? X: 5
+        Y: -18
+      : 0
+      ? X: 5
+        Y: -17
+      : 0
+      ? X: 6
+        Y: -23
+      : 0
+      ? X: 6
+        Y: -22
+      : 0
+      ? X: 6
+        Y: -21
+      : 0
+      ? X: 6
+        Y: -20
+      : 0
+      ? X: 6
+        Y: -19
+      : 0
+      ? X: 6
+        Y: -18
+      : 0
+      ? X: 6
+        Y: -17
+      : 0
+      ? X: 7
+        Y: -22
+      : 0
+      ? X: 7
+        Y: -21
+      : 0
+      ? X: 7
+        Y: -20
+      : 0
+      ? X: 7
+        Y: -19
+      : 0
+      ? X: 7
+        Y: -18
+      : 0
+      ? X: 7
+        Y: -17
+      : 0
+      ? X: 8
+        Y: -22
+      : 0
+      ? X: 8
+        Y: -21
+      : 0
+      ? X: 8
+        Y: -20
+      : 0
+      ? X: 8
+        Y: -19
+      : 0
+      ? X: 8
+        Y: -18
+      : 0
+      ? X: 8
+        Y: -17
+      : 0
+      ? X: 9
+        Y: -22
+      : 0
+      ? X: 9
+        Y: -21
+      : 0
+      ? X: 9
+        Y: -20
+      : 0
+      ? X: 9
+        Y: -19
+      : 0
+      ? X: 9
+        Y: -18
+      : 0
+      ? X: 9
+        Y: -17
+      : 0
+      ? X: 10
+        Y: -22
+      : 0
+      ? X: 10
+        Y: -21
+      : 0
+      ? X: 10
+        Y: -20
+      : 0
+      ? X: 10
+        Y: -19
+      : 0
+      ? X: 10
+        Y: -18
+      : 0
+      ? X: 10
+        Y: -17
+      : 0
+      ? X: 11
+        Y: -22
+      : 0
+      ? X: 11
+        Y: -21
+      : 0
+      ? X: 11
+        Y: -20
+      : 0
+      ? X: 11
+        Y: -19
+      : 0
+      ? X: 11
+        Y: -18
+      : 0
+      ? X: 11
+        Y: -17
+      : 0
+      ? X: 12
+        Y: -22
+      : 0
+      ? X: 12
+        Y: -21
+      : 0
+      ? X: 12
+        Y: -20
+      : 0
+      ? X: 12
+        Y: -19
+      : 0
+      ? X: 12
+        Y: -18
+      : 0
+      ? X: 12
+        Y: -17
+      : 0
+      ? X: 13
+        Y: -27
+      : 0
+      ? X: 13
+        Y: -26
+      : 0
+      ? X: 13
+        Y: -25
+      : 0
+      ? X: 13
+        Y: -24
+      : 0
+      ? X: 13
+        Y: -23
+      : 0
+      ? X: 13
+        Y: -22
+      : 0
+      ? X: 13
+        Y: -21
+      : 0
+      ? X: 13
+        Y: -20
+      : 0
+      ? X: 13
+        Y: -19
+      : 0
+      ? X: 13
+        Y: -18
+      : 0
+      ? X: 13
+        Y: -17
+      : 0
+      ? X: 14
+        Y: -27
+      : 0
+      ? X: 14
+        Y: -26
+      : 0
+      ? X: 14
+        Y: -25
+      : 0
+      ? X: 14
+        Y: -24
+      : 0
+      ? X: 14
+        Y: -23
+      : 0
+      ? X: 14
+        Y: -22
+      : 0
+      ? X: 14
+        Y: -21
+      : 0
+      ? X: 14
+        Y: -20
+      : 0
+      ? X: 14
+        Y: -19
+      : 0
+      ? X: 14
+        Y: -18
+      : 0
+      ? X: 14
+        Y: -17
+      : 0
+      ? X: 15
+        Y: -27
+      : 0
+      ? X: 15
+        Y: -26
+      : 0
+      ? X: 15
+        Y: -25
+      : 0
+      ? X: 15
+        Y: -24
+      : 0
+      ? X: 15
+        Y: -23
+      : 0
+      ? X: 15
+        Y: -22
+      : 0
+      ? X: 15
+        Y: -21
+      : 0
+      ? X: 15
+        Y: -20
+      : 0
+      ? X: 15
+        Y: -19
+      : 0
+      ? X: 15
+        Y: -18
+      : 0
+      ? X: 15
+        Y: -17
+      : 0
+      ? X: 16
+        Y: -27
+      : 0
+      ? X: 16
+        Y: -26
+      : 0
+      ? X: 16
+        Y: -25
+      : 0
+      ? X: 16
+        Y: -24
+      : 0
+      ? X: 16
+        Y: -23
+      : 0
+      ? X: 16
+        Y: -22
+      : 0
+      ? X: 16
+        Y: -21
+      : 0
+      ? X: 16
+        Y: -20
+      : 0
+      ? X: 16
+        Y: -19
+      : 0
+      ? X: 16
+        Y: -18
+      : 0
+      ? X: 16
+        Y: -17
+      : 0
+      ? X: 17
+        Y: -27
+      : 0
+      ? X: 17
+        Y: -26
+      : 0
+      ? X: 17
+        Y: -25
+      : 0
+      ? X: 17
+        Y: -24
+      : 0
+      ? X: 17
+        Y: -23
+      : 0
+      ? X: 17
+        Y: -22
+      : 0
+      ? X: 17
+        Y: -21
+      : 0
+      ? X: 17
+        Y: -20
+      : 0
+      ? X: 17
+        Y: -19
+      : 0
+      ? X: 17
+        Y: -18
+      : 0
+      ? X: 17
+        Y: -17
+      : 0
+      ? X: 18
+        Y: -27
+      : 0
+      ? X: 18
+        Y: -26
+      : 0
+      ? X: 18
+        Y: -25
+      : 0
+      ? X: 18
+        Y: -24
+      : 0
+      ? X: 18
+        Y: -23
+      : 0
+      ? X: 18
+        Y: -22
+      : 0
+      ? X: 18
+        Y: -21
+      : 0
+      ? X: 18
+        Y: -20
+      : 0
+      ? X: 18
+        Y: -19
+      : 0
+      ? X: 18
+        Y: -18
+      : 0
+      ? X: 18
+        Y: -17
+      : 0
+      ? X: 19
+        Y: -27
+      : 0
+      ? X: 19
+        Y: -26
+      : 0
+      ? X: 19
+        Y: -25
+      : 0
+      ? X: 19
+        Y: -24
+      : 0
+      ? X: 19
+        Y: -23
+      : 0
+      ? X: 19
+        Y: -22
+      : 0
+      ? X: 19
+        Y: -21
+      : 0
+      ? X: 19
+        Y: -20
+      : 0
+      ? X: 19
+        Y: -19
+      : 0
+      ? X: 19
+        Y: -18
+      : 0
+      ? X: 19
+        Y: -17
+      : 0
+      ? X: 20
+        Y: -27
+      : 0
+      ? X: 20
+        Y: -26
+      : 0
+      ? X: 20
+        Y: -25
+      : 0
+      ? X: 20
+        Y: -24
+      : 0
+      ? X: 20
+        Y: -23
+      : 0
+      ? X: 20
+        Y: -22
+      : 0
+      ? X: 20
+        Y: -21
+      : 0
+      ? X: 20
+        Y: -20
+      : 0
+      ? X: 20
+        Y: -19
+      : 0
+      ? X: 20
+        Y: -18
+      : 0
+      ? X: 20
+        Y: -17
+      : 0
+      ? X: 21
+        Y: -27
+      : 0
+      ? X: 21
+        Y: -26
+      : 0
+      ? X: 21
+        Y: -25
+      : 0
+      ? X: 21
+        Y: -24
+      : 0
+      ? X: 21
+        Y: -23
+      : 0
+      ? X: 21
+        Y: -22
+      : 0
+      ? X: 21
+        Y: -21
+      : 0
+      ? X: 21
+        Y: -20
+      : 0
+      ? X: 21
+        Y: -19
+      : 0
+      ? X: 21
+        Y: -18
+      : 0
+      ? X: 21
+        Y: -17
+      : 0
+      ? X: 22
+        Y: -27
+      : 0
+      ? X: 22
+        Y: -26
+      : 0
+      ? X: 22
+        Y: -25
+      : 0
+      ? X: 22
+        Y: -24
+      : 0
+      ? X: 22
+        Y: -23
+      : 0
+      ? X: 22
+        Y: -22
+      : 0
+      ? X: 22
+        Y: -21
+      : 0
+      ? X: 22
+        Y: -20
+      : 0
+      ? X: 22
+        Y: -19
+      : 0
+      ? X: 22
+        Y: -18
+      : 0
+      ? X: 22
+        Y: -17
+      : 0
+      ? X: 23
+        Y: -27
+      : 0
+      ? X: 23
+        Y: -26
+      : 0
+      ? X: 23
+        Y: -25
+      : 0
+      ? X: 23
+        Y: -24
+      : 0
+      ? X: 23
+        Y: -23
+      : 0
+      ? X: 23
+        Y: -22
+      : 0
+      ? X: 23
+        Y: -21
+      : 0
+      ? X: 23
+        Y: -20
+      : 0
+      ? X: 23
+        Y: -19
+      : 0
+      ? X: 23
+        Y: -18
+      : 0
+      ? X: 23
+        Y: -17
+      : 0
+      ? X: 24
+        Y: -20
+      : 0
+      ? X: 24
+        Y: -19
+      : 0
+      ? X: 24
+        Y: -18
+      : 0
+      ? X: 24
+        Y: -17
+      : 0
+      ? X: 25
+        Y: -20
+      : 0
+      ? X: 25
+        Y: -19
+      : 0
+      ? X: 25
+        Y: -18
+      : 0
+      ? X: 25
+        Y: -17
+      : 0
+      ? X: 26
+        Y: -20
+      : 0
+      ? X: 26
+        Y: -19
+      : 0
+      ? X: 26
+        Y: -18
+      : 0
+      ? X: 26
+        Y: -17
+      : 0
+      ? X: 27
+        Y: -20
+      : 0
+      ? X: 27
+        Y: -19
+      : 0
+      ? X: 27
+        Y: -18
+      : 0
+      ? X: 27
+        Y: -17
+      : 0
+      ? X: 28
+        Y: -20
+      : 0
+      ? X: 28
+        Y: -19
+      : 0
+      ? X: 28
+        Y: -18
+      : 0
+      ? X: 28
+        Y: -17
+      : 0
+      ? X: -16
+        Y: 16
+      : 0
+      ? X: -16
+        Y: 17
+      : 0
+      ? X: -16
+        Y: 18
+      : 0
+      ? X: -16
+        Y: 19
+      : 0
+      ? X: -16
+        Y: 20
+      : 0
+      ? X: -16
+        Y: 21
+      : 0
+      ? X: -16
+        Y: 22
+      : 0
+      ? X: -16
+        Y: 23
+      : 0
+      ? X: -16
+        Y: 24
+      : 0
+      ? X: -16
+        Y: 25
+      : 0
+      ? X: -16
+        Y: 26
+      : 0
+      ? X: -15
+        Y: 16
+      : 0
+      ? X: -15
+        Y: 17
+      : 0
+      ? X: -15
+        Y: 18
+      : 0
+      ? X: -15
+        Y: 19
+      : 0
+      ? X: -15
+        Y: 20
+      : 0
+      ? X: -15
+        Y: 21
+      : 0
+      ? X: -15
+        Y: 22
+      : 0
+      ? X: -15
+        Y: 23
+      : 0
+      ? X: -15
+        Y: 24
+      : 0
+      ? X: -15
+        Y: 25
+      : 0
+      ? X: -15
+        Y: 26
+      : 0
+      ? X: -14
+        Y: 16
+      : 0
+      ? X: -14
+        Y: 17
+      : 0
+      ? X: -14
+        Y: 18
+      : 0
+      ? X: -14
+        Y: 19
+      : 0
+      ? X: -14
+        Y: 20
+      : 0
+      ? X: -14
+        Y: 21
+      : 0
+      ? X: -14
+        Y: 22
+      : 0
+      ? X: -14
+        Y: 23
+      : 0
+      ? X: -14
+        Y: 24
+      : 0
+      ? X: -14
+        Y: 25
+      : 0
+      ? X: -14
+        Y: 26
+      : 0
+      ? X: -13
+        Y: 16
+      : 0
+      ? X: -13
+        Y: 17
+      : 0
+      ? X: -13
+        Y: 18
+      : 0
+      ? X: -13
+        Y: 19
+      : 0
+      ? X: -13
+        Y: 20
+      : 0
+      ? X: -13
+        Y: 21
+      : 0
+      ? X: -13
+        Y: 22
+      : 0
+      ? X: -13
+        Y: 23
+      : 0
+      ? X: -13
+        Y: 24
+      : 0
+      ? X: -13
+        Y: 25
+      : 0
+      ? X: -13
+        Y: 26
+      : 0
+      ? X: -12
+        Y: 16
+      : 0
+      ? X: -12
+        Y: 17
+      : 0
+      ? X: -12
+        Y: 18
+      : 0
+      ? X: -12
+        Y: 19
+      : 0
+      ? X: -12
+        Y: 20
+      : 0
+      ? X: -12
+        Y: 21
+      : 0
+      ? X: -12
+        Y: 22
+      : 0
+      ? X: -12
+        Y: 23
+      : 0
+      ? X: -12
+        Y: 24
+      : 0
+      ? X: -12
+        Y: 25
+      : 0
+      ? X: -12
+        Y: 26
+      : 0
+      ? X: -11
+        Y: 16
+      : 0
+      ? X: -11
+        Y: 17
+      : 0
+      ? X: -11
+        Y: 18
+      : 0
+      ? X: -11
+        Y: 19
+      : 0
+      ? X: -11
+        Y: 20
+      : 0
+      ? X: -11
+        Y: 21
+      : 0
+      ? X: -11
+        Y: 22
+      : 0
+      ? X: -11
+        Y: 23
+      : 0
+      ? X: -11
+        Y: 24
+      : 0
+      ? X: -11
+        Y: 25
+      : 0
+      ? X: -11
+        Y: 26
+      : 0
+      ? X: -10
+        Y: 16
+      : 0
+      ? X: -10
+        Y: 17
+      : 0
+      ? X: -10
+        Y: 18
+      : 0
+      ? X: -10
+        Y: 19
+      : 0
+      ? X: -10
+        Y: 20
+      : 0
+      ? X: -10
+        Y: 21
+      : 0
+      ? X: -10
+        Y: 22
+      : 0
+      ? X: -10
+        Y: 23
+      : 0
+      ? X: -10
+        Y: 24
+      : 0
+      ? X: -10
+        Y: 25
+      : 0
+      ? X: -10
+        Y: 26
+      : 0
+      ? X: -9
+        Y: 16
+      : 0
+      ? X: -9
+        Y: 17
+      : 0
+      ? X: -9
+        Y: 18
+      : 0
+      ? X: -9
+        Y: 19
+      : 0
+      ? X: -9
+        Y: 20
+      : 0
+      ? X: -9
+        Y: 21
+      : 0
+      ? X: -9
+        Y: 22
+      : 0
+      ? X: -9
+        Y: 23
+      : 0
+      ? X: -9
+        Y: 24
+      : 0
+      ? X: -9
+        Y: 25
+      : 0
+      ? X: -9
+        Y: 26
+      : 0
+      ? X: -8
+        Y: 16
+      : 0
+      ? X: -8
+        Y: 17
+      : 0
+      ? X: -8
+        Y: 18
+      : 0
+      ? X: -8
+        Y: 19
+      : 0
+      ? X: -8
+        Y: 20
+      : 0
+      ? X: -8
+        Y: 21
+      : 0
+      ? X: -8
+        Y: 22
+      : 0
+      ? X: -8
+        Y: 23
+      : 0
+      ? X: -8
+        Y: 24
+      : 0
+      ? X: -8
+        Y: 25
+      : 0
+      ? X: -8
+        Y: 26
+      : 0
+      ? X: -7
+        Y: 16
+      : 0
+      ? X: -7
+        Y: 17
+      : 0
+      ? X: -7
+        Y: 18
+      : 0
+      ? X: -7
+        Y: 19
+      : 0
+      ? X: -7
+        Y: 20
+      : 0
+      ? X: -7
+        Y: 21
+      : 0
+      ? X: -7
+        Y: 22
+      : 0
+      ? X: -7
+        Y: 23
+      : 0
+      ? X: -7
+        Y: 24
+      : 0
+      ? X: -7
+        Y: 25
+      : 0
+      ? X: -7
+        Y: 26
+      : 0
+      ? X: -6
+        Y: 16
+      : 0
+      ? X: -6
+        Y: 17
+      : 0
+      ? X: -6
+        Y: 18
+      : 0
+      ? X: -6
+        Y: 19
+      : 0
+      ? X: -6
+        Y: 20
+      : 0
+      ? X: -6
+        Y: 21
+      : 0
+      ? X: -6
+        Y: 22
+      : 0
+      ? X: -6
+        Y: 23
+      : 0
+      ? X: -6
+        Y: 24
+      : 0
+      ? X: -6
+        Y: 25
+      : 0
+      ? X: -5
+        Y: 16
+      : 0
+      ? X: -5
+        Y: 17
+      : 0
+      ? X: -5
+        Y: 18
+      : 0
+      ? X: -5
+        Y: 19
+      : 0
+      ? X: -5
+        Y: 20
+      : 0
+      ? X: -5
+        Y: 21
+      : 0
+      ? X: -5
+        Y: 22
+      : 0
+      ? X: -5
+        Y: 23
+      : 0
+      ? X: -5
+        Y: 24
+      : 0
+      ? X: -5
+        Y: 25
+      : 0
+      ? X: -4
+        Y: 16
+      : 0
+      ? X: -4
+        Y: 17
+      : 0
+      ? X: -4
+        Y: 18
+      : 0
+      ? X: -4
+        Y: 19
+      : 0
+      ? X: -4
+        Y: 20
+      : 0
+      ? X: -4
+        Y: 21
+      : 0
+      ? X: -4
+        Y: 22
+      : 0
+      ? X: -4
+        Y: 23
+      : 0
+      ? X: -4
+        Y: 24
+      : 0
+      ? X: -4
+        Y: 25
+      : 0
+      ? X: -4
+        Y: 26
+      : 0
+      ? X: -4
+        Y: 27
+      : 0
+      ? X: -4
+        Y: 28
+      : 0
+      ? X: -4
+        Y: 29
+      : 0
+      ? X: -4
+        Y: 30
+      : 0
+      ? X: -4
+        Y: 31
+      : 0
+      ? X: -3
+        Y: 16
+      : 0
+      ? X: -3
+        Y: 17
+      : 0
+      ? X: -3
+        Y: 18
+      : 0
+      ? X: -3
+        Y: 19
+      : 0
+      ? X: -3
+        Y: 20
+      : 0
+      ? X: -3
+        Y: 21
+      : 0
+      ? X: -3
+        Y: 22
+      : 0
+      ? X: -3
+        Y: 23
+      : 0
+      ? X: -3
+        Y: 24
+      : 0
+      ? X: -3
+        Y: 25
+      : 0
+      ? X: -3
+        Y: 26
+      : 0
+      ? X: -3
+        Y: 27
+      : 0
+      ? X: -3
+        Y: 28
+      : 0
+      ? X: -3
+        Y: 29
+      : 0
+      ? X: -3
+        Y: 30
+      : 0
+      ? X: -3
+        Y: 31
+      : 0
+      ? X: -2
+        Y: 16
+      : 0
+      ? X: -2
+        Y: 17
+      : 0
+      ? X: -2
+        Y: 18
+      : 0
+      ? X: -2
+        Y: 19
+      : 0
+      ? X: -2
+        Y: 20
+      : 0
+      ? X: -2
+        Y: 21
+      : 0
+      ? X: -2
+        Y: 22
+      : 0
+      ? X: -2
+        Y: 23
+      : 0
+      ? X: -2
+        Y: 24
+      : 0
+      ? X: -2
+        Y: 25
+      : 0
+      ? X: -2
+        Y: 26
+      : 0
+      ? X: -2
+        Y: 27
+      : 0
+      ? X: -2
+        Y: 28
+      : 0
+      ? X: -2
+        Y: 29
+      : 0
+      ? X: -2
+        Y: 30
+      : 0
+      ? X: -2
+        Y: 31
+      : 0
+      ? X: -1
+        Y: 16
+      : 0
+      ? X: -1
+        Y: 17
+      : 0
+      ? X: -1
+        Y: 18
+      : 0
+      ? X: -1
+        Y: 19
+      : 0
+      ? X: -1
+        Y: 20
+      : 0
+      ? X: -1
+        Y: 21
+      : 0
+      ? X: -1
+        Y: 22
+      : 0
+      ? X: -1
+        Y: 23
+      : 0
+      ? X: -1
+        Y: 24
+      : 0
+      ? X: -1
+        Y: 25
+      : 0
+      ? X: -1
+        Y: 26
+      : 0
+      ? X: -1
+        Y: 27
+      : 0
+      ? X: -1
+        Y: 28
+      : 0
+      ? X: -1
+        Y: 29
+      : 0
+      ? X: -1
+        Y: 30
+      : 0
+      ? X: -1
+        Y: 31
+      : 0
+      ? X: -20
+        Y: 16
+      : 0
+      ? X: -20
+        Y: 17
+      : 0
+      ? X: -20
+        Y: 18
+      : 0
+      ? X: -20
+        Y: 19
+      : 0
+      ? X: -20
+        Y: 20
+      : 0
+      ? X: -20
+        Y: 21
+      : 0
+      ? X: -20
+        Y: 22
+      : 0
+      ? X: -20
+        Y: 23
+      : 0
+      ? X: -20
+        Y: 24
+      : 0
+      ? X: -20
+        Y: 25
+      : 0
+      ? X: -20
+        Y: 26
+      : 0
+      ? X: -19
+        Y: 16
+      : 0
+      ? X: -19
+        Y: 17
+      : 0
+      ? X: -19
+        Y: 18
+      : 0
+      ? X: -19
+        Y: 19
+      : 0
+      ? X: -19
+        Y: 20
+      : 0
+      ? X: -19
+        Y: 21
+      : 0
+      ? X: -19
+        Y: 22
+      : 0
+      ? X: -19
+        Y: 23
+      : 0
+      ? X: -19
+        Y: 24
+      : 0
+      ? X: -19
+        Y: 25
+      : 0
+      ? X: -19
+        Y: 26
+      : 0
+      ? X: -18
+        Y: 16
+      : 0
+      ? X: -18
+        Y: 17
+      : 0
+      ? X: -18
+        Y: 18
+      : 0
+      ? X: -18
+        Y: 19
+      : 0
+      ? X: -18
+        Y: 20
+      : 0
+      ? X: -18
+        Y: 21
+      : 0
+      ? X: -18
+        Y: 22
+      : 0
+      ? X: -18
+        Y: 23
+      : 0
+      ? X: -18
+        Y: 24
+      : 0
+      ? X: -18
+        Y: 25
+      : 0
+      ? X: -18
+        Y: 26
+      : 0
+      ? X: -17
+        Y: 16
+      : 0
+      ? X: -17
+        Y: 17
+      : 0
+      ? X: -17
+        Y: 18
+      : 0
+      ? X: -17
+        Y: 19
+      : 0
+      ? X: -17
+        Y: 20
+      : 0
+      ? X: -17
+        Y: 21
+      : 0
+      ? X: -17
+        Y: 22
+      : 0
+      ? X: -17
+        Y: 23
+      : 0
+      ? X: -17
+        Y: 24
+      : 0
+      ? X: -17
+        Y: 25
+      : 0
+      ? X: -17
+        Y: 26
+      : 0
+      ? X: -3
+        Y: 32
+      : 0
+      ? X: -2
+        Y: 32
+      : 0
+      ? X: -2
+        Y: 33
+      : 0
+      ? X: -1
+        Y: 32
+      : 0
+      ? X: -1
+        Y: 33
+      : 0
+      ? X: 16
+        Y: 16
+      : 0
+      ? X: 17
+        Y: 16
+      : 0
+      ? X: 18
+        Y: 17
+      : 0
+      ? X: 18
+        Y: 18
+      : 0
+      ? X: 18
+        Y: 19
+      : 0
+      ? X: 18
+        Y: 20
+      : 0
+      ? X: 18
+        Y: 21
+      : 0
+      ? X: 19
+        Y: 16
+      : 0
+      ? X: 19
+        Y: 17
+      : 0
+      ? X: 19
+        Y: 18
+      : 0
+      ? X: 19
+        Y: 19
+      : 0
+      ? X: 19
+        Y: 20
+      : 0
+      ? X: 19
+        Y: 21
+      : 0
+      ? X: 20
+        Y: 16
+      : 0
+      ? X: 20
+        Y: 17
+      : 0
+      ? X: 20
+        Y: 18
+      : 0
+      ? X: 20
+        Y: 19
+      : 0
+      ? X: 20
+        Y: 20
+      : 0
+      ? X: 20
+        Y: 21
+      : 0
+      ? X: 21
+        Y: 16
+      : 0
+      ? X: 21
+        Y: 17
+      : 0
+      ? X: 21
+        Y: 18
+      : 0
+      ? X: 21
+        Y: 19
+      : 0
+      ? X: 21
+        Y: 20
+      : 0
+      ? X: 21
+        Y: 21
+      : 0
+      ? X: 22
+        Y: 16
+      : 0
+      ? X: 22
+        Y: 17
+      : 0
+      ? X: 22
+        Y: 18
+      : 0
+      ? X: 22
+        Y: 19
+      : 0
+      ? X: 22
+        Y: 20
+      : 0
+      ? X: 22
+        Y: 21
+      : 0
+      ? X: 23
+        Y: 16
+      : 0
+      ? X: 23
+        Y: 17
+      : 0
+      ? X: 23
+        Y: 18
+      : 0
+      ? X: 23
+        Y: 19
+      : 0
+      ? X: 23
+        Y: 20
+      : 0
+      ? X: 23
+        Y: 21
+      : 0
+      ? X: 24
+        Y: 17
+      : 0
+      ? X: 24
+        Y: 18
+      : 0
+      ? X: 24
+        Y: 19
+      : 0
+      ? X: 24
+        Y: 20
+      : 0
+      ? X: 24
+        Y: 21
+      : 0
+      ? X: 0
+        Y: 32
+      : 0
+      ? X: 0
+        Y: 33
+      : 0
+      ? X: 1
+        Y: 32
+      : 0
+      ? X: 1
+        Y: 33
+      : 0
+      ? X: 2
+        Y: 32
+      : 0
+      ? X: 2
+        Y: 33
+      : 0
+      ? X: 3
+        Y: 32
+      : 0
+      ? X: 3
+        Y: 33
+      : 0
+      ? X: 4
+        Y: 32
+      : 0
+      ? X: 4
+        Y: 33
+      : 0
+      ? X: 5
+        Y: 32
+      : 0
+      ? X: 5
+        Y: 33
+      : 0
+      ? X: 6
+        Y: 32
+      : 0
+      ? X: 6
+        Y: 33
+      : 0
+      ? X: 7
+        Y: 32
+      : 0
+      ? X: 7
+        Y: 33
+      : 0
+      ? X: 8
+        Y: 32
+      : 0
+      ? X: 8
+        Y: 33
+      : 0
+      ? X: 9
+        Y: 32
+      : 0
+      ? X: 32
+        Y: 0
+      : 0
+      ? X: 32
+        Y: 1
+      : 0
+      ? X: 32
+        Y: 2
+      : 0
+      ? X: 32
+        Y: 3
+      : 0
+      ? X: 32
+        Y: 4
+      : 0
+      ? X: 32
+        Y: 5
+      : 0
+      ? X: 32
+        Y: 6
+      : 0
+      ? X: 32
+        Y: 7
+      : 0
+      ? X: 32
+        Y: 8
+      : 0
+      ? X: 32
+        Y: 9
+      : 0
+      ? X: 32
+        Y: 10
+      : 0
+      ? X: 32
+        Y: 11
+      : 0
+      ? X: 32
+        Y: 12
+      : 0
+      ? X: 32
+        Y: 13
+      : 0
+      ? X: 32
+        Y: 14
+      : 0
+      ? X: 32
+        Y: 15
+      : 0
+      ? X: 33
+        Y: 0
+      : 0
+      ? X: 33
+        Y: 1
+      : 0
+      ? X: 33
+        Y: 2
+      : 0
+      ? X: 33
+        Y: 3
+      : 0
+      ? X: 33
+        Y: 4
+      : 0
+      ? X: 33
+        Y: 5
+      : 0
+      ? X: 33
+        Y: 6
+      : 0
+      ? X: 33
+        Y: 7
+      : 0
+      ? X: 33
+        Y: 8
+      : 0
+      ? X: 33
+        Y: 9
+      : 0
+      ? X: 33
+        Y: 10
+      : 0
+      ? X: 33
+        Y: 11
+      : 0
+      ? X: 33
+        Y: 12
+      : 0
+      ? X: 33
+        Y: 13
+      : 0
+      ? X: 33
+        Y: 14
+      : 0
+      ? X: 33
+        Y: 15
+      : 0
+      ? X: 34
+        Y: 0
+      : 0
+      ? X: 34
+        Y: 1
+      : 0
+      ? X: 34
+        Y: 2
+      : 0
+      ? X: 34
+        Y: 3
+      : 0
+      ? X: 34
+        Y: 4
+      : 0
+      ? X: 34
+        Y: 5
+      : 0
+      ? X: 34
+        Y: 6
+      : 0
+      ? X: 34
+        Y: 7
+      : 0
+      ? X: 34
+        Y: 8
+      : 0
+      ? X: 34
+        Y: 9
+      : 0
+      ? X: 34
+        Y: 10
+      : 0
+      ? X: 34
+        Y: 11
+      : 0
+      ? X: 34
+        Y: 12
+      : 0
+      ? X: 34
+        Y: 13
+      : 0
+      ? X: 34
+        Y: 14
+      : 0
+      ? X: 34
+        Y: 15
+      : 0
+      ? X: 35
+        Y: 0
+      : 0
+      ? X: 35
+        Y: 1
+      : 0
+      ? X: 35
+        Y: 2
+      : 0
+      ? X: 35
+        Y: 3
+      : 0
+      ? X: 35
+        Y: 4
+      : 0
+      ? X: 35
+        Y: 5
+      : 0
+      ? X: 35
+        Y: 6
+      : 0
+      ? X: 35
+        Y: 7
+      : 0
+      ? X: 35
+        Y: 8
+      : 0
+      ? X: 35
+        Y: 9
+      : 0
+      ? X: 35
+        Y: 10
+      : 0
+      ? X: 35
+        Y: 11
+      : 0
+      ? X: 35
+        Y: 12
+      : 0
+      ? X: 35
+        Y: 13
+      : 0
+      ? X: 35
+        Y: 14
+      : 0
+      ? X: 35
+        Y: 15
+      : 0
+      ? X: 36
+        Y: 0
+      : 0
+      ? X: 36
+        Y: 1
+      : 0
+      ? X: 36
+        Y: 2
+      : 0
+      ? X: 36
+        Y: 3
+      : 0
+      ? X: 36
+        Y: 4
+      : 0
+      ? X: 36
+        Y: 5
+      : 0
+      ? X: 36
+        Y: 6
+      : 0
+      ? X: 36
+        Y: 7
+      : 0
+      ? X: 36
+        Y: 8
+      : 0
+      ? X: 36
+        Y: 9
+      : 0
+      ? X: 36
+        Y: 10
+      : 0
+      ? X: 36
+        Y: 11
+      : 0
+      ? X: 36
+        Y: 12
+      : 0
+      ? X: 36
+        Y: 13
+      : 0
+      ? X: 36
+        Y: 14
+      : 0
+      ? X: 36
+        Y: 15
+      : 0
+      ? X: 37
+        Y: 0
+      : 0
+      ? X: 37
+        Y: 1
+      : 0
+      ? X: 37
+        Y: 2
+      : 0
+      ? X: 37
+        Y: 3
+      : 0
+      ? X: 37
+        Y: 4
+      : 0
+      ? X: 37
+        Y: 5
+      : 0
+      ? X: 37
+        Y: 6
+      : 0
+      ? X: 37
+        Y: 7
+      : 0
+      ? X: 37
+        Y: 8
+      : 0
+      ? X: 37
+        Y: 9
+      : 0
+      ? X: 37
+        Y: 10
+      : 0
+      ? X: 37
+        Y: 11
+      : 0
+      ? X: 37
+        Y: 12
+      : 0
+      ? X: 37
+        Y: 13
+      : 0
+      ? X: 37
+        Y: 14
+      : 0
+      ? X: 38
+        Y: 0
+      : 0
+      ? X: 38
+        Y: 1
+      : 0
+      ? X: 38
+        Y: 2
+      : 0
+      ? X: 38
+        Y: 3
+      : 0
+      ? X: 38
+        Y: 4
+      : 0
+      ? X: 38
+        Y: 5
+      : 0
+      ? X: 38
+        Y: 6
+      : 0
+      ? X: 38
+        Y: 7
+      : 0
+      ? X: 38
+        Y: 8
+      : 0
+      ? X: 38
+        Y: 9
+      : 0
+      ? X: 38
+        Y: 10
+      : 0
+      ? X: 38
+        Y: 11
+      : 0
+      ? X: 38
+        Y: 12
+      : 0
+      ? X: 38
+        Y: 13
+      : 0
+      ? X: 38
+        Y: 14
+      : 0
+      ? X: 39
+        Y: 0
+      : 0
+      ? X: 39
+        Y: 1
+      : 0
+      ? X: 39
+        Y: 2
+      : 0
+      ? X: 39
+        Y: 3
+      : 0
+      ? X: 39
+        Y: 4
+      : 0
+      ? X: 39
+        Y: 5
+      : 0
+      ? X: 39
+        Y: 6
+      : 0
+      ? X: 39
+        Y: 7
+      : 0
+      ? X: 39
+        Y: 8
+      : 0
+      ? X: 39
+        Y: 9
+      : 0
+      ? X: 39
+        Y: 10
+      : 0
+      ? X: 39
+        Y: 11
+      : 0
+      ? X: 39
+        Y: 12
+      : 0
+      ? X: 39
+        Y: 13
+      : 0
+      ? X: 39
+        Y: 14
+      : 0
+      ? X: 40
+        Y: 0
+      : 0
+      ? X: 40
+        Y: 1
+      : 0
+      ? X: 40
+        Y: 2
+      : 0
+      ? X: 40
+        Y: 3
+      : 0
+      ? X: 40
+        Y: 4
+      : 0
+      ? X: 40
+        Y: 5
+      : 0
+      ? X: 40
+        Y: 6
+      : 0
+      ? X: 40
+        Y: 7
+      : 0
+      ? X: 40
+        Y: 8
+      : 0
+      ? X: 40
+        Y: 9
+      : 0
+      ? X: 40
+        Y: 10
+      : 0
+      ? X: 40
+        Y: 11
+      : 0
+      ? X: 40
+        Y: 12
+      : 0
+      ? X: 40
+        Y: 13
+      : 0
+      ? X: 40
+        Y: 14
+      : 0
+      ? X: 41
+        Y: 0
+      : 0
+      ? X: 41
+        Y: 1
+      : 0
+      ? X: 41
+        Y: 2
+      : 0
+      ? X: 41
+        Y: 3
+      : 0
+      ? X: 41
+        Y: 4
+      : 0
+      ? X: 41
+        Y: 5
+      : 0
+      ? X: 41
+        Y: 6
+      : 0
+      ? X: 41
+        Y: 7
+      : 0
+      ? X: 41
+        Y: 8
+      : 0
+      ? X: 41
+        Y: 9
+      : 0
+      ? X: 41
+        Y: 10
+      : 0
+      ? X: 41
+        Y: 11
+      : 0
+      ? X: 41
+        Y: 12
+      : 0
+      ? X: 41
+        Y: 13
+      : 0
+      ? X: 41
+        Y: 14
+      : 0
+      ? X: 42
+        Y: 0
+      : 0
+      ? X: 42
+        Y: 1
+      : 0
+      ? X: 42
+        Y: 2
+      : 0
+      ? X: 42
+        Y: 3
+      : 0
+      ? X: 42
+        Y: 4
+      : 0
+      ? X: 42
+        Y: 5
+      : 0
+      ? X: 42
+        Y: 6
+      : 0
+      ? X: 42
+        Y: 7
+      : 0
+      ? X: 42
+        Y: 8
+      : 0
+      ? X: 42
+        Y: 9
+      : 0
+      ? X: 42
+        Y: 10
+      : 0
+      ? X: 42
+        Y: 11
+      : 0
+      ? X: 42
+        Y: 12
+      : 0
+      ? X: 42
+        Y: 13
+      : 0
+      ? X: 42
+        Y: 14
+      : 0
+      ? X: 43
+        Y: 0
+      : 0
+      ? X: 43
+        Y: 1
+      : 0
+      ? X: 43
+        Y: 2
+      : 0
+      ? X: 43
+        Y: 3
+      : 0
+      ? X: 43
+        Y: 4
+      : 0
+      ? X: 43
+        Y: 5
+      : 0
+      ? X: 43
+        Y: 6
+      : 0
+      ? X: 43
+        Y: 7
+      : 0
+      ? X: 43
+        Y: 8
+      : 0
+      ? X: 43
+        Y: 9
+      : 0
+      ? X: 43
+        Y: 10
+      : 0
+      ? X: 43
+        Y: 11
+      : 0
+      ? X: 43
+        Y: 12
+      : 0
+      ? X: 43
+        Y: 13
+      : 0
+      ? X: 43
+        Y: 14
+      : 0
+      ? X: 44
+        Y: 0
+      : 0
+      ? X: 44
+        Y: 1
+      : 0
+      ? X: 44
+        Y: 2
+      : 0
+      ? X: 44
+        Y: 3
+      : 0
+      ? X: 44
+        Y: 4
+      : 0
+      ? X: 44
+        Y: 5
+      : 0
+      ? X: 44
+        Y: 6
+      : 0
+      ? X: 44
+        Y: 7
+      : 0
+      ? X: 44
+        Y: 8
+      : 0
+      ? X: 44
+        Y: 9
+      : 0
+      ? X: 44
+        Y: 10
+      : 0
+      ? X: 44
+        Y: 11
+      : 0
+      ? X: 44
+        Y: 12
+      : 0
+      ? X: 44
+        Y: 13
+      : 0
+      ? X: 44
+        Y: 14
+      : 0
+      ? X: 45
+        Y: 0
+      : 0
+      ? X: 45
+        Y: 1
+      : 0
+      ? X: 45
+        Y: 2
+      : 0
+      ? X: 45
+        Y: 3
+      : 0
+      ? X: 45
+        Y: 4
+      : 0
+      ? X: 45
+        Y: 5
+      : 0
+      ? X: 45
+        Y: 6
+      : 0
+      ? X: 45
+        Y: 7
+      : 0
+      ? X: 45
+        Y: 8
+      : 0
+      ? X: 45
+        Y: 9
+      : 0
+      ? X: 45
+        Y: 10
+      : 0
+      ? X: 46
+        Y: 0
+      : 0
+      ? X: 46
+        Y: 1
+      : 0
+      ? X: 46
+        Y: 2
+      : 0
+      ? X: 46
+        Y: 3
+      : 0
+      ? X: 46
+        Y: 4
+      : 0
+      ? X: 46
+        Y: 5
+      : 0
+      ? X: 47
+        Y: 0
+      : 0
+      ? X: 47
+        Y: 1
+      : 0
+      ? X: 47
+        Y: 2
+      : 0
+      ? X: 47
+        Y: 3
+      : 0
+      ? X: 47
+        Y: 4
+      : 0
+      ? X: 47
+        Y: 5
+      : 0
+      ? X: 48
+        Y: 0
+      : 0
+      ? X: 48
+        Y: 1
+      : 0
+      ? X: 48
+        Y: 2
+      : 0
+      ? X: 48
+        Y: 3
+      : 0
+      ? X: 48
+        Y: 4
+      : 0
+      ? X: 48
+        Y: 5
+      : 0
+      ? X: 49
+        Y: 0
+      : 0
+      ? X: 49
+        Y: 1
+      : 0
+      ? X: 49
+        Y: 2
+      : 0
+      ? X: 49
+        Y: 3
+      : 0
+      ? X: 49
+        Y: 4
+      : 0
+      ? X: 49
+        Y: 5
+      : 0
+      ? X: 50
+        Y: 0
+      : 0
+      ? X: 50
+        Y: 1
+      : 0
+      ? X: 50
+        Y: 2
+      : 0
+      ? X: 50
+        Y: 3
+      : 0
+      ? X: 50
+        Y: 4
+      : 0
+      ? X: 50
+        Y: 5
+      : 0
+      ? X: 51
+        Y: 0
+      : 0
+      ? X: 51
+        Y: 1
+      : 0
+      ? X: 51
+        Y: 2
+      : 0
+      ? X: 51
+        Y: 3
+      : 0
+      ? X: 51
+        Y: 4
+      : 0
+      ? X: 51
+        Y: 5
+      : 0
+      ? X: 32
+        Y: -9
+      : 0
+      ? X: 32
+        Y: -8
+      : 0
+      ? X: 32
+        Y: -7
+      : 0
+      ? X: 32
+        Y: -6
+      : 0
+      ? X: 32
+        Y: -5
+      : 0
+      ? X: 32
+        Y: -4
+      : 0
+      ? X: 32
+        Y: -3
+      : 0
+      ? X: 32
+        Y: -2
+      : 0
+      ? X: 32
+        Y: -1
+      : 0
+      ? X: 33
+        Y: -9
+      : 0
+      ? X: 33
+        Y: -8
+      : 0
+      ? X: 33
+        Y: -7
+      : 0
+      ? X: 33
+        Y: -6
+      : 0
+      ? X: 33
+        Y: -5
+      : 0
+      ? X: 33
+        Y: -4
+      : 0
+      ? X: 33
+        Y: -3
+      : 0
+      ? X: 33
+        Y: -2
+      : 0
+      ? X: 33
+        Y: -1
+      : 0
+      ? X: 34
+        Y: -9
+      : 0
+      ? X: 34
+        Y: -8
+      : 0
+      ? X: 34
+        Y: -7
+      : 0
+      ? X: 34
+        Y: -6
+      : 0
+      ? X: 34
+        Y: -5
+      : 0
+      ? X: 34
+        Y: -4
+      : 0
+      ? X: 34
+        Y: -3
+      : 0
+      ? X: 34
+        Y: -2
+      : 0
+      ? X: 34
+        Y: -1
+      : 0
+      ? X: 35
+        Y: -9
+      : 0
+      ? X: 35
+        Y: -8
+      : 0
+      ? X: 35
+        Y: -7
+      : 0
+      ? X: 35
+        Y: -6
+      : 0
+      ? X: 35
+        Y: -5
+      : 0
+      ? X: 35
+        Y: -4
+      : 0
+      ? X: 35
+        Y: -3
+      : 0
+      ? X: 35
+        Y: -2
+      : 0
+      ? X: 35
+        Y: -1
+      : 0
+      ? X: 36
+        Y: -9
+      : 0
+      ? X: 36
+        Y: -8
+      : 0
+      ? X: 36
+        Y: -7
+      : 0
+      ? X: 36
+        Y: -6
+      : 0
+      ? X: 36
+        Y: -5
+      : 0
+      ? X: 36
+        Y: -4
+      : 0
+      ? X: 36
+        Y: -3
+      : 0
+      ? X: 36
+        Y: -2
+      : 0
+      ? X: 36
+        Y: -1
+      : 0
+      ? X: 37
+        Y: -9
+      : 0
+      ? X: 37
+        Y: -8
+      : 0
+      ? X: 37
+        Y: -7
+      : 0
+      ? X: 37
+        Y: -6
+      : 0
+      ? X: 37
+        Y: -5
+      : 0
+      ? X: 37
+        Y: -4
+      : 0
+      ? X: 37
+        Y: -3
+      : 0
+      ? X: 37
+        Y: -2
+      : 0
+      ? X: 37
+        Y: -1
+      : 0
+      ? X: 38
+        Y: -9
+      : 0
+      ? X: 38
+        Y: -8
+      : 0
+      ? X: 38
+        Y: -7
+      : 0
+      ? X: 38
+        Y: -6
+      : 0
+      ? X: 38
+        Y: -5
+      : 0
+      ? X: 38
+        Y: -4
+      : 0
+      ? X: 38
+        Y: -3
+      : 0
+      ? X: 38
+        Y: -2
+      : 0
+      ? X: 38
+        Y: -1
+      : 0
+      ? X: 39
+        Y: -9
+      : 0
+      ? X: 39
+        Y: -8
+      : 0
+      ? X: 39
+        Y: -7
+      : 0
+      ? X: 39
+        Y: -6
+      : 0
+      ? X: 39
+        Y: -5
+      : 0
+      ? X: 39
+        Y: -4
+      : 0
+      ? X: 39
+        Y: -3
+      : 0
+      ? X: 39
+        Y: -2
+      : 0
+      ? X: 39
+        Y: -1
+      : 0
+      ? X: 40
+        Y: -6
+      : 0
+      ? X: 40
+        Y: -5
+      : 0
+      ? X: 40
+        Y: -4
+      : 0
+      ? X: 40
+        Y: -3
+      : 0
+      ? X: 40
+        Y: -2
+      : 0
+      ? X: 40
+        Y: -1
+      : 0
+      ? X: 41
+        Y: -6
+      : 0
+      ? X: 41
+        Y: -5
+      : 0
+      ? X: 41
+        Y: -4
+      : 0
+      ? X: 41
+        Y: -3
+      : 0
+      ? X: 41
+        Y: -2
+      : 0
+      ? X: 41
+        Y: -1
+      : 0
+      ? X: 42
+        Y: -6
+      : 0
+      ? X: 42
+        Y: -5
+      : 0
+      ? X: 42
+        Y: -4
+      : 0
+      ? X: 42
+        Y: -3
+      : 0
+      ? X: 42
+        Y: -2
+      : 0
+      ? X: 42
+        Y: -1
+      : 0
+      ? X: 43
+        Y: -6
+      : 0
+      ? X: 43
+        Y: -5
+      : 0
+      ? X: 43
+        Y: -4
+      : 0
+      ? X: 43
+        Y: -3
+      : 0
+      ? X: 43
+        Y: -2
+      : 0
+      ? X: 43
+        Y: -1
+      : 0
+      ? X: 44
+        Y: -6
+      : 0
+      ? X: 44
+        Y: -5
+      : 0
+      ? X: 44
+        Y: -4
+      : 0
+      ? X: 44
+        Y: -3
+      : 0
+      ? X: 44
+        Y: -2
+      : 0
+      ? X: 44
+        Y: -1
+      : 0
+      ? X: 46
+        Y: -8
+      : 0
+      ? X: 46
+        Y: -7
+      : 0
+      ? X: 46
+        Y: -6
+      : 0
+      ? X: 46
+        Y: -5
+      : 0
+      ? X: 46
+        Y: -4
+      : 0
+      ? X: 46
+        Y: -3
+      : 0
+      ? X: 46
+        Y: -2
+      : 0
+      ? X: 47
+        Y: -8
+      : 0
+      ? X: 47
+        Y: -7
+      : 0
+      ? X: 47
+        Y: -6
+      : 0
+      ? X: 47
+        Y: -5
+      : 0
+      ? X: 47
+        Y: -4
+      : 0
+      ? X: 47
+        Y: -3
+      : 0
+      ? X: 47
+        Y: -2
+      : 0
+      ? X: 47
+        Y: -1
+      : 0
+      ? X: -16
+        Y: -28
+      : 0
+      ? X: -16
+        Y: -27
+      : 0
+      ? X: -16
+        Y: -26
+      : 0
+      ? X: -16
+        Y: -25
+      : 0
+      ? X: -16
+        Y: -24
+      : 0
+      ? X: -16
+        Y: -23
+      : 0
+      ? X: -16
+        Y: -22
+      : 0
+      ? X: -16
+        Y: -21
+      : 0
+      ? X: -16
+        Y: -20
+      : 0
+      ? X: -16
+        Y: -19
+      : 0
+      ? X: -16
+        Y: -18
+      : 0
+      ? X: -16
+        Y: -17
+      : 0
+      ? X: -15
+        Y: -28
+      : 0
+      ? X: -15
+        Y: -27
+      : 0
+      ? X: -15
+        Y: -26
+      : 0
+      ? X: -15
+        Y: -25
+      : 0
+      ? X: -15
+        Y: -24
+      : 0
+      ? X: -15
+        Y: -23
+      : 0
+      ? X: -15
+        Y: -22
+      : 0
+      ? X: -15
+        Y: -21
+      : 0
+      ? X: -15
+        Y: -20
+      : 0
+      ? X: -15
+        Y: -19
+      : 0
+      ? X: -15
+        Y: -18
+      : 0
+      ? X: -15
+        Y: -17
+      : 0
+      ? X: -14
+        Y: -28
+      : 0
+      ? X: -14
+        Y: -27
+      : 0
+      ? X: -14
+        Y: -26
+      : 0
+      ? X: -14
+        Y: -25
+      : 0
+      ? X: -14
+        Y: -24
+      : 0
+      ? X: -14
+        Y: -23
+      : 0
+      ? X: -14
+        Y: -22
+      : 0
+      ? X: -14
+        Y: -21
+      : 0
+      ? X: -14
+        Y: -20
+      : 0
+      ? X: -14
+        Y: -19
+      : 0
+      ? X: -14
+        Y: -18
+      : 0
+      ? X: -14
+        Y: -17
+      : 0
+      ? X: -13
+        Y: -29
+      : 0
+      ? X: -13
+        Y: -28
+      : 0
+      ? X: -13
+        Y: -27
+      : 0
+      ? X: -13
+        Y: -26
+      : 0
+      ? X: -13
+        Y: -25
+      : 0
+      ? X: -13
+        Y: -24
+      : 0
+      ? X: -13
+        Y: -23
+      : 0
+      ? X: -13
+        Y: -22
+      : 0
+      ? X: -13
+        Y: -21
+      : 0
+      ? X: -13
+        Y: -20
+      : 0
+      ? X: -13
+        Y: -19
+      : 0
+      ? X: -13
+        Y: -18
+      : 0
+      ? X: -13
+        Y: -17
+      : 0
+      ? X: -12
+        Y: -29
+      : 0
+      ? X: -12
+        Y: -28
+      : 0
+      ? X: -12
+        Y: -27
+      : 0
+      ? X: -12
+        Y: -26
+      : 0
+      ? X: -12
+        Y: -25
+      : 0
+      ? X: -12
+        Y: -24
+      : 0
+      ? X: -12
+        Y: -23
+      : 0
+      ? X: -12
+        Y: -22
+      : 0
+      ? X: -12
+        Y: -21
+      : 0
+      ? X: -12
+        Y: -20
+      : 0
+      ? X: -12
+        Y: -19
+      : 0
+      ? X: -12
+        Y: -18
+      : 0
+      ? X: -12
+        Y: -17
+      : 0
+      ? X: -11
+        Y: -31
+      : 0
+      ? X: -11
+        Y: -30
+      : 0
+      ? X: -11
+        Y: -29
+      : 0
+      ? X: -11
+        Y: -28
+      : 0
+      ? X: -11
+        Y: -27
+      : 0
+      ? X: -11
+        Y: -26
+      : 0
+      ? X: -11
+        Y: -25
+      : 0
+      ? X: -11
+        Y: -24
+      : 0
+      ? X: -11
+        Y: -23
+      : 0
+      ? X: -11
+        Y: -22
+      : 0
+      ? X: -11
+        Y: -21
+      : 0
+      ? X: -11
+        Y: -20
+      : 0
+      ? X: -11
+        Y: -19
+      : 0
+      ? X: -11
+        Y: -18
+      : 0
+      ? X: -11
+        Y: -17
+      : 0
+      ? X: -10
+        Y: -31
+      : 0
+      ? X: -10
+        Y: -30
+      : 0
+      ? X: -10
+        Y: -29
+      : 0
+      ? X: -10
+        Y: -28
+      : 0
+      ? X: -10
+        Y: -27
+      : 0
+      ? X: -10
+        Y: -26
+      : 0
+      ? X: -10
+        Y: -25
+      : 0
+      ? X: -10
+        Y: -24
+      : 0
+      ? X: -10
+        Y: -23
+      : 0
+      ? X: -10
+        Y: -22
+      : 0
+      ? X: -10
+        Y: -21
+      : 0
+      ? X: -10
+        Y: -20
+      : 0
+      ? X: -10
+        Y: -19
+      : 0
+      ? X: -10
+        Y: -18
+      : 0
+      ? X: -10
+        Y: -17
+      : 0
+      ? X: -9
+        Y: -31
+      : 0
+      ? X: -9
+        Y: -30
+      : 0
+      ? X: -9
+        Y: -29
+      : 0
+      ? X: -9
+        Y: -28
+      : 0
+      ? X: -9
+        Y: -27
+      : 0
+      ? X: -9
+        Y: -26
+      : 0
+      ? X: -9
+        Y: -25
+      : 0
+      ? X: -9
+        Y: -24
+      : 0
+      ? X: -9
+        Y: -23
+      : 0
+      ? X: -9
+        Y: -22
+      : 0
+      ? X: -9
+        Y: -21
+      : 0
+      ? X: -9
+        Y: -20
+      : 0
+      ? X: -9
+        Y: -19
+      : 0
+      ? X: -9
+        Y: -18
+      : 0
+      ? X: -9
+        Y: -17
+      : 0
+      ? X: -8
+        Y: -31
+      : 0
+      ? X: -8
+        Y: -30
+      : 0
+      ? X: -8
+        Y: -29
+      : 0
+      ? X: -8
+        Y: -28
+      : 0
+      ? X: -8
+        Y: -27
+      : 0
+      ? X: -8
+        Y: -26
+      : 0
+      ? X: -8
+        Y: -25
+      : 0
+      ? X: -8
+        Y: -24
+      : 0
+      ? X: -8
+        Y: -23
+      : 0
+      ? X: -8
+        Y: -22
+      : 0
+      ? X: -8
+        Y: -21
+      : 0
+      ? X: -8
+        Y: -20
+      : 0
+      ? X: -8
+        Y: -19
+      : 0
+      ? X: -8
+        Y: -18
+      : 0
+      ? X: -8
+        Y: -17
+      : 0
+      ? X: -7
+        Y: -31
+      : 0
+      ? X: -7
+        Y: -30
+      : 0
+      ? X: -7
+        Y: -29
+      : 0
+      ? X: -7
+        Y: -28
+      : 0
+      ? X: -7
+        Y: -27
+      : 0
+      ? X: -7
+        Y: -26
+      : 0
+      ? X: -7
+        Y: -25
+      : 0
+      ? X: -7
+        Y: -24
+      : 0
+      ? X: -7
+        Y: -23
+      : 0
+      ? X: -7
+        Y: -22
+      : 0
+      ? X: -7
+        Y: -21
+      : 0
+      ? X: -7
+        Y: -20
+      : 0
+      ? X: -7
+        Y: -19
+      : 0
+      ? X: -7
+        Y: -18
+      : 0
+      ? X: -7
+        Y: -17
+      : 0
+      ? X: -6
+        Y: -29
+      : 0
+      ? X: -6
+        Y: -28
+      : 0
+      ? X: -6
+        Y: -27
+      : 0
+      ? X: -6
+        Y: -26
+      : 0
+      ? X: -6
+        Y: -25
+      : 0
+      ? X: -6
+        Y: -24
+      : 0
+      ? X: -6
+        Y: -23
+      : 0
+      ? X: -6
+        Y: -22
+      : 0
+      ? X: -6
+        Y: -21
+      : 0
+      ? X: -6
+        Y: -20
+      : 0
+      ? X: -6
+        Y: -19
+      : 0
+      ? X: -6
+        Y: -18
+      : 0
+      ? X: -6
+        Y: -17
+      : 0
+      ? X: -5
+        Y: -29
+      : 0
+      ? X: -5
+        Y: -28
+      : 0
+      ? X: -5
+        Y: -27
+      : 0
+      ? X: -5
+        Y: -26
+      : 0
+      ? X: -5
+        Y: -25
+      : 0
+      ? X: -5
+        Y: -24
+      : 0
+      ? X: -5
+        Y: -23
+      : 0
+      ? X: -5
+        Y: -22
+      : 0
+      ? X: -5
+        Y: -21
+      : 0
+      ? X: -5
+        Y: -20
+      : 0
+      ? X: -5
+        Y: -19
+      : 0
+      ? X: -5
+        Y: -18
+      : 0
+      ? X: -5
+        Y: -17
+      : 0
+      ? X: -4
+        Y: -29
+      : 0
+      ? X: -4
+        Y: -28
+      : 0
+      ? X: -4
+        Y: -27
+      : 0
+      ? X: -4
+        Y: -26
+      : 0
+      ? X: -4
+        Y: -25
+      : 0
+      ? X: -4
+        Y: -24
+      : 0
+      ? X: -4
+        Y: -23
+      : 0
+      ? X: -4
+        Y: -22
+      : 0
+      ? X: -4
+        Y: -21
+      : 0
+      ? X: -4
+        Y: -20
+      : 0
+      ? X: -4
+        Y: -19
+      : 0
+      ? X: -4
+        Y: -18
+      : 0
+      ? X: -4
+        Y: -17
+      : 0
+      ? X: -3
+        Y: -29
+      : 0
+      ? X: -3
+        Y: -28
+      : 0
+      ? X: -3
+        Y: -27
+      : 0
+      ? X: -3
+        Y: -26
+      : 0
+      ? X: -3
+        Y: -25
+      : 0
+      ? X: -3
+        Y: -24
+      : 0
+      ? X: -3
+        Y: -23
+      : 0
+      ? X: -3
+        Y: -22
+      : 0
+      ? X: -3
+        Y: -21
+      : 0
+      ? X: -3
+        Y: -20
+      : 0
+      ? X: -3
+        Y: -19
+      : 0
+      ? X: -3
+        Y: -18
+      : 0
+      ? X: -3
+        Y: -17
+      : 0
+      ? X: -2
+        Y: -29
+      : 0
+      ? X: -2
+        Y: -28
+      : 0
+      ? X: -2
+        Y: -27
+      : 0
+      ? X: -2
+        Y: -26
+      : 0
+      ? X: -2
+        Y: -25
+      : 0
+      ? X: -2
+        Y: -24
+      : 0
+      ? X: -2
+        Y: -23
+      : 0
+      ? X: -2
+        Y: -22
+      : 0
+      ? X: -2
+        Y: -21
+      : 0
+      ? X: -2
+        Y: -20
+      : 0
+      ? X: -2
+        Y: -19
+      : 0
+      ? X: -2
+        Y: -18
+      : 0
+      ? X: -2
+        Y: -17
+      : 0
+      ? X: -1
+        Y: -29
+      : 0
+      ? X: -1
+        Y: -28
+      : 0
+      ? X: -1
+        Y: -27
+      : 0
+      ? X: -1
+        Y: -26
+      : 0
+      ? X: -1
+        Y: -25
+      : 0
+      ? X: -1
+        Y: -24
+      : 0
+      ? X: -1
+        Y: -23
+      : 0
+      ? X: -1
+        Y: -22
+      : 0
+      ? X: -1
+        Y: -21
+      : 0
+      ? X: -1
+        Y: -20
+      : 0
+      ? X: -1
+        Y: -19
+      : 0
+      ? X: -1
+        Y: -18
+      : 0
+      ? X: -1
+        Y: -17
+      : 0
+      ? X: -20
+        Y: -17
+      : 0
+      ? X: -19
+        Y: -28
+      : 0
+      ? X: -19
+        Y: -27
+      : 0
+      ? X: -19
+        Y: -26
+      : 0
+      ? X: -19
+        Y: -25
+      : 0
+      ? X: -19
+        Y: -24
+      : 0
+      ? X: -19
+        Y: -23
+      : 0
+      ? X: -19
+        Y: -22
+      : 0
+      ? X: -19
+        Y: -21
+      : 0
+      ? X: -19
+        Y: -20
+      : 0
+      ? X: -19
+        Y: -19
+      : 0
+      ? X: -19
+        Y: -18
+      : 0
+      ? X: -19
+        Y: -17
+      : 0
+      ? X: -18
+        Y: -28
+      : 0
+      ? X: -18
+        Y: -27
+      : 0
+      ? X: -18
+        Y: -26
+      : 0
+      ? X: -18
+        Y: -25
+      : 0
+      ? X: -18
+        Y: -24
+      : 0
+      ? X: -18
+        Y: -23
+      : 0
+      ? X: -18
+        Y: -22
+      : 0
+      ? X: -18
+        Y: -21
+      : 0
+      ? X: -18
+        Y: -20
+      : 0
+      ? X: -18
+        Y: -19
+      : 0
+      ? X: -18
+        Y: -18
+      : 0
+      ? X: -18
+        Y: -17
+      : 0
+      ? X: -17
+        Y: -28
+      : 0
+      ? X: -17
+        Y: -27
+      : 0
+      ? X: -17
+        Y: -26
+      : 0
+      ? X: -17
+        Y: -25
+      : 0
+      ? X: -17
+        Y: -24
+      : 0
+      ? X: -17
+        Y: -23
+      : 0
+      ? X: -17
+        Y: -22
+      : 0
+      ? X: -17
+        Y: -21
+      : 0
+      ? X: -17
+        Y: -20
+      : 0
+      ? X: -17
+        Y: -19
+      : 0
+      ? X: -17
+        Y: -18
+      : 0
+      ? X: -17
+        Y: -17
+      : 0
+      ? X: -32
+        Y: -13
+      : 0
+      ? X: -32
+        Y: -12
+      : 0
+      ? X: -32
+        Y: -11
+      : 0
+      ? X: -32
+        Y: -10
+      : 0
+      ? X: -32
+        Y: -9
+      : 0
+      ? X: -32
+        Y: -8
+      : 0
+      ? X: -32
+        Y: -7
+      : 0
+      ? X: -32
+        Y: -6
+      : 0
+      ? X: -32
+        Y: -5
+      : 0
+      ? X: -32
+        Y: -4
+      : 0
+      ? X: -32
+        Y: -3
+      : 0
+      ? X: -32
+        Y: -2
+      : 0
+      ? X: -32
+        Y: -1
+      : 0
+      ? X: -31
+        Y: -13
+      : 0
+      ? X: -31
+        Y: -12
+      : 0
+      ? X: -31
+        Y: -11
+      : 0
+      ? X: -31
+        Y: -10
+      : 0
+      ? X: -31
+        Y: -9
+      : 0
+      ? X: -31
+        Y: -8
+      : 0
+      ? X: -31
+        Y: -7
+      : 0
+      ? X: -31
+        Y: -6
+      : 0
+      ? X: -31
+        Y: -5
+      : 0
+      ? X: -31
+        Y: -4
+      : 0
+      ? X: -31
+        Y: -3
+      : 0
+      ? X: -31
+        Y: -2
+      : 0
+      ? X: -31
+        Y: -1
+      : 0
+      ? X: -30
+        Y: -13
+      : 0
+      ? X: -30
+        Y: -12
+      : 0
+      ? X: -30
+        Y: -11
+      : 0
+      ? X: -30
+        Y: -10
+      : 0
+      ? X: -30
+        Y: -9
+      : 0
+      ? X: -30
+        Y: -8
+      : 0
+      ? X: -30
+        Y: -7
+      : 0
+      ? X: -30
+        Y: -6
+      : 0
+      ? X: -30
+        Y: -5
+      : 0
+      ? X: -30
+        Y: -4
+      : 0
+      ? X: -30
+        Y: -3
+      : 0
+      ? X: -30
+        Y: -2
+      : 0
+      ? X: -30
+        Y: -1
+      : 0
+      ? X: -29
+        Y: -13
+      : 0
+      ? X: -29
+        Y: -12
+      : 0
+      ? X: -29
+        Y: -11
+      : 0
+      ? X: -29
+        Y: -10
+      : 0
+      ? X: -29
+        Y: -9
+      : 0
+      ? X: -29
+        Y: -8
+      : 0
+      ? X: -29
+        Y: -7
+      : 0
+      ? X: -29
+        Y: -6
+      : 0
+      ? X: -29
+        Y: -5
+      : 0
+      ? X: -29
+        Y: -4
+      : 0
+      ? X: -29
+        Y: -3
+      : 0
+      ? X: -29
+        Y: -2
+      : 0
+      ? X: -29
+        Y: -1
+      : 0
+      ? X: -28
+        Y: -13
+      : 0
+      ? X: -28
+        Y: -12
+      : 0
+      ? X: -28
+        Y: -11
+      : 0
+      ? X: -28
+        Y: -10
+      : 0
+      ? X: -28
+        Y: -9
+      : 0
+      ? X: -28
+        Y: -8
+      : 0
+      ? X: -28
+        Y: -7
+      : 0
+      ? X: -28
+        Y: -6
+      : 0
+      ? X: -28
+        Y: -5
+      : 0
+      ? X: -28
+        Y: -4
+      : 0
+      ? X: -28
+        Y: -3
+      : 0
+      ? X: -28
+        Y: -2
+      : 0
+      ? X: -28
+        Y: -1
+      : 0
+      ? X: -27
+        Y: -13
+      : 0
+      ? X: -27
+        Y: -12
+      : 0
+      ? X: -27
+        Y: -11
+      : 0
+      ? X: -27
+        Y: -10
+      : 0
+      ? X: -27
+        Y: -9
+      : 0
+      ? X: -27
+        Y: -8
+      : 0
+      ? X: -27
+        Y: -7
+      : 0
+      ? X: -27
+        Y: -6
+      : 0
+      ? X: -27
+        Y: -5
+      : 0
+      ? X: -27
+        Y: -4
+      : 0
+      ? X: -27
+        Y: -3
+      : 0
+      ? X: -27
+        Y: -2
+      : 0
+      ? X: -27
+        Y: -1
+      : 0
+      ? X: -26
+        Y: -13
+      : 0
+      ? X: -26
+        Y: -12
+      : 0
+      ? X: -26
+        Y: -11
+      : 0
+      ? X: -26
+        Y: -10
+      : 0
+      ? X: -26
+        Y: -9
+      : 0
+      ? X: -26
+        Y: -8
+      : 0
+      ? X: -26
+        Y: -7
+      : 0
+      ? X: -26
+        Y: -6
+      : 0
+      ? X: -26
+        Y: -5
+      : 0
+      ? X: -26
+        Y: -4
+      : 0
+      ? X: -26
+        Y: -3
+      : 0
+      ? X: -26
+        Y: -2
+      : 0
+      ? X: -26
+        Y: -1
+      : 0
+      ? X: -25
+        Y: -16
+      : 0
+      ? X: -25
+        Y: -15
+      : 0
+      ? X: -25
+        Y: -14
+      : 0
+      ? X: -25
+        Y: -13
+      : 0
+      ? X: -25
+        Y: -12
+      : 0
+      ? X: -25
+        Y: -11
+      : 0
+      ? X: -25
+        Y: -10
+      : 0
+      ? X: -25
+        Y: -9
+      : 0
+      ? X: -25
+        Y: -8
+      : 0
+      ? X: -25
+        Y: -7
+      : 0
+      ? X: -25
+        Y: -6
+      : 0
+      ? X: -25
+        Y: -5
+      : 0
+      ? X: -25
+        Y: -4
+      : 0
+      ? X: -25
+        Y: -3
+      : 0
+      ? X: -25
+        Y: -2
+      : 0
+      ? X: -25
+        Y: -1
+      : 0
+      ? X: -24
+        Y: -16
+      : 0
+      ? X: -24
+        Y: -15
+      : 0
+      ? X: -24
+        Y: -14
+      : 0
+      ? X: -24
+        Y: -13
+      : 0
+      ? X: -24
+        Y: -12
+      : 0
+      ? X: -24
+        Y: -11
+      : 0
+      ? X: -24
+        Y: -10
+      : 0
+      ? X: -24
+        Y: -9
+      : 0
+      ? X: -24
+        Y: -8
+      : 0
+      ? X: -24
+        Y: -7
+      : 0
+      ? X: -24
+        Y: -6
+      : 0
+      ? X: -24
+        Y: -5
+      : 0
+      ? X: -24
+        Y: -4
+      : 0
+      ? X: -24
+        Y: -3
+      : 0
+      ? X: -24
+        Y: -2
+      : 0
+      ? X: -24
+        Y: -1
+      : 0
+      ? X: -23
+        Y: -16
+      : 0
+      ? X: -23
+        Y: -15
+      : 0
+      ? X: -23
+        Y: -14
+      : 0
+      ? X: -23
+        Y: -13
+      : 0
+      ? X: -23
+        Y: -12
+      : 0
+      ? X: -23
+        Y: -11
+      : 0
+      ? X: -23
+        Y: -10
+      : 0
+      ? X: -23
+        Y: -9
+      : 0
+      ? X: -23
+        Y: -8
+      : 0
+      ? X: -23
+        Y: -7
+      : 0
+      ? X: -23
+        Y: -6
+      : 0
+      ? X: -23
+        Y: -5
+      : 0
+      ? X: -23
+        Y: -4
+      : 0
+      ? X: -23
+        Y: -3
+      : 0
+      ? X: -23
+        Y: -2
+      : 0
+      ? X: -23
+        Y: -1
+      : 0
+      ? X: -22
+        Y: -16
+      : 0
+      ? X: -22
+        Y: -15
+      : 0
+      ? X: -22
+        Y: -14
+      : 0
+      ? X: -22
+        Y: -13
+      : 0
+      ? X: -22
+        Y: -12
+      : 0
+      ? X: -22
+        Y: -11
+      : 0
+      ? X: -22
+        Y: -10
+      : 0
+      ? X: -22
+        Y: -9
+      : 0
+      ? X: -22
+        Y: -8
+      : 0
+      ? X: -22
+        Y: -7
+      : 0
+      ? X: -22
+        Y: -6
+      : 0
+      ? X: -22
+        Y: -5
+      : 0
+      ? X: -22
+        Y: -4
+      : 0
+      ? X: -22
+        Y: -3
+      : 0
+      ? X: -22
+        Y: -2
+      : 0
+      ? X: -22
+        Y: -1
+      : 0
+      ? X: -21
+        Y: -16
+      : 0
+      ? X: -21
+        Y: -15
+      : 0
+      ? X: -21
+        Y: -14
+      : 0
+      ? X: -21
+        Y: -13
+      : 0
+      ? X: -21
+        Y: -12
+      : 0
+      ? X: -21
+        Y: -11
+      : 0
+      ? X: -21
+        Y: -10
+      : 0
+      ? X: -21
+        Y: -9
+      : 0
+      ? X: -21
+        Y: -8
+      : 0
+      ? X: -21
+        Y: -7
+      : 0
+      ? X: -21
+        Y: -6
+      : 0
+      ? X: -21
+        Y: -5
+      : 0
+      ? X: -21
+        Y: -4
+      : 0
+      ? X: -21
+        Y: -3
+      : 0
+      ? X: -21
+        Y: -2
+      : 0
+      ? X: -21
+        Y: -1
+      : 0
+      ? X: -20
+        Y: -16
+      : 0
+      ? X: -20
+        Y: -15
+      : 0
+      ? X: -20
+        Y: -14
+      : 0
+      ? X: -20
+        Y: -13
+      : 0
+      ? X: -20
+        Y: -12
+      : 0
+      ? X: -20
+        Y: -11
+      : 0
+      ? X: -20
+        Y: -10
+      : 0
+      ? X: -20
+        Y: -9
+      : 0
+      ? X: -20
+        Y: -8
+      : 0
+      ? X: -20
+        Y: -7
+      : 0
+      ? X: -20
+        Y: -6
+      : 0
+      ? X: -20
+        Y: -5
+      : 0
+      ? X: -20
+        Y: -4
+      : 0
+      ? X: -20
+        Y: -3
+      : 0
+      ? X: -20
+        Y: -2
+      : 0
+      ? X: -20
+        Y: -1
+      : 0
+      ? X: -19
+        Y: -16
+      : 0
+      ? X: -19
+        Y: -15
+      : 0
+      ? X: -19
+        Y: -14
+      : 0
+      ? X: -19
+        Y: -13
+      : 0
+      ? X: -19
+        Y: -12
+      : 0
+      ? X: -19
+        Y: -11
+      : 0
+      ? X: -19
+        Y: -10
+      : 0
+      ? X: -19
+        Y: -9
+      : 0
+      ? X: -19
+        Y: -8
+      : 0
+      ? X: -19
+        Y: -7
+      : 0
+      ? X: -19
+        Y: -6
+      : 0
+      ? X: -19
+        Y: -5
+      : 0
+      ? X: -19
+        Y: -4
+      : 0
+      ? X: -19
+        Y: -3
+      : 0
+      ? X: -19
+        Y: -2
+      : 0
+      ? X: -19
+        Y: -1
+      : 0
+      ? X: -18
+        Y: -16
+      : 0
+      ? X: -18
+        Y: -15
+      : 0
+      ? X: -18
+        Y: -14
+      : 0
+      ? X: -18
+        Y: -13
+      : 0
+      ? X: -18
+        Y: -12
+      : 0
+      ? X: -18
+        Y: -11
+      : 0
+      ? X: -18
+        Y: -10
+      : 0
+      ? X: -18
+        Y: -9
+      : 0
+      ? X: -18
+        Y: -8
+      : 0
+      ? X: -18
+        Y: -7
+      : 0
+      ? X: -18
+        Y: -6
+      : 0
+      ? X: -18
+        Y: -5
+      : 0
+      ? X: -18
+        Y: -4
+      : 0
+      ? X: -18
+        Y: -3
+      : 0
+      ? X: -18
+        Y: -2
+      : 0
+      ? X: -18
+        Y: -1
+      : 0
+      ? X: -17
+        Y: -16
+      : 0
+      ? X: -17
+        Y: -15
+      : 0
+      ? X: -17
+        Y: -14
+      : 0
+      ? X: -17
+        Y: -13
+      : 0
+      ? X: -17
+        Y: -12
+      : 0
+      ? X: -17
+        Y: -11
+      : 0
+      ? X: -17
+        Y: -10
+      : 0
+      ? X: -17
+        Y: -9
+      : 0
+      ? X: -17
+        Y: -8
+      : 0
+      ? X: -17
+        Y: -7
+      : 0
+      ? X: -17
+        Y: -6
+      : 0
+      ? X: -17
+        Y: -5
+      : 0
+      ? X: -17
+        Y: -4
+      : 0
+      ? X: -17
+        Y: -3
+      : 0
+      ? X: -17
+        Y: -2
+      : 0
+      ? X: -17
+        Y: -1
+      : 0
+      ? X: -42
+        Y: 3
+      : 0
+      ? X: -42
+        Y: 4
+      : 0
+      ? X: -42
+        Y: 5
+      : 0
+      ? X: -42
+        Y: 7
+      : 0
+      ? X: -42
+        Y: 8
+      : 0
+      ? X: -42
+        Y: 9
+      : 0
+      ? X: -41
+        Y: 1
+      : 0
+      ? X: -41
+        Y: 2
+      : 0
+      ? X: -41
+        Y: 3
+      : 0
+      ? X: -41
+        Y: 4
+      : 0
+      ? X: -41
+        Y: 5
+      : 0
+      ? X: -41
+        Y: 6
+      : 0
+      ? X: -41
+        Y: 7
+      : 0
+      ? X: -41
+        Y: 8
+      : 0
+      ? X: -41
+        Y: 9
+      : 0
+      ? X: -41
+        Y: 10
+      : 0
+      ? X: -41
+        Y: 11
+      : 0
+      ? X: -40
+        Y: 1
+      : 0
+      ? X: -40
+        Y: 2
+      : 0
+      ? X: -40
+        Y: 3
+      : 0
+      ? X: -40
+        Y: 4
+      : 0
+      ? X: -40
+        Y: 5
+      : 0
+      ? X: -40
+        Y: 6
+      : 0
+      ? X: -40
+        Y: 7
+      : 0
+      ? X: -40
+        Y: 8
+      : 0
+      ? X: -40
+        Y: 9
+      : 0
+      ? X: -40
+        Y: 10
+      : 0
+      ? X: -40
+        Y: 11
+      : 0
+      ? X: -39
+        Y: 0
+      : 0
+      ? X: -39
+        Y: 1
+      : 0
+      ? X: -39
+        Y: 2
+      : 0
+      ? X: -39
+        Y: 3
+      : 0
+      ? X: -39
+        Y: 4
+      : 0
+      ? X: -39
+        Y: 5
+      : 0
+      ? X: -39
+        Y: 6
+      : 0
+      ? X: -39
+        Y: 7
+      : 0
+      ? X: -39
+        Y: 8
+      : 0
+      ? X: -39
+        Y: 9
+      : 0
+      ? X: -39
+        Y: 10
+      : 0
+      ? X: -39
+        Y: 11
+      : 0
+      ? X: -38
+        Y: 0
+      : 0
+      ? X: -38
+        Y: 1
+      : 0
+      ? X: -38
+        Y: 2
+      : 0
+      ? X: -38
+        Y: 3
+      : 0
+      ? X: -38
+        Y: 4
+      : 0
+      ? X: -38
+        Y: 5
+      : 0
+      ? X: -38
+        Y: 6
+      : 0
+      ? X: -38
+        Y: 7
+      : 0
+      ? X: -38
+        Y: 8
+      : 0
+      ? X: -38
+        Y: 9
+      : 0
+      ? X: -38
+        Y: 10
+      : 0
+      ? X: -38
+        Y: 11
+      : 0
+      ? X: -37
+        Y: 0
+      : 0
+      ? X: -37
+        Y: 1
+      : 0
+      ? X: -37
+        Y: 2
+      : 0
+      ? X: -37
+        Y: 3
+      : 0
+      ? X: -37
+        Y: 4
+      : 0
+      ? X: -37
+        Y: 5
+      : 0
+      ? X: -37
+        Y: 6
+      : 0
+      ? X: -37
+        Y: 7
+      : 0
+      ? X: -37
+        Y: 8
+      : 0
+      ? X: -37
+        Y: 9
+      : 0
+      ? X: -37
+        Y: 10
+      : 0
+      ? X: -37
+        Y: 11
+      : 0
+      ? X: -36
+        Y: 0
+      : 0
+      ? X: -36
+        Y: 1
+      : 0
+      ? X: -36
+        Y: 2
+      : 0
+      ? X: -36
+        Y: 3
+      : 0
+      ? X: -36
+        Y: 4
+      : 0
+      ? X: -36
+        Y: 5
+      : 0
+      ? X: -36
+        Y: 6
+      : 0
+      ? X: -36
+        Y: 7
+      : 0
+      ? X: -36
+        Y: 8
+      : 0
+      ? X: -36
+        Y: 9
+      : 0
+      ? X: -36
+        Y: 10
+      : 0
+      ? X: -36
+        Y: 11
+      : 0
+      ? X: -35
+        Y: 0
+      : 0
+      ? X: -35
+        Y: 1
+      : 0
+      ? X: -35
+        Y: 2
+      : 0
+      ? X: -35
+        Y: 3
+      : 0
+      ? X: -35
+        Y: 4
+      : 0
+      ? X: -35
+        Y: 5
+      : 0
+      ? X: -35
+        Y: 6
+      : 0
+      ? X: -35
+        Y: 7
+      : 0
+      ? X: -35
+        Y: 8
+      : 0
+      ? X: -35
+        Y: 9
+      : 0
+      ? X: -35
+        Y: 10
+      : 0
+      ? X: -35
+        Y: 11
+      : 0
+      ? X: -34
+        Y: 0
+      : 0
+      ? X: -34
+        Y: 1
+      : 0
+      ? X: -34
+        Y: 2
+      : 0
+      ? X: -34
+        Y: 3
+      : 0
+      ? X: -34
+        Y: 4
+      : 0
+      ? X: -34
+        Y: 5
+      : 0
+      ? X: -34
+        Y: 6
+      : 0
+      ? X: -34
+        Y: 7
+      : 0
+      ? X: -34
+        Y: 8
+      : 0
+      ? X: -34
+        Y: 9
+      : 0
+      ? X: -34
+        Y: 10
+      : 0
+      ? X: -34
+        Y: 11
+      : 0
+      ? X: -34
+        Y: 12
+      : 0
+      ? X: -34
+        Y: 13
+      : 0
+      ? X: -34
+        Y: 14
+      : 0
+      ? X: -34
+        Y: 15
+      : 0
+      ? X: -33
+        Y: 0
+      : 0
+      ? X: -33
+        Y: 1
+      : 0
+      ? X: -33
+        Y: 2
+      : 0
+      ? X: -33
+        Y: 3
+      : 0
+      ? X: -33
+        Y: 4
+      : 0
+      ? X: -33
+        Y: 5
+      : 0
+      ? X: -33
+        Y: 6
+      : 0
+      ? X: -33
+        Y: 7
+      : 0
+      ? X: -33
+        Y: 8
+      : 0
+      ? X: -33
+        Y: 9
+      : 0
+      ? X: -33
+        Y: 10
+      : 0
+      ? X: -33
+        Y: 11
+      : 0
+      ? X: -33
+        Y: 12
+      : 0
+      ? X: -33
+        Y: 13
+      : 0
+      ? X: -33
+        Y: 14
+      : 0
+      ? X: -33
+        Y: 15
+      : 0
+      ? X: -40
+        Y: -5
+      : 0
+      ? X: -40
+        Y: -4
+      : 0
+      ? X: -40
+        Y: -3
+      : 0
+      ? X: -39
+        Y: -9
+      : 0
+      ? X: -39
+        Y: -8
+      : 0
+      ? X: -39
+        Y: -7
+      : 0
+      ? X: -39
+        Y: -6
+      : 0
+      ? X: -39
+        Y: -5
+      : 0
+      ? X: -39
+        Y: -4
+      : 0
+      ? X: -39
+        Y: -3
+      : 0
+      ? X: -39
+        Y: -2
+      : 0
+      ? X: -39
+        Y: -1
+      : 0
+      ? X: -38
+        Y: -9
+      : 0
+      ? X: -38
+        Y: -8
+      : 0
+      ? X: -38
+        Y: -7
+      : 0
+      ? X: -38
+        Y: -6
+      : 0
+      ? X: -38
+        Y: -5
+      : 0
+      ? X: -38
+        Y: -4
+      : 0
+      ? X: -38
+        Y: -3
+      : 0
+      ? X: -38
+        Y: -2
+      : 0
+      ? X: -38
+        Y: -1
+      : 0
+      ? X: -37
+        Y: -9
+      : 0
+      ? X: -37
+        Y: -8
+      : 0
+      ? X: -37
+        Y: -7
+      : 0
+      ? X: -37
+        Y: -6
+      : 0
+      ? X: -37
+        Y: -5
+      : 0
+      ? X: -37
+        Y: -4
+      : 0
+      ? X: -37
+        Y: -3
+      : 0
+      ? X: -37
+        Y: -2
+      : 0
+      ? X: -37
+        Y: -1
+      : 0
+      ? X: -36
+        Y: -9
+      : 0
+      ? X: -36
+        Y: -8
+      : 0
+      ? X: -36
+        Y: -7
+      : 0
+      ? X: -36
+        Y: -6
+      : 0
+      ? X: -36
+        Y: -5
+      : 0
+      ? X: -36
+        Y: -4
+      : 0
+      ? X: -36
+        Y: -3
+      : 0
+      ? X: -36
+        Y: -2
+      : 0
+      ? X: -36
+        Y: -1
+      : 0
+      ? X: -35
+        Y: -13
+      : 0
+      ? X: -35
+        Y: -12
+      : 0
+      ? X: -35
+        Y: -11
+      : 0
+      ? X: -35
+        Y: -10
+      : 0
+      ? X: -35
+        Y: -9
+      : 0
+      ? X: -35
+        Y: -8
+      : 0
+      ? X: -35
+        Y: -7
+      : 0
+      ? X: -35
+        Y: -6
+      : 0
+      ? X: -35
+        Y: -5
+      : 0
+      ? X: -35
+        Y: -4
+      : 0
+      ? X: -35
+        Y: -3
+      : 0
+      ? X: -35
+        Y: -2
+      : 0
+      ? X: -35
+        Y: -1
+      : 0
+      ? X: -34
+        Y: -13
+      : 0
+      ? X: -34
+        Y: -12
+      : 0
+      ? X: -34
+        Y: -11
+      : 0
+      ? X: -34
+        Y: -10
+      : 0
+      ? X: -34
+        Y: -9
+      : 0
+      ? X: -34
+        Y: -8
+      : 0
+      ? X: -34
+        Y: -7
+      : 0
+      ? X: -34
+        Y: -6
+      : 0
+      ? X: -34
+        Y: -5
+      : 0
+      ? X: -34
+        Y: -4
+      : 0
+      ? X: -34
+        Y: -3
+      : 0
+      ? X: -34
+        Y: -2
+      : 0
+      ? X: -34
+        Y: -1
+      : 0
+      ? X: -33
+        Y: -13
+      : 0
+      ? X: -33
+        Y: -12
+      : 0
+      ? X: -33
+        Y: -11
+      : 0
+      ? X: -33
+        Y: -10
+      : 0
+      ? X: -33
+        Y: -9
+      : 0
+      ? X: -33
+        Y: -8
+      : 0
+      ? X: -33
+        Y: -7
+      : 0
+      ? X: -33
+        Y: -6
+      : 0
+      ? X: -33
+        Y: -5
+      : 0
+      ? X: -33
+        Y: -4
+      : 0
+      ? X: -33
+        Y: -3
+      : 0
+      ? X: -33
+        Y: -2
+      : 0
+      ? X: -33
+        Y: -1
+      : 0
+      ? X: 48
+        Y: -8
+      : 0
+      ? X: 48
+        Y: -7
+      : 0
+      ? X: 48
+        Y: -6
+      : 0
+      ? X: 48
+        Y: -5
+      : 0
+      ? X: 48
+        Y: -4
+      : 0
+      ? X: 48
+        Y: -3
+      : 0
+      ? X: 48
+        Y: -2
+      : 0
+      ? X: 48
+        Y: -1
+      : 0
+      ? X: 49
+        Y: -8
+      : 0
+      ? X: 49
+        Y: -7
+      : 0
+      ? X: 49
+        Y: -6
+      : 0
+      ? X: 49
+        Y: -5
+      : 0
+      ? X: 49
+        Y: -4
+      : 0
+      ? X: 49
+        Y: -3
+      : 0
+      ? X: 49
+        Y: -2
+      : 0
+      ? X: 49
+        Y: -1
+      : 0
+      ? X: 50
+        Y: -8
+      : 0
+      ? X: 50
+        Y: -7
+      : 0
+      ? X: 50
+        Y: -6
+      : 0
+      ? X: 50
+        Y: -5
+      : 0
+      ? X: 50
+        Y: -4
+      : 0
+      ? X: 50
+        Y: -3
+      : 0
+      ? X: 50
+        Y: -2
+      : 0
+      ? X: 50
+        Y: -1
+      : 0
+      ? X: 51
+        Y: -8
+      : 0
+      ? X: 51
+        Y: -7
+      : 0
+      ? X: 51
+        Y: -6
+      : 0
+      ? X: 51
+        Y: -5
+      : 0
+      ? X: 51
+        Y: -4
+      : 0
+      ? X: 51
+        Y: -3
+      : 0
+      ? X: 51
+        Y: -2
+      : 0
+      ? X: 51
+        Y: -1
+      : 0
+      ? X: 52
+        Y: -8
+      : 0
+      ? X: 52
+        Y: -7
+      : 0
+      ? X: 52
+        Y: -6
+      : 0
+      ? X: 52
+        Y: -5
+      : 0
+      ? X: 52
+        Y: -4
+      : 0
+      ? X: 52
+        Y: -3
+      : 0
+      ? X: 52
+        Y: -2
+      : 0
+    type: GridAtmosphere
 - uid: 16
   type: Wire
   components:
@@ -17004,12 +27836,12 @@ entities:
   - parent: 15
     pos: 18.5,-0.5
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 2220
   type: DisposalTrunk
   components:
@@ -23210,12 +34042,12 @@ entities:
     pos: -10.5,-17.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 2951
   type: DisposalPipe
   components:
@@ -23262,12 +34094,12 @@ entities:
     pos: -27.5,-8.5
     rot: 1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 2955
   type: DisposalPipe
   components:
@@ -23626,12 +34458,12 @@ entities:
     pos: -22.5,6.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 2983
   type: DisposalPipe
   components:
@@ -23756,12 +34588,12 @@ entities:
     pos: -12.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 2993
   type: DisposalPipe
   components:
@@ -24117,12 +34949,12 @@ entities:
     pos: 0.5,1.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3021
   type: DisposalTrunk
   components:
@@ -24519,12 +35351,12 @@ entities:
     pos: 12.5,-2.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3052
   type: DisposalTrunk
   components:
@@ -24602,12 +35434,12 @@ entities:
     pos: 11.5,-11.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3059
   type: DisposalTrunk
   components:
@@ -24913,12 +35745,12 @@ entities:
     pos: -2.5,29.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3083
   type: DisposalTrunk
   components:
@@ -25323,12 +36155,12 @@ entities:
     pos: 37.5,6.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3115
   type: DisposalTrunk
   components:
@@ -25479,12 +36311,12 @@ entities:
     pos: 34.5,-4.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3127
   type: DisposalTrunk
   components:
@@ -25651,12 +36483,12 @@ entities:
     pos: 24.5,8.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3141
   type: DisposalTrunk
   components:
@@ -25729,12 +36561,12 @@ entities:
     pos: 6.5,11.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3147
   type: DisposalTrunk
   components:
@@ -25794,12 +36626,12 @@ entities:
     pos: -5.5,17.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3152
   type: DisposalTrunk
   components:
@@ -25917,12 +36749,12 @@ entities:
     pos: -29.5,11.5
     rot: -1.5707963267948966 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3162
   type: VendingMachineYouTool
   components:
@@ -26014,12 +36846,12 @@ entities:
     pos: -17.5,-22.5
     rot: 3.141592653589793 rad
     type: Transform
+  - shapes: []
+    type: Collidable
   - containers:
       DisposalUnit:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
-  - shapes: []
-    type: Collidable
 - uid: 3170
   type: DisposalTrunk
   components:

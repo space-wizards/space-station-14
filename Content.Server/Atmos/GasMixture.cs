@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Interfaces;
@@ -520,9 +521,10 @@ namespace Content.Server.Atmos
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(_moles, other._moles)
-                   && Equals(_molesArchived, other._molesArchived)
+            return _moles.SequenceEqual(other._moles)
+                   && _molesArchived.SequenceEqual(other._molesArchived)
                    && _temperature.Equals(other._temperature)
+                   && ReactionResults.SequenceEqual(other.ReactionResults)
                    && Immutable == other.Immutable
                    && LastShare.Equals(other.LastShare)
                    && TemperatureArchived.Equals(other.TemperatureArchived)
@@ -536,7 +538,7 @@ namespace Content.Server.Atmos
 
         public object Clone()
         {
-            return new GasMixture()
+            var newMixture = new GasMixture()
             {
                 _moles = (float[])_moles.Clone(),
                 _molesArchived = (float[])_molesArchived.Clone(),
@@ -546,6 +548,7 @@ namespace Content.Server.Atmos
                 TemperatureArchived = TemperatureArchived,
                 Volume = Volume,
             };
+            return newMixture;
         }
     }
 }
