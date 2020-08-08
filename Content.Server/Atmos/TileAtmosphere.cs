@@ -625,7 +625,7 @@ namespace Content.Server.Atmos
                 _gridAtmosphereComponent.RemoveActiveTile(this);
         }
 
-        public void ProcessHotspot()
+        public void triti()
         {
             if (!Hotspot.Valid)
             {
