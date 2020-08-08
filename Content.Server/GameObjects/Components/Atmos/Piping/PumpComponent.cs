@@ -5,6 +5,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    [RegisterComponent]
     public class PumpComponent : Component
     {
         public override string Name => "Pump";

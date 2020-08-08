@@ -28,6 +28,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 _pipes.Add(pipe);
                 pipe.JoinPipeNet(this);
+                ContainedGas.Volume += pipe.LocalGas.Volume;
                 ContainedGas.Merge(pipe.LocalGas);
                 pipe.LocalGas.Clear();
             }
@@ -40,14 +41,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 pipe.ClearPipeNet();
                 pipe.LocalGas.Merge(ContainedGas);
                 pipe.LocalGas.Multiply(pipe.LocalGas.Volume / ContainedGas.Volume);
-                ContainedGas.Clear();
             }
+            ContainedGas.Clear();
+        }
+
+        protected override void OnGivingNodesForRemake()
+        {
+            foreach (var pipe in _pipes)
+            {
+                pipe.LocalGas.Merge(ContainedGas);
+                pipe.LocalGas.Multiply(pipe.LocalGas.Volume / ContainedGas.Volume);
+            }
+            ContainedGas.Clear();
         }
 
         private class NullPipeNet : IPipeNet
         {
-            public GasMixture ContainedGas => _containedGas;
-            private static GasMixture _containedGas = new GasMixture();
+            public GasMixture ContainedGas => new GasMixture();
         }
     }
 }
