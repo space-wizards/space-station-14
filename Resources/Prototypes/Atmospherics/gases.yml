@@ -31,3 +31,11 @@
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: tritium
   color: 13FF4B
+
+- type: gas
+  id: 5
+  name: Water Vapor
+  specificHeat: 40
+  gasOverlaySprite: /Textures/Effects/atmospherics.rsi
+  gasOverlayState: water_vapor
+  color: bffffd

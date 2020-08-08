@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -686,7 +687,7 @@ namespace Content.Server.Atmos
 
             if (Hotspot.Bypassing)
             {
-                Hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
+                Hotspot.Volume = Air.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Hotspot.Temperature = Air.Temperature;
             }
             else
@@ -697,7 +698,7 @@ namespace Content.Server.Atmos
                     affected.Temperature = Hotspot.Temperature;
                     affected.React(this);
                     Hotspot.Temperature = affected.Temperature;
-                    Hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
+                    Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                     AssumeAir(affected);
                 }
             }
