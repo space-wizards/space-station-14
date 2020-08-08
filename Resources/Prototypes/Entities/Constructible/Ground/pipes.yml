@@ -15,6 +15,7 @@
     sprite: Constructible/Power/hv_cable.rsi
   - type: Destructible
     thresholdvalue: 100
+  - type: Pipe
 
 - type: entity
   parent: PipeBase
@@ -26,7 +27,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Gas
+      nodeGroupID: Pipe
       pipeDirection: All
 
 - type: entity
@@ -39,7 +40,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Gas
+      nodeGroupID: Pipe
       pipeDirection: Vertical
       
 - type: entity
@@ -52,7 +53,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Gas
+      nodeGroupID: Pipe
       pipeDirection: ULBend
       
 - type: entity
@@ -65,5 +66,5 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Gas
+      nodeGroupID: Pipe
       pipeDirection: TUp

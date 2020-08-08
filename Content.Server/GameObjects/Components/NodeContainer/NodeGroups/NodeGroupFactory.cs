@@ -61,6 +61,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         HVPower,
         MVPower,
         Apc,
-        Gas,
+        Pipe,
     }
 }
