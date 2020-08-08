@@ -30,7 +30,7 @@ namespace Content.Client.GameObjects.Components.Disposal
 
             _window = new DisposalUnitWindow();
 
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
             _window.OnClose += Close;
 
             _window.Eject.OnPressed += _ => ButtonPressed(UiButton.Eject);

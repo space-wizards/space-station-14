@@ -158,6 +158,44 @@ namespace Content.Shared.Atmos
         public const float PhoronUpperTemperature = (1370f+T0C);
         public const float PhoronOxygenFullburn = 10f;
         public const float PhoronBurnRateDelta = 9f;
+
+        /// <summary>
+        ///     Determines at what pressure the ultra-high pressure red icon is displayed.
+        /// </summary>
+        public const float HazardHighPressure = 550f;
+
+        /// <summary>
+        ///     Determines when the orange pressure icon is displayed.
+        /// </summary>
+        public const float WarningHighPressure = 0.7f * HazardHighPressure;
+
+        /// <summary>
+        ///     Determines when the gray low pressure icon is displayed.
+        /// </summary>
+        public const float WarningLowPressure = 2.5f * HazardLowPressure;
+
+        /// <summary>
+        ///     Determines when the black ultra-low pressure icon is displayed.
+        /// </summary>
+        public const float HazardLowPressure = 20f;
+
+        /// <summary>
+        ///    The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT,
+        ///     with the maximum of MaxHighPressureDamage.
+        /// </summary>
+        public const float PressureDamageCoefficient = 4;
+
+        /// <summary>
+        ///     Maximum amount of damage that can be endured with high pressure.
+        /// </summary>
+        public const int MaxHighPressureDamage = 4;
+
+        /// <summary>
+        ///     The amount of damage someone takes when in a low pressure area
+        ///     (The pressure threshold is so low that it doesn't make sense to do any calculations,
+        ///     so it just applies this flat value).
+        /// </summary>
+        public const int LowPressureDamage = 4;
     }
 
     /// <summary>

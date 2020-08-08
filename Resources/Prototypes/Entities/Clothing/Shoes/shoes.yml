@@ -15,7 +15,7 @@
   parent: ShoesBase
   id: ShoesAtmosMagboots0
   name: atmos magboots (off)
-  description: ''
+  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently off.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/atmosmagboots0.rsi
@@ -28,7 +28,7 @@
   parent: ShoesBase
   id: ShoesAtmosMagboots1
   name: atmos magboots (on)
-  description: ''
+  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently on.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/atmosmagboots1.rsi
@@ -41,7 +41,7 @@
   parent: ShoesBase
   id: ShoesBlack
   name: black shoes
-  description: Don't take them off at your office Christmas party
+  description: Stylish black shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/black.rsi
@@ -54,7 +54,7 @@
   parent: ShoesBase
   id: ShoesBlue
   name: blue shoes
-  description: Don't take them off at your office Christmas party
+  description: Stylish blue shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/blue.rsi
@@ -67,7 +67,7 @@
   parent: ShoesBase
   id: ShoesBoots
   name: boots
-  description: ''
+  description: Comfortable-looking boots.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/boots.rsi
@@ -93,7 +93,7 @@
   parent: ShoesBase
   id: ShoesChef
   name: chef shoes
-  description: ''
+  description: Sturdy shoes that minimize injury from falling objects or knives.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/chef.rsi
@@ -106,7 +106,7 @@
   parent: ShoesBase
   id: ShoesCowboy
   name: cowboy shoes
-  description: ''
+  description: A small sticker lets you know they've been inspected for snakes, It is unclear how long ago the inspection took place...
   components:
   - type: Sprite
     sprite: Clothing/Shoes/cowboy.rsi
@@ -119,7 +119,7 @@
   parent: ShoesBase
   id: ShoesCult
   name: cult shoes
-  description: ''
+  description: A pair of boots worn by the followers of Nar'Sie.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/cult.rsi
@@ -132,7 +132,7 @@
   parent: ShoesBase
   id: ShoesDetective
   name: detective shoes
-  description: ''
+  description: This pair of leather boots has seen better days.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/detective.rsi
@@ -145,7 +145,7 @@
   parent: ShoesBase
   id: ShoesDigiboots
   name: digiboots
-  description: ''
+  description: A pair of digi boots.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/digiboots.rsi
@@ -158,7 +158,7 @@
   parent: ShoesBase
   id: ShoesFlippers
   name: flippers
-  description: ''
+  description: A pair of rubber flippers that improves swimming ability when worn.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/flippers.rsi
@@ -171,7 +171,7 @@
   parent: ShoesBase
   id: ShoesGaloshes
   name: galoshes shoes
-  description: ''
+  description: Rubber boots.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/galoshes.rsi
@@ -185,7 +185,7 @@
   parent: ShoesBase
   id: ShoesGreen
   name: green shoes
-  description: ''
+  description: Stylish green shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/green.rsi
@@ -198,7 +198,7 @@
   parent: ShoesBase
   id: ShoesLeather
   name: leather shoes
-  description: ''
+  description: Very stylish pair of boots, made from fine leather.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/leather.rsi
@@ -211,7 +211,7 @@
   parent: ShoesBase
   id: ShoesMagboots0
   name: magboots (off)
-  description: ''
+  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently off.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/magboots0.rsi
@@ -224,7 +224,7 @@
   parent: ShoesBase
   id: ShoesMagboots1
   name: magboots (on)
-  description: ''
+  description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. Currently on.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/magboots1.rsi
@@ -237,7 +237,7 @@
   parent: ShoesBase
   id: ShoesMercboots0
   name: merc boots
-  description: ''
+  description: A pair of boots with extra padding and armor.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/mercboots0.rsi
@@ -250,7 +250,7 @@
   parent: ShoesBase
   id: ShoesMercboots1
   name: merc boots
-  description: ''
+  description: A pair of boots with extra padding and armor.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/mercboots1.rsi
@@ -263,7 +263,7 @@
   parent: ShoesBase
   id: ShoesMime
   name: mime shoes
-  description: ''
+  description: ...
   components:
   - type: Sprite
     sprite: Clothing/Shoes/mime.rsi
@@ -276,7 +276,7 @@
   parent: ShoesBase
   id: ShoesOrange
   name: orange shoes
-  description: ''
+  description: Stylish orange shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/orange.rsi
@@ -289,7 +289,7 @@
   parent: ShoesBase
   id: ShoesOrange1
   name: orange shoes
-  description: ''
+  description: Stylish orange shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/orange1.rsi
@@ -302,7 +302,7 @@
   parent: ShoesBase
   id: ShoesPurple
   name: purple shoes
-  description: ''
+  description: Stylish purple shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/purple.rsi
@@ -315,7 +315,7 @@
   parent: ShoesBase
   id: ShoesRainbow
   name: rainbow shoes
-  description: ''
+  description: A pair of rainbow shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/rain_bow.rsi
@@ -328,7 +328,7 @@
   parent: ShoesBase
   id: ShoesRed
   name: red shoes
-  description: ''
+  description: Stylish purple shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/red.rsi
@@ -341,7 +341,7 @@
   parent: ShoesBase
   id: ShoesReinforced
   name: reinforced shoes
-  description: ''
+  description: A pair of reinforced shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/reinforced.rsi
@@ -354,7 +354,7 @@
   parent: ShoesBase
   id: ShoesSlippers
   name: slippers
-  description: ''
+  description: Fluffy!
   components:
   - type: Sprite
     sprite: Clothing/Shoes/slippers.rsi
@@ -367,7 +367,7 @@
   parent: ShoesBase
   id: ShoesSlippersWorn
   name: slippers (worn)
-  description: ''
+  description: Fluffy...
   components:
   - type: Sprite
     sprite: Clothing/Shoes/slippers_worn.rsi
@@ -380,7 +380,7 @@
   parent: ShoesBase
   id: ShoesSpringjacks
   name: springjacks
-  description: ''
+  description: Uh... Those are spring jacks.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/springjacks.rsi
@@ -393,7 +393,7 @@
   parent: ShoesBase
   id: ShoesSwat
   name: swat shoes
-  description: ''
+  description: When you want to turn up the heat.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/swat.rsi
@@ -406,7 +406,7 @@
   parent: ShoesBase
   id: ShoesSNinja
   name: S ninja shoes
-  description: ''
+  description: A pair of nano-enhanced oots with built-in magnetic suction cups.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/s_ninja.rsi
@@ -419,7 +419,7 @@
   parent: ShoesBase
   id: ShoesTourist
   name: tourist shoes
-  description: ''
+  description: These cheap sandals don't look very comfortable.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/tourist.rsi
@@ -445,7 +445,7 @@
   parent: ShoesBase
   id: ShoesWizard
   name: wizard shoes
-  description: ''
+  description: A pair of magic shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/wizard.rsi
@@ -458,7 +458,7 @@
   parent: ShoesBase
   id: ShoesWorkboots
   name: workboots shoes
-  description: ''
+  description: Engineering lace-up work boots for the especially blue-collar.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/workboots.rsi
@@ -471,7 +471,7 @@
   parent: ShoesBase
   id: ShoesYellow
   name: yellow shoes
-  description: ''
+  description: Stylish yellow shoes.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/yellow.rsi
