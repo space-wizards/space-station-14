@@ -1,3 +1,6 @@
+# Bounds Guide
+#1D2L3U4R
+
 - type: entity
   save: false
   name: based on what?
@@ -75,7 +78,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.50,-0.25,0.30,0.25"
       mask:
       - Impassable
       - MobImpassable
@@ -89,6 +92,44 @@
     - type: DamageStateVisualizer
       normal: corgi
       dead: corgi_dead
+
+- type: entity
+  save: false
+  name: ian
+  parent: PetBaseMob_Content
+  id: IanMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ian
+  - type: Icon
+    sprite: Mobs/Pets/corgi.rsi
+    state: ian
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.25,0.30,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: ian
+      dead: ian_dead
 
 - type: entity
   save: false
@@ -113,7 +154,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.45,-0.20,0.30,0.20"
       mask:
       - Impassable
       - MobImpassable
@@ -154,7 +195,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.45,-0.35,0.15,0.35"
       mask:
       - Impassable
       - MobImpassable

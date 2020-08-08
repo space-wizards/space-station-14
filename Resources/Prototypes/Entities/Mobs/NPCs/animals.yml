@@ -1,3 +1,6 @@
+# Bounds Guide
+#1D2L3U4R
+
 - type: entity
   save: false
   name: monkey
@@ -27,7 +30,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.30,-0.25,0.40,0.25"
       mask:
       - Impassable
       - MobImpassable
@@ -121,7 +124,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.45,-0.20,0.10,0.20"
       mask:
       - Impassable
       - MobImpassable
@@ -332,7 +335,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.45,-0.35,0.45,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -374,7 +377,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.30,-0.35,0.35,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -412,7 +415,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.30,-0.30,0.25,0.30"
       mask:
       - Impassable
       - MobImpassable
@@ -453,7 +456,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.30,-0.40,0.45,0.40"
       mask:
       - Impassable
       - MobImpassable
@@ -491,7 +494,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.40,-0.35,0.20,0.35"
       mask:
       - Impassable
       - MobImpassable
@@ -529,7 +532,7 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.30,-0.35,0.45,0.35"
+      bounds: "-0.50,-0.30,0.35,0.30"
       mask:
       - Impassable
       - MobImpassable

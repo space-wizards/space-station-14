@@ -26,7 +26,52 @@
       ]
     },
     {
+      "name": "corgi_rest",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "corgi_dead",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ian",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "ian_dead",
       "directions": 1,
       "delays": [
         [
@@ -53,7 +98,7 @@
       ]
     },
     {
-      "name": "corgi_shaved",
+      "name": "ian_shaved",
       "directions": 4,
       "delays": [
         [
@@ -71,7 +116,7 @@
       ]
     },
     {
-      "name": "corgi_shaved_dead",
+      "name": "ian_shaved_dead",
       "directions": 1,
       "delays": [
         [
@@ -197,7 +242,7 @@
       ]
     },
     {
-      "name": "old_corgi",
+      "name": "old_ian",
       "directions": 4,
       "delays": [
         [
@@ -219,7 +264,7 @@
       ]
     },
     {
-      "name": "old_corgi_dead",
+      "name": "old_ian_dead",
       "directions": 1,
       "delays": [
         [
@@ -228,7 +273,7 @@
       ]
     },
     {
-      "name": "old_corgi_shaved",
+      "name": "old_ian_shaved",
       "directions": 4,
       "delays": [
         [
@@ -250,7 +295,7 @@
       ]
     },
     {
-      "name": "old_corgi_shaved_dead",
+      "name": "old_ian_shaved_dead",
       "directions": 1,
       "delays": [
         [
