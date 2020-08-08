@@ -153,6 +153,7 @@
             "MovedByPressure",
             "Spray",
             "Vapor",
+            "DamageOnHighSpeedImpact",
         };
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
@@ -7,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 {
@@ -14,7 +15,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Organizes themselves into distinct <see cref="INodeGroup"/>s with other <see cref="Node"/>s
     ///     that they can "reach" and have the same <see cref="Node.NodeGroupID"/>.
     /// </summary>
-    public abstract class Node
+    public abstract class Node : IExposeData
     {
         /// <summary>
         ///     An ID used as a criteria for combining into groups. Determines which <see cref="INodeGroup"/>
@@ -45,17 +46,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         /// </summary>
         private bool _deleting = false;
 
-#pragma warning disable 649
-        [Dependency] private readonly INodeGroupFactory _nodeGroupFactory;
-#pragma warning restore 649
+        private INodeGroupFactory _nodeGroupFactory;
 
-        public void Initialize(NodeGroupID nodeGroupID, IEntity owner)
+        public virtual void ExposeData(ObjectSerializer serializer)
         {
-            NodeGroupID = nodeGroupID;
-            Owner = owner;
+            serializer.DataField(this, x => NodeGroupID, "nodeGroupID", NodeGroupID.Default);
         }
 
-        public void OnContainerInitialize()
+        public void Initialize(IEntity owner)
+        {
+            Owner = owner;
+            _nodeGroupFactory = IoCManager.Resolve<INodeGroupFactory>();
+        }
+
+        public void OnContainerStartup()
         {
             TryAssignGroupIfNeeded();
             CombineGroupWithReachable();

@@ -33,8 +33,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
+            // TODO Return space grid atmosphere for invalid grids or grids with no atmos
             var grid = _mapManager.GetGrid(gridId);
-            var gridEnt = _entityManager.GetEntity(grid.GridEntityId);
+
+            if (!_entityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
+
             return gridEnt.TryGetComponent(out IGridAtmosphereComponent atmos) ? atmos : null;
         }
 
