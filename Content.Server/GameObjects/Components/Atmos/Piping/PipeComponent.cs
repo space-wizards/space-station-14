@@ -13,26 +13,20 @@ namespace Content.Server.GameObjects.Components.Atmos
         ///     To check what gases are in this pipe.
         /// </summary>
         [ViewVariables]
-        public GasMixture ContainedGas => _needsPipeNet ? LocalGas.GasMixture : _pipeNet.ContainedGas;
+        public GasMixture ContainedGas => _needsPipeNet ? LocalGas : _pipeNet.ContainedGas;
 
         /// <summary>
         ///     Stores gas in this pipe when not in an <see cref="IPipeNet"/>.
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
-        public GasMixtureComponent LocalGas { get; set; }
+        public GasMixture LocalGas { get; set; }
 
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
         [ViewVariables]
         private bool _needsPipeNet = true;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            LocalGas = Owner.EnsureComponent<GasMixtureComponent>();
-        }
 
         public void JoinPipeNet(IPipeNet pipeNet)
         {

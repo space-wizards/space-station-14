@@ -28,9 +28,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 _pipes.Add(pipe);
                 pipe.JoinPipeNet(this);
-                //take pipes local gas
-
-                pipe.LocalGas.GasMixture.Clear();
+                ContainedGas.Merge(pipe.LocalGas);
+                pipe.LocalGas.Clear();
             }
         }
 
@@ -39,8 +38,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             foreach (var pipe in _pipes)
             {
                 pipe.ClearPipeNet();
-                var pipeVolFrac = pipe.LocalGas.GasMixture.Volume / ContainedGas.Volume;
-                //pipe.LocalGas.GasMixture = frac of own gas
+                pipe.LocalGas.Merge(ContainedGas);
+                pipe.LocalGas.Multiply(pipe.LocalGas.Volume / ContainedGas.Volume);
+                ContainedGas.Clear();
             }
         }
 
