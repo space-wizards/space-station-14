@@ -46,7 +46,8 @@ namespace Content.Server.GameObjects.EntitySystems
 
             if (eventArgs.BreakOnTargetMove)
             {
-                TargetGrid = eventArgs.Target.Transform.GridPosition;
+                // Target should never be null if the bool is set.
+                TargetGrid = eventArgs.Target!.Transform.GridPosition;
             }
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
@@ -107,7 +108,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 return true;
             }
             
-            if (EventArgs.BreakOnTargetMove && EventArgs.Target.Transform.GridPosition != TargetGrid)
+            if (EventArgs.BreakOnTargetMove && EventArgs.Target!.Transform.GridPosition != TargetGrid)
             {
                 return true;
             }
