@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Body.Scanner;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components.Body.Scanner
 {
+    [UsedImplicitly]
     public class BodyScannerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
@@ -17,9 +19,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         [ViewVariables]
         private Dictionary<string, BodyScannerBodyPartData> _parts;
 
-        public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
-        {
-        }
+        public BodyScannerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) { }
 
         protected override void Open()
         {
@@ -34,7 +34,9 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
             base.UpdateState(state);
 
             if (!(state is BodyScannerInterfaceState scannerState))
+            {
                 return;
+            }
 
             _template = scannerState.Template;
             _parts = scannerState.Parts;
@@ -45,7 +47,13 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-        }
 
+            if (disposing)
+            {
+                _display.Dispose();
+                _template = null;
+                _parts.Clear();
+            }
+        }
     }
 }

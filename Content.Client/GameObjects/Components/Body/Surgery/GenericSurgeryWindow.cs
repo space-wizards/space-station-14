@@ -11,8 +11,6 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
 {
     public class GenericSurgeryWindow : SS14Window
     {
-        public delegate void CloseCallback();
-
         public delegate void OptionSelectedCallback(int selectedOptionData);
 
         private readonly VBoxContainer _optionsBox;
@@ -67,8 +65,10 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
 
         private void OnButtonPressed(BaseButton.ButtonEventArgs args)
         {
-            var pressedButton = (SurgeryButton) args.Button.Parent;
-            _optionSelectedCallback(pressedButton.CallbackData);
+            if (args.Button.Parent is SurgeryButton surgery)
+            {
+                _optionSelectedCallback(surgery.CallbackData);
+            }
         }
     }
 
