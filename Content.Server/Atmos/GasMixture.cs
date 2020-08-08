@@ -457,7 +457,7 @@ namespace Content.Server.Atmos
                     temperature < prototype.MinimumTemperatureRequirement)
                     continue;
 
-                var breakLoop = false;
+                var doReaction = true;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
                     if(i > Atmospherics.TotalNumberOfGases)
@@ -466,12 +466,12 @@ namespace Content.Server.Atmos
                     var req = prototype.MinimumRequirements[i];
 
                     if (!(GetMoles(i) < req)) continue;
-                    breakLoop = true;
+                    doReaction = false;
                     break;
                 }
 
-                if (breakLoop)
-                    break;
+                if (!doReaction)
+                    continue;
 
                 reaction = prototype.React(this, holder);
                 if(reaction.HasFlag(ReactionResult.StopReactions))
