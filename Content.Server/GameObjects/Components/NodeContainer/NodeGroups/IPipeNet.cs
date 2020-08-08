@@ -1,11 +1,14 @@
 ﻿using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface IPipeNet
     {
-        public GasMixture ContainedGas { get; }
+        GasMixture ContainedGas { get; }
     }
 
     [NodeGroup(NodeGroupID.Pipe)]
@@ -13,5 +16,38 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
     {
         [ViewVariables]
         public GasMixture ContainedGas { get; private set; } = new GasMixture();
+
+        [ViewVariables]
+        private readonly List<PipeComponent> _pipes = new List<PipeComponent>();
+
+        public static readonly IPipeNet NullNet = new NullPipeNet();
+
+        protected override void OnAddNode(Node node)
+        {
+            if (node.Owner.TryGetComponent<PipeComponent>(out var pipe))
+            {
+                _pipes.Add(pipe);
+                pipe.JoinPipeNet(this);
+                //take pipes local gas
+
+                pipe.LocalGas.GasMixture.Clear();
+            }
+        }
+
+        protected override void OnRemoveNode(Node node)
+        {
+            foreach (var pipe in _pipes)
+            {
+                pipe.ClearPipeNet();
+                var pipeVolFrac = pipe.LocalGas.GasMixture.Volume / ContainedGas.Volume;
+                //pipe.LocalGas.GasMixture = frac of own gas
+            }
+        }
+
+        private class NullPipeNet : IPipeNet
+        {
+            public GasMixture ContainedGas => _containedGas;
+            private static GasMixture _containedGas = new GasMixture();
+        }
     }
 }

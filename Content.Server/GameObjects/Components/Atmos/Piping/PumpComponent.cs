@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Atmos.PipeNet
+namespace Content.Server.GameObjects.Components.Atmos
 {
     public class PumpComponent : Component
     {

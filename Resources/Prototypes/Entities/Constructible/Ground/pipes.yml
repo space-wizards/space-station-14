@@ -16,6 +16,8 @@
   - type: Destructible
     thresholdvalue: 100
   - type: Pipe
+  - type: GasMixture
+    volume: 10
 
 - type: entity
   parent: PipeBase
