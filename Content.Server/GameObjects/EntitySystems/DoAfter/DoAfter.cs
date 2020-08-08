@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.EntitySystems
             AsTask = Tcs.Task;
         }
 
-        public void HandleDamage(object sender, DamageEventArgs eventArgs)
+        public void HandleDamage(object? sender, DamageEventArgs eventArgs)
         {
             _tookDamage = true;
         }
