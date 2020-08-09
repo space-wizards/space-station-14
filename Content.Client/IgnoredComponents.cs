@@ -155,7 +155,7 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
-            "Pipe",
+            "PipeContainer",
             "Pump",
         };
     }

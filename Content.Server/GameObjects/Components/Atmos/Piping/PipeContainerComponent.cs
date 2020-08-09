@@ -1,17 +1,41 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class PipeComponent : Component, IGasMixtureHolder
+    public class PipeContainerComponent : Component
     {
-        public override string Name => "Pipe";
+        public override string Name => "PipeContainer";
 
+        [ViewVariables]
+        public IReadOnlyList<Pipe> Pipes => _pipes;
+        private List<Pipe> _pipes = new List<Pipe>();
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _pipes, "pipes", new List<Pipe>());
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            foreach (var pipe in _pipes)
+            {
+                pipe.Initialize();
+            }
+        }
+    }
+    public class Pipe : IGasMixtureHolder, IExposeData
+    {
         /// <summary>
         ///     The gases in this pipe.
         /// </summary>
@@ -29,20 +53,22 @@ namespace Content.Server.GameObjects.Components.Atmos
         public float Volume { get; private set; }
 
         [ViewVariables]
+        public PipeDirection PipeDirection { get; private set; }
+
+        [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
 
         [ViewVariables]
         private bool _needsPipeNet = true;
 
-        public override void ExposeData(ObjectSerializer serializer)
+        public void ExposeData(ObjectSerializer serializer)
         {
-            base.ExposeData(serializer);
             serializer.DataField(this, x => Volume, "volume", 10);
+            serializer.DataField(this, x => PipeDirection, "pipeDirection", PipeDirection.None);
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            base.Initialize();
             Air = new GasMixture(Volume);
 
             //debug way for some gas to start in pipes

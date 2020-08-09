@@ -15,7 +15,6 @@
     sprite: Constructible/Power/hv_cable.rsi
   - type: Destructible
     thresholdvalue: 100
-  - type: Pipe
 
 - type: entity
   parent: PipeBase
@@ -29,6 +28,9 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: All
+  - type: PipeContainer
+    pipes:
+    - pipeDirection: All
 
 - type: entity
   parent: PipeBase
@@ -42,29 +44,6 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Vertical
-      
-- type: entity
-  parent: PipeBase
-  id: UpLeftBendPipe
-  name: Up-Left Bend Pipe
-  components:
-  - type: Sprite
-    state: hvcable_9
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: ULBend
-      
-- type: entity
-  parent: PipeBase
-  id: TUpPipe
-  name: T-Up Pipe
-  components:
-  - type: Sprite
-    state: hvcable_13
-  - type: NodeContainer
-    nodes:
-    - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: TUp
+  - type: PipeContainer
+    pipes:
+    - pipeDirection: Vertical

@@ -4,7 +4,8 @@ using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.Transactions;
+using System.Linq;
+using static Content.Server.GameObjects.Components.Atmos.PipeContainerComponent;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -22,7 +23,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
         [ViewVariables]
-        private readonly Dictionary<Node, PipeComponent> _pipes = new Dictionary<Node, PipeComponent>();
+        private readonly Dictionary<Node, Pipe> _pipes = new Dictionary<Node, Pipe>();
 
         public bool AssumeAir(GasMixture giver)
         {
@@ -32,14 +33,22 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnAddNode(Node node)
         {
-            if (node.Owner.TryGetComponent<PipeComponent>(out var pipe))
-            {
-                _pipes.Add(node, pipe);
-                pipe.JoinPipeNet(this);
-                Air.Volume += pipe.Volume;
-                AssumeAir(pipe.Air);
-                pipe.Air.Clear();
-            }
+            if (!node.Owner.TryGetComponent<PipeContainerComponent>(out var pipeContainer))
+                return;
+
+            if (!(node is PipeNode pipeNode))
+                return;
+
+            var compatiblePipes = pipeContainer.Pipes.Where(pipe => pipe.PipeDirection == pipeNode.PipeDirection);
+            if (!compatiblePipes.Any())
+                return;
+
+            var pipe = compatiblePipes.First();
+            _pipes.Add(node, pipe);
+            pipe.JoinPipeNet(this);
+            Air.Volume += pipe.Volume;
+            AssumeAir(pipe.Air);
+            pipe.Air.Clear();
         }
 
         protected override void OnRemoveNode(Node node)
