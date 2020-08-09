@@ -152,7 +152,10 @@
             "Airtight",
             "MovedByPressure",
             "Headset",
+            "Spray",
+            "Vapor",
             "DamageOnHighSpeedImpact",
+            "Barotrauma",
         };
     }
 }

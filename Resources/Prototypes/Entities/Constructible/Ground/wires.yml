@@ -19,8 +19,6 @@
   - type: Destructible
     thresholdvalue: 100
   - type: SubFloorHide
-  - type: Physics
-    anchored: true
 
 - type: entity
   parent: WireBase

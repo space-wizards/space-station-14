@@ -259,10 +259,64 @@ namespace Content.Server.Atmos
         }
     }
 
-        public class SetTemperature : IClientCommand
+    public class ClearAtmos : IClientCommand
+    {
+        public string Command => "clearatmos";
+        public string Description => "Clear a grid of all gases.";
+        public string Help => "clearatmos <GridId>";
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            if (args.Length < 1) return;
+            if (!int.TryParse(args[0], out var id))
+            {
+                shell.SendText(player, "Not enough arguments!");
+            }
+
+            var gridId = new GridId(id);
+
+            var mapMan = IoCManager.Resolve<IMapManager>();
+
+            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
+            {
+                shell.SendText(player, "Invalid grid ID.");
+                return;
+            }
+
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
+            {
+                shell.SendText(player, "Failed to get grid entity.");
+                return;
+            }
+
+            if (!grid.HasComponent<GridAtmosphereComponent>())
+            {
+                shell.SendText(player, "Grid doesn't have an atmosphere.");
+                return;
+            }
+
+            var gam = grid.GetComponent<GridAtmosphereComponent>();
+
+            var tiles = 0;
+            var moles = 0f;
+            foreach (var tile in gam)
+            {
+                if (tile.Air.Immutable) continue;
+                tiles++;
+                moles += tile.Air.TotalMoles;
+                tile.Air.RemoveRatio(1f);
+                gam.Invalidate(tile.GridIndices);
+            }
+
+            shell.SendText(player, $"Removed {moles} moles from {tiles} tiles.");
+        }
+    }
+
+    public class SetTemperature : IClientCommand
     {
         public string Command => "settemp";
-        public string Description => "Sets a tile's temperature.";
+        public string Description => "Sets a tile's temperature (in kelvin).";
         public string Help => "Usage: settemp <X> <Y> <GridId> <Temperature>";
         public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
         {
@@ -320,6 +374,65 @@ namespace Content.Server.Atmos
 
             tile.Air.Temperature = temperature;
             gam.Invalidate(indices);
+        }
+    }
+
+    public class SetAtmosTemperature : IClientCommand
+    {
+        public string Command => "setatmostemp";
+        public string Description => "Sets a grid's temperature (in kelvin).";
+        public string Help => "Usage: setatmostemp <GridId> <Temperature>";
+        public void Execute(IConsoleShell shell, IPlayerSession? player, string[] args)
+        {
+            if (args.Length < 2) return;
+            if(!int.TryParse(args[0], out var id)
+               || !float.TryParse(args[1], out var temperature)) return;
+
+            var gridId = new GridId(id);
+
+            var mapMan = IoCManager.Resolve<IMapManager>();
+
+            if (temperature < Atmospherics.TCMB)
+            {
+                shell.SendText(player, "Invalid temperature.");
+                return;
+            }
+
+            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
+            {
+                shell.SendText(player, "Invalid grid ID.");
+                return;
+            }
+
+            var entMan = IoCManager.Resolve<IEntityManager>();
+
+            if (!entMan.TryGetEntity(gridComp.GridEntityId, out var grid))
+            {
+                shell.SendText(player, "Failed to get grid entity.");
+                return;
+            }
+
+            if (!grid.HasComponent<GridAtmosphereComponent>())
+            {
+                shell.SendText(player, "Grid doesn't have an atmosphere.");
+                return;
+            }
+
+            var gam = grid.GetComponent<GridAtmosphereComponent>();
+
+            var tiles = 0;
+            foreach (var tile in gam)
+            {
+                if (tile.Air == null)
+                    continue;
+
+                tiles++;
+
+                tile.Air.Temperature = temperature;
+                gam.Invalidate(tile.GridIndices);
+            }
+
+            shell.SendText(player, $"Changed the temperature of {tiles} tiles.");
         }
     }
 }

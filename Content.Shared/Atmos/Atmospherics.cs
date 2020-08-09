@@ -63,6 +63,12 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
 
+        public const float OxygenStandard = 0.21f;
+        public const float NitrogenStandard = 0.79f;
+
+        public const float OxygenMolesStandard = MolesCellStandard * OxygenStandard;
+        public const float NitrogenMolesStandard = MolesCellStandard * NitrogenStandard;
+
         #endregion
 
         /// <summary>
@@ -143,8 +149,12 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 5;
+        public const int TotalNumberOfGases = 6;
 
+        /// <summary>
+        ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
+        /// </summary>
+        public const float FireHydrogenEnergyReleased = 560000f;
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
@@ -158,6 +168,14 @@ namespace Content.Shared.Atmos
         public const float PhoronUpperTemperature = (1370f+T0C);
         public const float PhoronOxygenFullburn = 10f;
         public const float PhoronBurnRateDelta = 9f;
+
+        /// <summary>
+        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
+        /// </summary>
+        public const float MinimumTritiumOxyburnEnergy = 2000000f;
+
+        public const float TritiumBurnOxyFactor = 100f;
+        public const float TritiumBurnTritFactor = 10f;
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -208,5 +226,6 @@ namespace Content.Shared.Atmos
         CarbonDioxide = 2,
         Phoron = 3,
         Tritium = 4,
+        WaterVapor = 5,
     }
 }
