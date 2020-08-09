@@ -485,27 +485,22 @@ namespace Content.Server.GameObjects.Components.Atmos
             } else if (serializer.Writing)
             {
                 var uniqueMixes = new List<GasMixture>();
+                var uniqueMixHash = new Dictionary<GasMixture, int>();
                 var tiles = new Dictionary<MapIndices, int>();
                 foreach (var (indices, tile) in _tiles)
                 {
                     if (tile.Air == null) continue;
 
-                    var isUnique = true;
-                    for (var i = 0; i < uniqueMixes.Count; i++)
+                    if (uniqueMixHash.TryGetValue(tile.Air, out var index))
                     {
-                        var mix = uniqueMixes[i];
-                        if (!mix.Equals(tile.Air)) continue;
-                        isUnique = false;
-                        tiles[indices] = i;
-                        Logger.Info($"FOUND MATCH! {i} ORIG: {indices}");
-                        break;
+                        tiles[indices] = index;
+                        continue;
                     }
 
-                    if(!isUnique)
-                        continue;
-
                     uniqueMixes.Add(tile.Air);
-                    tiles[indices] = uniqueMixes.Count - 1;
+                    var newIndex = uniqueMixes.Count - 1;
+                    uniqueMixHash[tile.Air] = newIndex;
+                    tiles[indices] = newIndex;
                 }
 
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());

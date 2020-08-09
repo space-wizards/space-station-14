@@ -533,7 +533,23 @@ namespace Content.Server.Atmos
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_moles, _molesArchived, _temperature, Immutable, LastShare, TemperatureArchived, Volume);
+            var hashCode = new HashCode();
+
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            {
+                var moles = _moles[i];
+                var molesArchived = _molesArchived[i];
+                hashCode.Add(moles);
+                hashCode.Add(molesArchived);
+            }
+
+            hashCode.Add(_temperature);
+            hashCode.Add(TemperatureArchived);
+            hashCode.Add(Immutable);
+            hashCode.Add(LastShare);
+            hashCode.Add(Volume);
+
+            return hashCode.ToHashCode();
         }
 
         public object Clone()
