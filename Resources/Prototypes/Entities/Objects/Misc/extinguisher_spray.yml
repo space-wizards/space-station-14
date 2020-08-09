@@ -1,0 +1,27 @@
+﻿- type: entity
+  name: Extinguisher Spray
+  parent: BaseItem
+  id: ExtinguisherSpray
+  description: Extinguisher Spray
+  components:
+    - type: Sprite
+      sprite: Effects/extinguisherSpray.rsi
+      layers:
+        - state: extinguish
+    - type: Icon
+      sprite: Effects/extinguisherSpray.rsi
+      state: extinguish
+    - type: Item
+      sprite: Effects/extinguisherSpray.rsi
+      HeldPrefix: off
+    - type: GasVapor
+    - type: Physics
+    - type: Collidable
+      shapes:
+      - !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
+        mask:
+        - Impassable
+    - type: Appearance
+      visuals:
+        - type: ExtinguisherVisualizer

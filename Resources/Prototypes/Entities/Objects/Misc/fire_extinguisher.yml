@@ -10,3 +10,5 @@
     texture: Objects/Misc/fire_extinguisher.png
   - type: Item
     size: 10
+  - type: GasHolder
+  - type: GasSprayer
