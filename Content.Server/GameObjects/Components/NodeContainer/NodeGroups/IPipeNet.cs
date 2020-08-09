@@ -46,15 +46,16 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _pipes.Add(node, pipe);
             pipe.JoinPipeNet(this);
             Air.Volume += pipe.Volume;
-            AssumeAir(pipe.Air);
-            pipe.Air.Clear();
+            AssumeAir(pipe.LocalAir);
+            pipe.LocalAir.Clear();
         }
 
         protected override void OnRemoveNode(Node node)
         {
             var pipe = _pipes[node];
-            pipe.LocalAir.Merge(Air);
-            pipe.Air.Multiply(pipe.Volume / Air.Volume);
+            var pipeAir = pipe.LocalAir;
+            pipeAir.Merge(Air);
+            pipeAir.Multiply(pipe.Volume / Air.Volume);
             _pipes.Remove(node);
         }
 
