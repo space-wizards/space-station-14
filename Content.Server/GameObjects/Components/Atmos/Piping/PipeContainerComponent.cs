@@ -40,14 +40,24 @@ namespace Content.Server.GameObjects.Components.Atmos
         ///     The gases in this pipe.
         /// </summary>
         [ViewVariables]
-        public GasMixture ContainedGas => _needsPipeNet ? Air : _pipeNet.Air;
+        public GasMixture Air
+        {
+            get => _needsPipeNet ? LocalAir : _pipeNet.Air;
+            set
+            {
+                if (_needsPipeNet)
+                    LocalAir = value;
+                else
+                    _pipeNet.Air = value;
+            }
+        }
 
         /// <summary>
         ///     Stores gas in this pipe when disconnected <see cref="IPipeNet"/>.
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
-        public GasMixture Air { get; set; }
+        public GasMixture LocalAir { get; set; }
 
         [ViewVariables]
         public float Volume { get; private set; }
@@ -69,10 +79,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Initialize()
         {
-            Air = new GasMixture(Volume);
+            LocalAir = new GasMixture(Volume);
 
             //debug way for some gas to start in pipes
-            Air.AdjustMoles(0, 1);
+            LocalAir.AdjustMoles(0, 1);
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)

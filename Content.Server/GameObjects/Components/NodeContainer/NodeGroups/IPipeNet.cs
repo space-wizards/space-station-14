@@ -5,7 +5,6 @@ using Content.Server.Interfaces;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 using System.Linq;
-using static Content.Server.GameObjects.Components.Atmos.PipeContainerComponent;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
@@ -54,7 +53,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected override void OnRemoveNode(Node node)
         {
             var pipe = _pipes[node];
-            pipe.AssumeAir(Air);
+            pipe.LocalAir.Merge(Air);
             pipe.Air.Multiply(pipe.Volume / Air.Volume);
             _pipes.Remove(node);
         }
