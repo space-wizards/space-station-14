@@ -53,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         /// <summary>
-        ///     Stores gas in this pipe when disconnected <see cref="IPipeNet"/>.
+        ///     Stores gas in this pipe when disconnected from a <see cref="IPipeNet"/>.
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
