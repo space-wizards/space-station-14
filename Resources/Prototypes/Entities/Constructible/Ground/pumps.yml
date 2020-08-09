@@ -26,11 +26,15 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Gas
+      nodeGroupID: Pipe
       pipeDirection: Up
     - !type:PipeNode
-      nodeGroupID: Gas
+      nodeGroupID: Pipe
       pipeDirection: Down
-  - type: Pump
+  - type: PipeContainer
+    pipes:
+    - pipeDirection: Up
+    - pipeDirection: Down
+  - type: DebugPump
     outletDirection: Up
     inletDirection: Down
