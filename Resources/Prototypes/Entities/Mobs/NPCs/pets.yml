@@ -64,6 +64,7 @@
   drawdepth: Mobs
   suffix: AI
   components:
+  - type: Damageable
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi

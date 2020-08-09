@@ -546,3 +546,43 @@
     - type: DamageStateVisualizer
       normal: penguin
       dead: penguin_dead
+
+- type: entity
+  save: false
+  name: big chungus
+  parent: MonkeyMob_Content
+  id: BigChungusMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: LoopingSound
+    sound: /Audio/Effects/chungus.ogg
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: chungster
+      sprite: Mobs/Animals/unusuallylargefunnyrabbit.rsi
+  - type: Icon
+    sprite: Mobs/Animals/unusuallylargefunnyrabbit.rsi
+    state: chungster
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.30,0.35,0.30"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: chungster
+      dead: dead
