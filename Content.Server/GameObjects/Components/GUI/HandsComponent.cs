@@ -219,10 +219,15 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            if (doMobChecks &&
-                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (doMobChecks)
             {
-                return false;
+                if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
+                    return false;
+            }
+            else
+            {
+                interactionSystem.DroppedInteraction(Owner, item.Owner);
             }
 
             item.RemovedFromSlot();
@@ -262,10 +267,15 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (doMobChecks &&
-                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (doMobChecks)
             {
-                return false;
+                if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
+                    return false;
+            }
+            else
+            {
+                interactionSystem.DroppedInteraction(Owner, item.Owner);
             }
 
             if (!hand.Container.Remove(hand.Entity))
@@ -325,9 +335,15 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (doMobChecks)
             {
-                return false;
+                if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
+                    return false;
+            }
+            else
+            {
+                interactionSystem.DroppedInteraction(Owner, item.Owner);
             }
 
             if (!hand.Container.CanRemove(hand.Entity))
