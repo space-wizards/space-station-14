@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class VaporSystem : EntitySystem
+    public class GasVaporSystem : EntitySystem
     {
         /// <inheritdoc />
         public override void Update(float frameTime)

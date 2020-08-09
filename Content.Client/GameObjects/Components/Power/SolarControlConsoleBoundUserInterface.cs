@@ -48,7 +48,7 @@ namespace Content.Client.GameObjects.Components.Power
                     SendMessage(msg);
                 }
             };
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
         }
 
         public SolarControlConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)

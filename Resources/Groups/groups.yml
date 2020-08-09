@@ -176,7 +176,9 @@
   - fillgas
   - listgases
   - removegas
+  - clearatmos
   - settemp
+  - setatmostemp
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

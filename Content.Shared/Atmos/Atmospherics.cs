@@ -63,6 +63,12 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
 
+        public const float OxygenStandard = 0.21f;
+        public const float NitrogenStandard = 0.79f;
+
+        public const float OxygenMolesStandard = MolesCellStandard * OxygenStandard;
+        public const float NitrogenMolesStandard = MolesCellStandard * NitrogenStandard;
+
         #endregion
 
         /// <summary>
@@ -143,8 +149,12 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 5;
+        public const int TotalNumberOfGases = 6;
 
+        /// <summary>
+        ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
+        /// </summary>
+        public const float FireHydrogenEnergyReleased = 560000f;
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
@@ -158,6 +168,52 @@ namespace Content.Shared.Atmos
         public const float PhoronUpperTemperature = (1370f+T0C);
         public const float PhoronOxygenFullburn = 10f;
         public const float PhoronBurnRateDelta = 9f;
+
+        /// <summary>
+        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
+        /// </summary>
+        public const float MinimumTritiumOxyburnEnergy = 2000000f;
+
+        public const float TritiumBurnOxyFactor = 100f;
+        public const float TritiumBurnTritFactor = 10f;
+
+        /// <summary>
+        ///     Determines at what pressure the ultra-high pressure red icon is displayed.
+        /// </summary>
+        public const float HazardHighPressure = 550f;
+
+        /// <summary>
+        ///     Determines when the orange pressure icon is displayed.
+        /// </summary>
+        public const float WarningHighPressure = 0.7f * HazardHighPressure;
+
+        /// <summary>
+        ///     Determines when the gray low pressure icon is displayed.
+        /// </summary>
+        public const float WarningLowPressure = 2.5f * HazardLowPressure;
+
+        /// <summary>
+        ///     Determines when the black ultra-low pressure icon is displayed.
+        /// </summary>
+        public const float HazardLowPressure = 20f;
+
+        /// <summary>
+        ///    The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT,
+        ///     with the maximum of MaxHighPressureDamage.
+        /// </summary>
+        public const float PressureDamageCoefficient = 4;
+
+        /// <summary>
+        ///     Maximum amount of damage that can be endured with high pressure.
+        /// </summary>
+        public const int MaxHighPressureDamage = 4;
+
+        /// <summary>
+        ///     The amount of damage someone takes when in a low pressure area
+        ///     (The pressure threshold is so low that it doesn't make sense to do any calculations,
+        ///     so it just applies this flat value).
+        /// </summary>
+        public const int LowPressureDamage = 4;
     }
 
     /// <summary>
@@ -170,5 +226,6 @@ namespace Content.Shared.Atmos
         CarbonDioxide = 2,
         Phoron = 3,
         Tritium = 4,
+        WaterVapor = 5,
     }
 }
