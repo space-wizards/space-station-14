@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.BodySystem;
-using Content.Server.GameObjects.Components.Fluids;
-using Content.Server.GameObjects.EntitySystems.Click;
+using System.Threading;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
@@ -12,14 +9,13 @@ using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -42,6 +38,8 @@ namespace Content.Server.GameObjects.Components.Items.RCD
         private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
         [ViewVariables(VVAccess.ReadWrite)] public int maxAmmo;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
+        [ViewVariables(VVAccess.ReadWrite)] private float _delay;
+        private DoAfterSystem doAfterSystem;
 
 
         ///Enum to store the different mode states for clarity.
@@ -58,16 +56,18 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             base.ExposeData(serializer);
 
             serializer.DataField(ref maxAmmo, "maxAmmo", 5);
+            serializer.DataField(ref _delay, "delay", 2f);
         }
 
         public override void Initialize()
         {
             base.Initialize();
             _ammo = maxAmmo;
+            doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         ///<summary>
-        /// Method called when the RCD is clicked in-hand, this will swap the RCD's mode from "floors" to "walls".
+        /// Method called when the RCD is clicked in-hand, this will cycle the RCD mode.
         ///</summary>
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
@@ -90,107 +90,59 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is now set to {this._mode} mode."); //Prints an overhead message above the RCD
         }
 
-        ///<summary>
-        ///Method called when the user examines this object, it'll simply add the mode that it's in to the object's description
-        ///@params message = The original message from examining, like ..() in BYOND's examine
-        ///</summary>
-
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("It's currently on {0} mode, and holds {1} charges.",_mode.ToString(), this._ammo));
         }
 
-        ///<summary>
-        /// Method to handle clicking on a tile to then appropriately RCD it. This can have several behaviours depending on mode.
-        /// @param eventAargs = An action event telling us what tile was clicked on. We use this to exrapolate where to place the new tile / remove the old one etc.
-        ///</summary>
-
-        public void AfterInteract(AfterInteractEventArgs   eventArgs) // TODO: do_after()
+        public async void AfterInteract(AfterInteractEventArgs   eventArgs)
         {
+            //No changing mode mid-RCD
+            var startingMode = _mode;
+
             var mapGrid = _mapManager.GetGrid(eventArgs.ClickLocation.GridID);
             var tile = mapGrid.GetTileRef(eventArgs.ClickLocation);
-            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
-            //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
-            if (_ammo <= 0)
-            {
-                _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is out of ammo!");
-                return;
-            }
-            if (coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
-            {
-                return;
-            }
-
             var snapPos = mapGrid.SnapGridCellFor(eventArgs.ClickLocation, SnapGridOffset.Center);
+
+            //Using an RCD isn't instantaneous
+            var cancelToken = new CancellationTokenSource();
+            var doAfterEventArgs = new DoAfterEventArgs(eventArgs.User, _delay, cancelToken.Token, eventArgs.Target)
+            {
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                NeedHand = true,
+                ExtraCheck = () => IsRCDStillValid(eventArgs, mapGrid, tile, snapPos, startingMode) //All of the sanity checks are here
+            };
+
+            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            if (result == DoAfterStatus.Cancelled)
+            {
+                return;
+            }
 
             switch (_mode)
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    if (!tile.Tile.IsEmpty)
-                    {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can only build a floor on space!");
-                        return;
-                    }
-
                     mapGrid.SetTile(eventArgs.ClickLocation, new Tile(_tileDefinitionManager["floor_steel"].TileId));
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
-                    if (tile.Tile.IsEmpty)
-                    {
-                        return;
-                    }
-
                     if (!tile.IsBlockedTurf(true)) //Delete the turf
                     {
                         mapGrid.SetTile(snapPos, Tile.Empty);
                     }
                     else //Delete what the user targeted
                     {
-                        //They tried to decon a turf but the turf is blocked
-                        if (eventArgs.Target == null)
-                        {
-                            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
-                            return;
-                        }
-
-                        if (!eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist rcd_decon))
-                        {
-                            _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can't deconstruct that!");
-                            return;
-                        }
-
                         eventArgs.Target.Delete();
                     }
                     break;
                 //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
                 case RcdMode.Walls:
-                    if (tile.Tile.IsEmpty)
-                    {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"Cannot build a wall on space!");
-                        return;
-                    }
-
-                    if (tile.IsBlockedTurf(true))
-                    {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
-                        return;
-                    }
                     var ent = _serverEntityManager.SpawnEntity("solid_wall", mapGrid.GridTileToLocal(snapPos));
                     ent.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
                     break;
                 case RcdMode.Airlock:
-                    if (tile.Tile.IsEmpty)
-                    {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"Cannot build an airlock on space!");
-                        return;
-                    }
-                    if (tile.IsBlockedTurf(true))
-                    {
-                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
-                        return;
-                    }
                     var airlock = _serverEntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     airlock.Transform.LocalRotation = Owner.Transform.LocalRotation; //Now apply icon smoothing.
                     break;
@@ -201,6 +153,89 @@ namespace Content.Server.GameObjects.Components.Items.RCD
             _entitySystemManager.GetEntitySystem<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", Owner);
             _ammo--;
 
+        }
+
+        private bool IsRCDStillValid(AfterInteractEventArgs eventArgs, IMapGrid mapGrid, TileRef tile, MapIndices snapPos, RcdMode startingMode)
+        {
+            //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
+            if (_ammo <= 0)
+            {
+                _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"The RCD is out of ammo!");
+                return false;
+            }
+
+            if (_mode != startingMode)
+            {
+                return false;
+            }
+
+            var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
+            if (coordinates == GridCoordinates.InvalidGrid || !InteractionChecks.InRangeUnobstructed(eventArgs))
+            {
+                return false;
+            }
+
+            switch (_mode)
+            {
+                //Floor mode just needs the tile to be a space tile (subFloor)
+                case RcdMode.Floors:
+                    if (!tile.Tile.IsEmpty)
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can only build a floor on space!");
+                        return false;
+                    }
+
+                    return true;
+                //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
+                case RcdMode.Deconstruct:
+                    if (tile.Tile.IsEmpty)
+                    {
+                        return false;
+                    }
+
+                    //They tried to decon a turf but the turf is blocked
+                    if (eventArgs.Target == null && tile.IsBlockedTurf(true))
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                        return false;
+                    }
+                    //They tried to decon a non-turf but it's not in the whitelist
+                    if (eventArgs.Target != null && !eventArgs.Target.TryGetComponent(out RCDDeconstructWhitelist rcd_decon))
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"You can't deconstruct that!");
+                        return false;
+                    }
+
+                    return true;
+                //Walls are a special behaviour, and require us to build a new object with a transform rather than setting a grid tile, thus we early return to avoid the tile set code.
+                case RcdMode.Walls:
+                    if (tile.Tile.IsEmpty)
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"Cannot build a wall on space!");
+                        return false;
+                    }
+
+                    if (tile.IsBlockedTurf(true))
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                        return false;
+                    }
+                    return true;
+                case RcdMode.Airlock:
+                    if (tile.Tile.IsEmpty)
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"Cannot build an airlock on space!");
+                        return false;
+                    }
+                    if (tile.IsBlockedTurf(true))
+                    {
+                        _serverNotifyManager.PopupMessage(Owner, eventArgs.User, $"That tile is obstructed!");
+                        return false;
+                    }
+                    return true;
+                default:
+                    return false; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
+            }
         }
     }
 }

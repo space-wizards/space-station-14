@@ -249,7 +249,7 @@
   name: RCD
   parent: BaseItem
   id: RCD
-  description: An advanced construction device which can place floors / walls down quickly.
+  description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
   - type: UseDelay
