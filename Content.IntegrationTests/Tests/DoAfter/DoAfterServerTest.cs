@@ -18,16 +18,15 @@ namespace Content.IntegrationTests.Tests.DoAfter
     public class DoAfterServerTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public async Task TestFinished()
         {
             Task<DoAfterStatus> task = null;
             var server = StartServerDummyTicker();
-            float tickTime = 0.0f;
 
             // That it finishes successfully
             server.Post(() =>
             {
-                tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
+                var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
                 var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -39,10 +38,17 @@ namespace Content.IntegrationTests.Tests.DoAfter
             
             await server.WaitRunTicks(1);
             Assert.That(task.Result == DoAfterStatus.Finished);
-            
-            // That cancel works on mob move
+        }
+
+        [Test]
+        public async Task TestCancelled()
+        {
+            Task<DoAfterStatus> task = null;
+            var server = StartServerDummyTicker();
+
             server.Post(() =>
             {
+                var tickTime = 1.0f / IoCManager.Resolve<IGameTiming>().TickRate;
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 mapManager.CreateNewMapEntity(MapId.Nullspace);
                 var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -50,11 +56,11 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime * 2, cancelToken.Token);
                 task = EntitySystem.Get<DoAfterSystem>().DoAfter(args);
-                mob.Transform.GridPosition = mob.Transform.GridPosition.Translated(new Vector2(0.1f, 0.1f));
+                cancelToken.Cancel();
             });
 
-            await server.WaitRunTicks(1);
-            Assert.That(task.Result == DoAfterStatus.Cancelled);
+            await server.WaitRunTicks(3);
+            Assert.That(task.Result == DoAfterStatus.Cancelled, $"Result was {task.Result}");
         }
     }
 }
