@@ -156,7 +156,7 @@
             "DamageOnHighSpeedImpact",
             "Barotrauma",
             "PipeContainer",
-            "Pump",
+            "DebugPump",
         };
     }
 }
