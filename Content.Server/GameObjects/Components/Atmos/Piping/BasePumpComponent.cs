@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
-    [RegisterComponent]
     public abstract class BasePumpComponent : Component
     {
         [ViewVariables]
@@ -43,15 +42,5 @@ namespace Content.Server.GameObjects.Components.Atmos
         }
 
         protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas, float frameTime);
-    }
-
-    public class DebugPumpComponent : BasePumpComponent
-    {
-        public override string Name => "DebugPump";
-
-        protected override void PumpGas(GasMixture inletGas, GasMixture outletGas, float frameTime)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
