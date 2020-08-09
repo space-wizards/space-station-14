@@ -1,6 +1,7 @@
 ﻿- type: entity
   abstract: true
   id: WireBase
+  description: A flexible superconducting cable for heavy-duty power transfer
   placement:
     mode: SnapgridCenter
   components:
@@ -18,8 +19,6 @@
   - type: Destructible
     thresholdvalue: 100
   - type: SubFloorHide
-  - type: Physics
-    anchored: true
 
 - type: entity
   parent: WireBase

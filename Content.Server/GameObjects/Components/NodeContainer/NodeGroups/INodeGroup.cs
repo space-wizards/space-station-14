@@ -2,7 +2,6 @@
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
