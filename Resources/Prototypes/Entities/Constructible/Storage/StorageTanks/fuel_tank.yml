@@ -9,7 +9,7 @@
   - type: Icon
     texture: Constructible/Misc/weldtank.png
   - type: Explosive
-    devastationRange: 0
+    devastationRange: 5
     heavyImpactRange: 2
     lightImpactRange: 6
     flashRange: 5
