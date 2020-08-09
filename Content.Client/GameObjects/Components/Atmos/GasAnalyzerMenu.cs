@@ -178,14 +178,14 @@ namespace Content.Client.GameObjects.Components.Atmos
                 });
                 return;
             }
-            
+
             _statusContainer.AddChild(new Label
             {
                 Text = Loc.GetString("Pressure: {0:0.##} kPa", state.Pressure)
             });
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Pressure, TemperatureHelpers.KelvinToCelsius(state.Pressure))
+                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Temperature, TemperatureHelpers.KelvinToCelsius(state.Temperature))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
             if (state.Gases.Length == 0)
