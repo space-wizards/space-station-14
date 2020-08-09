@@ -55,7 +55,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 newGroup.CombineGroup(this);
                 return;
             }
-            OnGivingNodesForRemake();
+            OnGivingNodesForCombine(newGroup);
             foreach (var node in Nodes)
             {
                 node.NodeGroup = newGroup;
@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         
         protected virtual void OnRemoveNode(Node node) { }
 
-        protected virtual void OnGivingNodesForRemake() { }
+        protected virtual void OnGivingNodesForCombine(INodeGroup newGroup) { }
 
         protected virtual void AfterRemake(IEnumerable<INodeGroup> newGroups) { }
 

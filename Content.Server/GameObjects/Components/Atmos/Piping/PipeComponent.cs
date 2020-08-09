@@ -18,14 +18,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         public GasMixture ContainedGas => _needsPipeNet ? LocalGas : _pipeNet.ContainedGas;
 
         /// <summary>
-        ///     Stores gas in this pipe when not in an <see cref="IPipeNet"/>.
+        ///     Stores gas in this pipe when disconnected <see cref="IPipeNet"/>.
         ///     Only for usage by <see cref="IPipeNet"/>s.
         /// </summary>
         [ViewVariables]
         public GasMixture LocalGas { get; set; }
 
         [ViewVariables]
-        private float _volume;
+        public float Volume { get; private set; }
 
         [ViewVariables]
         private IPipeNet _pipeNet = PipeNet.NullNet;
@@ -36,15 +36,15 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _volume, "volume", 10);
+            serializer.DataField(this, x => Volume, "volume", 10);
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            LocalGas = new GasMixture(_volume);
+            LocalGas = new GasMixture(Volume);
 
-            //debug
+            //debug way for some gas to start in pipes
             LocalGas.AdjustMoles(0, 1);
         }
 

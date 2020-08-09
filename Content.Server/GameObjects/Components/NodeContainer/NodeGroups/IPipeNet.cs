@@ -18,7 +18,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public GasMixture ContainedGas { get; private set; } = new GasMixture();
 
         [ViewVariables]
-        private readonly List<PipeComponent> _pipes = new List<PipeComponent>();
+        private readonly Dictionary<Node, PipeComponent> _pipes = new Dictionary<Node, PipeComponent>();
 
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
@@ -26,9 +26,9 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             if (node.Owner.TryGetComponent<PipeComponent>(out var pipe))
             {
-                _pipes.Add(pipe);
+                _pipes.Add(node, pipe);
                 pipe.JoinPipeNet(this);
-                ContainedGas.Volume += pipe.LocalGas.Volume;
+                ContainedGas.Volume += pipe.Volume;
                 ContainedGas.Merge(pipe.LocalGas);
                 pipe.LocalGas.Clear();
             }
@@ -36,23 +36,31 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnRemoveNode(Node node)
         {
-            foreach (var pipe in _pipes)
-            {
-                pipe.ClearPipeNet();
-                pipe.LocalGas.Merge(ContainedGas);
-                pipe.LocalGas.Multiply(pipe.LocalGas.Volume / ContainedGas.Volume);
-            }
+            var pipe = _pipes[node];
+            var pipeGas = pipe.LocalGas;
+
+            pipeGas.Merge(ContainedGas);
+            pipeGas.Multiply(pipe.Volume / ContainedGas.Volume);
+            _pipes.Remove(node);
+        }
+
+        protected override void OnGivingNodesForCombine(INodeGroup newGroup)
+        {
+            var newPipeNet = (IPipeNet) newGroup;
+            var newPipeNetGas = newPipeNet.ContainedGas;
+
+            newPipeNetGas.Merge(ContainedGas);
             ContainedGas.Clear();
         }
 
-        protected override void OnGivingNodesForRemake()
+        protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
         {
-            foreach (var pipe in _pipes)
+            foreach (IPipeNet newPipeNet in newGroups)
             {
-                pipe.LocalGas.Merge(ContainedGas);
-                pipe.LocalGas.Multiply(pipe.LocalGas.Volume / ContainedGas.Volume);
+                var newPipeNetGas = newPipeNet.ContainedGas;
+                newPipeNetGas.Merge(ContainedGas);
+                newPipeNetGas.Multiply(newPipeNetGas.Volume / ContainedGas.Volume);
             }
-            ContainedGas.Clear();
         }
 
         private class NullPipeNet : IPipeNet
