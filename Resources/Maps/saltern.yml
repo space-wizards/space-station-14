@@ -319,6 +319,8 @@ entities:
     type: Collidable
 - uid: 15
   components:
+  - type: MetaData
+    name: Saltern Station
   - parent: null
     type: Transform
   - index: 0
