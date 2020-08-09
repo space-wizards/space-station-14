@@ -4,10 +4,7 @@ using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Utility;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -15,15 +12,13 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Utility;
-using System;
+using Robust.Shared.Maths;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     [RegisterComponent]
-    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped
+    public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
 #pragma warning disable 649
         [Dependency] private IServerNotifyManager _notifyManager = default!;
@@ -32,7 +27,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         private BoundUserInterface _userInterface = default!;
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;
-        private const float TimeBetweenSyncs = 10f;
+        private const float TimeBetweenSyncs = 2f;
+        private bool _checkPlayer = false; // Check at the player pos or at some other tile?
+        private Vector2 _offset; // The direction in which you're holding the analyzer
 
         public override void Initialize()
         {
@@ -69,6 +66,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (_timeSinceSync > TimeBetweenSyncs)
             {
                 Resync();
+                UpdateUserInterface();
             }
         }
 
@@ -103,9 +101,31 @@ namespace Content.Server.GameObjects.Components.Atmos
         private void UpdateUserInterface()
         {
             string? error = null;
-            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
 
-            var tile = gam?.GetTile(Owner.Transform.GridPosition).Air;
+            // Check if the player is still holding the gas analyzer => if not, don't update
+            foreach (var session in _userInterface.SubscribedSessions)
+            {
+                if (session.AttachedEntity == null)
+                    return;
+
+                if (!session.AttachedEntity.TryGetComponent(out IHandsComponent handsComponent))
+                    return;
+
+                var activeHandEntity = handsComponent?.GetActiveHand?.Owner;
+                if (activeHandEntity == null || !activeHandEntity.TryGetComponent(out GasAnalyzerComponent gasAnalyzer))
+                {
+                    return;
+                }
+            }
+
+            var pos = Owner.Transform.GridPosition;
+            if (!_checkPlayer)
+            {
+                pos.Offset(_offset);
+            }
+
+            var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
+            var tile = gam?.GetTile(pos).Air;
             if (tile == null)
             {
                 error = "No Atmosphere!";
@@ -172,12 +192,22 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         void IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            if (!eventArgs.CanReach)
+            {
+                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't reach there!"));
+                return;
+            }
+
             if (eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
+                _checkPlayer = false;
+                _offset = eventArgs.ClickLocation.Position - eventArgs.User.Transform.GridPosition.Position;
                 OpenInterface(actor.playerSession);
                 //TODO: show other sprite when ui open?
             }
         }
+
+
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
@@ -186,6 +216,18 @@ namespace Content.Server.GameObjects.Components.Atmos
                 CloseInterface(actor.playerSession);
                 //TODO: if other sprite is shown, change again
             }
+        }
+
+        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
+        {
+            if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+            {
+                _checkPlayer = true;
+                OpenInterface(actor.playerSession);
+                //TODO: show other sprite when ui open?
+                return true;
+            }
+            return false;
         }
     }
 }
