@@ -21,6 +21,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override string Name => "Airtight";
 
         private bool _airBlocked = true;
+        private bool _fixVacuum = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool AirBlocked
@@ -33,11 +34,15 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+        [ViewVariables]
+        public bool FixVacuum => _fixVacuum;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
 
             serializer.DataField(ref _airBlocked, "airBlocked", true);
+            serializer.DataField(ref _fixVacuum, "fixVacuum", false);
         }
 
         public override void Initialize()

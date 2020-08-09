@@ -165,6 +165,26 @@ namespace Content.Server.GameObjects.Components.Atmos
                 }
                 else
                 {
+                    var obs = GetObstructingComponent(indices);
+
+                    if (obs != null)
+                    {
+                        if (tile.Air == null && obs.FixVacuum)
+                        {
+                            var adjacent = GetAdjacentTiles(indices);
+                            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+
+                            var ratio = 1f / adjacent.Count;
+
+                            foreach (var (direction, adj) in adjacent)
+                            {
+                                var mix = adj.Air.RemoveRatio(ratio);
+                                tile.Air.Merge(mix);
+                                adj.Air.Merge(mix);
+                            }
+                        }
+                    }
+
                     tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
                 }
 
@@ -289,7 +309,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             foreach (var dir in Cardinal())
             {
                 var side = indices.Offset(dir);
-                sides[dir] = GetTile(side);
+                var tile = GetTile(side);
+                if(tile?.Air != null)
+                    sides[dir] = tile;
             }
 
             return sides;
