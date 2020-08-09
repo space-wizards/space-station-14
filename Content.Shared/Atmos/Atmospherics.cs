@@ -63,6 +63,12 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
 
+        public const float OxygenStandard = 0.21f;
+        public const float NitrogenStandard = 0.79f;
+
+        public const float OxygenMolesStandard = MolesCellStandard * OxygenStandard;
+        public const float NitrogenMolesStandard = MolesCellStandard * NitrogenStandard;
+
         #endregion
 
         /// <summary>

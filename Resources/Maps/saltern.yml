@@ -332,8 +332,8 @@ entities:
   - uniqueMixes:
     - volume: 2500
       moles:
-      - 20
-      - 80
+      - 21.824879
+      - 82.103120
       - 0
       - 0
       - 0
