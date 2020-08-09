@@ -1,26 +1,34 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.Interfaces;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
+using System.Transactions;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
-    public interface IPipeNet
+    public interface IPipeNet : IGasMixtureHolder
     {
-        GasMixture ContainedGas { get; }
+
     }
 
     [NodeGroup(NodeGroupID.Pipe)]
     public class PipeNet : BaseNodeGroup, IPipeNet
     {
         [ViewVariables]
-        public GasMixture ContainedGas { get; private set; } = new GasMixture();
+        public GasMixture Air { get; set; } = new GasMixture();
+
+        public static readonly IPipeNet NullNet = new NullPipeNet();
 
         [ViewVariables]
         private readonly Dictionary<Node, PipeComponent> _pipes = new Dictionary<Node, PipeComponent>();
 
-        public static readonly IPipeNet NullNet = new NullPipeNet();
+        public bool AssumeAir(GasMixture giver)
+        {
+            Air.Merge(giver);
+            return true;
+        }
 
         protected override void OnAddNode(Node node)
         {
@@ -28,44 +36,45 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             {
                 _pipes.Add(node, pipe);
                 pipe.JoinPipeNet(this);
-                ContainedGas.Volume += pipe.Volume;
-                ContainedGas.Merge(pipe.LocalGas);
-                pipe.LocalGas.Clear();
+                Air.Volume += pipe.Volume;
+                AssumeAir(pipe.Air);
+                pipe.Air.Clear();
             }
         }
 
         protected override void OnRemoveNode(Node node)
         {
             var pipe = _pipes[node];
-            var pipeGas = pipe.LocalGas;
-
-            pipeGas.Merge(ContainedGas);
-            pipeGas.Multiply(pipe.Volume / ContainedGas.Volume);
+            pipe.AssumeAir(Air);
+            pipe.Air.Multiply(pipe.Volume / Air.Volume);
             _pipes.Remove(node);
         }
 
         protected override void OnGivingNodesForCombine(INodeGroup newGroup)
         {
             var newPipeNet = (IPipeNet) newGroup;
-            var newPipeNetGas = newPipeNet.ContainedGas;
-
-            newPipeNetGas.Merge(ContainedGas);
-            ContainedGas.Clear();
+            newPipeNet.AssumeAir(Air);
+            Air.Clear();
         }
 
         protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
         {
             foreach (IPipeNet newPipeNet in newGroups)
             {
-                var newPipeNetGas = newPipeNet.ContainedGas;
-                newPipeNetGas.Merge(ContainedGas);
-                newPipeNetGas.Multiply(newPipeNetGas.Volume / ContainedGas.Volume);
+                newPipeNet.AssumeAir(Air);
+                var newPipeNetGas = newPipeNet.Air;
+                newPipeNetGas.Multiply(newPipeNetGas.Volume / Air.Volume);
             }
         }
 
         private class NullPipeNet : IPipeNet
         {
-            public GasMixture ContainedGas => new GasMixture();
+            GasMixture IGasMixtureHolder.Air { get; set; } = new GasMixture();
+
+            public bool AssumeAir(GasMixture giver)
+            {
+                return false;
+            }
         }
     }
 }
