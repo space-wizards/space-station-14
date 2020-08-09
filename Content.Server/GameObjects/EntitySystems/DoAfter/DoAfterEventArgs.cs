@@ -33,25 +33,25 @@ namespace Content.Server.GameObjects.EntitySystems
         ///     Whether we need to keep our active hand as is (i.e. can't change hand or change item).
         ///     This also covers requiring the hand to be free (if applicable).
         /// </summary>
-        public readonly bool NeedHand;
+        public bool NeedHand { get; set; }
 
         /// <summary>
         ///     If do_after stops when the user moves
         /// </summary>
-        public readonly bool BreakOnUserMove;
+        public bool BreakOnUserMove { get; set; }
 
         /// <summary>
         ///     If do_after stops when the target moves (if there is a target)
         /// </summary>
-        public readonly bool BreakOnTargetMove;
+        public bool BreakOnTargetMove { get; set; }
 
-        public readonly bool BreakOnDamage;
-        public readonly bool BreakOnStun;
+        public bool BreakOnDamage { get; set; }
+        public bool BreakOnStun { get; set; }
 
         /// <summary>
         ///     Additional conditions that need to be met. Return false to cancel.
         /// </summary>
-        public readonly Func<bool>? ExtraCheck;
+        public Func<bool>? ExtraCheck { get; set; }
 
         public DoAfterEventArgs(
             IEntity user,
