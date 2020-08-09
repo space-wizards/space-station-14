@@ -38,7 +38,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Update(float frameTime)
         {
-            PumpGas(_inletPipe.ContainedGas, _outletPipe.ContainedGas, frameTime);
+            PumpGas(_inletPipe.Air, _outletPipe.Air, frameTime);
         }
 
         protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas, float frameTime);
