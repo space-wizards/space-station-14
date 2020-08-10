@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
-        private GridCoordinates _position; // The tile that we scanned
+        private GridCoordinates? _position; // The tile that we scanned
 
         public override void Initialize()
         {
@@ -51,9 +51,28 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <summary>
         /// Call this from other components to open the gas analyzer UI.
+        /// Uses the player position.
         /// </summary>
+        /// <param name="session">The session to open the ui for</param>
         public void OpenInterface(IPlayerSession session)
         {
+            _checkPlayer = true;
+            _position = null;
+            _userInterface.Open(session);
+            UpdateUserInterface();
+            Resync();
+        }
+
+        /// <summary>
+        /// Call this from other components to open the gas analyzer UI.
+        /// Uses a given position.
+        /// </summary>
+        /// <param name="session">The session to open the ui for</param>
+        /// <param name="pos">The position to analyze the gas</param>
+        public void OpenInterface(IPlayerSession session, GridCoordinates pos)
+        {
+            _checkPlayer = false;
+            _position = pos;
             _userInterface.Open(session);
             UpdateUserInterface();
             Resync();
@@ -61,6 +80,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void CloseInterface(IPlayerSession session)
         {
+            _position = null;
             _userInterface.Close(session);
             Resync();
         }
@@ -124,13 +144,13 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             var pos = Owner.Transform.GridPosition;
-            if (!_checkPlayer)
+            if (!_checkPlayer && _position.HasValue)
             {
                 // Check if position is out of range => don't update
-                if (!_position.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
+                if (!_position.Value.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
                     return;
                 
-                pos = _position;
+                pos = _position.Value;
             }
 
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
@@ -209,9 +229,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
-                _checkPlayer = false;
-                _position = eventArgs.ClickLocation;
-                OpenInterface(actor.playerSession);
+                OpenInterface(actor.playerSession, eventArgs.ClickLocation);
                 //TODO: show other sprite when ui open?
             }
         }
@@ -231,7 +249,6 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
-                _checkPlayer = true;
                 OpenInterface(actor.playerSession);
                 //TODO: show other sprite when ui open?
                 return true;
