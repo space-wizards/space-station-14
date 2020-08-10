@@ -219,11 +219,16 @@ namespace Content.Client.UserInterface
                         Text = control.Name,
                         CustomMinimumSize = (100, 0)
                     };
+                    var divider = new Control
+                    {
+                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                    };
                     var hbox = new HBoxContainer
                     {
                         Children =
                         {
                             label,
+                            divider,
                             control.GetControl()
                         },
                     };
