@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             var tile = gridAtmos.GetTile(gridPosition);
             if (tile == null)
                 return;
-            ScrubGas(_scrubberOutlet.Air, tile.Air, frameTime);
+            ScrubGas(tile.Air, _scrubberOutlet.Air, frameTime);
         }
 
         protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas, float frameTime);
