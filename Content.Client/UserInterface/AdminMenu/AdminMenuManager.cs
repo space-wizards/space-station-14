@@ -15,6 +15,12 @@ namespace Content.Client.UserInterface.AdminMenu
             _window = new AdminMenuWindow();
         }
 
+        public void OpenCommand(SS14Window window)
+        {
+            _commandWindow = window;
+            _commandWindow.OpenCentered();
+        }
+
         public void Open()
         {
             //TODO: remove dis
@@ -33,5 +39,6 @@ namespace Content.Client.UserInterface.AdminMenu
     {
         void Initialize();
         void Open(); //TODO: remove this and import the pressed action (from IGameHud or somewhere else)
+        void OpenCommand(SS14Window window);
     }
 }
