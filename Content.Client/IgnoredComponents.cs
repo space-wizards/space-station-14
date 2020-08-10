@@ -157,6 +157,8 @@
             "Barotrauma",
             "PipeContainer",
             "DebugPump",
+            "DebugVent",
+            "DebugScrubber",
         };
     }
 }
