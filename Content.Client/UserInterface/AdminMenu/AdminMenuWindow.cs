@@ -85,9 +85,8 @@ namespace Content.Client.UserInterface
 
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
-                new CommandUIControl
+                new CommandUIDropDown
                 {
-                    Type = CommandUIControlType.DropDown,
                     Name = "Player",
                     Data = new List<string> //TODO: get all players
                     {
@@ -95,9 +94,8 @@ namespace Content.Client.UserInterface
                         "PJB"
                     }
                 },
-                new CommandUIControl
+                new CommandUILineEdit
                 {
-                    Type = CommandUIControlType.LineEdit,
                     Name = "Reason",
                     Optional = true
                 }
@@ -115,9 +113,8 @@ namespace Content.Client.UserInterface
 
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
-                new CommandUIControl
+                new CommandUIDropDown
                 {
-                    Type = CommandUIControlType.DropDown,
                     Name = "DropDown",
                     Data = new List<string> //TODO: get all players
                     {
@@ -125,19 +122,16 @@ namespace Content.Client.UserInterface
                         "2"
                     }
                 },
-                new CommandUIControl
+                new CommandUILineEdit
                 {
-                    Type = CommandUIControlType.LineEdit,
                     Name = "LineEdit"
                 },
-                new CommandUIControl
+                new CommandUICheckBox
                 {
-                    Type = CommandUIControlType.Checkbox,
                     Name = "CheckBox"
                 },
-                new CommandUIControl
+                new CommandUILineEdit
                 {
-                    Type = CommandUIControlType.LineEdit,
                     Name = "Optional",
                     Optional = true
                 },
@@ -149,20 +143,24 @@ namespace Content.Client.UserInterface
             }
         }
 
-
-        enum CommandUIControlType
-        {
-            LineEdit,
-            DropDown,
-            Checkbox
-        }
-        private class CommandUIControl
+        //do we really need this? can't we just give the control to the poor window?
+        private abstract class CommandUIControl
         {
             public string Name;
-            public CommandUIControlType Type;
             public bool Optional = false;
-            public List<string> Data;
             public Control? Control;
+        }
+        private class CommandUIDropDown : CommandUIControl
+        {
+            public List<string> Data;
+        }
+        private class CommandUICheckBox : CommandUIControl
+        {
+
+        }
+        private class CommandUILineEdit : CommandUIControl
+        {
+
         }
 
         private class CommandWindow : SS14Window
@@ -184,11 +182,11 @@ namespace Content.Client.UserInterface
                         Text = control.Name,
                         CustomMinimumSize = (100, 0)
                     };
-                    Control con = control.Type switch
+                    Control con = control switch
                     {
-                        CommandUIControlType.LineEdit => new LineEdit { CustomMinimumSize = (100, 0) },
-                        CommandUIControlType.DropDown => new OptionButton { CustomMinimumSize = (100, 0) },
-                        CommandUIControlType.Checkbox => new CheckBox { },
+                        CommandUILineEdit line => new LineEdit { CustomMinimumSize = (100, 0) },
+                        CommandUIDropDown dropdown => new OptionButton { CustomMinimumSize = (100, 0) },
+                        CommandUICheckBox check => new CheckBox { },
                         _ => throw new NotImplementedException(),
                     };
                     var hbox = new HBoxContainer
@@ -201,9 +199,9 @@ namespace Content.Client.UserInterface
                     };
 
                     // Add Items to Dropdown
-                    if (con is OptionButton opt)
+                    if (con is OptionButton opt && control is CommandUIDropDown drop)
                     {
-                        foreach (var data in control.Data)
+                        foreach (var data in drop.Data)
                             opt.AddItem(data);
 
                         opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
@@ -229,7 +227,7 @@ namespace Content.Client.UserInterface
                 {
                     LineEdit line => line.Text,
                     CheckBox check => check.Pressed ? "1" : "0",
-                    OptionButton opt => control.Data[opt.SelectedId],
+                    OptionButton opt => ((CommandUIDropDown)control).Data[opt.SelectedId],
                     _ => string.Empty
                 };
             }
