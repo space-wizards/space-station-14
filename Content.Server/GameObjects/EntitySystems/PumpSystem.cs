@@ -3,14 +3,20 @@ using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class PumpSystem : EntitySystem
+    /// <summary>
+    /// Placeholder for updating pipenet stuff
+    /// </summary>
+    public sealed class PumpSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
-            base.Update(frameTime);
             foreach (var pump in ComponentManager.EntityQuery<BasePumpComponent>())
             {
                 pump.Update(frameTime);
+            }
+            foreach (var vent in ComponentManager.EntityQuery<BaseVentComponent>())
+            {
+                vent.Update(frameTime);
             }
         }
     }

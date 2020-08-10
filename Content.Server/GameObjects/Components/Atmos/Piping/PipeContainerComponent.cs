@@ -82,7 +82,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             LocalAir = new GasMixture(Volume);
 
             //debug way for some gas to start in pipes
-            LocalAir.AdjustMoles(0, 1);
+            LocalAir.AdjustMoles(0, 1000);
+            LocalAir.Temperature = 500;
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
