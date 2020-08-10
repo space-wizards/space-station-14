@@ -737,10 +737,10 @@
   - type: Sprite
     drawdepth: WallTops
     sprite: Constructible/Misc/decals.rsi
-    state: atmos_plasma
+    state: atmos_phoron
   - type: Icon
     sprite: Constructible/Misc/decals.rsi
-    state: atmos_plasma
+    state: atmos_phoron
 
 - type: entity
   id: PlaqueWaste
