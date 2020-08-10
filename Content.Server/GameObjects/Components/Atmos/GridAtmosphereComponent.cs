@@ -13,7 +13,6 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -122,8 +121,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void RepopulateTiles()
         {
-            _tiles.Clear();
-
             foreach (var tile in _grid.GetAllTiles())
             {
                 if(!_tiles.ContainsKey(tile.GridIndices))
@@ -160,19 +157,40 @@ namespace Content.Server.GameObjects.Components.Atmos
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
+
                 } else if (IsAirBlocked(indices))
                 {
                     tile.Air = null;
                 }
                 else
                 {
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1));
+                    var obs = GetObstructingComponent(indices);
+
+                    if (obs != null)
+                    {
+                        if (tile.Air == null && obs.FixVacuum)
+                        {
+                            var adjacent = GetAdjacentTiles(indices);
+                            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+
+                            var ratio = 1f / adjacent.Count;
+
+                            foreach (var (direction, adj) in adjacent)
+                            {
+                                var mix = adj.Air.RemoveRatio(ratio);
+                                tile.Air.Merge(mix);
+                                adj.Air.Merge(mix);
+                            }
+                        }
+                    }
+
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
                 }
 
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
-                foreach (var direction in Cardinal())
+                foreach (var direction in Cardinal)
                 {
                     var otherIndices = indices.Offset(direction);
                     var otherTile = GetTile(otherIndices);
@@ -287,10 +305,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices)
         {
             var sides = new Dictionary<Direction, TileAtmosphere>();
-            foreach (var dir in Cardinal())
+            foreach (var dir in Cardinal)
             {
                 var side = indices.Offset(dir);
-                sides[dir] = GetTile(side);
+                var tile = GetTile(side);
+                if(tile?.Air != null)
+                    sides[dir] = tile;
             }
 
             return sides;
@@ -328,20 +348,20 @@ namespace Content.Server.GameObjects.Components.Atmos
                     _state = ProcessState.ActiveTiles;
                     return;
                 case ProcessState.ActiveTiles:
-                    if(ProcessActiveTiles())
-                        _state = ProcessState.ExcitedGroups;
+                    ProcessActiveTiles();
+                    _state = ProcessState.ExcitedGroups;
                     return;
                 case ProcessState.ExcitedGroups:
-                    if(ProcessExcitedGroups())
-                        _state = ProcessState.HighPressureDelta;
+                    ProcessExcitedGroups();
+                    _state = ProcessState.HighPressureDelta;
                     return;
                 case ProcessState.HighPressureDelta:
                     ProcessHighPressureDelta();
                     _state = ProcessState.Hotspots;
                     break;
                 case ProcessState.Hotspots:
-                    if(ProcessHotspots())
-                        _state = ProcessState.TileEqualize;
+                    ProcessHotspots();
+                    _state = ProcessState.TileEqualize;
                     break;
             }
 
@@ -363,11 +383,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
-
-            return;
         }
 
-        public bool ProcessActiveTiles()
+        public void ProcessActiveTiles()
         {
             _stopwatch.Restart();
 
@@ -380,13 +398,11 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return false;
+                    return;
             }
-
-            return true;
         }
 
-        public bool ProcessExcitedGroups()
+        public void ProcessExcitedGroups()
         {
             _stopwatch.Restart();
 
@@ -406,10 +422,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return false;
+                    return;
             }
-
-            return true;
         }
 
         public void ProcessHighPressureDelta()
@@ -430,11 +444,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
-
-            return;
         }
 
-        private bool ProcessHotspots()
+        private void ProcessHotspots()
         {
             _stopwatch.Restart();
 
@@ -447,10 +459,8 @@ namespace Content.Server.GameObjects.Components.Atmos
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
-                    return false;
+                    return;
             }
-
-            return true;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
@@ -464,8 +474,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             return null;
         }
 
-        private static IEnumerable<Direction> Cardinal() =>
-            new[]
+        private static readonly Direction[] Cardinal =
+            new []
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
@@ -485,6 +495,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture> uniqueMixes) ||
                     !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int> tiles))
                     return;
+
+                _tiles.Clear();
+
                 foreach (var (indices, mix) in tiles)
                 {
                     _tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes[mix].Clone()));
@@ -493,12 +506,22 @@ namespace Content.Server.GameObjects.Components.Atmos
             } else if (serializer.Writing)
             {
                 var uniqueMixes = new List<GasMixture>();
+                var uniqueMixHash = new Dictionary<GasMixture, int>();
                 var tiles = new Dictionary<MapIndices, int>();
                 foreach (var (indices, tile) in _tiles)
                 {
                     if (tile.Air == null) continue;
+
+                    if (uniqueMixHash.TryGetValue(tile.Air, out var index))
+                    {
+                        tiles[indices] = index;
+                        continue;
+                    }
+
                     uniqueMixes.Add(tile.Air);
-                    tiles[indices] = uniqueMixes.Count - 1;
+                    var newIndex = uniqueMixes.Count - 1;
+                    uniqueMixHash[tile.Air] = newIndex;
+                    tiles[indices] = newIndex;
                 }
 
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());
