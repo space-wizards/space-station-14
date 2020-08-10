@@ -18,6 +18,10 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 vent.Update(frameTime);
             }
+            foreach (var scrubber in ComponentManager.EntityQuery<BaseScrubberComponent>())
+            {
+                scrubber.Update(frameTime);
+            }
         }
     }
 }
