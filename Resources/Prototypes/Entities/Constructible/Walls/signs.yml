@@ -1,0 +1,715 @@
+# These signs would not have collision otherwise, they simply
+# need collision in order for them to be destructible. Once the
+# SmallImpassable etc. stuff actually gets implemented in this
+# shitheap of a videogame bother swept to go back and fix these.
+
+- type: entity
+  id: PaintingMonkey
+  name: monkey painting
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: monkey_painting
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: monkey_painting
+
+# Directional Station Guide Signs
+
+- type: entity
+  id: SignDirectionalSec
+  name: sec sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_sec
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_sec
+
+- type: entity
+  id: SignDirectionalEvac
+  name: evac sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_evac
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_evac
+
+- type: entity
+  id: SignDirectionalBridge
+  name: bridge sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_bridge
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_bridge
+
+- type: entity
+  id: SignDirectionalMed
+  name: medical sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_med
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_med
+
+# Regular Signs
+
+- type: entity
+  id: SignArmory
+  name: armory sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: armory
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: armory
+
+- type: entity
+  id: SignCargo
+  name: cargo sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: cargo
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: cargo
+
+- type: entity
+  id: SignCargoDock
+  name: cargo dock sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: cargo_dock
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: cargo_dock
+
+- type: entity
+  id: SignChem
+  name: chemistry sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: chem
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: chem
+
+- type: entity
+  id: SignShipDock
+  name: dock sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: dock
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: dock
+
+- type: entity
+  id: SignEngineering
+  name: engineering sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: eng
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: eng
+
+- type: entity
+  id: SignEVA
+  name: eva sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: eva
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: eva
+
+- type: entity
+  id: SignGravity
+  name: gravity sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: gravi
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: gravi
+
+- type: entity
+  id: SignMedical
+  name: medbay sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: medbay
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: medbay
+
+- type: entity
+  id: SignMorgue
+  name: morgue sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: morgue
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: morgue
+
+- type: entity
+  id: SignPriso
+  name: prison sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: prison
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: prison
+
+- type: entity
+  id: SignRND
+  name: rnd sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: rnd
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: rnd
+
+- type: entity
+  id: SignScience
+  name: science sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: sci
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: sci
+
+- type: entity
+  id: SignToxins
+  name: toxins sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: toxins
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: toxins
+
+- type: entity
+  id: SignBridge
+  name: bridge sign
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: bridge
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: bridge
+
+# Atmos plaques
+
+- type: entity
+  id: PlaqueAir
+  name: air plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_air
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_air
+
+- type: entity
+  id: PlaqueCO2
+  name: co2 plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_co2
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_co2
+
+- type: entity
+  id: PlaqueN2
+  name: n2 plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_n2
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_n2
+
+- type: entity
+  id: PlaqueN2O
+  name: n2o plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_n2o
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_n2o
+
+- type: entity
+  id: PlaqueO2
+  name: o2 plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_o2
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_o2
+
+- type: entity
+  id: PlaquePhoron
+  name: phoron plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_plasma
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_plasma
+
+- type: entity
+  id: PlaqueWaste
+  name: waste plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_waste
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmos_waste
+
+- type: entity
+  id: PlaqueZum
+  name: atmos plaque
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: atmosplaque
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: atmosplaque
