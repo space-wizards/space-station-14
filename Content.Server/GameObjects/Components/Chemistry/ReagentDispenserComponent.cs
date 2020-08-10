@@ -80,6 +80,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
 
             InitializeFromPrototype();
             UpdateUserInterface();
@@ -105,6 +106,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
+        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        {
+            UpdateUserInterface();
+        }
+
         /// <summary>
         /// Handles ui messages from the client. For things such as button presses
         /// which interact with the world and require server action.
@@ -112,10 +118,16 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
-            if(!PlayerCanUseDispenser(obj.Session.AttachedEntity))
+            var msg = (UiButtonPressedMessage) obj.Message;
+            var needsPower = msg.Button switch
+            {
+                UiButton.Eject => false,
+                _ => true,
+            };
+
+            if(!PlayerCanUseDispenser(obj.Session.AttachedEntity, needsPower))
                 return;
 
-            var msg = (UiButtonPressedMessage) obj.Message;
             switch (msg.Button)
             {
                 case UiButton.Eject:
@@ -161,7 +173,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the dispenser, and false if it cannot.</returns>
-        private bool PlayerCanUseDispenser(IEntity playerEntity)
+        private bool PlayerCanUseDispenser(IEntity playerEntity, bool needsPower = true)
         {
             //Need player entity to check if they are still able to use the dispenser
             if (playerEntity == null)
@@ -170,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (!ActionBlockerSystem.CanInteract(playerEntity) || !ActionBlockerSystem.CanUse(playerEntity))
                 return false;
             //Check if device is powered
-            if (!Powered)
+            if (needsPower && !Powered)
                 return false;
 
             return true;
@@ -185,12 +197,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var beaker = _beakerContainer.ContainedEntity;
             if (beaker == null)
             {
-                return new ReagentDispenserBoundUserInterfaceState(false, ReagentUnit.New(0), ReagentUnit.New(0),
+                return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Inventory, Owner.Name, null, _dispenseAmount);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
-            return new ReagentDispenserBoundUserInterfaceState(true, solution.CurrentVolume, solution.MaxVolume,
+            return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
                 beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 
@@ -262,9 +274,6 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     _localizationManager.GetString("You have no hands."));
                 return;
             }
-
-            if (!Powered)
-                return;
 
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)

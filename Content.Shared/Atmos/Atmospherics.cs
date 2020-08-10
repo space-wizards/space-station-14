@@ -59,9 +59,15 @@ namespace Content.Shared.Atmos
         public const float CellVolume = 2500f;
 
         /// <summary>
-        ///     Moles in a 2.5 m^3 cell at 101.325 Pa and 20ºC
+        ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        public const float OxygenStandard = 0.21f;
+        public const float NitrogenStandard = 0.79f;
+
+        public const float OxygenMolesStandard = MolesCellStandard * OxygenStandard;
+        public const float NitrogenMolesStandard = MolesCellStandard * NitrogenStandard;
 
         #endregion
 
