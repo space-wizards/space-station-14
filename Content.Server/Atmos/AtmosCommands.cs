@@ -302,7 +302,7 @@ namespace Content.Server.Atmos
             var moles = 0f;
             foreach (var tile in gam)
             {
-                if (tile.Air.Immutable) continue;
+                if (tile.Air == null || tile.Air.Immutable) continue;
                 tiles++;
                 moles += tile.Air.TotalMoles;
                 tile.Air.RemoveRatio(1f);
