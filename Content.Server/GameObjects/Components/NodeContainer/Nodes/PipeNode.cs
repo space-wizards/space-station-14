@@ -52,20 +52,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             switch (direction)
             {
                 case CardinalDirection.North:
-                    sameDir = PipeDirection.Up;
-                    oppDir = PipeDirection.Down;
+                    sameDir = PipeDirection.North;
+                    oppDir = PipeDirection.South;
                     break;
                 case CardinalDirection.South:
-                    sameDir = PipeDirection.Down;
-                    oppDir = PipeDirection.Up;
+                    sameDir = PipeDirection.South;
+                    oppDir = PipeDirection.North;
                     break;
                 case CardinalDirection.East:
-                    sameDir = PipeDirection.Right;
-                    oppDir = PipeDirection.Left;
+                    sameDir = PipeDirection.East;
+                    oppDir = PipeDirection.West;
                     break;
                 case CardinalDirection.West:
-                    sameDir = PipeDirection.Left;
-                    oppDir = PipeDirection.Right;
+                    sameDir = PipeDirection.West;
+                    oppDir = PipeDirection.East;
                     break;
                 default:
                     throw new ArgumentException("Invalid Direction.");
@@ -97,28 +97,30 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         None = 0,
 
         //Half of a pipe in a direction
-        Up = 1 << 0,
-        Down = 1 << 1,
-        Left = 1 << 2,
-        Right = 1 << 3,
+        North = 1 << 0,
+        South = 1 << 1,
+        West = 1 << 2,
+        East = 1 << 3,
 
         //Straight pipes
-        Vertical = Up | Down,
-        Horizontial = Left | Right,
+        Longitudinal = North | South,
+        Lateral = West | East,
 
         //Bends
-        ULBend = Up | Left,
-        URBend = Up | Right,
-        DLBend = Down | Left,
-        DRBend = Down | Right,
+        NWBend = North | West,
+        NEBend = North | East,
+        SWBend = South | West,
+        SEBend = South | East,
 
         //T-Junctions
-        TUp = Up | Horizontial,
-        TDown = Down | Horizontial,
-        TLeft = Left | Vertical,
-        TRight = Right | Vertical,
+        TNorth = North | Lateral,
+        TSouth = South | Lateral,
+        TWest = West | Longitudinal,
+        TEast = East | Longitudinal,
 
         //Four way
+        FourWay = North | South | East | West,
+
         All = -1,
     }
 }

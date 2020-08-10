@@ -18,23 +18,23 @@
 
 - type: entity
   parent: PumpBase
-  id: UpwardPipePump
-  name: Upward Pipe Pump
+  id: NorthFromSouthPipePump
+  name: North from south pipe pump
   components:
   - type: Sprite
     state: mvcable_3
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Up
+      nodeGroNorthID: Pipe
+      pipeDirection: North
     - !type:PipeNode
-      nodeGroupID: Pipe
-      pipeDirection: Down
+      nodeGroNorthID: Pipe
+      pipeDirection: South
   - type: PipeContainer
     pipes:
-    - pipeDirection: Up
-    - pipeDirection: Down
+    - pipeDirection: North
+    - pipeDirection: South
   - type: DebugPump
-    outletDirection: Up
-    inletDirection: Down
+    outletDirection: North
+    inletDirection: South

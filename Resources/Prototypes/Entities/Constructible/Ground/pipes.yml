@@ -27,15 +27,15 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: All
+      pipeDirection: FourWay
   - type: PipeContainer
     pipes:
-    - pipeDirection: All
+    - pipeDirection: FourWay
 
 - type: entity
   parent: PipeBase
-  id: VerticalPipe
-  name: Vertical Pipe
+  id: LongitudinalPipe
+  name: Longitudinal Pipe
   components:
   - type: Sprite
     state: hvcable_3
@@ -43,7 +43,7 @@
     nodes:
     - !type:PipeNode
       nodeGroupID: Pipe
-      pipeDirection: Vertical
+      pipeDirection: Longitudinal
   - type: PipeContainer
     pipes:
-    - pipeDirection: Vertical
+    - pipeDirection: Longitudinal
