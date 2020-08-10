@@ -143,7 +143,7 @@ namespace Content.Server.Explosions
                     delta = _epicenterDistance;
 
                 var distance = delta.LengthSquared;
-                var effect = 1 / (1 + 0.2f * distance);
+                var effect = 10 * (1 / (1 + distance));
                 if (effect > 0.01f)
                 {
                     var kick = -delta.Normalized * effect;

@@ -72,8 +72,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var castState = (ReagentDispenserBoundUserInterfaceState)state;
             _lastState = castState;
 
-            _window?.UpdateState(castState); //Update window state
             UpdateReagentsList(castState.Inventory); //Update reagents list & reagent button actions
+            _window?.UpdateState(castState); //Update window state
         }
 
         /// <summary>

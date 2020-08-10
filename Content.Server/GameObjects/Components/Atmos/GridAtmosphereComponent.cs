@@ -13,7 +13,6 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -191,7 +190,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
-                foreach (var direction in Cardinal())
+                foreach (var direction in Cardinal)
                 {
                     var otherIndices = indices.Offset(direction);
                     var otherTile = GetTile(otherIndices);
@@ -306,7 +305,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices)
         {
             var sides = new Dictionary<Direction, TileAtmosphere>();
-            foreach (var dir in Cardinal())
+            foreach (var dir in Cardinal)
             {
                 var side = indices.Offset(dir);
                 var tile = GetTile(side);
@@ -475,8 +474,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             return null;
         }
 
-        private static IEnumerable<Direction> Cardinal() =>
-            new[]
+        private static readonly Direction[] Cardinal =
+            new []
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
