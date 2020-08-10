@@ -93,7 +93,7 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void ClearPipeNet()
         {
-            _pipeNet = NodeContainer.NodeGroups.PipeNet.NullNet;
+            _pipeNet = PipeNet.NullNet;
             _needsPipeNet = true;
         }
 
