@@ -20,6 +20,7 @@
             "EmergencyLight",
             "Clickable",
             "CanSeeGases",
+            "RadiatingLight",
         };
 
     }
