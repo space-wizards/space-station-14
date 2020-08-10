@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "Thanks Yeeyee",
+  "copyright": "By Yeeyee",
+  "states": [
+    {
+      "name": "memoryLeek",
+      "directions": 1,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
