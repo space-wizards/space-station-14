@@ -52,6 +52,7 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Airtight
+    fixVacuum: true
     adjacentAtmosphere: true
   - type: Occluder
   - type: SnapGrid

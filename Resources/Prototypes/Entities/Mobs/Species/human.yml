@@ -150,6 +150,7 @@
     proper: true
   - type: Pullable
   - type: CanSeeGases
+  - type: DoAfter
 
 - type: entity
   save: false

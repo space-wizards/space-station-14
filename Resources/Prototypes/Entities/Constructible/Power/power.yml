@@ -23,8 +23,6 @@
       nodeGroupID: HVPower
   - type: PowerSupplier
     supplyRate: 3000
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -54,8 +52,6 @@
     drawRate: 50
   - type: Breakable
     maxHP: 100
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -84,8 +80,6 @@
       nodeGroupID: HVPower
   - type: PowerConsumer
   - type: BatteryStorage
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -114,8 +108,6 @@
       nodeGroupID: HVPower
   - type: PowerSupplier
   - type: BatteryDischarger
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -160,8 +152,6 @@
   - type: PowerSupplier
   - type: BatteryDischarger
     activeSupplyRate: 1000
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -200,8 +190,6 @@
     voltage: Medium
   - type: BatteryDischarger
     activeSupplyRate: 1000
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity
@@ -271,8 +259,6 @@
   - type: Icon
     texture: Constructible/Power/wirelessmachine.png
   - type: PowerReceiver
-  - type: Physics
-    anchored: true
   - type: Anchorable
 
 - type: entity

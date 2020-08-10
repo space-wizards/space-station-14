@@ -177,7 +177,9 @@
   - fillgas
   - listgases
   - removegas
+  - clearatmos
   - settemp
+  - setatmostemp
   - destroymechanism
   CanViewVar: true
   CanAdminPlace: true
