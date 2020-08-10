@@ -7,7 +7,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface
@@ -19,6 +18,7 @@ namespace Content.Client.UserInterface
         private List<CommandButton> _buttons = new List<CommandButton>
         {
             new KickCommandButton(),
+            new TestCommandButton(),
         };
         public AdminMenuWindow()
         {
@@ -87,23 +87,63 @@ namespace Content.Client.UserInterface
             {
                 new CommandUIControl
                 {
-                    Type = CommandUIControlType.LineEdit,
-                    Name = "Player"
+                    Type = CommandUIControlType.DropDown,
+                    Name = "Player",
+                    Data = new List<string> //TODO: get all players
+                    {
+                        "Exp",
+                        "PJB"
+                    }
                 },
                 new CommandUIControl
                 {
                     Type = CommandUIControlType.LineEdit,
                     Name = "Reason",
                     Optional = true
-                },
-                new CommandUIControl
-                {
-                    Type = CommandUIControlType.Checkbox,
-                    Name = "Checkbox",
                 }
             };
 
             public override void Submit(Dictionary<string,string> val)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private class TestCommandButton : CommandButton
+        {
+            public override string Name => "Test";
+
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            {
+                new CommandUIControl
+                {
+                    Type = CommandUIControlType.DropDown,
+                    Name = "DropDown",
+                    Data = new List<string> //TODO: get all players
+                    {
+                        "1",
+                        "2"
+                    }
+                },
+                new CommandUIControl
+                {
+                    Type = CommandUIControlType.LineEdit,
+                    Name = "LineEdit"
+                },
+                new CommandUIControl
+                {
+                    Type = CommandUIControlType.Checkbox,
+                    Name = "CheckBox"
+                },
+                new CommandUIControl
+                {
+                    Type = CommandUIControlType.LineEdit,
+                    Name = "Optional",
+                    Optional = true
+                },
+            };
+
+            public override void Submit(Dictionary<string, string> val)
             {
                 throw new NotImplementedException();
             }
@@ -121,13 +161,14 @@ namespace Content.Client.UserInterface
             public string Name;
             public CommandUIControlType Type;
             public bool Optional = false;
+            public List<string> Data;
             public Control? Control;
         }
 
         private class CommandWindow : SS14Window
         {
             List<CommandUIControl> _controls;
-            public Action<Dictionary<string, string>> Submit;
+            public Action<Dictionary<string, string>> Submit { get; set; }
             public CommandWindow(CommandButton button)
             {
                 Title = button.Name;
@@ -146,7 +187,7 @@ namespace Content.Client.UserInterface
                     Control con = control.Type switch
                     {
                         CommandUIControlType.LineEdit => new LineEdit { CustomMinimumSize = (100, 0) },
-                        CommandUIControlType.DropDown => throw new NotImplementedException(),
+                        CommandUIControlType.DropDown => new OptionButton { CustomMinimumSize = (100, 0) },
                         CommandUIControlType.Checkbox => new CheckBox { },
                         _ => throw new NotImplementedException(),
                     };
@@ -158,6 +199,15 @@ namespace Content.Client.UserInterface
                             con
                         },
                     };
+
+                    // Add Items to Dropdown
+                    if (con is OptionButton opt)
+                    {
+                        foreach (var data in control.Data)
+                            opt.AddItem(data);
+
+                        opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
+                    }
 
                     container.AddChild(hbox);
                     control.Control = con;
@@ -173,12 +223,13 @@ namespace Content.Client.UserInterface
                 Contents.AddChild(container);
             }
 
-            string GetValue(Control control)
+            string GetValue(CommandUIControl control)
             {
-                return control switch
+                return control.Control switch
                 {
                     LineEdit line => line.Text,
                     CheckBox check => check.Pressed ? "1" : "0",
+                    OptionButton opt => control.Data[opt.SelectedId],
                     _ => string.Empty
                 };
             }
@@ -188,8 +239,10 @@ namespace Content.Client.UserInterface
                 Dictionary<string, string> val = new Dictionary<string, string>();
                 foreach (var control in _controls)
                 {
+                    if (control.Control == null)
+                        return;
                     //TODO: optional check?
-                    val.Add(control.Name, GetValue(control.Control));
+                    val.Add(control.Name, GetValue(control));
                 }
                 Submit.Invoke(val);
             }
