@@ -2,16 +2,20 @@
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using System.Collections.Generic;
 
@@ -22,6 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
 #pragma warning disable 649
         [Dependency] private IServerNotifyManager _notifyManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
 #pragma warning restore 649
 
         private BoundUserInterface _userInterface = default!;
@@ -29,7 +34,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private float _timeSinceSync;
         private const float TimeBetweenSyncs = 2f;
         private bool _checkPlayer = false; // Check at the player pos or at some other tile?
-        private Vector2 _offset; // The direction in which you're holding the analyzer
+        private GridCoordinates _position; // The tile that we scanned
 
         public override void Initialize()
         {
@@ -121,7 +126,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             var pos = Owner.Transform.GridPosition;
             if (!_checkPlayer)
             {
-                pos.Offset(_offset);
+                // Check if position is out of range => don't update
+                if (!_position.InRange(_mapManager, pos, SharedInteractionSystem.InteractionRange))
+                    return;
+                
+                pos = _position;
             }
 
             var gam = EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(pos.GridID);
@@ -201,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (eventArgs.User.TryGetComponent(out IActorComponent actor))
             {
                 _checkPlayer = false;
-                _offset = eventArgs.ClickLocation.Position - eventArgs.User.Transform.GridPosition.Position;
+                _position = eventArgs.ClickLocation;
                 OpenInterface(actor.playerSession);
                 //TODO: show other sprite when ui open?
             }
