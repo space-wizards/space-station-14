@@ -135,6 +135,84 @@
     sprite: Constructible/Misc/decals.rsi
     state: direction_med
 
+- type: entity
+  id: SignDirectionalEng
+  name: engineering sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_eng
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_eng
+
+- type: entity
+  id: SignDirectionalSci
+  name: science sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_sci
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_sci
+
+- type: entity
+  id: SignDirectionalSupply
+  name: supply sign
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_supply
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+    state: direction_supply
+
 # Regular Signs
 
 - type: entity
