@@ -1,4 +1,6 @@
-﻿using Robust.Client.Console;
+﻿using Content.Client.Sandbox;
+using Content.Client.UserInterface.AdminMenu;
+using Robust.Client.Console;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -68,6 +70,13 @@ namespace Content.Client.UserInterface
             QuitButton = new Button {Text = _localizationManager.GetString("Quit Game")};
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
+
+            var adminMenuButton = new Button { Text = _localizationManager.GetString("Admin Menu") };
+            adminMenuButton.OnPressed += (args) =>
+            {
+                IoCManager.Resolve<IAdminMenuManager>().Open();
+            };
+            vBox.AddChild(adminMenuButton);
         }
 
         private void OnQuitButtonClicked(BaseButton.ButtonEventArgs args)
