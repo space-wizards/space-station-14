@@ -148,19 +148,56 @@ namespace Content.Client.UserInterface
         {
             public string Name;
             public bool Optional = false;
-            public Control? Control;
+            public Control Control;
+            //Idea: implement these abstract functions:
+            public abstract Control GetControl();
+            public abstract string GetValue();
         }
         private class CommandUIDropDown : CommandUIControl
         {
             public List<string> Data;
+
+            public override Control GetControl()
+            {
+                var opt = new OptionButton { CustomMinimumSize = (100, 0) };
+                foreach (var data in Data)
+                    opt.AddItem(data);
+
+                opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
+                Control = opt;
+                return Control;
+            }
+
+            public override string GetValue()
+            {
+                return Data[((OptionButton)Control).SelectedId];
+            }
         }
         private class CommandUICheckBox : CommandUIControl
         {
+            public override Control GetControl()
+            {
+                Control = new CheckBox();
+                return Control;
+            }
 
+            public override string GetValue()
+            {
+                return ((CheckBox)Control).Pressed ? "1" : "0";
+            }
         }
         private class CommandUILineEdit : CommandUIControl
         {
+            public override Control GetControl()
+            {
+                Control = new LineEdit { CustomMinimumSize = (100, 0) };
+                return Control;
+            }
 
+            public override string GetValue()
+            {
+                return ((LineEdit)Control).Text;
+            }
         }
 
         private class CommandWindow : SS14Window
@@ -174,7 +211,7 @@ namespace Content.Client.UserInterface
                 var container = new VBoxContainer //TODO: add margin between different controls
                 {
                 };
-                // Init Controls
+                // Init Controls in a hbox + a label
                 foreach (var control in _controls)
                 {
                     var label = new Label
@@ -182,33 +219,16 @@ namespace Content.Client.UserInterface
                         Text = control.Name,
                         CustomMinimumSize = (100, 0)
                     };
-                    Control con = control switch
-                    {
-                        CommandUILineEdit line => new LineEdit { CustomMinimumSize = (100, 0) },
-                        CommandUIDropDown dropdown => new OptionButton { CustomMinimumSize = (100, 0) },
-                        CommandUICheckBox check => new CheckBox { },
-                        _ => throw new NotImplementedException(),
-                    };
                     var hbox = new HBoxContainer
                     {
                         Children =
                         {
                             label,
-                            con
+                            control.GetControl()
                         },
                     };
 
-                    // Add Items to Dropdown
-                    if (con is OptionButton opt && control is CommandUIDropDown drop)
-                    {
-                        foreach (var data in drop.Data)
-                            opt.AddItem(data);
-
-                        opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
-                    }
-
                     container.AddChild(hbox);
-                    control.Control = con;
                 }
                 // Init Submit Button
                 var submitButton = new Button
@@ -221,17 +241,6 @@ namespace Content.Client.UserInterface
                 Contents.AddChild(container);
             }
 
-            string GetValue(CommandUIControl control)
-            {
-                return control.Control switch
-                {
-                    LineEdit line => line.Text,
-                    CheckBox check => check.Pressed ? "1" : "0",
-                    OptionButton opt => ((CommandUIDropDown)control).Data[opt.SelectedId],
-                    _ => string.Empty
-                };
-            }
-
             public void SubmitPressed(ButtonEventArgs args)
             {
                 Dictionary<string, string> val = new Dictionary<string, string>();
@@ -240,7 +249,7 @@ namespace Content.Client.UserInterface
                     if (control.Control == null)
                         return;
                     //TODO: optional check?
-                    val.Add(control.Name, GetValue(control));
+                    val.Add(control.Name, control.GetValue());
                 }
                 Submit.Invoke(val);
             }
