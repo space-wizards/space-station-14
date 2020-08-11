@@ -512,7 +512,7 @@
       ]
     },
     {
-      "name": "gene",
+      "name": "cloning",
       "directions": 1,
       "delays": [
         [
@@ -656,7 +656,7 @@
       ]
     },
     {
-      "name": "operational",
+      "name": "surgery",
       "directions": 1,
       "delays": [
         [
