@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects;
+﻿using Content.Client.GameObjects.Components.Items;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
@@ -32,6 +33,7 @@ namespace Content.Client.GameObjects.Components.Clothing
             base.ExposeData(serializer);
 
             serializer.DataField(ref _femaleMask, "femaleMask", FemaleClothingMask.UniformFull);
+            serializer.DataField(this, p => p.ClothingEquippedPrefix, "ClothingPrefix", null);
         }
 
         public (RSI rsi, RSI.StateId stateId)? GetEquippedStateInfo(EquipmentSlotDefines.SlotFlags slot)

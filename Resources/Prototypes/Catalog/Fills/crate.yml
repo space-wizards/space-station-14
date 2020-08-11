@@ -1,0 +1,121 @@
+- type: entity
+  id: CrateFlashlights
+  parent: CrateGeneric
+  name: flashlight crate (x5)
+  components:
+  - type: StorageFill
+    contents:
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+      - FlashlightLantern
+
+- type: entity
+  id: CrateLightBulb
+  parent: CrateGeneric
+  name: light bulb crate (x10)
+  components:
+  - type: StorageFill
+    contents:
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+      - LightBulb
+
+- type: entity
+  id: CrateFireExtinguisher
+  parent: CrateGeneric
+  name: fire extinguisher crate (x3)
+  components:
+  - type: StorageFill
+    contents:
+      - FireExtinguisher
+      - FireExtinguisher
+      - FireExtinguisher
+
+- type: entity
+  id: CratePen
+  parent: CrateGeneric
+  name: pen  crate (x10)
+  components:
+  - type: StorageFill
+    contents:
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+      - Pen
+
+- type: entity
+  id: CrateBikeHorn
+  parent: CrateGeneric
+  name: bike horn crate (x5)
+  components:
+  - type: StorageFill
+    contents:
+      - BikeHorn
+      - BikeHorn
+      - BikeHorn
+      - BikeHorn
+      - BikeHorn
+
+- type: entity
+  id: CrateCleaver
+  parent: CrateGeneric
+  name: cleaver crate (x5)
+  components:
+  - type: StorageFill
+    contents:
+      - ButchCleaver
+      - ButchCleaver
+      - ButchCleaver
+      - ButchCleaver
+      - ButchCleaver
+
+- type: entity
+  id: CrateFuelTank
+  parent: CrateGeneric
+  name: fuel tank
+  components:
+  - type: StorageFill
+    contents:
+      - WeldingFuelTank
+
+- type: entity
+  id: CrateMedicalScanner
+  parent: CrateGeneric
+  name: medical scanner
+  components:
+  - type: StorageFill
+    contents:
+      - MedicalScanner
+
+- type: entity
+  id: CrateGlass
+  parent: CrateGeneric
+  name: glass sheet crate (x50)
+  components:
+  - type: StorageFill
+    contents:
+      - GlassStack
+
+- type: entity
+  id: CrateCable
+  parent: CrateGeneric
+  name: cable coil crate (x50)
+  components:
+  - type: StorageFill
+    contents:
+      - CableStack1

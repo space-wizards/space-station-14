@@ -19,6 +19,7 @@
   Name: Moderator
   Commands:
   - login
+  - logout
   - joingame
   - help
   - list
@@ -39,6 +40,7 @@
 - Index: 100
   Name: Administrator
   Commands:
+  - logout
   - joingame
   - help
   - list
@@ -83,12 +85,21 @@
   - hostlogin
   - deleteewc
   - asay
+  - mapping
+  - addhand
+  - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
+  - tilewalls
   CanViewVar: true
   CanAdminPlace: true
 
 - Index: 200
   Name: Host
   Commands:
+  - logout
   - joingame
   - help
   - list
@@ -154,6 +165,22 @@
   - deleteewc
   - sudo
   - asay
+  - mapping
+  - addhand
+  - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
+  - addatmos
+  - addgas
+  - fillgas
+  - listgases
+  - removegas
+  - clearatmos
+  - settemp
+  - setatmostemp
+  - tilewalls
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

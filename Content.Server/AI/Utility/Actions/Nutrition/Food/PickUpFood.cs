@@ -39,12 +39,12 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Food
 
             return new[]
             {
-                considerationsManager.Get<TargetAccessibleCon>()
-                    .BoolCurve(context),
                 considerationsManager.Get<TargetDistanceCon>()
                     .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<FoodValueCon>()
                     .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
             };
         }
     }

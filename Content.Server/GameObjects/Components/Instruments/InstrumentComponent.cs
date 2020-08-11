@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Instruments;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -302,6 +302,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 InstrumentPlayer = null;
                 Clean();
+                _userInterface.CloseAll();
             }
 
             if ((_batchesDropped >= MaxMidiBatchDropped

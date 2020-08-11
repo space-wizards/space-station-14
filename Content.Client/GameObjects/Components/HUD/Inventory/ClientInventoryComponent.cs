@@ -1,7 +1,4 @@
-﻿// Only unused on .NET Core due to KeyValuePair.Deconstruct
-// ReSharper disable once RedundantUsingDirective
-using Robust.Shared.Utility;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Client.GameObjects.Components.Clothing;
 using Content.Shared.GameObjects;
@@ -10,7 +7,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
@@ -95,6 +91,14 @@ namespace Content.Client.GameObjects
                 doneSlots.Add(slot);
             }
 
+            if (cast.HoverEntity != null)
+            {
+                var (slot, (entityUid, fits)) = cast.HoverEntity.Value;
+                var entity = Owner.EntityManager.GetEntity(entityUid);
+
+                InterfaceController?.HoverInSlot(slot, entity, fits);
+            }
+
             foreach (var slot in _slots.Keys.ToList())
             {
                 if (!doneSlots.Contains(slot))
@@ -173,6 +177,11 @@ namespace Content.Client.GameObjects
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
             SendNetworkMessage(equipmessage);
+        }
+
+        public void SendHoverMessage(Slots slot)
+        {
+            SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
         }
 
         public void SendOpenStorageUIMessage(Slots slot)

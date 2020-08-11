@@ -466,6 +466,15 @@
                 ]
             ]
         },
+		{
+            "name": "spawner_trash",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
         {
             "name": "spawner_xenoai",
             "directions": 1,

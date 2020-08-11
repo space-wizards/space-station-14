@@ -1,11 +1,13 @@
-﻿using Content.Server.GameObjects.Components.Items.Storage;
+﻿using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Interfaces.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Server.Utility;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -14,16 +16,14 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(StoreableComponent))]
+    [ComponentReference(typeof(StorableComponent))]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : StoreableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
+    public class ItemComponent : StorableComponent, IInteractHand, IExAct, IEquipped, IUnequipped, IItemComponent
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -83,12 +83,22 @@ namespace Content.Server.GameObjects.Components
 
         public bool CanPickup(IEntity user)
         {
-            if (!ActionBlockerSystem.CanPickup(user)) return false;
+            if (!ActionBlockerSystem.CanPickup(user))
+            {
+                return false;
+            }
 
             if (user.Transform.MapID != Owner.Transform.MapID)
+            {
                 return false;
+            }
 
-            var userPos = user.Transform.MapPosition;
+            if (Owner.TryGetComponent(out PhysicsComponent physics) &&
+                physics.Anchored)
+            {
+                return false;
+            }
+
             var itemPos = Owner.Transform.MapPosition;
 
             return InteractionChecks.InRangeUnobstructed(user, itemPos, ignoredEnt: Owner, ignoreInsideBlocker:true);
@@ -99,7 +109,7 @@ namespace Content.Server.GameObjects.Components
             if (!CanPickup(eventArgs.User)) return false;
 
             var hands = eventArgs.User.GetComponent<IHandsComponent>();
-            hands.PutInHand(this, hands.ActiveIndex, fallback: false);
+            hands.PutInHand(this, hands.ActiveHand, false);
             return true;
         }
 
@@ -131,24 +141,6 @@ namespace Content.Server.GameObjects.Components
         public override ComponentState GetComponentState()
         {
             return new ItemComponentState(EquippedPrefix);
-        }
-
-        public void Fumble()
-        {
-            if (Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
-            {
-                physicsComponent.LinearVelocity += RandomOffset();
-            }
-        }
-
-        private Vector2 RandomOffset()
-        {
-            return new Vector2(RandomOffset(), RandomOffset());
-            float RandomOffset()
-            {
-                var size = 15.0F;
-                return (_robustRandom.NextFloat() * size) - size / 2;
-            }
         }
 
         public void OnExplosion(ExplosionEventArgs eventArgs)

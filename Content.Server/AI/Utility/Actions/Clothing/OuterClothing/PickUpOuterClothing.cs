@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Clothing;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
@@ -44,6 +45,8 @@ namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
                     .BoolCurve(context),
                 considerationsManager.Get<TargetDistanceCon>()
                     .PresetCurve(context, PresetCurve.Distance),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
             };
         }
     }

@@ -67,11 +67,13 @@ namespace Content.Client
             factory.Register<SharedWiresComponent>();
             factory.Register<SharedCargoConsoleComponent>();
             factory.Register<SharedReagentDispenserComponent>();
+            factory.Register<SharedChemMasterComponent>();
             factory.Register<SharedMicrowaveComponent>();
             factory.Register<SharedGravityGeneratorComponent>();
 
             prototypes.RegisterIgnore("material");
             prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
+            prototypes.RegisterIgnore("gasReaction");
             prototypes.RegisterIgnore("barSign");
 
             ClientContentIoC.Register();

@@ -5,6 +5,8 @@ using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
+using Content.Server.AI.Utility.Considerations.Combat.Melee;
+using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
@@ -70,6 +72,8 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
                     .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<TargetHealthCon>()
                     .PresetCurve(context, PresetCurve.TargetHealth),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
                 // TODO: Consider our Speed and Damage to compare this to using a weapon
                 // Also need to unequip our weapon if we have one (xenos can't hold one so no issue for now)
             };

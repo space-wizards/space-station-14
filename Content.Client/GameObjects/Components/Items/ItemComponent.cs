@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Storage;
+﻿using Content.Client.GameObjects.Components.Disposal;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -14,11 +14,11 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : Component, IItemComponent
+    public class ItemComponent : Component, IItemComponent, IClientDraggable
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -40,15 +40,16 @@ namespace Content.Client.GameObjects
             }
         }
 
-        public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(string hand)
+        public (RSI rsi, RSI.StateId stateId)? GetInHandStateInfo(HandLocation hand)
         {
             if (RsiPath == null)
             {
                 return null;
             }
 
+            var handName = hand.ToString().ToLowerInvariant();
             var rsi = GetRSI();
-            var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{hand}" : $"inhand-{hand}";
+            var stateId = EquippedPrefix != null ? $"{EquippedPrefix}-inhand-{handName}" : $"inhand-{handName}";
             if (rsi.TryGetState(stateId, out _))
             {
                 return (rsi, stateId);
@@ -78,6 +79,16 @@ namespace Content.Client.GameObjects
 
             var itemComponentState = (ItemComponentState)curState;
             EquippedPrefix = itemComponentState.EquippedPrefix;
+        }
+
+        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
+        {
+            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
+        }
+
+        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
+        {
+            return true;
         }
     }
 }

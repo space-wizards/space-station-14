@@ -1,0 +1,130 @@
+﻿- type: entity
+  name: stool
+  id: Stool
+  description: Apply butt.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: stool_base
+    color: "#8e9799"
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: stool_base
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: bar stool
+  id: StoolBar
+  parent: Stool
+  components:
+  - type: Sprite
+    state: bar_stool
+    color: "white"
+  - type: Icon
+    state: bar_stool
+
+- type: entity
+  name: white office chair
+  id: ChairOfficeLight
+  description: You sit in this. Either by will or force.
+  components:
+  - type: Rotatable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_white
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_white
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: dark office chair
+  id: ChairOfficeDark
+  parent: ChairOfficeLight
+  components:
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_dark
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: officechair_dark
+
+
+- type: entity
+  name: chair
+  id: Chair
+  description: You sit in this. Either by will or force.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: chair
+    color: "#8e9799"
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: chair
+  - type: Strap
+    position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  parent: Chair
+  name: comfy chair
+  id: ComfyChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: comfychair_preview
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: comfychair_preview
+
+
+- type: entity
+  name: wooden chair
+  id: ChairWood
+  parent: Chair
+  components:
+  - type: Sprite
+    state: wooden_chair
+    color: "white"
+  - type: Icon
+    state: wooden_chair
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  name: bed
+  id: Bed
+  description: This is used to lie in, sleep in or strap on.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: bed
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: bed
+  - type: Strap
+    position: Down
+    rotation: -90
+  placement:
+    mode: SnapgridCenter

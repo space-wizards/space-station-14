@@ -1,12 +1,10 @@
-using System;
-using Content.Server.GameObjects.Components.Sound;
+﻿using System;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -46,15 +44,13 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
+
             serializer.DataField(ref _caliber, "caliber", BallisticCaliber.Unspecified);
-
-            if (serializer.Reading)
-            {
-                var capacity = serializer.ReadDataField("capacity", 6);
-                _ammoSlots = new IEntity[capacity];
-            }
-
-            // TODO: Writing?
+            serializer.DataReadWriteFunction(
+                "capacity",
+                6,
+                cap => _ammoSlots = new IEntity[cap],
+                () => _ammoSlots.Length);
             serializer.DataField(ref _fillPrototype, "fillPrototype", null);
 
             // Sounds

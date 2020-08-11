@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 #pragma warning disable 649
         [Dependency] private IEyeManager _eyeManager;
 #pragma warning restore 649
-        
+
         private AiDebugMode _tooltips = AiDebugMode.None;
         private readonly Dictionary<IEntity, PanelContainer> _aiBoxes = new Dictionary<IEntity,PanelContainer>();
 
@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.EntitySystems.AI
                     {
                         panel.Dispose();
                     }
-                    
+
                     _aiBoxes.Clear();
                 }
                 return;
@@ -103,8 +103,8 @@ namespace Content.Client.GameObjects.EntitySystems.AI
 
                 var label = (Label) _aiBoxes[entity].GetChild(0).GetChild(1);
                 label.Text = $"Pathfinding time (ms): {message.TimeTaken * 1000:0.0000}\n" +
-                             $"Nodes traversed: {message.ClosedTiles.Count}\n" +
-                             $"Nodes per ms: {message.ClosedTiles.Count / (message.TimeTaken * 1000)}";
+                             $"Nodes traversed: {message.CameFrom.Count}\n" +
+                             $"Nodes per ms: {message.CameFrom.Count / (message.TimeTaken * 1000)}";
             }
         }
 

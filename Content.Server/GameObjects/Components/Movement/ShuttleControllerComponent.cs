@@ -1,16 +1,19 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Buckle;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
-using Robust.Server.GameObjects;
-using Robust.Server.GameObjects.Components.Container;
+using Content.Shared.GameObjects.Components.Strap;
+using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -20,8 +23,8 @@ namespace Content.Server.GameObjects.Components.Movement
     internal class ShuttleControllerComponent : Component, IMoverComponent
     {
 #pragma warning disable 649
-        [Dependency] private readonly IMapManager _mapManager;
-        [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 #pragma warning restore 649
 
         private bool _movingUp;
@@ -29,11 +32,22 @@ namespace Content.Server.GameObjects.Components.Movement
         private bool _movingLeft;
         private bool _movingRight;
 
+        /// <summary>
+        ///     The icon to be displayed when piloting from this chair.
+        /// </summary>
+        private string _pilotingIcon = default!;
+
+        /// <summary>
+        ///     The entity that's currently controlling this component.
+        ///     Changed from <see cref="SetController"/> and <see cref="RemoveController"/>
+        /// </summary>
+        private IEntity? _controller;
+
         public override string Name => "ShuttleController";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentWalkSpeed { get; set; } = 8;
-        public float CurrentSprintSpeed { get; set; }
+        public float CurrentWalkSpeed { get; } = 8;
+        public float CurrentSprintSpeed => 0;
 
         /// <inheritdoc />
         [ViewVariables]
@@ -43,7 +57,8 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         public float GrabRange => 0.0f;
 
-        public bool Sprinting { get; set; }
+        public bool Sprinting => false;
+
         public (Vector2 walking, Vector2 sprinting) VelocityDir { get; } = (Vector2.Zero, Vector2.Zero);
         public GridCoordinates LastPosition { get; set; }
         public float StepSoundDistance { get; set; }
@@ -52,10 +67,11 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             var gridId = Owner.Transform.GridID;
 
-            if (_mapManager.TryGetGrid(gridId, out var grid) && _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
+            if (_mapManager.TryGetGrid(gridId, out var grid) &&
+                _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out PhysicsComponent physComp))
+                if (!gridEntity.TryGetComponent(out IPhysicsComponent physComp))
                 {
                     physComp = gridEntity.AddComponent<PhysicsComponent>();
                     physComp.Mass = 1;
@@ -70,7 +86,8 @@ namespace Content.Server.GameObjects.Components.Movement
                     collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
-                physComp.LinearVelocity = CalcNewVelocity(direction, enabled) * CurrentWalkSpeed;
+                var controller = physComp.EnsureController<ShuttleController>();
+                controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
             }
         }
 
@@ -113,36 +130,115 @@ namespace Content.Server.GameObjects.Components.Movement
 
             // can't normalize zero length vector
             if (result.LengthSquared > 1.0e-6)
+            {
                 result = result.Normalized;
+            }
 
             return result;
         }
 
+        /// <summary>
+        ///     Changes the entity currently controlling this shuttle controller
+        /// </summary>
+        /// <param name="entity">The entity to set</param>
+        private void SetController(IEntity entity)
+        {
+            if (_controller != null ||
+                !entity.TryGetComponent(out MindComponent mind) ||
+                mind.Mind == null ||
+                !Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            {
+                return;
+            }
+
+            mind.Mind.Visit(Owner);
+            _controller = entity;
+
+            status.ChangeStatusEffectIcon(StatusEffect.Piloting, _pilotingIcon);
+        }
+
+        /// <summary>
+        ///     Removes the current controller
+        /// </summary>
+        /// <param name="entity">The entity to remove, or null to force the removal of any current controller</param>
+        public void RemoveController(IEntity? entity = null)
+        {
+            if (_controller == null)
+            {
+                return;
+            }
+
+            // If we are not forcing a controller removal and the entity is not the current controller
+            if (entity != null && entity != _controller)
+            {
+                return;
+            }
+
+            UpdateRemovedEntity(entity ?? _controller);
+
+            _controller = null;
+        }
+
+        /// <summary>
+        ///     Updates the state of an entity that is no longer controlling this shuttle controller.
+        ///     Called from <see cref="RemoveController"/>
+        /// </summary>
+        /// <param name="entity">The entity to update</param>
+        private void UpdateRemovedEntity(IEntity entity)
+        {
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent status))
+            {
+                status.RemoveStatusEffect(StatusEffect.Piloting);
+            }
+
+            if (entity.TryGetComponent(out MindComponent mind))
+            {
+                mind.Mind?.UnVisit();
+            }
+
+            if (entity.TryGetComponent(out BuckleComponent buckle))
+            {
+                buckle.TryUnbuckle(entity, true);
+            }
+        }
+
+        private void BuckleChanged(IEntity entity, in bool buckled)
+        {
+            Logger.DebugS("shuttle", $"Pilot={entity.Name}, buckled={buckled}");
+
+            if (buckled)
+            {
+                SetController(entity);
+            }
+            else
+            {
+                RemoveController(entity);
+            }
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+
+            serializer.DataField(ref _pilotingIcon, "pilotingIcon", "/Textures/Interface/StatusEffects/Buckle/buckled.png");
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Owner.EnsureComponent<ServerStatusEffectsComponent>();
+        }
+
         /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent component)
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
 
             switch (message)
             {
-                case ContainerContentsModifiedMessage contents:
-                    if(contents.Entity.TryGetComponent(out MindComponent mindComp))
-                        ContentsChanged(contents.Entity, mindComp, contents.Removed);
+                case StrapChangeMessage strap:
+                    BuckleChanged(strap.Entity, strap.Buckled);
                     break;
-            }
-        }
-
-        private void ContentsChanged(IEntity entity, MindComponent mindComp, in bool removed)
-        {
-            Logger.DebugS("shuttle", $"Pilot={entity.Name}, removed={removed}");
-
-            if (!removed)
-            {
-                mindComp.Mind?.Visit(Owner);
-            }
-            else
-            {
-                mindComp.Mind?.UnVisit();
             }
         }
     }

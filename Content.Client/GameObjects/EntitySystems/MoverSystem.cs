@@ -31,8 +31,8 @@ namespace Content.Client.GameObjects.EntitySystems
                 return;
             }
 
-            var physics = playerEnt.GetComponent<PhysicsComponent>();
-            playerEnt.TryGetComponent(out CollidableComponent? collidable);
+            var physics = playerEnt.GetComponent<IPhysicsComponent>();
+            playerEnt.TryGetComponent(out ICollidableComponent? collidable);
             physics.Predict = true;
 
             UpdateKinematics(playerEnt.Transform, mover, physics, collidable);
@@ -41,11 +41,6 @@ namespace Content.Client.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             FrameUpdate(frameTime);
-        }
-
-        protected override void SetController(PhysicsComponent physics)
-        {
-            physics.SetController<MoverController>();
         }
     }
 }

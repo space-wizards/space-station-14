@@ -54,14 +54,10 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, PhysicsComponent physics,
-            CollidableComponent? collider = null)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics,
+            ICollidableComponent? collider = null)
         {
-            if (physics.Controller == null)
-            {
-                // Set up controller
-                SetController(physics);
-            }
+            physics.EnsureController<MoverController>();
 
             var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
                              _physicsManager.IsWeightless(transform.GridPosition);
@@ -82,7 +78,10 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                (physics.Controller as MoverController)?.StopMoving();
+                if (physics.TryGetController(out MoverController controller))
+                {
+                    controller.StopMoving();
+                }
             }
             else
             {
@@ -90,7 +89,11 @@ namespace Content.Shared.GameObjects.EntitySystems
 
                 if (weightless)
                 {
-                    (physics.Controller as MoverController)?.Push(combined, mover.CurrentPushSpeed);
+                    if (physics.TryGetController(out MoverController controller))
+                    {
+                        controller.Push(combined, mover.CurrentPushSpeed);
+                    }
+
                     transform.LocalRotation = walkDir.GetDir().ToAngle();
                     return;
                 }
@@ -98,7 +101,11 @@ namespace Content.Shared.GameObjects.EntitySystems
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
                 //Console.WriteLine($"{walkDir} ({mover.CurrentWalkSpeed}) + {sprintDir} ({mover.CurrentSprintSpeed}): {total}");
 
-                (physics.Controller as MoverController)?.Move(total, 1);
+                {if (physics.TryGetController(out MoverController controller))
+                {
+                    controller.Move(total, 1);
+                }}
+
                 transform.LocalRotation = total.GetDir().ToAngle();
 
                 HandleFootsteps(mover);
@@ -110,10 +117,8 @@ namespace Content.Shared.GameObjects.EntitySystems
 
         }
 
-        protected abstract void SetController(PhysicsComponent physics);
-
         private bool IsAroundCollider(ITransformComponent transform, IMoverComponent mover,
-            CollidableComponent collider)
+            ICollidableComponent collider)
         {
             foreach (var entity in _entityManager.GetEntitiesInRange(transform.Owner, mover.GrabRange, true))
             {
@@ -122,7 +127,13 @@ namespace Content.Shared.GameObjects.EntitySystems
                     continue; // Don't try to push off of yourself!
                 }
 
-                if (!entity.TryGetComponent<CollidableComponent>(out var otherCollider))
+                if (!entity.TryGetComponent<ICollidableComponent>(out var otherCollider))
+                {
+                    continue;
+                }
+
+                // Don't count pulled entities
+                if (otherCollider.HasController<PullController>())
                 {
                     continue;
                 }

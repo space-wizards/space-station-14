@@ -1,8 +1,6 @@
 ﻿#nullable enable
 using System;
-using System.Runtime.Remoting;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
@@ -11,15 +9,16 @@ using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Interactable;
-using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {
@@ -52,6 +51,8 @@ namespace Content.Server.GameObjects.Components.Interactable
         private SolutionComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
+        public string? WeldSoundCollection { get; set; }
+
         [ViewVariables]
         public float Fuel => _solutionComponent?.Solution.GetReagentQuantity("chem.WeldingFuel").Float() ?? 0f;
 
@@ -83,6 +84,11 @@ namespace Content.Server.GameObjects.Components.Interactable
             Owner.TryGetComponent(out _solutionComponent);
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            serializer.DataField(this, collection => WeldSoundCollection, "weldSoundCollection", string.Empty);
         }
 
         public override ComponentState GetComponentState()
@@ -119,7 +125,13 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_solutionComponent == null)
                 return false;
 
-            return _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+            bool succeeded = _solutionComponent.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(value));
+
+            if (succeeded && !silent)
+            {
+                PlaySoundCollection(WeldSoundCollection);
+            }
+            return succeeded;
         }
 
         private bool CanWeld(float value)
@@ -209,7 +221,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             if (TryWeld(5, victim, silent: true))
             {
-                PlaySoundCollection("Welder", -5);
+                PlaySoundCollection(WeldSoundCollection);
                 chat.EntityMe(victim, Loc.GetString("welds {0:their} every orifice closed! It looks like {0:theyre} trying to commit suicide!", victim)); //TODO: theyre macro
                 return SuicideKind.Heat;
             }

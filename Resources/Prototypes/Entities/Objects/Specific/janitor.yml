@@ -1,0 +1,197 @@
+﻿- type: entity
+  parent: BaseItem
+  name: mop
+  id: MopItem
+  description: A mop that can't be stopped, viscera cleanup detail awaits.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
+  - type: Icon
+    sprite: Objects/Specific/Janitorial/mop.rsi
+    state: mop
+  - type: Item
+    size: 10
+    sprite: Objects/Specific/Janitorial/mop.rsi
+  - type: Mop
+  - type: Solution
+    maxVol: 10
+    caps: 1
+  - type: LoopingSound
+
+- type: entity
+  name: mop bucket
+  id: MopBucket
+  description: Holds water and the tears of the janitor.
+  components:
+  - type: Clickable
+  - type: Sprite
+    texture: Objects/Specific/Janitorial/mopbucket.png
+    drawdepth: Objects
+  - type: Icon
+    texture: Objects/Specific/Janitorial/mopbucket.png
+  - type: InteractionOutline
+  - type: Bucket
+  - type: LoopingSound
+  - type: Solution
+    maxVol: 500
+    caps: 3
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.40,-0.25,0.25,0.25"
+      mask:
+      - Impassable
+      - Opaque
+      layer:
+      - Opaque
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 5
+    anchored: false
+  - type: CanSpill
+  - type: Pullable
+
+- type: entity
+  parent: BaseItem
+  name: bucket
+  id: Bucket
+  description: "Dear God."
+  components:
+  - type: Clickable
+  - type: Sprite
+    texture: Objects/Specific/Janitorial/bucket.png
+    drawdepth: Objects
+  - type: Icon
+    texture: Objects/Specific/Janitorial/bucket.png
+  - type: Bucket
+  - type: LoopingSound
+  - type: Solution
+    maxVol: 500
+    caps: 3
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.25,-0.25,0.25,0.25"
+      mask:
+      - Impassable
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 5
+    anchored: false
+  - type: CanSpill
+
+- type: entity
+  name: wet floor sign
+  id: WetFloorSign
+  parent: BaseItem
+  description: Caution! Wet Floor!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    state: caution
+  - type: Icon
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    state: caution
+  - type: Item
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+
+- type: entity
+  name: soap
+  id: Soap
+  parent: BaseItem
+  description: A cheap bar of soap. Doesn't smell.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/soap.rsi
+      state: soap
+    - type: Icon
+      sprite: Objects/Specific/Janitorial/soap.rsi
+      state: soap
+    - type: Item
+      sprite: Objects/Specific/Janitorial/soap.rsi
+    - type: Slippery
+      paralyzeTime: 2.5
+
+
+- type: entity
+  name: soap
+  id: SoapNT
+  parent: Soap
+  description: A Nanotrasen brand bar of soap. Smells of phoron.
+  components:
+    - type: Sprite
+      state: soapnt
+    - type: Icon
+      state: soapnt
+
+- type: entity
+  name: soap
+  id: SoapDeluxe
+  parent: Soap
+  description: A deluxe Waffle Co. brand bar of soap. Smells of condoms.
+  components:
+    - type: Sprite
+      state: soapdeluxe
+    - type: Icon
+      state: soapdeluxe
+
+- type: entity
+  name: soap
+  id: SoapSyndie
+  parent: Soap
+  description: An untrustworthy bar of soap. Smells of fear.
+  components:
+    - type: Sprite
+      state: soapsyndie
+    - type: Icon
+      state: soapsyndie
+    - type: Slippery
+      paralyzeTime: 5
+
+- type: entity
+  name: soap
+  id: SoapHomemade
+  parent: Soap
+  description: A homemade bar of soap. Smells of... well....
+  components:
+    - type: Sprite
+      state: soapgibs
+    - type: Icon
+      state: soapgibs
+    - type: Slippery
+      paralyzeTime: 2
+
+- type: entity
+  name: omega soap
+  id: SoapOmega
+  parent: Soap
+  description: The most advanced soap known to mankind. Smells of bluespace.
+  components:
+    - type: Sprite
+      state: soapomega
+    - type: Icon
+      state: soapomega
+    - type: Slippery
+      paralyzeTime: 7
+
+- type: entity
+  name: spray bottle
+  id: SprayBottle
+  parent: BaseItem
+  description: A spray bottle with an unscrewable top.
+  components:
+  - type: Sprite
+    texture: Objects/Specific/Janitorial/cleaner.png
+  - type: Icon
+    texture: Objects/Specific/Janitorial/cleaner.png
+  - type: Solution
+    maxVol: 100
+    caps: 1
+  - type: Pourable
+    transferAmount: 5.0
+  - type: CanSpill
+  - type: Spray
+    transferAmount: 10
+    sprayVelocity: 5
+    spraySound: /Audio/Effects/spray.ogg

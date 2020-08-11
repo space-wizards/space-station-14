@@ -1,0 +1,121 @@
+- type: entity
+  parent: Clothing
+  id: BackpackClothing
+  name: backpack
+  description: You wear this on your back and put items into it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: backpack
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    state: backpack
+  - type: Clothing
+    size: 9999
+    QuickEquip: false
+    Slots:
+    - back
+    sprite: Clothing/Back/Backpacks/backpack.rsi
+    HeldPrefix: backpack
+  - type: Storage
+    capacity: 100
+
+- type: entity
+  parent: BackpackClothing
+  id: ClownPack
+  name: giggles von honkerton
+  description: It's a backpack made by Honk! Co.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/clown.rsi
+    state: clown
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/clown.rsi
+    state: clown
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/clown.rsi
+    HeldPrefix: clown
+
+- type: entity
+  parent: BackpackClothing
+  id: SecPack
+  name: security backpack
+  description: It's a very robust backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/security.rsi
+    state: security
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/security.rsi
+    state: security
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/security.rsi
+    HeldPrefix: security
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackEngineering
+  name: engineering backpack
+  description: It's a tough backpack for the daily grind of station life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/engineering.rsi
+    state: engineering
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/engineering.rsi
+    state: engineering
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/engineering.rsi
+    HeldPrefix: engineering
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackMedical
+  name: medical backpack
+  description: It's a backpack especially designed for use in a sterile environment.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/medical.rsi
+    state: medical
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/medical.rsi
+    state: medical
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/medical.rsi
+    HeldPrefix: medical
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackCaptain
+  name: captain's backpack
+  description: It's a special backpack made exclusively for Nanotrasen officers.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/captain.rsi
+    state: captain
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/captain.rsi
+    state: captain
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/captain.rsi
+    HeldPrefix: captain
+
+- type: entity
+  parent: BackpackClothing
+  id: BackpackHolding
+  name: bag of holding
+  description: A backpack that opens into a localized pocket of bluespace.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
+    layers:
+    - state: holding
+    - state: holding-unlit
+      shader: unshaded
+  - type: Icon
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
+  - type: Clothing
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    HeldPrefix: holding

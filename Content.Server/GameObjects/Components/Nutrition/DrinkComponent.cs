@@ -1,11 +1,13 @@
-﻿using System;
-using Content.Server.GameObjects.Components.Chemistry;
+﻿using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Fluids;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.Audio;
@@ -25,7 +27,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAfterInteract))]
-    public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange,IExamine
+    public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange, IExamine, ILand
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -41,16 +43,15 @@ namespace Content.Server.GameObjects.Components.Nutrition
         private bool _defaultToOpened;
         [ViewVariables]
         public ReagentUnit TransferAmount { get; private set; } = ReagentUnit.New(2);
-
         [ViewVariables]
-        public bool Opened => _opened;
-
+        protected bool Opened { get; set; }
         [ViewVariables]
         public bool Empty => _contents.CurrentVolume.Float() <= 0;
 
         private AppearanceComponent _appearanceComponent;
-        private bool _opened = false;
         private string _soundCollection;
+        private bool _pressurized;
+        private string _burstSound;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -58,6 +59,8 @@ namespace Content.Server.GameObjects.Components.Nutrition
             serializer.DataField(ref _useSound, "useSound", "/Audio/Items/drink.ogg");
             serializer.DataField(ref _defaultToOpened, "isOpen", false); //For things like cups of coffee.
             serializer.DataField(ref _soundCollection, "openSounds","canOpenSounds");
+            serializer.DataField(ref _pressurized, "pressurized",false);
+            serializer.DataField(ref _burstSound, "burstSound", "/Audio/Effects/flash_bang.ogg");
         }
 
         public override void Initialize()
@@ -72,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _contents.Capabilities = SolutionCaps.PourIn
                                      | SolutionCaps.PourOut
                                      | SolutionCaps.Injectable;
-            _opened = _defaultToOpened;
+            Opened = _defaultToOpened;
             UpdateAppearance();
         }
 
@@ -88,14 +91,14 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
         bool IUse.UseEntity(UseEntityEventArgs args)
         {
-            if (!_opened)
+            if (!Opened)
             {
                 //Do the opening stuff like playing the sounds.
                 var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
                 var file = _random.Pick(soundCollection.PickFiles);
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(file, args.User, AudioParams.Default);
-                _opened = true;
+                Opened = true;
                 return false;
             }
             return TryUseDrink(args.User);
@@ -126,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            if (!_opened)
+            if (!Opened)
             {
                 target.PopupMessage(target, Loc.GetString("Open it first!"));
                 return false;
@@ -158,6 +161,23 @@ namespace Content.Server.GameObjects.Components.Nutrition
             _contents.TryAddSolution(split);
             target.PopupMessage(target, Loc.GetString("You've had enough {0}!", Owner.Name));
             return false;
+        }
+
+        void ILand.Land(LandEventArgs eventArgs)
+        {
+            if (_pressurized &&
+                !Opened &&
+                _random.Prob(0.25f) &&
+                Owner.TryGetComponent(out SolutionComponent component))
+            {
+                Opened = true;
+
+                var solution = component.SplitSolution(component.CurrentVolume);
+                SpillHelper.SpillAt(Owner, solution, "PuddleSmear");
+
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_burstSound, Owner,
+                    AudioParams.Default.WithVolume(-4));
+            }
         }
     }
 }

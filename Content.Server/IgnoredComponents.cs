@@ -19,6 +19,8 @@
             "Marker",
             "EmergencyLight",
             "Clickable",
+            "CanSeeGases",
+            "RadiatingLight",
         };
 
     }

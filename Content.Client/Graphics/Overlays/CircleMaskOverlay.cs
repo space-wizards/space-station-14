@@ -17,15 +17,17 @@ namespace Content.Client.Graphics.Overlays
 #pragma warning restore 649
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        private readonly ShaderInstance _shader;
 
-        public CircleMaskOverlay() : base(nameof(OverlayType.CircleMaskOverlay))
+        public CircleMaskOverlay() : base(nameof(SharedOverlayID.CircleMaskOverlay))
         {
             IoCManager.InjectDependencies(this);
-            Shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
+            _shader = _prototypeManager.Index<ShaderPrototype>("CircleMask").Instance();
         }
 
-        protected override void Draw(DrawingHandleBase handle)
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
+            handle.UseShader(_shader);
             var worldHandle = (DrawingHandleWorld)handle;
             var viewport = _eyeManager.GetWorldViewport();
             worldHandle.DrawRect(viewport, Color.White);

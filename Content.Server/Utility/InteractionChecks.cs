@@ -1,8 +1,6 @@
-using System;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -10,7 +8,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Utility
 {
@@ -108,8 +105,7 @@ namespace Content.Server.Utility
         /// </summary>
         public static bool InRangeUnobstructed(IEntity user, MapCoordinates otherCoords,
             float range = SharedInteractionSystem.InteractionRange,
-            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null,
-            bool ignoreInsideBlocker = false)
+            int collisionMask = (int) CollisionGroup.Impassable, IEntity ignoredEnt = null, bool ignoreInsideBlocker = false)
         {
             var mapManager = IoCManager.Resolve<IMapManager>();
             var interactionSystem = EntitySystem.Get<SharedInteractionSystem>();
@@ -118,13 +114,11 @@ namespace Content.Server.Utility
             {
                 var localizationManager = IoCManager.Resolve<ILocalizationManager>();
                 user.PopupMessage(user, localizationManager.GetString("You can't reach there!"));
+
                 return false;
             }
 
             return true;
         }
-
-
-
     }
 }

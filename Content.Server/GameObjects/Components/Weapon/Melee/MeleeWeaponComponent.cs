@@ -16,6 +16,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using CannyFastMath;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 
@@ -99,6 +100,16 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
             var entities = ArcRayCast(eventArgs.User.Transform.WorldPosition, angle, eventArgs.User);
 
+            var audioSystem = EntitySystem.Get<AudioSystem>();
+            if (entities.Count() != 0)
+            {
+                audioSystem.PlayFromEntity( _hitSound, entities.First());
+            }
+            else
+            {
+                audioSystem.PlayFromEntity("/Audio/Weapons/punchmiss.ogg", eventArgs.User);
+            }
+
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
             {
@@ -113,10 +124,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
             }
 
             if(!OnHitEntities(hitEntities, eventArgs)) return;
-
-            var audioSystem = EntitySystem.Get<AudioSystem>();
-            var emitter = hitEntities.Count == 0 ? eventArgs.User : hitEntities[0];
-            audioSystem.PlayFromEntity(hitEntities.Count > 0 ? _hitSound : "/Audio/Weapons/punchmiss.ogg", emitter);
 
             if (Arc != null)
             {

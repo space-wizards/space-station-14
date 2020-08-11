@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Timing;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystemMessages;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
@@ -48,6 +52,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
                     new PointerInputCmdHandler(HandleActivateItemInWorld))
+                .Bind(ContentKeyFunctions.TryPullObject, new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<InteractionSystem>();
         }
 
@@ -71,13 +76,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // trigger dragdrops on the dropped entity
             foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
             {
-                if (dragDrop.DragDrop(interactionArgs)) return;
+                if (dragDrop.CanDragDrop(interactionArgs) &&
+                    dragDrop.DragDrop(interactionArgs))
+                {
+                    return;
+                }
             }
 
             // trigger dragdropons on the targeted entity
             foreach (var dragDropOn in target.GetAllComponents<IDragDropOn>())
             {
-                if (dragDropOn.DragDropOn(interactionArgs)) return;
+                if (dragDropOn.CanDragDropOn(interactionArgs) &&
+                    dragDropOn.DragDropOn(interactionArgs))
+                {
+                    return;
+                }
             }
         }
 
@@ -221,6 +234,77 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             return true;
         }
 
+        private bool HandleTryPullObject(ICommonSession session, GridCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!_mapManager.GridExists(coords.GridID))
+            {
+                Logger.InfoS("system.interaction", $"Invalid Coordinates for pulling: client={session}, coords={coords}");
+                return false;
+            }
+
+            if (uid.IsClientSide())
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent pull interaction with client-side entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            var player = session.AttachedEntity;
+
+            if (player == null)
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent pulling interaction with no attached entity. Session={session}, Uid={uid}");
+                return false;
+            }
+
+            if (!EntityManager.TryGetEntity(uid, out var pulledObject))
+            {
+                return false;
+            }
+
+            if (player == pulledObject)
+            {
+                return false;
+            }
+
+            if (!pulledObject.TryGetComponent<PullableComponent>(out var pull))
+            {
+                return false;
+            }
+
+            if (!player.TryGetComponent<HandsComponent>(out var hands))
+            {
+                return false;
+            }
+
+            var dist = player.Transform.GridPosition.Position - pulledObject.Transform.GridPosition.Position;
+            if (dist.LengthSquared > InteractionRangeSquared)
+            {
+                return false;
+            }
+
+            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
+                collidable.Anchored)
+            {
+                return false;
+            }
+
+            var controller = collidable.EnsureController<PullController>();
+
+            if (controller.GettingPulled)
+            {
+                hands.StopPull();
+            }
+            else
+            {
+                hands.StartPull(pull);
+            }
+
+            return false;
+        }
+
         private void UserInteraction(IEntity player, GridCoordinates coordinates, EntityUid clickedUid)
         {
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -286,7 +370,8 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 if (item != null)
                 {
                     // After attack: Check if we clicked on an empty location, if so the only interaction we can do is AfterInteract
-                    InteractAfter(player, item, coordinates);
+                    var distSqrt = (playerTransform.WorldPosition - coordinates.ToMapPos(_mapManager)).LengthSquared;
+                    InteractAfter(player, item, coordinates, distSqrt <= InteractionRangeSquared);
                 }
 
                 return;
@@ -330,9 +415,9 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         /// <summary>
         ///     We didn't click on any entity, try doing an AfterInteract on the click location
         /// </summary>
-        private void InteractAfter(IEntity user, IEntity weapon, GridCoordinates clickLocation)
+        private void InteractAfter(IEntity user, IEntity weapon, GridCoordinates clickLocation, bool canReach)
         {
-            var message = new AfterInteractMessage(user, weapon, null, clickLocation);
+            var message = new AfterInteractMessage(user, weapon, null, clickLocation, canReach);
             RaiseLocalEvent(message);
             if (message.Handled)
             {
@@ -340,7 +425,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             }
 
             var afterInteracts = weapon.GetAllComponents<IAfterInteract>().ToList();
-            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation};
+            var afterInteractEventArgs = new AfterInteractEventArgs {User = user, ClickLocation = clickLocation, CanReach = canReach};
 
             foreach (var afterInteract in afterInteracts)
             {
@@ -380,7 +465,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation);
+            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, true);
             RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
             {
@@ -391,7 +476,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Target = attacked
+                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = true
             };
 
             foreach (var afterAttack in afterAttacks)
@@ -687,7 +772,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 }
             }
 
-            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation);
+            var afterAtkMsg = new AfterInteractMessage(user, weapon, attacked, clickLocation, false);
             RaiseLocalEvent(afterAtkMsg);
             if (afterAtkMsg.Handled)
                 return;
@@ -695,7 +780,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             var afterAttacks = weapon.GetAllComponents<IAfterInteract>().ToList();
             var afterAttackEventArgs = new AfterInteractEventArgs
             {
-                User = user, ClickLocation = clickLocation, Target = attacked
+                User = user, ClickLocation = clickLocation, Target = attacked, CanReach = false
             };
 
             //See if we have a ranged attack interaction

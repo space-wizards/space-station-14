@@ -19,6 +19,7 @@ namespace Content.Server.GameObjects.Components
         public const float DefaultThrowTime = 0.25f;
 
         private bool _shouldCollide = true;
+        private bool _shouldStop = false;
 
         public override string Name => "ThrownItem";
         public override uint? NetID => ContentNetIDs.THROWN_ITEM;
@@ -31,6 +32,13 @@ namespace Content.Server.GameObjects.Components
         void ICollideBehavior.CollideWith(IEntity entity)
         {
             if (!_shouldCollide) return;
+            if (entity.TryGetComponent(out CollidableComponent collid))
+            {
+                if (!collid.Hard) // ignore non hard
+                    return;
+
+                _shouldStop = true; // hit something hard => stop after this collision
+            }
             if (entity.TryGetComponent(out DamageableComponent damage))
             {
                 damage.TakeDamage(DamageType.Brute, 10, Owner, User);
@@ -40,7 +48,7 @@ namespace Content.Server.GameObjects.Components
             // after impacting the first object.
             // For realism this should actually be changed when the velocity of the object is less than a threshold.
             // This would allow ricochets off walls, and weird gravity effects from slowing the object.
-            if (Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 _shouldCollide = false;
             }
@@ -53,14 +61,17 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            if (Owner.TryGetComponent(out CollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            if (Owner.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 body.PhysicsShapes[0].CollisionMask &= (int) ~CollisionGroup.ThrownItem;
 
-                var physics = Owner.GetComponent<PhysicsComponent>();
-                physics.LinearVelocity = Vector2.Zero;
-                physics.Status = BodyStatus.OnGround;
+                if (body.TryGetController(out ThrownController controller))
+                {
+                    controller.LinearVelocity = Vector2.Zero;
+                }
+
                 body.Status = BodyStatus.OnGround;
+
                 Owner.RemoveComponent<ThrownItemComponent>();
                 EntitySystem.Get<InteractionSystem>().LandInteraction(User, Owner, Owner.Transform.GridPosition);
             }
@@ -68,17 +79,20 @@ namespace Content.Server.GameObjects.Components
 
         void ICollideBehavior.PostCollide(int collideCount)
         {
-            if (collideCount > 0)
+            if (_shouldStop && collideCount > 0)
             {
                 StopThrow();
             }
         }
 
-        public void StartThrow(Vector2 initialImpulse)
+        public void StartThrow(Vector2 direction, float speed)
         {
-            var comp = Owner.GetComponent<PhysicsComponent>();
+            var comp = Owner.GetComponent<IPhysicsComponent>();
             comp.Status = BodyStatus.InAir;
-            comp.Momentum = initialImpulse;
+
+            var controller = comp.EnsureController<ThrownController>();
+            controller.Push(direction, speed);
+
             StartStopTimer();
         }
 
@@ -101,6 +115,13 @@ namespace Content.Server.GameObjects.Components
             }
 
             StopThrow();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            Owner.EnsureComponent<CollidableComponent>().EnsureController<ThrownController>();
         }
     }
 }

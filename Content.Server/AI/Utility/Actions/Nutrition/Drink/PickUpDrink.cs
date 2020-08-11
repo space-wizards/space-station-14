@@ -40,8 +40,6 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
             
             return new[]
             {
-                considerationsManager.Get<TargetAccessibleCon>()
-                    .BoolCurve(context),
                 considerationsManager.Get<FreeHandCon>()
                     .BoolCurve(context),
                 considerationsManager.Get<ThirstCon>()
@@ -50,6 +48,8 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
                     .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<DrinkValueCon>()
                     .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
+                considerationsManager.Get<TargetAccessibleCon>()
+                    .BoolCurve(context),
             };
         }
 

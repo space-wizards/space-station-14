@@ -1,15 +1,14 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.Components.Sound;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Server.Utility;
 using Content.Shared.GameObjects;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -25,7 +24,7 @@ namespace Content.Server.GameObjects.Components.Power
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit
     {
         public override string Name => "PoweredLight";
 
@@ -221,26 +220,26 @@ namespace Content.Server.GameObjects.Components.Power
 
             Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged += UpdateLight;
 
-            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner, out var existed);
-
-            if (!existed) // Insert a light tube if there wasn't any.
-            {
-                switch (BulbType)
-                {
-                    case LightBulbType.Tube:
-                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightTube", Owner.Transform.GridPosition));
-                        break;
-                    case LightBulbType.Bulb:
-                        _lightBulbContainer.Insert(Owner.EntityManager.SpawnEntity("LightBulb", Owner.Transform.GridPosition));
-                        break;
-                }
-            }
+            _lightBulbContainer = ContainerManagerComponent.Ensure<ContainerSlot>("light_bulb", Owner);
         }
 
         public override void OnRemove()
         {
             Owner.GetComponent<PowerReceiverComponent>().OnPowerStateChanged -= UpdateLight;
             base.OnRemove();
+        }
+
+        void IMapInit.MapInit()
+        {
+            var prototype = BulbType switch
+            {
+                LightBulbType.Bulb => "LightBulb",
+                LightBulbType.Tube => "LightTube",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var entity = Owner.EntityManager.SpawnEntity(prototype, Owner.Transform.GridPosition);
+            _lightBulbContainer.Insert(entity);
         }
     }
 }

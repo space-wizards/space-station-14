@@ -100,11 +100,11 @@ namespace Content.Tests.Server.Preferences
             await db.SaveSelectedCharacterIndexAsync(username, slot);
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), slot);
             var prefs = await db.GetPlayerPreferencesAsync(username);
-            Assert.AreEqual(prefs.SelectedCharacterIndex, 0);
+            Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
 
             await db.SaveSelectedCharacterIndexAsync(username, MaxCharacterSlots);
             prefs = await db.GetPlayerPreferencesAsync(username);
-            Assert.AreEqual(prefs.SelectedCharacterIndex, MaxCharacterSlots - 1);
+            Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(MaxCharacterSlots - 1));
         }
     }
 }

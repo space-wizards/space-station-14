@@ -1,0 +1,38 @@
+﻿- type: entity
+  id: StorageTank
+  name: storage tank
+  description: "A liquids storage tank"
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+    IsScrapingFloor: true
+  - type: Physics
+    mass: 15
+    anchored: false
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 10
+  - type: Solution
+    maxVol: 1500
+    caps: 2
+  - type: Pourable
+    transferAmount: 100.0
+  placement:
+    snap:
+    - Wall

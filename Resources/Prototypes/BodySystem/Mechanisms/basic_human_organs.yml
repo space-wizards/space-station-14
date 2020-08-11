@@ -4,10 +4,10 @@
   name: "human heart (debug)"
   components:
   - type: Sprite
-    sprite: Objects/BodySystem/Organs/basic_human.rsi
+    sprite: Mobs/Parts/organs_human.rsi
     state: heart_human
   - type: Icon
-    sprite: Objects/BodySystem/Organs/basic_human.rsi
+    sprite: Mobs/Parts/organs_human.rsi
     state: heart_human
   - type: DroppedMechanism
     debugLoadMechanismData: mechanism.Heart.BasicHuman

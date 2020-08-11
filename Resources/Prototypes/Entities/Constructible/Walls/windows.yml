@@ -1,0 +1,50 @@
+﻿- type: entity
+  id: Window
+  name: window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    color: "#DDDDDD"
+    netsync: false
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/window.rsi
+  - type: Icon
+    sprite: Constructible/Structures/Windows/window.rsi
+    state: full
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.3, 0.5"
+      layer:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 100
+  - type: SnapGrid
+    offset: Center
+  - type: Airtight
+  - type: Window
+    base: window
+
+- type: entity
+  id: ReinforcedWindow
+  name: reinforced window
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+  - type: Window
+    base: rwindow
+  - type: Icon
+    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+    state: full

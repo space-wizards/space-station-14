@@ -1,12 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Chemistry;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
@@ -15,11 +18,13 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timers.Timer;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Fluids
 {
@@ -27,7 +32,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    public class PuddleComponent : Component
+    public class PuddleComponent : Component, IExamine, IMapInit
     {
         // Current design: Something calls the SpillHelper.Spill, that will either
         // A) Add to an existing puddle at the location (normalised to tile-center) or
@@ -44,12 +49,25 @@ namespace Content.Server.GameObjects.Components.Fluids
 
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager;
+        [Dependency] private readonly ILocalizationManager _loc;
 #pragma warning restore 649
 
         public override string Name => "Puddle";
 
         private CancellationTokenSource _evaporationToken;
         private ReagentUnit _evaporateThreshold; // How few <Solution Quantity> we can hold prior to self-destructing
+        public ReagentUnit EvaporateThreshold
+        {
+            get => _evaporateThreshold;
+            set => _evaporateThreshold = value;
+        }
+        private ReagentUnit _slipThreshold = ReagentUnit.New(3);
+        public ReagentUnit SlipThreshold
+        {
+            get => _slipThreshold;
+            set => _slipThreshold = value;
+        }
+        private bool _slippery = false;
         private float _evaporateTime;
         private string _spillSound;
 
@@ -78,6 +96,7 @@ namespace Content.Server.GameObjects.Components.Fluids
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
         private SolutionComponent _contents;
+        public bool EmptyHolder => _contents.ReagentList.Count == 0;
         private int _spriteVariants;
         // Whether the underlying solution color should be used
         private bool _recolor;
@@ -87,11 +106,12 @@ namespace Content.Server.GameObjects.Components.Fluids
         {
             serializer.DataFieldCached(ref _spillSound, "spill_sound", "/Audio/Effects/Fluids/splat.ogg");
             serializer.DataField(ref _overflowVolume, "overflow_volume", ReagentUnit.New(20));
-            serializer.DataField(ref _evaporateTime, "evaporate_time", 600.0f);
+            serializer.DataField(ref _evaporateTime, "evaporate_time", 5.0f);
             // Long-term probably have this based on the underlying reagents
-            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(2));
+            serializer.DataField(ref _evaporateThreshold, "evaporate_threshold", ReagentUnit.New(20));
             serializer.DataField(ref _spriteVariants, "variants", 1);
             serializer.DataField(ref _recolor, "recolor", false);
+
         }
 
         public override void Initialize()
@@ -119,8 +139,23 @@ namespace Content.Server.GameObjects.Components.Fluids
             var baseName = new ResourcePath(_spriteComponent.BaseRSIPath).FilenameWithoutExtension;
 
             _spriteComponent.LayerSetState(0, $"{baseName}-{randomVariant}"); // TODO: Remove hardcode
-            _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
             // UpdateAppearance should get called soon after this so shouldn't need to call Dirty() here
+
+            UpdateStatus();
+        }
+
+        void IMapInit.MapInit()
+        {
+            var robustRandom = IoCManager.Resolve<IRobustRandom>();
+            _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
+        }
+
+        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
+        {
+            if(_slippery)
+            {
+                message.AddText(_loc.GetString("It looks slippery."));
+            }
         }
 
         // Flow rate should probably be controlled globally so this is it for now
@@ -174,12 +209,28 @@ namespace Content.Server.GameObjects.Components.Fluids
             }
         }
 
-        private void UpdateStatus()
+        public void Evaporate()
         {
-            // If UpdateStatus is getting called again it means more fluid has been updated so let's just wait
-            _evaporationToken?.Cancel();
+            _contents.SplitSolution(ReagentUnit.Min(ReagentUnit.New(1), _contents.CurrentVolume));
+            if (CurrentVolume == 0)
+            {
+                Owner.Delete();
+            }
+            else
+            {
+                UpdateStatus();
+            }
+        }
 
-            if (CurrentVolume > _evaporateThreshold)
+        public void UpdateStatus()
+        {
+            _evaporationToken?.Cancel();
+            if(Owner.Deleted) return;
+
+            UpdateAppearance();
+            UpdateSlip();
+
+            if (_evaporateThreshold == ReagentUnit.New(-1) || CurrentVolume > _evaporateThreshold)
             {
                 return;
             }
@@ -187,12 +238,26 @@ namespace Content.Server.GameObjects.Components.Fluids
             _evaporationToken = new CancellationTokenSource();
 
             // KYS to evaporate
-            Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), CheckEvaporate, _evaporationToken.Token);
+            Timer.Spawn(TimeSpan.FromSeconds(_evaporateTime), Evaporate, _evaporationToken.Token);
+        }
+
+        private void UpdateSlip()
+        {
+            if ((_slipThreshold == ReagentUnit.New(-1) || CurrentVolume < _slipThreshold) && Owner.TryGetComponent(out SlipperyComponent existingSlipperyComponent))
+            {
+                Owner.RemoveComponent<SlipperyComponent>();
+                _slippery = false;
+            }
+            else if (CurrentVolume >= _slipThreshold && !Owner.TryGetComponent(out SlipperyComponent newSlipperyComponent))
+            {
+                Owner.AddComponent<SlipperyComponent>();
+                _slippery = true;
+            }
         }
 
         private void UpdateAppearance()
         {
-            if (Owner.Deleted)
+            if (Owner.Deleted || EmptyHolder)
             {
                 return;
             }
@@ -329,7 +394,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var entity in _snapGrid.GetInDir(direction))
             {
-                if (entity.TryGetComponent(out CollidableComponent collidable) &&
+                if (entity.TryGetComponent(out ICollidableComponent collidable) &&
                     (collidable.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
