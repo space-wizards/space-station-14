@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Markers;
 using Robust.Server.Interfaces.Console;
@@ -39,7 +39,7 @@ namespace Content.Server.Administration
             if (location == "?")
             {
                 var locations = string.Join(", ",
-                    comp.GetAllComponents<WarpPointComponent>()
+                    comp.EntityQuery<WarpPointComponent>()
                         .Select(p => p.Location)
                         .Where(p => p != null)
                         .OrderBy(p => p)
@@ -59,7 +59,7 @@ namespace Content.Server.Administration
                 var currentMap = player.AttachedEntity.Transform.MapID;
                 var currentGrid = player.AttachedEntity.Transform.GridID;
 
-                var found = comp.GetAllComponents<WarpPointComponent>()
+                var found = comp.EntityQuery<WarpPointComponent>()
                     .Where(p => p.Location == location)
                     .Select(p => p.Owner.Transform.GridPosition)
                     .OrderBy(p => p, Comparer<GridCoordinates>.Create((a, b) =>

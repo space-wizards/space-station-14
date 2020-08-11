@@ -139,7 +139,11 @@ namespace Content.Client.GameObjects.Components.Items
 
             if (entity == null)
             {
-                _sprite.LayerSetVisible($"hand-{name}", false);
+                if (_sprite.LayerMapTryGet($"hand-{name}", out var layer))
+                {
+                    _sprite.LayerSetVisible(layer, false);
+                }
+
                 return;
             }
 

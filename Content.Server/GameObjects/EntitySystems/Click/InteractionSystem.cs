@@ -76,13 +76,21 @@ namespace Content.Server.GameObjects.EntitySystems.Click
             // trigger dragdrops on the dropped entity
             foreach (var dragDrop in dropped.GetAllComponents<IDragDrop>())
             {
-                if (dragDrop.DragDrop(interactionArgs)) return;
+                if (dragDrop.CanDragDrop(interactionArgs) &&
+                    dragDrop.DragDrop(interactionArgs))
+                {
+                    return;
+                }
             }
 
             // trigger dragdropons on the targeted entity
             foreach (var dragDropOn in target.GetAllComponents<IDragDropOn>())
             {
-                if (dragDropOn.DragDropOn(interactionArgs)) return;
+                if (dragDropOn.CanDragDropOn(interactionArgs) &&
+                    dragDropOn.DragDropOn(interactionArgs))
+                {
+                    return;
+                }
             }
         }
 
@@ -277,8 +285,13 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return false;
             }
 
-            var physics = pull.Owner.GetComponent<IPhysicsComponent>();
-            var controller = physics.EnsureController<PullController>();
+            if (!pull.Owner.TryGetComponent(out ICollidableComponent collidable) ||
+                collidable.Anchored)
+            {
+                return false;
+            }
+
+            var controller = collidable.EnsureController<PullController>();
 
             if (controller.GettingPulled)
             {

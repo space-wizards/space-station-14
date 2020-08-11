@@ -11,6 +11,10 @@
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
+  - type: MovedByPressure
+  - type: Barotrauma
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
@@ -139,6 +143,8 @@
   - type: Grammar
     proper: true
   - type: Pullable
+  - type: CanSeeGases
+  - type: DoAfter
 
 - type: entity
   save: false

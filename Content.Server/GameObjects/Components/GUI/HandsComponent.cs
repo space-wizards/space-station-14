@@ -188,6 +188,25 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(index)?.Container.CanInsert(item.Owner) == true;
         }
 
+        /// <summary>
+        /// Calls the Dropped Interaction with the item.
+        /// </summary>
+        /// <param name="item">The itemcomponent of the item to be dropped</param>
+        /// <param name="doMobChecks">Check if the item can be dropped</param>
+        /// <returns>True if IDropped.Dropped was called, otherwise false</returns>
+        private bool DroppedInteraction(ItemComponent item, bool doMobChecks)
+        {
+            var interactionSystem = _entitySystemManager.GetEntitySystem<InteractionSystem>();
+            if (doMobChecks)
+            {
+                if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
+                    return false;
+            }
+            
+            interactionSystem.DroppedInteraction(Owner, item.Owner);
+            return true;
+        }
+
         public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
         {
             handName = null;
@@ -219,11 +238,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 return false;
             }
 
-            if (doMobChecks &&
-                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
-            {
+            if (!DroppedInteraction(item, doMobChecks))
                 return false;
-            }
 
             item.RemovedFromSlot();
             item.Owner.Transform.GridPosition = coords;
@@ -262,11 +278,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (doMobChecks &&
-                !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
-            {
+            if (!DroppedInteraction(item, doMobChecks))
                 return false;
-            }
 
             if (!hand.Container.Remove(hand.Entity))
             {
@@ -325,10 +338,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (doMobChecks && !_entitySystemManager.GetEntitySystem<InteractionSystem>().TryDroppedInteraction(Owner, item.Owner))
-            {
+            if (!DroppedInteraction(item, doMobChecks))
                 return false;
-            }
 
             if (!hand.Container.CanRemove(hand.Entity))
             {
@@ -500,6 +511,17 @@ namespace Content.Server.GameObjects.Components.GUI
             if (Owner == pullable.Owner)
             {
                 return;
+            }
+
+            var isOwnerContained = ContainerHelpers.TryGetContainer(Owner, out var ownerContainer);
+            var isPullableContained = ContainerHelpers.TryGetContainer(pullable.Owner, out var pullableContainer);
+
+            if (isOwnerContained || isPullableContained)
+            {
+                if (ownerContainer != pullableContainer)
+                {
+                    return;
+                }
             }
 
             if (IsPulling)

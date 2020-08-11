@@ -3,7 +3,7 @@
   name: vending machine
   components:
   - type: Physics
-    Anchored: true
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -51,18 +51,6 @@
     LayoutId: Vending
   - type: Anchorable
   - type: Pullable
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineAmmo
-  name: AmmoVend
-  components:
-  - type: VendingMachine
-    pack: AmmoVend
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/ammo.rsi
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/ammo.rsi
 
 - type: entity
   parent: VendingMachine
@@ -323,18 +311,6 @@
     sprite: Constructible/Power/VendingMachines/snack.rsi
   - type: Sprite
     sprite: Constructible/Power/VendingMachines/snack.rsi
-
-- type: entity
-  parent: VendingMachine
-  id: VendingMachineSoviet
-  name: Товарищ-vend
-  components:
-  - type: VendingMachine
-    pack: soviet
-  - type: Icon
-    sprite: Constructible/Power/VendingMachines/soviet.rsi
-  - type: Sprite
-    sprite: Constructible/Power/VendingMachines/soviet.rsi
 
 - type: entity
   parent: VendingMachine
