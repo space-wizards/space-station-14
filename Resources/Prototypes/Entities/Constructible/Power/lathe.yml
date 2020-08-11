@@ -33,6 +33,7 @@
   parent: BaseLathe
   id: Autolathe
   name: "autolathe"
+  description: It produces items using metal and glass.
   components:
   - type: Sprite
     sprite: Constructible/Power/autolathe.rsi
@@ -69,7 +70,7 @@
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
+      - CableStack1
       - Crowbar
       - Multitool
   - type: Appearance
@@ -80,6 +81,7 @@
   parent: BaseLathe
   id: Protolathe
   name: "protolathe"
+  description: Converts raw materials into useful objects.
   components:
   - type: Sprite
     sprite: Constructible/Power/protolathe.rsi
@@ -118,7 +120,7 @@
       - Screwdriver
       - Welder
       - Wrench
-      - CableStack
+      - CableStack1
       - Crowbar
       - Multitool
   - type: UserInterface

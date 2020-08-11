@@ -18,6 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Serialization;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Interactable
 {

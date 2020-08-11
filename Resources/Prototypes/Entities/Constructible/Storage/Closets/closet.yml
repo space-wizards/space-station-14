@@ -17,6 +17,9 @@
     sprite: Constructible/Structures/closet.rsi
     state: generic_door
   - type: Clickable
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Collidable
     shapes:

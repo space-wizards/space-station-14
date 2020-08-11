@@ -2,7 +2,7 @@
   parent: HatBase
   id: HatWelding
   name: welding mask
-  description: ''
+  description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
   components:
   - type: Sprite
     sprite: Clothing/Head/welding.rsi
@@ -15,7 +15,7 @@
   parent: HatBase
   id: HatWeldingup
   name: welding mask (up)
-  description: ''
+  description: A head-mounted face cover designed to protect the wearer completely from space-arc eye.
   components:
   - type: Sprite
     sprite: Clothing/Head/weldingup.rsi
@@ -28,7 +28,7 @@
   parent: HatBase
   id: HatFireWeldingMask
   name: fire welding mask
-  description: ''
+  description: A painted welding helmet, this one has flames on it.
   components:
   - type: Sprite
     sprite: Clothing/Head/fire_welding_mask_1.rsi
@@ -41,7 +41,7 @@
   parent: HatBase
   id: HatFireWeldingMaskup
   name: fire welding mask (up)
-  description: ''
+  description: A painted welding helmet, this one has flames on it.
   components:
   - type: Sprite
     sprite: Clothing/Head/fire_welding_mask_1up.rsi
@@ -54,7 +54,7 @@
   parent: HatBase
   id: HatBlueFlameWeldingMask
   name: blue flame welding mask
-  description: ''
+  description: A painted welding helmet, this one has blue flames on it.
   components:
   - type: Sprite
     sprite: Clothing/Head/blue_flame_welding_mask_1.rsi
@@ -67,7 +67,7 @@
   parent: HatBase
   id: HatBlueFlameWeldingMaskup
   name: blue flame welding mask (up)
-  description: ''
+  description: A painted welding helmet, this one has blue flames on it.
   components:
   - type: Sprite
     sprite: Clothing/Head/blue_flame_welding_mask_1up.rsi
@@ -80,7 +80,7 @@
   parent: HatBase
   id: HatPaintedwelding
   name: painted welding mask
-  description: ''
+  description: A welding helmet, painted in crimson.
   components:
   - type: Sprite
     sprite: Clothing/Head/paintedwelding.rsi
@@ -93,7 +93,7 @@
   parent: HatBase
   id: HatPaintedweldingup
   name: painted welding mask (up)
-  description: ''
+  description: A welding helmet, painted in crimson.
   components:
   - type: Sprite
     sprite: Clothing/Head/paintedweldingup.rsi

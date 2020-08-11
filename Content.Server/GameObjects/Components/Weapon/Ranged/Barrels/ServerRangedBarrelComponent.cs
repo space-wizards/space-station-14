@@ -28,6 +28,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Server.Interfaces;
+using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {

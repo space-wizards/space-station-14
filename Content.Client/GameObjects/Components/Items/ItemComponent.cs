@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.Components.Storage;
+﻿using Content.Client.GameObjects.Components.Disposal;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
@@ -18,7 +18,7 @@ namespace Content.Client.GameObjects.Components.Items
 {
     [RegisterComponent]
     [ComponentReference(typeof(IItemComponent))]
-    public class ItemComponent : Component, IItemComponent
+    public class ItemComponent : Component, IItemComponent, IClientDraggable
     {
         public override string Name => "Item";
         public override uint? NetID => ContentNetIDs.ITEM;
@@ -79,6 +79,16 @@ namespace Content.Client.GameObjects.Components.Items
 
             var itemComponentState = (ItemComponentState)curState;
             EquippedPrefix = itemComponentState.EquippedPrefix;
+        }
+
+        bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
+        {
+            return eventArgs.Target.HasComponent<DisposalUnitComponent>();
+        }
+
+        bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
+        {
+            return true;
         }
     }
 }
