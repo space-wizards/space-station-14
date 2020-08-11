@@ -10,5 +10,11 @@
     texture: Objects/Misc/fire_extinguisher.png
   - type: Item
     size: 10
-  - type: GasHolder
+  - type: Solution
+    maxVol: 1000
+    caps: 9
+    contents:
+      reagents:
+        - ReagentId: chem.H2O
+          Quantity: 100
   - type: GasSprayer

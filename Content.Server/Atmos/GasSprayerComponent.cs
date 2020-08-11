@@ -1,17 +1,21 @@
-﻿using Content.Server.Interfaces;
+﻿using System;
+using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.Pointing;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
 
 namespace Content.Server.Atmos
 {
     [RegisterComponent]
-    public class GasSprayerComponent: Component, IAfterInteract
+    public class GasSprayerComponent : Component, IAfterInteract
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
@@ -19,26 +23,35 @@ namespace Content.Server.Atmos
 #pragma warning restore 649
 
         public override string Name => "GasSprayer";
+
+
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-
-            var playerPos = eventArgs.User.Transform.GridPosition;
-            var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
-            playerPos.Offset(direction);
-
-            var spray =_serverEntityManager.SpawnEntity("ExtinguisherSpray",playerPos);
-
-            if(!spray.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out SolutionComponent tank) &&
+                tank.Solution.GetReagentQuantity("chem.H2O").Float().Equals(0f))
             {
-                return;
+                //TODO: Parameterize to use object prototype's name
+                _notifyManager.PopupMessage(Owner, eventArgs.User,
+                    Loc.GetString("The Extinguisher is out of water!", Owner));
             }
+            else
+            {
+                var playerPos = eventArgs.User.Transform.GridPosition;
+                var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
+                playerPos.Offset(direction);
 
-            appearance.SetData(RoguePointingArrowVisuals.Rotation,direction.ToAngle().Degrees);
+                var spray = _serverEntityManager.SpawnEntity("ExtinguisherSpray", playerPos);
 
-            //Todo: Parameterize into prototype
-            spray.GetComponent<GasVaporComponent>().StartMove(direction,5);
+                if (!spray.TryGetComponent(out AppearanceComponent appearance))
+                {
+                    return;
+                }
 
-            return;
+                appearance.SetData(RoguePointingArrowVisuals.Rotation, direction.ToAngle().Degrees);
+
+                //Todo: Parameterize into prototype
+                spray.GetComponent<GasVaporComponent>().StartMove(direction, 5);
+            }
         }
     }
 }
