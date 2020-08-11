@@ -16,5 +16,5 @@
     contents:
       reagents:
         - ReagentId: chem.H2O
-          Quantity: 100
+          Quantity: 1000
   - type: GasSprayer

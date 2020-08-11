@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Pointing;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Microsoft.CodeAnalysis;
@@ -36,6 +37,9 @@ namespace Content.Server.Atmos
             }
             else
             {
+
+                tank.TryRemoveReagent("chem.H2O", ReagentUnit.New(50));
+
                 var playerPos = eventArgs.User.Transform.GridPosition;
                 var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
                 playerPos.Offset(direction);
