@@ -38,8 +38,15 @@ namespace Content.Client.UserInterface
             {
                 Columns = 4,
             };
-            foreach (var cmd in _buttons) //TODO EXP: filter if the player can do those actually
+            //TODO: we check here the commands, but what if we join a new server? the window gets created at game launch
+            // create the window everytime we open it?
+            var groupController = IoCManager.Resolve<IClientConGroupController>(); 
+            foreach (var cmd in _buttons)
             {
+                // Check if the player can do the command
+                if (cmd.RequiredCommand != string.Empty && !groupController.CanCommand(cmd.RequiredCommand))
+                    continue;
+
                 //TODO: make toggle?
                 var button = new Button
                 {
@@ -67,7 +74,7 @@ namespace Content.Client.UserInterface
         private abstract class CommandButton
         {
             public abstract string Name { get; }
-            //abstract _contents
+            public abstract string RequiredCommand { get; }
             public string? SubmitText;
             public abstract void Submit(Dictionary<string,string> val);
             public void ButtonPressed(ButtonEventArgs args)
@@ -83,6 +90,7 @@ namespace Content.Client.UserInterface
         private class KickCommandButton : CommandButton
         {
             public override string Name => "Kick";
+            public override string RequiredCommand => "kick";
 
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
@@ -111,6 +119,8 @@ namespace Content.Client.UserInterface
         private class TestCommandButton : CommandButton
         {
             public override string Name => "Test";
+
+            public override string RequiredCommand => string.Empty;
 
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {

@@ -37,6 +37,7 @@
   - loc
   - hostlogin
   - events
+  CanAdminMenu: true
 
 - Index: 100
   Name: Administrator
@@ -98,6 +99,7 @@
   - destroymechanism
   CanViewVar: true
   CanAdminPlace: true
+  CanAdminMenu: true
 
 - Index: 200
   Name: Host
@@ -189,3 +191,4 @@
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
+  CanAdminMenu: true

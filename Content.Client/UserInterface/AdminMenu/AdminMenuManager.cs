@@ -10,7 +10,7 @@ namespace Content.Client.UserInterface.AdminMenu
         SS14Window _window;
         SS14Window _commandWindow; //TODO EXP: make this a list/array of windows? then we can have multiple cmd windows open
 
-        public void Initialize() //TODO EXP: only show if you're have the permissions. => make a new permission?
+        public void Initialize()
         {
             _window = new AdminMenuWindow();
         }
