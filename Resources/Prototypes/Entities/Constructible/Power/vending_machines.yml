@@ -47,6 +47,32 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineAmmo
+  name: AmmoVend
+  components:
+  - type: VendingMachine
+    pack: AmmoVend
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/ammo.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineBooze
   name: Booze-O-Mat
   components:
@@ -616,6 +642,32 @@
       normalUnshaded: true
       ejectUnshaded: true
       denyUnshaded: true
+      broken: true
+    - type: WiresVisualizer
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSoviet
+  name: Товарищ-vend
+  components:
+  - type: VendingMachine
+    pack: soviet
+  - type: Icon
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
+  - type: Sprite
+    sprite: Constructible/Power/VendingMachines/soviet.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Unlit"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - texture: Constructible/Power/VendingMachines/maintenance_panel.png
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+    visuals:
+    - type: VendingMachineVisualizer
+      normalUnshaded: true
       broken: true
     - type: WiresVisualizer
 
