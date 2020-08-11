@@ -118,6 +118,7 @@
     - type: DisposalUnitVisualizer
       state_unanchored: condisposal
       state_anchored: disposal
+      state_charging: disposal-charging
       overlay_charging: dispover-charge
       overlay_ready: dispover-ready
       overlay_full: dispover-full
