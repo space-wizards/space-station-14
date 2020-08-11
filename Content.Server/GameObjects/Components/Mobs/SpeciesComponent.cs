@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Mobs
 
             serializer.DataField(ref templatename, "Template", "Human");
 
-            var type = typeof(SpeciesComponent).Assembly.GetType("Content.Server.GameObjects." + templatename);
+            var type = typeof(SpeciesComponent).Assembly.GetType("Content.Server.GameObjects.Components.Mobs.DamageThresholdTemplates." + templatename);
             DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }
