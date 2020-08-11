@@ -4,8 +4,8 @@
     "x": 32,
     "y": 32
   },
-  "license": "Thanks Yeeye",
-  "copyright": "By Yeeye",
+  "license": "CC-BY-SA 3.0",
+  "copyright": "Yeeye",
   "states": [
     {
       "name": "memoryLeek",
