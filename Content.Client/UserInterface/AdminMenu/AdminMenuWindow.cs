@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Content.Client.UserInterface.AdminMenu;
 using Robust.Client.Console;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -97,10 +98,15 @@ namespace Content.Client.UserInterface
                 new CommandUIDropDown
                 {
                     Name = "Player",
-                    Data = new List<string> //TODO EXP: get all players
+                    GetData = () =>  //TODO EXP: get all players
                     {
-                        "Exp",
-                        "PJB"
+                        var playerManager = IoCManager.Resolve<IPlayerManager>();
+                        List<string> players = new List<string>();
+                        foreach (var session in playerManager.Sessions)
+                        {
+                            players.Add(session.Name);
+                        }
+                        return players;
                     }
                 },
                 new CommandUILineEdit
@@ -112,7 +118,7 @@ namespace Content.Client.UserInterface
 
             public override void Submit(Dictionary<string,string> val)
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick {val["Player"]} {val["Reason"]}");
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{val["Player"]}\" \"{val["Reason"]}\"");
             }
         }
 
@@ -127,7 +133,7 @@ namespace Content.Client.UserInterface
                 new CommandUIDropDown
                 {
                     Name = "DropDown",
-                    Data = new List<string>
+                    GetData = () => new List<string>
                     {
                         "1",
                         "2"
@@ -166,13 +172,14 @@ namespace Content.Client.UserInterface
         }
         private class CommandUIDropDown : CommandUIControl
         {
-            public List<string> Data;
+            public Func<List<string>> GetData;
 
             public override Control GetControl()
             {
                 var opt = new OptionButton { CustomMinimumSize = (100, 0) };
-                foreach (var data in Data)
-                    opt.AddItem(data);
+                var data = GetData();
+                foreach (var item in data)
+                    opt.AddItem(item);
 
                 opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
                 Control = opt;
@@ -181,7 +188,7 @@ namespace Content.Client.UserInterface
 
             public override string GetValue()
             {
-                return Data[((OptionButton)Control).SelectedId];
+                return ((OptionButton)Control).SelectedText;
             }
         }
         private class CommandUICheckBox : CommandUIControl
