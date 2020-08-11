@@ -50,9 +50,6 @@ namespace Content.Server.GameObjects.Components.Items
                 var desiredTile = _tileDefinitionManager[_outputTile];
                 mapGrid.SetTile(eventArgs.ClickLocation, new Tile(desiredTile.TileId));
                 EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Items/genhit.ogg", eventArgs.ClickLocation);
-                if(_stack.Count < 1){
-                    Owner.Delete();
-                }
             }
 
 
