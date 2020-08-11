@@ -1,10 +1,15 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    ///     Allows an entity to hold gases from an <see cref="IPipeNet"/>, needed to function with
+    ///     a <see cref="BaseScrubberComponent"/>, <see cref="BaseVentComponent"/>, and <see cref="BasePumpComponent"/>. 
+    /// </summary>
     [RegisterComponent]
     public class PipeContainerComponent : Component
     {

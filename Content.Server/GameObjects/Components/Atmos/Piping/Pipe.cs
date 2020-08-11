@@ -8,6 +8,9 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    ///     
+    /// </summary>
     public class Pipe : IGasMixtureHolder, IExposeData
     {
         /// <summary>

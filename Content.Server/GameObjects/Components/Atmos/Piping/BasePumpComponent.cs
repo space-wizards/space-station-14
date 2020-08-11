@@ -7,11 +7,20 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    ///     Transfer gas from one <see cref="Pipe"/> to another.
+    /// </summary>
     public abstract class BasePumpComponent : Component
     {
+        /// <summary>
+        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
+        /// </summary>
         [ViewVariables]
         private PipeDirection _inletDirection;
 
+        /// <summary>
+        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
+        /// </summary>
         [ViewVariables]
         private PipeDirection _outletDirection;
 

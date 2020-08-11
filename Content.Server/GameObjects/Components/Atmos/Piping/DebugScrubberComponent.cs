@@ -3,6 +3,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    ///     Placeholder example of scrubber functionality.
+    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(BaseScrubberComponent))]
     public class DebugScrubberComponent : BaseScrubberComponent

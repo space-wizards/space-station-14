@@ -9,8 +9,14 @@ using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
+    /// <summary>
+    ///     Transfers gas from the rile it is on to a <see cref="Pipe"/>.
+    /// </summary>
     public abstract class BaseScrubberComponent : Component
     {
+        /// <summary>
+        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
+        /// </summary>
         [ViewVariables]
         private PipeDirection _scrubberOutletDirection;
 
