@@ -23,7 +23,6 @@
       mask:
       - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
   - type: Physics
     edgeslide: false
