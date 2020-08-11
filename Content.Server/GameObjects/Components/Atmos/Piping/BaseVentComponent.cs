@@ -4,14 +4,17 @@ using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 using System.Linq;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {
     public abstract class BaseVentComponent : Component
     {
+        [ViewVariables]
         private PipeDirection _ventInletDirection;
 
+        [ViewVariables]
         private Pipe _ventInlet;
 
         public override void ExposeData(ObjectSerializer serializer)

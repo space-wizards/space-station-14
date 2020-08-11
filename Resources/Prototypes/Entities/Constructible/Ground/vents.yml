@@ -24,7 +24,7 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroNorthID: Pipe
+      nodeGroupID: Pipe
       pipeDirection: South
   - type: PipeContainer
     pipes:
