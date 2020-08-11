@@ -1,15 +1,17 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.GameObjects.Components.Access
 {
     public sealed class AccessReaderChangeMessage : EntitySystemMessage
     {
-        public EntityUid Uid { get; }
+        public IEntity Sender { get; }
+
         public bool Enabled { get; }
 
-        public AccessReaderChangeMessage(EntityUid uid, bool enabled)
+        public AccessReaderChangeMessage(IEntity entity, bool enabled)
         {
-            Uid = uid;
+            Sender = entity;
             Enabled = enabled;
         }
     }

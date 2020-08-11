@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
@@ -20,9 +22,10 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
     /*
-    // TODO: IMO use rectangular symmetry reduction on the nodes with collision at all., or
+    // TODO: IMO use rectangular symmetry reduction on the nodes with collision at all. (currently planned to be implemented via AiReachableSystem and expanded later).
     alternatively store all rooms and have an alternative graph for humanoid mobs (same collision mask, needs access etc). You could also just path from room to room as needed.
     // TODO: Longer term -> Handle collision layer changes?
+    TODO: Handle container entities so they're not tracked.
     */
     /// <summary>
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
@@ -30,10 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
     /// </summary>
     public class PathfindingSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entitymanager;
-        [Dependency] private readonly IMapManager _mapManager;
-#pragma warning restore 649
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public IReadOnlyDictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>> _graph = new Dictionary<GridId, Dictionary<MapIndices, PathfindingChunk>>();
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         private readonly Queue<TileRef> _tileUpdateQueue = new Queue<TileRef>();
 
         // Need to store previously known entity positions for collidables for when they move
-        private readonly Dictionary<EntityUid, PathfindingNode> _lastKnownPositions = new Dictionary<EntityUid, PathfindingNode>();
+        private readonly Dictionary<IEntity, PathfindingNode> _lastKnownPositions = new Dictionary<IEntity, PathfindingNode>();
 
         public const int TrackedCollisionLayers = (int)
             (CollisionGroup.Impassable |
@@ -86,7 +86,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _collidableUpdateQueue)
             {
-                var entity = _entitymanager.GetEntity(update.Owner);
+                var entity = EntityManager.GetEntity(update.Owner);
                 if (update.CanCollide)
                 {
                     HandleEntityAdd(entity);
@@ -103,14 +103,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             foreach (var update in _accessReaderUpdateQueue)
             {
-                var entity = _entitymanager.GetEntity(update.Uid);
                 if (update.Enabled)
                 {
-                    HandleEntityAdd(entity);
+                    HandleEntityAdd(update.Sender);
                 }
                 else
                 {
-                    HandleEntityRemove(entity);
+                    HandleEntityRemove(update.Sender);
                 }
 
                 totalUpdates++;
@@ -138,7 +137,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             for (var i = 0; i < moveUpdateCount; i++)
             {
-                HandleCollidableMove(_moveUpdateQueue.Dequeue());
+                HandleEntityMove(_moveUpdateQueue.Dequeue());
             }
 
             DebugTools.Assert(_moveUpdateQueue.Count < 1000);
@@ -204,9 +203,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
         public override void Initialize()
         {
-            // TODO: Remove this once the memory leaks are solved.
-            return;
-
             SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
             SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
             SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeMessage);
@@ -279,7 +275,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="entity"></param>
         private void HandleEntityAdd(IEntity entity)
         {
-            if (entity.Deleted || _lastKnownPositions.ContainsKey(entity.Uid))
+            if (entity.Deleted || 
+                _lastKnownPositions.ContainsKey(entity) ||
+                !entity.TryGetComponent(out ICollidableComponent collidableComponent) || 
+                !PathfindingNode.IsRelevant(entity, collidableComponent))
             {
                 return;
             }
@@ -289,19 +288,19 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             var chunk = GetChunk(tileRef);
             var node = chunk.GetNode(tileRef);
-            node.AddEntity(entity);
-            _lastKnownPositions.Add(entity.Uid, node);
+            node.AddEntity(entity, collidableComponent);
+            _lastKnownPositions.Add(entity, node);
         }
 
         private void HandleEntityRemove(IEntity entity)
         {
-            if (!_lastKnownPositions.TryGetValue(entity.Uid, out var node))
+            if (!_lastKnownPositions.TryGetValue(entity, out var node))
             {
                 return;
             }
 
             node.RemoveEntity(entity);
-            _lastKnownPositions.Remove(entity.Uid);
+            _lastKnownPositions.Remove(entity);
         }
 
         private void QueueMoveEvent(MoveEvent moveEvent)
@@ -313,35 +312,47 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// When an entity moves around we'll remove it from its old node and add it to its new node (if applicable)
         /// </summary>
         /// <param name="moveEvent"></param>
-        private void HandleCollidableMove(MoveEvent moveEvent)
+        private void HandleEntityMove(MoveEvent moveEvent)
         {
-            var entityUid = moveEvent.Sender.Uid;
-
-            if (!_lastKnownPositions.TryGetValue(entityUid, out var oldNode))
+            // If we've moved to space or the likes then remove us.
+            if (moveEvent.Sender.Deleted || 
+                !moveEvent.Sender.TryGetComponent(out ICollidableComponent collidableComponent) ||
+                !PathfindingNode.IsRelevant(moveEvent.Sender, collidableComponent))
             {
+                HandleEntityRemove(moveEvent.Sender);
+                return;
+            }
+            
+            // Memory leak protection until grid parenting confirmed fix / you REALLY need the performance
+            var gridBounds = _mapManager.GetGrid(moveEvent.Sender.Transform.GridID).WorldBounds;
+            
+            if (!gridBounds.Contains(moveEvent.Sender.Transform.WorldPosition))
+            {
+                HandleEntityRemove(moveEvent.Sender);
+                return;
+            }
+            
+            // If we move from space to a grid we may need to start tracking it.
+            if (!_lastKnownPositions.TryGetValue(moveEvent.Sender, out var oldNode))
+            {
+                HandleEntityAdd(moveEvent.Sender);
                 return;
             }
 
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
-            if (moveEvent.Sender.Deleted)
-            {
-                HandleEntityRemove(moveEvent.Sender);
-                return;
-            }
-
             var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GridID).GetTileRef(moveEvent.NewPosition);
-
+            
             if (oldNode == null || oldNode.TileRef == newTile)
             {
                 return;
             }
 
             var newNode = GetNode(newTile);
-            _lastKnownPositions[entityUid] = newNode;
+            _lastKnownPositions[moveEvent.Sender] = newNode;
 
             oldNode.RemoveEntity(moveEvent.Sender);
-            newNode.AddEntity(moveEvent.Sender);
+            newNode.AddEntity(moveEvent.Sender, collidableComponent);
         }
 
         private void QueueCollisionChangeMessage(CollisionChangeMessage collisionMessage)
