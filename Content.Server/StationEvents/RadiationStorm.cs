@@ -56,7 +56,7 @@ namespace Content.Server.StationEvents
 
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (var overlay in componentManager.GetAllComponents<ServerOverlayEffectsComponent>())
+            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
                 overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
@@ -73,7 +73,7 @@ namespace Content.Server.StationEvents
             
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (var overlay in componentManager.GetAllComponents<ServerOverlayEffectsComponent>())
+            foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
                 overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
