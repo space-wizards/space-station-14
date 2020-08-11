@@ -692,6 +692,9 @@
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: "screen"
+      map: ["enum.VendingMachineVisualLayers.Screen"]
+      shader: unshaded
   - type: Appearance
     visuals:
     - type: VendingMachineVisualizer
