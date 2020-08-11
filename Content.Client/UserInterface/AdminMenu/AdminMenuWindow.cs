@@ -9,6 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface
@@ -98,16 +99,9 @@ namespace Content.Client.UserInterface
                 new CommandUIDropDown
                 {
                     Name = "Player",
-                    GetData = () =>  //TODO EXP: get all players
-                    {
-                        var playerManager = IoCManager.Resolve<IPlayerManager>();
-                        List<string> players = new List<string>();
-                        foreach (var session in playerManager.Sessions)
-                        {
-                            players.Add(session.Name);
-                        }
-                        return players;
-                    }
+                    GetData = () => IoCManager.Resolve<IPlayerManager>().Sessions.ToList<object>(),
+                    GetDisplayName = (obj) => $"{((IPlayerSession)obj).Name} ({((IPlayerSession)obj).AttachedEntity?.Name})",
+                    GetValueFromData = (obj) => ((IPlayerSession)obj).Name,
                 },
                 new CommandUILineEdit
                 {
@@ -133,11 +127,12 @@ namespace Content.Client.UserInterface
                 new CommandUIDropDown
                 {
                     Name = "DropDown",
-                    GetData = () => new List<string>
+                    GetData = () => new List<object>
                     {
                         "1",
                         "2"
-                    }
+                    },
+                    GetValueFromData = (obj) => (string)obj
                 },
                 new CommandUILineEdit
                 {
@@ -172,14 +167,20 @@ namespace Content.Client.UserInterface
         }
         private class CommandUIDropDown : CommandUIControl
         {
-            public Func<List<string>> GetData;
+            public Func<List<object>> GetData;
+            // The string that the player sees in the list
+            public Func<object, string> GetDisplayName;
+            // The value that is given to Submit
+            public Func<object, string> GetValueFromData;
+            // Cache
+            public List<object> Data;
 
             public override Control GetControl()
             {
                 var opt = new OptionButton { CustomMinimumSize = (100, 0) };
-                var data = GetData();
-                foreach (var item in data)
-                    opt.AddItem(item);
+                Data = GetData();
+                foreach (var item in Data)
+                    opt.AddItem(GetDisplayName(item));
 
                 opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
                 Control = opt;
@@ -188,7 +189,7 @@ namespace Content.Client.UserInterface
 
             public override string GetValue()
             {
-                return ((OptionButton)Control).SelectedText;
+                return GetValueFromData(Data[((OptionButton)Control).SelectedId]);
             }
         }
         private class CommandUICheckBox : CommandUIControl
