@@ -1,9 +1,7 @@
 ﻿using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 
@@ -14,26 +12,14 @@ namespace Content.Server.GameObjects.Components.Atmos
     /// </summary>
     public abstract class BaseScrubberComponent : Component
     {
-        /// <summary>
-        ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
-        /// </summary>
-        [ViewVariables]
-        private PipeDirection _scrubberOutletDirection;
-
         [ViewVariables]
         private Pipe _scrubberOutlet;
-
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            serializer.DataField(ref _scrubberOutletDirection, "scrubberOutletDirection", PipeDirection.None);
-        }
 
         public override void Initialize()
         {
             base.Initialize();
             var pipeContainer = Owner.GetComponent<PipeContainerComponent>();
-            _scrubberOutlet = pipeContainer.Pipes.Where(pipe => pipe.PipeDirection == _scrubberOutletDirection).First();
+            _scrubberOutlet = pipeContainer.Pipes.First();
         }
 
         public void Update(float frameTime)
