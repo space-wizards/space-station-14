@@ -359,6 +359,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 appearance.SetData(Visuals.Light, LightState.Off);
                 return;
             }
+            else if (_pressure < 1)
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Charging);
+            }
             else
             {
                 appearance.SetData(Visuals.VisualState, VisualState.Anchored);

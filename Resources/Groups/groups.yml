@@ -92,6 +92,7 @@
   - anchor
   - unanchor
   - tubeconnections
+  - tilewalls
   - destroymechanism
   CanViewVar: true
   CanAdminPlace: true
@@ -180,6 +181,7 @@
   - clearatmos
   - settemp
   - setatmostemp
+  - tilewalls
   - destroymechanism
   CanViewVar: true
   CanAdminPlace: true
