@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Client.UserInterface.AdminMenu;
+using Robust.Client.Console;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -37,7 +38,7 @@ namespace Content.Client.UserInterface
             {
                 Columns = 4,
             };
-            foreach (var cmd in _buttons)
+            foreach (var cmd in _buttons) //TODO EXP: filter if the player can do those actually
             {
                 //TODO: make toggle?
                 var button = new Button
@@ -88,7 +89,7 @@ namespace Content.Client.UserInterface
                 new CommandUIDropDown
                 {
                     Name = "Player",
-                    Data = new List<string> //TODO: get all players
+                    Data = new List<string> //TODO EXP: get all players
                     {
                         "Exp",
                         "PJB"
@@ -103,7 +104,7 @@ namespace Content.Client.UserInterface
 
             public override void Submit(Dictionary<string,string> val)
             {
-                throw new NotImplementedException();
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick {val["Player"]} {val["Reason"]}");
             }
         }
 
@@ -116,7 +117,7 @@ namespace Content.Client.UserInterface
                 new CommandUIDropDown
                 {
                     Name = "DropDown",
-                    Data = new List<string> //TODO: get all players
+                    Data = new List<string>
                     {
                         "1",
                         "2"
@@ -139,7 +140,7 @@ namespace Content.Client.UserInterface
 
             public override void Submit(Dictionary<string, string> val)
             {
-                throw new NotImplementedException();
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"say \"Dropdown: {val["DropDown"]}\nLineEdit: {val["LineEdit"]}\nCheckBox: {val["CheckBox"]}\nOptional: {val["Optional"]}\"");
             }
         }
 
@@ -253,7 +254,7 @@ namespace Content.Client.UserInterface
                 {
                     if (control.Control == null)
                         return;
-                    //TODO: optional check?
+                    //TODO EXP: optional check?
                     val.Add(control.Name, control.GetValue());
                 }
                 Submit.Invoke(val);

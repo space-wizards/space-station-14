@@ -8,9 +8,9 @@ namespace Content.Client.UserInterface.AdminMenu
     internal class AdminMenuManager : IAdminMenuManager
     {
         SS14Window _window;
-        SS14Window _commandWindow; //TODO: make this a list/array of windows? then we can have multiple cmd windows open
+        SS14Window _commandWindow; //TODO EXP: make this a list/array of windows? then we can have multiple cmd windows open
 
-        public void Initialize()
+        public void Initialize() //TODO EXP: only show if you're have the permissions. => make a new permission?
         {
             _window = new AdminMenuWindow();
         }
@@ -23,7 +23,7 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public void Open()
         {
-            //TODO: remove dis
+            //TODO EXP: remove dis
             _window = new AdminMenuWindow();
             _window.OpenCentered();
         }
@@ -38,7 +38,7 @@ namespace Content.Client.UserInterface.AdminMenu
     internal interface IAdminMenuManager
     {
         void Initialize();
-        void Open(); //TODO: remove this and import the pressed action (from IGameHud or somewhere else)
+        void Open(); //TODO EXP: remove this and import the pressed action (from IGameHud or somewhere else)
         void OpenCommand(SS14Window window);
     }
 }
