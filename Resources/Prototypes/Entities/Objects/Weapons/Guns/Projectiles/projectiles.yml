@@ -23,7 +23,6 @@
       mask:
       - Impassable
       - MobImpassable
-      - SmallImpassable
   - type: Physics
     edgeslide: false
   - type: Projectile
