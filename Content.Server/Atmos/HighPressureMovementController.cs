@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using CannyFastMath;
 using Content.Server.GameObjects.Components.Atmos;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
@@ -8,8 +9,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Logger = Robust.Shared.Log.Logger;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {

@@ -6,7 +6,7 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class PuddleSystem : EntitySystem
     {

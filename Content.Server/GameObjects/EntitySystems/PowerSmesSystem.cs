@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     internal class PowerSmesSystem : EntitySystem
     {

@@ -5,9 +5,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

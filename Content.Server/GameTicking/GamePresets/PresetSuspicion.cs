@@ -1,23 +1,18 @@
-﻿using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.GameTicking.GameRules;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared.Antags;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Robust.Shared.Log;
-using System.Threading.Tasks;
-using Content.Shared.Preferences;
-
-
 
 namespace Content.Server.GameTicking.GamePresets
 {

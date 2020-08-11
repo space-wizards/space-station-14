@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Preferences.Appearance;
 using JetBrains.Annotations;

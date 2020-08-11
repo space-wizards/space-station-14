@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Content.Server.AI.Operators;
 using Content.Server.AI.Operators.Inventory;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Hands;
 using Content.Server.AI.Utility.Considerations.Nutrition.Food;
 using Content.Server.AI.WorldState;

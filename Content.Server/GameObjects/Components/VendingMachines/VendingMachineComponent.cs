@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.VendingMachines;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;

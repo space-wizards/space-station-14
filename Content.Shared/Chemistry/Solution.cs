@@ -1,13 +1,11 @@
-﻿using Content.Shared.Interfaces.Chemistry;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Chemistry
 {

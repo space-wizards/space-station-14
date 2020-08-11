@@ -1,8 +1,8 @@
-﻿using Content.Server.GameObjects;
+﻿using Content.Server.GameObjects.Components.Temperature;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     class TemperatureSystem : EntitySystem
     {

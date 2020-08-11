@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;

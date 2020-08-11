@@ -2,7 +2,7 @@ using Content.Server.GameObjects.Components.Interactable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class HandHeldLightSystem : EntitySystem
     {

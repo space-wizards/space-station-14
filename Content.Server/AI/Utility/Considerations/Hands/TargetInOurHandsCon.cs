@@ -1,7 +1,7 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 
 namespace Content.Server.AI.Utility.Considerations.Hands
 {

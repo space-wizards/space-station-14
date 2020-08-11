@@ -1,6 +1,6 @@
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     /// Contains combined name and icon information for a verb category.

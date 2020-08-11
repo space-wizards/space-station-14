@@ -1,12 +1,12 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using System.Collections.Generic;
 using Robust.Shared.IoC;
-using Robust.Server.Interfaces.Timing;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public sealed class ApcSystem : EntitySystem
     {
@@ -21,7 +21,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
         public override void Update(float frameTime)
         {
-            var uniqueApcNets = new HashSet<IApcNet>(); //could be improved by maintaining set instead of getting collection every frame 
+            var uniqueApcNets = new HashSet<IApcNet>(); //could be improved by maintaining set instead of getting collection every frame
             foreach (var entity in RelevantEntities)
             {
                 if (_pauseManager.IsEntityPaused(entity))

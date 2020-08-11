@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
@@ -27,8 +29,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {

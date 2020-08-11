@@ -12,7 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.Components.Movement
 {

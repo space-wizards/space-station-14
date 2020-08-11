@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -17,11 +19,10 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using CancellationTokenSource = System.Threading.CancellationTokenSource;
+using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -237,7 +238,7 @@ namespace Content.Server.GameObjects
                     if (percentage < 0.1f)
                         continue;
 
-                    damage.TakeDamage(Shared.GameObjects.DamageType.Brute, DoorCrushDamage);
+                    damage.TakeDamage(DamageType.Brute, DoorCrushDamage);
                     stun.Paralyze(DoorStunTime);
                     hitSomeone = true;
                 }

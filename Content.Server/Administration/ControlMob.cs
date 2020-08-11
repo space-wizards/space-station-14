@@ -1,6 +1,5 @@
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Mobs;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;

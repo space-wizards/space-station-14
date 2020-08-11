@@ -5,7 +5,7 @@ using Content.Server.AI.Utility.Actions.Combat.Melee;
 using Content.Server.AI.Utils;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Robust.Server.GameObjects;
 

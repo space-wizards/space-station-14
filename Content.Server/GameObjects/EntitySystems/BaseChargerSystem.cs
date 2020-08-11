@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Power.Chargers;
+﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal class BaseChargerSystem : EntitySystem

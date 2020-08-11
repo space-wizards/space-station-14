@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Gravity;
@@ -8,7 +7,6 @@ using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
@@ -16,7 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     public class GravitySystem: EntitySystem
@@ -93,7 +91,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             {
                 if (player.AttachedEntity == null
                     || player.AttachedEntity.Transform.GridID != gridId) continue;
-                EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/alert.ogg", player.AttachedEntity);
+                Get<AudioSystem>().PlayFromEntity("/Audio/Effects/alert.ogg", player.AttachedEntity);
             }
         }
 

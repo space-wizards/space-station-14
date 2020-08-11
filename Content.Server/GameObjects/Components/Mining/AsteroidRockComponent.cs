@@ -1,5 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Weapon.Melee;
-using Content.Shared.GameObjects;
+﻿using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;

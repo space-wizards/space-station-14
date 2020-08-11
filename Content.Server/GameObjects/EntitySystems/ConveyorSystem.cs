@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;

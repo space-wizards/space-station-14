@@ -1,13 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
-using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

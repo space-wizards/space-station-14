@@ -9,10 +9,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
 using Color = Robust.Shared.Maths.Color;
-using CannyFastMath;
 using Math = CannyFastMath.Math;
 using MathF = CannyFastMath.MathF;
 

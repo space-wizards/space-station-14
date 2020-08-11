@@ -6,8 +6,8 @@
  using Robust.Shared.Interfaces.Map;
  using Robust.Shared.IoC;
  using Robust.Shared.Localization;
-using Robust.Shared.Localization.Macros;
-using Robust.Shared.Prototypes;
+ using Robust.Shared.Localization.Macros;
+ using Robust.Shared.Prototypes;
 
  namespace Content.Shared
 {

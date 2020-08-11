@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Robust.Shared.Interfaces.GameObjects;

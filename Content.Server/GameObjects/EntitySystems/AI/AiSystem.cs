@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.AI.Utility.AiLogic;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Movement;
 using JetBrains.Annotations;
@@ -111,7 +110,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 var processorId = args[0];
                 var entId = new EntityUid(int.Parse(args[1]));
                 var ent = IoCManager.Resolve<IEntityManager>().GetEntity(entId);
-                var aiSystem = EntitySystem.Get<AiSystem>();
+                var aiSystem = Get<AiSystem>();
 
                 if (!aiSystem.ProcessorTypeExists(processorId))
                 {

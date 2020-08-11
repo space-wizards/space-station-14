@@ -18,7 +18,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
 using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos

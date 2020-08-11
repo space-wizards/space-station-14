@@ -4,7 +4,7 @@ using System.Reflection;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     public static class VerbUtility
     {

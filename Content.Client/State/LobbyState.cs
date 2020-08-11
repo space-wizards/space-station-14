@@ -9,10 +9,8 @@ using Robust.Client.Interfaces;
 using Robust.Client.Interfaces.Input;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Interfaces.UserInterface;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
@@ -20,9 +18,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using CannyFastMath;
 using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.State
 {

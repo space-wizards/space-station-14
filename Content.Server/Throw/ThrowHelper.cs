@@ -1,9 +1,11 @@
-﻿using Content.Server.GameObjects.Components;
+﻿using CannyFastMath;
+using Content.Server.GameObjects.Components.Projectiles;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -11,8 +13,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Robust.Shared.Interfaces.Physics;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Throw
 {

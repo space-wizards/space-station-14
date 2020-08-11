@@ -1,16 +1,12 @@
-﻿using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Client.Interfaces.Graphics;
-using Robust.Shared.Maths;
-using System;
+﻿using CannyFastMath;
+using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Shaders;
+using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using CannyFastMath;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
-namespace Robust.Client.UserInterface.Controls
+namespace Content.Client.UserInterface
 {
 
     public class CooldownGraphic : Control
