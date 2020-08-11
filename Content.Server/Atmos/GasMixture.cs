@@ -332,7 +332,7 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void TemperatureShare(GasMixture sharer, float conductionCoefficient)
+        public float TemperatureShare(GasMixture sharer, float conductionCoefficient)
         {
             var temperatureDelta = TemperatureArchived - sharer.TemperatureArchived;
             if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
@@ -351,6 +351,30 @@ namespace Content.Server.Atmos
                         sharer.Temperature = MathF.Abs(MathF.Max(sharer.Temperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
                 }
             }
+
+            return sharer.Temperature;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public float TemperatureShare(float conductionCoefficient, float sharerTemperature, float sharerHeatCapacity)
+        {
+            var temperatureDelta = TemperatureArchived - sharerTemperature;
+            if (MathF.Abs(temperatureDelta) > Atmospherics.MinimumTemperatureDeltaToConsider)
+            {
+                var heatCapacity = HeatCapacityArchived;
+
+                if (sharerHeatCapacity > Atmospherics.MinimumHeatCapacity && heatCapacity > Atmospherics.MinimumHeatCapacity)
+                {
+                    var heat = conductionCoefficient * temperatureDelta * (heatCapacity * sharerHeatCapacity / (heatCapacity + sharerHeatCapacity));
+
+                    if (!Immutable)
+                        Temperature = MathF.Abs(MathF.Max(Temperature - heat / heatCapacity, Atmospherics.TCMB));
+
+                    sharerTemperature = MathF.Abs(MathF.Max(sharerTemperature + heat / sharerHeatCapacity, Atmospherics.TCMB));
+                }
+            }
+
+            return sharerTemperature;
         }
 
         public enum GasCompareResult
@@ -359,6 +383,9 @@ namespace Content.Server.Atmos
             TemperatureExchange = -1,
         }
 
+        /// <summary>
+        ///     Compares sample to self to see if within acceptable ranges that group processing may be enabled.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GasCompareResult Compare(GasMixture sample)
         {
