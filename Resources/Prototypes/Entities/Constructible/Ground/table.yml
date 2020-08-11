@@ -17,7 +17,6 @@
     - !type:PhysShapeAabb
       layer:
       - SmallImpassable
-      - MobImpassable
   - type: SnapGrid
     offset: Center
   - type: IconSmooth
