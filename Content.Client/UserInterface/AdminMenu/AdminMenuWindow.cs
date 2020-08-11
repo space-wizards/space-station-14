@@ -22,6 +22,7 @@ namespace Content.Client.UserInterface
         {
             new KickCommandButton(),
             new TestCommandButton(),
+            new RestartRoundCommandButton(),
         };
         public AdminMenuWindow()
         {
@@ -77,9 +78,15 @@ namespace Content.Client.UserInterface
         {
             public abstract string Name { get; }
             public abstract string RequiredCommand { get; }
+            public abstract void ButtonPressed(ButtonEventArgs args);
+        }
+
+        // Button that opens a UI
+        private abstract class UICommandButton : CommandButton
+        {
             public string? SubmitText;
-            public abstract void Submit(Dictionary<string,string> val);
-            public void ButtonPressed(ButtonEventArgs args)
+            public abstract void Submit(Dictionary<string, string> val);
+            public override void ButtonPressed(ButtonEventArgs args)
             {
                 var manager = IoCManager.Resolve<IAdminMenuManager>();
                 var window = new CommandWindow(this);
@@ -89,7 +96,16 @@ namespace Content.Client.UserInterface
             public abstract List<CommandUIControl> UI { get; }
         }
 
-        private class KickCommandButton : CommandButton
+        // Button that directly calls a Command
+        private abstract class DirectCommandButton : CommandButton
+        {
+            public override void ButtonPressed(ButtonEventArgs args)
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand(RequiredCommand);
+            }
+        }
+
+        private class KickCommandButton : UICommandButton
         {
             public override string Name => "Kick";
             public override string RequiredCommand => "kick";
@@ -116,7 +132,7 @@ namespace Content.Client.UserInterface
             }
         }
 
-        private class TestCommandButton : CommandButton
+        private class TestCommandButton : UICommandButton
         {
             public override string Name => "Test";
 
@@ -155,7 +171,13 @@ namespace Content.Client.UserInterface
             }
         }
 
-        //do we really need this? can't we just give the control to the poor window?
+        private class RestartRoundCommandButton : DirectCommandButton
+        {
+            public override string Name => "Restart Round";
+
+            public override string RequiredCommand => "restartround";
+        }
+
         private abstract class CommandUIControl
         {
             public string Name;
@@ -223,7 +245,7 @@ namespace Content.Client.UserInterface
         {
             List<CommandUIControl> _controls;
             public Action<Dictionary<string, string>> Submit { get; set; }
-            public CommandWindow(CommandButton button)
+            public CommandWindow(UICommandButton button)
             {
                 Title = button.Name;
                 _controls = button.UI;
