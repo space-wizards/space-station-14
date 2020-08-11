@@ -25,23 +25,34 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         /// Whenever there's a change in the collision layers we update the mask as the graph has more reads than writes
         /// </summary>
         public int BlockedCollisionMask { get; private set; }
-        private readonly Dictionary<EntityUid, int> _blockedCollidables = new Dictionary<EntityUid, int>(0);
+        private readonly Dictionary<IEntity, int> _blockedCollidables = new Dictionary<IEntity, int>(0);
 
-        public IReadOnlyDictionary<EntityUid, int> PhysicsLayers => _physicsLayers;
-        private readonly Dictionary<EntityUid, int> _physicsLayers = new Dictionary<EntityUid, int>(0);
+        public IReadOnlyDictionary<IEntity, int> PhysicsLayers => _physicsLayers;
+        private readonly Dictionary<IEntity, int> _physicsLayers = new Dictionary<IEntity, int>(0);
 
         /// <summary>
         /// The entities on this tile that require access to traverse
         /// </summary>
         /// We don't store the ICollection, at least for now, as we'd need to replicate the access code here
         public IReadOnlyCollection<AccessReader> AccessReaders => _accessReaders.Values;
-        private readonly Dictionary<EntityUid, AccessReader> _accessReaders = new Dictionary<EntityUid, AccessReader>(0);
+        private readonly Dictionary<IEntity, AccessReader> _accessReaders = new Dictionary<IEntity, AccessReader>(0);
 
         public PathfindingNode(PathfindingChunk parent, TileRef tileRef)
         {
             _parentChunk = parent;
             TileRef = tileRef;
             GenerateMask();
+        }
+
+        public static bool IsRelevant(IEntity entity, ICollidableComponent collidableComponent)
+        {
+            if (entity.Transform.GridID == GridId.Invalid || 
+                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -249,7 +260,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         /// <param name="entity"></param>
         /// TODO: These 2 methods currently don't account for a bunch of changes (e.g. airlock unpowered, wrenching, etc.)
         /// TODO: Could probably optimise this slightly more.
-        public void AddEntity(IEntity entity)
+        public void AddEntity(IEntity entity, ICollidableComponent collidableComponent)
         {
             // If we're a door
             if (entity.HasComponent<AirlockComponent>() || entity.HasComponent<ServerDoorComponent>())
@@ -258,27 +269,25 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 // TODO: Check for powered I think (also need an event for when it's depowered
                 // AccessReader calls this whenever opening / closing but it can seem to get called multiple times
                 // Which may or may not be intended?
-                if (entity.TryGetComponent(out AccessReader accessReader) && !_accessReaders.ContainsKey(entity.Uid))
+                if (entity.TryGetComponent(out AccessReader accessReader) && !_accessReaders.ContainsKey(entity))
                 {
-                    _accessReaders.Add(entity.Uid, accessReader);
+                    _accessReaders.Add(entity, accessReader);
                     ParentChunk.Dirty();
                 }
                 return;
             }
             
-            if (entity.TryGetComponent(out ICollidableComponent collidableComponent) && 
-                (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0)
+            DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0);
+            
+            if (!collidableComponent.Anchored)
             {
-                if (entity.TryGetComponent(out IPhysicsComponent physicsComponent) && !physicsComponent.Anchored)
-                {
-                    _physicsLayers.Add(entity.Uid, collidableComponent.CollisionLayer);
-                }
-                else
-                {
-                    _blockedCollidables.TryAdd(entity.Uid, collidableComponent.CollisionLayer);
-                    GenerateMask();
-                    ParentChunk.Dirty();
-                }
+                _physicsLayers.Add(entity, collidableComponent.CollisionLayer);
+            }
+            else
+            {
+                _blockedCollidables.Add(entity, collidableComponent.CollisionLayer);
+                GenerateMask();
+                ParentChunk.Dirty();
             }
         }
 
@@ -292,18 +301,18 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             // There's no guarantee that the entity isn't deleted
             // 90% of updates are probably entities moving around
             // Entity can't be under multiple categories so just checking each once is fine.
-            if (_physicsLayers.ContainsKey(entity.Uid))
+            if (_physicsLayers.ContainsKey(entity))
             {
-                _physicsLayers.Remove(entity.Uid);
+                _physicsLayers.Remove(entity);
             } 
-            else if (_accessReaders.ContainsKey(entity.Uid))
+            else if (_accessReaders.ContainsKey(entity))
             {
-                _accessReaders.Remove(entity.Uid);
+                _accessReaders.Remove(entity);
                 ParentChunk.Dirty();
             } 
-            else if (_blockedCollidables.ContainsKey(entity.Uid))
+            else if (_blockedCollidables.ContainsKey(entity))
             {
-                _blockedCollidables.Remove(entity.Uid);
+                _blockedCollidables.Remove(entity);
                 GenerateMask();
                 ParentChunk.Dirty();
             }
