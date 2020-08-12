@@ -28,6 +28,11 @@ namespace Content.Client.UserInterface
         {
             new DirectCommandButton("Restart Round", "restartround"),
         };
+        private List<CommandButton> _serverButtons = new List<CommandButton>
+        {
+            new DirectCommandButton("Reboot", "restart"),
+            new DirectCommandButton("Shutdown", "shutdown"),
+        };
 
         private void RefreshPlayerList(ButtonEventArgs args)
         {
@@ -191,6 +196,12 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            var serverButtonGrid = new GridContainer
+            {
+                Columns = 4,
+            };
+            AddCommandButton(_serverButtons, serverButtonGrid);
+            serverTabContainer.AddChild(serverButtonGrid);
             #endregion
 
 
