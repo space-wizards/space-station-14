@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var currentTime = _gameTiming.CurTime;
             var timeSinceLastFire = (currentTime - _lastFire).TotalSeconds;
-            var newTheta = Math.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
+            var newTheta = FloatMath.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
             _currentAngle = new Angle(newTheta);
 
             var random = (_robustRandom.NextDouble() - 0.5) * 2;

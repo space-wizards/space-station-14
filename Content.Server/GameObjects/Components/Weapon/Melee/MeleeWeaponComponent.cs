@@ -15,10 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using CannyFastMath;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {

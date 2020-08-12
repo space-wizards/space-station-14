@@ -16,7 +16,7 @@ using System.Linq;
 using Robust.Shared.Log;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
-
+using Robust.Shared.Maths;
 
 
 namespace Content.Server.GameTicking.GamePresets
@@ -60,7 +60,7 @@ namespace Content.Server.GameTicking.GamePresets
                 }
             }
 
-            var numTraitors = Math.Clamp(readyPlayers.Count % PlayersPerTraitor,
+            var numTraitors = FloatMath.Clamp(readyPlayers.Count % PlayersPerTraitor,
                 MinTraitors, readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)

@@ -12,9 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using System;
 using System.Linq;
-using CannyFastMath;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -80,7 +77,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         {
             EntityQuery = new TypeEntityQuery(typeof(SolarPanelComponent));
             // Initialize the sun to something random
-            TowardsSun = Math.TAU * _robustRandom.NextDouble();
+            TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
         }
 

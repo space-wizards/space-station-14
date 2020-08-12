@@ -20,9 +20,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using CannyFastMath;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.State
 {

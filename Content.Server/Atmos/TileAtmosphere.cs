@@ -138,7 +138,7 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(Math.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(FloatMath.Clamp(PressureDifference / 10, 10, 100)));
             }
 
 
@@ -810,7 +810,7 @@ namespace Content.Server.Atmos
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            if (sum > 20 && _robustRandom.Prob(Math.Clamp(sum / 100, 0.005f, 0.5f)))
+            if (sum > 20 && _robustRandom.Prob(FloatMath.Clamp(sum / 100, 0.005f, 0.5f)))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 
