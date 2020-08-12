@@ -44,9 +44,7 @@ namespace Content.Server.AI.Utility.Actions.Clothing.Shoes
 
             return new[]
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.SHOES, context)
-                    .InverseBoolCurve(context),
-                considerationsManager.Get<CanPutTargetInHandsCon>()
+                considerationsManager.Get<CanPutTargetInInventoryCon>()
                     .BoolCurve(context),
             };
         }

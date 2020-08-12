@@ -106,7 +106,6 @@ namespace Content.Server.AI.Utility.Actions
         /// This is where the magic happens
         /// </summary>
         /// <param name="context"></param>
-        /// <param name="bonus"></param>
         /// <param name="min"></param>
         /// <returns></returns>
         public float GetScore(Blackboard context, float min)
