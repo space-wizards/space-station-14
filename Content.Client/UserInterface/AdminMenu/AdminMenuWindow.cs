@@ -17,6 +17,7 @@ namespace Content.Client.UserInterface
     public class AdminMenuWindow : SS14Window
     {
         public TabContainer MasterTabContainer;
+        public VBoxContainer PlayerList;
 
         private List<CommandButton> _buttons = new List<CommandButton>
         {
@@ -24,11 +25,50 @@ namespace Content.Client.UserInterface
             new TestCommandButton(),
             new DirectCommandButton("Restart Round", "restartround"),
         };
-        public AdminMenuWindow()
+
+        private void RefreshPlayerList(ButtonEventArgs args)
         {
+            PlayerList.RemoveAllChildren();
+            var sessions = IoCManager.Resolve<IPlayerManager>().Sessions;
+            var header = new HBoxContainer
+            {
+                Children =
+                    {
+                        new Label { Text = "Name" },
+                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                        new Label { Text = "Player"},
+                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                        new Label { Text = "Status"},
+                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                        new Label { Text = "Ping"},
+                    }
+            };
+            PlayerList.AddChild(header);
+            PlayerList.AddChild(new Controls.HighDivider());
+            foreach (var player in sessions) //TODO: make this aligned with the header
+            {
+                var hbox = new HBoxContainer
+                {
+                    Children =
+                    {
+                        new Label { Text = player.Name },
+                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                        new Label { Text = player.AttachedEntity?.Name },
+                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                        new Label { Text = player.Status.ToString() },
+                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
+                        new Label { Text = player.Ping.ToString() },
+                    }
+                };
+                PlayerList.AddChild(hbox);
+            }
+        }
+        public AdminMenuWindow() //TODO: search for buttons?
+        {
+            CustomMinimumSize = (415,0);
             Title = Loc.GetString("Admin Menu");
 
-            // Player Tab
+            // Players
             var playerTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -37,7 +77,33 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
-            var playerButtonGrid = new GridContainer
+            PlayerList = new VBoxContainer();
+            var refreshButton = new Button
+            {
+                Text = "Refresh"
+            };
+            refreshButton.OnPressed += RefreshPlayerList;
+            RefreshPlayerList(null);
+            var playerVBox = new VBoxContainer
+            {
+                Children =
+                {
+                    refreshButton,
+                    PlayerList
+                }
+            };
+            playerTabContainer.AddChild(playerVBox);
+
+            // Admin Tab
+            var adminTabContainer = new MarginContainer
+            {
+                MarginLeftOverride = 4,
+                MarginTopOverride = 4,
+                MarginRightOverride = 4,
+                MarginBottomOverride = 4,
+                CustomMinimumSize = (50, 50),
+            };
+            var adminButtonGrid = new GridContainer
             {
                 Columns = 4,
             };
@@ -56,21 +122,68 @@ namespace Content.Client.UserInterface
                     Text = cmd.Name
                 };
                 button.OnPressed += cmd.ButtonPressed;
-                playerButtonGrid.AddChild(button);
+                adminButtonGrid.AddChild(button);
             }
-            playerTabContainer.AddChild(playerButtonGrid);
+            adminTabContainer.AddChild(adminButtonGrid);
 
-            // TODO: Game Tab
+            // Adminbus
+            var adminbusTabContainer = new MarginContainer
+            {
+                MarginLeftOverride = 4,
+                MarginTopOverride = 4,
+                MarginRightOverride = 4,
+                MarginBottomOverride = 4,
+                CustomMinimumSize = (50, 50),
+            };
+
+            // Debug
+            var debugTabContainer = new MarginContainer
+            {
+                MarginLeftOverride = 4,
+                MarginTopOverride = 4,
+                MarginRightOverride = 4,
+                MarginBottomOverride = 4,
+                CustomMinimumSize = (50, 50),
+            };
+
+            // Round
+            var roundTabContainer = new MarginContainer
+            {
+                MarginLeftOverride = 4,
+                MarginTopOverride = 4,
+                MarginRightOverride = 4,
+                MarginBottomOverride = 4,
+                CustomMinimumSize = (50, 50),
+            };
+
+            // Server
+            var serverTabContainer = new MarginContainer
+            {
+                MarginLeftOverride = 4,
+                MarginTopOverride = 4,
+                MarginRightOverride = 4,
+                MarginBottomOverride = 4,
+                CustomMinimumSize = (50, 50),
+            };
 
 
             //The master menu that contains all of the tabs.
             MasterTabContainer = new TabContainer();
 
             //Add all the tabs to the Master container.
+            //TODO: add playerlist maybe?
+            MasterTabContainer.AddChild(adminTabContainer);
+            MasterTabContainer.SetTabTitle(0, Loc.GetString("Admin"));
+            MasterTabContainer.AddChild(adminbusTabContainer);
+            MasterTabContainer.SetTabTitle(1, Loc.GetString("Adminbus"));
+            MasterTabContainer.AddChild(debugTabContainer);
+            MasterTabContainer.SetTabTitle(2, Loc.GetString("Debug"));
+            MasterTabContainer.AddChild(roundTabContainer);
+            MasterTabContainer.SetTabTitle(3, Loc.GetString("Round"));
+            MasterTabContainer.AddChild(serverTabContainer);
+            MasterTabContainer.SetTabTitle(4, Loc.GetString("Server"));
             MasterTabContainer.AddChild(playerTabContainer);
-            MasterTabContainer.SetTabTitle(0, Loc.GetString("Player"));
-            //MasterTabContainer.AddChild(playerTabContainer); //TODO: replace with Game Tab here
-            //MasterTabContainer.SetTabTitle(1, Loc.GetString("Game"));
+            MasterTabContainer.SetTabTitle(5, Loc.GetString("Players"));
             Contents.AddChild(MasterTabContainer);
         }
 
@@ -199,7 +312,7 @@ namespace Content.Client.UserInterface
             // The value that is given to Submit
             public Func<object, string> GetValueFromData;
             // Cache
-            public List<object> Data;
+            private List<object> Data;
 
             public override Control GetControl()
             {
