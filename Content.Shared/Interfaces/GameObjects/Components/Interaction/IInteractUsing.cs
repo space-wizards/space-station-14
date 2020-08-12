@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -12,6 +13,12 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     /// </summary>
     public interface IInteractUsing
     {
+        /// <summary>
+        /// The interaction Priority. Higher numbers get called first.
+        /// </summary>
+        /// <value>Prority defaults to 0</value>
+        int Priority { get => 0; }
+
         /// <summary>
         /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
