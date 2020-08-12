@@ -43,9 +43,9 @@ namespace Content.Server.AI.Utility.Actions.Nutrition.Drink
                 considerationsManager.Get<FreeHandCon>()
                     .BoolCurve(context),
                 considerationsManager.Get<ThirstCon>()
-                    .LogisticCurve(context, 1000f, 1.3f, -1.0f, 0.5f),
-                considerationsManager.Get<DistanceCon>()
-                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
+                    .PresetCurve(context, PresetCurve.Nutrition),
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<DrinkValueCon>()
                     .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, 0.0f),
                 considerationsManager.Get<TargetAccessibleCon>()

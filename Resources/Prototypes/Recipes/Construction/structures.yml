@@ -15,7 +15,6 @@
     icon: Constructible/Structures/Walls/wall_girder.png
     reverse:
       tool: Anchoring
-
   - material: Metal
     amount: 2
     reverse:
@@ -90,7 +89,6 @@
     amount: 2
     reverse:
       tool: Anchoring
-
 # Should be replaced with Metal Rods when someone puts them in.
   - material: Metal
     amount: 2

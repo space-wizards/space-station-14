@@ -15,7 +15,7 @@
   parent: NeckClothing
   id: HeadPhonesOn
   name: headphones
-  description:
+  description: Quality headphones from Drunk Masters, with good sound insulation.
   components:
   - type: Sprite
     sprite: Clothing/Neck/headphones.rsi
@@ -31,7 +31,7 @@
   parent: NeckClothing
   id: RedTie
   name: red-tie
-  description:
+  description: A neosilk clip-on red tie.
   components:
   - type: Sprite
     sprite: Clothing/Neck/redtie.rsi
@@ -47,7 +47,7 @@
   parent: NeckClothing
   id: DetTie
   name: detective's tie
-  description:
+  description: A loosely tied necktie, a perfect accessory for the over-worked detective.
   components:
   - type: Sprite
     sprite: Clothing/Neck/dettie.rsi
@@ -63,7 +63,7 @@
   parent: NeckClothing
   id: Stethoscope
   name: stethoscope
-  description:
+  description: An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing.
   components:
   - type: Sprite
     sprite: Clothing/Neck/stethoscope.rsi
@@ -79,7 +79,7 @@
   parent: NeckClothing
   id: StripedRedScarf
   name: striped red scarf
-  description:
+  description: A stylish striped red scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Scarfs/red_scarf.rsi
@@ -95,7 +95,7 @@
   parent: NeckClothing
   id: StripedBlueScarf
   name: striped blue scarf
-  description:
+  description: A stylish striped blue scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Scarfs/blue_scarf.rsi
@@ -111,7 +111,7 @@
   parent: NeckClothing
   id: StripedGreenScarf
   name: striped green scarf
-  description:
+  description: A stylish striped green scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Scarfs/green_scarf.rsi
@@ -127,7 +127,7 @@
   parent: NeckClothing
   id: ZebraScarf
   name: zebra scarf
-  description:
+  description: A striped scarf, a mandatory accessory for artists.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Scarfs/zebra_scarf.rsi
@@ -143,7 +143,7 @@
   parent: NeckClothing
   id: Bling
   name: bling
-  description:
+  description: Damn, it feels good to be a gangster.
   components:
   - type: Sprite
     sprite: Clothing/Neck/bling.rsi

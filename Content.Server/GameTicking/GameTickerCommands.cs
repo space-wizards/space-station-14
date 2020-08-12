@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.BodySystem;
@@ -6,11 +6,18 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.BodySystem;
 using Content.Shared.Jobs;
+using Content.Shared.Maps;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking
@@ -335,7 +342,7 @@ namespace Content.Server.GameTicking
         {
             if (player == null)
             {
-                shell.SendText(player, "Only a player can run this command.");
+                shell.SendText((IPlayerSession) null, "Only a player can run this command.");
                 return;
             }
 
@@ -345,9 +352,23 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
-            var hand = manager.PartDictionary.First(x => x.Key == string.Join(" ", args));
-            manager.InstallBodyPart(hand.Value, hand.Key + new Random());
+            if (!player.AttachedEntity.TryGetComponent(out BodyManagerComponent body))
+            {
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+
+                shell.SendText(player, text);
+                return;
+            }
+
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.TryIndex("bodyPart.Hand.BasicHuman", out BodyPartPrototype prototype);
+
+            var part = new BodyPart(prototype);
+            var slot = part.GetHashCode().ToString();
+
+            body.Template.Slots.Add(slot, BodyPartType.Hand);
+            body.InstallBodyPart(part, slot);
         }
     }
 
@@ -361,7 +382,7 @@ namespace Content.Server.GameTicking
         {
             if (player == null)
             {
-                shell.SendText(player, "Only a player can run this command.");
+                shell.SendText((IPlayerSession) null, "Only a player can run this command.");
                 return;
             }
 
@@ -372,8 +393,114 @@ namespace Content.Server.GameTicking
             }
 
             var manager = player.AttachedEntity.GetComponent<BodyManagerComponent>();
-            var hand = manager.PartDictionary.First(x => x.Value.PartType == BodyPartType.Hand);
-            manager.DisconnectBodyPart(hand.Value, true);
+            var hand = manager.PartDictionary.FirstOrDefault(x => x.Value.PartType == BodyPartType.Hand);
+            if (hand.Value == null)
+            {
+                shell.SendText(player, "You have no hands.");
+                return;
+            }
+            else
+            {
+                manager.DisconnectBodyPart(hand.Value, true);
+            }
+        }
+    }
+
+    class TileWallsCommand : IClientCommand
+    {
+        // ReSharper disable once StringLiteralTypo
+        public string Command => "tilewalls";
+        public string Description => "Puts an underplating tile below every wall on a grid.";
+        public string Help => $"Usage: {Command} <gridId> | {Command}";
+
+        public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
+        {
+            GridId gridId;
+
+            switch (args.Length)
+            {
+                case 0:
+                    if (player?.AttachedEntity == null)
+                    {
+                        shell.SendText((IPlayerSession) null, "Only a player can run this command.");
+                        return;
+                    }
+
+                    gridId = player.AttachedEntity.Transform.GridID;
+                    break;
+                case 1:
+                    if (!int.TryParse(args[0], out var id))
+                    {
+                        shell.SendText(player, $"{args[0]} is not a valid integer.");
+                        return;
+                    }
+
+                    gridId = new GridId(id);
+                    break;
+                default:
+                    shell.SendText(player, Help);
+                    return;
+            }
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+            if (!mapManager.TryGetGrid(gridId, out var grid))
+            {
+                shell.SendText(player, $"No grid exists with id {gridId}");
+                return;
+            }
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
+            {
+                shell.SendText(player, $"Grid {gridId} doesn't have an associated grid entity.");
+                return;
+            }
+
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            var underplating = tileDefinitionManager["underplating"];
+            var underplatingTile = new Tile(underplating.TileId);
+            var changed = 0;
+            foreach (var childUid in gridEntity.Transform.ChildEntityUids)
+            {
+                if (!entityManager.TryGetEntity(childUid, out var childEntity))
+                {
+                    continue;
+                }
+
+                var prototype = childEntity.Prototype;
+                while (true)
+                {
+                    if (prototype?.Parent == null)
+                    {
+                        break;
+                    }
+
+                    prototype = prototype.Parent;
+                }
+
+                if (prototype?.ID != "base_wall")
+                {
+                    continue;
+                }
+
+                if (!childEntity.TryGetComponent(out SnapGridComponent snapGrid))
+                {
+                    continue;
+                }
+
+                var tile = grid.GetTileRef(childEntity.Transform.GridPosition);
+                var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
+
+                if (tileDef.Name == "underplating")
+                {
+                    continue;
+                }
+
+                grid.SetTile(childEntity.Transform.GridPosition, underplatingTile);
+                changed++;
+            }
+
+            shell.SendText(player, $"Changed {changed} tiles.");
         }
     }
 }

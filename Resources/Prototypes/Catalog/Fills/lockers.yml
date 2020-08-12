@@ -111,6 +111,11 @@
   parent: LockerSecurity
 
 - type: entity
+  id: LockerDetectiveFilled
+  suffix: Filled
+  parent: LockerDetective
+
+- type: entity
   id: LockerFormalFilled
   suffix: Filled
   parent: LockerFormal

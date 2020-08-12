@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: ResearchAndDevelopmentServer
   name: "R&D server"
+  description: 'Thats a R&D server'
   components:
   - type: Sprite
     sprite: Constructible/Power/server.rsi
@@ -61,4 +62,4 @@
   - type: Anchorable
   - type: Physics
     mass: 25
-    Anchored: true
+    anchored: true

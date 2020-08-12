@@ -88,6 +88,11 @@
   - mapping
   - addhand
   - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
+  - tilewalls
   CanViewVar: true
   CanAdminPlace: true
 
@@ -163,6 +168,19 @@
   - mapping
   - addhand
   - removehand
+  - tilepry
+  - anchor
+  - unanchor
+  - tubeconnections
+  - addatmos
+  - addgas
+  - fillgas
+  - listgases
+  - removegas
+  - clearatmos
+  - settemp
+  - setatmostemp
+  - tilewalls
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

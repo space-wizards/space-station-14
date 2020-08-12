@@ -17,9 +17,9 @@
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: Explosive
-    devastationRange: 1
-    heavyImpactRange: 3
-    lightImpactRange: 5
+    devastationRange: 0
+    heavyImpactRange: 2
+    lightImpactRange: 4
     flashRange: 7
   - type: Damageable
   - type: Destructible
@@ -82,6 +82,36 @@
   - type: Damageable
   - type: Destructible
     thresholdvalue: 10
+  - type: Appearance
+    visuals:
+    - type: TimerTriggerVisualizer
+      countdown_sound: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: the nuclear option
+  description: Please don't throw it, think of the children.
+  parent: BaseItem
+  id: NuclearGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/nukenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Icon
+    sprite: Objects/Weapons/Grenades/nukenade.rsi
+    state: icon
+  - type: Item
+    size: 5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: Explosive
+    devastationRange: 25
+    heavyImpactRange: 25
+    flashRange: 50
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 50
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer

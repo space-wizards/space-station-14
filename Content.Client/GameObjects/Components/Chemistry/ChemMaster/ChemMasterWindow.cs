@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.UserInterface;
@@ -273,6 +273,34 @@ namespace Content.Client.GameObjects.Components.Chemistry.ChemMaster
             var castState = (ChemMasterBoundUserInterfaceState) state;
             Title = castState.DispenserName;
             UpdatePanelInfo(castState);
+            if (Contents.Children != null)
+            {
+                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                EjectButton.Disabled = !castState.HasBeaker;
+            }
+        }
+
+        /// <summary>
+        /// This searches recursively through all the children of "parent"
+        /// and sets the Disabled value of any buttons found to "val"
+        /// </summary>
+        /// <param name="parent">The control which childrens get searched</param>
+        /// <param name="val">The value to which disabled gets set</param>
+        private void SetButtonDisabledRecursive(Control parent, bool val)
+        {
+            foreach (var child in parent.Children)
+            {
+                if (child is Button but)
+                {
+                    but.Disabled = val;
+                    continue;
+                }
+
+                if (child.Children != null)
+                {
+                    SetButtonDisabledRecursive(child, val);
+                }
+            }
         }
 
         /// <summary>

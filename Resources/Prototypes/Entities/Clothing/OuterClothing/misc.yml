@@ -2,7 +2,7 @@
   parent: OuterclothingBase
   id: OuterclothingApron
   name: apron
-  description: ''
+  description: A fancy purple apron for a stylish person.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/apron.rsi
@@ -15,7 +15,7 @@
   parent: OuterclothingBase
   id: OuterclothingApronchef
   name: apron (chef)
-  description: ''
+  description: An apron-jacket used by a high class chef.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/apronchef.rsi
@@ -28,7 +28,7 @@
   parent: OuterclothingBase
   id: OuterclothingAssjacket
   name: ass jacket
-  description: ''
+  description: Very damaged orange jacket. Don't be silly, do not wear it.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/ass_jacket.rsi
@@ -41,7 +41,7 @@
   parent: OuterclothingBase
   id: OuterclothingBedsheet
   name: ghost costume
-  description: ''
+  description: This is obviously just a bedsheet, but maybe try it on?
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/bedsheet.rsi
@@ -54,7 +54,7 @@
   parent: OuterclothingBase
   id: OuterclothingBlackhoodie
   name: black hoodie
-  description: ''
+  description: Oh my God, it's a black hoodie!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/black_hoodie.rsi
@@ -67,7 +67,7 @@
   parent: OuterclothingBase
   id: OuterclothingBlackhoodieopen
   name: black hoodie (open)
-  description: ''
+  description: Oh my God, it's a black hoodie!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/black_hoodie_open.rsi
@@ -80,7 +80,7 @@
   parent: OuterclothingBase
   id: OuterclothingCardborg
   name: cardborg
-  description: ''
+  description: An ordinary cardboard box with holes cut in the sides.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/cardborg.rsi
@@ -93,7 +93,7 @@
   parent: OuterclothingBase
   id: OuterclothingChaplainhoodie
   name: chaplain hoodie
-  description: ''
+  description: Black and strict chaplain hoodie.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/chaplain_hoodie.rsi
@@ -106,7 +106,7 @@
   parent: OuterclothingBase
   id: OuterclothingChef
   name: chef
-  description: ''
+  description: An apron-jacket used by a high class chef.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/chef.rsi
@@ -119,7 +119,7 @@
   parent: OuterclothingBase
   id: OuterclothingChickensuit
   name: chicken suit
-  description: ''
+  description: Bok bok bok!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/chickensuit.rsi
@@ -132,7 +132,7 @@
   parent: OuterclothingBase
   id: OuterclothingClassicponcho
   name: classic poncho
-  description: ''
+  description: A warm and comfy classic poncho.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/classicponcho.rsi
@@ -145,7 +145,7 @@
   parent: OuterclothingBase
   id: OuterclothingCultrobes
   name: cult robes
-  description: ''
+  description: There's no cult without classic red/crimson cult robes.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/cultrobes.rsi
@@ -158,7 +158,7 @@
   parent: OuterclothingBase
   id: OuterclothingDetvest
   name: detective's vest
-  description: ''
+  description: A hard-boiled private investigator's grey trenchcoat.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/detvest.rsi
@@ -171,7 +171,7 @@
   parent: OuterclothingBase
   id: OuterclothingHazard
   name: hazard
-  description: ''
+  description: A high-visibility vest used in work zones.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/hazard.rsi
@@ -184,7 +184,7 @@
   parent: OuterclothingBase
   id: OuterclothingJudge
   name: judge
-  description: ''
+  description: This robe commands authority.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/judge.rsi
@@ -197,7 +197,7 @@
   parent: OuterclothingBase
   id: OuterclothingMonkeysuit
   name: monkey suit
-  description: ''
+  description: A suit that looks like a primate.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/monkeysuit.rsi
@@ -210,7 +210,7 @@
   parent: OuterclothingBase
   id: OuterclothingPoncho
   name: poncho
-  description: ''
+  description: A warm and comfy poncho.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/poncho.rsi
@@ -223,7 +223,7 @@
   parent: OuterclothingBase
   id: OuterclothingSanta
   name: santa
-  description: ''
+  description: Ho ho ho!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/santa.rsi
@@ -236,7 +236,7 @@
   parent: OuterclothingBase
   id: OuterclothingStraightjacket
   name: straight jacket
-  description: ''
+  description: A straight jacket.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/straight_jacket.rsi
@@ -250,7 +250,7 @@
   parent: OuterclothingBase
   id: OuterclothingSurgeon
   name: surgeon
-  description: ''
+  description: A sterile blue surgical apron.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/surgeon.rsi
@@ -263,7 +263,7 @@
   parent: OuterclothingBase
   id: OuterclothingVest
   name: vest
-  description: ''
+  description: A thick vest with a rubbery, water-resistant shell.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/vest.rsi
@@ -277,7 +277,7 @@
   parent: OuterclothingBase
   id: OuterclothingVioletwizard
   name: violet wizard
-  description: ''
+  description: A bizarre gem-encrusted violet robe that radiates magical energies.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/violetwizard.rsi
@@ -290,7 +290,7 @@
   parent: OuterclothingBase
   id: OuterclothingWizard
   name: wizard
-  description: ''
+  description: A bizarre gem-encrusted blue robe that radiates magical energies.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/wizard.rsi
@@ -303,7 +303,7 @@
   parent: OuterclothingBase
   id: OuterclothingXenos
   name: xenos
-  description: ''
+  description: A suit made out of chitinous alien hide.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/xenos.rsi

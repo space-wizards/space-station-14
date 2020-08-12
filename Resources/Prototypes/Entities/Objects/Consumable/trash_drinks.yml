@@ -1,9 +1,10 @@
-# These can still be used as containers
+﻿# These can still be used as containers
 - type: entity
   name: base empty bottle
   parent: BaseItem
   abstract: true
   id: DrinkBottleBaseEmpty
+  description: That's an empty bottle.
   components:
   - type: LoopingSound
   - type: Sprite

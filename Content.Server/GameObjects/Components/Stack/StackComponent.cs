@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -27,15 +28,7 @@ namespace Content.Server.GameObjects.Components.Stack
         public override int Count
         {
             get => base.Count;
-            set
-            {
-                base.Count = value;
-
-                if (Count <= 0)
-                {
-                    Owner.Delete();
-                }
-            }
+            set => base.Count = value;
         }
 
         [ViewVariables(VVAccess.ReadWrite)]

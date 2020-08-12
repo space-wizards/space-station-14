@@ -60,7 +60,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.False(ActionBlockerSystem.CanMove(human));
                 Assert.False(ActionBlockerSystem.CanChangeDirection(human));
                 Assert.False(EffectBlockerSystem.CanFall(human));
-                Assert.AreEqual(human.Transform.WorldPosition, chair.Transform.WorldPosition);
+                Assert.That(human.Transform.WorldPosition, Is.EqualTo(chair.Transform.WorldPosition));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));
@@ -146,6 +146,22 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(ActionBlockerSystem.CanMove(human));
                 Assert.True(ActionBlockerSystem.CanChangeDirection(human));
                 Assert.True(EffectBlockerSystem.CanFall(human));
+
+                // Re-buckle
+                Assert.True(buckle.TryBuckle(human, chair));
+
+                // Move away from the chair
+                human.Transform.WorldPosition += (1, 0);
+            });
+
+            server.RunTicks(1);
+
+            server.Assert(() =>
+            {
+                // No longer buckled
+                Assert.False(buckle.Buckled);
+                Assert.Null(buckle.BuckledTo);
+                Assert.IsEmpty(strap.BuckledEntities);
             });
 
             await server.WaitIdleAsync();

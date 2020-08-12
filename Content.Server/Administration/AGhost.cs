@@ -35,7 +35,7 @@ namespace Content.Server.Administration
             {
                 var canReturn = mind.CurrentEntity != null && !mind.CurrentEntity.HasComponent<GhostComponent>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var ghost = entityManager.SpawnEntity("AdminObserver", player.AttachedEntity.Transform.GridPosition);
+                var ghost = entityManager.SpawnEntity("AdminObserver", player.AttachedEntity.Transform.MapPosition);
                 if(canReturn)
                     mind.Visit(ghost);
                 else

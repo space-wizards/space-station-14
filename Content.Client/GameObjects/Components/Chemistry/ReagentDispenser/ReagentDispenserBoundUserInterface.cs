@@ -44,7 +44,7 @@ namespace Content.Client.GameObjects.Components.Chemistry
                 Title = _localizationManager.GetString("Reagent dispenser"),
             };
 
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
             _window.OnClose += Close;
 
             //Setup static button actions.
@@ -72,8 +72,8 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var castState = (ReagentDispenserBoundUserInterfaceState)state;
             _lastState = castState;
 
-            _window?.UpdateState(castState); //Update window state
             UpdateReagentsList(castState.Inventory); //Update reagents list & reagent button actions
+            _window?.UpdateState(castState); //Update window state
         }
 
         /// <summary>

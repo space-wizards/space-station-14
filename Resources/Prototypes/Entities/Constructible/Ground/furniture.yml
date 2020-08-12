@@ -1,6 +1,7 @@
-- type: entity
+﻿- type: entity
   name: stool
   id: Stool
+  description: Apply butt.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -14,6 +15,8 @@
     state: stool_base
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: bar stool
@@ -29,6 +32,7 @@
 - type: entity
   name: white office chair
   id: ChairOfficeLight
+  description: You sit in this. Either by will or force.
   components:
   - type: Rotatable
   - type: Clickable
@@ -42,27 +46,26 @@
     state: officechair_white
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: dark office chair
   id: ChairOfficeDark
+  parent: ChairOfficeLight
   components:
-  - type: Rotatable
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Collidable
   - type: Sprite
     sprite: Constructible/Misc/furniture.rsi
     state: officechair_dark
   - type: Icon
     sprite: Constructible/Misc/furniture.rsi
     state: officechair_dark
-  - type: Strap
-    position: Stand
+
 
 - type: entity
   name: chair
   id: Chair
+  description: You sit in this. Either by will or force.
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -76,6 +79,22 @@
     state: chair
   - type: Strap
     position: Stand
+  - type: Anchorable
+  - type: Pullable
+
+- type: entity
+  parent: Chair
+  name: comfy chair
+  id: ComfyChair
+  description: It looks comfy.
+  components:
+  - type: Sprite
+    sprite: Constructible/Misc/furniture.rsi
+    state: comfychair_preview
+  - type: Icon
+    sprite: Constructible/Misc/furniture.rsi
+    state: comfychair_preview
+
 
 - type: entity
   name: wooden chair
@@ -87,10 +106,13 @@
     color: "white"
   - type: Icon
     state: wooden_chair
+  - type: Anchorable
+  - type: Pullable
 
 - type: entity
   name: bed
   id: Bed
+  description: This is used to lie in, sleep in or strap on.
   components:
   - type: Clickable
   - type: InteractionOutline

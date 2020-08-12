@@ -13,7 +13,6 @@
     - state: invaders
       shader: unshaded
       map: ["enum.ComputerVisualizer+Layers.Screen"]
-
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -21,3 +20,5 @@
       key: ""
       body: arcade
       bodyBroken: arcade
+  - type: Anchorable
+  - type: Pullable
