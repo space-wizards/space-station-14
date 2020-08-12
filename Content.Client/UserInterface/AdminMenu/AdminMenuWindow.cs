@@ -40,32 +40,50 @@ namespace Content.Client.UserInterface
             var sessions = IoCManager.Resolve<IPlayerManager>().Sessions;
             var header = new HBoxContainer
             {
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
                 Children =
                     {
-                        new Label { Text = "Name" },
-                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                        new Label { Text = "Player"},
-                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                        new Label { Text = "Status"},
-                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                        new Label { Text = "Ping"},
+                        new Label { Text = "Name",
+                            SizeFlagsStretchRatio = 2f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new Label { Text = "Player",
+                            SizeFlagsStretchRatio = 2f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new Label { Text = "Status",
+                            SizeFlagsStretchRatio = 1f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new Label { Text = "Ping",
+                            SizeFlagsStretchRatio = 1f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            Align = Label.AlignMode.Right },
                     }
             };
             PlayerList.AddChild(header);
             PlayerList.AddChild(new Controls.HighDivider());
-            foreach (var player in sessions) //TODO: make this aligned with the header
+            foreach (var player in sessions)
             {
                 var hbox = new HBoxContainer
                 {
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
                     Children =
                     {
-                        new Label { Text = player.Name },
-                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                        new Label { Text = player.AttachedEntity?.Name },
-                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                        new Label { Text = player.Status.ToString() },
-                        new Control {SizeFlagsHorizontal = SizeFlags.FillExpand},
-                        new Label { Text = player.Ping.ToString() },
+                        new Label {
+                            Text = player.Name,
+                            SizeFlagsStretchRatio = 2f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new Label {
+                            Text = player.AttachedEntity?.Name,
+                            SizeFlagsStretchRatio = 2f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new Label {
+                            Text = player.Status.ToString(),
+                            SizeFlagsStretchRatio = 1f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand },
+                        new Label {
+                            Text = player.Ping.ToString(),
+                            SizeFlagsStretchRatio = 1f,
+                            SizeFlagsHorizontal = SizeFlags.FillExpand,
+                            Align = Label.AlignMode.Right },
                     }
                 };
                 PlayerList.AddChild(hbox);
