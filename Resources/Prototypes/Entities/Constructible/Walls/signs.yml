@@ -10,6 +10,7 @@
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
       layer:
+      - Opaque
       - Impassable
       - MobImpassable
       - VaultImpassable
@@ -52,7 +53,6 @@
   description: A direction sign, pointing out which way Security is.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -69,7 +69,6 @@
   description: A direction sign, pointing out which way evac is.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -86,7 +85,6 @@
   description: A direction sign, pointing out which way the Bridge is.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -103,7 +101,6 @@
   description: A direction sign, pointing out which way the Medical department is.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -120,7 +117,6 @@
   description: A direction sign, pointing out which way the Engineering department is.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -137,7 +133,6 @@
   description: A direction sign, pointing out which way the Science department is.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -154,7 +149,6 @@
   description: A direction sign, pointing to some supplies.
   components:
   - type: Rotatable
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -171,7 +165,6 @@
   id: SignArmory
   name: ARMORY
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -186,7 +179,6 @@
   id: SignToolStorage
   name: TOOL STORAGE
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -201,7 +193,6 @@
   id: SignAnomaly
   name: ANOMALY LAB
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -216,7 +207,6 @@
   id: SignAtmos
   name: ATMOS
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -231,7 +221,6 @@
   id: SignBar
   name: BAR
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -246,7 +235,6 @@
   id: SignLibrary
   name: LIBRARY
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -261,7 +249,6 @@
   id: SignChapel
   name: CHAPEL
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -276,7 +263,6 @@
   id: SignHead
   name: HEAD
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -291,7 +277,6 @@
   id: SignConference
   name: CONFERENCE ROOM
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -306,7 +291,6 @@
   id: SignDrones
   name: DRONES
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -321,7 +305,6 @@
   id: SignEngine
   name: ENGINE
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -336,7 +319,6 @@
   id: SignCloning
   name: CLONING
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -351,7 +333,6 @@
   id: SignInterrogation
   name: INTERROGATION
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -366,7 +347,6 @@
   id: SignSurgery
   name: SURGERY
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -381,7 +361,6 @@
   id: SignTelecoms
   name: TELECOMS
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -396,7 +375,6 @@
   id: SignCargo
   name: CARGO
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -411,7 +389,6 @@
   id: SignCargoDock
   name: CARGO DOCK
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -426,7 +403,6 @@
   id: SignChem
   name: CHEMISTRY
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -441,7 +417,6 @@
   id: SignShipDock
   name: DOCKING
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -456,7 +431,6 @@
   id: SignEngineering
   name: ENGINEERING
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -471,7 +445,6 @@
   id: SignEVA
   name: EVA
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -486,7 +459,6 @@
   id: SignGravity
   name: GRAVITY
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -501,7 +473,6 @@
   id: SignMedical
   name: MEDBAY
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -516,7 +487,6 @@
   id: SignMorgue
   name: MORGUE
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -528,11 +498,10 @@
 
 - type: entity
   parent: BaseSign
-  id: SignPriso
+  id: SignPrison
   name: PRISON
   description:
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -547,7 +516,6 @@
   id: SignRND
   name: RND
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -562,7 +530,6 @@
   id: SignScience
   name: SCIENCE
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -577,7 +544,6 @@
   id: SignToxins
   name: TOXINS
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -592,7 +558,6 @@
   id: SignBridge
   name: BRIDGE
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -610,7 +575,6 @@
   name: Air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -626,7 +590,6 @@
   name: CO2 warning sign
   description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -642,7 +605,6 @@
   name: N2 warning sign
   description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -658,7 +620,6 @@
   name: N2O warning sign
   description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -674,7 +635,6 @@
   name: O2 warning sign
   description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -690,7 +650,6 @@
   name: phoron waste sign
   description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -706,7 +665,6 @@
   name: Atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -737,7 +695,6 @@
   name: No Smoking
   description: A warning sign which reads 'NO SMOKING'
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -753,7 +710,6 @@
   name: Old Sign
   description: Technical information of some sort, shame its too worn-out to read.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
@@ -769,7 +725,6 @@
   name: Old Sign
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
-  - type: Clickable
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
