@@ -112,7 +112,7 @@ namespace Content.Client.UserInterface
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownDisplay.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownDisplay.Progress = FloatMath.Clamp((float)ratio, -1, 1);
 
                 if (ratio > -1f)
                 {
