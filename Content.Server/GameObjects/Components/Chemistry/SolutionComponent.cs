@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     ///    ECS component that manages a liquid solution of reagents.
     /// </summary>
     [RegisterComponent]
-    internal class SolutionComponent : SharedSolutionComponent, IExamine
+    public class SolutionComponent : SharedSolutionComponent, IExamine
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;

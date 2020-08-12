@@ -1,22 +1,17 @@
-using System.Linq;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.GameObjects.Components.Metabolism;
+using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Body.Circulatory
 {
     [RegisterComponent]
-    public class BloodstreamComponent : Component
+    public class BloodstreamComponent : Component, IGasMixtureHolder
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
-#pragma warning restore 649
-
         public override string Name => "Bloodstream";
 
         /// <summary>
@@ -32,7 +27,11 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
         /// <summary>
         ///     Empty volume of internal solution
         /// </summary>
-        public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
+        [ViewVariables] public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
+
+        [ViewVariables] public GasMixture Air { get; set; } = new GasMixture(6);
+
+        [ViewVariables] public SolutionComponent Solution => _internalSolution;
 
         public override void Initialize()
         {
@@ -67,45 +66,18 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
             return true;
         }
 
-        /// <summary>
-        ///     Loops through each reagent in _internalSolution,
-        ///     and calls <see cref="IMetabolizable.Metabolize"/> for each of them.
-        /// </summary>
-        /// <param name="tickTime">The time since the last metabolism tick in seconds.</param>
-        private void Metabolize(float tickTime)
+        public void PumpToxins(GasMixture into, float pressure)
         {
-            if (_internalSolution.CurrentVolume == 0)
+            if (!Owner.TryGetComponent(out MetabolismComponent metabolism))
             {
+                Air.PumpGasTo(into, pressure);
                 return;
             }
 
-            // Run metabolism for each reagent, remove metabolized reagents
-            // Using ToList here lets us edit reagents while iterating
-            foreach (var reagent in _internalSolution.ReagentList.ToList())
-            {
-                if (!_prototypeManager.TryIndex(reagent.ReagentId, out ReagentPrototype proto))
-                {
-                    continue;
-                }
+            var toxins = metabolism.Clean(this);
 
-                //Run metabolism code for each reagent
-                foreach (var metabolizable in proto.Metabolism)
-                {
-                    var reagentDelta = metabolizable.Metabolize(Owner, reagent.ReagentId, tickTime);
-                    _internalSolution.TryRemoveReagent(reagent.ReagentId, reagentDelta);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Triggers metabolism of the reagents inside _internalSolution.
-        /// </summary>
-        /// <param name="frameTime">
-        ///     The time since the last metabolism tick in seconds.
-        /// </param>
-        public void Update(float frameTime)
-        {
-            Metabolize(frameTime);
+            toxins.PumpGasTo(into, pressure);
+            Air.Merge(toxins);
         }
     }
 }

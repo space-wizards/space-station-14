@@ -11,20 +11,15 @@ namespace Content.Server.Body.Network
 
         protected override void OnAdd()
         {
-            Owner.EnsureComponent<LungsComponent>();
+            Owner.EnsureComponent<LungComponent>();
         }
 
         public override void OnRemove()
         {
-            if (Owner.HasComponent<LungsComponent>())
+            if (Owner.HasComponent<LungComponent>())
             {
-                Owner.RemoveComponent<LungsComponent>();
+                Owner.RemoveComponent<LungComponent>();
             }
-        }
-
-        public override void Update(float frameTime)
-        {
-            Owner.GetComponent<LungsComponent>().Update(frameTime);
         }
     }
 }

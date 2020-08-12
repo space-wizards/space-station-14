@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Body.Mechanisms.Behaviors;
 using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.IoC;
@@ -210,13 +211,26 @@ namespace Content.Server.Body.Mechanisms
         }
 
         /// <summary>
-        ///     This method is called by <see cref="BodyPart.Update"/>
+        ///     This method is called by <see cref="BodyPart.PreMetabolism"/> before
+        ///     <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
-        public void Update(float frameTime)
+        public void PreMetabolism(float frameTime)
         {
             foreach (var behavior in Behaviors)
             {
-                behavior.Update(frameTime);
+                behavior.PreMetabolism(frameTime);
+            }
+        }
+
+        /// <summary>
+        ///     This method is called by <see cref="BodyPart.PostMetabolism"/> after
+        ///     <see cref="MetabolismComponent.Update"/> is called.
+        /// </summary>
+        public void PostMetabolism(float frameTime)
+        {
+            foreach (var behavior in Behaviors)
+            {
+                behavior.PostMetabolism(frameTime);
             }
         }
 

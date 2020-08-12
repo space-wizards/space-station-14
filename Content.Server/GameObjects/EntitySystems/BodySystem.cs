@@ -1,4 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Metabolism;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
@@ -11,8 +12,17 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var body in ComponentManager.EntityQuery<BodyManagerComponent>())
             {
-                // TODO
-                body.Update(frameTime);
+                body.PreMetabolism(frameTime);
+            }
+
+            foreach (var metabolism in ComponentManager.EntityQuery<MetabolismComponent>())
+            {
+                metabolism.Update(frameTime);
+            }
+
+            foreach (var body in ComponentManager.EntityQuery<BodyManagerComponent>())
+            {
+                body.PostMetabolism(frameTime);
             }
         }
     }

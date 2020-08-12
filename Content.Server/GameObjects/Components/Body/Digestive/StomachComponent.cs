@@ -57,11 +57,6 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
 
-        /// <summary>
-        ///     Reference to bloodstream where digested reagents are transferred to
-        /// </summary>
-        private BloodstreamComponent _bloodstream;
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -75,12 +70,6 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
 
             _stomachContents = Owner.GetComponent<SolutionComponent>();
             _stomachContents.MaxVolume = _initialMaxVolume;
-            if (!Owner.TryGetComponent(out _bloodstream))
-            {
-                Logger.Warning(_localizationManager.GetString(
-                    "StomachComponent entity does not have a BloodstreamComponent, which is required for it to function. Owner entity name: {0}",
-                    Owner.Name));
-            }
         }
 
         public bool TryTransferSolution(Solution solution)
@@ -110,7 +99,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <param name="frameTime">The time since the last update in seconds.</param>
         public void Update(float frameTime)
         {
-            if (_bloodstream == null)
+            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
             {
                 return;
             }
@@ -132,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
             }
 
             // Transfer digested reagents to bloodstream
-            _bloodstream.TryTransferSolution(transferSolution);
+            bloodstream.TryTransferSolution(transferSolution);
         }
 
         /// <summary>

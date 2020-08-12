@@ -13,8 +13,10 @@ namespace Content.Server.Body.Mechanisms.Behaviors
 
         protected override Type? Network => typeof(DigestiveNetwork);
 
-        public override void Update(float frameTime)
+        public override void PreMetabolism(float frameTime)
         {
+            base.PreMetabolism(frameTime);
+
             if (Mechanism.Body == null ||
                 !Mechanism.Body.Owner.TryGetComponent(out StomachComponent stomach))
             {

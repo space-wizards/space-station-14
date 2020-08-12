@@ -2,6 +2,7 @@
 
 namespace Content.Shared.GameObjects.Components.Damage
 {
+    // TODO
     /// <summary>
     ///     Component interface that gets triggered after the values of a
     ///     <see cref="IDamageableComponent"/> on the same <see cref="IEntity"/> change.

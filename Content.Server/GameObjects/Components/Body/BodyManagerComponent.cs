@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Body;
 using Content.Server.Body.Network;
+using Content.Server.GameObjects.Components.Metabolism;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Mobs;
@@ -199,13 +200,31 @@ namespace Content.Server.GameObjects.Components.Body
         }
 
         /// <summary>
-        ///     This method is called by <see cref="BodySystem.Update"/>
+        ///     This method is called by <see cref="BodySystem.Update"/> before
+        ///     <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
-        public void Update(float frameTime)
+        public void PreMetabolism(float frameTime)
         {
             foreach (var part in Parts.Values)
             {
-                part.Update(frameTime);
+                part.PreMetabolism(frameTime);
+            }
+
+            foreach (var network in _networks.Values)
+            {
+                network.Update(frameTime);
+            }
+        }
+
+        /// <summary>
+        ///     This method is called by <see cref="BodySystem.Update"/> after
+        ///     <see cref="MetabolismComponent.Update"/> is called.
+        /// </summary>
+        public void PostMetabolism(float frameTime)
+        {
+            foreach (var part in Parts.Values)
+            {
+                part.PostMetabolism(frameTime);
             }
 
             foreach (var network in _networks.Values)

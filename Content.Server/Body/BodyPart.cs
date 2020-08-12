@@ -6,6 +6,7 @@ using System.Linq;
 using Content.Server.Body.Mechanisms;
 using Content.Server.Body.Surgery;
 using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Metabolism;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Part.Properties;
@@ -201,12 +202,25 @@ namespace Content.Server.Body
 
         /// <summary>
         ///     This method is called by <see cref="BodyManagerComponent.Update"/>
+        ///     before <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
-        public void Update(float frameTime)
+        public void PreMetabolism(float frameTime)
         {
             foreach (var mechanism in Mechanisms)
             {
-                mechanism.Update(frameTime);
+                mechanism.PreMetabolism(frameTime);
+            }
+        }
+
+        /// <summary>
+        ///     This method is called by <see cref="BodyManagerComponent.Update"/>
+        ///     after <see cref="MetabolismComponent.Update"/> is called.
+        /// </summary>
+        public void PostMetabolism(float frameTime)
+        {
+            foreach (var mechanism in Mechanisms)
+            {
+                mechanism.PreMetabolism(frameTime);
             }
         }
 

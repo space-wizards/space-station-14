@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Metabolism;
 
 namespace Content.Server.Body.Mechanisms.Behaviors
 {
@@ -167,8 +168,18 @@ namespace Content.Server.Body.Mechanisms.Behaviors
         ///     Called every update when this behavior is connected to a
         ///     <see cref="BodyManagerComponent"/>, but not while in a
         ///     <see cref="DroppedMechanismComponent"/> or
-        ///     <see cref="DroppedBodyPartComponent"/>.
+        ///     <see cref="DroppedBodyPartComponent"/>,
+        ///     before <see cref="MetabolismComponent.Update"/> is called.
         /// </summary>
-        public virtual void Update(float frameTime) { }
+        public virtual void PreMetabolism(float frameTime) { }
+
+        /// <summary>
+        ///     Called every update when this behavior is connected to a
+        ///     <see cref="BodyManagerComponent"/>, but not while in a
+        ///     <see cref="DroppedMechanismComponent"/> or
+        ///     <see cref="DroppedBodyPartComponent"/>,
+        ///     after <see cref="MetabolismComponent.Update"/> is called.
+        /// </summary>
+        public virtual void PostMetabolism(float frameTime) { }
     }
 }

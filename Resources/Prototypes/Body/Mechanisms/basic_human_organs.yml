@@ -57,6 +57,8 @@
   durability: 13
   size: 1
   compatibility: Biological
+  behaviors:
+  - Content.Server.Body.Mechanisms.Behaviors.LungBehavior
 
 - type: mechanism
   id: mechanism.Stomach.BasicHuman

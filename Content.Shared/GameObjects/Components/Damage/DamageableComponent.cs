@@ -34,9 +34,9 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public virtual List<DamageState> SupportedDamageStates => new List<DamageState> {DamageState.Alive};
 
-        [ViewVariables] public virtual DamageState CurrentDamageState { get; protected set; } = DamageState.Alive;
+        public virtual DamageState CurrentDamageState { get; protected set; } = DamageState.Alive;
 
-        public int TotalDamage => Damage.TotalDamage;
+        [ViewVariables] public int TotalDamage => Damage.TotalDamage;
 
         public IReadOnlyDictionary<DamageClass, int> DamageClasses => Damage.DamageClasses;
 

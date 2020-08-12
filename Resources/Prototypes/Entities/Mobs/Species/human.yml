@@ -129,6 +129,12 @@
   - type: BodyManager
     baseTemplate: bodyTemplate.Humanoid
     basePreset: bodyPreset.BasicHuman
+  - type: Metabolism
+    needsGases:
+      Oxygen: 0.1
+    producesGases:
+      Oxygen: 0.075
+      CarbonDioxide: 0.025
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance
