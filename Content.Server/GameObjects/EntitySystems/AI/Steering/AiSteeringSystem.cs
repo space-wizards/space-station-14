@@ -320,7 +320,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 return SteeringStatus.Pending;
             }
             
-            var ignoredCollision = new List<EntityUid>();
+            var ignoredCollision = new List<IEntity>();
             // Check if the target entity has moved - If so then re-path
             // TODO: Patch the path from the target's position back towards us, stopping if it ever intersects the current path
             // Probably need a separate "PatchPath" job
@@ -339,7 +339,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     RequestPath(entity, steeringRequest);
                 }
                 
-                ignoredCollision.Add(entitySteer.Target.Uid);
+                ignoredCollision.Add(entitySteer.Target);
             }
 
             HandleStuck(entity);
@@ -597,7 +597,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// <param name="direction">entity's travel direction</param>
         /// <param name="ignoredTargets"></param>
         /// <returns></returns>
-        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<EntityUid> ignoredTargets)
+        private Vector2 CollisionAvoidance(IEntity entity, Vector2 direction, ICollection<IEntity> ignoredTargets)
         {
             if (direction == Vector2.Zero || !entity.TryGetComponent(out ICollidableComponent collidableComponent))
             {
@@ -627,26 +627,25 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
             {
                 var node = _pathfindingSystem.GetNode(tile);
                 // Assume the immovables have already been checked
-                foreach (var (uid, layer) in node.PhysicsLayers)
+                foreach (var (physicsEntity, layer) in node.PhysicsLayers)
                 {
                     // Ignore myself / my target if applicable / if my mask doesn't collide
-                    if (uid == entity.Uid || ignoredTargets.Contains(uid) || (entityCollisionMask & layer) == 0) continue;
+                    if (physicsEntity == entity || ignoredTargets.Contains(physicsEntity) || (entityCollisionMask & layer) == 0) continue;
                     // God there's so many ways to do this
                     // err for now we'll just assume the first entity is the center and just add a vector for it
-                    var collisionEntity = _entityManager.GetEntity(uid);
 
                     //Pathfinding updates are deferred so this may not be done yet.
-                    if (collisionEntity.Deleted) continue;
+                    if (physicsEntity.Deleted) continue;
                     
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (collisionEntity.TryGetComponent(out IPhysicsComponent physicsComponent) &&
+                    if (physicsEntity.TryGetComponent(out IPhysicsComponent physicsComponent) &&
                         Vector2.Dot(physicsComponent.LinearVelocity, direction) > 0)
                     {
                         continue;
                     }
-                    var centerGrid = collisionEntity.Transform.GridPosition;
+                    var centerGrid = physicsEntity.Transform.GridPosition;
                     // Check how close we are to center of tile and get the inverse; if we're closer this is stronger
                     var additionalVector = (centerGrid.Position - entityGridCoords.Position);
                     var distance = additionalVector.Length;
