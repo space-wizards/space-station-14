@@ -1,6 +1,5 @@
 using System;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
@@ -80,13 +79,12 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.GridPosition.TryGetTileAtmosphere(out var atmosphere) ||
-                atmosphere.Air == null)
+            if (!Owner.Transform.GridPosition.TryGetTileAir(out var air))
             {
                 return;
             }
 
-            atmosphere.Air.PumpGasTo(Air, Pressure);
+            air.PumpGasTo(Air, Pressure);
             Air.PumpGasTo(bloodstream.Air, Pressure);
         }
 
@@ -97,14 +95,13 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.GridPosition.TryGetTileAtmosphere(out var atmosphere) ||
-                atmosphere.Air == null)
+            if (!Owner.Transform.GridPosition.TryGetTileAir(out var air))
             {
                 return;
             }
 
             bloodstream.PumpToxins(Air, Pressure);
-            Air.PumpGasTo(atmosphere.Air, Pressure);
+            Air.PumpGasTo(air, Pressure);
         }
     }
 
