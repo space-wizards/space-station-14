@@ -227,7 +227,10 @@ namespace Content.Client.State
 
             // client side command handlers will always be sent the local player session.
             var session = PlayerManager.LocalPlayer.Session;
-            inputSys.HandleInputCommand(session, func, message);
+            if (inputSys.HandleInputCommand(session, func, message))
+            {
+                args.Handle();
+            }
         }
     }
 }
