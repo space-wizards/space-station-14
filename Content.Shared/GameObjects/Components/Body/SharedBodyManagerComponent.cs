@@ -42,11 +42,13 @@ namespace Content.Shared.GameObjects.Components.Body
     public sealed class BodyPartRemovedMessage : ComponentMessage
     {
         public readonly Enum RSIMap;
+        public readonly EntityUid? Dropped;
 
-        public BodyPartRemovedMessage(Enum rsiMap)
+        public BodyPartRemovedMessage(Enum rsiMap, EntityUid? dropped = null)
         {
             Directed = true;
             RSIMap = rsiMap;
+            Dropped = dropped;
         }
     }
 

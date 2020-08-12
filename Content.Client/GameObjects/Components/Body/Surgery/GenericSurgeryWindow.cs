@@ -57,7 +57,7 @@ namespace Content.Client.GameObjects.Components.Body.Surgery
                 var button = new SurgeryButton(callbackData);
 
                 button.SetOnToggleBehavior(OnButtonPressed);
-                button.SetDisplayText(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(displayText));
+                button.SetDisplayText(Loc.GetString(displayText));
 
                 _optionsBox.AddChild(button);
             }

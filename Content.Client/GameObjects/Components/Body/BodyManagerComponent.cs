@@ -5,7 +5,9 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 using Robust.Shared.Players;
 
 namespace Content.Client.GameObjects.Components.Body
@@ -15,6 +17,10 @@ namespace Content.Client.GameObjects.Components.Body
     [ComponentReference(typeof(IBodyManagerComponent))]
     public class BodyManagerComponent : SharedBodyManagerComponent, IClientDraggable
     {
+#pragma warning disable 649
+        [Dependency] private readonly IEntityManager _entityManager;
+#pragma warning restore 649
+
         public bool ClientCanDropOn(CanDropEventArgs eventArgs)
         {
             return eventArgs.Target.HasComponent<DisposalUnitComponent>();
@@ -41,6 +47,17 @@ namespace Content.Client.GameObjects.Components.Body
                     break;
                 case BodyPartRemovedMessage partRemoved:
                     sprite.LayerSetVisible(partRemoved.RSIMap, false);
+
+                    if (!partRemoved.Dropped.HasValue ||
+                        !_entityManager.TryGetEntity(partRemoved.Dropped.Value, out var entity) ||
+                        !entity.TryGetComponent(out ISpriteComponent droppedSprite))
+                    {
+                        break;
+                    }
+
+                    var color = sprite[partRemoved.RSIMap].Color;
+
+                    droppedSprite.LayerSetColor(0, color);
                     break;
                 case MechanismSpriteAddedMessage mechanismAdded:
                     sprite.LayerSetVisible(mechanismAdded.RSIMap, true);

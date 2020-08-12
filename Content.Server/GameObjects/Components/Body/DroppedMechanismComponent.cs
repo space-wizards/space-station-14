@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Body
         public void InitializeDroppedMechanism(Mechanism data)
         {
             ContainedMechanism = data;
-            Owner.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(ContainedMechanism.Name);
+            Owner.Name = Loc.GetString(ContainedMechanism.Name);
 
             if (Owner.TryGetComponent(out SpriteComponent component))
             {

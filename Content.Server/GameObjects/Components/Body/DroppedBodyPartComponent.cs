@@ -67,12 +67,17 @@ namespace Content.Server.GameObjects.Components.Body
         public void TransferBodyPartData(BodyPart data)
         {
             ContainedBodyPart = data;
-            Owner.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(ContainedBodyPart.Name);
+            Owner.Name = Loc.GetString(ContainedBodyPart.Name);
 
             if (Owner.TryGetComponent(out SpriteComponent component))
             {
                 component.LayerSetRSI(0, data.RSIPath);
                 component.LayerSetState(0, data.RSIState);
+
+                if (data.RSIColor.HasValue)
+                {
+                    component.LayerSetColor(0, data.RSIColor.Value);
+                }
             }
         }
 

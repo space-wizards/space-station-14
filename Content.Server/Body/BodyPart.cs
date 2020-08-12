@@ -14,11 +14,14 @@ using Content.Shared.Damage.DamageContainer;
 using Content.Shared.Damage.ResistanceSet;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Server.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -138,6 +141,12 @@ namespace Content.Server.Body
         /// </summary>
         [ViewVariables]
         public Enum? RSIMap { get; set; }
+
+        /// <summary>
+        ///     RSI color of this body part.
+        /// </summary>
+        // TODO: SpriteComponent rework
+        public Color? RSIColor { get; set; }
 
         /// <summary>
         ///     <see cref="BodyPartType"/> that this <see cref="BodyPart"/> is considered
@@ -572,6 +581,22 @@ namespace Content.Server.Body
         private void OnHealthChanged(List<HealthChangeData> changes)
         {
             // TODO
+        }
+
+        public bool SpawnDropped([NotNullWhen(true)] out IEntity dropped)
+        {
+            dropped = default!;
+
+            if (Body == null)
+            {
+                return false;
+            }
+
+            dropped = IoCManager.Resolve<IEntityManager>().SpawnEntity("BaseDroppedBodyPart", Body.Owner.Transform.GridPosition);
+
+            dropped.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(this);
+
+            return true;
         }
     }
 }

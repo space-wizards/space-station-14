@@ -18,12 +18,14 @@ using Content.Shared.Body.Template;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Movement;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -172,7 +174,7 @@ namespace Content.Server.GameObjects.Components.Body
                 }
 
                 // Try and remove an existing limb if that exists.
-                RemoveBodyPart(slotName);
+                RemoveBodyPart(slotName, false);
 
                 // Add a new BodyPart with the BodyPartPrototype as a baseline to our
                 // BodyComponent.
@@ -585,10 +587,10 @@ namespace Content.Server.GameObjects.Components.Body
                 }
             }
 
-            var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-            partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
+            part.SpawnDropped(out var dropped);
+
             OnBodyChanged();
-            return partEntity;
+            return dropped;
         }
 
         /// <summary>
@@ -606,12 +608,12 @@ namespace Content.Server.GameObjects.Components.Body
             }
 
             var slotName = Parts.FirstOrDefault(x => x.Value == part).Key;
-            RemoveBodyPart(slotName);
+            RemoveBodyPart(slotName, dropEntity);
 
-            // Call disconnect on all limbs that were hanging off this limb.
+            // Call disconnect on all limbs that were hanging off this limb
             if (TryGetBodyPartConnections(slotName, out List<string> connections))
             {
-                // This loop is an unoptimized travesty. TODO: optimize to be less shit
+                // TODO: Optimize
                 foreach (var connectionName in connections)
                 {
                     if (TryGetBodyPart(connectionName, out var result) && !ConnectedToCenterPart(result))
@@ -619,13 +621,6 @@ namespace Content.Server.GameObjects.Components.Body
                         DisconnectBodyPart(connectionName, dropEntity);
                     }
                 }
-            }
-
-            if (dropEntity)
-            {
-                var partEntity =
-                    Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
             }
 
             OnBodyChanged();
@@ -653,7 +648,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            RemoveBodyPart(slotName);
+            RemoveBodyPart(slotName, dropEntity);
 
             if (TryGetBodyPartConnections(slotName, out List<string> connections))
             {
@@ -664,12 +659,6 @@ namespace Content.Server.GameObjects.Components.Body
                         DisconnectBodyPart(connectionName, dropEntity);
                     }
                 }
-            }
-
-            if (dropEntity)
-            {
-                var partEntity = Owner.EntityManager.SpawnEntity("BaseDroppedBodyPart", Owner.Transform.GridPosition);
-                partEntity.GetComponent<DroppedBodyPartComponent>().TransferBodyPartData(part);
             }
 
             OnBodyChanged();
@@ -728,14 +717,23 @@ namespace Content.Server.GameObjects.Components.Body
         ///     if one exists.
         /// </summary>
         /// <param name="slotName">The slot to remove it from.</param>
+        /// <param name="drop">
+        ///     Whether or not to drop the removed <see cref="BodyPart"/>.
+        /// </param>
         /// <returns></returns>
-        private bool RemoveBodyPart(string slotName)
+        private bool RemoveBodyPart(string slotName, bool drop)
         {
             DebugTools.AssertNotNull(slotName);
 
             if (!_parts.Remove(slotName, out var part))
             {
                 return false;
+            }
+
+            IEntity? dropped = null;
+            if (drop)
+            {
+                part.SpawnDropped(out dropped);
             }
 
             part.Body = null;
@@ -749,7 +747,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             if (part.RSIMap != null)
             {
-                var message = new BodyPartRemovedMessage(part.RSIMap);
+                var message = new BodyPartRemovedMessage(part.RSIMap, dropped?.Uid);
                 SendNetworkMessage(message);
             }
 
@@ -791,7 +789,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return false;
             }
 
-            return RemoveBodyPart(slotName);
+            return RemoveBodyPart(slotName, false);
         }
 
         #endregion

@@ -118,7 +118,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
                 // that we can grab the list by index. I don't know either.
                 _slots.Add(slotName);
 
-                BodyPartList.AddItem(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(slotName));
+                BodyPartList.AddItem(Loc.GetString(slotName));
             }
         }
 
@@ -131,7 +131,7 @@ namespace Content.Client.GameObjects.Components.Body.Scanner
 
         private void UpdateBodyPartBox(BodyScannerBodyPartData part, string slotName)
         {
-            BodyPartLabel.Text = $"{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(slotName)}: {CultureInfo.CurrentCulture.TextInfo.ToTitleCase(part.Name)}";
+            BodyPartLabel.Text = $"{Loc.GetString(slotName)}: {Loc.GetString(part.Name)}";
             BodyPartHealth.Text = $"{part.CurrentDurability}/{part.MaxDurability}";
 
             MechanismList.Clear();
