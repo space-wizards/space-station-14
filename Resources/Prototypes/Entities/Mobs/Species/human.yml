@@ -131,10 +131,10 @@
     basePreset: bodyPreset.BasicHuman
   - type: Metabolism
     needsGases:
-      Oxygen: 0.1
+      Oxygen: 0.006365740
     producesGases:
-      Oxygen: 0.075
-      CarbonDioxide: 0.025
+      Oxygen: 0.004774305
+      CarbonDioxide: 0.001591435
   - type: MobStateManager
   - type: HeatResistance
   - type: Appearance

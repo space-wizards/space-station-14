@@ -207,6 +207,11 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public void PreMetabolism(float frameTime)
         {
+            if (CurrentDamageState == DamageState.Dead)
+            {
+                return;
+            }
+
             foreach (var part in Parts.Values)
             {
                 part.PreMetabolism(frameTime);
@@ -224,6 +229,11 @@ namespace Content.Server.GameObjects.Components.Body
         /// </summary>
         public void PostMetabolism(float frameTime)
         {
+            if (CurrentDamageState == DamageState.Dead)
+            {
+                return;
+            }
+
             foreach (var part in Parts.Values)
             {
                 part.PostMetabolism(frameTime);

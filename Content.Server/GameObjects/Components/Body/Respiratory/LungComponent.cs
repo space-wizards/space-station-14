@@ -2,6 +2,7 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -50,26 +51,27 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            if (Math.Abs(_accumulatedFrameTime) < 1)
+            var absoluteTime = Math.Abs(_accumulatedFrameTime);
+            if (absoluteTime < 2)
             {
                 return;
             }
 
-            _accumulatedFrameTime -= 1;
-
             switch (Status)
             {
                 case LungStatus.Inhaling:
-                    Inhale(frameTime);
+                    Inhale(absoluteTime);
                     Status = LungStatus.Exhaling;
                     break;
                 case LungStatus.Exhaling:
-                    Exhale(frameTime);
+                    Exhale(absoluteTime);
                     Status = LungStatus.Inhaling;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _accumulatedFrameTime = absoluteTime - 2;
         }
 
         public void Inhale(float frameTime)
@@ -79,13 +81,18 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.GridPosition.TryGetTileAir(out var air))
+            if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
             {
                 return;
             }
 
-            air.PumpGasTo(Air, Pressure);
+            var amount = Atmospherics.BreathPercentage * frameTime;
+            var volumeRatio = amount / tileAir.Volume;
+            var temp = tileAir.RemoveRatio(volumeRatio);
+
+            temp.PumpGasTo(Air, Pressure);
             Air.PumpGasTo(bloodstream.Air, Pressure);
+            tileAir.Merge(temp);
         }
 
         public void Exhale(float frameTime)
@@ -95,13 +102,19 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            if (!Owner.Transform.GridPosition.TryGetTileAir(out var air))
+            if (!Owner.Transform.GridPosition.TryGetTileAir(out var tileAir))
             {
                 return;
             }
 
             bloodstream.PumpToxins(Air, Pressure);
-            Air.PumpGasTo(air, Pressure);
+
+            var amount = Atmospherics.BreathPercentage * frameTime;
+            var volumeRatio = amount / tileAir.Volume;
+            var temp = tileAir.RemoveRatio(volumeRatio);
+
+            temp.PumpGasTo(tileAir, Pressure);
+            Air.Merge(temp);
         }
     }
 
