@@ -1,12 +1,16 @@
 ﻿#nullable enable
 using Content.Client.UserInterface.AdminMenu;
 using Robust.Client.Console;
+using Robust.Client.Interfaces.Placement;
+using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +27,11 @@ namespace Content.Client.UserInterface
         {
             new KickCommandButton(),
             new TestCommandButton(),
+        };
+        private List<CommandButton> _adminbusButtons = new List<CommandButton>
+        {
+            new SpawnEntitiesCommandButton(),
+            new SpawnTilesCommandButton(),
         };
         private List<CommandButton> _roundButtons = new List<CommandButton>
         {
@@ -94,11 +103,10 @@ namespace Content.Client.UserInterface
         {
             //TODO: we check here the commands, but what if we join a new server? the window gets created at game launch
             // create the window everytime we open it?
-            var groupController = IoCManager.Resolve<IClientConGroupController>();
             foreach (var cmd in buttons)
             {
                 // Check if the player can do the command
-                if (cmd.RequiredCommand != string.Empty && !groupController.CanCommand(cmd.RequiredCommand))
+                if (!cmd.CanPress())
                     continue;
 
                 //TODO: make toggle?
@@ -172,6 +180,12 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            var adminbusButtonGrid = new GridContainer
+            {
+                Columns = 4,
+            };
+            AddCommandButton(_adminbusButtons, adminbusButtonGrid);
+            adminbusTabContainer.AddChild(adminbusButtonGrid);
             #endregion
 
             #region Debug
@@ -248,6 +262,11 @@ namespace Content.Client.UserInterface
             public virtual string Name { get; }
             public virtual string RequiredCommand { get; }
             public abstract void ButtonPressed(ButtonEventArgs args);
+            public virtual bool CanPress()
+            {
+                return RequiredCommand == string.Empty ||
+                    IoCManager.Resolve<IClientConGroupController>().CanCommand(RequiredCommand);
+            }
 
             public CommandButton()
             {
@@ -284,6 +303,35 @@ namespace Content.Client.UserInterface
             public override void ButtonPressed(ButtonEventArgs args)
             {
                 IoCManager.Resolve<IClientConsole>().ProcessCommand(RequiredCommand);
+            }
+        }
+
+        private class SpawnEntitiesCommandButton : CommandButton
+        {
+            public override string Name => "Spawn Entities";
+            //TODO: override CanPress
+            public override void ButtonPressed(ButtonEventArgs args)
+            {
+                var manager = IoCManager.Resolve<IAdminMenuManager>();
+                var window = new EntitySpawnWindow(IoCManager.Resolve<IPlacementManager>(),
+                    IoCManager.Resolve<IPrototypeManager>(),
+                    IoCManager.Resolve<IResourceCache>(),
+                    IoCManager.Resolve<ILocalizationManager>());
+                manager.OpenCommand(window);
+            }
+        }
+
+        private class SpawnTilesCommandButton : CommandButton
+        {
+            public override string Name => "Spawn Tiles";
+            //TODO: override CanPress
+            public override void ButtonPressed(ButtonEventArgs args)
+            {
+                var manager = IoCManager.Resolve<IAdminMenuManager>();
+                var window = new TileSpawnWindow(IoCManager.Resolve<ITileDefinitionManager>(),
+                    IoCManager.Resolve<IPlacementManager>(),
+                    IoCManager.Resolve<IResourceCache>());
+                manager.OpenCommand(window);
             }
         }
 
