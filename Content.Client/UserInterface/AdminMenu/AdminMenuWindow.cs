@@ -19,10 +19,13 @@ namespace Content.Client.UserInterface
         public TabContainer MasterTabContainer;
         public VBoxContainer PlayerList;
 
-        private List<CommandButton> _buttons = new List<CommandButton>
+        private List<CommandButton> _adminButtons = new List<CommandButton>
         {
             new KickCommandButton(),
             new TestCommandButton(),
+        };
+        private List<CommandButton> _roundButtons = new List<CommandButton>
+        {
             new DirectCommandButton("Restart Round", "restartround"),
         };
 
@@ -63,12 +66,35 @@ namespace Content.Client.UserInterface
                 PlayerList.AddChild(hbox);
             }
         }
+
+        private void AddCommandButton(List<CommandButton> buttons, Control parent)
+        {
+            //TODO: we check here the commands, but what if we join a new server? the window gets created at game launch
+            // create the window everytime we open it?
+            var groupController = IoCManager.Resolve<IClientConGroupController>();
+            foreach (var cmd in buttons)
+            {
+                // Check if the player can do the command
+                if (cmd.RequiredCommand != string.Empty && !groupController.CanCommand(cmd.RequiredCommand))
+                    continue;
+
+                //TODO: make toggle?
+                var button = new Button
+                {
+                    Text = cmd.Name
+                };
+                button.OnPressed += cmd.ButtonPressed;
+                parent.AddChild(button);
+            }
+        }
+
         public AdminMenuWindow() //TODO: search for buttons?
         {
             CustomMinimumSize = (415,0);
             Title = Loc.GetString("Admin Menu");
 
-            // Players
+            #region PlayerList
+            // Players // List of all the players, their entities and status
             var playerTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -93,8 +119,10 @@ namespace Content.Client.UserInterface
                 }
             };
             playerTabContainer.AddChild(playerVBox);
+            #endregion PlayerList
 
-            // Admin Tab
+            #region Admin Tab
+            // Admin Tab // Actual admin stuff
             var adminTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -107,26 +135,12 @@ namespace Content.Client.UserInterface
             {
                 Columns = 4,
             };
-            //TODO: we check here the commands, but what if we join a new server? the window gets created at game launch
-            // create the window everytime we open it?
-            var groupController = IoCManager.Resolve<IClientConGroupController>(); 
-            foreach (var cmd in _buttons)
-            {
-                // Check if the player can do the command
-                if (cmd.RequiredCommand != string.Empty && !groupController.CanCommand(cmd.RequiredCommand))
-                    continue;
-
-                //TODO: make toggle?
-                var button = new Button
-                {
-                    Text = cmd.Name
-                };
-                button.OnPressed += cmd.ButtonPressed;
-                adminButtonGrid.AddChild(button);
-            }
+            AddCommandButton(_adminButtons, adminButtonGrid);
             adminTabContainer.AddChild(adminButtonGrid);
+            #endregion
 
-            // Adminbus
+            #region Adminbus
+            // Adminbus // Fun Commands
             var adminbusTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -135,8 +149,10 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            #endregion
 
-            // Debug
+            #region Debug
+            // Debug // Mostly dev tools, like addatmos
             var debugTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -145,8 +161,10 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            #endregion
 
-            // Round
+            #region Round
+            // Round // Commands like Check Antags, End Round, RestartRound
             var roundTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -155,8 +173,16 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            var roundButtonGrid = new GridContainer
+            {
+                Columns = 4,
+            };
+            AddCommandButton(_roundButtons, roundButtonGrid);
+            roundTabContainer.AddChild(roundButtonGrid);
+            #endregion
 
-            // Server
+            #region Server
+            // Server // Commands like Restart, Shutdown
             var serverTabContainer = new MarginContainer
             {
                 MarginLeftOverride = 4,
@@ -165,6 +191,7 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            #endregion
 
 
             //The master menu that contains all of the tabs.
@@ -272,6 +299,7 @@ namespace Content.Client.UserInterface
                         "1",
                         "2"
                     },
+                    GetDisplayName = (obj) => (string)obj,
                     GetValueFromData = (obj) => (string)obj
                 },
                 new CommandUILineEdit
@@ -314,7 +342,7 @@ namespace Content.Client.UserInterface
             // Cache
             private List<object> Data;
 
-            public override Control GetControl()
+            public override Control GetControl() //TODO: scale those properly
             {
                 var opt = new OptionButton { CustomMinimumSize = (100, 0) };
                 Data = GetData();
