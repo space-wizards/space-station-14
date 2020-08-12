@@ -205,7 +205,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
                 return;
             }
 
-            _accumulatedFrameTime = 0;
+            _accumulatedFrameTime -= 1;
 
             ProcessGases(frameTime);
             ProcessNutrients(frameTime);

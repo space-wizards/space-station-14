@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            _accumulatedFrameTime = 0;
+            _accumulatedFrameTime -= 1;
 
             switch (Status)
             {

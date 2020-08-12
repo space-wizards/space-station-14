@@ -17,14 +17,16 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public override void Update(float frameTime)
         {
             _accumulatedFrameTime += frameTime;
-            if (_accumulatedFrameTime > 1.0f)
+
+            if (_accumulatedFrameTime >= 1)
             {
                 foreach (var entity in RelevantEntities)
                 {
                     var comp = entity.GetComponent<HungerComponent>();
                     comp.OnUpdate(_accumulatedFrameTime);
                 }
-                _accumulatedFrameTime = 0.0f;
+
+                _accumulatedFrameTime -= 1;
             }
         }
     }

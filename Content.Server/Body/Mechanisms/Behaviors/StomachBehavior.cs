@@ -29,7 +29,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
             if (_accumulatedFrameTime >= 1)
             {
                 stomach.Update(_accumulatedFrameTime);
-                _accumulatedFrameTime = 0;
+                _accumulatedFrameTime -= 1;
             }
         }
     }

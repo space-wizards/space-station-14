@@ -31,7 +31,7 @@ namespace Content.Server.Body.Mechanisms.Behaviors
             if (_accumulatedFrameTime >= 1)
             {
                 // bloodstream.Update(_accumulatedFrameTime);
-                _accumulatedFrameTime = 0;
+                _accumulatedFrameTime -= 1;
             }
         }
     }
