@@ -22,7 +22,7 @@ namespace Content.Client.UserInterface
         {
             new KickCommandButton(),
             new TestCommandButton(),
-            new RestartRoundCommandButton(),
+            new DirectCommandButton("Restart Round", "restartround"),
         };
         public AdminMenuWindow()
         {
@@ -76,9 +76,20 @@ namespace Content.Client.UserInterface
 
         private abstract class CommandButton
         {
-            public abstract string Name { get; }
-            public abstract string RequiredCommand { get; }
+            public virtual string Name { get; }
+            public virtual string RequiredCommand { get; }
             public abstract void ButtonPressed(ButtonEventArgs args);
+
+            public CommandButton()
+            {
+                Name = string.Empty;
+                RequiredCommand = string.Empty;
+            }
+            public CommandButton(string name, string command)
+            {
+                Name = name;
+                RequiredCommand = command;
+            }
         }
 
         // Button that opens a UI
@@ -97,8 +108,10 @@ namespace Content.Client.UserInterface
         }
 
         // Button that directly calls a Command
-        private abstract class DirectCommandButton : CommandButton
+        private class DirectCommandButton : CommandButton
         {
+            public DirectCommandButton(string name, string command) : base(name, command) { }
+
             public override void ButtonPressed(ButtonEventArgs args)
             {
                 IoCManager.Resolve<IClientConsole>().ProcessCommand(RequiredCommand);
@@ -136,8 +149,6 @@ namespace Content.Client.UserInterface
         {
             public override string Name => "Test";
 
-            public override string RequiredCommand => string.Empty;
-
             public override List<CommandUIControl> UI => new List<CommandUIControl>
             {
                 new CommandUIDropDown
@@ -169,13 +180,6 @@ namespace Content.Client.UserInterface
             {
                 IoCManager.Resolve<IClientConsole>().ProcessCommand($"say \"Dropdown: {val["DropDown"]}\nLineEdit: {val["LineEdit"]}\nCheckBox: {val["CheckBox"]}\nOptional: {val["Optional"]}\"");
             }
-        }
-
-        private class RestartRoundCommandButton : DirectCommandButton
-        {
-            public override string Name => "Restart Round";
-
-            public override string RequiredCommand => "restartround";
         }
 
         private abstract class CommandUIControl
