@@ -1,5 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using CannyFastMath;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects;

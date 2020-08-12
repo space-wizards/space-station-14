@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using Content.Server.GameObjects.Components.Atmos;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
@@ -8,8 +9,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
-using Logger = Robust.Shared.Log.Logger;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
@@ -52,13 +51,13 @@ namespace Content.Server.Atmos
 
                 if (maxForce > ThrowForce && throwTarget != GridCoordinates.InvalidGrid)
                 {
-                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 50f);
+                    var moveForce = MathF.Min(maxForce * Math.Clamp(moveProb, 0, 100) / 100f, 50f);
                     var pos = throwTarget.Position - transform.GridPosition.Position;
                     LinearVelocity = pos * moveForce;
                 }
                 else
                 {
-                    var moveForce = MathF.Min(maxForce * MathF.Clamp(moveProb, 0, 100) / 100f, 25f);
+                    var moveForce = MathF.Min(maxForce * Math.Clamp(moveProb, 0, 100) / 100f, 25f);
                     LinearVelocity = direction.ToVec() * moveForce;
                 }
 
