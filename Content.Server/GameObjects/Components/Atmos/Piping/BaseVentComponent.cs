@@ -25,15 +25,10 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void Update(float frameTime)
         {
-            var gridPosition = Owner.Transform.GridPosition;
-            var gridAtmos = EntitySystem.Get<AtmosphereSystem>()
-                .GetGridAtmosphere(gridPosition.GridID);
-            if (gridAtmos == null)
+            var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
+            if (tileAtmos == null)
                 return;
-            var tile = gridAtmos.GetTile(gridPosition);
-            if (tile == null)
-                return;
-            VentGas(_ventInlet.Air, tile.Air, frameTime);
+            VentGas(_ventInlet.Air, tileAtmos.Air, frameTime);
         }
 
         protected abstract void VentGas(GasMixture inletGas, GasMixture outletGas, float frameTime);
