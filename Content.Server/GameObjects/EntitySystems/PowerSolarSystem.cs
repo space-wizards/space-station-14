@@ -10,7 +10,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using System;
 using System.Linq;
-using Math = CannyFastMath.Math;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
@@ -73,7 +72,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         public override void Initialize()
         {
             // Initialize the sun to something random
-            TowardsSun = Math.TAU * _robustRandom.NextDouble();
+            TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
         }
 

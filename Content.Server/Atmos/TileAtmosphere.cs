@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
@@ -17,8 +18,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
@@ -139,7 +138,7 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathF.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(FloatMath.Clamp(PressureDifference / 10, 10, 100)));
             }
 
 
@@ -641,7 +640,7 @@ namespace Content.Server.Atmos
             ExcitedGroup?.ResetCooldowns();
 
             if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
-                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || Air.Gases[(int)Gas.Phoron] < 0.5f)
+                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Phoron] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 Hotspot = new Hotspot();
                 UpdateVisuals();
@@ -686,7 +685,7 @@ namespace Content.Server.Atmos
 
             if (Hotspot.Bypassing)
             {
-                Hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
+                Hotspot.Volume = Air.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Hotspot.Temperature = Air.Temperature;
             }
             else
@@ -697,7 +696,7 @@ namespace Content.Server.Atmos
                     affected.Temperature = Hotspot.Temperature;
                     affected.React(this);
                     Hotspot.Temperature = affected.Temperature;
-                    Hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
+                    Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                     AssumeAir(affected);
                 }
             }
@@ -811,7 +810,7 @@ namespace Content.Server.Atmos
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 100, 0.005f, 0.5f)))
+            if (sum > 20 && _robustRandom.Prob(FloatMath.Clamp(sum / 100, 0.005f, 0.5f)))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 

@@ -5,6 +5,7 @@ using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Inventory;
+using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Shared.GameObjects.Components.Inventory;
@@ -40,12 +41,10 @@ namespace Content.Server.AI.Utility.Actions.Clothing.OuterClothing
 
             return new[]
             {
-                considerationsManager.Get<ClothingInSlotCon>().Slot(EquipmentSlotDefines.Slots.OUTERCLOTHING, context)
-                    .InverseBoolCurve(context),
-                considerationsManager.Get<CanPutTargetInHandsCon>()
+                considerationsManager.Get<CanPutTargetInInventoryCon>()
                     .BoolCurve(context),
-                considerationsManager.Get<ClothingInInventoryCon>().Slot(EquipmentSlotDefines.SlotFlags.OUTERCLOTHING, context)
-                    .InverseBoolCurve(context),
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<TargetAccessibleCon>()
                     .BoolCurve(context),
             };

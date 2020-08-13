@@ -122,7 +122,7 @@ namespace Content.Client.Chat
             var screenPos = lowerCenter - (Width / 2, ContentHeight + _verticalOffsetAchieved);
             LayoutContainer.SetPosition(this, screenPos);
 
-            var height = (lowerCenter.Y - screenPos.Y).Clamp(0, ContentHeight);
+            var height = FloatMath.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
             LayoutContainer.SetSize(this, (Size.X, height));
         }
 

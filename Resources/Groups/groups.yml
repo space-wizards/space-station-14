@@ -92,6 +92,7 @@
   - anchor
   - unanchor
   - tubeconnections
+  - tilewalls
   CanViewVar: true
   CanAdminPlace: true
 
@@ -176,7 +177,10 @@
   - fillgas
   - listgases
   - removegas
+  - clearatmos
   - settemp
+  - setatmostemp
+  - tilewalls
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
