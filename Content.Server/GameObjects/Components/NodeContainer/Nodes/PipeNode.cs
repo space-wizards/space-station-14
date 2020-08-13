@@ -1,4 +1,8 @@
-﻿using Robust.Shared.GameObjects.Components.Transform;
+﻿using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
+using Content.Server.Interfaces;
+using Robust.Shared.GameObjects.Components.Transform;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -12,16 +16,76 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
     ///     Connects with other <see cref="PipeNode"/>s whose <see cref="PipeNode.PipeDirection"/>
     ///     correctly correspond.
     /// </summary>
-    public class PipeNode : Node
+    public class PipeNode : Node, IGasMixtureHolder
     {
         [ViewVariables]
-        public PipeDirection PipeDirection { get => _pipeDirection; set => SetPipeDirection(value); }
+        public PipeDirection PipeDirection => _pipeDirection;
         private PipeDirection _pipeDirection;
+
+        [ViewVariables]
+        private IPipeNet _pipeNet = PipeNet.NullNet;
+
+        [ViewVariables]
+        private bool _needsPipeNet = true;
+
+        /// <summary>
+        ///     The gases in this pipe.
+        /// </summary>
+        [ViewVariables]
+        public GasMixture Air
+        {
+            get => _needsPipeNet ? LocalAir : _pipeNet.Air;
+            set
+            {
+                if (_needsPipeNet)
+                    LocalAir = value;
+                else
+                    _pipeNet.Air = value;
+            }
+        }
+
+        /// <summary>
+        ///     Stores gas in this pipe when disconnected from a <see cref="IPipeNet"/>.
+        ///     Only for usage by <see cref="IPipeNet"/>s.
+        /// </summary>
+        [ViewVariables]
+        public GasMixture LocalAir { get; set; }
+
+        [ViewVariables]
+        public float Volume { get; private set; }
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _pipeDirection, "pipeDirection", PipeDirection.None);
+            serializer.DataField(this, x => Volume, "volume", 10);
+        }
+
+        public override void Initialize(IEntity owner)
+        {
+            base.Initialize(owner);
+            LocalAir = new GasMixture(Volume);
+            //debug way for some gas to start in pipes
+            LocalAir.AdjustMoles(0, 1000);
+            LocalAir.Temperature = 500;
+        }
+
+        public void JoinPipeNet(IPipeNet pipeNet)
+        {
+            _pipeNet = pipeNet;
+            _needsPipeNet = false;
+        }
+
+        public void ClearPipeNet()
+        {
+            _pipeNet = PipeNet.NullNet;
+            _needsPipeNet = true;
+        }
+
+        public bool AssumeAir(GasMixture giver)
+        {
+            Air.Merge(giver);
+            return true;
         }
 
         protected override IEnumerable<Node> GetReachableNodes()
@@ -70,17 +134,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
                 default:
                     throw new ArgumentException("Invalid Direction.");
             }
-        }
-
-        private void SetPipeDirection(PipeDirection pipeDirection)
-        {
-            throw new NotImplementedException();
-
-            NodeGroup.RemoveNode(this);
-            ClearNodeGroup();
-            _pipeDirection = pipeDirection;
-            TryAssignGroupIfNeeded();
-            //CombineGroupWithReachable();
         }
 
         private enum CardinalDirection

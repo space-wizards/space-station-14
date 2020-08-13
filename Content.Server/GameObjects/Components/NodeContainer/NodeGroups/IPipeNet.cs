@@ -22,7 +22,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
         [ViewVariables]
-        private readonly Dictionary<Node, Pipe> _pipes = new Dictionary<Node, Pipe>();
+        private readonly List<PipeNode> _pipes = new List<PipeNode>();
 
         public bool AssumeAir(GasMixture giver)
         {
@@ -32,31 +32,23 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnAddNode(Node node)
         {
-            if (!node.Owner.TryGetComponent<PipeContainerComponent>(out var pipeContainer))
-                return;
-
             if (!(node is PipeNode pipeNode))
                 return;
-
-            var compatiblePipes = pipeContainer.Pipes.Where(pipe => pipe.PipeDirection == pipeNode.PipeDirection);
-            if (!compatiblePipes.Any())
-                return;
-
-            var pipe = compatiblePipes.First();
-            _pipes.Add(node, pipe);
-            pipe.JoinPipeNet(this);
-            Air.Volume += pipe.Volume;
-            AssumeAir(pipe.LocalAir);
-            pipe.LocalAir.Clear();
+            _pipes.Add(pipeNode);
+            pipeNode.JoinPipeNet(this);
+            Air.Volume += pipeNode.Volume;
+            AssumeAir(pipeNode.LocalAir);
+            pipeNode.LocalAir.Clear();
         }
 
         protected override void OnRemoveNode(Node node)
         {
-            var pipe = _pipes[node];
-            var pipeAir = pipe.LocalAir;
+            if (!(node is PipeNode pipeNode))
+                return;
+            var pipeAir = pipeNode.LocalAir;
             pipeAir.Merge(Air);
-            pipeAir.Multiply(pipe.Volume / Air.Volume);
-            _pipes.Remove(node);
+            pipeAir.Multiply(pipeNode.Volume / Air.Volume);
+            _pipes.Remove(pipeNode);
         }
 
         protected override void OnGivingNodesForCombine(INodeGroup newGroup)

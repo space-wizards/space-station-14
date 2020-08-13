@@ -1,4 +1,6 @@
 ﻿using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.NodeContainer;
+using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -13,13 +15,12 @@ namespace Content.Server.GameObjects.Components.Atmos
     public abstract class BaseVentComponent : Component
     {
         [ViewVariables]
-        private Pipe _ventInlet;
+        private PipeNode _ventInlet;
 
         public override void Initialize()
         {
             base.Initialize();
-            var pipeContainer = Owner.GetComponent<PipeContainerComponent>();
-            _ventInlet = pipeContainer.Pipes.First();
+            _ventInlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().First();
         }
 
         public void Update(float frameTime)

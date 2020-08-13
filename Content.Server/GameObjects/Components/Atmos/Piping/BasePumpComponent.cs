@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -25,10 +26,10 @@ namespace Content.Server.GameObjects.Components.Atmos
         private PipeDirection _outletDirection;
 
         [ViewVariables]
-        private Pipe _inletPipe;
+        private PipeNode _inletPipe;
 
         [ViewVariables]
-        private Pipe _outletPipe;
+        private PipeNode _outletPipe;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -40,9 +41,11 @@ namespace Content.Server.GameObjects.Components.Atmos
         public override void Initialize()
         {
             base.Initialize();
-            var pipeContainer = Owner.GetComponent<PipeContainerComponent>();
-            _inletPipe = pipeContainer.Pipes.Where(pipe => pipe.PipeDirection == _inletDirection).First();
-            _outletPipe = pipeContainer.Pipes.Where(pipe => pipe.PipeDirection == _outletDirection).First();
+            var pipeNodes = Owner.GetComponent<NodeContainerComponent>()
+                .Nodes
+                .OfType<PipeNode>();
+            _inletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _inletDirection).First();
+            _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _outletDirection).First();
         }
 
         public void Update(float frameTime)
