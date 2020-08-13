@@ -1,13 +1,11 @@
 ﻿using Content.Server.GameObjects.Components.Power;
 using JetBrains.Annotations;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
-using Robust.Shared.Physics;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using System;
@@ -19,12 +17,10 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.
     /// </summary>
     [UsedImplicitly]
-    public class PowerSolarSystem : EntitySystem
+    internal sealed class PowerSolarSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private IGameTiming _gameTiming;
-        [Dependency] private IRobustRandom _robustRandom;
-#pragma warning restore 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         /// <summary>
         /// The current sun angle.
@@ -75,7 +71,6 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
         public override void Initialize()
         {
-            EntityQuery = new TypeEntityQuery(typeof(SolarPanelComponent));
             // Initialize the sun to something random
             TowardsSun = MathHelper.TwoPi * _robustRandom.NextDouble();
             SunAngularVelocity = Angle.FromDegrees(0.1 + ((_robustRandom.NextDouble() - 0.5) * 0.05));
@@ -91,12 +86,11 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 
             TotalPanelPower = 0;
 
-            foreach (var entity in RelevantEntities)
+            foreach (var panel in ComponentManager.EntityQuery<SolarPanelComponent>())
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
-                entity.Transform.WorldRotation = TargetPanelRotation;
-
-                var panel = entity.GetComponent<SolarPanelComponent>();
+                panel.Owner.Transform.WorldRotation = TargetPanelRotation;
+                
                 if (panel.TimeOfNextCoverageUpdate < _gameTiming.CurTime)
                 {
                     // Setup the next coverage check.
