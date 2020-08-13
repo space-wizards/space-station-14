@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components;
+﻿using System;
+using Content.Server.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
@@ -12,7 +13,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Interfaces.Physics;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Throw
 {

@@ -122,7 +122,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable

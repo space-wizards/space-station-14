@@ -16,7 +16,7 @@
     shapes:
     - !type:PhysShapeAabb
       layer:
-      - SmallImpassable
+      - VaultImpassable
   - type: SnapGrid
     offset: Center
   - type: IconSmooth

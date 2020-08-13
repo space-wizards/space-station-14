@@ -33,9 +33,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         {
             base.Initialize();
 
-            // register entity query
-            EntityQuery = new TypeEntityQuery(typeof(AiControllerComponent));
-
             var processors = _reflectionManager.GetAllChildren<AiLogicProcessor>();
             foreach (var processor in processors)
             {
@@ -49,18 +46,16 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            var entities = EntityManager.GetEntities(EntityQuery);
-            foreach (var entity in entities)
+            foreach (var comp in ComponentManager.EntityQuery<AiControllerComponent>())
             {
-                if (_pauseManager.IsEntityPaused(entity))
+                if (_pauseManager.IsEntityPaused(comp.Owner))
                 {
                     continue;
                 }
+                
+                ProcessorInitialize(comp);
 
-                var aiComp = entity.GetComponent<AiControllerComponent>();
-                ProcessorInitialize(aiComp);
-
-                var processor = aiComp.Processor;
+                var processor = comp.Processor;
 
                 processor.Update(frameTime);
             }

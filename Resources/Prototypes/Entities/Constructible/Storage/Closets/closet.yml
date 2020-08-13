@@ -32,7 +32,6 @@
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable

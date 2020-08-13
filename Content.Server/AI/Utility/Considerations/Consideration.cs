@@ -2,6 +2,7 @@ using System;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using JetBrains.Annotations;
+using Robust.Shared.Maths;
 
 namespace Content.Server.AI.Utility.Considerations
 {
@@ -16,7 +17,7 @@ namespace Content.Server.AI.Utility.Considerations
             var modificationFactor = 1.0f - 1.0f / considerationsCount;
             var makeUpValue = (1.0f - score) * modificationFactor;
             var adjustedScore = score + makeUpValue * score;
-            return Math.Clamp(adjustedScore, 0.0f, 1.0f);
+            return FloatMath.Clamp(adjustedScore, 0.0f, 1.0f);
         }
 
         [Pure]
@@ -43,7 +44,7 @@ namespace Content.Server.AI.Utility.Considerations
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             return x == 1.0f ? 0.0f : 1.0f;
         }
-        
+
         public Func<float> InverseBoolCurve(Blackboard context)
         {
             float Result()
@@ -58,7 +59,7 @@ namespace Content.Server.AI.Utility.Considerations
         [Pure]
         private static float LogisticCurve(float x, float slope, float exponent, float yOffset, float xOffset)
         {
-            return Math.Clamp(
+            return FloatMath.Clamp(
                 exponent * (1 / (1 + (float) Math.Pow(Math.Log(1000) * slope, -1 * x + xOffset))) + yOffset, 0.0f, 1.0f);
         }
 
@@ -76,7 +77,7 @@ namespace Content.Server.AI.Utility.Considerations
         [Pure]
         private static float QuadraticCurve(float x, float slope, float exponent, float yOffset, float xOffset)
         {
-            return Math.Clamp(slope * (float) Math.Pow(x - xOffset, exponent) + yOffset, 0.0f, 1.0f);
+            return FloatMath.Clamp(slope * (float) Math.Pow(x - xOffset, exponent) + yOffset, 0.0f, 1.0f);
         }
 
         public Func<float> QuadraticCurve(Blackboard context, float slope, float exponent, float yOffset, float xOffset)
@@ -102,7 +103,7 @@ namespace Content.Server.AI.Utility.Considerations
             float Result()
             {
                 var adjustedScore = GetAdjustedScore(context);
-                
+
                 switch (preset)
                 {
                     case Considerations.PresetCurve.Distance:

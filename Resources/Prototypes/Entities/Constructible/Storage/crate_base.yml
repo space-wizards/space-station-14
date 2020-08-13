@@ -26,9 +26,7 @@
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
     IsScrapingFloor: true
   - type: Physics

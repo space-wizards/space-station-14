@@ -1,27 +1,13 @@
 ﻿using Content.Server.GameObjects.Components.Interactable;
-using JetBrains.Annotations;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    class RadioSystem : EntitySystem
+    internal sealed class RadioSystem : EntitySystem
     {
-        private List<string> _messages;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            EntityQuery = new TypeEntityQuery(typeof(RadioComponent));
-            _messages = new List<string>();
-        }
+        private readonly List<string> _messages = new List<string>();
 
         public void SpreadMessage(IEntity source, string message)
         {
@@ -32,10 +18,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radioEntity in RelevantEntities)
+            foreach (var radio in ComponentManager.EntityQuery<RadioComponent>())
             {
-                var radio = radioEntity.GetComponent<RadioComponent>();
-                if (radioEntity == source || !radio.RadioOn)
+                if (radio.Owner == source || !radio.RadioOn)
                 {
                     continue;
                 }

@@ -1,9 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿#nullable enable
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Map;
-
-#nullable enable
 
 namespace Content.Server.Atmos
 {

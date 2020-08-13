@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.Click;
+using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
-    class StorageSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class StorageSystem : EntitySystem
     {
         private readonly List<IPlayerSession> _sessionCache = new List<IPlayerSession>();
 
@@ -19,16 +18,14 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
         {
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
-
-            EntityQuery = new TypeEntityQuery(typeof(ServerStorageComponent));
         }
 
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var component in ComponentManager.EntityQuery<ServerStorageComponent>())
             {
-                CheckSubscribedEntities(entity);
+                CheckSubscribedEntities(component);
             }
         }
 
@@ -52,9 +49,8 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             }
         }
 
-        private void CheckSubscribedEntities(IEntity entity)
+        private void CheckSubscribedEntities(ServerStorageComponent storageComp)
         {
-            var storageComp = entity.GetComponent<ServerStorageComponent>();
 
             // We have to cache the set of sessions because Unsubscribe modifies the original.
             _sessionCache.Clear();
@@ -63,8 +59,8 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             if (_sessionCache.Count == 0)
                 return;
 
-            var storagePos = entity.Transform.WorldPosition;
-            var storageMap = entity.Transform.MapID;
+            var storagePos = storageComp.Owner.Transform.WorldPosition;
+            var storageMap = storageComp.Owner.Transform.MapID;
 
             foreach (var session in _sessionCache)
             {
