@@ -4,6 +4,7 @@
         "x": 32,
         "y": 32
     },
+    "license": "CC BY-SA 3.0",
     "states": [
         {
             "name": "inhand-left",
