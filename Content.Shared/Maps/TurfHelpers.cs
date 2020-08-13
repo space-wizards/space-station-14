@@ -83,13 +83,13 @@ namespace Content.Shared.Maps
             foreach (var body in query)
             {
                 if (body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                    return false;
+                    return true;
 
                 if (filterMobs && (body.CollisionLayer & (int) CollisionGroup.MobMask) != 0)
-                    return false;
+                    return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
