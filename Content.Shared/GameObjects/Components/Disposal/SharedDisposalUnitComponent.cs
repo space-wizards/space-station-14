@@ -22,7 +22,8 @@ namespace Content.Shared.GameObjects.Components.Disposal
         {
             UnAnchored,
             Anchored,
-            Flushing
+            Flushing,
+            Charging
         }
 
         [Serializable, NetSerializable]

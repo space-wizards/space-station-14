@@ -28,15 +28,7 @@ namespace Content.Server.GameObjects.Components.Stack
         public override int Count
         {
             get => base.Count;
-            set
-            {
-                base.Count = value;
-
-                if (Count <= 0)
-                {
-                    Owner.Delete();
-                }
-            }
+            set => base.Count = value;
         }
 
         [ViewVariables(VVAccess.ReadWrite)]

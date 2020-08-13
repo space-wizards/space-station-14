@@ -244,7 +244,7 @@ namespace Content.Client.GameObjects.Components
 
                     if (int.TryParse(ev.Text, out var result))
                     {
-                        result = result.Clamp(0, byte.MaxValue);
+                        result = FloatMath.Clamp(result, 0, byte.MaxValue);
 
                         _ignoreEvents = true;
                         _colorValue = (byte) result;

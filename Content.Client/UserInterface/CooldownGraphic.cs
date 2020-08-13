@@ -6,9 +6,6 @@ using System;
 using Robust.Client.Graphics.Shaders;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using CannyFastMath;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Robust.Client.UserInterface.Controls
 {
@@ -45,7 +42,7 @@ namespace Robust.Client.UserInterface.Controls
             }
             else
             {
-                var alpha = MathF.Clamp(0.5f * lerp, 0f, 0.5f);
+                var alpha = FloatMath.Clamp(0.5f * lerp, 0f, 0.5f);
                 color = new Color(1f, 1f, 1f, alpha);
             }
 
