@@ -1,16 +1,14 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+﻿using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal class PowerSmesSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<SmesComponent>())
+            foreach (var comp in Robust.Shared.GameObjects.ComponentManager.EntityQuery<SmesComponent>())
             {
                 comp.OnUpdate();
             }

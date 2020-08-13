@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
