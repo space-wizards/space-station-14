@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Server.GameObjects.Components.Temperature;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
@@ -89,7 +90,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;
-                
+
                 if (panel.TimeOfNextCoverageUpdate < _gameTiming.CurTime)
                 {
                     // Setup the next coverage check.

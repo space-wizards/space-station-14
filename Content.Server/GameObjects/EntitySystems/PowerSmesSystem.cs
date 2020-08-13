@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -8,7 +9,7 @@ namespace Content.Server.GameObjects.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in Robust.Shared.GameObjects.ComponentManager.EntityQuery<SmesComponent>())
+            foreach (var comp in ComponentManager.EntityQuery<SmesComponent>())
             {
                 comp.OnUpdate();
             }
