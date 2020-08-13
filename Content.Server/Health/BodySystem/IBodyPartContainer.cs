@@ -1,9 +1,6 @@
-﻿using Robust.Shared.Interfaces.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Content.Server.Health.BodySystem.Surgery.SurgeryData;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem
 {
 
     /// <summary>

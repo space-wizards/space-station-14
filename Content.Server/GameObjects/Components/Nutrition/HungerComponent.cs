@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Nutrition;
@@ -40,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         [ViewVariables(VVAccess.ReadOnly)]
         public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
         private HungerThreshold _currentHungerThreshold;
-        
+
         private HungerThreshold _lastHungerThreshold;
 
         [ViewVariables(VVAccess.ReadWrite)]

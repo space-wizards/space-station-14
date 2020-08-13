@@ -1,9 +1,9 @@
 ﻿#nullable enable
 using System;
 using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Disposal;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;

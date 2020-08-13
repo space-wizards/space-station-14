@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {

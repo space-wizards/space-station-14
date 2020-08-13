@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Robust.Server.Interfaces.Player;
 using Content.Shared.Preferences;
+using Robust.Server.Interfaces.Player;
 
 namespace Content.Server.GameTicking
 {

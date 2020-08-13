@@ -1,10 +1,10 @@
-﻿using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.BodySystem
+namespace Content.Shared.Health.DamageContainer
 {
     public enum DamageClass { Brute, Burn, Toxin, Airloss }
     public enum DamageType { Blunt, Piercing, Heat, Disintegration, Cellular, DNA, Airloss }

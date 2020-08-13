@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
