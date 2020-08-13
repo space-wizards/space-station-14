@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,6 @@ using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
@@ -20,11 +20,11 @@ namespace Content.Client.StationEvents
     [UsedImplicitly]
     public sealed class RadiationPulseOverlay : Overlay
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private IMapManager _mapManager = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
-        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IComponentManager _componentManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
         
         /// <summary>
         /// Current color of a pulse
@@ -109,8 +109,8 @@ namespace Content.Client.StationEvents
             _colors[entity] = Color.Green.WithAlpha(0.0f);
             _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
         }
-
-        protected override void Draw(DrawingHandleBase handle)
+        
+        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
         {
             // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
@@ -123,8 +123,8 @@ namespace Content.Client.StationEvents
             var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
             _lastTick = _gameTiming.CurTime;
 
-            var radiationPulses = _entityManager
-                .GetEntities(new TypeEntityQuery(typeof(ClientRadiationPulseComponent)))
+            var radiationPulses = _componentManager
+                .GetAllComponents(typeof(RadiationPulseComponent))
                 .ToList();
 
             var screenHandle = (DrawingHandleScreen) handle;
@@ -134,17 +134,17 @@ namespace Content.Client.StationEvents
             {
                 foreach (var pulse in radiationPulses)
                 {
-                    if (grid.Index != pulse.Transform.GridID) continue;
+                    if (grid.Index != pulse.Owner.Transform.GridID) continue;
                     
                     // TODO: Check if viewport intersects circle
-                    var circlePosition = _eyeManager.WorldToScreen(pulse.Transform.WorldPosition);
-                    var comp = pulse.GetComponent<ClientRadiationPulseComponent>();
+                    var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
+                    var comp = (RadiationPulseComponent) pulse;
                     
                     // change to worldhandle when implemented
                     screenHandle.DrawCircle(
                         circlePosition, 
                         comp.Range * 64,
-                        GetColor(pulse, elapsedTime, comp.EndTime));
+                        GetColor(pulse.Owner, elapsedTime, comp.EndTime));
                 }
             }
         }

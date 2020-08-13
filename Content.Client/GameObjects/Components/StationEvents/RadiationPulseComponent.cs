@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.GameObjects.Components.StationEvents
 {
     [RegisterComponent]
-    public sealed class ClientRadiationPulseComponent : SharedRadiationPulseComponent
+    public sealed class RadiationPulseComponent : SharedRadiationPulseComponent
     {
         public TimeSpan EndTime { get; private set; }
         
