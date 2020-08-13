@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Server.Interfaces.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Damage
 {
     //TODO: add support for component add/remove
 

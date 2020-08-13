@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
@@ -17,8 +19,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.ViewVariables;
-using Logger = Robust.Shared.Log.Logger;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.Atmos
 {
@@ -28,8 +28,20 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
+        [ViewVariables]
         private int _archivedCycle = 0;
+
+        [ViewVariables]
         private int _currentCycle = 0;
+
+        [ViewVariables]
+        private static GasTileOverlaySystem _gasTileOverlaySystem;
+
+        [ViewVariables]
+        private float _temperature = Atmospherics.T20C;
+
+        [ViewVariables]
+        private float _temperatureArchived = Atmospherics.T20C;
 
         // I know this being static is evil, but I seriously can't come up with a better solution to sound spam.
         private static int _soundCooldown = 0;
@@ -39,6 +51,12 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public float PressureDifference { get; set; } = 0;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float HeatCapacity { get; set; } = 1f;
+
+        [ViewVariables]
+        public float ThermalConductivity => Tile?.Tile.GetContentTileDefinition().ThermalConductivity ?? 0.05f;
 
         [ViewVariables]
         public bool Excited { get; set; } = false;
@@ -55,10 +73,14 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public Hotspot Hotspot;
 
+        [ViewVariables]
         private Direction _pressureDirection;
 
         [ViewVariables]
         public GridId GridIndex { get; }
+
+        [ViewVariables]
+        public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
 
         [ViewVariables]
         public MapIndices GridIndices { get; }
@@ -68,6 +90,9 @@ namespace Content.Server.Atmos
 
         [ViewVariables]
         public GasMixture Air { get; set; }
+
+        [ViewVariables]
+        public bool BlocksAir => _gridAtmosphereComponent.IsAirBlocked(GridIndices);
 
         public TileAtmosphere(GridAtmosphereComponent atmosphereComponent, GridId gridIndex, MapIndices gridIndices, GasMixture mixture = null)
         {
@@ -81,8 +106,9 @@ namespace Content.Server.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Archive(int fireCount)
         {
-            _archivedCycle = fireCount;
             Air?.Archive();
+            _archivedCycle = fireCount;
+            _temperatureArchived = _temperature;
         }
 
         public void HotspotExpose(float exposedTemperature, float exposedVolume, bool soh = false)
@@ -139,7 +165,7 @@ namespace Content.Server.Atmos
             {
                 if(_soundCooldown == 0)
                     EntitySystem.Get<AudioSystem>().PlayAtCoords("/Audio/Effects/space_wind.ogg",
-                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(MathF.Clamp(PressureDifference / 10, 10, 100)));
+                        GridIndices.ToGridCoordinates(_mapManager, GridIndex), AudioHelpers.WithVariation(0.125f).WithVolume(FloatMath.Clamp(PressureDifference / 10, 10, 100)));
             }
 
 
@@ -641,7 +667,7 @@ namespace Content.Server.Atmos
             ExcitedGroup?.ResetCooldowns();
 
             if ((Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (Hotspot.Volume <= 1f)
-                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || Air.Gases[(int)Gas.Phoron] < 0.5f)
+                || Air == null || Air.Gases[(int)Gas.Oxygen] < 0.5f || (Air.Gases[(int)Gas.Phoron] < 0.5f && Air.GetMoles(Gas.Tritium) < 0.5f))
             {
                 Hotspot = new Hotspot();
                 UpdateVisuals();
@@ -686,7 +712,7 @@ namespace Content.Server.Atmos
 
             if (Hotspot.Bypassing)
             {
-                Hotspot.Volume = Air.ReactionResultFire * Atmospherics.FireGrowthRate;
+                Hotspot.Volume = Air.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Hotspot.Temperature = Air.Temperature;
             }
             else
@@ -697,7 +723,7 @@ namespace Content.Server.Atmos
                     affected.Temperature = Hotspot.Temperature;
                     affected.React(this);
                     Hotspot.Temperature = affected.Temperature;
-                    Hotspot.Volume = affected.ReactionResultFire * Atmospherics.FireGrowthRate;
+                    Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
                     AssumeAir(affected);
                 }
             }
@@ -705,10 +731,150 @@ namespace Content.Server.Atmos
             // TODO ATMOS Let all entities in this tile know about the fire?
         }
 
+        private bool ConsiderSuperconductivity()
+        {
+            if (ThermalConductivity == 0f)
+                return false;
+
+            _gridAtmosphereComponent.AddSuperconductivityTile(this);
+            return true;
+        }
+
         private bool ConsiderSuperconductivity(bool starting)
         {
-            // TODO ATMOS
-            return false;
+            if (Air.Temperature < (starting
+                ? Atmospherics.MinimumTemperatureStartSuperConduction
+                : Atmospherics.MinimumTemperatureForSuperconduction))
+                return false;
+
+            return !(Air.HeatCapacity < Atmospherics.MCellWithRatio) && ConsiderSuperconductivity();
+        }
+
+        public void Superconduct()
+        {
+            var directions = ConductivityDirections();
+            var adjacentTiles = _gridAtmosphereComponent.GetAdjacentTiles(GridIndices, true);
+
+            if (directions.Length > 0)
+            {
+                foreach (var direction in directions)
+                {
+                    if (!adjacentTiles.TryGetValue(direction, out var adjacent)) continue;
+
+                    if (adjacent.ThermalConductivity == 0f)
+                        continue;
+
+                    if(adjacent._archivedCycle < _gridAtmosphereComponent.UpdateCounter)
+                        adjacent.Archive(_gridAtmosphereComponent.UpdateCounter);
+
+                    adjacent.NeighborConductWithSource(this);
+
+                    adjacent.ConsiderSuperconductivity();
+                }
+            }
+
+            RadiateToSpace();
+
+            FinishSuperconduction();
+        }
+
+        private void FinishSuperconduction()
+        {
+            // Conduct with air on my tile if I have it
+            if (!BlocksAir)
+            {
+                _temperature = Air.TemperatureShare(ThermalConductivity, _temperature, HeatCapacity);
+            }
+
+            FinishSuperconduction(BlocksAir ? _temperature : Air.Temperature);
+        }
+
+        private void FinishSuperconduction(float temperature)
+        {
+            // Make sure it's still hot enough to continue conducting.
+            if (temperature < Atmospherics.MinimumTemperatureForSuperconduction)
+            {
+                _gridAtmosphereComponent.RemoveSuperconductivityTile(this);
+            }
+        }
+
+        private void NeighborConductWithSource(TileAtmosphere other)
+        {
+            if (BlocksAir)
+            {
+                if (!other.BlocksAir)
+                {
+                    other.TemperatureShareOpenToSolid(this);
+                }
+                else
+                {
+                    other.TemperatureShareMutualSolid(this, ThermalConductivity);
+                }
+
+                TemperatureExpose(null, _temperature, _gridAtmosphereComponent.GetVolumeForCells(1));
+                return;
+            }
+
+            if (!other.BlocksAir)
+            {
+                other.Air.TemperatureShare(Air, Atmospherics.WindowHeatTransferCoefficient);
+            }
+            else
+            {
+                TemperatureShareOpenToSolid(other);
+            }
+
+            _gridAtmosphereComponent.AddActiveTile(this);
+        }
+
+        private void TemperatureShareOpenToSolid(TileAtmosphere other)
+        {
+            other._temperature =
+                Air.TemperatureShare(other.ThermalConductivity, other._temperature, other.HeatCapacity);
+        }
+
+        private void TemperatureShareMutualSolid(TileAtmosphere other, float conductionCoefficient)
+        {
+            var deltaTemperature = (_temperatureArchived - other._temperatureArchived);
+            if (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider
+                && HeatCapacity != 0f && other.HeatCapacity != 0f)
+            {
+                var heat = conductionCoefficient * deltaTemperature *
+                           (HeatCapacity * other.HeatCapacity / (HeatCapacity + other.HeatCapacity));
+
+                _temperature -= heat / HeatCapacity;
+                other._temperature += heat / other.HeatCapacity;
+            }
+        }
+
+        public void RadiateToSpace()
+        {
+            // Considering 0ºC as the break even point for radiation in and out.
+            if (_temperature > Atmospherics.T0C)
+            {
+                // Hardcoded space temperature.
+                var deltaTemperature = (_temperatureArchived - Atmospherics.TCMB);
+                if ((HeatCapacity > 0) && (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider))
+                {
+                    var heat = ThermalConductivity * deltaTemperature * (HeatCapacity *
+                        Atmospherics.HeatCapacityVacuum / (HeatCapacity + Atmospherics.HeatCapacityVacuum));
+
+                    _temperature -= heat;
+                }
+            }
+        }
+
+        public Direction[] ConductivityDirections()
+        {
+            if(BlocksAir)
+            {
+                if(_archivedCycle < _gridAtmosphereComponent.UpdateCounter)
+                    Archive(_gridAtmosphereComponent.UpdateCounter);
+                return Cardinal;
+            }
+
+            // TODO ATMOS check if this is correct
+            return Cardinal;
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -811,7 +977,7 @@ namespace Content.Server.Atmos
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            if (sum > 20 && _robustRandom.Prob(MathF.Clamp(sum / 100, 0.005f, 0.5f)))
+            if (sum > 20 && _robustRandom.Prob(FloatMath.Clamp(sum / 100, 0.005f, 0.5f)))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 
@@ -820,7 +986,6 @@ namespace Content.Server.Atmos
             // TODO ATMOS firelocks!
             //throw new NotImplementedException();
         }
-
 
         private void React()
         {
@@ -880,8 +1045,6 @@ namespace Content.Server.Atmos
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
-
-        private static GasTileOverlaySystem _gasTileOverlaySystem;
 
         public void TemperatureExpose(GasMixture mixture, float temperature, float cellVolume)
         {

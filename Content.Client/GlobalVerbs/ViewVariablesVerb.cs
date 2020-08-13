@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects;
+﻿using Content.Shared.GameObjects.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
 using Robust.Shared.Interfaces.GameObjects;

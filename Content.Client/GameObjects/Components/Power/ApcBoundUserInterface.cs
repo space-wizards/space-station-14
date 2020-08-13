@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.GameObjects.Components.UserInterface;
@@ -24,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Power
 
             _window = new ApcWindow();
             _window.OnClose += Close;
-            _window.OpenCenteredMinSize();
+            _window.OpenCentered();
 
             _breakerButton = _window.BreakerButton;
             _breakerButton.OnPressed += _ => SendMessage(new ApcToggleMainBreakerMessage());

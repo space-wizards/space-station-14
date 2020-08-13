@@ -24,14 +24,12 @@ using Robust.Shared.Players;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class PointingSystem : EntitySystem
+    internal sealed class PointingSystem : EntitySystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -156,8 +154,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
-            EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
-
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
@@ -173,9 +169,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>())
             {
-                entity.GetComponent<PointingArrowComponent>().Update(frameTime);
+                component.Update(frameTime);
             }
         }
     }

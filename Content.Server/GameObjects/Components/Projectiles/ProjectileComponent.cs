@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
@@ -10,6 +9,7 @@ using Robust.Shared.GameObjects.Components.Map;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -18,9 +18,9 @@ namespace Content.Server.GameObjects.EntitySystems
     public class AtmosphereSystem : EntitySystem
     {
 #pragma warning disable 649
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IEntityManager _entityManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly IPauseManager _pauseManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPauseManager _pauseManager = default!;
 #pragma warning restore 649
 
         public override void Initialize()
@@ -33,8 +33,11 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
         {
+            // TODO Return space grid atmosphere for invalid grids or grids with no atmos
             var grid = _mapManager.GetGrid(gridId);
-            var gridEnt = _entityManager.GetEntity(grid.GridEntityId);
+
+            if (!_entityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
+
             return gridEnt.TryGetComponent(out IGridAtmosphereComponent atmos) ? atmos : null;
         }
 

@@ -1,9 +1,9 @@
 ﻿using System;
-using Content.Server.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Interfaces.GameObjects
+namespace Content.Server.Interfaces.GameObjects.Components.Damage
 {
     public interface IDamageableComponent : IComponent
     {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Mobs.DamageThresholdTemplates
 {
     /// <summary>
     /// Defines the threshold values for each damage state for any kind of species

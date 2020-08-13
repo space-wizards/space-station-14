@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -15,10 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using CannyFastMath;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
 {

@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using CannyFastMath;
+using System;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
@@ -49,14 +49,11 @@ namespace Content.Server.Atmos.Reactions
                     mixture.SetMoles(Gas.Phoron, mixture.GetMoles(Gas.Phoron) - phoronBurnRate);
                     mixture.SetMoles(Gas.Oxygen, mixture.GetMoles(Gas.Oxygen) - (phoronBurnRate * oxygenBurnRate));
 
-                    if(superSaturation)
-                        mixture.AdjustMoles(Gas.Tritium, phoronBurnRate);
-                    else
-                        mixture.AdjustMoles(Gas.CarbonDioxide, phoronBurnRate);
+                    mixture.AdjustMoles(superSaturation ? Gas.Tritium : Gas.CarbonDioxide, phoronBurnRate);
 
                     energyReleased += Atmospherics.FirePhoronEnergyReleased * (phoronBurnRate);
 
-                    mixture.ReactionResultFire += (phoronBurnRate) * (1 + oxygenBurnRate);
+                    mixture.ReactionResults[GasReaction.Fire] += (phoronBurnRate) * (1 + oxygenBurnRate);
                 }
             }
 
@@ -72,15 +69,15 @@ namespace Content.Server.Atmos.Reactions
                 temperature = mixture.Temperature;
                 if (temperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    location.HotspotExpose(temperature, Atmospherics.CellVolume);
+                    location.HotspotExpose(temperature, mixture.Volume);
 
                     // TODO ATMOS Expose temperature all items on cell
 
-                    location.TemperatureExpose(mixture, temperature, Atmospherics.CellVolume);
+                    location.TemperatureExpose(mixture, temperature, mixture.Volume);
                 }
             }
 
-            return mixture.ReactionResultFire != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
+            return mixture.ReactionResults[GasReaction.Fire] != 0 ? ReactionResult.Reacting : ReactionResult.NoReaction;
         }
 
         public void ExposeData(ObjectSerializer serializer)

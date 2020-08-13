@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Client.Atmos;
-using Content.Client.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems

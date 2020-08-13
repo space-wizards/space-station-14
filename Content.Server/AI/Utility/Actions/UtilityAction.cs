@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Robust.Shared.Interfaces.GameObjects;
@@ -106,7 +105,6 @@ namespace Content.Server.AI.Utility.Actions
         /// This is where the magic happens
         /// </summary>
         /// <param name="context"></param>
-        /// <param name="bonus"></param>
         /// <param name="min"></param>
         /// <returns></returns>
         public float GetScore(Blackboard context, float min)
