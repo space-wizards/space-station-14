@@ -1,4 +1,7 @@
-﻿using Content.Shared.Physics;
+﻿#nullable enable
+using System.Collections.Generic;
+using Content.Shared.Physics;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.IoC;
@@ -9,6 +12,63 @@ namespace Content.Shared.Maps
 {
     public static class TurfHelpers
     {
+        /// <summary>
+        ///     Returns the content tile definition for a tile.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this Tile tile)
+        {
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+        }
+
+        /// <summary>
+        ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
+        /// </summary>
+        public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId)
+        {
+            if (!gridId.IsValid())
+                return null;
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            if (!mapManager.TryGetGrid(gridId, out var grid))
+                return null;
+
+            if (!grid.TryGetTileRef(mapIndices, out var tile))
+                return null;
+
+            return tile;
+        }
+
+        /// <summary>
+        ///     Attempts to get the turf at a certain coordinates or null if no such turf is found.
+        /// </summary>
+        public static TileRef? GetTileRef(this GridCoordinates coordinates)
+        {
+            if (!coordinates.GridID.IsValid())
+                return null;
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            if (!mapManager.TryGetGrid(coordinates.GridID, out var grid))
+                return null;
+
+            if (!grid.TryGetTileRef(coordinates.ToMapIndices(mapManager), out var tile))
+                return null;
+
+            return tile;
+        }
+
+        /// <summary>
+        ///     Helper that returns all entities in a turf.
+        /// </summary>
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+        }
+
         /// <summary>
         /// Checks if a turf has something dense on it.
         /// </summary>

@@ -1,19 +1,11 @@
-﻿using System;
-using Content.Client.Animations;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Content.Shared.GameObjects.Components;
 using Content.Shared.Utility;
-using Robust.Client.Animations;
-using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Animations;
-using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -178,14 +170,14 @@ namespace Content.Client.GameObjects.Components.Atmos
                 });
                 return;
             }
-            
+
             _statusContainer.AddChild(new Label
             {
                 Text = Loc.GetString("Pressure: {0:0.##} kPa", state.Pressure)
             });
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Pressure, TemperatureHelpers.KelvinToCelsius(state.Pressure))
+                Text = Loc.GetString("Temperature: {0:0.#}K ({1:0.#}°C)", state.Temperature, TemperatureHelpers.KelvinToCelsius(state.Temperature))
             });
             // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
             if (state.Gases.Length == 0)

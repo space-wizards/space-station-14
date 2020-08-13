@@ -1,21 +1,14 @@
 using System;
-using System.Linq;
 using System.Threading;
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using NFluidsynth;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Logger = Robust.Shared.Log.Logger;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameTicking.GameRules

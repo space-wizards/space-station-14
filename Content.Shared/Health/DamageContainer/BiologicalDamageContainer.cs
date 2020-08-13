@@ -1,9 +1,8 @@
-﻿using Robust.Shared.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Robust.Shared.Serialization;
 
-namespace Content.Shared.BodySystem
+namespace Content.Shared.Health.DamageContainer
 {
     [NetSerializable, Serializable]
     public class BiologicalDamageContainer : AbstractDamageContainer

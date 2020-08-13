@@ -1,12 +1,13 @@
 ﻿using System;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Maths;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Temperature
 {
     public interface ITemperatureComponent : IComponent
     {

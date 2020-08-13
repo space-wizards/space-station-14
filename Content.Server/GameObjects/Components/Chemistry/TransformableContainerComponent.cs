@@ -1,4 +1,4 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;

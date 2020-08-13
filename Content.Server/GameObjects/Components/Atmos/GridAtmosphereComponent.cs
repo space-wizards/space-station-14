@@ -13,7 +13,6 @@ using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -67,6 +66,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
         [ViewVariables]
@@ -82,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             ExcitedGroups,
             HighPressureDelta,
             Hotspots,
+            Superconductivity,
         }
 
         /// <inheritdoc />
@@ -122,8 +125,6 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void RepopulateTiles()
         {
-            _tiles.Clear();
-
             foreach (var tile in _grid.GetAllTiles())
             {
                 if(!_tiles.ContainsKey(tile.GridIndices))
@@ -160,19 +161,40 @@ namespace Content.Server.GameObjects.Components.Atmos
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
+
                 } else if (IsAirBlocked(indices))
                 {
                     tile.Air = null;
                 }
                 else
                 {
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1));
+                    var obs = GetObstructingComponent(indices);
+
+                    if (obs != null)
+                    {
+                        if (tile.Air == null && obs.FixVacuum)
+                        {
+                            var adjacent = GetAdjacentTiles(indices);
+                            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+
+                            var ratio = 1f / adjacent.Count;
+
+                            foreach (var (direction, adj) in adjacent)
+                            {
+                                var mix = adj.Air.RemoveRatio(ratio);
+                                tile.Air.Merge(mix);
+                                adj.Air.Merge(mix);
+                            }
+                        }
+                    }
+
+                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
                 }
 
                 tile.UpdateAdjacent();
                 tile.UpdateVisuals();
 
-                foreach (var direction in Cardinal())
+                foreach (var direction in Cardinal)
                 {
                     var otherIndices = indices.Offset(direction);
                     var otherTile = GetTile(otherIndices);
@@ -217,6 +239,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             if (tile == null) return;
             _hotspotTiles.Remove(tile);
+        }
+
+        public void AddSuperconductivityTile(TileAtmosphere tile)
+        {
+            if (tile?.GridIndex != _grid.Index) return;
+            _superconductivityTiles.Add(tile);
+        }
+
+        public void RemoveSuperconductivityTile(TileAtmosphere tile)
+        {
+            if (tile == null) return;
+            _superconductivityTiles.Remove(tile);
         }
 
         /// <inheritdoc />
@@ -284,13 +318,15 @@ namespace Content.Server.GameObjects.Components.Atmos
             return _grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices)
+        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
         {
             var sides = new Dictionary<Direction, TileAtmosphere>();
-            foreach (var dir in Cardinal())
+            foreach (var dir in Cardinal)
             {
                 var side = indices.Offset(dir);
-                sides[dir] = GetTile(side);
+                var tile = GetTile(side);
+                if(tile?.Air != null || includeAirBlocked)
+                    sides[dir] = tile;
             }
 
             return sides;
@@ -341,6 +377,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
                 case ProcessState.Hotspots:
                     ProcessHotspots();
+                    _state = ProcessState.Superconductivity;
+                    break;
+                case ProcessState.Superconductivity:
+                    ProcessSuperconductivity();
                     _state = ProcessState.TileEqualize;
                     break;
             }
@@ -443,6 +483,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
+        private void ProcessSuperconductivity()
+        {
+            _stopwatch.Restart();
+
+            var number = 0;
+            foreach (var superconductivity in _superconductivityTiles.ToArray())
+            {
+                superconductivity.Superconduct();
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    return;
+            }
+        }
+
         private AirtightComponent GetObstructingComponent(MapIndices indices)
         {
             foreach (var v in _grid.GetSnapGridCell(indices, SnapGridOffset.Center))
@@ -454,8 +511,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             return null;
         }
 
-        private static IEnumerable<Direction> Cardinal() =>
-            new[]
+        private static readonly Direction[] Cardinal =
+            new []
             {
                 Direction.North, Direction.East, Direction.South, Direction.West
             };
@@ -475,6 +532,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (!serializer.TryReadDataField("uniqueMixes", out List<GasMixture> uniqueMixes) ||
                     !serializer.TryReadDataField("tiles", out Dictionary<MapIndices, int> tiles))
                     return;
+
+                _tiles.Clear();
+
                 foreach (var (indices, mix) in tiles)
                 {
                     _tiles.Add(indices, new TileAtmosphere(this, gridId, indices, (GasMixture)uniqueMixes[mix].Clone()));
@@ -483,12 +543,22 @@ namespace Content.Server.GameObjects.Components.Atmos
             } else if (serializer.Writing)
             {
                 var uniqueMixes = new List<GasMixture>();
+                var uniqueMixHash = new Dictionary<GasMixture, int>();
                 var tiles = new Dictionary<MapIndices, int>();
                 foreach (var (indices, tile) in _tiles)
                 {
                     if (tile.Air == null) continue;
+
+                    if (uniqueMixHash.TryGetValue(tile.Air, out var index))
+                    {
+                        tiles[indices] = index;
+                        continue;
+                    }
+
                     uniqueMixes.Add(tile.Air);
-                    tiles[indices] = uniqueMixes.Count - 1;
+                    var newIndex = uniqueMixes.Count - 1;
+                    uniqueMixHash[tile.Air] = newIndex;
+                    tiles[indices] = newIndex;
                 }
 
                 serializer.DataField(ref uniqueMixes, "uniqueMixes", new List<GasMixture>());

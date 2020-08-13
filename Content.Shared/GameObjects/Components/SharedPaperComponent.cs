@@ -1,5 +1,4 @@
 using System;
-using System.Net.Mime;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;

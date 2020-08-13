@@ -1,8 +1,10 @@
-﻿using Content.Shared.GameObjects.Components.Inventory;
+﻿using System;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Clothing;
+using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.GameObjects;
-using Math = CannyFastMath.Math;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
     public class HeatResistanceComponent : Component

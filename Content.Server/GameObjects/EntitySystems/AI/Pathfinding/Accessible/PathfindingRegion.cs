@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
-using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
 {
@@ -16,7 +13,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         /// Bottom-left reference node of the region
         /// </summary>
         public PathfindingNode OriginNode { get; }
-        
+
         // The shape may be anything within the bounds of a chunk, this is just a quick way to do a bounds-check
 
         /// <summary>
@@ -49,13 +46,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
         {
             // Tell our neighbors we no longer exist ;-/
             var neighbors = new List<PathfindingRegion>(Neighbors);
-            
+
             for (var i = 0; i < neighbors.Count; i++)
             {
                 var neighbor = neighbors[i];
                 neighbor.Neighbors.Remove(this);
             }
-            
+
             _nodes.Clear();
             Neighbors.Clear();
 
@@ -81,7 +78,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 xDistance = Math.Abs(xDistance + otherRegion.Width);
             }
-            
+
             if (yDistance > 0)
             {
                 yDistance -= Height;
@@ -90,7 +87,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 yDistance = Math.Abs(yDistance + otherRegion.Height);
             }
-            
+
             return PathfindingHelpers.OctileDistance(xDistance, yDistance);
         }
 
@@ -121,10 +118,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible
             {
                 Height = yHeight;
             }
-            
+
             _nodes.Add(node);
         }
-        
+
         // HashSet wasn't working correctly so uhh we got this.
         public bool Equals(PathfindingRegion other)
         {

@@ -1,16 +1,22 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Health.BodySystem.BodyPart;
+using Content.Server.Health.BodySystem.BodyPreset;
+using Content.Server.Health.BodySystem.BodyTemplate;
+using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.Health.BodySystem;
+using Content.Shared.Health.BodySystem.BodyPart;
+using Content.Shared.Health.BodySystem.BodyPreset;
+using Content.Shared.Health.BodySystem.BodyTemplate;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using Content.Shared.BodySystem;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Interfaces.GameObjects;
-using System.Linq;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 
-namespace Content.Server.BodySystem {
+namespace Content.Server.Health.BodySystem {
 
     /// <summary>
     ///     Component representing a collection of <see cref="BodyPart">BodyParts</see> attached to each other.
@@ -24,23 +30,23 @@ namespace Content.Server.BodySystem {
 #pragma warning restore
 
         [ViewVariables]
-        private BodyTemplate _template;
+        private BodyTemplate.BodyTemplate _template;
 
         [ViewVariables]
         private string _presetName;
 
         [ViewVariables]
-        private Dictionary<string, BodyPart> _partDictionary = new Dictionary<string, BodyPart>();
+        private Dictionary<string, BodyPart.BodyPart> _partDictionary = new Dictionary<string, BodyPart.BodyPart>();
 
         /// <summary>
         ///     The <see cref="BodyTemplate"/> that this BodyManagerComponent is adhering to.
         /// </summary>
-        public BodyTemplate Template => _template;
+        public BodyTemplate.BodyTemplate Template => _template;
 
         /// <summary>
         ///     Maps <see cref="BodyTemplate"/> slot name to the <see cref="BodyPart"/> object filling it (if there is one).
         /// </summary>
-        public Dictionary<string, BodyPart> PartDictionary => _partDictionary;
+        public Dictionary<string, BodyPart.BodyPart> PartDictionary => _partDictionary;
 
         /// <summary>
         ///     List of all occupied slots in this body, taken from the values of _parts.
@@ -67,7 +73,7 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     List of all <see cref="BodyPart">BodyParts</see> in this body, taken from the keys of _parts.
         /// </summary>
-        public IEnumerable<BodyPart> Parts {
+        public IEnumerable<BodyPart.BodyPart> Parts {
             get {
                 return _partDictionary.Values;
             }
@@ -77,14 +83,14 @@ namespace Content.Server.BodySystem {
         ///     Recursive search that returns whether a given <see cref="BodyPart"/> is connected to the center <see cref="BodyPart"/>.
         ///     Not efficient (O(n^2)), but most bodies don't have a ton of <see cref="BodyPart">BodyParts</see>.
         /// </summary>
-        public bool ConnectedToCenterPart(BodyPart target) {
+        public bool ConnectedToCenterPart(BodyPart.BodyPart target) {
             List<string> searchedSlots = new List<string> { };
             if (TryGetSlotName(target, out string result))
                 return false;
             return ConnectedToCenterPartRecursion(searchedSlots, result);
         }
         private bool ConnectedToCenterPartRecursion(List<string> searchedSlots, string slotName) {
-            TryGetBodyPart(slotName, out BodyPart part);
+            TryGetBodyPart(slotName, out BodyPart.BodyPart part);
             if (part != null && part == GetCenterBodyPart())
                 return true;
             searchedSlots.Add(slotName);
@@ -101,8 +107,8 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Returns the central <see cref="BodyPart"/> of this body based on the <see cref="BodyTemplate"/>. For humans, this is the torso. Returns null if not found.
         /// </summary>
-        public BodyPart GetCenterBodyPart() {
-            _partDictionary.TryGetValue(_template.CenterSlot, out BodyPart center);
+        public BodyPart.BodyPart GetCenterBodyPart() {
+            _partDictionary.TryGetValue(_template.CenterSlot, out BodyPart.BodyPart center);
             return center;
         }
 
@@ -119,7 +125,7 @@ namespace Content.Server.BodySystem {
         ///     Grabs the <see cref="BodyPart"/> in the given slotName if there is one. Returns true if a <see cref="BodyPart"/> is found,
         ///     false otherwise. If false, result will be null.
         /// </summary>
-        public bool TryGetBodyPart(string slotName, out BodyPart result) {
+        public bool TryGetBodyPart(string slotName, out BodyPart.BodyPart result) {
             return _partDictionary.TryGetValue(slotName, out result);
         }
 
@@ -127,7 +133,7 @@ namespace Content.Server.BodySystem {
         ///     Grabs the slotName that the given <see cref="BodyPart"/> resides in. Returns true if the <see cref="BodyPart"/> is
         ///     part of this body and a slot is found, false otherwise. If false, result will be null.
         /// </summary>
-        public bool TryGetSlotName(BodyPart part, out string result) {
+        public bool TryGetSlotName(BodyPart.BodyPart part, out string result) {
             result = _partDictionary.FirstOrDefault(x => x.Value == part).Key; //We enforce that there is only one of each value in the dictionary, so we can iterate through the dictionary values to get the key from there.
             return result == null;
         }
@@ -150,15 +156,15 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Grabs all occupied slots connected to the given slot, regardless of whether the target slot is occupied. Returns true if successful, false if there was an error or no connected BodyParts were found.
         /// </summary>
-        public bool TryGetBodyPartConnections(string slotName, out List<BodyPart> result)
+        public bool TryGetBodyPartConnections(string slotName, out List<BodyPart.BodyPart> result)
         {
             result = null;
             if (!_template.Connections.TryGetValue(slotName, out List<string> connections))
                 return false;
-            List<BodyPart> toReturn = new List<BodyPart>();
+            List<BodyPart.BodyPart> toReturn = new List<BodyPart.BodyPart>();
             foreach (string connection in connections)
             {
-                if (TryGetBodyPart(connection, out BodyPart bodyPartResult))
+                if (TryGetBodyPart(connection, out BodyPart.BodyPart bodyPartResult))
                 {
                     toReturn.Add(bodyPartResult);
                 }
@@ -192,7 +198,7 @@ namespace Content.Server.BodySystem {
                         throw new InvalidOperationException("No BodyTemplatePrototype was found with the name " + template + " while loading a BodyTemplate!"); //Should never happen unless you fuck up the prototype.
                     }
 
-                    _template = new BodyTemplate(templateData);
+                    _template = new BodyTemplate.BodyTemplate(templateData);
                 },
                 () => _template.Name);
 
@@ -206,7 +212,7 @@ namespace Content.Server.BodySystem {
                         throw new InvalidOperationException("No BodyPresetPrototype was found with the name " + preset + " while loading a BodyPreset!"); //Should never happen unless you fuck up the prototype.
                     }
 
-                    LoadBodyPreset(new BodyPreset(presetData));
+                    LoadBodyPreset(new BodyPreset.BodyPreset(presetData));
                 },
                 () => _presetName);
         }
@@ -214,7 +220,7 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Loads the given <see cref="BodyPreset"/> - forcefully changes all limbs found in both the preset and this template!
         /// </summary>
-        public void LoadBodyPreset(BodyPreset preset)
+        public void LoadBodyPreset(BodyPreset.BodyPreset preset)
         {
             _presetName = preset.Name;
 
@@ -232,7 +238,7 @@ namespace Content.Server.BodySystem {
                     BodyPartRemoved(removedPart, slotName);
                 }
 
-                var addedPart = new BodyPart(newPartData);
+                var addedPart = new BodyPart.BodyPart(newPartData);
                 _partDictionary.Add(slotName, addedPart); //Add a new BodyPart with the BodyPartPrototype as a baseline to our BodyComponent.
                 BodyPartAdded(addedPart, slotName);
             }
@@ -243,7 +249,7 @@ namespace Content.Server.BodySystem {
         ///     if there is a slot for them in both <see cref="BodyTemplate"/>.
         /// </summary>
         public void ChangeBodyTemplate(BodyTemplatePrototype newTemplate) {
-            foreach (KeyValuePair<string, BodyPart> part in _partDictionary) {
+            foreach (KeyValuePair<string, BodyPart.BodyPart> part in _partDictionary) {
                 //TODO: Make this work.
             }
         }
@@ -251,8 +257,8 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Grabs all <see cref="BodyPart">BodyParts</see> of the given type in this body.
         /// </summary>
-        public List<BodyPart> GetBodyPartsOfType(BodyPartType type) {
-            List<BodyPart> toReturn = new List<BodyPart>();
+        public List<BodyPart.BodyPart> GetBodyPartsOfType(BodyPartType type) {
+            List<BodyPart.BodyPart> toReturn = new List<BodyPart.BodyPart>();
             foreach (var (slotName, bodyPart) in _partDictionary) {
                 if (bodyPart.PartType == type)
                     toReturn.Add(bodyPart);
@@ -265,11 +271,11 @@ namespace Content.Server.BodySystem {
         /// <summary>
         ///     Installs the given <see cref="BodyPart"/> into the given slot. Returns true if successful, false otherwise.
         /// </summary>
-        public bool InstallBodyPart(BodyPart part, string slotName)
+        public bool InstallBodyPart(BodyPart.BodyPart part, string slotName)
         {
             if (!SlotExists(slotName)) //Make sure the given slot exists
                 return false;
-            if (TryGetBodyPart(slotName, out BodyPart result)) //And that nothing is in it
+            if (TryGetBodyPart(slotName, out BodyPart.BodyPart result)) //And that nothing is in it
                 return false;
             _partDictionary.Add(slotName, part);
             BodyPartAdded(part, slotName);
@@ -293,7 +299,7 @@ namespace Content.Server.BodySystem {
         ///     Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see>
         ///     if they were hanging off it. Returns the IEntity representing the dropped BodyPart.
         /// </summary>
-        public IEntity DropBodyPart(BodyPart part)
+        public IEntity DropBodyPart(BodyPart.BodyPart part)
         {
             if (!_partDictionary.ContainsValue(part))
                 return null;
@@ -305,7 +311,7 @@ namespace Content.Server.BodySystem {
                 {
                     foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
                     {
-                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result))
+                        if (TryGetBodyPart(connectionName, out BodyPart.BodyPart result) && !ConnectedToCenterPart(result))
                         {
                             DisconnectBodyPartByName(connectionName, true);
                         }
@@ -321,7 +327,7 @@ namespace Content.Server.BodySystem {
         /// <summary>
         /// Disconnects the given <see cref="BodyPart"/> reference, potentially dropping other <see cref="BodyPart">BodyParts</see> if they were hanging off it.
         /// </summary>
-        public void DisconnectBodyPart(BodyPart part, bool dropEntity) {
+        public void DisconnectBodyPart(BodyPart.BodyPart part, bool dropEntity) {
             if (!_partDictionary.ContainsValue(part))
                 return;
             if (part != null) {
@@ -335,7 +341,7 @@ namespace Content.Server.BodySystem {
                 {
                     foreach (string connectionName in connections) //This loop is an unoptimized travesty. TODO: optimize to be less shit
                     {
-                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result)) {
+                        if (TryGetBodyPart(connectionName, out BodyPart.BodyPart result) && !ConnectedToCenterPart(result)) {
                             DisconnectBodyPartByName(connectionName, dropEntity);
                         }
                     }
@@ -351,7 +357,7 @@ namespace Content.Server.BodySystem {
         ///     Internal string version of DisconnectBodyPart for performance purposes. Yes, it is actually more performant.
         /// </summary>
         private void DisconnectBodyPartByName(string name, bool dropEntity) {
-            if (!TryGetBodyPart(name, out BodyPart part))
+            if (!TryGetBodyPart(name, out BodyPart.BodyPart part))
                 return;
             if (part != null) {
                 if (_partDictionary.Remove(name, out var partRemoved))
@@ -361,7 +367,7 @@ namespace Content.Server.BodySystem {
 
                 if (TryGetBodyPartConnections(name, out List<string> connections)) {
                     foreach (string connectionName in connections) {
-                        if (TryGetBodyPart(connectionName, out BodyPart result) && !ConnectedToCenterPart(result)) {
+                        if (TryGetBodyPart(connectionName, out BodyPart.BodyPart result) && !ConnectedToCenterPart(result)) {
                             DisconnectBodyPartByName(connectionName, dropEntity);
                         }
                     }
@@ -373,7 +379,7 @@ namespace Content.Server.BodySystem {
             }
         }
 
-        private void BodyPartAdded(BodyPart part, string slotName)
+        private void BodyPartAdded(BodyPart.BodyPart part, string slotName)
         {
             var argsAdded = new BodyPartAddedEventArgs(part, slotName);
 
@@ -383,7 +389,7 @@ namespace Content.Server.BodySystem {
             }
         }
 
-        private void BodyPartRemoved(BodyPart part, string slotName)
+        private void BodyPartRemoved(BodyPart.BodyPart part, string slotName)
         {
             var args = new BodyPartRemovedEventArgs(part, slotName);
 

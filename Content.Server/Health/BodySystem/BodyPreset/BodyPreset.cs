@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.BodySystem;
+using Content.Server.Health.BodySystem.BodyPart;
+using Content.Shared.Health.BodySystem.BodyPart;
+using Content.Shared.Health.BodySystem.BodyPreset;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BodySystem {
+namespace Content.Server.Health.BodySystem.BodyPreset {
 
     /// <summary>
     ///     Stores data on what <see cref="BodyPartPrototype">BodyPartPrototypes</see> should fill a BodyTemplate. Used for loading complete body presets, like a "basic human" with all human limbs.
@@ -16,7 +18,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Maps a template slot to the ID of the <see cref="BodyPart"> that should fill it. E.g. "right arm" : "BodyPart.arm.basic_human".
-        /// </summary>		
+        /// </summary>
         [ViewVariables]
 		public Dictionary<string, string> PartIDs => _partIDs;
 

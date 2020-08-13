@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.GameObjects.EntitySystems.Click;
+using Content.Server.Interfaces;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
@@ -27,8 +29,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -159,10 +159,10 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         public override void OnAdd()
         {
             base.OnAdd();
-            var rangedWeapon = Owner.GetComponent<ServerRangedWeaponComponent>();
-            rangedWeapon.Barrel = this;
-            rangedWeapon.FireHandler += Fire;
-            rangedWeapon.WeaponCanFireHandler += WeaponCanFire;
+            var rangedWeaponComponent = Owner.GetComponent<ServerRangedWeaponComponent>();
+            rangedWeaponComponent.Barrel = this;
+            rangedWeaponComponent.FireHandler += Fire;
+            rangedWeaponComponent.WeaponCanFireHandler += WeaponCanFire;
         }
 
         public override void OnRemove()
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var currentTime = _gameTiming.CurTime;
             var timeSinceLastFire = (currentTime - _lastFire).TotalSeconds;
-            var newTheta = Math.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
+            var newTheta = FloatMath.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
             _currentAngle = new Angle(newTheta);
 
             var random = (_robustRandom.NextDouble() - 0.5) * 2;
@@ -208,7 +208,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        private void Fire(IEntity shooter, GridCoordinates target)
+        /// <summary>
+        /// Fires a round of ammo out of the weapon.
+        /// </summary>
+        /// <param name="shooter">Entity that is operating the weapon, usually the player.</param>
+        /// <param name="targetPos">Target position on the map to shoot at.</param>
+        private void Fire(IEntity shooter, Vector2 targetPos)
         {
             var soundSystem = EntitySystem.Get<AudioSystem>();
             if (ShotsLeft == 0)
@@ -229,8 +234,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             }
 
             // At this point firing is confirmed
-            var worldPosition = IoCManager.Resolve<IMapManager>().GetGrid(target.GridID).LocalToWorld(target).Position;
-            var direction = (worldPosition - shooter.Transform.WorldPosition).ToAngle();
+            var direction = (targetPos - shooter.Transform.WorldPosition).ToAngle();
             var angle = GetRecoilAngle(direction);
             // This should really be client-side but for now we'll just leave it here
             if (shooter.TryGetComponent(out CameraRecoilComponent recoilComponent))

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.BodySystem;
+using Content.Server.Health.BodySystem.BodyPart;
+using Content.Server.Health.BodySystem.Mechanism;
 using Content.Shared.GameObjects;
+using Content.Shared.Health.BodySystem;
+using Content.Shared.Health.BodySystem.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -14,7 +17,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.Surgery.Surgeon
 {
     //TODO: add checks to close UI if user walks too far away from tool or target.
 
@@ -106,10 +109,10 @@ namespace Content.Server.BodySystem
             }
         }
 
-        public void RequestMechanism(List<Mechanism> options, ISurgeon.MechanismRequestCallback callback)
+        public void RequestMechanism(List<Mechanism.Mechanism> options, ISurgeon.MechanismRequestCallback callback)
         {
             var toSend = new Dictionary<string, int> ();
-            foreach (Mechanism mechanism in options)
+            foreach (Mechanism.Mechanism mechanism in options)
             {
                 _optionsCache.Add(_idHash, mechanism);
                 toSend.Add(mechanism.Name, _idHash++);
@@ -181,7 +184,7 @@ namespace Content.Server.BodySystem
             {
                 SendNoUsefulWayToUseAnymorePopup();
             }
-            BodyPart target = targetObject as BodyPart;
+            BodyPart.BodyPart target = targetObject as BodyPart.BodyPart;
             if (!target.AttemptSurgery(_surgeryType, _bodyManagerComponentCache, this, _performerCache))
             {
                 SendNoUsefulWayToUseAnymorePopup();
@@ -198,7 +201,7 @@ namespace Content.Server.BodySystem
             {
                 SendNoUsefulWayToUseAnymorePopup();
             }
-            Mechanism target = targetObject as Mechanism;
+            Mechanism.Mechanism target = targetObject as Mechanism.Mechanism;
             CloseSurgeryUI(_performerCache.GetComponent<BasicActorComponent>().playerSession);
             _callbackCache(target, _bodyManagerComponentCache, this, _performerCache);
         }
