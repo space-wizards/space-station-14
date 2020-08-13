@@ -22,10 +22,13 @@ namespace Content.IntegrationTests.Tests
         public async Task Test()
         {
             var server = StartServerDummyTicker();
+            var client = StartClient();
             await server.WaitIdleAsync();
+            await client.WaitIdleAsync();
             var mapMan = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
-            var prototypeMan = server.ResolveDependency<IPrototypeManager>();
+            var serverPrototypeMan = server.ResolveDependency<IPrototypeManager>();
+            var clientPrototypeMan = client.ResolveDependency<IPrototypeManager>();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var pauseMan = server.ResolveDependency<IPauseManager>();
             var prototypes = new List<EntityPrototype>();
@@ -40,12 +43,25 @@ namespace Content.IntegrationTests.Tests
                 grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
             });
 
+            client.Assert(() =>
+                {
+                    foreach (var prototype in clientPrototypeMan.EnumeratePrototypes<EntityPrototype>())
+                    {
+                        if (prototype.Abstract)
+                        {
+                            continue;
+                        }
+
+                        Assert.That(prototype.Components.ContainsKey("Icon"), $"Entity {prototype.ID} does not have an Icon component, but is not abstract");
+                    }
+                });
+
             server.Assert(() =>
                 {
                     var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
 
                     //Generate list of non-abstract prototypes to test
-                    foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
+                    foreach (var prototype in serverPrototypeMan.EnumeratePrototypes<EntityPrototype>())
                     {
                         if (prototype.Abstract)
                         {
@@ -77,7 +93,7 @@ namespace Content.IntegrationTests.Tests
                 });
 
             await server.WaitIdleAsync();
+            await client.WaitIdleAsync();
         }
-
     }
 }
