@@ -1,6 +1,7 @@
 ﻿using System;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Pointing;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -37,7 +38,6 @@ namespace Content.Server.Atmos
             }
             else
             {
-
                 tank.TryRemoveReagent("chem.H2O", ReagentUnit.New(50));
 
                 var playerPos = eventArgs.User.Transform.GridPosition;
@@ -46,12 +46,14 @@ namespace Content.Server.Atmos
 
                 var spray = _serverEntityManager.SpawnEntity("ExtinguisherSpray", playerPos);
 
-                if (!spray.TryGetComponent(out AppearanceComponent appearance))
+                spray.GetComponent<AppearanceComponent>()
+                    .SetData(RoguePointingArrowVisuals.Rotation, direction.ToAngle().Degrees);
+                if (spray.TryGetComponent<GasVaporComponent>(out GasVaporComponent air))
                 {
-                    return;
+                    air.contents = new GasMixture(200){Temperature = Atmospherics.T20C};
+                    air.contents.SetMoles(Gas.WaterVapor,20);
                 }
 
-                appearance.SetData(RoguePointingArrowVisuals.Rotation, direction.ToAngle().Degrees);
 
                 //Todo: Parameterize into prototype
                 spray.GetComponent<GasVaporComponent>().StartMove(direction, 5);

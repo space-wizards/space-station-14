@@ -4,6 +4,7 @@ using Content.Shared.Physics;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Robust.Server.GameObjects;
+using Content.Server.Atmos.Reactions;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
@@ -21,6 +22,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Content.Server.GameObjects.Components.Atmos;
+using Content.Shared.Atmos;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.Atmos
@@ -33,7 +36,10 @@ namespace Content.Server.Atmos
 #pragma warning enable 649
         public override string Name => "GasVapor";
 
-        [ViewVariables] private GasMixture _contents;
+        //TODO: IDK if this is a good way to initilize contents
+        [ViewVariables] public GasMixture contents;
+
+        [ViewVariables] private GridAtmosphereComponent _gridAtmosphereComponent;
         //TODO: Add Whatever the gas scaler values is if there is one?
         //Does a gas dissapear when it recats?
         //[ViewVariables] private ReagentUnit _transferAmount;
@@ -43,21 +49,18 @@ namespace Content.Server.Atmos
         private float _velocity;
 
 
-        public override void Initialize()
+        public void Initialize(GridAtmosphereComponent gridAtmosphereComponent)
         {
             base.Initialize();
-
-            //TODO: Add Gas mixture to spray boy
-            //_contents = Owner.GetComponent<GasMixture>();
+            _gridAtmosphereComponent = gridAtmosphereComponent;
         }
 
-        //TODO: Write GasVaporController
         public void StartMove(Vector2 dir, float velocity)
         {
             _running = true;
             _direction = dir;
             _velocity = velocity;
-            // Set Move
+
             if (Owner.TryGetComponent(out ICollidableComponent collidable))
             {
                 var controller = collidable.EnsureController<GasVaporController>();
@@ -66,35 +69,31 @@ namespace Content.Server.Atmos
         }
 
         //TODO: Does the scaler amount of gas need to be exposed?
-       public override void ExposeData(ObjectSerializer serializer)
+        public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-           // serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(0.5));
+            // serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(0.5));
         }
 
+        //TODO: have moles/volume/pressure falloff over time exponentially
         public void Update()
         {
             if (!_running)
                 return;
 
-            // Get all intersecting tiles with the vapor and spray the divided solution on there
             if (Owner.TryGetComponent(out ICollidableComponent collidable))
             {
                 var worldBounds = collidable.WorldAABB;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
 
-                //TODO: React with gasses here
-                /*
                 var tiles = mapGrid.GetTilesIntersecting(worldBounds);
 
-                var amount = _transferAmount / ReagentUnit.New(tiles.Count());
                 foreach (var tile in tiles)
                 {
                     var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
-                    SpillHelper.SpillAt(pos, _contents.SplitSolution(amount), "PuddleSmear",
-                        false); //make non PuddleSmear?
+                    var atmos = AtmosHelpers.GetTileAtmosphere(pos);
+                    //Here is were we check for reactions.
                 }
-                */
 
             }
 
