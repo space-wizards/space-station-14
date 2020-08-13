@@ -1,4 +1,5 @@
 using Content.Server.GameObjects.Components.Fluids;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
@@ -8,12 +9,12 @@ using Robust.Shared.Map;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class PuddleSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class PuddleSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(PuddleComponent));
             var mapManager = IoCManager.Resolve<IMapManager>();
             mapManager.TileChanged += HandleTileChanged;
         }
@@ -28,17 +29,14 @@ namespace Content.Server.GameObjects.EntitySystems
         private void HandleTileChanged(object sender, TileChangedEventArgs eventArgs)
         {
             // If this gets hammered you could probably queue up all the tile changes every tick but I doubt that would ever happen.
-            var entities = EntityManager.GetEntities(EntityQuery);
-
-            foreach (var entity in entities)
+            foreach (var (puddle, snapGrid) in ComponentManager.EntityQuery<PuddleComponent, SnapGridComponent>())
             {
                 // If the tile becomes space then delete it (potentially change by design)
-                if (eventArgs.NewTile.GridIndex == entity.Transform.GridID &&
-                    entity.TryGetComponent(out SnapGridComponent snapGridComponent) &&
-                    snapGridComponent.Position == eventArgs.NewTile.GridIndices &&
+                if (eventArgs.NewTile.GridIndex == puddle.Owner.Transform.GridID &&
+                    snapGrid.Position == eventArgs.NewTile.GridIndices &&
                     eventArgs.NewTile.Tile.IsEmpty)
                 {
-                    entity.Delete();
+                    puddle.Owner.Delete();
                     break; // Currently it's one puddle per tile, if that changes remove this
                 }
             }

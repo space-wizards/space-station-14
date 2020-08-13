@@ -1,21 +1,16 @@
 using Content.Server.GameObjects.Components.Medical;
-using Robust.Shared.GameObjects;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class MedicalScannerSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class MedicalScannerSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(MedicalScannerComponent));
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var comp in ComponentManager.EntityQuery<MedicalScannerComponent>())
             {
-                var comp = entity.GetComponent<MedicalScannerComponent>();
                 comp.Update(frameTime);
             }
         }

@@ -578,7 +578,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                 return Vector2.Zero;
             }
 
-            if (target.TryGetComponent(out IPhysicsComponent physicsComponent))
+            if (target.TryGetComponent(out ICollidableComponent physicsComponent))
             {
                 var targetDistance = (targetPos.Position - entityPos.Position);
                 targetPos = targetPos.Offset(physicsComponent.LinearVelocity * targetDistance);
@@ -637,11 +637,12 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     // if we're moving in the same direction then ignore
                     // So if 2 entities are moving towards each other and both detect a collision they'll both move in the same direction
                     // i.e. towards the right
-                    if (physicsEntity.TryGetComponent(out IPhysicsComponent physicsComponent) &&
+                    if (physicsEntity.TryGetComponent(out ICollidableComponent physicsComponent) &&
                         Vector2.Dot(physicsComponent.LinearVelocity, direction) > 0)
                     {
                         continue;
                     }
+
                     var centerGrid = physicsEntity.Transform.GridPosition;
                     // Check how close we are to center of tile and get the inverse; if we're closer this is stronger
                     var additionalVector = (centerGrid.Position - entityGridCoords.Position);

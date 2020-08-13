@@ -1,23 +1,17 @@
 using Content.Server.GameObjects.Components.Movement;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class PortalSystem : EntitySystem
+    internal sealed class PortalSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(ServerPortalComponent));
-        }
-
+        // TODO: Someone refactor portals
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var comp in ComponentManager.EntityQuery<ServerPortalComponent>())
             {
-                var comp = entity.GetComponent<ServerPortalComponent>();
                 comp.OnUpdate();
             }
         }

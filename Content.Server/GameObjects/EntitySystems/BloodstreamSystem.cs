@@ -1,21 +1,16 @@
 ﻿using Content.Server.GameObjects.Components.Metabolism;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
-    /// Triggers metabolism updates for <see cref="BloodstreamComponent"/>
+    ///     Triggers metabolism updates for <see cref="BloodstreamComponent"/>
     /// </summary>
     [UsedImplicitly]
-    public class BloodstreamSystem : EntitySystem
+    internal sealed class BloodstreamSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(BloodstreamComponent));
-        }
 
         public override void Update(float frameTime)
         {
@@ -23,12 +18,11 @@ namespace Content.Server.GameObjects.EntitySystems
             _accumulatedFrameTime += frameTime;
             if (_accumulatedFrameTime > 1.0f)
             {
-                foreach (var entity in RelevantEntities)
+                foreach (var component in ComponentManager.EntityQuery<BloodstreamComponent>())
                 {
-                    var comp = entity.GetComponent<BloodstreamComponent>();
-                    comp.OnUpdate(_accumulatedFrameTime);
+                    component.OnUpdate(_accumulatedFrameTime);
                 }
-                _accumulatedFrameTime = 0.0f;
+                _accumulatedFrameTime -= 1.0f;
             }
         }
     }

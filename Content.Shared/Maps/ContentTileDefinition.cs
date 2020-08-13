@@ -23,6 +23,7 @@ namespace Content.Shared.Maps
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
         public float Friction { get; set; }
+        public float ThermalConductivity { get; set; }
         public string ItemDropPrototypeName { get; private set; }
 
         public void AssignTileId(ushort id)
@@ -63,6 +64,15 @@ namespace Content.Shared.Maps
             else
             {
                 Friction = 0;
+            }
+
+            if (mapping.TryGetNode("thermalConductivity", out node))
+            {
+                ThermalConductivity = node.AsFloat();
+            }
+            else
+            {
+                ThermalConductivity = 0.05f;
             }
 
             if (mapping.TryGetNode("item_drop", out node))
