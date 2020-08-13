@@ -1,6 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using JetBrains.Annotations;
+﻿using System;
+using System.Linq;
+using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using Content.Shared.Physics;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Physics;
@@ -8,10 +10,8 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
-using System;
-using System.Linq;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.
@@ -90,7 +90,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Interaction
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;
-                
+
                 if (panel.TimeOfNextCoverageUpdate < _gameTiming.CurTime)
                 {
                     // Setup the next coverage check.

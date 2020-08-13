@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.GameObjects.Components;
+﻿using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.GameObjects.Components.Paper
 {
     [RegisterComponent]
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse

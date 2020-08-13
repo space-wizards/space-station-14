@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.Construction;
+﻿using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;

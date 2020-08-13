@@ -1,11 +1,11 @@
 ﻿using System;
-using CancellationTokenSource = System.Threading.CancellationTokenSource;
+using System.Threading;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
-using Robust.Shared.IoC;
 using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
+using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Timing
 {

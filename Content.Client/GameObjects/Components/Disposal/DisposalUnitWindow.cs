@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Content.Shared.GameObjects.Components.Disposal;
+﻿using Content.Shared.GameObjects.Components.Disposal;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

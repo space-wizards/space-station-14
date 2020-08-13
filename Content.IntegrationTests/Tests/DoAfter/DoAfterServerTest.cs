@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using NUnit.Framework;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -9,7 +9,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.DoAfter
 {
@@ -35,7 +34,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var args = new DoAfterEventArgs(mob, tickTime / 2, cancelToken.Token);
                 task = EntitySystem.Get<DoAfterSystem>().DoAfter(args);
             });
-            
+
             await server.WaitRunTicks(1);
             Assert.That(task.Result == DoAfterStatus.Finished);
         }

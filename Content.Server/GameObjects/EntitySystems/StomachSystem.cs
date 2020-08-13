@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     /// <summary>
     ///     Triggers digestion updates on <see cref="StomachComponent"/>

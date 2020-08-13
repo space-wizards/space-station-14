@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
     [UsedImplicitly]
     public sealed class DoAfterSystem : EntitySystem
@@ -19,18 +19,18 @@ namespace Content.Server.GameObjects.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            
+
             foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>())
             {
                 if (_pauseManager.IsGridPaused(comp.Owner.Transform.GridID)) continue;
-                
+
                 var cancelled = new List<DoAfter>(0);
                 var finished = new List<DoAfter>(0);
 
                 foreach (var doAfter in comp.DoAfters)
                 {
                     doAfter.Run(frameTime);
-                    
+
                     switch (doAfter.Status)
                     {
                         case DoAfterStatus.Running:
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.EntitySystems
                 finished.Clear();
             }
         }
-        
+
         /// <summary>
         ///     Tasks that are delayed until the specified time has passed
         ///     These can be potentially cancelled by the user moving or when other things happen.
@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.EntitySystems
             var doAfterComponent = eventArgs.User.GetComponent<DoAfterComponent>();
             doAfterComponent.Add(doAfter);
             DamageableComponent? damageableComponent = null;
-            
+
             // TODO: If the component's deleted this may not get unsubscribed?
             if (eventArgs.BreakOnDamage && eventArgs.User.TryGetComponent(out damageableComponent))
             {
@@ -82,12 +82,12 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             await doAfter.AsTask;
-            
+
             if (damageableComponent != null)
             {
                 damageableComponent.Damaged -= doAfter.HandleDamage;
             }
-            
+
             return doAfter.Status;
         }
     }

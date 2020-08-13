@@ -1,9 +1,8 @@
 ﻿using System;
-using Content.Shared.GameObjects;
-using JetBrains.Annotations;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Damage
 {
     /// <summary>
     /// Triggers an event when values rise above or drop below this threshold

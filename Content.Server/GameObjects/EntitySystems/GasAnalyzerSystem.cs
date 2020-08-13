@@ -1,10 +1,5 @@
 ﻿using Content.Server.GameObjects.Components.Atmos;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

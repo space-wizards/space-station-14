@@ -1,6 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Pointing;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;

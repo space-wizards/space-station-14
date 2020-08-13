@@ -1,12 +1,10 @@
-﻿using Content.Client.UserInterface;
-using Content.Shared.BodySystem;
+﻿using System.Collections.Generic;
+using Content.Shared.Health.BodySystem.BodyScanner;
 using Robust.Client.GameObjects.Components.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
 
-namespace Content.Client.BodySystem
+namespace Content.Client.Health.BodySystem.BodyScanner
 {
     public class BodyScannerBoundUserInterface : BoundUserInterface
     {
@@ -40,7 +38,7 @@ namespace Content.Client.BodySystem
 
             _template = scannerState.Template;
             _parts = scannerState.Parts;
-            
+
             _display.UpdateDisplay(_template, _parts);
         }
 

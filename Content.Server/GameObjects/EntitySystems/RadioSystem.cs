@@ -1,7 +1,7 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.EntitySystems
 {

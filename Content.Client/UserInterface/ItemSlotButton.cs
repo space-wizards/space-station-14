@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Items;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

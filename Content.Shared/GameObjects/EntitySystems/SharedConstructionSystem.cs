@@ -1,6 +1,5 @@
 ﻿using System;
 using Content.Shared.Construction;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
