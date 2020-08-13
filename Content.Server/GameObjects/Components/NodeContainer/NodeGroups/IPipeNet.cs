@@ -1,5 +1,4 @@
 ﻿using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.Interfaces;
 using Robust.Shared.ViewVariables;
@@ -23,12 +22,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         private readonly List<PipeNode> _pipes = new List<PipeNode>();
 
-        public bool AssumeAir(GasMixture giver)
-        {
-            Air.Merge(giver);
-            return true;
-        }
-
         protected override void OnAddNode(Node node)
         {
             if (!(node is PipeNode pipeNode))
@@ -36,7 +29,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             _pipes.Add(pipeNode);
             pipeNode.JoinPipeNet(this);
             Air.Volume += pipeNode.Volume;
-            AssumeAir(pipeNode.LocalAir);
+            Air.Merge(pipeNode.LocalAir);
             pipeNode.LocalAir.Clear();
         }
 
@@ -53,7 +46,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         protected override void OnGivingNodesForCombine(INodeGroup newGroup)
         {
             var newPipeNet = (IPipeNet) newGroup;
-            newPipeNet.AssumeAir(Air);
+            newPipeNet.Air.Merge(Air);
             Air.Clear();
         }
 
@@ -61,7 +54,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         {
             foreach (IPipeNet newPipeNet in newGroups)
             {
-                newPipeNet.AssumeAir(Air);
+                newPipeNet.Air.Merge(Air);
                 var newPipeNetGas = newPipeNet.Air;
                 newPipeNetGas.Multiply(newPipeNetGas.Volume / Air.Volume);
             }
@@ -70,11 +63,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         private class NullPipeNet : IPipeNet
         {
             GasMixture IGasMixtureHolder.Air { get; set; } = new GasMixture();
-
-            public bool AssumeAir(GasMixture giver)
-            {
-                return false;
-            }
         }
     }
 }

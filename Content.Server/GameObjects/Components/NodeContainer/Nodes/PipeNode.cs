@@ -82,12 +82,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             _needsPipeNet = true;
         }
 
-        public bool AssumeAir(GasMixture giver)
-        {
-            Air.Merge(giver);
-            return true;
-        }
-
         protected override IEnumerable<Node> GetReachableNodes()
         {
             foreach (CardinalDirection direction in Enum.GetValues(typeof(CardinalDirection)))
