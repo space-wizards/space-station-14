@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Content.Client.UserInterface.AdminMenu;
+using Content.Shared.Atmos;
 using Robust.Client.Console;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
@@ -10,6 +11,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System;
 using System.Collections.Generic;
@@ -26,15 +28,25 @@ namespace Content.Client.UserInterface
         private List<CommandButton> _adminButtons = new List<CommandButton>
         {
             new KickCommandButton(),
-            new TestCommandButton(),
+            new DirectCommandButton("Admin Ghost", "aghost"),
+            //TODO: teleport
         };
         private List<CommandButton> _adminbusButtons = new List<CommandButton>
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
+            
+        };
+        private List<CommandButton> _debugButtons = new List<CommandButton>
+        {
+            new AddAtmosCommandButton(),
+            new FillGasCommandButton(),
+            new TestCommandButton(),
         };
         private List<CommandButton> _roundButtons = new List<CommandButton>
         {
+            new DirectCommandButton("Start Round", "startround"),
+            new DirectCommandButton("End Round", "endround"),
             new DirectCommandButton("Restart Round", "restartround"),
         };
         private List<CommandButton> _serverButtons = new List<CommandButton>
@@ -198,6 +210,12 @@ namespace Content.Client.UserInterface
                 MarginBottomOverride = 4,
                 CustomMinimumSize = (50, 50),
             };
+            var debugButtonGrid = new GridContainer
+            {
+                Columns = 4,
+            };
+            AddCommandButton(_debugButtons, debugButtonGrid);
+            debugTabContainer.AddChild(debugButtonGrid);
             #endregion
 
             #region Round
@@ -283,7 +301,12 @@ namespace Content.Client.UserInterface
         // Button that opens a UI
         private abstract class UICommandButton : CommandButton
         {
+            // The text on the submit button
             public string? SubmitText;
+            /// <summary>
+            /// Called when the Submit button is pressed
+            /// </summary>
+            /// <param name="val">Dictionary of the parameter names and values</param>
             public abstract void Submit(Dictionary<string, string> val);
             public override void ButtonPressed(ButtonEventArgs args)
             {
@@ -292,6 +315,7 @@ namespace Content.Client.UserInterface
                 window.Submit += Submit;
                 manager.OpenCommand(window);
             }
+            // List of all the UI Elements
             public abstract List<CommandUIControl> UI { get; }
         }
 
@@ -400,6 +424,61 @@ namespace Content.Client.UserInterface
             }
         }
 
+        private class AddAtmosCommandButton : UICommandButton
+        {
+            public override string Name => "Add Atmos";
+            public override string RequiredCommand => "addatmos";
+
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            {
+                new CommandUIDropDown
+                {
+                    Name = "Grid",
+                    GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int)g.Index != 0).ToList<object>(),
+                    GetDisplayName = (obj) => $"{((IMapGrid)obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid)obj).Index ? " (Current)" : "" )}",
+                    GetValueFromData = (obj) => ((IMapGrid)obj).Index.ToString(),
+                },
+            };
+
+            public override void Submit(Dictionary<string, string> val)
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"addatmos {val["Grid"]}");
+            }
+        }
+
+        private class FillGasCommandButton : UICommandButton
+        {
+            public override string Name => "Fill Gas";
+            public override string RequiredCommand => "fillgas";
+
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            {
+                new CommandUIDropDown
+                {
+                    Name = "Grid",
+                    GetData = () => IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int)g.Index != 0).ToList<object>(),
+                    GetDisplayName = (obj) => $"{((IMapGrid)obj).Index}{(IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID == ((IMapGrid)obj).Index ? " (Current)" : "" )}",
+                    GetValueFromData = (obj) => ((IMapGrid)obj).Index.ToString(),
+                },
+                new CommandUIDropDown
+                {
+                    Name = "Gas",
+                    GetData = () =>  Atmospherics.Gases.ToList<object>(),
+                    GetDisplayName = (obj) => $"{((GasPrototype)obj).Name} ({((GasPrototype)obj).ID})",
+                    GetValueFromData = (obj) => ((GasPrototype)obj).ID.ToString(),
+                },
+                new CommandUILineEdit //TODO: make number thingy?
+                {
+                    Name = "Amount"
+                },
+            };
+
+            public override void Submit(Dictionary<string, string> val)
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"fillgas {val["Grid"]} {val["Gas"]} {val["Amount"]}");
+            }
+        }
+
         private abstract class CommandUIControl
         {
             public string Name;
@@ -417,7 +496,7 @@ namespace Content.Client.UserInterface
             // The value that is given to Submit
             public Func<object, string> GetValueFromData;
             // Cache
-            private List<object> Data;
+            private List<object> Data; //TODO: make this like IEnumerable or smth, so you don't have to do this ToList<object> shittery
 
             public override Control GetControl() //TODO: scale those properly
             {
