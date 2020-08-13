@@ -9,10 +9,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
 using Color = Robust.Shared.Maths.Color;
-using Math = CannyFastMath.Math;
-using MathF = CannyFastMath.MathF;
 
 namespace Content.Client.Parallax
 {
@@ -79,7 +78,7 @@ namespace Content.Client.Parallax
             private readonly NoiseGenerator.NoiseType NoiseType = NoiseGenerator.NoiseType.Fbm;
             private readonly uint Seed = 1234;
             private readonly float Persistence = 0.5f;
-            private readonly float Lacunarity = (float) (Math.TAU / 3);
+            private readonly float Lacunarity = (float) (Math.PI / 3);
             private readonly float Frequency = 1;
             private readonly uint Octaves = 3;
             private readonly float Threshold;

@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using CannyFastMath;
+using System;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;

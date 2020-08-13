@@ -1,9 +1,8 @@
-using System;
-using Content.Server.GameObjects.Components.Damage;
+﻿using System;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -13,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
@@ -20,6 +20,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -39,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
 
         public Func<bool> WeaponCanFireHandler;
         public Func<IEntity, bool> UserCanFireHandler;
-        public Action<IEntity, GridCoordinates> FireHandler;
+        public Action<IEntity, Vector2> FireHandler;
 
         public ServerRangedBarrelComponent Barrel
         {
@@ -78,6 +79,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             serializer.DataField(this, p => p.ClumsyExplodeChance, "clumsyExplodeChance", 0.5f);
         }
 
+        /// <inheritdoc />
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -96,7 +98,24 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                         return;
                     }
 
-                    _tryFire(user, msg.Target);
+                    if (msg.TargetGrid != GridId.Invalid)
+                    {
+                        // grid pos
+                        if (!IoCManager.Resolve<IMapManager>().TryGetGrid(msg.TargetGrid, out var grid))
+                        {
+                            // Client sent us a message with an invalid grid.
+                            break;
+                        }
+
+                        var targetPos = grid.LocalToWorld(msg.TargetPosition);
+                        TryFire(user, targetPos);
+                    }
+                    else
+                    {
+                        // map pos
+                        TryFire(user, msg.TargetPosition);
+                    }
+
                     break;
             }
         }
@@ -106,7 +125,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
             return new RangedWeaponComponentState(FireRateSelector);
         }
 
-        private void _tryFire(IEntity user, GridCoordinates coordinates)
+        /// <summary>
+        /// Tries to fire a round of ammo out of the weapon.
+        /// </summary>
+        /// <param name="user">Entity that is operating the weapon, usually the player.</param>
+        /// <param name="targetPos">Target position on the map to shoot at.</param>
+        private void TryFire(IEntity user, Vector2 targetPos)
         {
             if (!user.TryGetComponent(out HandsComponent hands) || hands.GetActiveHand?.Owner != Owner)
             {
@@ -159,7 +183,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged
                 return;
             }
 
-            FireHandler?.Invoke(user, coordinates);
+            FireHandler?.Invoke(user, targetPos);
         }
 
         // Probably a better way to do this.

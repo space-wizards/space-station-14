@@ -41,7 +41,7 @@ namespace Content.Client.UserInterface
             }
             else
             {
-                var alpha = MathF.Clamp(0.5f * lerp, 0f, 0.5f);
+                var alpha = FloatMath.Clamp(0.5f * lerp, 0f, 0.5f);
                 color = new Color(1f, 1f, 1f, alpha);
             }
 
