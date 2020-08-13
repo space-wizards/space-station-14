@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using Content.Server.AI.Operators.Sequences;
 using Content.Server.AI.Utility.Considerations;
-using Content.Server.AI.Utility.Considerations.Clothing;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
