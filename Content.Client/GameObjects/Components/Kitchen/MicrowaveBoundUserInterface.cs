@@ -1,21 +1,20 @@
 ﻿using System;
-using Robust.Client.GameObjects.Components.UserInterface;
-using Content.Shared.Kitchen;
-using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Content.Shared.Chemistry;
-using Robust.Shared.GameObjects;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.GameObjects;
+using Content.Shared.Chemistry;
+using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
+using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components.UserInterface;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.GameObjects.Components.Kitchen
 {

@@ -3,6 +3,7 @@ using Content.Client.Construction;
 using Content.Client.GameObjects.Components.Construction;
 using Content.Client.UserInterface;
 using Content.Shared.Construction;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -21,7 +22,7 @@ namespace Content.Client.GameObjects.EntitySystems
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    public class ConstructionSystem : Shared.GameObjects.EntitySystems.SharedConstructionSystem
+    public class ConstructionSystem : SharedConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IGameHud _gameHud;

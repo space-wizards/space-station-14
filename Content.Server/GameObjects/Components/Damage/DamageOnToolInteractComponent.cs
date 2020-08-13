@@ -1,9 +1,10 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using System.Collections.Generic;
-using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -56,9 +57,9 @@ namespace Content.Server.GameObjects.Components.Damage
         {
             if (eventArgs.Target.TryGetComponent<DamageableComponent>(out var damageable))
             {
-                if(tool.HasQuality(ToolQuality.Welding)) damageable.TakeDamage(Shared.GameObjects.DamageType.Heat, Damage, eventArgs.Using, eventArgs.User);
+                if(tool.HasQuality(ToolQuality.Welding)) damageable.TakeDamage(DamageType.Heat, Damage, eventArgs.Using, eventArgs.User);
                 else
-                damageable.TakeDamage(Shared.GameObjects.DamageType.Brute, Damage, eventArgs.Using, eventArgs.User);
+                damageable.TakeDamage(DamageType.Brute, Damage, eventArgs.Using, eventArgs.User);
                 return true;
             }
                 return false;

@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -16,8 +19,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         // for each entity in range. Seemed easier than checking entities on spawn, then checking collidables, etc.
         // Especially considering each pulse is a big chonker, + no circle hitboxes yet.
 
-        [Dependency] private IEntityManager _entityManager = default!;
-
         private TypeEntityQuery _speciesQuery;
 
         /// <summary>
@@ -31,7 +32,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         public override void Initialize()
         {
             base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(RadiationPulseComponent));
             _speciesQuery = new TypeEntityQuery(typeof(SpeciesComponent));
         }
         
@@ -40,19 +40,18 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             base.Update(frameTime);
             var anyPulses = false;
 
-            foreach (var entity in RelevantEntities)
+            foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>())
             {
                 anyPulses = true;
-                var comp = entity.GetComponent<RadiationPulseComponent>();
-                
-                foreach (var species in _entityManager.GetEntities(_speciesQuery))
+
+                foreach (var species in EntityManager.GetEntities(_speciesQuery))
                 {
                     // Work out if we're in range and accumulate more damage
                     // If we've hit the DamageThreshold we'll also apply that damage to the mob
                     // If we're really lagging server can apply multiples of the DamageThreshold at once
-                    if (species.Transform.MapID != entity.Transform.MapID) continue;
+                    if (species.Transform.MapID != comp.Owner.Transform.MapID) continue;
 
-                    if ((species.Transform.WorldPosition - entity.Transform.WorldPosition).Length > comp.Range)
+                    if ((species.Transform.WorldPosition - comp.Owner.Transform.WorldPosition).Length > comp.Range)
                     {
                         continue;
                     }
@@ -73,7 +72,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                     var damageMultiple = (int) (totalDamage / DamageThreshold);
                     _accumulatedDamage[species] = totalDamage % DamageThreshold;
 
-                    damageableComponent.TakeDamage(DamageType.Heat, damageMultiple * DamageThreshold, entity, entity);
+                    damageableComponent.TakeDamage(DamageType.Heat, damageMultiple * DamageThreshold, comp.Owner, comp.Owner);
                 }
             }
 

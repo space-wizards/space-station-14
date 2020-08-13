@@ -1,22 +1,24 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Content.Shared.BodySystem;
-using Robust.Shared.ViewVariables;
 using System.Globalization;
-using Robust.Server.GameObjects;
-using Robust.Shared.Log;
+using Content.Server.Health.BodySystem.BodyPart;
+using Content.Shared.Health.BodySystem.Mechanism;
+using Content.Shared.Health.BodySystem.Surgery;
 using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BodySystem {
+namespace Content.Server.Health.BodySystem.Mechanism {
 
     /// <summary>
     ///    Component representing a dropped, tangible <see cref="Mechanism"/> entity.
@@ -138,7 +140,7 @@ namespace Content.Server.BodySystem {
             {
                 _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You see no useful way to use the {0} anymore.", Owner.Name));
             }
-            BodyPart target = targetObject as BodyPart;
+            BodyPart.BodyPart target = targetObject as BodyPart.BodyPart;
             if (!target.TryInstallDroppedMechanism(this))
             {
                 _sharedNotifyManager.PopupMessage(_bodyManagerComponentCache.Owner, _performerCache, Loc.GetString("You can't fit it in!"));

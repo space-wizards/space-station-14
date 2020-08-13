@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -22,9 +20,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
@@ -101,7 +99,7 @@ namespace Content.Server.GameObjects
         bool IEffectBlocker.CanSlip()
         {
             if(Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
+                inventoryComponent.TryGetSlotItem(Slots.SHOES, out ItemComponent shoes)
             )
             {
                 return EffectBlockerSystem.CanSlip(shoes.Owner);
