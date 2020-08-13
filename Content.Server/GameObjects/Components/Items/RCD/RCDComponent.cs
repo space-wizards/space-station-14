@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
