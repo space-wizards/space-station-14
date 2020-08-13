@@ -66,16 +66,14 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
             return new[]
             {
-                considerationsManager.Get<MeleeWeaponEquippedCon>()
-                    .BoolCurve(context),
                 considerationsManager.Get<TargetIsDeadCon>()
                     .InverseBoolCurve(context),
                 considerationsManager.Get<TargetIsCritCon>()
                     .QuadraticCurve(context, -0.8f, 1.0f, 1.0f, 0.0f),
-                considerationsManager.Get<DistanceCon>()
-                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<TargetHealthCon>()
-                    .QuadraticCurve(context, 1.0f, 0.4f, 0.0f, -0.02f),
+                    .PresetCurve(context, PresetCurve.TargetHealth),
                 considerationsManager.Get<MeleeWeaponSpeedCon>()
                     .QuadraticCurve(context, 1.0f, 0.5f, 0.0f, 0.0f),
                 considerationsManager.Get<MeleeWeaponDamageCon>()

@@ -42,12 +42,8 @@ namespace Content.Server.AI.Utility.Actions.Combat.Melee
 
             return new[]
             {
-                considerationsManager.Get<FreeHandCon>()
-                    .BoolCurve(context),
-                considerationsManager.Get<HasMeleeWeaponCon>()
-                    .InverseBoolCurve(context),
-                considerationsManager.Get<DistanceCon>()
-                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
                 considerationsManager.Get<MeleeWeaponDamageCon>()
                     .QuadraticCurve(context, 1.0f, 0.25f, 0.0f, 0.0f),
                 considerationsManager.Get<MeleeWeaponSpeedCon>()

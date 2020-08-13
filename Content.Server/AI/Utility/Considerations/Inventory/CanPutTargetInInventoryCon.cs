@@ -6,7 +6,7 @@ using Content.Server.GameObjects.Components;
 
 namespace Content.Server.AI.Utility.Considerations.Inventory
 {
-    public class CanPutTargetInHandsCon : Consideration
+    public class CanPutTargetInInventoryCon : Consideration
     {
         protected override float GetScore(Blackboard context)
         {
