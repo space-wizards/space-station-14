@@ -35,7 +35,6 @@ namespace Content.Client.UserInterface
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
-            
         };
         private List<CommandButton> _debugButtons = new List<CommandButton>
         {
@@ -411,16 +410,16 @@ namespace Content.Client.UserInterface
                 {
                     Name = "CheckBox"
                 },
-                new CommandUILineEdit
+                new CommandUISpinBox
                 {
-                    Name = "Optional",
+                    Name = "SpinBox",
                     Optional = true
                 },
             };
 
             public override void Submit(Dictionary<string, string> val)
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"say \"Dropdown: {val["DropDown"]}\nLineEdit: {val["LineEdit"]}\nCheckBox: {val["CheckBox"]}\nOptional: {val["Optional"]}\"");
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"say \"Dropdown: {val["DropDown"]}\nLineEdit: {val["LineEdit"]}\nCheckBox: {val["CheckBox"]}\nSpinBox: {val["SpinBox"]}\"");
             }
         }
 
@@ -467,7 +466,7 @@ namespace Content.Client.UserInterface
                     GetDisplayName = (obj) => $"{((GasPrototype)obj).Name} ({((GasPrototype)obj).ID})",
                     GetValueFromData = (obj) => ((GasPrototype)obj).ID.ToString(),
                 },
-                new CommandUILineEdit //TODO: make number thingy?
+                new CommandUISpinBox
                 {
                     Name = "Amount"
                 },
@@ -498,9 +497,9 @@ namespace Content.Client.UserInterface
             // Cache
             private List<object> Data; //TODO: make this like IEnumerable or smth, so you don't have to do this ToList<object> shittery
 
-            public override Control GetControl() //TODO: scale those properly
+            public override Control GetControl() //TODO: fix optionbutton being shitty after moving the window
             {
-                var opt = new OptionButton { CustomMinimumSize = (100, 0) };
+                var opt = new OptionButton { CustomMinimumSize = (100, 0), SizeFlagsHorizontal = SizeFlags.FillExpand };
                 Data = GetData();
                 foreach (var item in Data)
                     opt.AddItem(GetDisplayName(item));
@@ -519,7 +518,7 @@ namespace Content.Client.UserInterface
         {
             public override Control GetControl()
             {
-                Control = new CheckBox();
+                Control = new CheckBox { SizeFlagsHorizontal = SizeFlags.FillExpand, SizeFlagsVertical = SizeFlags.ShrinkCenter };
                 return Control;
             }
 
@@ -532,13 +531,27 @@ namespace Content.Client.UserInterface
         {
             public override Control GetControl()
             {
-                Control = new LineEdit { CustomMinimumSize = (100, 0) };
+                Control = new LineEdit { CustomMinimumSize = (100, 0), SizeFlagsHorizontal = SizeFlags.FillExpand };
                 return Control;
             }
 
             public override string GetValue()
             {
                 return ((LineEdit)Control).Text;
+            }
+        }
+
+        private class CommandUISpinBox : CommandUIControl
+        {
+            public override Control GetControl()
+            {
+                Control = new SpinBox { CustomMinimumSize = (100, 0), SizeFlagsHorizontal = SizeFlags.FillExpand };
+                return Control;
+            }
+
+            public override string GetValue()
+            {
+                return ((SpinBox)Control).Value.ToString();
             }
         }
 
@@ -563,7 +576,7 @@ namespace Content.Client.UserInterface
                     };
                     var divider = new Control
                     {
-                        SizeFlagsHorizontal = SizeFlags.FillExpand
+                        CustomMinimumSize = (50, 0)
                     };
                     var hbox = new HBoxContainer
                     {
