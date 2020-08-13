@@ -16,7 +16,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Interfaces.GameObjects.Components.Interaction
 {
     [UsedImplicitly]
-    internal sealed class GravitySystem: EntitySystem
+    internal sealed class GravitySystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
