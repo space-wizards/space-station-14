@@ -381,7 +381,7 @@ namespace Content.Client.UserInterface
 
             public override void Submit(Dictionary<string,string> val)
             {
-                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{val["Player"]}\" \"{val["Reason"]}\"");
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"kick \"{val["Player"]}\" \"{val["Reason"].Replace("\\", "\\\\").Replace("\"", "\\\"")}\"");
             }
         }
 
