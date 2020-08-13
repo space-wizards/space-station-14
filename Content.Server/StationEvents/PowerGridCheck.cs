@@ -34,6 +34,8 @@ namespace Content.Server.StationEvents
         
         private Dictionary<IEntity, bool> _powered = new Dictionary<IEntity, bool>();
         
+        private readonly List<PowerReceiverComponent> _toPowerDown = new List<PowerReceiverComponent>();
+        
         public override void Startup()
         {
             base.Startup();
@@ -41,12 +43,10 @@ namespace Content.Server.StationEvents
 
             _elapsedTime = 0.0f;
             _failDuration = IoCManager.Resolve<IRobustRandom>().Next(30, 120);
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var componentManager = IoCManager.Resolve<IComponentManager>();
             
-            foreach (var entity in entityManager.GetEntities(new TypeEntityQuery(typeof(PowerReceiverComponent))))
+            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>())
             {
-                var component = entity.GetComponent<PowerReceiverComponent>();
-                _powered.Add(entity, component.PowerDisabled);
                 component.PowerDisabled = true;
             }
         }
@@ -58,6 +58,8 @@ namespace Content.Server.StationEvents
 
             foreach (var (entity, powered) in _powered)
             {
+                if (entity.Deleted) continue;
+                
                 if (entity.TryGetComponent(out PowerReceiverComponent powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = powered;

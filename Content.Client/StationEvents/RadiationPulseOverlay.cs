@@ -124,7 +124,7 @@ namespace Content.Client.StationEvents
             _lastTick = _gameTiming.CurTime;
 
             var radiationPulses = _componentManager
-                .GetAllComponents(typeof(RadiationPulseComponent))
+                .EntityQuery<RadiationPulseComponent>()
                 .ToList();
 
             var screenHandle = (DrawingHandleScreen) handle;
