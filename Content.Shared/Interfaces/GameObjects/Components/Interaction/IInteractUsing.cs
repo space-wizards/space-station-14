@@ -14,9 +14,9 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public interface IInteractUsing
     {
         /// <summary>
-        /// The interaction Priority. Higher numbers get called first.
+        /// The interaction priority. Higher numbers get called first.
         /// </summary>
-        /// <value>Prority defaults to 0</value>
+        /// <value>Priority defaults to 0</value>
         int Priority { get => 0; }
 
         /// <summary>
