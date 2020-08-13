@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Content.Shared.Physics;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
@@ -275,9 +271,9 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         /// <param name="entity"></param>
         private void HandleEntityAdd(IEntity entity)
         {
-            if (entity.Deleted || 
+            if (entity.Deleted ||
                 _lastKnownPositions.ContainsKey(entity) ||
-                !entity.TryGetComponent(out ICollidableComponent collidableComponent) || 
+                !entity.TryGetComponent(out ICollidableComponent collidableComponent) ||
                 !PathfindingNode.IsRelevant(entity, collidableComponent))
             {
                 return;
@@ -315,23 +311,23 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
         private void HandleEntityMove(MoveEvent moveEvent)
         {
             // If we've moved to space or the likes then remove us.
-            if (moveEvent.Sender.Deleted || 
+            if (moveEvent.Sender.Deleted ||
                 !moveEvent.Sender.TryGetComponent(out ICollidableComponent collidableComponent) ||
                 !PathfindingNode.IsRelevant(moveEvent.Sender, collidableComponent))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
             }
-            
+
             // Memory leak protection until grid parenting confirmed fix / you REALLY need the performance
             var gridBounds = _mapManager.GetGrid(moveEvent.Sender.Transform.GridID).WorldBounds;
-            
+
             if (!gridBounds.Contains(moveEvent.Sender.Transform.WorldPosition))
             {
                 HandleEntityRemove(moveEvent.Sender);
                 return;
             }
-            
+
             // If we move from space to a grid we may need to start tracking it.
             if (!_lastKnownPositions.TryGetValue(moveEvent.Sender, out var oldNode))
             {
@@ -342,7 +338,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // The pathfinding graph is tile-based so first we'll check if they're on a different tile and if we need to update.
             // If you get entities bigger than 1 tile wide you'll need some other system so god help you.
             var newTile = _mapManager.GetGrid(moveEvent.NewPosition.GridID).GetTileRef(moveEvent.NewPosition);
-            
+
             if (oldNode == null || oldNode.TileRef == newTile)
             {
                 return;

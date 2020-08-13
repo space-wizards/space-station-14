@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.Server.Interfaces;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;

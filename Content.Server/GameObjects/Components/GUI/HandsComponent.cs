@@ -3,14 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Shared.GameObjects.Components.Body;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Health.BodySystem;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -202,7 +204,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
                     return false;
             }
-            
+
             interactionSystem.DroppedInteraction(Owner, item.Owner);
             return true;
         }

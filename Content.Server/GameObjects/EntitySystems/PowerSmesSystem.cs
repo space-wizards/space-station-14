@@ -1,9 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Power;
+﻿using Content.Server.GameObjects.Components.Power.PowerNetComponents;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal class PowerSmesSystem : EntitySystem

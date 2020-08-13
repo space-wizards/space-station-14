@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Maps
 {

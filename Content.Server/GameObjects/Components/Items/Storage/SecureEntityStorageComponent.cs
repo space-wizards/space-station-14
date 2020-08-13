@@ -1,8 +1,8 @@
 ﻿using Content.Server.GameObjects.Components.Access;
 using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;

@@ -6,11 +6,10 @@ using Content.Server.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
     [UsedImplicitly]
     public sealed class DoAfterSystem : EntitySystem

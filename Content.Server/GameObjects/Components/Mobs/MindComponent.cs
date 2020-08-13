@@ -1,21 +1,19 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {

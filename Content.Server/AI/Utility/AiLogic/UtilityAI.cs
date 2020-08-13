@@ -6,7 +6,6 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.Components.Damage;

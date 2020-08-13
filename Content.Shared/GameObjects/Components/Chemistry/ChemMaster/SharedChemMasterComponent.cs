@@ -6,7 +6,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.GameObjects.Components.Chemistry
+namespace Content.Shared.GameObjects.Components.Chemistry.ChemMaster
 {
 
     /// <summary>

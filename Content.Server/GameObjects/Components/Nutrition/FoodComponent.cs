@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Body.Digestive;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;

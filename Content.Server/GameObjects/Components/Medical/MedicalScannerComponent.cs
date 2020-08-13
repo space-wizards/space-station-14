@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using Content.Server.GameObjects.Components.Damage;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -13,10 +13,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.Localization;
 
 namespace Content.Server.GameObjects.Components.Medical

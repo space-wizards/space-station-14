@@ -7,8 +7,6 @@ using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.Utils;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects;

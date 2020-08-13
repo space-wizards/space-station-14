@@ -1,19 +1,12 @@
-﻿using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
-using Robust.Client.ResourceManagement;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Content.Client.Utility;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Content.Client.Utility;
-using Robust.Client.Player;
-using System.Linq;
-using System.Collections.Generic;
-using static Robust.Client.UserInterface.Controls.ItemList;
 using static Content.Shared.SharedGameTicker;
-using System;
 
 namespace Content.Client.UserInterface
 {

@@ -1,6 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Projectiles;
-using Content.Server.GameObjects.EntitySystems.Click;
+﻿using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Damage;
@@ -14,7 +12,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Timers;
 
-namespace Content.Server.GameObjects.Components
+namespace Content.Server.GameObjects.Components.Projectiles
 {
     [RegisterComponent]
     internal class ThrownItemComponent : ProjectileComponent, ICollideBehavior

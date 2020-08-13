@@ -1,21 +1,17 @@
 ﻿using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared.Antags;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Roles;
 using Robust.Shared.Log;
-using System.Threading.Tasks;
-using Content.Shared.Preferences;
 using Robust.Shared.Maths;
 
 

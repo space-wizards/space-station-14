@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Damage;

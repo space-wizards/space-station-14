@@ -1,9 +1,7 @@
 #nullable enable
 using System.Linq;
-using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Rotation;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

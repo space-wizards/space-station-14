@@ -1,9 +1,7 @@
-﻿using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;

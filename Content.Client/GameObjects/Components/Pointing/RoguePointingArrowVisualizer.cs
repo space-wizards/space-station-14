@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Pointing;
 using JetBrains.Annotations;
 using Robust.Client.Animations;

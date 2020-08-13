@@ -1,6 +1,5 @@
 ﻿using System;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.GameObjects.Components.Power.PowerNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -8,7 +7,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
 
     /// <summary>

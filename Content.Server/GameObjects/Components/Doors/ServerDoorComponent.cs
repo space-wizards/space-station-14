@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Damage;
@@ -7,6 +8,7 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
@@ -20,11 +22,10 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using CancellationTokenSource = System.Threading.CancellationTokenSource;
+using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Doors
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]

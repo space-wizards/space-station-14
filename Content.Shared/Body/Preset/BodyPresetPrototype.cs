@@ -18,11 +18,11 @@ namespace Content.Shared.Body.Preset
         private string _name;
         private Dictionary<string, string> _partIDs;
 
+        [ViewVariables] public string ID => _id;
+
         [ViewVariables] public string Name => _name;
 
         [ViewVariables] public Dictionary<string, string> PartIDs => _partIDs;
-
-        [ViewVariables] public string ID => _id;
 
         public virtual void LoadFrom(YamlMappingNode mapping)
         {

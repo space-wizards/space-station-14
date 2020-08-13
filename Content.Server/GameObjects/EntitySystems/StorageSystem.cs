@@ -6,7 +6,7 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class StorageSystem : EntitySystem

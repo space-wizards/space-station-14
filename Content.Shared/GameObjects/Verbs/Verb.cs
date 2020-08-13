@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     ///     A verb is an action in the right click menu of an entity.
@@ -48,7 +48,7 @@ namespace Content.Shared.GameObjects
 
     /// <inheritdoc />
     /// <summary>
-    ///     Sub class of <see cref="T:Content.Shared.GameObjects.Verb"/> that works on a specific type of component,
+    ///     Sub class of <see cref="T:Content.Shared.GameObjects.Verbs.Verb" /> that works on a specific type of component,
     ///     to reduce casting boiler plate for implementations.
     /// </summary>
     /// <typeparam name="T">The type of component that this verb will run on.</typeparam>

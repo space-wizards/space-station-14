@@ -64,6 +64,7 @@ namespace Content.Server.GameObjects.Components.Damage
 
                 return true;
             }
+
             return false;
         }
     }

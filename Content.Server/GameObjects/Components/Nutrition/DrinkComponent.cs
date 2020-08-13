@@ -1,8 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Body.Digestive;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.Fluids;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;

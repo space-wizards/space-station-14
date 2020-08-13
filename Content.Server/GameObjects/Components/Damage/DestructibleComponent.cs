@@ -1,5 +1,4 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects.Components.Damage;
+﻿using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;

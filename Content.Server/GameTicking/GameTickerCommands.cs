@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Content.Shared.Jobs;
 using Content.Shared.Maps;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Components.Transform;

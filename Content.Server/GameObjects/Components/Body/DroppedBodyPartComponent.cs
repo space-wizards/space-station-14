@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Content.Server.Body;
-using Content.Shared.Body.Surgery;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Server.Body;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;

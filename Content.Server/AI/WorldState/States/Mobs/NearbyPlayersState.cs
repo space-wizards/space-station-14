@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
