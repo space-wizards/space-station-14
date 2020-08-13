@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Body.Scanner;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;

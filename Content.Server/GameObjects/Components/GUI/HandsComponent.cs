@@ -12,7 +12,6 @@ using Content.Shared.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Health.BodySystem;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
