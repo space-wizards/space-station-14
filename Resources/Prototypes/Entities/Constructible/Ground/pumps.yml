@@ -26,15 +26,11 @@
   - type: NodeContainer
     nodes:
     - !type:PipeNode
-      nodeGroNorthID: Pipe
+      nodeGroupNorthID: Pipe
       pipeDirection: North
     - !type:PipeNode
-      nodeGroNorthID: Pipe
+      nodeGroupNorthID: Pipe
       pipeDirection: South
-  - type: PipeContainer
-    pipes:
-    - pipeDirection: North
-    - pipeDirection: South
   - type: DebugPump
     outletDirection: North
     inletDirection: South

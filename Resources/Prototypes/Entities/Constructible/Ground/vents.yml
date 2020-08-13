@@ -26,8 +26,5 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: South
-  - type: PipeContainer
-    pipes:
-    - pipeDirection: South
   - type: DebugVent
     ventInletDirection: South

@@ -28,9 +28,6 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: FourWay
-  - type: PipeContainer
-    pipes:
-    - pipeDirection: FourWay
 
 - type: entity
   parent: PipeBase
@@ -44,6 +41,3 @@
     - !type:PipeNode
       nodeGroupID: Pipe
       pipeDirection: Longitudinal
-  - type: PipeContainer
-    pipes:
-    - pipeDirection: Longitudinal
