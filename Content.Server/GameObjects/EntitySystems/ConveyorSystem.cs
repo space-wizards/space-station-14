@@ -13,7 +13,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var comp in ComponentManager.EntityQuery<ConveyorComponent>())
             {
-                comp.Update();
+                comp.Update(frameTime);
             }
         }
     }
