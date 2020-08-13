@@ -20,6 +20,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
             base.Open();
 
             _strippingMenu = new StrippingMenu();
+            _strippingMenu.OpenCentered();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

@@ -12,6 +12,7 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Health.BodySystem;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -59,6 +60,8 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
+
+        public IReadOnlyList<Hand> Hands => _hands;
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
