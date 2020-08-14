@@ -29,6 +29,7 @@ namespace Content.Client.StationEvents
         {
             _netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents),
                 msg => StationEvents = msg.Events);
+            _netManager.Disconnect += (sender, msg) => StationEvents = null;
         }
 
         private void RequestEvents()
