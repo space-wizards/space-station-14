@@ -2,7 +2,6 @@
   id: BaseSign
   name: base sign
   abstract: true
-  description: based on what
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -39,6 +38,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: monkey_painting
   - type: Icon
@@ -63,6 +63,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_sec
   - type: Icon
@@ -85,6 +86,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_evac
   - type: Icon
@@ -107,6 +109,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_bridge
   - type: Icon
@@ -129,6 +132,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_med
   - type: Icon
@@ -151,6 +155,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_eng
   - type: Icon
@@ -173,6 +178,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_sci
   - type: Icon
@@ -195,6 +201,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: direction_supply
   - type: Icon
@@ -205,7 +212,7 @@
 - type: entity
   parent: BaseSign
   id: SignArmory
-  name: ARMORY
+  name: armory sign
   components:
   - type: Collidable
     shapes:
@@ -217,6 +224,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: armory
   - type: Icon
@@ -225,7 +233,7 @@
 - type: entity
   parent: BaseSign
   id: SignToolStorage
-  name: TOOL STORAGE
+  name: tool storage sign
   components:
   - type: Collidable
     shapes:
@@ -237,6 +245,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: ass
   - type: Icon
@@ -245,7 +254,7 @@
 - type: entity
   parent: BaseSign
   id: SignAnomaly
-  name: ANOMALY LAB
+  name: anomaly lab sign
   components:
   - type: Collidable
     shapes:
@@ -257,6 +266,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: anomaly
   - type: Icon
@@ -265,7 +275,7 @@
 - type: entity
   parent: BaseSign
   id: SignAtmos
-  name: ATMOS
+  name: atmos sign
   components:
   - type: Collidable
     shapes:
@@ -277,6 +287,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos
   - type: Icon
@@ -285,7 +296,7 @@
 - type: entity
   parent: BaseSign
   id: SignBar
-  name: BAR
+  name: bar sign
   components:
   - type: Collidable
     shapes:
@@ -297,6 +308,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: bar
   - type: Icon
@@ -305,7 +317,7 @@
 - type: entity
   parent: BaseSign
   id: SignLibrary
-  name: LIBRARY
+  name: library sign
   components:
   - type: Collidable
     shapes:
@@ -317,6 +329,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: biblio
   - type: Icon
@@ -325,7 +338,7 @@
 - type: entity
   parent: BaseSign
   id: SignChapel
-  name: CHAPEL
+  name: chapel sign
   components:
   - type: Collidable
     shapes:
@@ -337,6 +350,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: chapel
   - type: Icon
@@ -345,7 +359,7 @@
 - type: entity
   parent: BaseSign
   id: SignHead
-  name: HEAD
+  name: head sign
   components:
   - type: Collidable
     shapes:
@@ -357,6 +371,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: commander
   - type: Icon
@@ -365,7 +380,7 @@
 - type: entity
   parent: BaseSign
   id: SignConference
-  name: CONFERENCE ROOM
+  name: conference room sign
   components:
   - type: Collidable
     shapes:
@@ -377,6 +392,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: conference_room
   - type: Icon
@@ -385,7 +401,7 @@
 - type: entity
   parent: BaseSign
   id: SignDrones
-  name: DRONES
+  name: drones sign
   components:
   - type: Collidable
     shapes:
@@ -397,6 +413,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: drones
   - type: Icon
@@ -405,7 +422,7 @@
 - type: entity
   parent: BaseSign
   id: SignEngine
-  name: ENGINE
+  name: engine sign
   components:
   - type: Collidable
     shapes:
@@ -417,6 +434,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: engine
   - type: Icon
@@ -425,7 +443,7 @@
 - type: entity
   parent: BaseSign
   id: SignCloning
-  name: CLONING
+  name: cloning sign
   components:
   - type: Collidable
     shapes:
@@ -437,6 +455,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: cloning
   - type: Icon
@@ -445,7 +464,7 @@
 - type: entity
   parent: BaseSign
   id: SignInterrogation
-  name: INTERROGATION
+  name: interrogation sign
   components:
   - type: Collidable
     shapes:
@@ -457,6 +476,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: interrogation
   - type: Icon
@@ -465,7 +485,7 @@
 - type: entity
   parent: BaseSign
   id: SignSurgery
-  name: SURGERY
+  name: surgery sign
   components:
   - type: Collidable
     shapes:
@@ -477,6 +497,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: surgery
   - type: Icon
@@ -484,8 +505,8 @@
 
 - type: entity
   parent: BaseSign
-  id: SignTelecoms
-  name: TELECOMS
+  id: SignTelecomms
+  name: telecomms sign
   components:
   - type: Collidable
     shapes:
@@ -497,6 +518,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: telecoms
   - type: Icon
@@ -505,7 +527,7 @@
 - type: entity
   parent: BaseSign
   id: SignCargo
-  name: CARGO
+  name: cargo sign
   components:
   - type: Collidable
     shapes:
@@ -517,6 +539,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: cargo
   - type: Icon
@@ -525,7 +548,7 @@
 - type: entity
   parent: BaseSign
   id: SignCargoDock
-  name: CARGO DOCK
+  name: cargo dock sign
   components:
   - type: Collidable
     shapes:
@@ -537,6 +560,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: cargo_dock
   - type: Icon
@@ -545,7 +569,7 @@
 - type: entity
   parent: BaseSign
   id: SignChem
-  name: CHEMISTRY
+  name: chemistry sign
   components:
   - type: Collidable
     shapes:
@@ -557,6 +581,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: chem
   - type: Icon
@@ -565,7 +590,7 @@
 - type: entity
   parent: BaseSign
   id: SignShipDock
-  name: DOCKING
+  name: docking sign
   components:
   - type: Collidable
     shapes:
@@ -577,6 +602,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: dock
   - type: Icon
@@ -585,7 +611,7 @@
 - type: entity
   parent: BaseSign
   id: SignEngineering
-  name: ENGINEERING
+  name: engineering sign
   components:
   - type: Collidable
     shapes:
@@ -597,6 +623,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: eng
   - type: Icon
@@ -605,7 +632,7 @@
 - type: entity
   parent: BaseSign
   id: SignEVA
-  name: EVA
+  name: EVA sign
   components:
   - type: Collidable
     shapes:
@@ -617,6 +644,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: eva
   - type: Icon
@@ -625,7 +653,7 @@
 - type: entity
   parent: BaseSign
   id: SignGravity
-  name: GRAVITY
+  name: gravity sign
   components:
   - type: Collidable
     shapes:
@@ -637,6 +665,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: gravi
   - type: Icon
@@ -645,7 +674,7 @@
 - type: entity
   parent: BaseSign
   id: SignMedical
-  name: MEDBAY
+  name: medbay sign
   components:
   - type: Collidable
     shapes:
@@ -657,6 +686,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: medbay
   - type: Icon
@@ -665,7 +695,7 @@
 - type: entity
   parent: BaseSign
   id: SignMorgue
-  name: MORGUE
+  name: morgue sign
   components:
   - type: Collidable
     shapes:
@@ -677,6 +707,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: morgue
   - type: Icon
@@ -685,7 +716,7 @@
 - type: entity
   parent: BaseSign
   id: SignPrison
-  name: PRISON
+  name: prison sign
   description:
   components:
   - type: Collidable
@@ -698,6 +729,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: prison
   - type: Icon
@@ -706,7 +738,7 @@
 - type: entity
   parent: BaseSign
   id: SignRND
-  name: RND
+  name: research and development sign
   components:
   - type: Collidable
     shapes:
@@ -718,6 +750,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: rnd
   - type: Icon
@@ -726,7 +759,7 @@
 - type: entity
   parent: BaseSign
   id: SignScience
-  name: SCIENCE
+  name: science sign
   components:
   - type: Collidable
     shapes:
@@ -738,6 +771,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: sci
   - type: Icon
@@ -746,7 +780,7 @@
 - type: entity
   parent: BaseSign
   id: SignToxins
-  name: TOXINS
+  name: toxins sign
   components:
   - type: Collidable
     shapes:
@@ -758,6 +792,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: toxins
   - type: Icon
@@ -766,7 +801,7 @@
 - type: entity
   parent: BaseSign
   id: SignBridge
-  name: BRIDGE
+  name: bridge sign
   components:
   - type: Collidable
     shapes:
@@ -778,6 +813,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: bridge
   - type: Icon
@@ -788,7 +824,7 @@
 - type: entity
   parent: BaseSign
   id: WarningAir
-  name: Air warning sign
+  name: air warning sign
   description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Collidable
@@ -801,6 +837,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_air
   - type: Icon
@@ -822,6 +859,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_co2
   - type: Icon
@@ -843,6 +881,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_n2
   - type: Icon
@@ -864,6 +903,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_n2o
   - type: Icon
@@ -885,6 +925,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_o2
   - type: Icon
@@ -906,6 +947,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_phoron
   - type: Icon
@@ -914,7 +956,7 @@
 - type: entity
   parent: BaseSign
   id: WarningWaste
-  name: Atmos waste sign
+  name: atmos waste sign
   description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Collidable
@@ -927,6 +969,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: atmos_waste
   - type: Icon
@@ -936,7 +979,7 @@
   parent: BaseSign
   id: PlaqueZum
   name: zumos plaque
-  description: This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.
+  description: "This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind."
   components:
   - type: Collidable
     shapes:
@@ -948,6 +991,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: zumosplaque
   - type: Icon
@@ -957,7 +1001,7 @@
   parent: BaseSign
   id: PlaqueAtmos
   name: atmos plaque
-  description: This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.
+  description: "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
   components:
     - type: Collidable
       shapes:
@@ -969,6 +1013,7 @@
             - MobImpassable
             - VaultImpassable
             - SmallImpassable
+            - Clickable
     - type: Sprite
       state: atmosplaque
     - type: Icon
@@ -977,7 +1022,7 @@
 - type: entity
   parent: BaseSign
   id: SignSmoking
-  name: No Smoking
+  name: no smoking sign
   description: A warning sign which reads 'NO SMOKING'
   components:
   - type: Collidable
@@ -990,6 +1035,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: nosmoking2
   - type: Icon
@@ -998,7 +1044,7 @@
 - type: entity
   parent: BaseSign
   id: SignSomethingOld
-  name: Old Sign
+  name: old sign
   description: Technical information of some sort, shame its too worn-out to read.
   components:
   - type: Collidable
@@ -1011,6 +1057,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: something-old1
   - type: Icon
@@ -1019,7 +1066,7 @@
 - type: entity
   parent: BaseSign
   id: SignSomethingOld2
-  name: Old Sign
+  name: old sign
   description: Looks like a planet crashing by some station above it. Its kinda scary.
   components:
   - type: Collidable
@@ -1032,6 +1079,7 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      - Clickable
   - type: Sprite
     state: something-old2
   - type: Icon
