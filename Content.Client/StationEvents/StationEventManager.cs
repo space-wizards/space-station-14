@@ -19,18 +19,17 @@ namespace Content.Client.StationEvents
                     RequestEvents();
                 return _events;
             }
-            set => _events = value;
         }
 
         public void Initialize()
         {
             var netManager = IoCManager.Resolve<IClientNetManager>();
             netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents),
-                msg => StationEvents = msg.Events);
-            netManager.Disconnect += (sender, msg) => StationEvents = null;
+                msg => _events = msg.Events);
+            netManager.Disconnect += (sender, msg) => _events = null;
         }
 
-        private void RequestEvents()
+        public void RequestEvents()
         {
             IoCManager.Resolve<IClientNetManager>().ClientSendMessage(IoCManager.Resolve<IClientNetManager>().CreateNetMessage<MsgGetStationEvents>());
         }

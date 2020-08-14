@@ -7,7 +7,7 @@ namespace Content.Client.StationEvents
 {
     public interface IStationEventManager
     {
-        public List<string>? StationEvents { get; set; }
+        public List<string>? StationEvents { get; }
         public void Initialize();
     }
 }
