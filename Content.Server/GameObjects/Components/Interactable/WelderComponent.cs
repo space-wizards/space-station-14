@@ -162,6 +162,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 if (_pointLightComponent != null) _pointLightComponent.Enabled = false;
 
                 PlaySoundCollection("WelderOff", -5);
+                _welderSystem.Unsubscribe(this);
                 return true;
             }
 
@@ -178,6 +179,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             if (_pointLightComponent != null) _pointLightComponent.Enabled = true;
 
             PlaySoundCollection("WelderOn", -5);
+            _welderSystem.Subscribe(this);
 
             Owner.Transform.GridPosition
                 .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
@@ -208,9 +210,15 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            _welderSystem.Unsubscribe(this);
+        }
+
         public void OnUpdate(float frameTime)
         {
-            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
