@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand, false);
-            hands.PutInHand(item, hand, false);
+            hands.PutInHand(item!, hand, false);
             UpdateSubscribed();
         }
 
