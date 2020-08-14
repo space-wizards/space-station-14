@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Damage
 {
     /// <summary>
     /// Resistance set used by damageable objects.
@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects
                 {
                     _resistances[damageType] = resistanceSetting;
                 });
-            } 
+            }
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
-            return EntitySystem.Get<SharedInteractionSystem>()
+            return Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition,
                     ExamineRange, predicate: entity => entity == examiner || entity == examined, ignoreInsideBlocker:true);
         }

@@ -1,27 +1,19 @@
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Shared.GameObjects;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
-    public class StunSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class StunSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            EntityQuery = new TypeEntityQuery(typeof(StunnableComponent));
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var entity in RelevantEntities)
+            foreach (var component in ComponentManager.EntityQuery<StunnableComponent>())
             {
-                entity.GetComponent<StunnableComponent>().Update(frameTime);
+                component.Update(frameTime);
             }
         }
     }

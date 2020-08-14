@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Robust.Shared.IoC;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Items.Clothing
 {
     [RegisterComponent]
     [ComponentReference(typeof(ItemComponent))]

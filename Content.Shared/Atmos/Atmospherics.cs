@@ -59,9 +59,20 @@ namespace Content.Shared.Atmos
         public const float CellVolume = 2500f;
 
         /// <summary>
-        ///     Moles in a 2.5 m^3 cell at 101.325 Pa and 20ºC
+        ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        /// <summary>
+        ///     Compared against for superconduction.
+        /// </summary>
+        public const float MCellWithRatio = (MolesCellStandard * 0.005f);
+
+        public const float OxygenStandard = 0.21f;
+        public const float NitrogenStandard = 0.79f;
+
+        public const float OxygenMolesStandard = MolesCellStandard * OxygenStandard;
+        public const float NitrogenMolesStandard = MolesCellStandard * NitrogenStandard;
 
         #endregion
 
@@ -76,6 +87,11 @@ namespace Content.Shared.Atmos
         public const float GasMinMoles = 0.00000005f;
 
         public const float OpenHeatTransferCoefficient = 0.4f;
+
+        /// <summary>
+        ///     Hack to make vacuums cold, sacrificing realism for gameplay.
+        /// </summary>
+        public const float HeatCapacityVacuum = 7000f;
 
         /// <summary>
         ///     Ratio of air that must move to/from a tile to reset group processing
@@ -110,6 +126,7 @@ namespace Content.Shared.Atmos
         ///     Minimum temperature for starting superconduction.
         /// </summary>
         public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
+        public const float MinimumTemperatureForSuperconduction = (T20C + 10f);
 
         /// <summary>
         ///     Minimum heat capacity.
@@ -143,8 +160,12 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 5;
+        public const int TotalNumberOfGases = 6;
 
+        /// <summary>
+        ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
+        /// </summary>
+        public const float FireHydrogenEnergyReleased = 560000f;
         public const float FireMinimumTemperatureToExist = T0C + 100f;
         public const float FireMinimumTemperatureToSpread = T0C + 150f;
         public const float FireSpreadRadiosityScale = 0.85f;
@@ -158,6 +179,54 @@ namespace Content.Shared.Atmos
         public const float PhoronUpperTemperature = (1370f+T0C);
         public const float PhoronOxygenFullburn = 10f;
         public const float PhoronBurnRateDelta = 9f;
+
+        /// <summary>
+        ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
+        /// </summary>
+        public const float MinimumTritiumOxyburnEnergy = 2000000f;
+
+        public const float TritiumBurnOxyFactor = 100f;
+        public const float TritiumBurnTritFactor = 10f;
+
+        /// <summary>
+        ///     Determines at what pressure the ultra-high pressure red icon is displayed.
+        /// </summary>
+        public const float HazardHighPressure = 550f;
+
+        /// <summary>
+        ///     Determines when the orange pressure icon is displayed.
+        /// </summary>
+        public const float WarningHighPressure = 0.7f * HazardHighPressure;
+
+        /// <summary>
+        ///     Determines when the gray low pressure icon is displayed.
+        /// </summary>
+        public const float WarningLowPressure = 2.5f * HazardLowPressure;
+
+        /// <summary>
+        ///     Determines when the black ultra-low pressure icon is displayed.
+        /// </summary>
+        public const float HazardLowPressure = 20f;
+
+        /// <summary>
+        ///    The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT,
+        ///     with the maximum of MaxHighPressureDamage.
+        /// </summary>
+        public const float PressureDamageCoefficient = 4;
+
+        /// <summary>
+        ///     Maximum amount of damage that can be endured with high pressure.
+        /// </summary>
+        public const int MaxHighPressureDamage = 4;
+
+        /// <summary>
+        ///     The amount of damage someone takes when in a low pressure area
+        ///     (The pressure threshold is so low that it doesn't make sense to do any calculations,
+        ///     so it just applies this flat value).
+        /// </summary>
+        public const int LowPressureDamage = 4;
+
+        public const float WindowHeatTransferCoefficient = 0.1f;
     }
 
     /// <summary>
@@ -170,5 +239,6 @@ namespace Content.Shared.Atmos
         CarbonDioxide = 2,
         Phoron = 3,
         Tritium = 4,
+        WaterVapor = 5,
     }
 }

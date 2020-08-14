@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,9 +11,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>
@@ -162,6 +161,29 @@ namespace Content.Client.GameObjects.Components.Chemistry
         }
 
         /// <summary>
+        /// This searches recursively through all the children of "parent"
+        /// and sets the Disabled value of any buttons found to "val"
+        /// </summary>
+        /// <param name="parent">The control which childrens get searched</param>
+        /// <param name="val">The value to which disabled gets set</param>
+        private void SetButtonDisabledRecursive(Control parent, bool val)
+        {
+            foreach (var child in parent.Children)
+            {
+                if (child is Button but)
+                {
+                    but.Disabled = val;
+                    continue;
+                }
+
+                if (child.Children != null)
+                {
+                    SetButtonDisabledRecursive(child, val);
+                }
+            }
+        }
+
+        /// <summary>
         /// Update the UI state when new state data is received from the server.
         /// </summary>
         /// <param name="state">State data sent by the server.</param>
@@ -170,6 +192,20 @@ namespace Content.Client.GameObjects.Components.Chemistry
             var castState = (ReagentDispenserBoundUserInterfaceState) state;
             Title = castState.DispenserName;
             UpdateContainerInfo(castState);
+
+            // Disable all buttons if not powered
+            if (Contents.Children != null)
+            {
+                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                EjectButton.Disabled = false;
+            }
+
+            // Disable the Clear & Eject button if no beaker
+            if (!castState.HasBeaker)
+            {
+                ClearButton.Disabled = true;
+                EjectButton.Disabled = true;
+            }
 
             switch (castState.SelectedDispenseAmount.Int())
             {

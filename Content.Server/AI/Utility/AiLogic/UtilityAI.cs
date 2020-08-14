@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.Operators;
-using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Robust.Server.AI;
@@ -148,7 +148,7 @@ namespace Content.Server.AI.Utility.AiLogic
                 _isDead = false;
             }
         }
-        
+
         private void ReceivedAction()
         {
             switch (_actionRequest.Exception)
@@ -167,7 +167,7 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 return;
             }
-            
+
             var currentOp = CurrentAction?.ActionOperators.Peek();
             if (currentOp != null && currentOp.HasStartup)
             {

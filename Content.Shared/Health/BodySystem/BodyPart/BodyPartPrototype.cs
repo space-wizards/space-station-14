@@ -6,13 +6,12 @@ using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-
-namespace Content.Shared.BodySystem {
+namespace Content.Shared.Health.BodySystem.BodyPart {
 
 
     /// <summary>
     ///    Prototype for the BodyPart class.
-    /// </summary>	
+    /// </summary>
     [Prototype("bodyPart")]
     [NetSerializable, Serializable]
     public class BodyPartPrototype : IPrototype, IIndexedPrototype {
@@ -36,7 +35,7 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public string Name => _name;
-		
+
         [ViewVariables]
         public string Plural => _plural;
 
@@ -48,19 +47,19 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public BodyPartType PartType => _partType;
-		
+
 		[ViewVariables]
 		public int Durability => _durability;
-		
+
 		[ViewVariables]
-		public int DestroyThreshold => _destroyThreshold;	
-			
+		public int DestroyThreshold => _destroyThreshold;
+
 		[ViewVariables]
 		public float Resistance => _resistance;
-			
+
 		[ViewVariables]
 		public int Size => _size;
-		
+
         [ViewVariables]
         public BodyPartCompatibility Compatibility => _compatibility;
 

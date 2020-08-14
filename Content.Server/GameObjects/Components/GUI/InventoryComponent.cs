@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -21,12 +20,12 @@ using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
     {
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
@@ -51,10 +50,56 @@ namespace Content.Server.GameObjects
             }
         }
 
+        // Optimization: Cache this
+        [ViewVariables]
+        public float HighPressureMultiplier
+        {
+            get
+            {
+                var multiplier = 1f;
+
+                foreach (var (slot, containerSlot) in SlotContainers)
+                {
+                    foreach (var entity in containerSlot.ContainedEntities)
+                    {
+                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
+                        {
+                            multiplier *= protection.HighPressureMultiplier;
+                        }
+                    }
+                }
+
+                return multiplier;
+            }
+        }
+
+        // Optimization: Cache this
+        [ViewVariables]
+        public float LowPressureMultiplier
+        {
+            get
+            {
+                var multiplier = 1f;
+
+                foreach (var (slot, containerSlot) in SlotContainers)
+                {
+                    foreach (var entity in containerSlot.ContainedEntities)
+                    {
+                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
+                        {
+                            multiplier *= protection.LowPressureMultiplier;
+                        }
+                    }
+                }
+
+                return multiplier;
+            }
+        }
+
         bool IEffectBlocker.CanSlip()
         {
             if(Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
-                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
+                inventoryComponent.TryGetSlotItem(Slots.SHOES, out ItemComponent shoes)
             )
             {
                 return EffectBlockerSystem.CanSlip(shoes.Owner);

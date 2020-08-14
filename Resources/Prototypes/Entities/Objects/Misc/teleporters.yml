@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   name: "basehandtele"
   parent: BaseItem
   id: BaseHandTele

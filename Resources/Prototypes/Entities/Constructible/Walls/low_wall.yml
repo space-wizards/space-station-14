@@ -8,6 +8,7 @@
     - Wall
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     netsync: false
@@ -20,7 +21,9 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      layer: [SmallImpassable, MobImpassable]
+      layer:
+      - VaultImpassable
+      - SmallImpassable
   - type: Damageable
   - type: Destructible
     thresholdvalue: 100

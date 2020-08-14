@@ -136,6 +136,8 @@
             "TrashSpawner",
             "Pill",
             "RCD",
+            "RCDDeconstructWhitelist",
+            "RCDAmmo",
             "Pullable",
             "CursedEntityStorage",
             "Listening",
@@ -151,6 +153,10 @@
             "Flippable",
             "Airtight",
             "MovedByPressure",
+            "Spray",
+            "Vapor",
+            "DamageOnHighSpeedImpact",
+            "Barotrauma",
         };
     }
 }

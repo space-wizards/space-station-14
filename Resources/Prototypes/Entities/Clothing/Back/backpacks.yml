@@ -2,7 +2,7 @@
   parent: Clothing
   id: BackpackClothing
   name: backpack
-  description: A convenient storage pack
+  description: You wear this on your back and put items into it.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/backpack.rsi
@@ -56,6 +56,7 @@
   parent: BackpackClothing
   id: BackpackEngineering
   name: engineering backpack
+  description: It's a tough backpack for the daily grind of station life.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/engineering.rsi
@@ -71,6 +72,7 @@
   parent: BackpackClothing
   id: BackpackMedical
   name: medical backpack
+  description: It's a backpack especially designed for use in a sterile environment.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/medical.rsi
@@ -86,6 +88,7 @@
   parent: BackpackClothing
   id: BackpackCaptain
   name: captain's backpack
+  description: It's a special backpack made exclusively for Nanotrasen officers.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/captain.rsi
@@ -101,6 +104,7 @@
   parent: BackpackClothing
   id: BackpackHolding
   name: bag of holding
+  description: A backpack that opens into a localized pocket of bluespace.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/holding.rsi

@@ -1,4 +1,4 @@
-- type: entity
+﻿- type: entity
   id: Window
   name: window
   description: Don't smudge up the glass down there.
@@ -8,6 +8,7 @@
     - Window
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     color: "#DDDDDD"

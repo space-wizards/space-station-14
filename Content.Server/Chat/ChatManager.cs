@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.GameObjects.Components.Observer;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
@@ -10,15 +11,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using Content.Server.GameObjects.Components;
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.EntitySystems;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Robust.Shared.Interfaces.Map;
 
 namespace Content.Server.Chat
 {
@@ -49,6 +41,15 @@ namespace Content.Server.Chat
             msg.Channel = ChatChannel.Server;
             msg.Message = message;
             msg.MessageWrap = "SERVER: {0}";
+            _netManager.ServerSendToAll(msg);
+        }
+
+        public void DispatchStationAnnouncement(string message)
+        {
+            var msg = _netManager.CreateNetMessage<MsgChatMessage>();
+            msg.Channel = ChatChannel.Radio;
+            msg.Message = message;
+            msg.MessageWrap = "Station: {0}";
             _netManager.ServerSendToAll(msg);
         }
 

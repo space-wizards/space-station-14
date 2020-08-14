@@ -12,6 +12,12 @@ namespace Content.Server.Interfaces.Chat
         /// </summary>
         void DispatchServerAnnouncement(string message);
 
+        /// <summary>
+        ///     Station announcement to every player
+        /// </summary>
+        /// <param name="message"></param>
+        void DispatchStationAnnouncement(string message);
+
         void DispatchServerMessage(IPlayerSession player, string message);
 
         void EntitySay(IEntity source, string message);

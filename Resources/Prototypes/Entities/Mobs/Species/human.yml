@@ -12,6 +12,9 @@
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
+  - type: Barotrauma
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
@@ -110,7 +113,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
@@ -141,6 +143,7 @@
     proper: true
   - type: Pullable
   - type: CanSeeGases
+  - type: DoAfter
 
 - type: entity
   save: false
