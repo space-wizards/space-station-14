@@ -20,7 +20,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Invoked when the hand contents changes or when a hand is added/removed.
         /// </summary>
-        event Action OnChanged;
+        event Action? OnChanged;
 
         /// <summary>
         ///     The hands in this component.
@@ -42,7 +42,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="handName">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        ItemComponent GetItem(string handName);
+        ItemComponent? GetItem(string handName);
 
         /// <summary>
         ///     Attempts to get an item in a hand.
@@ -55,7 +55,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         /// Gets item held by the current active hand
         /// </summary>
-        ItemComponent GetActiveHand { get; }
+        ItemComponent? GetActiveHand { get; }
 
         /// <summary>
         ///     Puts an item into any empty hand, preferring the active hand.

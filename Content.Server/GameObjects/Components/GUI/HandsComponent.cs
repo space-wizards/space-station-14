@@ -43,7 +43,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHand;
         private uint _nextHand;
 
-        public event Action OnChanged;
+        public event Action? OnChanged;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
