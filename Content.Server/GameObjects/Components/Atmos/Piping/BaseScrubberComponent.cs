@@ -17,9 +17,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         private PipeNode _scrubberOutlet;
 
+        private AtmosphereSystem _atmosSystem;
+
         public override void Initialize()
         {
             base.Initialize();
+            _atmosSystem = EntitySystem.Get<AtmosphereSystem>();
             _scrubberOutlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().First();
         }
 
@@ -29,6 +32,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             if (tileAtmos == null)
                 return;
             ScrubGas(tileAtmos.Air, _scrubberOutlet.Air, frameTime);
+            _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID).Invalidate(tileAtmos.GridIndices);
         }
 
         protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas, float frameTime);

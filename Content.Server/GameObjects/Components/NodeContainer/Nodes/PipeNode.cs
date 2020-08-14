@@ -1,6 +1,7 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
+using Content.Shared.Atmos;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
@@ -66,8 +67,8 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
             base.Initialize(owner);
             LocalAir = new GasMixture(Volume);
             //debug way for some gas to start in pipes
-            LocalAir.AdjustMoles(0, 1000);
-            LocalAir.Temperature = 500;
+            LocalAir.AdjustMoles(Gas.Phoron, 100);
+            LocalAir.Temperature = 273;
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
