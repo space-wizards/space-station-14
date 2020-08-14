@@ -23,7 +23,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public sealed class StrippableComponent : SharedStrippableComponent, IDragDrop
     {
-        [Dependency] private IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public const float StripDelay = 2f;
 
