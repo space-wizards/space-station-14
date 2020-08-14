@@ -1,18 +1,28 @@
-﻿using Robust.Client.UserInterface.CustomControls;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Robust.Client.Console;
+using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.Network;
+using Robust.Shared.IoC;
 
 namespace Content.Client.UserInterface.AdminMenu
 {
     internal class AdminMenuManager : IAdminMenuManager
     {
-        SS14Window _window;
-        SS14Window _commandWindow; //TODO EXP: make this a list/array of windows? then we can have multiple cmd windows open
+#pragma warning disable 649
+        [Dependency] private INetManager _netManager = default!;
+#pragma warning restore 649
+        private SS14Window _window;
+        private SS14Window _commandWindow; //TODO EXP: make this a list/array of windows? then we can have multiple cmd windows open
 
-        public void Initialize()
+        public void Initialize() 
         {
-            _window = new AdminMenuWindow();
+            // Reset the AdminMenu Window on disconnect
+            _netManager.Disconnect += (sender, channel) => ResetWindow();
+        }
+
+        public void ResetWindow()
+        {
+            _window?.Close();
+            _window = null;
         }
 
         public void OpenCommand(SS14Window window)
@@ -23,8 +33,8 @@ namespace Content.Client.UserInterface.AdminMenu
 
         public void Open()
         {
-            //TODO EXP: remove dis
-            _window = new AdminMenuWindow();
+            if (_window == null)
+                _window = new AdminMenuWindow();
             _window.OpenCentered();
         }
 
@@ -33,6 +43,11 @@ namespace Content.Client.UserInterface.AdminMenu
             _window.Close();
             _commandWindow.Close();
         }
+
+        public bool CanOpen()
+        {
+            return IoCManager.Resolve<IClientConGroupController>().CanAdminMenu();
+        }
     }
 
     internal interface IAdminMenuManager
@@ -40,5 +55,6 @@ namespace Content.Client.UserInterface.AdminMenu
         void Initialize();
         void Open(); //TODO EXP: remove this and import the pressed action (from IGameHud or somewhere else)
         void OpenCommand(SS14Window window);
+        bool CanOpen();
     }
 }

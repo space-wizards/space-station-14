@@ -35,6 +35,7 @@ namespace Content.Client.UserInterface
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
+            //TODO: station events
         };
         private List<CommandButton> _debugButtons = new List<CommandButton>
         {
@@ -112,8 +113,6 @@ namespace Content.Client.UserInterface
 
         private void AddCommandButton(List<CommandButton> buttons, Control parent)
         {
-            //TODO: we check here the commands, but what if we join a new server? the window gets created at game launch
-            // create the window everytime we open it?
             foreach (var cmd in buttons)
             {
                 // Check if the player can do the command
@@ -272,6 +271,7 @@ namespace Content.Client.UserInterface
             MasterTabContainer.AddChild(playerTabContainer);
             MasterTabContainer.SetTabTitle(5, Loc.GetString("Players"));
             Contents.AddChild(MasterTabContainer);
+            //TODO: request station events here
         }
 
         private abstract class CommandButton
@@ -374,8 +374,7 @@ namespace Content.Client.UserInterface
                 },
                 new CommandUILineEdit
                 {
-                    Name = "Reason",
-                    Optional = true
+                    Name = "Reason"
                 }
             };
 
@@ -412,8 +411,7 @@ namespace Content.Client.UserInterface
                 },
                 new CommandUISpinBox
                 {
-                    Name = "SpinBox",
-                    Optional = true
+                    Name = "SpinBox"
                 },
             };
 
@@ -481,7 +479,6 @@ namespace Content.Client.UserInterface
         private abstract class CommandUIControl
         {
             public string Name;
-            public bool Optional = false;
             public Control Control;
             //Idea: implement these abstract functions:
             public abstract Control GetControl();
@@ -608,7 +605,7 @@ namespace Content.Client.UserInterface
                 {
                     if (control.Control == null)
                         return;
-                    //TODO EXP: optional check?
+
                     val.Add(control.Name, control.GetValue());
                 }
                 Submit.Invoke(val);

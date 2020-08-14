@@ -71,12 +71,13 @@ namespace Content.Client.UserInterface
             QuitButton.OnPressed += OnQuitButtonClicked;
             vBox.AddChild(QuitButton);
 
-            if (_conGroupController.CanAdminMenu())
+            var adminMenu = IoCManager.Resolve<IAdminMenuManager>();
+            if (adminMenu.CanOpen())
             {
                 var adminMenuButton = new Button { Text = _localizationManager.GetString("Admin Menu") };
                 adminMenuButton.OnPressed += (args) =>
                 {
-                    IoCManager.Resolve<IAdminMenuManager>().Open();
+                    adminMenu.Open();
                 };
                 vBox.AddChild(adminMenuButton);
             }
