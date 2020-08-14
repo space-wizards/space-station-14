@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public IReadOnlyDictionary<Slots, ContainerSlot> SlotContainers => _slotContainers;
 
-        public event Action OnChanged;
+        public event Action OnItemChanged;
 
         public override void Initialize()
         {
@@ -196,7 +196,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
 
@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
 
@@ -318,7 +318,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             return _slotContainers[slot];
         }
@@ -346,7 +346,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _slotContainers.Remove(slot);
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -378,7 +378,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 itemComp.RemovedFromSlot();
             }
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
         }

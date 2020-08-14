@@ -20,7 +20,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     Invoked when the hand contents changes or when a hand is added/removed.
         /// </summary>
-        event Action? OnChanged;
+        event Action? OnItemChanged;
 
         /// <summary>
         ///     The hands in this component.

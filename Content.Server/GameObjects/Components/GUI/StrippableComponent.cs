@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -15,6 +16,7 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.GUI
@@ -22,7 +24,7 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public sealed class StrippableComponent : SharedStrippableComponent, IDragDrop
     {
-        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private IServerNotifyManager _notifyManager = default!;
 
         public const float StripDelay = 2f;
 
@@ -42,7 +44,7 @@ namespace Content.Server.GameObjects.Components.GUI
             _inventoryComponent = Owner.GetComponent<InventoryComponent>();
             _handsComponent = Owner.GetComponent<HandsComponent>();
 
-            _inventoryComponent.OnChanged += UpdateSubscribed;
+            _inventoryComponent.OnItemChanged += UpdateSubscribed;
 
             // Initial update.
             UpdateSubscribed();
@@ -193,7 +195,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!hands.HasHand(hand))
                     return false;
 
-                if (hands.TryGetItem(hand, out _))
+                if (hands.TryGetItem(hand, out var _))
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} already {0:have} something there!", Owner));
                     return false;
@@ -224,7 +226,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand, false);
-            hands.PutInHand(item!, hand, false);
+            hands.PutInHand(item, hand, false);
             UpdateSubscribed();
         }
 

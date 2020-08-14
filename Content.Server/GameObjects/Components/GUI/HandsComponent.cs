@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHand;
         private uint _nextHand;
 
-        public event Action? OnChanged;
+        public event Action? OnItemChanged;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
@@ -146,7 +146,7 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 if (PutInHand(item, hand, false))
                 {
-                    OnChanged?.Invoke();
+                    OnItemChanged?.Invoke();
 
                     return true;
                 }
@@ -168,7 +168,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
-                OnChanged?.Invoke();
+                OnItemChanged?.Invoke();
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
@@ -263,7 +263,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 container.Insert(item.Owner);
             }
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -315,7 +315,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 container.Insert(item.Owner);
             }
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -381,7 +381,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException();
             }
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -434,7 +434,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             ActiveHand ??= name;
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -456,7 +456,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 _activeHand = _hands.FirstOrDefault()?.Name;
             }
 
-            OnChanged?.Invoke();
+            OnItemChanged?.Invoke();
 
             Dirty();
         }
