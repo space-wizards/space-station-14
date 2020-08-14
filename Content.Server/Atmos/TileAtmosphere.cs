@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
@@ -27,6 +28,9 @@ namespace Content.Server.Atmos
         [Robust.Shared.IoC.Dependency] private IRobustRandom _robustRandom = default!;
         [Robust.Shared.IoC.Dependency] private IEntityManager _entityManager = default!;
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
+
+
+        private static readonly TileAtmosphereComparer _comparer = new TileAtmosphereComparer();
 
         [ViewVariables]
         private int _archivedCycle = 0;
@@ -193,6 +197,23 @@ namespace Content.Server.Atmos
                 _soundCooldown = 0;
         }
 
+        private class TileAtmosphereComparer : IComparer<TileAtmosphere>
+        {
+            public int Compare(TileAtmosphere a, TileAtmosphere b)
+            {
+                if (a == null && b == null)
+                    return 0;
+
+                if (a == null)
+                    return -1;
+
+                if (b == null)
+                    return 1;
+
+                return a._tileAtmosInfo.MoleDelta.CompareTo(b._tileAtmosInfo.MoleDelta);
+            }
+        }
+
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void EqualizePressureInZone(int cycleNum)
         {
@@ -221,7 +242,7 @@ namespace Content.Server.Atmos
 
             var queueCycle = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
             var totalMoles = 0f;
-            var tiles = new TileAtmosphere[Atmospherics.ZumosHardTileLimit];
+            var tiles = ArrayPool<TileAtmosphere>.Shared.Rent(Atmospherics.ZumosHardTileLimit);
             tiles[0] = this;
             _tileAtmosInfo.LastQueueCycle = queueCycle;
             var tileCount = 1;
@@ -269,11 +290,13 @@ namespace Content.Server.Atmos
             }
 
             //tiles = tiles.AsSpan().Slice(0, tileCount).ToArray(); // According to my benchmarks, this is much slower.
-            Array.Resize(ref tiles, tileCount);
+            //Array.Resize(ref tiles, tileCount);
 
-            var averageMoles = totalMoles / (tiles.Length);
-            var giverTiles = new List<TileAtmosphere>();
-            var takerTiles = new List<TileAtmosphere>();
+            var averageMoles = totalMoles / (tileCount);
+            var giverTiles = ArrayPool<TileAtmosphere>.Shared.Rent(tileCount);
+            var takerTiles = ArrayPool<TileAtmosphere>.Shared.Rent(tileCount);
+            var giverTilesLength = 0;
+            var takerTilesLength = 0;
 
             for (var i = 0; i < tileCount; i++)
             {
@@ -282,25 +305,25 @@ namespace Content.Server.Atmos
                 tile._tileAtmosInfo.MoleDelta -= averageMoles;
                 if (tile._tileAtmosInfo.MoleDelta > 0)
                 {
-                    giverTiles.Add(tile);
+                    giverTiles[giverTilesLength++] = tile;
                 }
                 else
                 {
-                    takerTiles.Add(tile);
+                    takerTiles[takerTilesLength++] = tile;
                 }
             }
 
-            var logN = MathF.Log2(tiles.Length);
+            var logN = MathF.Log2(tileCount);
 
             // Optimization - try to spread gases using an O(nlogn) algorithm that has a chance of not working first to avoid O(n^2)
-            if (giverTiles.Count > logN && takerTiles.Count > logN)
+            if (giverTilesLength > logN && takerTilesLength > logN)
             {
                 // Even if it fails, it will speed up the next part.
-                Array.Sort(tiles, (a, b)
-                    => a._tileAtmosInfo.MoleDelta.CompareTo(b._tileAtmosInfo.MoleDelta));
+                Array.Sort(tiles, 0, tileCount, _comparer);
 
-                foreach (var tile in tiles)
+                for (var i = 0; i < tileCount; i++)
                 {
+                    var tile = tiles[i];
                     tile._tileAtmosInfo.FastDone = true;
                     if (!(tile._tileAtmosInfo.MoleDelta > 0)) continue;
                     Direction eligibleAdjBits = 0;
@@ -317,47 +340,50 @@ namespace Content.Server.Atmos
                         amtEligibleAdj++;
                     }
 
-                    if (amtEligibleAdj <= 0) continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
+                    if (amtEligibleAdj <= 0)
+                        continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
                     var molesToMove = tile._tileAtmosInfo.MoleDelta / amtEligibleAdj;
                     foreach (var direction in Cardinal)
                     {
-                        if((eligibleAdjBits & direction) == 0 || !tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        if ((eligibleAdjBits & direction) == 0 ||
+                            !tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         tile.AdjustEqMovement(direction, molesToMove);
                         tile._tileAtmosInfo.MoleDelta -= molesToMove;
                         tile2._tileAtmosInfo.MoleDelta += molesToMove;
                     }
                 }
 
-                giverTiles.Clear();
-                takerTiles.Clear();
+                giverTilesLength = 0;
+                takerTilesLength = 0;
 
-                foreach (var tile in tiles)
+                for (var i = 0; i < tileCount; i++)
                 {
+                    var tile = tiles[i];
                     if (tile._tileAtmosInfo.MoleDelta > 0)
                     {
-                        giverTiles.Add(tile);
+                        giverTiles[giverTilesLength++] = tile;
                     }
                     else
                     {
-                        takerTiles.Add(tile);
+                        takerTiles[takerTilesLength++] = tile;
                     }
                 }
 
                 // This is the part that can become O(n^2).
-                if (giverTiles.Count < takerTiles.Count)
+                if (giverTilesLength < takerTilesLength)
                 {
                     // as an optimization, we choose one of two methods based on which list is smaller. We really want to avoid O(n^2) if we can.
-                    var queue = new List<TileAtmosphere>(takerTiles.Count);
-                    foreach (var giver in giverTiles)
+                    var queue = ArrayPool<TileAtmosphere>.Shared.Rent(tileCount);
+                    for (var j = 0; j < giverTilesLength; j++)
                     {
-                        giver._tileAtmosInfo.CurrentTransferDirection = (Direction)(-1);
+                        var giver = giverTiles[j];
+                        giver._tileAtmosInfo.CurrentTransferDirection = (Direction) (-1);
                         giver._tileAtmosInfo.CurrentTransferAmount = 0;
                         var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
-                        queue.Clear();
-                        queue.Add(giver);
+                        var queueLength = 0;
+                        queue[queueLength++] = giver;
                         giver._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
-                        var queueCount = queue.Count;
-                        for (var i = 0; i < queueCount; i++)
+                        for (var i = 0; i < queueLength; i++)
                         {
                             if (giver._tileAtmosInfo.MoleDelta <= 0)
                                 break; // We're done here now. Let's not do more work than needed.
@@ -365,7 +391,7 @@ namespace Content.Server.Atmos
                             var tile = queue[i];
                             foreach (var direction in Cardinal)
                             {
-                                if(!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                                if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                                 if (giver._tileAtmosInfo.MoleDelta <= 0)
                                     break; // We're done here now. Let's not do more work than needed.
 
@@ -373,8 +399,7 @@ namespace Content.Server.Atmos
                                     continue;
 
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
-                                queue.Add(tile2);
-                                queueCount++;
+                                queue[queueLength++] = tile2;
                                 tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
                                 tile2._tileAtmosInfo.CurrentTransferDirection = direction.GetOpposite();
                                 tile2._tileAtmosInfo.CurrentTransferAmount = 0;
@@ -400,33 +425,38 @@ namespace Content.Server.Atmos
                         }
 
                         // Putting this loop here helps make it O(n^2) over O(n^3)
-                        for (var i = queue.Count - 1; i >= 0; i--)
+                        for (var i = queueLength - 1; i >= 0; i--)
                         {
                             var tile = queue[i];
                             if (tile._tileAtmosInfo.CurrentTransferAmount != 0 &&
-                                tile._tileAtmosInfo.CurrentTransferDirection != (Direction)(-1))
+                                tile._tileAtmosInfo.CurrentTransferDirection != (Direction) (-1))
                             {
-                                tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
-                                if(tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var adjacent))
-                                    adjacent._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
+                                tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection,
+                                    tile._tileAtmosInfo.CurrentTransferAmount);
+                                if (tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection,
+                                    out var adjacent))
+                                    adjacent._tileAtmosInfo.CurrentTransferAmount +=
+                                        tile._tileAtmosInfo.CurrentTransferAmount;
                                 tile._tileAtmosInfo.CurrentTransferAmount = 0;
                             }
                         }
                     }
+
+                    ArrayPool<TileAtmosphere>.Shared.Return(queue, true);
                 }
                 else
                 {
-                    var queue = new List<TileAtmosphere>(giverTiles.Count);
-                    foreach (var taker in takerTiles)
+                    var queue = ArrayPool<TileAtmosphere>.Shared.Rent(tileCount);
+                    for (var j = 0; j < takerTilesLength; j++)
                     {
+                        var taker = takerTiles[j];
                         taker._tileAtmosInfo.CurrentTransferDirection = Direction.Invalid;
                         taker._tileAtmosInfo.CurrentTransferAmount = 0;
                         var queueCycleSlow = ++_gridAtmosphereComponent.EqualizationQueueCycleControl;
-                        queue.Clear();
-                        queue.Add(taker);
+                        var queueLength = 0;
+                        queue[queueLength++] = taker;
                         taker._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
-                        var queueCount = queue.Count;
-                        for (int i = 0; i < queueCount; i++)
+                        for (int i = 0; i < queueLength; i++)
                         {
                             if (taker._tileAtmosInfo.MoleDelta >= 0)
                                 break; // We're done here now. Let's not do more work than needed.
@@ -434,16 +464,16 @@ namespace Content.Server.Atmos
                             var tile = queue[i];
                             foreach (var direction in Cardinal)
                             {
-                                if(!tile._adjacentTiles.ContainsKey(direction)) continue;
+                                if (!tile._adjacentTiles.ContainsKey(direction)) continue;
                                 var tile2 = tile._adjacentTiles[direction];
 
                                 if (taker._tileAtmosInfo.MoleDelta >= 0)
                                     break; // We're done here now. Let's not do more work than needed.
 
-                                if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
+                                if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
+                                    continue;
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
-                                queue.Add(tile2);
-                                queueCount++;
+                                queue[queueLength++] = tile2;
                                 tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
                                 tile2._tileAtmosInfo.CurrentTransferDirection = direction.GetOpposite();
                                 tile2._tileAtmosInfo.CurrentTransferAmount = 0;
@@ -469,27 +499,34 @@ namespace Content.Server.Atmos
                             }
                         }
 
-                        for (var i = queue.Count - 1; i >= 0; i--)
+                        for (var i = queueLength - 1; i >= 0; i--)
                         {
                             var tile = queue[i];
                             if (tile._tileAtmosInfo.CurrentTransferAmount == 0 ||
                                 tile._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid) continue;
-                            tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
+                            tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection,
+                                tile._tileAtmosInfo.CurrentTransferAmount);
 
-                            if(tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var adjacent))
-                                adjacent._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
+                            if (tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection,
+                                out var adjacent))
+                                adjacent._tileAtmosInfo.CurrentTransferAmount +=
+                                    tile._tileAtmosInfo.CurrentTransferAmount;
                             tile._tileAtmosInfo.CurrentTransferAmount = 0;
                         }
                     }
+
+                    ArrayPool<TileAtmosphere>.Shared.Return(queue, true);
                 }
 
-                foreach (var tile in tiles)
+                for (var i = 0; i < tileCount; i++)
                 {
+                    var tile = tiles[i];
                     tile.FinalizeEq();
                 }
 
-                foreach (var tile in tiles)
+                for (var i = 0; i < tileCount; i++)
                 {
+                    var tile = tiles[i];
                     foreach (var direction in Cardinal)
                     {
                         if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
@@ -498,6 +535,10 @@ namespace Content.Server.Atmos
                         break;
                     }
                 }
+
+                ArrayPool<TileAtmosphere>.Shared.Return(tiles, true);
+                ArrayPool<TileAtmosphere>.Shared.Return(giverTiles, true);
+                ArrayPool<TileAtmosphere>.Shared.Return(takerTiles, true);
             }
         }
 
