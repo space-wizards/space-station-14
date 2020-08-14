@@ -5,7 +5,6 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
 using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
