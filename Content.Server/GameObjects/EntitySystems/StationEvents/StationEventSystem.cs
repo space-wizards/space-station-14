@@ -165,18 +165,6 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             }
 
             _netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents), GetEventReceived);
-            // Send admins the events when they connect
-            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-        }
-
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
-        {
-            if (e.NewStatus != SessionStatus.Connected || e.OldStatus != SessionStatus.Connecting)
-            {
-                return;
-            }
-
-            SendEvents(e.Session);
         }
 
         private void GetEventReceived(MsgGetStationEvents msg)
