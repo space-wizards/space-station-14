@@ -5,6 +5,7 @@
   description: based on what
   components:
   - type: Clickable
+  - type: InteractionOutline
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
