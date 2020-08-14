@@ -1,0 +1,1037 @@
+- type: entity
+  id: BaseSign
+  name: base sign
+  abstract: true
+  description: based on what
+  components:
+  - type: Clickable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+  - type: Damageable
+  - type: Destructible
+    thresholdvalue: 5
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Constructible/Misc/decals.rsi
+  - type: Icon
+    sprite: Constructible/Misc/decals.rsi
+
+# These signs would not have collision otherwise, they simply
+# need collision in order for them to be destructible. Once the
+# SmallImpassable etc. stuff actually gets implemented in this
+# shitheap of a videogame bother swept to go back and fix these.
+
+- type: entity
+  parent: BaseSign
+  id: PaintingMonkey
+  name: monkey painting
+  description: monky
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: monkey_painting
+  - type: Icon
+    state: monkey_painting
+
+# Directional Station Guide Signs
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalSec
+  name: sec sign
+  description: A direction sign, pointing out which way Security is.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_sec
+  - type: Icon
+    state: direction_sec
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalEvac
+  name: evac sign
+  description: A direction sign, pointing out which way evac is.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_evac
+  - type: Icon
+    state: direction_evac
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalBridge
+  name: bridge sign
+  description: A direction sign, pointing out which way the Bridge is.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_bridge
+  - type: Icon
+    state: direction_bridge
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalMed
+  name: medical sign
+  description: A direction sign, pointing out which way the Medical department is.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_med
+  - type: Icon
+    state: direction_med
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalEng
+  name: engineering sign
+  description: A direction sign, pointing out which way the Engineering department is.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_eng
+  - type: Icon
+    state: direction_eng
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalSci
+  name: science sign
+  description: A direction sign, pointing out which way the Science department is.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_sci
+  - type: Icon
+    state: direction_sci
+
+- type: entity
+  parent: BaseSign
+  id: SignDirectionalSupply
+  name: supply sign
+  description: A direction sign, pointing to some supplies.
+  components:
+  - type: Rotatable
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: direction_supply
+  - type: Icon
+    state: direction_supply
+
+# Regular Signs
+
+- type: entity
+  parent: BaseSign
+  id: SignArmory
+  name: ARMORY
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: armory
+  - type: Icon
+    state: armory
+
+- type: entity
+  parent: BaseSign
+  id: SignToolStorage
+  name: TOOL STORAGE
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: ass
+  - type: Icon
+    state: ass
+
+- type: entity
+  parent: BaseSign
+  id: SignAnomaly
+  name: ANOMALY LAB
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: anomaly
+  - type: Icon
+    state: anomaly
+
+- type: entity
+  parent: BaseSign
+  id: SignAtmos
+  name: ATMOS
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos
+  - type: Icon
+    state: atmos
+
+- type: entity
+  parent: BaseSign
+  id: SignBar
+  name: BAR
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: bar
+  - type: Icon
+    state: bar
+
+- type: entity
+  parent: BaseSign
+  id: SignLibrary
+  name: LIBRARY
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: biblio
+  - type: Icon
+    state: biblio
+
+- type: entity
+  parent: BaseSign
+  id: SignChapel
+  name: CHAPEL
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: chapel
+  - type: Icon
+    state: chapel
+
+- type: entity
+  parent: BaseSign
+  id: SignHead
+  name: HEAD
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: commander
+  - type: Icon
+    state: commander
+
+- type: entity
+  parent: BaseSign
+  id: SignConference
+  name: CONFERENCE ROOM
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: conference_room
+  - type: Icon
+    state: conference_room
+
+- type: entity
+  parent: BaseSign
+  id: SignDrones
+  name: DRONES
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: drones
+  - type: Icon
+    state: drones
+
+- type: entity
+  parent: BaseSign
+  id: SignEngine
+  name: ENGINE
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: engine
+  - type: Icon
+    state: engine
+
+- type: entity
+  parent: BaseSign
+  id: SignCloning
+  name: CLONING
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: cloning
+  - type: Icon
+    state: cloning
+
+- type: entity
+  parent: BaseSign
+  id: SignInterrogation
+  name: INTERROGATION
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: interrogation
+  - type: Icon
+    state: interrogation
+
+- type: entity
+  parent: BaseSign
+  id: SignSurgery
+  name: SURGERY
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: surgery
+  - type: Icon
+    state: surgery
+
+- type: entity
+  parent: BaseSign
+  id: SignTelecoms
+  name: TELECOMS
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: telecoms
+  - type: Icon
+    state: telecoms
+
+- type: entity
+  parent: BaseSign
+  id: SignCargo
+  name: CARGO
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: cargo
+  - type: Icon
+    state: cargo
+
+- type: entity
+  parent: BaseSign
+  id: SignCargoDock
+  name: CARGO DOCK
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: cargo_dock
+  - type: Icon
+    state: cargo_dock
+
+- type: entity
+  parent: BaseSign
+  id: SignChem
+  name: CHEMISTRY
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: chem
+  - type: Icon
+    state: chem
+
+- type: entity
+  parent: BaseSign
+  id: SignShipDock
+  name: DOCKING
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: dock
+  - type: Icon
+    state: dock
+
+- type: entity
+  parent: BaseSign
+  id: SignEngineering
+  name: ENGINEERING
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: eng
+  - type: Icon
+    state: eng
+
+- type: entity
+  parent: BaseSign
+  id: SignEVA
+  name: EVA
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: eva
+  - type: Icon
+    state: eva
+
+- type: entity
+  parent: BaseSign
+  id: SignGravity
+  name: GRAVITY
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: gravi
+  - type: Icon
+    state: gravi
+
+- type: entity
+  parent: BaseSign
+  id: SignMedical
+  name: MEDBAY
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: medbay
+  - type: Icon
+    state: medbay
+
+- type: entity
+  parent: BaseSign
+  id: SignMorgue
+  name: MORGUE
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: morgue
+  - type: Icon
+    state: morgue
+
+- type: entity
+  parent: BaseSign
+  id: SignPrison
+  name: PRISON
+  description:
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: prison
+  - type: Icon
+    state: prison
+
+- type: entity
+  parent: BaseSign
+  id: SignRND
+  name: RND
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: rnd
+  - type: Icon
+    state: rnd
+
+- type: entity
+  parent: BaseSign
+  id: SignScience
+  name: SCIENCE
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: sci
+  - type: Icon
+    state: sci
+
+- type: entity
+  parent: BaseSign
+  id: SignToxins
+  name: TOXINS
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: toxins
+  - type: Icon
+    state: toxins
+
+- type: entity
+  parent: BaseSign
+  id: SignBridge
+  name: BRIDGE
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: bridge
+  - type: Icon
+    state: bridge
+
+# Atmos Warnings
+
+- type: entity
+  parent: BaseSign
+  id: WarningAir
+  name: Air warning sign
+  description: WARNING! Air flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_air
+  - type: Icon
+    state: atmos_air
+
+- type: entity
+  parent: BaseSign
+  id: WarningCO2
+  name: CO2 warning sign
+  description: WARNING! CO2 flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_co2
+  - type: Icon
+    state: atmos_co2
+
+- type: entity
+  parent: BaseSign
+  id: WarningN2
+  name: N2 warning sign
+  description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_n2
+  - type: Icon
+    state: atmos_n2
+
+- type: entity
+  parent: BaseSign
+  id: WarningN2O
+  name: N2O warning sign
+  description: WARNING! N2O flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_n2o
+  - type: Icon
+    state: atmos_n2o
+
+- type: entity
+  parent: BaseSign
+  id: WarningO2
+  name: O2 warning sign
+  description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_o2
+  - type: Icon
+    state: atmos_o2
+
+- type: entity
+  parent: BaseSign
+  id: WarningPhoron
+  name: phoron waste sign
+  description: WARNING! Plasma flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_phoron
+  - type: Icon
+    state: atmos_phoron
+
+- type: entity
+  parent: BaseSign
+  id: WarningWaste
+  name: Atmos waste sign
+  description: WARNING! Waste flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: atmos_waste
+  - type: Icon
+    state: atmos_waste
+
+- type: entity
+  parent: BaseSign
+  id: PlaqueZum
+  name: zumos plaque
+  description: This plaque commemorates the rise of the Atmos ZUM division. May they carry the torch that the Atmos ZAS, LINDA and FEA divisions left behind.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: zumosplaque
+  - type: Icon
+    state: zumosplaque
+
+- type: entity
+  parent: BaseSign
+  id: PlaqueAtmos
+  name: atmos plaque
+  description: This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands.
+  components:
+    - type: Collidable
+      shapes:
+        - !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable
+    - type: Sprite
+      state: atmosplaque
+    - type: Icon
+      state: atmosplaque
+
+- type: entity
+  parent: BaseSign
+  id: SignSmoking
+  name: No Smoking
+  description: A warning sign which reads 'NO SMOKING'
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: nosmoking2
+  - type: Icon
+    state: nosmoking2
+
+- type: entity
+  parent: BaseSign
+  id: SignSomethingOld
+  name: Old Sign
+  description: Technical information of some sort, shame its too worn-out to read.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: something-old1
+  - type: Icon
+    state: something-old1
+
+- type: entity
+  parent: BaseSign
+  id: SignSomethingOld2
+  name: Old Sign
+  description: Looks like a planet crashing by some station above it. Its kinda scary.
+  components:
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+  - type: Sprite
+    state: something-old2
+  - type: Icon
+    state: something-old2
