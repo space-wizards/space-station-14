@@ -30,7 +30,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
-        string ActiveHand { get; set; }
+        string? ActiveHand { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.
@@ -101,7 +101,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <returns>
         ///     true if the entity is held, false otherwise
         /// </returns>
-        bool TryHand(IEntity entity, out string handName);
+        bool TryHand(IEntity entity, out string? handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
