@@ -23,13 +23,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using Content.Server.GameObjects.Components.Atmos;
+using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.Atmos
 {
     [RegisterComponent]
-    class GasVaporComponent : Component, ICollideBehavior
+    class GasVaporComponent : Component, ICollideBehavior, IGasMixtureHolder
     {
 #pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -37,7 +38,7 @@ namespace Content.Server.Atmos
         public override string Name => "GasVapor";
 
         //TODO: IDK if this is a good way to initilize contents
-        [ViewVariables] public GasMixture contents;
+        [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] private GridAtmosphereComponent _gridAtmosphereComponent;
         //TODO: Add Whatever the gas scaler values is if there is one?
@@ -92,9 +93,20 @@ namespace Content.Server.Atmos
                 {
                     var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
                     var atmos = AtmosHelpers.GetTileAtmosphere(pos);
-                    //Here is were we check for reactions.
-                }
 
+                    //Does the tile have gas
+                    if (atmos.Air == null)
+                    {
+                        return;
+                    }
+
+                    //Here is were we check for reactions.
+                    var result = atmos.Air.React(this);
+                    if (result != ReactionResult.NoReaction)
+                    {
+                        Owner.Delete();
+                    }
+                }
             }
 
             //TODO: disspate once were out of Moles

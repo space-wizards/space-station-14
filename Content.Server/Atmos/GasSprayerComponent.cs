@@ -50,8 +50,8 @@ namespace Content.Server.Atmos
                     .SetData(RoguePointingArrowVisuals.Rotation, direction.ToAngle().Degrees);
                 if (spray.TryGetComponent<GasVaporComponent>(out GasVaporComponent air))
                 {
-                    air.contents = new GasMixture(200){Temperature = Atmospherics.T20C};
-                    air.contents.SetMoles(Gas.WaterVapor,20);
+                    air.Air = new GasMixture(200){Temperature = Atmospherics.T20C};
+                    air.Air.SetMoles(Gas.WaterVapor,20);
                 }
 
 
