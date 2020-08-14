@@ -10,9 +10,6 @@ namespace Content.Client.StationEvents
 {
     class StationEventManager : SharedStationEvent, IStationEventManager
     {
-#pragma warning disable 649
-        [Dependency] private readonly IClientNetManager _netManager = default!;
-#pragma warning restore 649
         private List<string>? _events;
         public List<string>? StationEvents
         {
@@ -27,14 +24,14 @@ namespace Content.Client.StationEvents
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents),
+            IoCManager.Resolve<IClientNetManager>().RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents),
                 msg => StationEvents = msg.Events);
-            _netManager.Disconnect += (sender, msg) => StationEvents = null;
+            IoCManager.Resolve<IClientNetManager>().Disconnect += (sender, msg) => StationEvents = null;
         }
 
         private void RequestEvents()
         {
-            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgGetStationEvents>());
+            IoCManager.Resolve<IClientNetManager>().ClientSendMessage(IoCManager.Resolve<IClientNetManager>().CreateNetMessage<MsgGetStationEvents>());
         }
     }
 }
