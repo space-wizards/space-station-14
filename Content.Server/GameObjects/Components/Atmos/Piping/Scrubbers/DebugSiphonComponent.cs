@@ -1,16 +1,16 @@
 ﻿using Content.Server.Atmos;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Atmos
+namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     /// <summary>
     ///     Placeholder example of scrubber functionality.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(BaseScrubberComponent))]
-    public class DebugScrubberComponent : BaseScrubberComponent
+    [ComponentReference(typeof(BaseSiphonComponent))]
+    public class DebugSiphonComponent : BaseSiphonComponent
     {
-        public override string Name => "DebugScrubber";
+        public override string Name => "DebugSiphon";
 
         protected override void ScrubGas(GasMixture inletGas, GasMixture outletGas, float frameTime)
         {
