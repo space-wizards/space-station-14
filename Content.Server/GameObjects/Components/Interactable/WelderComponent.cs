@@ -212,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         public void OnUpdate(float frameTime)
         {
-            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
