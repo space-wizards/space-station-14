@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;

@@ -1,8 +1,7 @@
 ﻿﻿using Content.Server.AI.Utility.Considerations;
- using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.AI.WorldState;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
-﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;

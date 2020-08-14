@@ -1,7 +1,4 @@
 ﻿using Content.Shared.Maths;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Shared.Utility
 {

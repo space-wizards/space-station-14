@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.GameObjects.Components.Paper
 {
     public class PaperWindow : SS14Window
     {

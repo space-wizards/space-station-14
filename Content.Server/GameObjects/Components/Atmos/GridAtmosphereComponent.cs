@@ -66,6 +66,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         private readonly HashSet<TileAtmosphere> _hotspotTiles = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private readonly HashSet<TileAtmosphere> _superconductivityTiles = new HashSet<TileAtmosphere>(1000);
+
+        [ViewVariables]
         private readonly HashSet<MapIndices> _invalidatedCoords = new HashSet<MapIndices>(1000);
 
         [ViewVariables]
@@ -81,6 +84,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             ExcitedGroups,
             HighPressureDelta,
             Hotspots,
+            Superconductivity,
         }
 
         /// <inheritdoc />
@@ -237,6 +241,18 @@ namespace Content.Server.GameObjects.Components.Atmos
             _hotspotTiles.Remove(tile);
         }
 
+        public void AddSuperconductivityTile(TileAtmosphere tile)
+        {
+            if (tile?.GridIndex != _grid.Index) return;
+            _superconductivityTiles.Add(tile);
+        }
+
+        public void RemoveSuperconductivityTile(TileAtmosphere tile)
+        {
+            if (tile == null) return;
+            _superconductivityTiles.Remove(tile);
+        }
+
         /// <inheritdoc />
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddHighPressureDelta(TileAtmosphere tile)
@@ -302,14 +318,14 @@ namespace Content.Server.GameObjects.Components.Atmos
             return _grid.GetTileRef(indices).Tile.IsEmpty;
         }
 
-        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices)
+        public Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false)
         {
             var sides = new Dictionary<Direction, TileAtmosphere>();
             foreach (var dir in Cardinal)
             {
                 var side = indices.Offset(dir);
                 var tile = GetTile(side);
-                if(tile?.Air != null)
+                if(tile?.Air != null || includeAirBlocked)
                     sides[dir] = tile;
             }
 
@@ -361,6 +377,10 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
                 case ProcessState.Hotspots:
                     ProcessHotspots();
+                    _state = ProcessState.Superconductivity;
+                    break;
+                case ProcessState.Superconductivity:
+                    ProcessSuperconductivity();
                     _state = ProcessState.TileEqualize;
                     break;
             }
@@ -454,6 +474,23 @@ namespace Content.Server.GameObjects.Components.Atmos
             foreach (var hotspot in _hotspotTiles.ToArray())
             {
                 hotspot.ProcessHotspot();
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    return;
+            }
+        }
+
+        private void ProcessSuperconductivity()
+        {
+            _stopwatch.Restart();
+
+            var number = 0;
+            foreach (var superconductivity in _superconductivityTiles.ToArray())
+            {
+                superconductivity.Superconduct();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Client.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Storage;
 using Content.Client.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.Components.Storage;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Interfaces.GameObjects.Components;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;

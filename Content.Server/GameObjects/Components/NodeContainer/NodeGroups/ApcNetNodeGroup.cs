@@ -1,9 +1,9 @@
-﻿using Content.Server.GameObjects.Components.Power;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
-using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Content.Server.GameObjects.Components.Power;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {

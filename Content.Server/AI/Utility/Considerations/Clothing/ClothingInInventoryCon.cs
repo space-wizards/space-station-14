@@ -1,7 +1,7 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Clothing;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
 
 namespace Content.Server.AI.Utility.Considerations.Clothing

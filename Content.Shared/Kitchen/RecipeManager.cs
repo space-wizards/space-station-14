@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Prototypes.Kitchen;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;

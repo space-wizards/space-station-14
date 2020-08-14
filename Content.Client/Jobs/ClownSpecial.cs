@@ -1,4 +1,4 @@
-using Content.Server.Jobs;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 
 namespace Content.Client.Jobs

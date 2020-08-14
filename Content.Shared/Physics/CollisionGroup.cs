@@ -1,8 +1,8 @@
 ﻿using System;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using RobustPhysics = Robust.Shared.Physics;
 using Robust.Shared.Serialization;
+using RobustPhysics = Robust.Shared.Physics;
 
 namespace Content.Shared.Physics
 {
