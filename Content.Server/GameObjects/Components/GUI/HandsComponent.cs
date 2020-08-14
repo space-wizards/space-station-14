@@ -221,7 +221,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string? handName)
+        public bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName)
         {
             handName = null;
 
