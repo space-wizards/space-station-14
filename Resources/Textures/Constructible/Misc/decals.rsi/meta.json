@@ -125,6 +125,15 @@
       ]
     },
     {
+      "name": "zumosplaque",
+      "directions": 1,
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "bar",
       "directions": 1,
       "delays": [
