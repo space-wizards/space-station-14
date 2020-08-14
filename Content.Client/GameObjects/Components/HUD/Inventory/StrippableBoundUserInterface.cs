@@ -17,7 +17,7 @@ namespace Content.Client.GameObjects.Components.HUD.Inventory
         [ViewVariables]
         private StrippingMenu _strippingMenu;
 
-        public StrippableBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public StrippableBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
         }
 
