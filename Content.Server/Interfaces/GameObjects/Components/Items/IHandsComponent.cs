@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
@@ -12,6 +16,16 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
 {
     public interface IHandsComponent : ISharedHandsComponent
     {
+        /// <summary>
+        ///     Invoked when the hand contents changes or when a hand is added/removed.
+        /// </summary>
+        event Action OnChanged;
+
+        /// <summary>
+        ///     The hands in this component.
+        /// </summary>
+        IReadOnlyList<Hand> Hands { get; }
+
         /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
@@ -28,6 +42,14 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="handName">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
         ItemComponent GetItem(string handName);
+
+        /// <summary>
+        ///     Attempts to get an item in a hand.
+        /// </summary>
+        /// <param name="handName">The name of the hand to get.</param>
+        /// <param name="item">The item in the held, null if no item is held</param>
+        /// <returns>Whether it was holding an item</returns>
+        bool TryGetItem(string handName, out ItemComponent item);
 
         /// <summary>
         /// Gets item held by the current active hand

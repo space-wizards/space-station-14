@@ -39,6 +39,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public IReadOnlyDictionary<Slots, ContainerSlot> SlotContainers => _slotContainers;
 
+        public event Action OnChanged;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -171,7 +173,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
         /// <param name="item">The item to insert into the slot.</param>
-        /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
+        /// <param name="reason">The translated reason why the item cannot be equipped, if this function returns false. Can be null.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
         public bool Equip(Slots slot, ItemComponent item, out string reason)
         {
@@ -193,6 +195,8 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
+
+            OnChanged?.Invoke();
 
             Dirty();
 
@@ -273,6 +277,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
 
+            OnChanged?.Invoke();
+
             Dirty();
 
             return true;
@@ -309,7 +315,12 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             Dirty();
-            return _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+
+            _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+
+            OnChanged?.Invoke();
+
+            return _slotContainers[slot];
         }
 
         /// <summary>
@@ -334,6 +345,9 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             _slotContainers.Remove(slot);
+
+            OnChanged?.Invoke();
+
             Dirty();
         }
 
@@ -363,6 +377,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 itemComp.RemovedFromSlot();
             }
+
+            OnChanged?.Invoke();
 
             Dirty();
         }

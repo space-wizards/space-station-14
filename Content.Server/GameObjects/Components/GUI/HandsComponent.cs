@@ -43,6 +43,8 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHand;
         private uint _nextHand;
 
+        public event Action OnChanged;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
         {
@@ -108,6 +110,12 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
 
+        public bool TryGetItem(string handName, out ItemComponent item)
+        {
+            item = GetItem(handName);
+            return item != null;
+        }
+
         public ItemComponent? GetActiveHand => ActiveHand == null
             ? null
             : GetItem(ActiveHand);
@@ -139,6 +147,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 if (PutInHand(item, hand, false))
                 {
+                    OnChanged?.Invoke();
+
                     return true;
                 }
             }
@@ -159,6 +169,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
+                OnChanged?.Invoke();
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
@@ -253,6 +264,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 container.Insert(item.Owner);
             }
 
+            OnChanged?.Invoke();
+
             Dirty();
             return true;
         }
@@ -302,6 +315,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 container.Insert(item.Owner);
             }
+
+            OnChanged?.Invoke();
 
             Dirty();
             return true;
@@ -367,6 +382,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException();
             }
 
+            OnChanged?.Invoke();
+
             Dirty();
             return true;
         }
@@ -418,6 +435,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             ActiveHand ??= name;
 
+            OnChanged?.Invoke();
+
             Dirty();
         }
 
@@ -437,6 +456,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 _activeHand = _hands.FirstOrDefault()?.Name;
             }
+
+            OnChanged?.Invoke();
 
             Dirty();
         }
