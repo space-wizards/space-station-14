@@ -129,7 +129,8 @@ namespace Content.Server.Sandbox
             }
 
             var player = _playerManager.GetSessionByChannel(message.MsgChannel);
-            _shell.ExecuteCommand(player, $"aghost");
+
+            _shell.ExecuteCommand(player, _conGroupController.CanCommand(player, "aghost") ? "aghost" : "ghost");
         }
 
         private void SandboxSuicideReceived(MsgSandboxSuicide message)
