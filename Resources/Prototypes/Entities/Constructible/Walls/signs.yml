@@ -8,13 +8,6 @@
   - type: Collidable
     shapes:
     - !type:PhysShapeAabb
-      bounds: "-0.1,-0.4,0.1,0.4"
-      layer:
-      - Opaque
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
   - type: Damageable
   - type: Destructible
     thresholdvalue: 5
@@ -39,6 +32,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: monkey_painting
   - type: Icon
@@ -57,6 +56,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_sec
   - type: Icon
@@ -73,6 +78,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_evac
   - type: Icon
@@ -89,6 +100,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_bridge
   - type: Icon
@@ -105,6 +122,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_med
   - type: Icon
@@ -121,6 +144,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_eng
   - type: Icon
@@ -137,6 +166,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_sci
   - type: Icon
@@ -153,6 +188,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.1,-0.4,0.1,0.4"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: direction_supply
   - type: Icon
@@ -169,6 +210,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: armory
   - type: Icon
@@ -183,6 +230,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: ass
   - type: Icon
@@ -197,6 +250,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: anomaly
   - type: Icon
@@ -211,6 +270,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos
   - type: Icon
@@ -225,6 +290,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: bar
   - type: Icon
@@ -239,6 +310,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: biblio
   - type: Icon
@@ -253,6 +330,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: chapel
   - type: Icon
@@ -267,6 +350,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: commander
   - type: Icon
@@ -281,6 +370,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: conference_room
   - type: Icon
@@ -295,6 +390,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: drones
   - type: Icon
@@ -309,6 +410,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: engine
   - type: Icon
@@ -323,6 +430,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: cloning
   - type: Icon
@@ -337,6 +450,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: interrogation
   - type: Icon
@@ -351,6 +470,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: surgery
   - type: Icon
@@ -365,6 +490,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: telecoms
   - type: Icon
@@ -379,6 +510,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: cargo
   - type: Icon
@@ -393,6 +530,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: cargo_dock
   - type: Icon
@@ -407,6 +550,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: chem
   - type: Icon
@@ -421,6 +570,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: dock
   - type: Icon
@@ -435,6 +590,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: eng
   - type: Icon
@@ -449,6 +610,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: eva
   - type: Icon
@@ -463,6 +630,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: gravi
   - type: Icon
@@ -477,6 +650,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: medbay
   - type: Icon
@@ -491,6 +670,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: morgue
   - type: Icon
@@ -506,6 +691,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: prison
   - type: Icon
@@ -520,6 +711,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: rnd
   - type: Icon
@@ -534,6 +731,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: sci
   - type: Icon
@@ -548,6 +751,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: toxins
   - type: Icon
@@ -562,6 +771,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: bridge
   - type: Icon
@@ -579,6 +794,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_air
   - type: Icon
@@ -594,6 +815,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_co2
   - type: Icon
@@ -609,6 +836,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_n2
   - type: Icon
@@ -624,6 +857,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_n2o
   - type: Icon
@@ -639,6 +878,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_o2
   - type: Icon
@@ -654,6 +899,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_phoron
   - type: Icon
@@ -669,6 +920,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.2,-0.3,0.2,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmos_waste
   - type: Icon
@@ -684,6 +941,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: atmosplaque
   - type: Icon
@@ -699,6 +962,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: nosmoking2
   - type: Icon
@@ -714,6 +983,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: something-old1
   - type: Icon
@@ -729,6 +1004,12 @@
     shapes:
     - !type:PhysShapeAabb
       bounds: "-0.4,-0.3,0.4,0.3"
+      layer:
+      - Opaque
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
   - type: Sprite
     state: something-old2
   - type: Icon
