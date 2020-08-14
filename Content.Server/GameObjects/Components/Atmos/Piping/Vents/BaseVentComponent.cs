@@ -7,12 +7,12 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 
-namespace Content.Server.GameObjects.Components.Atmos
+namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     /// <summary>
-    ///     Transfers gas from a <see cref="Pipe"/> to the tile it is on.
+    ///     Transfers gas from a <see cref="PipeNode"/> to the tile it is on.
     /// </summary>
-    public abstract class BaseVentComponent : Component
+    public abstract class BaseVentComponent : UpdatedPipingComponent
     {
         [ViewVariables]
         private PipeNode _ventInlet;
@@ -26,7 +26,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             _ventInlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().First();
         }
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
             var transform = Owner.Transform;
             var tileAtmos = AtmosHelpers.GetTileAtmosphere(transform.GridPosition);

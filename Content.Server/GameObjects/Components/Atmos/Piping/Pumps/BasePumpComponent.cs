@@ -1,17 +1,16 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 
-namespace Content.Server.GameObjects.Components.Atmos
+namespace Content.Server.GameObjects.Components.Atmos.Piping
 {
     /// <summary>
-    ///     Transfer gas from one <see cref="Pipe"/> to another.
+    ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : Component
+    public abstract class BasePumpComponent : UpdatedPipingComponent
     {
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.
@@ -48,7 +47,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _outletDirection).First();
         }
 
-        public void Update(float frameTime)
+        public override void Update(float frameTime)
         {
             PumpGas(_inletPipe.Air, _outletPipe.Air, frameTime);
         }
