@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 if (inventory.TryGetSlotItem(slot, out ItemComponent _))
                 {
-                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} already have something there!", Owner));
+                    _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} already {0:have} something there!", Owner));
                     return false;
                 }
 
@@ -355,7 +355,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 case StrippingHandButtonPressed handMessage:
                     var hands = Owner.GetComponent<HandsComponent>();
 
-                    if (hands.TryGetItem(handMessage.Hand, out var _))
+                    if (hands.TryGetItem(handMessage.Hand, out _))
                         placingItem = false;
 
                     if(placingItem)
