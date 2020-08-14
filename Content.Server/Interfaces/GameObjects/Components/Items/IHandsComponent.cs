@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.GameObjects;
@@ -49,7 +50,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="handName">The name of the hand to get.</param>
         /// <param name="item">The item in the held, null if no item is held</param>
         /// <returns>Whether it was holding an item</returns>
-        bool TryGetItem(string handName, out ItemComponent item);
+        bool TryGetItem(string handName, out ItemComponent? item);
 
         /// <summary>
         /// Gets item held by the current active hand

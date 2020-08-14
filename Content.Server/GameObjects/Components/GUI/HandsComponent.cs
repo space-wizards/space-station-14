@@ -110,7 +110,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
 
-        public bool TryGetItem(string handName, out ItemComponent item)
+        public bool TryGetItem(string handName, out ItemComponent? item)
         {
             item = GetItem(handName);
             return item != null;
