@@ -12,7 +12,6 @@ using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Health.BodySystem;
-using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -282,7 +281,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, coords, doMobChecks);
+            return Drop(slot!, coords, doMobChecks);
         }
 
         public bool Drop(string slot, bool doMobChecks = true)
@@ -334,7 +333,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, doMobChecks);
+            return Drop(slot!, doMobChecks);
         }
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
@@ -400,7 +399,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, targetContainer, doMobChecks);
+            return Drop(slot!, targetContainer, doMobChecks);
         }
 
         /// <summary>
@@ -669,7 +668,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out IPhysicsComponent physics))
+                if (!message.Entity.TryGetComponent(out ICollidableComponent physics))
                 {
                     return;
                 }
