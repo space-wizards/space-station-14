@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!hands.HasHand(hand))
                     return false;
 
-                if (hands.TryGetItem(hand, out var _))
+                if (hands.TryGetItem(hand, out _))
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} already {0:have} something there!", Owner));
                     return false;
