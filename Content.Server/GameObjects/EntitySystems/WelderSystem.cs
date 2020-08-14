@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Interactable;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
@@ -10,23 +11,12 @@ namespace Content.Server.GameObjects.EntitySystems
     /// </summary>
     public class WelderSystem : EntitySystem
     {
-        private readonly HashSet<WelderComponent> _activeWelders = new HashSet<WelderComponent>();
-
-        public bool Subscribe(WelderComponent welder)
-        {
-            return _activeWelders.Add(welder);
-        }
-
-        public bool Unsubscribe(WelderComponent welder)
-        {
-            return _activeWelders.Remove(welder);
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var tool in _activeWelders.ToArray())
+            foreach (var welder in EntityManager.ComponentManager.EntityQuery<WelderComponent>())
             {
-                tool.OnUpdate(frameTime);
+                if(welder.WelderLit && !welder.Owner.Deleted)
+                    welder.OnUpdate(frameTime);
             }
         }
     }
