@@ -1,18 +1,15 @@
-using Content.Server.GameObjects;
+﻿using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Players;
-using Content.Shared.Atmos;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Mobs;
+using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.Console;
-using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
-using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.Server.Observer
 {
@@ -72,7 +69,12 @@ namespace Content.Server.Observer
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             ghostComponent.CanReturnToBody = canReturn;
 
-            if(canReturn)
+            if (player.AttachedEntity.TryGetComponent(out ServerOverlayEffectsComponent overlayComponent))
+            {
+                overlayComponent?.RemoveOverlay(SharedOverlayID.CircleMaskOverlay);
+            }
+
+            if (canReturn)
                 mind.Visit(ghost);
             else
                 mind.TransferTo(ghost);
