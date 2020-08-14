@@ -6,6 +6,7 @@ using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
@@ -111,6 +112,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             bool Check()
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                    return false;
+
                 if (item == null)
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("You aren't holding anything!"));
@@ -173,6 +177,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             bool Check()
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                    return false;
+
                 if (item == null)
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("You aren't holding anything!"));
@@ -233,6 +240,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             bool Check()
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                    return false;
+
                 if (!inventory.HasSlot(slot))
                     return false;
 
@@ -281,6 +291,9 @@ namespace Content.Server.GameObjects.Components.GUI
 
             bool Check()
             {
+                if (!ActionBlockerSystem.CanInteract(user))
+                    return false;
+
                 if (!hands.HasHand(hand))
                     return false;
 
