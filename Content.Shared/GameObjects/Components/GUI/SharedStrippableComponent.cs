@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.GameObjects.Components.GUI
 {
@@ -21,9 +22,9 @@ namespace Content.Shared.GameObjects.Components.GUI
     [NetSerializable, Serializable]
     public class StrippingInventoryButtonPressed : BoundUserInterfaceMessage
     {
-        public EquipmentSlotDefines.Slots Slot { get; }
+        public Slots Slot { get; }
 
-        public StrippingInventoryButtonPressed(EquipmentSlotDefines.Slots slot)
+        public StrippingInventoryButtonPressed(Slots slot)
         {
             Slot = slot;
         }
@@ -43,10 +44,10 @@ namespace Content.Shared.GameObjects.Components.GUI
     [NetSerializable, Serializable]
     public class StrippingBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public Dictionary<EquipmentSlotDefines.Slots, string> Inventory { get; }
+        public Dictionary<Slots, string> Inventory { get; }
         public Dictionary<string, string> Hands { get; }
 
-        public StrippingBoundUserInterfaceState(Dictionary<EquipmentSlotDefines.Slots, string> inventory, Dictionary<string, string> hands)
+        public StrippingBoundUserInterfaceState(Dictionary<Slots, string> inventory, Dictionary<string, string> hands)
         {
             Inventory = inventory;
             Hands = hands;

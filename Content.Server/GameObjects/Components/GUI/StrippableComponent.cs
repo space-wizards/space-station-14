@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Server.GameObjects.Components.GUI
 {
@@ -72,9 +73,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        private Dictionary<EquipmentSlotDefines.Slots, string> GetInventorySlots()
+        private Dictionary<Slots, string> GetInventorySlots()
         {
-            var dictionary = new Dictionary<EquipmentSlotDefines.Slots, string>();
+            var dictionary = new Dictionary<Slots, string>();
 
             foreach (var (slot, container) in _inventoryComponent.SlotContainers)
             {
@@ -104,7 +105,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <summary>
         ///     Places item in user's active hand to an inventory slot.
         /// </summary>
-        private async void PlaceActiveHandItemInInventory(IEntity user, EquipmentSlotDefines.Slots slot)
+        private async void PlaceActiveHandItemInInventory(IEntity user, Slots slot)
         {
             var inventory = Owner.GetComponent<InventoryComponent>();
             var userHands = user.GetComponent<HandsComponent>();
@@ -233,7 +234,7 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <summary>
         ///     Takes an item from the inventory and places it in the user's active hand.
         /// </summary>
-        private async void TakeItemFromInventory(IEntity user, EquipmentSlotDefines.Slots slot)
+        private async void TakeItemFromInventory(IEntity user, Slots slot)
         {
             var inventory = Owner.GetComponent<InventoryComponent>();
             var userHands = user.GetComponent<HandsComponent>();

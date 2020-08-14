@@ -6,12 +6,14 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
 namespace Content.Client.GameObjects.Components.HUD.Inventory
 {
+    [UsedImplicitly]
     public class StrippableBoundUserInterface : BoundUserInterface
     {
-        public Dictionary<EquipmentSlotDefines.Slots, string> Inventory { get; private set; }
+        public Dictionary<Slots, string> Inventory { get; private set; }
         public Dictionary<string, string> Hands { get; private set; }
 
         [ViewVariables]
