@@ -217,6 +217,9 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
 
+            Owner.Transform.GridPosition
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
+
             if (Fuel == 0)
                 ToggleWelderStatus();
 
