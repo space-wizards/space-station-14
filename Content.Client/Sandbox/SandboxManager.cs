@@ -35,7 +35,6 @@ namespace Content.Client.Sandbox
         public Button ToggleSubfloorButton;
         public Button ShowMarkersButton; //Shows spawn points
         public Button ShowBbButton; //Shows bounding boxes
-        public Button ClientConsoleButton; //Opens C# client console
 
         public SandboxWindow(ILocalizationManager loc)
         {
@@ -75,9 +74,6 @@ namespace Content.Client.Sandbox
 
             ShowBbButton = new Button { Text = loc.GetString("Show Bb"), ToggleMode = true };
             vBox.AddChild(ShowBbButton);
-
-            ClientConsoleButton = new Button { Text = loc.GetString("Client C# Console") };
-            vBox.AddChild(ClientConsoleButton);
         }
     }
     internal class SandboxManager : SharedSandboxManager, ISandboxManager
@@ -187,7 +183,6 @@ namespace Content.Client.Sandbox
             _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
             _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
             _window.ShowBbButton.OnPressed += OnShowBbButtonClicked;
-            _window.ClientConsoleButton.OnPressed += OnClientConsoleButtonClicked;
 
             _window.OpenCenteredMinSize();
         }
@@ -234,10 +229,6 @@ namespace Content.Client.Sandbox
             ShowBb();
         }
 
-        private void OnClientConsoleButtonClicked(BaseButton.ButtonEventArgs args)
-        {
-            ClientConsole();
-        }
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
@@ -303,11 +294,6 @@ namespace Content.Client.Sandbox
         private void ShowBb()
         {
             _console.ProcessCommand("showbb");
-        }
-
-        private void ClientConsole()
-        {
-            _console.ProcessCommand("csi");
         }
     }
 }
