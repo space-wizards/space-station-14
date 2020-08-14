@@ -399,7 +399,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot!, targetContainer, doMobChecks);
+            return Drop(slot, targetContainer, doMobChecks);
         }
 
         /// <summary>
