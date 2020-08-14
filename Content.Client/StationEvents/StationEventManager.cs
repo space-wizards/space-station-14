@@ -24,9 +24,10 @@ namespace Content.Client.StationEvents
 
         public void Initialize()
         {
-            IoCManager.Resolve<IClientNetManager>().RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents),
+            var netManager = IoCManager.Resolve<IClientNetManager>();
+            netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents),
                 msg => StationEvents = msg.Events);
-            IoCManager.Resolve<IClientNetManager>().Disconnect += (sender, msg) => StationEvents = null;
+            netManager.Disconnect += (sender, msg) => StationEvents = null;
         }
 
         private void RequestEvents()
