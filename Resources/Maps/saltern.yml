@@ -11156,6 +11156,33 @@ entities:
       ? X: 52
         Y: -2
       : 0
+      ? X: -26
+        Y: -17
+      : 0
+      ? X: -25
+        Y: -17
+      : 0
+      ? X: -24
+        Y: -17
+      : 0
+      ? X: -23
+        Y: -17
+      : 0
+      ? X: -22
+        Y: -17
+      : 0
+      ? X: -21
+        Y: -17
+      : 0
+      ? X: -26
+        Y: -16
+      : 0
+      ? X: -26
+        Y: -15
+      : 0
+      ? X: -26
+        Y: -14
+      : 0
     type: GridAtmosphere
 - uid: 16
   type: Wire
@@ -37317,9 +37344,7 @@ entities:
     pos: -13.672081,21.719378
     rot: -1.5707963267948966 rad
     type: Transform
-  - angleIncrease: 1.9051974E-08
-    angleDecay: 1.4288981E-08
-    type: BatteryBarrel
+  - type: BatteryBarrel
   - anchored: False
     type: Collidable
   - containers:
@@ -37346,9 +37371,7 @@ entities:
     pos: -14.515831,21.735003
     rot: -1.5707963267948966 rad
     type: Transform
-  - angleIncrease: 1.9051974E-08
-    angleDecay: 1.4288981E-08
-    type: BatteryBarrel
+  - type: BatteryBarrel
   - anchored: False
     type: Collidable
   - containers:
