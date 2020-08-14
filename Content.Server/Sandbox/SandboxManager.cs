@@ -1,8 +1,10 @@
+using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Content.Shared.Sandbox;
+using Robust.Server.Interfaces.Console;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Placement;
 using Robust.Server.Interfaces.Player;
@@ -24,6 +26,7 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly IPlacementManager _placementManager;
         [Dependency] private readonly IConGroupController _conGroupController;
         [Dependency] private readonly IEntityManager _entityManager;
+        [Dependency] private readonly IConsoleShell _shell;
 #pragma warning restore 649
 
         private bool _isSandboxEnabled;
@@ -44,6 +47,8 @@ namespace Content.Server.Sandbox
             _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus));
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn), SandboxRespawnReceived);
             _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess), SandboxGiveAccessReceived);
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost), SandboxGiveAghostReceived);
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide), SandboxSuicideReceived);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _gameTicker.OnRunLevelChanged += GameTickerOnOnRunLevelChanged;
@@ -114,6 +119,28 @@ namespace Content.Server.Sandbox
                     _entityManager.SpawnEntity("CaptainIDCard",
                     player.AttachedEntity.Transform.GridPosition).GetComponent<ItemComponent>());
             }
+        }
+
+        private void SandboxGiveAghostReceived(MsgSandboxGiveAghost message)
+        {
+            if (!IsSandboxEnabled)
+            {
+                return;
+            }
+
+            var player = _playerManager.GetSessionByChannel(message.MsgChannel);
+            _shell.ExecuteCommand(player, $"aghost");
+        }
+
+        private void SandboxSuicideReceived(MsgSandboxSuicide message)
+        {
+            if (!IsSandboxEnabled)
+            {
+                return;
+            }
+
+            var player = _playerManager.GetSessionByChannel(message.MsgChannel);
+            _shell.ExecuteCommand(player, $"suicide");
         }
 
         private void UpdateSandboxStatusForAll()

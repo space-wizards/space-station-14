@@ -1,8 +1,12 @@
 ﻿using System;
 using Content.Client.UserInterface;
+using Content.Client.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
+using Robust.Client.Console;
+using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.Input;
+using Robust.Client.Interfaces.Graphics.Lighting;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -16,9 +20,64 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox
 {
-    internal sealed class SandboxManager : SharedSandboxManager, ISandboxManager
+    // Layout for the SandboxWindow
+    public class SandboxWindow : SS14Window
+    {
+        public Button RespawnButton;
+        public Button SpawnEntitiesButton;
+        public Button SpawnTilesButton;
+        public Button GiveFullAccessButton;  //A button that just puts a captain's ID in your hands.
+        public Button GiveAghostButton;
+        public Button ToggleLightButton;
+        public Button SuicideButton;
+        public Button ToggleSubfloorButton;
+        public Button ShowMarkersButton; //Shows spawn points
+        public Button ShowBbButton; //Shows bounding boxes
+
+        public SandboxWindow(ILocalizationManager loc)
+        {
+            Resizable = false;
+
+            Title = "Sandbox Panel";
+
+            var vBox = new VBoxContainer { SeparationOverride = 4 };
+            Contents.AddChild(vBox);
+
+            RespawnButton = new Button { Text = loc.GetString("Respawn") };
+            vBox.AddChild(RespawnButton);
+
+            SpawnEntitiesButton = new Button { Text = loc.GetString("Spawn Entities") };
+            vBox.AddChild(SpawnEntitiesButton);
+
+            SpawnTilesButton = new Button { Text = loc.GetString("Spawn Tiles") };
+            vBox.AddChild(SpawnTilesButton);
+
+            GiveFullAccessButton = new Button { Text = loc.GetString("Give AA Id") };
+            vBox.AddChild(GiveFullAccessButton);
+
+            GiveAghostButton = new Button { Text = loc.GetString("Ghost") };
+            vBox.AddChild(GiveAghostButton);
+
+            ToggleLightButton = new Button { Text = loc.GetString("Toggle Lights"), ToggleMode = true };
+            vBox.AddChild(ToggleLightButton);
+
+            ToggleSubfloorButton = new Button { Text = loc.GetString("Toggle Subfloor"), ToggleMode = true };
+            vBox.AddChild(ToggleSubfloorButton);
+
+            SuicideButton = new Button { Text = loc.GetString("Suicide") };
+            vBox.AddChild(SuicideButton);
+
+            ShowMarkersButton = new Button { Text = loc.GetString("Show Spawns"), ToggleMode = true };
+            vBox.AddChild(ShowMarkersButton);
+
+            ShowBbButton = new Button { Text = loc.GetString("Show Bb"), ToggleMode = true };
+            vBox.AddChild(ShowBbButton);
+        }
+    }
+    internal class SandboxManager : SharedSandboxManager, ISandboxManager
     {
 #pragma warning disable 649
+        [Dependency] private readonly IClientConsole _console;
         [Dependency] private readonly IGameHud _gameHud;
         [Dependency] private readonly IClientNetManager _netManager;
         [Dependency] private readonly ILocalizationManager _localization;
@@ -37,6 +96,7 @@ namespace Content.Client.Sandbox
         private EntitySpawnWindow _spawnWindow;
         private TileSpawnWindow _tilesSpawnWindow;
         private bool _sandboxWindowToggled;
+        bool SpawnEntitiesButton { get; set; }
 
         public void Initialize()
         {
@@ -46,6 +106,10 @@ namespace Content.Client.Sandbox
             _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess));
 
             _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
+
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost));
+
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide));
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 
@@ -111,11 +175,15 @@ namespace Content.Client.Sandbox
             _window.SpawnTilesButton.OnPressed += OnSpawnTilesButtonClicked;
             _window.SpawnEntitiesButton.OnPressed += OnSpawnEntitiesButtonClicked;
             _window.GiveFullAccessButton.OnPressed += OnGiveAdminAccessButtonClicked;
+            _window.GiveAghostButton.OnPressed += OnGiveAghostButtonClicked;
+            _window.ToggleLightButton.OnToggled += OnToggleLightButtonClicked;
+            _window.SuicideButton.OnPressed += OnSuicideButtonClicked;
+            _window.ToggleSubfloorButton.OnPressed += OnToggleSubfloorButtonClicked;
+            _window.ShowMarkersButton.OnPressed += OnShowMarkersButtonClicked;
+            _window.ShowBbButton.OnPressed += OnShowBbButtonClicked;
 
             _window.OpenCentered();
         }
-
-
 
         private void WindowOnOnClose()
         {
@@ -139,13 +207,44 @@ namespace Content.Client.Sandbox
             ToggleTilesWindow();
         }
 
+        private void OnToggleLightButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleLight();
+        }
+
+        private void OnToggleSubfloorButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ToggleSubfloor();
+        }
+
+        private void OnShowMarkersButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ShowMarkers();
+        }
+
+        private void OnShowBbButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            ShowBb();
+        }
+
         private void OnGiveAdminAccessButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAccess>());
         }
+
+        private void OnGiveAghostButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxGiveAghost>());
+        }
+
+        private void OnSuicideButtonClicked(BaseButton.ButtonEventArgs args)
+        {
+            _netManager.ClientSendMessage(_netManager.CreateNetMessage<MsgSandboxSuicide>());
+        }
+
         private void ToggleEntitySpawnWindow()
         {
-            if(_spawnWindow == null)
+            if (_spawnWindow == null)
                 _spawnWindow = new EntitySpawnWindow(_placementManager, _prototypeManager, _resourceCache, _localization);
 
             if (_spawnWindow.IsOpen)
@@ -161,7 +260,7 @@ namespace Content.Client.Sandbox
 
         private void ToggleTilesWindow()
         {
-            if(_tilesSpawnWindow == null)
+            if (_tilesSpawnWindow == null)
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
 
             if (_tilesSpawnWindow.IsOpen)
@@ -173,6 +272,26 @@ namespace Content.Client.Sandbox
                 _tilesSpawnWindow = new TileSpawnWindow(_tileDefinitionManager, _placementManager, _resourceCache);
                 _tilesSpawnWindow.OpenToLeft();
             }
+        }
+
+        private void ToggleLight()
+        {
+            _console.ProcessCommand("togglelight");
+        }
+
+        private void ToggleSubfloor()
+        {
+            _console.ProcessCommand("showsubfloor");
+        }
+
+        private void ShowMarkers()
+        {
+            _console.ProcessCommand("showmarkers");
+        }
+
+        private void ShowBb()
+        {
+            _console.ProcessCommand("showbb");
         }
     }
 }
