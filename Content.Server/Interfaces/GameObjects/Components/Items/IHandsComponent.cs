@@ -50,7 +50,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <param name="handName">The name of the hand to get.</param>
         /// <param name="item">The item in the held, null if no item is held</param>
         /// <returns>Whether it was holding an item</returns>
-        bool TryGetItem(string handName, out ItemComponent? item);
+        bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item);
 
         /// <summary>
         /// Gets item held by the current active hand
@@ -101,7 +101,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <returns>
         ///     true if the entity is held, false otherwise
         /// </returns>
-        bool TryHand(IEntity entity, out string? handName);
+        bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
