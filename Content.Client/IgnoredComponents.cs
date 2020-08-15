@@ -155,6 +155,8 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
+            "GasSprayer",
+            "GasVapor"
         };
     }
 }
