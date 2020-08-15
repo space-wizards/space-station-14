@@ -11,6 +11,7 @@ using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Health.BodySystem;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
@@ -140,11 +141,11 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public bool PutInHand(ItemComponent item)
+        public bool PutInHand(ItemComponent item, bool mobCheck = true)
         {
             foreach (var hand in ActivePriorityEnumerable())
             {
-                if (PutInHand(item, hand, false))
+                if (PutInHand(item, hand, false, mobCheck))
                 {
                     OnItemChanged?.Invoke();
 
@@ -155,10 +156,10 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool PutInHand(ItemComponent item, string index, bool fallback = true)
+        public bool PutInHand(ItemComponent item, string index, bool fallback = true, bool mobChecks = true)
         {
             var hand = GetHand(index);
-            if (!CanPutInHand(item, index) || hand == null)
+            if (!CanPutInHand(item, index, mobChecks) || hand == null)
             {
                 return fallback && PutInHand(item);
             }
@@ -176,16 +177,19 @@ namespace Content.Server.GameObjects.Components.GUI
             return success;
         }
 
-        public void PutInHandOrDrop(ItemComponent item)
+        public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
-            if (!PutInHand(item))
+            if (!PutInHand(item, mobCheck))
             {
                 item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
             }
         }
 
-        public bool CanPutInHand(ItemComponent item)
+        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
+            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+                return false;
+
             foreach (var handName in ActivePriorityEnumerable())
             {
                 if (CanPutInHand(item, handName))
@@ -197,8 +201,11 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool CanPutInHand(ItemComponent item, string index)
+        public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
         {
+            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+                return false;
+
             return GetHand(index)?.Container.CanInsert(item.Owner) == true;
         }
 
@@ -284,17 +291,17 @@ namespace Content.Server.GameObjects.Components.GUI
             return Drop(slot, coords, doMobChecks);
         }
 
-        public bool Drop(string slot, bool doMobChecks = true)
+        public bool Drop(string slot, bool mobChecks = true)
         {
             var hand = GetHand(slot);
-            if (!CanDrop(slot) || hand?.Entity == null)
+            if (!CanDrop(slot, mobChecks) || hand?.Entity == null)
             {
                 return false;
             }
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (!DroppedInteraction(item, doMobChecks))
+            if (!DroppedInteraction(item, mobChecks))
                 return false;
 
             if (!hand.Container.Remove(hand.Entity))
@@ -321,7 +328,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool Drop(IEntity entity, bool doMobChecks = true)
+        public bool Drop(IEntity entity, bool mobChecks = true)
         {
             if (entity == null)
             {
@@ -333,7 +340,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, doMobChecks);
+            return Drop(slot, mobChecks);
         }
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
@@ -409,13 +416,15 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanDrop(string name)
+        public bool CanDrop(string name, bool mobCheck = true)
         {
             var hand = GetHand(name);
-            if (hand?.Entity == null)
-            {
+
+            if (mobCheck && !ActionBlockerSystem.CanDrop(Owner))
                 return false;
-            }
+
+            if (hand?.Entity == null)
+                return false;
 
             return hand.Container.CanRemove(hand.Entity);
         }
