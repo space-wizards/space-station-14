@@ -210,12 +210,21 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
         }
 
+        protected override void Shutdown()
+        {
+            base.Shutdown();
+            _welderSystem.Unsubscribe(this);
+        }
+
         public void OnUpdate(float frameTime)
         {
-            if (!HasQuality(ToolQuality.Welding) || !WelderLit)
+            if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
             _solutionComponent?.TryRemoveReagent("chem.WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+
+            Owner.Transform.GridPosition
+                .GetTileAtmosphere()?.HotspotExpose(700f, 50f, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();

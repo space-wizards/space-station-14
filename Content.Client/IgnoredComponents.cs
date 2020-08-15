@@ -135,6 +135,8 @@
             "TrashSpawner",
             "Pill",
             "RCD",
+            "RCDDeconstructWhitelist",
+            "RCDAmmo",
             "Pullable",
             "CursedEntityStorage",
             "Listening",

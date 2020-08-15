@@ -8,6 +8,7 @@
     - Window
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     color: "#DDDDDD"

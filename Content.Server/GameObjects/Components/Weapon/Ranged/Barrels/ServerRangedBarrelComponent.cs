@@ -111,14 +111,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataReadWriteFunction(
                 "angleIncrease",
                 40 / _fireRate,
-                angle => _angleIncrease = angle * (float) Math.PI / 180,
-                () => _angleIncrease / (float) Math.PI / 180);
+                angle => _angleIncrease = angle * (float) Math.PI / 180f,
+                () => MathF.Round(_angleIncrease / ((float) Math.PI / 180f), 2));
 
             serializer.DataReadWriteFunction(
                 "angleDecay",
                 20f,
-                angle => _angleDecay = angle * (float) Math.PI / 180,
-                () => _angleDecay / (float) Math.PI / 180);
+                angle => _angleDecay = angle * (float) Math.PI / 180f,
+                () => MathF.Round(_angleDecay / ((float) Math.PI / 180f), 2));
 
             serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
 

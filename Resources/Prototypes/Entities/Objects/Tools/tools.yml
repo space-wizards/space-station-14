@@ -249,7 +249,7 @@
   name: RCD
   parent: BaseItem
   id: RCD
-  description: An advanced construction device which can place floors / walls down quickly.
+  description: An advanced construction device which can place/remove walls, floors, and airlocks quickly.
   components:
   - type: RCD
   - type: UseDelay
@@ -262,3 +262,17 @@
     state: rcd
   - type: Item
     sprite: Objects/Tools/rcd.rsi
+
+- type: entity
+  name: RCD Ammo
+  parent: BaseItem
+  id: RCDAmmo
+  description: Ammo cartridge for an RCD.
+  components:
+    - type: RCDAmmo
+    - type: Sprite
+      sprite: Objects/Tools/rcd.rsi
+      state: rcd_ammo
+    - type: Icon
+      sprite: Objects/Tools/rcd.rsi
+      state: rcd_ammo
