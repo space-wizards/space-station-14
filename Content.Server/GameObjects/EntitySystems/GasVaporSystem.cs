@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var GasVapor in ComponentManager.EntityQuery<GasVaporComponent>())
             {
-                GasVapor.Update();
+                GasVapor.Update(frameTime);
             }
         }
     }

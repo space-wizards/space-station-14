@@ -41,13 +41,11 @@ namespace Content.Server.Atmos
         [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] private GridAtmosphereComponent _gridAtmosphereComponent;
-        //TODO: Add Whatever the gas scaler values is if there is one?
-        //Does a gas dissapear when it recats?
-        //[ViewVariables] private ReagentUnit _transferAmount;
 
         private bool _running;
         private Vector2 _direction;
         private float _velocity;
+        private float disspateTimer = 0;
 
 
         public void Initialize(GridAtmosphereComponent gridAtmosphereComponent)
@@ -69,15 +67,7 @@ namespace Content.Server.Atmos
             }
         }
 
-        //TODO: Does the scaler amount of gas need to be exposed?
-        public override void ExposeData(ObjectSerializer serializer)
-        {
-            base.ExposeData(serializer);
-            // serializer.DataField(ref _transferAmount, "transferAmount", ReagentUnit.New(0.5));
-        }
-
-        //TODO: have moles/volume/pressure falloff over time exponentially
-        public void Update()
+        public void Update(float frameTime)
         {
             if (!_running)
                 return;
@@ -94,46 +84,29 @@ namespace Content.Server.Atmos
                     var pos = tile.GridIndices.ToGridCoordinates(_mapManager, tile.GridIndex);
                     var atmos = AtmosHelpers.GetTileAtmosphere(pos);
 
-                    //Does the tile have gas
                     if (atmos.Air == null)
                     {
                         return;
                     }
 
-                    //Here is were we check for reactions.
-                    var result = atmos.Air.React(this);
-                    if (result != ReactionResult.NoReaction)
+                    if (atmos.Air.React(this) != ReactionResult.NoReaction)
                     {
                         Owner.Delete();
                     }
                 }
             }
 
-            //TODO: disspate once were out of Moles
-            /*if (_contents.TotalMoles == 0)
+            disspateTimer += frameTime;
+            if (disspateTimer > 1)
             {
-                // Delete this
+                Air.SetMoles(Gas.WaterVapor, Air.TotalMoles/2 );
+            }
+
+            if (Air.TotalMoles < 1)
+            {
                 Owner.Delete();
-            }*/
+            }
         }
-
-        //TODO: TryReact
-        /*
-        internal bool TryAddSolution(Solution solution)
-        {
-            if (solution.TotalVolume == 0)
-            {
-                return false;
-            }
-
-            var result = _contents.TryAddSolution(solution);
-            if (!result)
-            {
-                return false;
-            }
-
-            return true;
-        }*/
 
         void ICollideBehavior.CollideWith(IEntity collidedWith)
         {
@@ -145,6 +118,7 @@ namespace Content.Server.Atmos
             {
                 var controller = coll.EnsureController<GasVaporController>();
                 controller.Stop();
+                Owner.Delete();
             }
         }
     }
