@@ -10,6 +10,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
+using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -20,6 +21,7 @@ namespace Content.Client.GameObjects.EntitySystems
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         private readonly Dictionary<float, Color> _fireCache = new Dictionary<float, Color>();
@@ -47,6 +49,7 @@ namespace Content.Client.GameObjects.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+            _mapManager.OnGridRemoved += OnGridRemoved;
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -87,6 +90,12 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _mapManager.OnGridRemoved -= OnGridRemoved;
+        }
+
         public void HandlePlayerAttached(PlayerAttachSysMessage message)
         {
             if (message.AttachedEntity == null)
@@ -98,6 +107,16 @@ namespace Content.Client.GameObjects.EntitySystems
             {
                 _gasesComponent = canSeeGasesComponent;
             }
+        }
+
+        private void OnGridRemoved(GridId gridId)
+        {
+            if (_gasesComponent == null)
+            {
+                return;
+            }
+
+            _gasesComponent.RemoveGrid(gridId);
         }
 
         public (Texture, Color color)[] GetOverlays(GridId gridIndex, MapIndices indices)

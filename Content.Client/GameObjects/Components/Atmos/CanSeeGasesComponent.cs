@@ -63,6 +63,16 @@ namespace Content.Client.GameObjects.Components.Atmos
             }
         }
 
+        public void RemoveGrid(GridId gridId)
+        {
+            if (!_tileData.ContainsKey(gridId))
+            {
+                return;
+            }
+
+            _tileData.Remove(gridId);
+        }
+
         // Slightly different to the server-side system version
         private GasOverlayChunk GetOrCreateChunk(GridId gridId, MapIndices indices)
         {

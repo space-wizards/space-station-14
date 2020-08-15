@@ -43,6 +43,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             base.Initialize();
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+            _mapManager.OnGridRemoved += OnGridRemoved;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+            _mapManager.OnGridRemoved -= OnGridRemoved;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -74,6 +82,20 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
 
             return chunk;
+        }
+
+        private void OnGridRemoved(GridId gridId)
+        {
+            if (_overlay.ContainsKey(gridId))
+            {
+                _overlay.Remove(gridId);
+            }
+        }
+
+        public void ResettingCleanup()
+        {
+            _invalidTiles.Clear();
+            _overlay.Clear();
         }
 
         private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
