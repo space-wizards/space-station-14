@@ -1,6 +1,5 @@
 ﻿- type: entity
   name: Extinguisher Spray
-  parent: BaseItem
   id: ExtinguisherSpray
   description: Extinguisher Spray
   components:
@@ -11,9 +10,6 @@
     - type: Icon
       sprite: Effects/extinguisherSpray.rsi
       state: extinguish
-    - type: Item
-      sprite: Effects/extinguisherSpray.rsi
-      HeldPrefix: off
     - type: GasVapor
       dissipationInterval: 1
       gas: WaterVapor
