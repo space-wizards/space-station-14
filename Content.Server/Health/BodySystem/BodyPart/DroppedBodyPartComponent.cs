@@ -1,19 +1,20 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using System.Collections.Generic;
-using Content.Shared.BodySystem;
-using Robust.Shared.ViewVariables;
+﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using Content.Shared.Health.BodySystem;
+using Content.Shared.Health.BodySystem.Surgery;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.Player;
-using Content.Shared.Interfaces;
-using System.Linq;
-using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.BodyPart
 {
 
     /// <summary>

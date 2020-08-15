@@ -1,4 +1,3 @@
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.GUI;
 using Robust.Shared.Interfaces.GameObjects;
 

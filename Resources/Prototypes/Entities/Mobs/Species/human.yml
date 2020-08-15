@@ -113,7 +113,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-      - SmallImpassable
       layer:
       - Opaque
       - MobImpassable
@@ -143,6 +142,7 @@
   - type: Grammar
     proper: true
   - type: Pullable
+  - type: DoAfter
 
 - type: entity
   save: false

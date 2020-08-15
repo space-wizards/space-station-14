@@ -1,11 +1,11 @@
-﻿using Robust.Server.GameObjects.Components.UserInterface;
+﻿using System.Collections.Generic;
+using Content.Shared.Health.BodySystem.BodyScanner;
+using Content.Shared.Interfaces.GameObjects.Components;
+using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
-using System.Collections.Generic;
-using Content.Shared.BodySystem;
-using Content.Shared.Interfaces.GameObjects.Components;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.BodyScanner
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
@@ -45,7 +45,7 @@ namespace Content.Server.BodySystem
         /// <summary>
         ///    Copy BodyTemplate and BodyPart data into a common data class that the client can read.
         /// </summary>
-        private BodyScannerInterfaceState PrepareBodyScannerInterfaceState(BodyTemplate template, Dictionary<string, BodyPart> bodyParts)
+        private BodyScannerInterfaceState PrepareBodyScannerInterfaceState(BodyTemplate.BodyTemplate template, Dictionary<string, BodyPart.BodyPart> bodyParts)
         {
             Dictionary<string, BodyScannerBodyPartData> partsData = new Dictionary<string, BodyScannerBodyPartData>();
             foreach (var(slotname, bpart) in bodyParts) {

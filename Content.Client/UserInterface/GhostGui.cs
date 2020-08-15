@@ -1,4 +1,3 @@
-using System.Data;
 using Content.Client.GameObjects.Components.Observer;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

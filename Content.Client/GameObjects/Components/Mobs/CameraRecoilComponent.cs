@@ -2,7 +2,6 @@
 using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -15,16 +14,16 @@ namespace Content.Client.GameObjects.Components.Mobs
     public sealed class CameraRecoilComponent : SharedCameraRecoilComponent
     {
         // Maximum rate of magnitude restore towards 0 kick.
-        private const float RestoreRateMax = 2f;
+        private const float RestoreRateMax = 15f;
 
         // Minimum rate of magnitude restore towards 0 kick.
         private const float RestoreRateMin = 1f;
 
         // Time in seconds since the last kick that lerps RestoreRateMin and RestoreRateMax
-        private const float RestoreRateRamp = 0.05f;
+        private const float RestoreRateRamp = 0.1f;
 
         // The maximum magnitude of the kick applied to the camera at any point.
-        private const float KickMagnitudeMax = 0.25f;
+        private const float KickMagnitudeMax = 5f;
 
         private Vector2 _currentKick;
         private float _lastKickTime;
@@ -87,6 +86,7 @@ namespace Content.Client.GameObjects.Components.Mobs
 
             // Continually restore camera to 0.
             var normalized = _currentKick.Normalized;
+            _lastKickTime += frameTime;     
             var restoreRate = FloatMath.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, _lastKickTime/RestoreRateRamp));
             var restore = normalized * restoreRate * frameTime;
             var (x, y) = _currentKick - restore;

@@ -1,7 +1,7 @@
-﻿using Content.Shared.Prototypes.Cargo;
-using Robust.Shared.Localization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Prototypes.Cargo;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Cargo
 {

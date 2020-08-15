@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;

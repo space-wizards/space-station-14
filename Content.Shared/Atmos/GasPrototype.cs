@@ -1,7 +1,5 @@
-﻿using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using System;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -69,6 +67,8 @@ namespace Content.Shared.Atmos
         /// </summary>
         public string OverlayPath { get; private set; }
 
+        public string Color { get; private set; }
+
         public void LoadFrom(YamlMappingNode mapping)
         {
             var serializer = YamlObjectSerializer.NewReader(mapping);
@@ -81,6 +81,7 @@ namespace Content.Shared.Atmos
             serializer.DataField(this, x => GasOverlayTexture, "gasOverlayTexture", string.Empty);
             serializer.DataField(this, x => GasOverlaySprite, "gasOverlaySprite", string.Empty);
             serializer.DataField(this, x => GasOverlayState, "gasOverlayState", string.Empty);
+            serializer.DataField(this, x => Color, "color", string.Empty);
         }
     }
 }

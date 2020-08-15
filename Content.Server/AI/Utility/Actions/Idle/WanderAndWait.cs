@@ -5,17 +5,15 @@ using Content.Server.AI.Operators.Generic;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.ActionBlocker;
-using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.WorldState;
+using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.AI.Utility.Actions.Idle
@@ -50,7 +48,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
                 new WaitOperator(waitTime),
             });
         }
-        
+
         protected override IReadOnlyCollection<Func<float>> GetConsiderations(Blackboard context)
         {
             var considerationsManager = IoCManager.Resolve<ConsiderationsManager>();
@@ -75,7 +73,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
             {
                 return default;
             }
-            
+
             var reachableNodes = new List<PathfindingNode>();
 
             foreach (var region in reachableRegions)

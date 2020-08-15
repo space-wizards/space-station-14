@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.GameObjects;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Damage;
 
-namespace Content.Server.Interfaces
+namespace Content.Server.Interfaces.GameObjects
 {
     /// <summary>
     /// Any component/entity that has behaviour linked to taking damage should implement this interface.

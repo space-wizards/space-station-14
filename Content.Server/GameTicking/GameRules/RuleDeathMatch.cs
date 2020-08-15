@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Server.Interfaces.Player;

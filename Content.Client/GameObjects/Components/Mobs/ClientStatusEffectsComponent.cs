@@ -152,7 +152,7 @@ namespace Content.Client.GameObjects.Components.Mobs
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownGraphic.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownGraphic.Progress = FloatMath.Clamp((float)ratio, -1, 1);
                 cooldownGraphic.Visible = ratio > -1f;
             }
         }

@@ -87,19 +87,6 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            AccumulatedFrameTime += frameTime;
-
-            if (AccumulatedFrameTime < UpdateTime)
-            {
-                return;
-            }
-
-            AccumulatedFrameTime -= UpdateTime;
-        }
-
         public void HandlePlayerAttached(PlayerAttachSysMessage message)
         {
             if (message.AttachedEntity == null)

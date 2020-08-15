@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.BodySystem;
+using Content.Shared.Health.BodySystem;
+using Content.Shared.Health.BodySystem.BodyTemplate;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.BodySystem {
+namespace Content.Server.Health.BodySystem.BodyTemplate {
 
     /// <summary>
     ///     This class is a data capsule representing the standard format of a <see cref="BodyManagerComponent"/>. For instance, the "humanoid" BodyTemplate
     ///     defines two arms, each connected to a torso and so on. Capable of loading data from a <see cref="BodyTemplatePrototype"/>.
-    /// </summary>	
+    /// </summary>
     public class BodyTemplate {
 
         [ViewVariables]
@@ -16,13 +17,13 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     The name of the center BodyPart. For humans, this is set to "torso". Used in many calculations.
-        /// </summary>					
+        /// </summary>
         [ViewVariables]
         public string CenterSlot { get; set; }
 
         /// <summary>
         ///     Maps all parts on this template to its BodyPartType. For instance, "right arm" is mapped to "BodyPartType.arm" on the humanoid template.
-        /// </summary>			
+        /// </summary>
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots { get; set; }
 
@@ -30,7 +31,7 @@ namespace Content.Server.BodySystem {
         ///     Maps limb name to the list of their connections to other limbs. For instance, on the humanoid template "torso" is mapped to a list containing "right arm", "left arm",
         ///     "left leg", and "right leg". This is mapped both ways during runtime, but in the prototype only one way has to be defined, i.e., "torso" to "left arm" will automatically
         ///     map "left arm" to "torso".
-        /// </summary>			
+        /// </summary>
         [ViewVariables]
         public Dictionary<string, List<string>> Connections { get; set; }
 
@@ -54,7 +55,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Returns whether the given slot exists in this BodyTemplate.
-        /// </summary>		
+        /// </summary>
         public bool SlotExists(string slotName)
         {
             foreach (string slot in Slots.Keys)
@@ -67,7 +68,7 @@ namespace Content.Server.BodySystem {
 
         /// <summary>
         ///     Returns an integer unique to this BodyTemplate's layout. It does not matter in which order the Connections or Slots are defined.
-        /// </summary>		
+        /// </summary>
         public override int GetHashCode()
         {
             int slotsHash = 0;
