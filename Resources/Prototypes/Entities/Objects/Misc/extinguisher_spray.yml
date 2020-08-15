@@ -19,6 +19,7 @@
       gas: WaterVapor
       gasVolume: 200
       gasTemperature: 293.15
+      gasAmount: 20
     - type: Physics
     - type: Collidable
       shapes:

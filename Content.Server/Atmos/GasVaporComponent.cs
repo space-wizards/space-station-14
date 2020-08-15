@@ -17,14 +17,10 @@ namespace Content.Server.Atmos
     [RegisterComponent]
     class GasVaporComponent : Component, ICollideBehavior, IGasMixtureHolder
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
-#pragma warning enable 649
         public override string Name => "GasVapor";
 
         [ViewVariables] public GasMixture Air { get; set; }
-
-        [ViewVariables] private GridAtmosphereComponent _gridAtmosphereComponent;
 
         private bool _running;
         private Vector2 _direction;
@@ -34,12 +30,13 @@ namespace Content.Server.Atmos
         private Gas _gas;
         private float _gasVolume;
         private float _gasTemperature;
+        private float _gasAmount;
 
         public override void Initialize()
         {
             base.Initialize();
             Air = new GasMixture(_gasVolume){Temperature = _gasTemperature};
-            Air.SetMoles(_gas,20);
+            Air.SetMoles(_gas,_gasAmount);
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -49,6 +46,7 @@ namespace Content.Server.Atmos
             serializer.DataField(ref _gas, "gas", Gas.WaterVapor);
             serializer.DataField(ref _gasVolume, "gasVolume", 200);
             serializer.DataField(ref _gasTemperature, "gasTemperature", Atmospherics.T20C);
+            serializer.DataField(ref _gasAmount, "gasAmount", 20);
         }
 
         public void StartMove(Vector2 dir, float velocity)
