@@ -17,6 +17,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
@@ -105,6 +106,7 @@ namespace Content.Server.Atmos
             GridIndex = gridIndex;
             GridIndices = gridIndices;
             Air = mixture;
+            ResetTileAtmosInfo();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -328,7 +330,7 @@ namespace Content.Server.Atmos
                     var tile = tiles[i];
                     tile._tileAtmosInfo.FastDone = true;
                     if (!(tile._tileAtmosInfo.MoleDelta > 0)) continue;
-                    Direction eligibleAdjBits = 0;
+                    var eligibleDirections = new List<Direction>();
                     var amtEligibleAdj = 0;
                     foreach (var direction in Cardinal)
                     {
@@ -338,16 +340,17 @@ namespace Content.Server.Atmos
                         if (tile2._tileAtmosInfo.FastDone || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
                             continue;
 
-                        eligibleAdjBits |= direction;
+                        eligibleDirections.Add(direction);
                         amtEligibleAdj++;
                     }
 
                     if (amtEligibleAdj <= 0)
                         continue; // Oof we've painted ourselves into a corner. Bad luck. Next part will handle this.
+
                     var molesToMove = tile._tileAtmosInfo.MoleDelta / amtEligibleAdj;
                     foreach (var direction in Cardinal)
                     {
-                        if ((eligibleAdjBits & direction) == 0 ||
+                        if (eligibleDirections.Contains(direction) ||
                             !tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         tile.AdjustEqMovement(direction, molesToMove);
                         tile._tileAtmosInfo.MoleDelta -= molesToMove;
@@ -546,25 +549,21 @@ namespace Content.Server.Atmos
             foreach (var direction in Cardinal)
             {
                 var amount = _tileAtmosInfo[direction];
-                transferDirections[direction] = amount;
                 if (amount == 0) continue;
+                transferDirections[direction] = amount;
                 _tileAtmosInfo[direction] = 0;
                 hasTransferDirs = true;
             }
 
             if (!hasTransferDirs) return;
 
-            foreach (var direction in Cardinal)
+            foreach (var (direction, amount) in transferDirections)
             {
-                var amount = transferDirections[direction];
                 if (!_adjacentTiles.TryGetValue(direction, out var tile) || tile.Air == null) continue;
                 if (amount > 0)
                 {
-                    // Prevent infinite recursion.
-                    tile._tileAtmosInfo[direction.GetOpposite()] = 0;
-
                     if (Air.TotalMoles < amount)
-                        FinalizeEqNeighbors();
+                        FinalizeEqNeighbors(transferDirections.Keys);
 
                     tile.Air.Merge(Air.Remove(amount));
                     UpdateVisuals();
@@ -575,9 +574,9 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void FinalizeEqNeighbors()
+        private void FinalizeEqNeighbors(IEnumerable<Direction> directions)
         {
-            foreach (var direction in Cardinal)
+            foreach (var direction in directions)
             {
                 var amount = _tileAtmosInfo[direction];
                 if(amount < 0 && _adjacentTiles.TryGetValue(direction, out var adjacent))
@@ -592,7 +591,7 @@ namespace Content.Server.Atmos
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = direction;
+                _pressureDirection = difference >= 0 ? direction.GetOpposite() : direction;
             }
         }
 
@@ -670,17 +669,17 @@ namespace Content.Server.Atmos
 
                 if (shouldShareAir)
                 {
-                    var difference = Air.Share(enemyTile.Air, adjacentTileLength);
+                    /*var difference =*/ Air.Share(enemyTile.Air, adjacentTileLength);
 
                     // Space wind!
-                    if (difference > 0)
+                    /*if (difference > 0)
                     {
                         ConsiderPressureDifference(direction, difference);
                     }
                     else
                     {
                         enemyTile.ConsiderPressureDifference(direction.GetOpposite(), -difference);
-                    }
+                    }*/
 
                     LastShareCheck();
                 }
@@ -946,7 +945,7 @@ namespace Content.Server.Atmos
                 }
                 else
                 {
-                    if (i > Atmospherics.ZumosHardTileLimit) continue;
+                    if (i > Atmospherics.ZumosTileLimit) continue;
                     foreach (var direction in Cardinal)
                     {
                         if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
@@ -992,14 +991,12 @@ namespace Content.Server.Atmos
                 }
             }
 
-            for (int i = 0; i < progressionCount; i++)
+            for (var i = progressionCount - 1; i >= 0; i--)
             {
                 var tile = progressionOrder[i];
                 if (tile._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid) continue;
-                var hpdLength = _gridAtmosphereComponent.HighPressureDeltaCount;
-                var inHdp = _gridAtmosphereComponent.HasHighPressureDelta(tile);
-                if(!inHdp)
-                    _gridAtmosphereComponent.AddHighPressureDelta(tile);
+                _gridAtmosphereComponent.AddHighPressureDelta(tile);
+                _gridAtmosphereComponent.AddActiveTile(tile);
                 if (!tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var tile2) || tile2.Air == null) continue;
                 var sum = tile2.Air.TotalMoles;
                 totalGasesRemoved += sum;
@@ -1007,20 +1004,25 @@ namespace Content.Server.Atmos
                 tile2._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
                 tile.PressureDifference = tile._tileAtmosInfo.CurrentTransferAmount;
                 tile._pressureDirection = tile._tileAtmosInfo.CurrentTransferDirection;
+
                 if (tile2._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid)
                 {
                     tile2.PressureDifference = tile2._tileAtmosInfo.CurrentTransferAmount;
                     tile2._pressureDirection = tile._tileAtmosInfo.CurrentTransferDirection;
                 }
+
                 tile.Air.Clear();
                 tile.UpdateVisuals();
                 tile.HandleDecompressionFloorRip(sum);
             }
+
+            Logger.Info($"{totalGasesRemoved} moles removed in explosive depressurization started in {GridIndices}.");
         }
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            if (sum > 20 && _robustRandom.Prob(FloatMath.Clamp(sum / 100, 0.005f, 0.5f)))
+            var chance = FloatMath.Clamp(sum / 200, 0.005f, 0.5f);
+            if (sum > 20 && _robustRandom.Prob(chance))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
 
@@ -1061,14 +1063,19 @@ namespace Content.Server.Atmos
         {
             foreach (var direction in Cardinal)
             {
-                if(!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction)))
-                    _adjacentTiles[direction] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
+                if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction)))
+                {
+                    var adjacent = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
+                    _adjacentTiles[direction] = adjacent;
+                    adjacent.UpdateAdjacent(direction.GetOpposite());
+                }
             }
         }
 
         public void UpdateAdjacent(Direction direction)
         {
-            _adjacentTiles[direction] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
+            if (!_gridAtmosphereComponent.IsAirBlocked(GridIndices.Offset(direction)))
+                _adjacentTiles[direction] = _gridAtmosphereComponent.GetTile(GridIndices.Offset(direction));
         }
 
         private void LastShareCheck()
