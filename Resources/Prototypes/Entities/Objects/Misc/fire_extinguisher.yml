@@ -25,3 +25,5 @@
       spraySound: /Audio/Effects/spray.ogg
       sprayType: ExtinguisherSpray
       fuelType: chem.H2O
+      fuelName: water
+      fuelCost: 50

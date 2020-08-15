@@ -31,6 +31,8 @@ namespace Content.Server.Atmos
         private string _spraySound;
         private string _sprayType;
         private string _fuelType;
+        private string _fuelName;
+        private int _fuelCost;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -38,20 +40,21 @@ namespace Content.Server.Atmos
             serializer.DataField(ref _spraySound, "spraySound", string.Empty);
             serializer.DataField(ref _sprayType, "sprayType", string.Empty);
             serializer.DataField(ref _fuelType, "fuelType", string.Empty);
-
+            serializer.DataField(ref _fuelName, "fuelName", "fuel");
+            serializer.DataField(ref _fuelCost, "fuelCost", 50);
         }
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (Owner.TryGetComponent(out SolutionComponent tank) &&
-                tank.Solution.GetReagentQuantity(_fuelType).Float().Equals(0f))
+                tank.Solution.GetReagentQuantity(_fuelType) == 0)
             {
                 _notifyManager.PopupMessage(Owner, eventArgs.User,
-                    Loc.GetString("The {0} is out of {1}!", Owner.Name, _fuelType));
+                    Loc.GetString("The {0} is out of {1}!", Owner.Name, _fuelName));
             }
             else
             {
-                tank.TryRemoveReagent(_fuelType, ReagentUnit.New(50));
+                tank.TryRemoveReagent(_fuelType, ReagentUnit.New(_fuelCost));
 
                 var playerPos = eventArgs.User.Transform.GridPosition;
                 var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
