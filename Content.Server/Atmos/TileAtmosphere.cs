@@ -220,7 +220,8 @@ namespace Content.Server.Atmos
         {
             if (Air == null || (_tileAtmosInfo.LastCycle >= cycleNum)) return; // Already done.
 
-            _tileAtmosInfo = new TileAtmosInfo();
+            ResetTileAtmosInfo();
+
 
             var startingMoles = Air.TotalMoles;
             var runAtmos = false;
@@ -263,7 +264,7 @@ namespace Content.Server.Atmos
                 {
                     if (adj?.Air == null) continue;
                     if(adj._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
-                    adj._tileAtmosInfo = new TileAtmosInfo();
+                    adj.ResetTileAtmosInfo();
 
                     adj._tileAtmosInfo.LastQueueCycle = queueCycle;
                     if(tileCount < Atmospherics.ZumosHardTileLimit)
@@ -503,16 +504,16 @@ namespace Content.Server.Atmos
                         for (var i = queueLength - 1; i >= 0; i--)
                         {
                             var tile = queue[i];
-                            if (tile._tileAtmosInfo.CurrentTransferAmount == 0 ||
-                                tile._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid) continue;
-                            tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection,
-                                tile._tileAtmosInfo.CurrentTransferAmount);
+                            if (tile._tileAtmosInfo.CurrentTransferAmount == 0 || tile._tileAtmosInfo.CurrentTransferDirection == Direction.Invalid)
+                                continue;
 
-                            if (tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection,
-                                out var adjacent))
-                                adjacent._tileAtmosInfo.CurrentTransferAmount +=
-                                    tile._tileAtmosInfo.CurrentTransferAmount;
-                            tile._tileAtmosInfo.CurrentTransferAmount = 0;
+                            tile.AdjustEqMovement(tile._tileAtmosInfo.CurrentTransferDirection, tile._tileAtmosInfo.CurrentTransferAmount);
+
+                            if (tile._adjacentTiles.TryGetValue(tile._tileAtmosInfo.CurrentTransferDirection, out var adjacent))
+                            {
+                                adjacent._tileAtmosInfo.CurrentTransferAmount += tile._tileAtmosInfo.CurrentTransferAmount;
+                                tile._tileAtmosInfo.CurrentTransferAmount = 0;
+                            }
                         }
                     }
 
@@ -605,8 +606,14 @@ namespace Content.Server.Atmos
         private void AdjustEqMovement(Direction direction, float molesToMove)
         {
             _tileAtmosInfo[direction] += molesToMove;
-            if(direction != (Direction)(-1) && _adjacentTiles.TryGetValue(direction, out var adj))
-                _adjacentTiles[direction]._tileAtmosInfo[direction.GetOpposite()] -= molesToMove;
+            if(direction != Direction.Invalid && _adjacentTiles.TryGetValue(direction, out var adj))
+                adj._tileAtmosInfo[direction.GetOpposite()] -= molesToMove;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void ResetTileAtmosInfo()
+        {
+            _tileAtmosInfo = new TileAtmosInfo {CurrentTransferDirection = Direction.Invalid};
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -928,11 +935,10 @@ namespace Content.Server.Atmos
             var tiles = new List<TileAtmosphere>();
             var spaceTiles = new List<TileAtmosphere>();
             tiles.Add(this);
-            _tileAtmosInfo = new TileAtmosInfo
-            {
-                LastQueueCycle = queueCycle,
-                CurrentTransferDirection = Direction.Invalid
-            };
+
+            ResetTileAtmosInfo();
+            _tileAtmosInfo.LastQueueCycle = queueCycle;
+
             var tileCount = 1;
             for (var i = 0; i < tileCount; i++)
             {
@@ -955,7 +961,8 @@ namespace Content.Server.Atmos
                         tile.ConsiderFirelocks(tile2);
                         if (tile._adjacentTiles[direction]?.Air != null)
                         {
-                            tile2._tileAtmosInfo = new TileAtmosInfo {LastQueueCycle = queueCycle};
+                            tile2.ResetTileAtmosInfo();
+                            tile2._tileAtmosInfo.LastQueueCycle = queueCycle;
                             tiles.Add(tile2);
                             tileCount++;
                         }
