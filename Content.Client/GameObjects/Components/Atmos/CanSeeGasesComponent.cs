@@ -21,6 +21,10 @@ namespace Content.Client.GameObjects.Components.Atmos
     [RegisterComponent]
     public class CanSeeGasesComponent : SharedCanSeeGasesComponent
     {
+        // This data never gets cleaned up unless we change entity.
+        // The advantage is we never need to re-send the same data to the client.
+        // The disadvantage is it could be more prone to memory leaks.
+        // Could look at running some cleanup every minute or so just in case it starts ballooning
         private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _tileData = 
             new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
 
@@ -39,6 +43,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                     break;
 
                 case PlayerDetachedMsg _:
+                    _tileData.Clear();
                     overlayManager = IoCManager.Resolve<IOverlayManager>();
                     if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
                         overlayManager.RemoveOverlay(nameof(GasTileOverlay));
@@ -55,53 +60,6 @@ namespace Content.Client.GameObjects.Components.Atmos
                 case SharedGasTileOverlaySystem.GasOverlayMessage msg:
                     HandleGasOverlayMessage(msg);
                     break;
-            }
-        }
-
-        /// <summary>
-        ///     Remove chunks that are out of out range to save memory.
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
-        public void RemoveOutOfRange()
-        {
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            
-            var entityTile = mapManager
-                .GetGrid(Owner.Transform.GridID)
-                .GetTileRef(Owner.Transform.GridPosition)
-                .GridIndices;
-            
-            var worldBounds = Box2.CenteredAround(Owner.Transform.WorldPosition,
-                new Vector2(20.0f, 20.0f));
-
-            var toRemove = new List<GasOverlayChunk>();
-
-            foreach (var grid in mapManager.FindGridsIntersecting(Owner.Transform.MapID, worldBounds))
-            {
-                if (!_tileData.TryGetValue(grid.Index, out var chunks)) continue;
-
-                foreach (var (indices, chunk) in chunks)
-                {
-                    // Am I dumb, this feels wrong.
-                    // Anyway, if the chunk's to the left of us there could be the very edge of it in range so need to consider
-                    // Chunk sizes when determining pruning
-                    var xDiff = indices.X - entityTile.X;
-                    var yDiff = indices.Y - entityTile.Y;
-
-                    if (xDiff > 0 && xDiff > SharedGasTileOverlaySystem.UpdateRange || xDiff < 0 && Math.Abs(xDiff + SharedGasTileOverlaySystem.ChunkSize) > SharedGasTileOverlaySystem.UpdateRange 
-                     || yDiff > 0 && yDiff > SharedGasTileOverlaySystem.UpdateRange || yDiff < 0 && Math.Abs(yDiff + SharedGasTileOverlaySystem.ChunkSize) > SharedGasTileOverlaySystem.UpdateRange)
-                    {
-                        toRemove.Add(chunk);
-                        continue;
-                    }
-                }
-
-                foreach (var chunk in toRemove)
-                {
-                    chunks.Remove(chunk.MapIndices);
-                }
-                
-                toRemove.Clear();
             }
         }
 

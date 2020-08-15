@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
@@ -6,6 +7,9 @@ using Robust.Server.GameObjects;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 
@@ -20,6 +24,12 @@ namespace Content.Server.GameObjects.Components.Atmos
     {
         private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _knownChunks = 
             new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
+        
+        /// <summary>
+        ///     We'll store the last time we sent a particular chunk to a client so if they move around
+        ///     we can check if they need the chunks sent.
+        /// </summary>
+        private Dictionary<GasOverlayChunk, TimeSpan> _lastSent = new Dictionary<GasOverlayChunk, TimeSpan>();
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
@@ -46,9 +56,9 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Adds this chunk for monitoring for invalidity.
         /// </summary>
-        /// <param name="gam"></param>
+        /// <param name="currentTime"></param>
         /// <param name="chunk"></param>
-        public void AddChunk(GridAtmosphereComponent gam, GasOverlayChunk chunk)
+        public void AddChunk(TimeSpan currentTime, GasOverlayChunk chunk)
         {
             if (!_knownChunks.TryGetValue(chunk.GridIndices, out var chunks))
             {
@@ -61,10 +71,18 @@ namespace Content.Server.GameObjects.Components.Atmos
                 chunks[chunk.MapIndices] = chunk;
             }
 
+            // If we've already sent this chunk to the client don't bother re-sending.
+            if (_lastSent.TryGetValue(chunk, out var chunkLastSent) && chunkLastSent >= chunk.LastUpdate)
+            {
+                return;
+            } 
+
             if (Owner.TryGetComponent(out IActorComponent actorComponent) && 
                 actorComponent.playerSession.ConnectedClient.IsConnected && 
                 TryChunkToMessage(chunk, out var message))
             {
+                chunkLastSent = currentTime;
+                _lastSent[chunk] = chunkLastSent;
                 SendNetworkMessage(message, actorComponent.playerSession.ConnectedClient);
             }
         }
@@ -84,13 +102,13 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         /// <summary>
         ///     Retrieve a whole chunk as a message, only getting the relevant tiles for the gas overlay.
+        ///     Don't use this for UpdateClient as it won't account for tiles that had an overlay texture that's been removed.
         /// </summary>
         /// <param name="chunk"></param>
         /// <param name="message"></param>
         /// <returns></returns>
         private bool TryChunkToMessage(GasOverlayChunk chunk, [NotNullWhen(true)] out SharedGasTileOverlaySystem.GasOverlayMessage? message)
         {
-            message = null;
             // Chunk data should already be up to date.
             // Only send relevant tiles to client.
             
@@ -114,20 +132,22 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             if (tileData.Count == 0)
             {
+                message = null;
                 return false;
             }
-
+            
             message = new SharedGasTileOverlaySystem.GasOverlayMessage(chunk.GridIndices, tileData);
             return true;
         }
 
         /// <summary>
         ///     Remove this chunk from our known chunks.
-        ///     This means if an UpdateClient() is called then it won't be sent.
+        ///     This means if an SyncClient() is called then it won't be sent.
         /// </summary>
         /// <param name="chunk"></param>
         public void RemoveChunk(GasOverlayChunk chunk)
         {
+            // We'll leave our last-sent time so we don't need to re-send the data if possible.
             if (!_knownChunks.TryGetValue(chunk.GridIndices, out var chunks))
             {
                 return;
@@ -149,6 +169,9 @@ namespace Content.Server.GameObjects.Components.Atmos
                 return;
             }
 
+            // New client won't have all the same data so we'll reset it.
+            _lastSent.Clear();
+            
             foreach (var (_, chunks) in _knownChunks)
             {
                 foreach (var (_, chunk) in chunks)

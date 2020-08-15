@@ -98,8 +98,6 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             AccumulatedFrameTime -= UpdateTime;
-
-            _gasesComponent?.RemoveOutOfRange();
         }
 
         public void HandlePlayerAttached(PlayerAttachSysMessage message)

@@ -12,6 +12,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.Configuration;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -22,6 +23,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
     [UsedImplicitly]
     internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
+        [Robust.Shared.IoC.Dependency] private readonly IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private readonly IPlayerManager _playerManager = default!;
         [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
         
@@ -224,24 +226,28 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                         tiles = new HashSet<MapIndices>();
                         updatedTiles[chunk] = tiles;
                     }
-
-                    chunk.Dirty = true;
+                    
                     updatedTiles[chunk].Add(invalid);
                     chunk.Update(data, invalid);
                 }
             }
-            
-            // TODO: Could look at the client storing atmos data for a chunk indefinitely and the server sends the last-dirty time for a chunk;
-            // if it's the same as what the client has then no need to send the full update.
 
+            var currentTime = _gameTiming.CurTime;
+
+            // Set the LastUpdate for chunks.
+            foreach (var (chunk, _) in updatedTiles)
+            {
+                chunk.Dirty(currentTime);
+            }
+            
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
             foreach (var comp in ComponentManager.EntityQuery<CanSeeGasesComponent>())
             {
                 // Get chunks in range and update if we've moved around or the chunks have new overlay data
-                var chunksInRange = GetChunksInRange(comp.Owner).ToList();
-                var knownChunks = comp.GetKnownChunks().ToList();
+                var chunksInRange = GetChunksInRange(comp.Owner).ToArray();
+                var knownChunks = comp.GetKnownChunks().ToArray();
                 var chunksToRemove = new List<GasOverlayChunk>(0);
                 var chunksToAdd = new List<GasOverlayChunk>(0);
                 
@@ -263,14 +269,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 
                 foreach (var chunk in chunksToAdd)
                 {
-                    if (!gridAtmosComponents.TryGetValue(chunk.GridIndices, out var gridAtmos))
-                    {
-                        gridAtmos = EntityManager
-                            .GetEntity(_mapManager.GetGrid(chunk.GridIndices).GridEntityId)
-                            .GetComponent<GridAtmosphereComponent>();
-                    }
-                    
-                    comp.AddChunk(gridAtmos, chunk);
+                    comp.AddChunk(currentTime, chunk);
                 }
 
                 foreach (var chunk in chunksToRemove)
@@ -301,11 +300,6 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
 
             // Cleanup
-            foreach (var (chunk, _) in updatedTiles)
-            {
-                chunk.Dirty = false;
-            }
-            
             _invalidTiles.Clear();
         }
     }

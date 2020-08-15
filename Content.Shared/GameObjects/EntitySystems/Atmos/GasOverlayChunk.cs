@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Robust.Shared.Interfaces.Timing;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 
@@ -19,15 +22,17 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         
         public SharedGasTileOverlaySystem.GasOverlayData[,] TileData = new SharedGasTileOverlaySystem.GasOverlayData[SharedGasTileOverlaySystem.ChunkSize, SharedGasTileOverlaySystem.ChunkSize];
 
-        /// <summary>
-        ///     Signals that that Chunk needs to be re-sent to clients in range.
-        /// </summary>
-        public bool Dirty { get; set; }
+        public TimeSpan LastUpdate { get; private set; }
 
         public GasOverlayChunk(GridId gridIndices, MapIndices mapIndices)
         {
             GridIndices = gridIndices;
             MapIndices = mapIndices;
+        }
+
+        public void Dirty(TimeSpan currentTime)
+        {
+            LastUpdate = currentTime;
         }
 
         /// <summary>
