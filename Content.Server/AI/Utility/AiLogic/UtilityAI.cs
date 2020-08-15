@@ -8,9 +8,12 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Robust.Server.AI;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -63,6 +66,13 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 SortActions();
             }
+
+            if (BehaviorSets.Count == 1 && !EntitySystem.Get<AiSystem>().IsAwake(this))
+            {
+                IoCManager.Resolve<IEntityManager>()
+                    .EventBus
+                    .RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
+            }
         }
 
         public void RemoveBehaviorSet(Type behaviorSet)
@@ -73,6 +83,13 @@ namespace Content.Server.AI.Utility.AiLogic
             {
                 BehaviorSets.Remove(behaviorSet);
                 SortActions();
+            }
+
+            if (BehaviorSets.Count == 0)
+            {
+                IoCManager.Resolve<IEntityManager>()
+                    .EventBus
+                    .RaiseEvent(EventSource.Local, new SleepAiMessage(this, true));
             }
         }
 
@@ -134,18 +151,22 @@ namespace Content.Server.AI.Utility.AiLogic
 
         private void DamageThresholdHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
         {
-            if (!SelfEntity.TryGetComponent(out SpeciesComponent speciesComponent))
-            {
-                return;
-            }
+            var oldDeadState = _isDead;
+            _isDead = eventArgs.DamageThreshold.ThresholdType == ThresholdType.Death;
 
-            if (speciesComponent.CurrentDamageState is DeadState)
+            if (oldDeadState != _isDead)
             {
-                _isDead = true;
-            }
-            else
-            {
-                _isDead = false;
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                
+                switch (_isDead)
+                {
+                    case true:
+                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, true));
+                        break;
+                    case false:
+                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
+                        break;
+                }
             }
         }
 
@@ -180,16 +201,6 @@ namespace Content.Server.AI.Utility.AiLogic
 
         public override void Update(float frameTime)
         {
-            // If we can't do anything then there's no point thinking
-            if (_isDead || BehaviorSets.Count == 0)
-            {
-                _actionCancellation?.Cancel();
-                _blackboard.GetState<LastUtilityScoreState>().SetValue(0.0f);
-                CurrentAction?.Shutdown();
-                CurrentAction = null;
-                return;
-            }
-
             // If we asked for a new action we don't want to dump the existing one.
             if (_actionRequest != null)
             {
