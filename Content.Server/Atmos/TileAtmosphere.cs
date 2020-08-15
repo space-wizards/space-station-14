@@ -598,7 +598,7 @@ namespace Content.Server.Atmos
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = ((Vector2i) (tile.GridIndices - GridIndices)).GetCardinalDir();
+                _pressureDirection = ((Vector2i) (GridIndices - tile.GridIndices)).GetCardinalDir();
             }
         }
 
