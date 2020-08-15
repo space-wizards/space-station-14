@@ -1,6 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
@@ -13,9 +18,19 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
     public interface IHandsComponent : ISharedHandsComponent
     {
         /// <summary>
+        ///     Invoked when the hand contents changes or when a hand is added/removed.
+        /// </summary>
+        event Action? OnItemChanged;
+
+        /// <summary>
+        ///     The hands in this component.
+        /// </summary>
+        IEnumerable<string> Hands { get; }
+
+        /// <summary>
         ///     The hand name of the currently active hand.
         /// </summary>
-        string ActiveHand { get; set; }
+        string? ActiveHand { get; set; }
 
         /// <summary>
         ///     Enumerates over every held item.
@@ -27,12 +42,20 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// </summary>
         /// <param name="handName">The name of the hand to get.</param>
         /// <returns>The item in the held, null if no item is held</returns>
-        ItemComponent GetItem(string handName);
+        ItemComponent? GetItem(string handName);
+
+        /// <summary>
+        ///     Attempts to get an item in a hand.
+        /// </summary>
+        /// <param name="handName">The name of the hand to get.</param>
+        /// <param name="item">The item in the held, null if no item is held</param>
+        /// <returns>Whether it was holding an item</returns>
+        bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item);
 
         /// <summary>
         /// Gets item held by the current active hand
         /// </summary>
-        ItemComponent GetActiveHand { get; }
+        ItemComponent? GetActiveHand { get; }
 
         /// <summary>
         ///     Puts an item into any empty hand, preferring the active hand.
@@ -78,7 +101,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <returns>
         ///     true if the entity is held, false otherwise
         /// </returns>
-        bool TryHand(IEntity entity, out string handName);
+        bool TryHand(IEntity entity, [MaybeNullWhen(false)] out string handName);
 
         /// <summary>
         ///     Drops the item contained in the slot to the same position as our entity.
