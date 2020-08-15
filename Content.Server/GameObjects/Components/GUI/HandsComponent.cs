@@ -668,13 +668,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out ICollidableComponent physics))
+                if (!message.Entity.TryGetComponent(out ICollidableComponent collidable))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                physics.Stop();
+                collidable.Stop();
                 return;
             }
         }

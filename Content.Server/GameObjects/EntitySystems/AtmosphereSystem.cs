@@ -17,18 +17,14 @@ namespace Content.Server.GameObjects.EntitySystems
     [UsedImplicitly]
     public class AtmosphereSystem : EntitySystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
-#pragma warning restore 649
 
         public override void Initialize()
         {
             base.Initialize();
 
             _mapManager.TileChanged += OnTileChanged;
-            EntityQuery = new MultipleTypeEntityQuery(new List<Type>(){typeof(IGridAtmosphereComponent)});
         }
 
         public IGridAtmosphereComponent? GetGridAtmosphere(GridId gridId)
@@ -36,7 +32,7 @@ namespace Content.Server.GameObjects.EntitySystems
             // TODO Return space grid atmosphere for invalid grids or grids with no atmos
             var grid = _mapManager.GetGrid(gridId);
 
-            if (!_entityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
+            if (!EntityManager.TryGetEntity(grid.GridEntityId, out var gridEnt)) return null;
 
             return gridEnt.TryGetComponent(out IGridAtmosphereComponent atmos) ? atmos : null;
         }
@@ -45,13 +41,12 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var gridEnt in RelevantEntities)
+            foreach (var (mapGridComponent, gridAtmosphereComponent) in EntityManager.ComponentManager.EntityQuery<IMapGridComponent, IGridAtmosphereComponent>())
             {
-                var grid = gridEnt.GetComponent<IMapGridComponent>();
-                if (_pauseManager.IsGridPaused(grid.GridIndex))
+                if (_pauseManager.IsGridPaused(mapGridComponent.GridIndex))
                     continue;
 
-                gridEnt.GetComponent<IGridAtmosphereComponent>().Update(frameTime);
+                gridAtmosphereComponent.Update(frameTime);
             }
         }
 
