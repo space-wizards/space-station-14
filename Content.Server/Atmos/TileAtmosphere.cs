@@ -78,7 +78,6 @@ namespace Content.Server.Atmos
         [ViewVariables]
         public Hotspot Hotspot;
 
-        [ViewVariables]
         private Direction _pressureDirection;
 
         [ViewVariables]
