@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
@@ -53,14 +54,14 @@ namespace Content.Server.Atmos
                 {
                     if (throwTarget != GridCoordinates.InvalidGrid)
                     {
-                        var moveForce = maxForce * FloatMath.Clamp(moveProb, 0, 100) / 1000f;
+                        var moveForce = maxForce * FloatMath.Clamp(moveProb, 0, 100) / 150f;
                         var pos = ((throwTarget.Position - transform.GridPosition.Position).Normalized + direction.ToVec()).Normalized;
                         LinearVelocity = pos * moveForce;
                     }
 
                     else
                     {
-                        var moveForce = maxForce * FloatMath.Clamp(moveProb, 0, 100) / 2500f;
+                        var moveForce = MathF.Min(maxForce * FloatMath.Clamp(moveProb, 0, 100) / 2500f, 20f);
                         LinearVelocity = direction.ToVec() * moveForce;
                     }
 
@@ -76,7 +77,7 @@ namespace Content.Server.Atmos
             if (ControlledComponent != null && !_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
             {
                 LinearVelocity *= 0.85f;
-                if (LinearVelocity.Length < 1f)
+                if (MathF.Abs(LinearVelocity.Length) < 1f)
                     Stop();
             }
         }

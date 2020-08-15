@@ -591,7 +591,7 @@ namespace Content.Server.Atmos
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = difference >= 0 ? direction.GetOpposite() : direction;
+                _pressureDirection = difference < 0 ? direction.GetOpposite() : direction;
             }
         }
 
@@ -669,17 +669,17 @@ namespace Content.Server.Atmos
 
                 if (shouldShareAir)
                 {
-                    /*var difference =*/ Air.Share(enemyTile.Air, adjacentTileLength);
+                    var difference = Air.Share(enemyTile.Air, adjacentTileLength);
 
                     // Space wind!
-                    /*if (difference > 0)
+                    if (difference > 0)
                     {
                         ConsiderPressureDifference(direction, difference);
                     }
                     else
                     {
                         enemyTile.ConsiderPressureDifference(direction.GetOpposite(), -difference);
-                    }*/
+                    }
 
                     LastShareCheck();
                 }
@@ -1016,12 +1016,13 @@ namespace Content.Server.Atmos
                 tile.HandleDecompressionFloorRip(sum);
             }
 
-            Logger.Info($"{totalGasesRemoved} moles removed in explosive depressurization started in {GridIndices}.");
+            if(totalGasesRemoved > 0)
+                Logger.Info($"{totalGasesRemoved} moles removed in explosive depressurization started in {GridIndices}.");
         }
 
         private void HandleDecompressionFloorRip(float sum)
         {
-            var chance = FloatMath.Clamp(sum / 200, 0.005f, 0.5f);
+            var chance = FloatMath.Clamp(sum / 500, 0.005f, 0.5f);
             if (sum > 20 && _robustRandom.Prob(chance))
                 _gridAtmosphereComponent.PryTile(GridIndices);
         }
