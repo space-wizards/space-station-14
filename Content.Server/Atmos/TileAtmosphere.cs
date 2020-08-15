@@ -394,13 +394,10 @@ namespace Content.Server.Atmos
                             foreach (var direction in Cardinal)
                             {
                                 if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
-                                if (giver._tileAtmosInfo.MoleDelta <= 0)
-                                    break; // We're done here now. Let's not do more work than needed.
-
-                                if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
-                                    continue;
-
+                                if (giver._tileAtmosInfo.MoleDelta <= 0) break; // We're done here now. Let's not do more work than needed.
+                                if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
+
                                 queue[queueLength++] = tile2;
                                 tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
                                 tile2._tileAtmosInfo.CurrentTransferDirection = direction.GetOpposite();
@@ -458,7 +455,7 @@ namespace Content.Server.Atmos
                         var queueLength = 0;
                         queue[queueLength++] = taker;
                         taker._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
-                        for (int i = 0; i < queueLength; i++)
+                        for (var i = 0; i < queueLength; i++)
                         {
                             if (taker._tileAtmosInfo.MoleDelta >= 0)
                                 break; // We're done here now. Let's not do more work than needed.
@@ -469,11 +466,8 @@ namespace Content.Server.Atmos
                                 if (!tile._adjacentTiles.ContainsKey(direction)) continue;
                                 var tile2 = tile._adjacentTiles[direction];
 
-                                if (taker._tileAtmosInfo.MoleDelta >= 0)
-                                    break; // We're done here now. Let's not do more work than needed.
-
-                                if (tile2?._tileAtmosInfo == null || tile2._tileAtmosInfo.LastQueueCycle != queueCycle)
-                                    continue;
+                                if (taker._tileAtmosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
+                                if (tile2._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                                 if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                                 queue[queueLength++] = tile2;
                                 tile2._tileAtmosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -598,7 +592,7 @@ namespace Content.Server.Atmos
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = difference < 0 ? direction : direction.GetOpposite();
+                _pressureDirection = direction;
             }
         }
 
@@ -955,7 +949,7 @@ namespace Content.Server.Atmos
                     if (i > Atmospherics.ZumosHardTileLimit) continue;
                     foreach (var direction in Cardinal)
                     {
-                        if (!_adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                        if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                         if (tile2?.Air == null) continue;
                         if (tile2._tileAtmosInfo.LastQueueCycle == queueCycle) continue;
                         tile.ConsiderFirelocks(tile2);
@@ -985,7 +979,7 @@ namespace Content.Server.Atmos
                 var tile = progressionOrder[i];
                 foreach (var direction in Cardinal)
                 {
-                    if (!_adjacentTiles.TryGetValue(direction, out var tile2)) continue;
+                    if (!tile._adjacentTiles.TryGetValue(direction, out var tile2)) continue;
                     if (tile2?._tileAtmosInfo.LastQueueCycle != queueCycle) continue;
                     if (tile2._tileAtmosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                     if(tile2.Air.Immutable) continue;
