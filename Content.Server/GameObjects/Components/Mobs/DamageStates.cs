@@ -1,12 +1,11 @@
-﻿using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Mobs;
+﻿using Content.Server.Mobs;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Mobs
 {
     /// <summary>
     /// Defines the blocking effect of each damage state, and what effects to apply upon entering or exiting the state

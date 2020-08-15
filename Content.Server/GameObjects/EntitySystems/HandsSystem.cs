@@ -1,8 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces;
+using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Server.Throw;
 using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -15,18 +21,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
-using System;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.Interfaces;
-using Robust.Shared.Maths;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : EntitySystem

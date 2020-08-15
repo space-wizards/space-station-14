@@ -1,8 +1,6 @@
-using Content.Server.GameObjects;
 using Content.Server.Interfaces.Chat;
+using Content.Shared.Roles;
 using Robust.Shared.IoC;
-using Robust.Shared.Utility;
-using Content.Shared.Antags;
 
 namespace Content.Server.Mobs.Roles
 {

@@ -1,37 +1,32 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Systems;
-using System.Collections.Generic;
-using Robust.Shared.IoC;
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using JetBrains.Annotations;
 using Robust.Server.Interfaces.Timing;
+using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.IoC;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
-    public sealed class ApcSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class PowerApcSystem : EntitySystem
     {
-#pragma warning disable 649
-        [Dependency] private readonly IPauseManager _pauseManager;
-#pragma warning restore 649
-
-        public override void Initialize()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(ApcComponent));
-        }
+        [Dependency] private readonly IPauseManager _pauseManager = default!;
 
         public override void Update(float frameTime)
         {
             var uniqueApcNets = new HashSet<IApcNet>(); //could be improved by maintaining set instead of getting collection every frame 
-            foreach (var entity in RelevantEntities)
+            foreach (var apc in ComponentManager.EntityQuery<ApcComponent>())
             {
-                if (_pauseManager.IsEntityPaused(entity))
+                if (_pauseManager.IsEntityPaused(apc.Owner))
                 {
                     continue;
                 }
-                var apc = entity.GetComponent<ApcComponent>();
+
                 uniqueApcNets.Add(apc.Net);
-                entity.GetComponent<ApcComponent>().Update();
+                apc.Update();
             }
+            
             foreach (var apcNet in uniqueApcNets)
             {
                 apcNet.Update(frameTime);

@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Items.Storage;
 using NUnit.Framework;
 using Robust.Client.GameObjects;

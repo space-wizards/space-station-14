@@ -67,6 +67,18 @@ namespace Content.Server.Atmos
         void RemoveHotspotTile(TileAtmosphere tile);
 
         /// <summary>
+        ///     Marks a tile as superconductive so it can be processed.
+        /// </summary>
+        /// <param name="tile"></param>
+        void AddSuperconductivityTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Removes a tile from the superconductivity processing list.
+        /// </summary>
+        /// <param name="tile"></param>
+        void RemoveSuperconductivityTile(TileAtmosphere tile);
+
+        /// <summary>
         ///     Marks a tile has having high pressure differences that need to be equalized.
         /// </summary>
         /// <param name="tile"></param>

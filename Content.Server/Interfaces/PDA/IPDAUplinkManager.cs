@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Prototypes.PDA;
 
 namespace Content.Server.Interfaces.PDA
 {

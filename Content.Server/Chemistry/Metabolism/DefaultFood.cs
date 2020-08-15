@@ -3,7 +3,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.Chemistry;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.Metabolism

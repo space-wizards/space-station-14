@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems

@@ -1,6 +1,7 @@
-using Content.Shared.GameObjects.Components.Weapons.Ranged;
+﻿using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Client.GameObjects.Components.Weapons.Ranged
 {
@@ -30,9 +31,9 @@ namespace Content.Client.GameObjects.Components.Weapons.Ranged
             FireRateSelector = rangedState.FireRateSelector;
         }
 
-        public void SyncFirePos(GridCoordinates worldPos)
+        public void SyncFirePos(GridId targetGrid, Vector2 targetPosition)
         {
-            SendNetworkMessage(new FirePosComponentMessage(worldPos));
+            SendNetworkMessage(new FirePosComponentMessage(targetGrid, targetPosition));
         }
     }
 }

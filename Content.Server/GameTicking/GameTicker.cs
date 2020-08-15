@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Markers;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.Components.PDA;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
+using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -24,8 +24,8 @@ using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.PDA;
-using Content.Shared.Jobs;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Prometheus;
 using Robust.Server.Interfaces;
 using Robust.Server.Interfaces.Maps;
@@ -620,15 +620,14 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
-
-            // Reset pathing system
+            
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
+            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
+            EntitySystem.Get<StationEventSystem>().ResettingCleanup();
 
             _spawnedPositions.Clear();
             _manifest.Clear();
-
-            EntitySystem.Get<WireHackingSystem>().ResetLayouts();
         }
 
         private void _preRoundSetup()

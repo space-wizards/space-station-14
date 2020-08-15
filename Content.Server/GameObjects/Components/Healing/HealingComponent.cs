@@ -1,11 +1,12 @@
-﻿using Content.Server.GameObjects.Components.Stack;
+﻿using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Server.Utility;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects.Components.Weapon.Melee
+namespace Content.Server.GameObjects.Components.Healing
 {
     [RegisterComponent]
     public class HealingComponent : Component, IAfterInteract, IUse

@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     ///     A verb is an action in the right click menu of an entity.

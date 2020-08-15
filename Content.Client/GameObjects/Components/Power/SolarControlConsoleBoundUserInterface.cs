@@ -1,6 +1,4 @@
 using System;
-using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Client.Graphics.Drawing;

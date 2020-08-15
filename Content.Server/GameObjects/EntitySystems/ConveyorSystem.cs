@@ -1,33 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Conveyor;
 using Content.Shared.GameObjects.Components.Conveyor;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class ConveyorSystem : EntitySystem
+    internal sealed class ConveyorSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            EntityQuery = new TypeEntityQuery(typeof(ConveyorComponent));
-        }
-
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var comp in ComponentManager.EntityQuery<ConveyorComponent>())
             {
-                if (!entity.TryGetComponent(out ConveyorComponent conveyor))
-                {
-                    continue;
-                }
-
-                conveyor.Update(frameTime);
+                comp.Update(frameTime);
             }
         }
     }

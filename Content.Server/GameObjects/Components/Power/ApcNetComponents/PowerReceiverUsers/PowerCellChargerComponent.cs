@@ -2,7 +2,7 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Server.GameObjects.Components.Power.Chargers
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     /// <summary>
     /// Recharges an entity with a <see cref="BatteryComponent"/>.

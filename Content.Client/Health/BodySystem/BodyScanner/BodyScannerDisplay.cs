@@ -1,20 +1,14 @@
-﻿using Content.Client.BodySystem;
-using Content.Shared.BodySystem;
-using Robust.Client.Graphics.Drawing;
-using Robust.Client.Interfaces.ResourceManagement;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using Content.Shared.Health.BodySystem.BodyScanner;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using static Robust.Client.UserInterface.Controls.ItemList;
 
-namespace Content.Client.UserInterface
+namespace Content.Client.Health.BodySystem.BodyScanner
 {
     public sealed class BodyScannerDisplay : SS14Window
     {
@@ -33,7 +27,7 @@ namespace Content.Client.UserInterface
 
         private BodyScannerTemplateData _template;
         private Dictionary<string, BodyScannerBodyPartData> _parts;
-        private List<string> _slots; 
+        private List<string> _slots;
         private BodyScannerBodyPartData _currentBodyPart;
 
 
@@ -100,7 +94,7 @@ namespace Content.Client.UserInterface
 
         public void UpdateDisplay(BodyScannerTemplateData template, Dictionary<string, BodyScannerBodyPartData> parts)
         {
-            _template = template; 
+            _template = template;
             _parts = parts;
             _slots = new List<string>();
             BodyPartList.Clear();

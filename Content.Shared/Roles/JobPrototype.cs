@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.Jobs;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.Jobs
+namespace Content.Shared.Roles
 {
     /// <summary>
     ///     Describes information for a single job on the station.

@@ -1,8 +1,8 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
-using System;
 
 namespace Content.Server.GameObjects.Components.Power
 {

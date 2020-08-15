@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -12,7 +12,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Destructible
+namespace Content.Server.GameObjects.Components.Damage
 {
     /// <summary>
     /// Deletes the entity once a certain damage threshold has been reached.

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -355,6 +357,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 appearance.SetData(Visuals.Handle, HandleState.Normal);
                 appearance.SetData(Visuals.Light, LightState.Off);
                 return;
+            }
+            else if (_pressure < 1)
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Charging);
             }
             else
             {
