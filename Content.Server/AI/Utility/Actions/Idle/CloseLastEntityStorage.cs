@@ -20,7 +20,7 @@ namespace Content.Server.AI.Utility.Actions.Idle
     /// </summary>
     public sealed class CloseLastEntityStorage : UtilityAction
     {
-        public override float Bonus => 1.5f;
+        public override float Bonus => IdleBonus + 0.01f;
         
         public CloseLastEntityStorage(IEntity owner) : base(owner) {}
 
@@ -50,9 +50,9 @@ namespace Content.Server.AI.Utility.Actions.Idle
             {
                 considerationsManager.Get<StoredStateEntityIsNullCon>().Set(typeof(LastOpenedStorageState), context)
                     .InverseBoolCurve(context),
-                considerationsManager.Get<DistanceCon>()
-                    .QuadraticCurve(context, 1.0f, 1.0f, 0.02f, 0.0f),
-                considerationsManager.Get<TargetAccessibleCon>()
+                considerationsManager.Get<TargetDistanceCon>()
+                    .PresetCurve(context, PresetCurve.Distance),
+				considerationsManager.Get<TargetAccessibleCon>()
                     .BoolCurve(context),
             };
         }

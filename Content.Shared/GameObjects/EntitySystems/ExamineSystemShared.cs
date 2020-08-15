@@ -58,7 +58,7 @@ namespace Content.Shared.GameObjects.EntitySystems
                 predicate += entity => entity == container.Owner;
             }
 
-            return EntitySystem.Get<SharedInteractionSystem>()
+            return Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition,
                     ExamineRange, predicate: predicate, ignoreInsideBlocker:true);
         }

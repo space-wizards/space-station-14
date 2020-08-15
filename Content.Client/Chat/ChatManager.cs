@@ -302,7 +302,8 @@ namespace Content.Client.Chat
                 case "ALL":
                     chatBox.LocalButton.Pressed ^= true;
                     chatBox.OOCButton.Pressed ^= true;
-                    chatBox.AdminButton.Pressed ^= true;
+                    if (chatBox.AdminButton != null)
+                        chatBox.AdminButton.Pressed ^= true;
                     _allState = !_allState;
                     break;
             }

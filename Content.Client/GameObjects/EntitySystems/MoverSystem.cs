@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Client.Physics;
 using Robust.Client.Player;

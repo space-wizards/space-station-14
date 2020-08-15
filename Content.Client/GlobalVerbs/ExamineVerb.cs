@@ -1,5 +1,5 @@
 using Content.Client.GameObjects.EntitySystems;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;

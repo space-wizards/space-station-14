@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using static Content.Shared.GameObjects.EntitySystemMessages.VerbSystemMessages;
-using Logger = Robust.Shared.Log.Logger;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class VerbSystem : EntitySystem
     {

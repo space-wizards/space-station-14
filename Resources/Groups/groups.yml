@@ -36,6 +36,7 @@
   - listplayers
   - loc
   - hostlogin
+  - events
 
 - Index: 100
   Name: Administrator
@@ -92,6 +93,8 @@
   - anchor
   - unanchor
   - tubeconnections
+  - tilewalls
+  - events
   CanViewVar: true
   CanAdminPlace: true
 
@@ -179,6 +182,8 @@
   - clearatmos
   - settemp
   - setatmostemp
+  - tilewalls
+  - events
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

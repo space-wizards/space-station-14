@@ -1,5 +1,4 @@
 ﻿using Content.Client.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
