@@ -1,5 +1,4 @@
 ﻿using Content.Server.Atmos;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
