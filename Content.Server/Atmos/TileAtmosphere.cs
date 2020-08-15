@@ -182,6 +182,8 @@ namespace Content.Server.Atmos
                     ||  ContainerHelpers.IsInContainer(entity))
                     continue;
 
+                physics.WakeBody();
+
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
                 if (pressure.LastHighPressureMovementAirCycle < _gridAtmosphereComponent.UpdateCounter)
                 {
