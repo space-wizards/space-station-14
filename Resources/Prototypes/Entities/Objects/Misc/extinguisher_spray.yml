@@ -15,6 +15,10 @@
       sprite: Effects/extinguisherSpray.rsi
       HeldPrefix: off
     - type: GasVapor
+      dissipationInterval: 1
+      gas: WaterVapor
+      gasVolume: 200
+      gasTemperature: 293.15
     - type: Physics
     - type: Collidable
       shapes:

@@ -11,7 +11,10 @@ namespace Content.Server.GameObjects.EntitySystems
         {
             foreach (var GasVapor in ComponentManager.EntityQuery<GasVaporComponent>())
             {
-                GasVapor.Update(frameTime);
+                if (GasVapor.Initialized)
+                {
+                    GasVapor.Update(frameTime);
+                }
             }
         }
     }

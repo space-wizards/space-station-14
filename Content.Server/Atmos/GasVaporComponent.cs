@@ -37,7 +37,6 @@ namespace Content.Server.Atmos
 #pragma warning enable 649
         public override string Name => "GasVapor";
 
-        //TODO: IDK if this is a good way to initilize contents
         [ViewVariables] public GasMixture Air { get; set; }
 
         [ViewVariables] private GridAtmosphereComponent _gridAtmosphereComponent;
@@ -45,13 +44,26 @@ namespace Content.Server.Atmos
         private bool _running;
         private Vector2 _direction;
         private float _velocity;
-        private float disspateTimer = 0;
+        private float _disspateTimer = 0;
+        private float _dissipationInterval;
+        private Gas _gas;
+        private float _gasVolume;
+        private float _gasTemperature;
 
-
-        public void Initialize(GridAtmosphereComponent gridAtmosphereComponent)
+        public override void Initialize()
         {
             base.Initialize();
-            _gridAtmosphereComponent = gridAtmosphereComponent;
+            Air = new GasMixture(_gasVolume){Temperature = _gasTemperature};
+            Air.SetMoles(_gas,20);
+        }
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _dissipationInterval, "dissipationInterval", 1);
+            serializer.DataField(ref _gas, "gas", Gas.WaterVapor);
+            serializer.DataField(ref _gasVolume, "gasVolume", 200);
+            serializer.DataField(ref _gasTemperature, "gasTemperature", Atmospherics.T20C);
         }
 
         public void StartMove(Vector2 dir, float velocity)
@@ -96,10 +108,10 @@ namespace Content.Server.Atmos
                 }
             }
 
-            disspateTimer += frameTime;
-            if (disspateTimer > 1)
+            _disspateTimer += frameTime;
+            if (_disspateTimer > _dissipationInterval)
             {
-                Air.SetMoles(Gas.WaterVapor, Air.TotalMoles/2 );
+                Air.SetMoles(_gas, Air.TotalMoles/2 );
             }
 
             if (Air.TotalMoles < 1)

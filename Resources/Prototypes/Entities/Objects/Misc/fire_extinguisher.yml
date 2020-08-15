@@ -23,3 +23,5 @@
             Quantity: 1000
     - type: GasSprayer
       spraySound: /Audio/Effects/spray.ogg
+      sprayType: ExtinguisherSpray
+      fuelType: chem.H2O

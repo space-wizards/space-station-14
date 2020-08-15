@@ -27,47 +27,43 @@ namespace Content.Server.Atmos
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
 #pragma warning restore 649
 
+        //TODO: create a function that can create a gas based on a solution mix
         public override string Name => "GasSprayer";
 
         private string _spraySound;
+        private string _sprayType;
+        private string _fuelType;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
             serializer.DataField(ref _spraySound, "spraySound", string.Empty);
-        }
+            serializer.DataField(ref _sprayType, "sprayType", string.Empty);
+            serializer.DataField(ref _fuelType, "fuelType", string.Empty);
 
+        }
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (Owner.TryGetComponent(out SolutionComponent tank) &&
-                tank.Solution.GetReagentQuantity("chem.H2O").Float().Equals(0f))
+                tank.Solution.GetReagentQuantity(_fuelType).Float().Equals(0f))
             {
-                //TODO: Parameterize to use object prototype's name
                 _notifyManager.PopupMessage(Owner, eventArgs.User,
-                    Loc.GetString("The Extinguisher is out of water!", Owner));
+                    Loc.GetString("The {0} is out of {1}!", Owner.Name, _fuelType));
             }
             else
             {
-                tank.TryRemoveReagent("chem.H2O", ReagentUnit.New(50));
+                tank.TryRemoveReagent(_fuelType, ReagentUnit.New(50));
 
                 var playerPos = eventArgs.User.Transform.GridPosition;
                 var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
                 playerPos.Offset(direction);
 
-                var spray = _serverEntityManager.SpawnEntity("ExtinguisherSpray", playerPos);
-
+                var spray = _serverEntityManager.SpawnEntity(_sprayType, playerPos);
                 spray.GetComponent<AppearanceComponent>()
                     .SetData(RoguePointingArrowVisuals.Rotation, direction.ToAngle().Degrees);
-                if (spray.TryGetComponent<GasVaporComponent>(out GasVaporComponent air))
-                {
-                    air.Air = new GasMixture(200){Temperature = Atmospherics.T20C};
-                    air.Air.SetMoles(Gas.WaterVapor,20);
-                }
-
-
-                //Todo: Parameterize into prototype
                 spray.GetComponent<GasVaporComponent>().StartMove(direction, 5);
+
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner);
             }
         }
