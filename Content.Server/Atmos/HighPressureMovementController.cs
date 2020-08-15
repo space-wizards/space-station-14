@@ -51,19 +51,17 @@ namespace Content.Server.Atmos
 
                 if (maxForce > ThrowForce)
                 {
-                    ControlledComponent.WakeBody();
-
                     if (throwTarget != GridCoordinates.InvalidGrid)
                     {
-                        var moveForce = maxForce * FloatMath.Clamp(moveProb, 0, 100);
+                        var moveForce = maxForce * FloatMath.Clamp(moveProb, 0, 100) / 150f;
                         var pos = ((throwTarget.Position - transform.GridPosition.Position).Normalized + direction.ToVec()).Normalized;
-                        ControlledComponent.Force += pos * moveForce;
+                        LinearVelocity = pos * moveForce;
                     }
 
                     else
                     {
-                        var moveForce = MathF.Min(maxForce * FloatMath.Clamp(moveProb, 0, 100), 20f);
-                        ControlledComponent.Force += direction.ToVec() * moveForce;
+                        var moveForce = MathF.Min(maxForce * FloatMath.Clamp(moveProb, 0, 100) / 2500f, 20f);
+                        LinearVelocity = direction.ToVec() * moveForce;
                     }
 
                     pressureComponent.LastHighPressureMovementAirCycle = cycle;
@@ -74,8 +72,6 @@ namespace Content.Server.Atmos
         public override void UpdateAfterProcessing()
         {
             base.UpdateAfterProcessing();
-
-            return;
 
             if (ControlledComponent != null && !_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
             {
