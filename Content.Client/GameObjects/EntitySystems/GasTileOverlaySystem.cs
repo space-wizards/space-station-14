@@ -1,28 +1,24 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using Content.Client.Atmos;
-using Content.Client.Utility;
+using Content.Client.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
-using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    internal sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
@@ -43,13 +39,14 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly int[] _fireFrameCounter = new int[FireStates];
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
 
-        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayData>> _overlay = new Dictionary<GridId, Dictionary<MapIndices, GasOverlayData>>();
+        private CanSeeGasesComponent? _gasesComponent;
+
+        public bool CanSeeGas => _gasesComponent != null;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeNetworkEvent(new EntityEventHandler<GasTileOverlayMessage>(OnTileOverlayMessage));
+            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
@@ -90,11 +87,46 @@ namespace Content.Client.GameObjects.EntitySystems
             }
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            AccumulatedFrameTime += frameTime;
+
+            if (AccumulatedFrameTime < UpdateTime)
+            {
+                return;
+            }
+
+            AccumulatedFrameTime -= UpdateTime;
+
+            _gasesComponent?.RemoveOutOfRange();
+        }
+
+        public void HandlePlayerAttached(PlayerAttachSysMessage message)
+        {
+            if (message.AttachedEntity == null)
+            {
+                return;
+            }
+            
+            if (message.AttachedEntity.TryGetComponent(out CanSeeGasesComponent canSeeGasesComponent))
+            {
+                _gasesComponent = canSeeGasesComponent;
+            }
+        }
+
         public (Texture, Color color)[] GetOverlays(GridId gridIndex, MapIndices indices)
         {
-            if (!_overlay.TryGetValue(gridIndex, out var tiles) || !tiles.TryGetValue(indices, out var overlays))
+            var data = _gasesComponent!.GetData(gridIndex, indices);
+
+            if (data == null)
                 return Array.Empty<(Texture, Color)>();
 
+            var overlays = data.Value;
+            
+            if (overlays.Gas == null)
+                return Array.Empty<(Texture, Color)>();
+            
             var fire = overlays.FireState != 0;
             var length = overlays.Gas.Length + (fire ? 1 : 0);
 
@@ -116,23 +148,6 @@ namespace Content.Client.GameObjects.EntitySystems
             }
 
             return list;
-        }
-
-        private void OnTileOverlayMessage(GasTileOverlayMessage ev)
-        {
-            if(ev.ClearAllOtherOverlays)
-                _overlay.Clear();
-
-            foreach (var data in ev.OverlayData)
-            {
-                if (!_overlay.TryGetValue(data.GridIndex, out var gridOverlays))
-                {
-                	gridOverlays = new Dictionary<MapIndices, GasOverlayData>();
-                    _overlay.Add(data.GridIndex, gridOverlays);
-                }
-
-                gridOverlays[data.GridIndices] = data.Data;
-            }
         }
 
         public override void FrameUpdate(float frameTime)
