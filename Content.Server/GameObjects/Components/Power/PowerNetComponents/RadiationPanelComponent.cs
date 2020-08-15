@@ -9,7 +9,7 @@ using Timer = Robust.Shared.Timers.Timer;
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
     [RegisterComponent]
-    public class RadiationPanel : PowerSupplierComponent, IInteractHand
+    public class RadiationPanelComponent : PowerSupplierComponent, IInteractHand
     {
         public override string Name => "Radiation Panel";
 

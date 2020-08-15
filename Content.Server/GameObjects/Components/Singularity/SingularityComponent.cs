@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Singularity
 
             foreach (var entity in _entityManager.GetEntitiesInRange(Owner.Transform.GridPosition, 15))
             {
-                if (entity.TryGetComponent<RadiationPanel>(out var radPanel))
+                if (entity.TryGetComponent<RadiationPanelComponent>(out var radPanel))
                 {
                     radPanel.Radiation += Level * 100;
                 }
