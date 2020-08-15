@@ -78,6 +78,11 @@ namespace Content.Server.GameObjects.EntitySystems
                     break;
                 }
 
+                if (globalVerb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
+                {
+                    break;
+                }
+
                 globalVerb.Activate(userEntity, entity);
                 break;
             }
