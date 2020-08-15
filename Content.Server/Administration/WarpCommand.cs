@@ -111,10 +111,7 @@ namespace Content.Server.Administration
                     player.AttachedEntity.Transform.GridPosition = found;
                     if (player.AttachedEntity.TryGetComponent(out ICollidableComponent collidable))
                     {
-                        foreach (var vcon in collidable.GetControllers())
-                        {
-                            vcon.Stop();
-                        }
+                        collidable.Stop();
                     }
                 }
                 else
