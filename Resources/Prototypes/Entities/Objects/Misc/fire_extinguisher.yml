@@ -22,3 +22,4 @@
           - ReagentId: chem.H2O
             Quantity: 1000
     - type: GasSprayer
+      spraySound: /Audio/Effects/spray.ogg

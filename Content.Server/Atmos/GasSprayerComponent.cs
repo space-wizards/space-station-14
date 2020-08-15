@@ -7,11 +7,14 @@ using Content.Shared.GameObjects.Components.Pointing;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Microsoft.CodeAnalysis;
 using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 
 
 namespace Content.Server.Atmos
@@ -25,6 +28,14 @@ namespace Content.Server.Atmos
 #pragma warning restore 649
 
         public override string Name => "GasSprayer";
+
+        private string _spraySound;
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _spraySound, "spraySound", string.Empty);
+        }
 
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
@@ -57,6 +68,7 @@ namespace Content.Server.Atmos
 
                 //Todo: Parameterize into prototype
                 spray.GetComponent<GasVaporComponent>().StartMove(direction, 5);
+                EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner);
             }
         }
     }
