@@ -1017,9 +1017,6 @@ namespace Content.Server.Atmos
                 tile.UpdateVisuals();
                 tile.HandleDecompressionFloorRip(sum);
             }
-
-            if(totalGasesRemoved > 0)
-                Logger.InfoS("atmos", $"{totalGasesRemoved} moles removed in explosive depressurization started in {GridIndices}.");
         }
 
         private void HandleDecompressionFloorRip(float sum)
