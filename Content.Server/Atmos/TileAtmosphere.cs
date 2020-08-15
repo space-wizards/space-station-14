@@ -10,6 +10,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Audio;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -176,7 +177,8 @@ namespace Content.Server.Atmos
             foreach (var entity in _entityManager.GetEntitiesIntersecting(_mapManager.GetGrid(GridIndex).ParentMapId, Box2.UnitCentered.Translated(GridIndices)))
             {
                 if (!entity.TryGetComponent(out ICollidableComponent physics)
-                    ||  !entity.TryGetComponent(out MovedByPressureComponent pressure))
+                    ||  !entity.TryGetComponent(out MovedByPressureComponent pressure)
+                    ||  ContainerHelpers.IsInContainer(entity))
                     continue;
 
                 var pressureMovements = physics.EnsureController<HighPressureMovementController>();
@@ -596,7 +598,7 @@ namespace Content.Server.Atmos
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = ((Vector2i) (tile.GridIndices - GridIndices)).GetDir();
+                _pressureDirection = ((Vector2i) (tile.GridIndices - GridIndices)).GetCardinalDir();
             }
         }
 
