@@ -4,10 +4,12 @@ using Content.Server.GameObjects.Components.Markers;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Administration
 {
@@ -107,6 +109,13 @@ namespace Content.Server.Administration
                 if (found.GridID != GridId.Invalid)
                 {
                     player.AttachedEntity.Transform.GridPosition = found;
+                    if (player.AttachedEntity.TryGetComponent(out ICollidableComponent collidable))
+                    {
+                        foreach (var vcon in collidable.GetControllers())
+                        {
+                            vcon.Stop();
+                        }
+                    }
                 }
                 else
                 {
