@@ -575,7 +575,7 @@ namespace Content.Server.Atmos
                     tile.Air.Merge(Air.Remove(amount));
                     UpdateVisuals();
                     tile.UpdateVisuals();
-                    ConsiderPressureDifference(tile, amount);
+                    ConsiderPressureDifference(direction, amount);
                 }
             }
         }
@@ -592,13 +592,13 @@ namespace Content.Server.Atmos
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void ConsiderPressureDifference(TileAtmosphere tile, float difference)
+        private void ConsiderPressureDifference(Direction direction, float difference)
         {
             _gridAtmosphereComponent.AddHighPressureDelta(this);
             if (difference > PressureDifference)
             {
                 PressureDifference = difference;
-                _pressureDirection = ((Vector2i) (GridIndices - tile.GridIndices)).GetCardinalDir();
+                _pressureDirection = difference < 0 ? direction : direction.GetOpposite();
             }
         }
 
@@ -631,7 +631,7 @@ namespace Content.Server.Atmos
 
             _currentCycle = fireCount;
             var adjacentTileLength = 0;
-            foreach (var (_, enemyTile) in _adjacentTiles)
+            foreach (var (direction, enemyTile) in _adjacentTiles)
             {
                 // If the tile is null or has no air, we don't do anything
                 if(enemyTile?.Air == null) continue;
@@ -681,11 +681,11 @@ namespace Content.Server.Atmos
                     // Space wind!
                     if (difference > 0)
                     {
-                        ConsiderPressureDifference(enemyTile, difference);
+                        ConsiderPressureDifference(direction, difference);
                     }
                     else
                     {
-                        enemyTile.ConsiderPressureDifference(this, -difference);
+                        enemyTile.ConsiderPressureDifference(direction.GetOpposite(), -difference);
                     }
 
                     LastShareCheck();
