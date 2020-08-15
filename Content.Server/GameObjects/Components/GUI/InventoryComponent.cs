@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
 
-        public IReadOnlyDictionary<Slots, ContainerSlot> SlotContainers => _slotContainers;
+        public IEnumerable<Slots> Slots => _slotContainers.Keys;
 
         public event Action OnItemChanged;
 
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             foreach (var slotName in InventoryInstance.SlotMasks)
             {
-                if (slotName != Slots.NONE)
+                if (slotName != EquipmentSlotDefines.Slots.NONE)
                 {
                     AddSlot(slotName);
                 }
@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.GUI
         bool IEffectBlocker.CanSlip()
         {
             if(Owner.TryGetComponent(out InventoryComponent inventoryComponent) &&
-                inventoryComponent.TryGetSlotItem(Slots.SHOES, out ItemComponent shoes)
+                inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent shoes)
             )
             {
                 return EffectBlockerSystem.CanSlip(shoes.Owner);

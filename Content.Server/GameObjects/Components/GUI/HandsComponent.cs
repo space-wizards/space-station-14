@@ -62,7 +62,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
 
-        public IReadOnlyList<Hand> Hands => _hands;
+        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
         // Mostly arbitrary.
         public const float PickupRange = 2;

@@ -25,7 +25,7 @@ namespace Content.Server.Interfaces.GameObjects.Components.Items
         /// <summary>
         ///     The hands in this component.
         /// </summary>
-        IReadOnlyList<Hand> Hands { get; }
+        IEnumerable<string> Hands { get; }
 
         /// <summary>
         ///     The hand name of the currently active hand.

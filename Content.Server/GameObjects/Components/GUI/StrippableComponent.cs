@@ -77,9 +77,9 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<Slots, string>();
 
-            foreach (var (slot, container) in _inventoryComponent.SlotContainers)
+            foreach (var slot in _inventoryComponent.Slots)
             {
-                dictionary[slot] = container.ContainedEntity?.Name ?? "None";
+                dictionary[slot] = _inventoryComponent.GetSlotItem(slot)?.Owner.Name ?? "None";
             }
 
             return dictionary;
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             foreach (var hand in _handsComponent.Hands)
             {
-                dictionary[hand.Name] = hand.Container.ContainedEntity?.Name ?? "None";
+                dictionary[hand] = _handsComponent.GetItem(hand)?.Owner.Name ?? "None";
             }
 
             return dictionary;
