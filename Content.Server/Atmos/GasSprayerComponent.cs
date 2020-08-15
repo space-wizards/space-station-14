@@ -1,6 +1,7 @@
 ﻿using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Pointing;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -58,7 +59,7 @@ namespace Content.Server.Atmos
 
                 var spray = _serverEntityManager.SpawnEntity(_sprayType, playerPos);
                 spray.GetComponent<AppearanceComponent>()
-                    .SetData(RoguePointingArrowVisuals.Rotation, direction.ToAngle().Degrees);
+                    .SetData(ExtinguisherVisuals.Rotation, direction.ToAngle().Degrees);
                 spray.GetComponent<GasVaporComponent>().StartMove(direction, 5);
 
                 EntitySystem.Get<AudioSystem>().PlayFromEntity(_spraySound, Owner);

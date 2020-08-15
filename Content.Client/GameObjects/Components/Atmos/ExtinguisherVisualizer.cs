@@ -1,6 +1,4 @@
 ﻿using System;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Pointing;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -8,12 +6,14 @@ using Robust.Client.GameObjects.Components.Animations;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Shared.Animations;
 using Robust.Shared.Maths;
+using Content.Shared.GameObjects.Components;
 
 namespace Content.Client.GameObjects.Components.Atmos
 {
     [UsedImplicitly]
     public class ExtinguisherVisualizer : AppearanceVisualizer
     {
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Atmos
                 return;
             }
 
-            if (component.TryGetData<double>(RoguePointingArrowVisuals.Rotation, out var degrees))
+            if (component.TryGetData<double>(ExtinguisherVisuals.Rotation, out var degrees))
             {
                 SetRotation(component, Angle.FromDegrees(degrees));
             }
