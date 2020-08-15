@@ -108,3 +108,42 @@
     sprite: Effects/contain_f.rsi
     state: Contain_F
   - type: Containment Field
+
+- type: entity
+  name: Emitter
+  description: "A machine that fires bolts of energy, used for powering containment fields at a safe distance."
+  id: Emitter
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    anchored: true
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.5, -0.5, 0.5, 0.5"
+      layer: [MobMask, Opaque]
+  - type: SnapGrid
+    offset: Center
+  - type: Sprite
+    sprite: Constructible/Power/emitter.rsi
+    state: emitter
+  - type: Icon
+    sprite: Constructible/Power/emitter.rsi
+    state: emitter
+  - type: Emitter
+
+- type: entity
+  name: Emitter Bolt
+  description: "A bolt of energy."
+  id: EmitterBolt
+  parent: BulletBase
+  components:
+  - type: Sprite
+    sprite: Constructible/Power/emitter.rsi
+    state: emitter_projectile
+  - type: Icon
+    sprite: Constructible/Power/emitter.rsi
+    state: emitter_projectile
