@@ -1,15 +1,16 @@
 #nullable enable
 using System;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Utility;
 
-namespace Content.Shared.Physics
+namespace Content.Shared.Physics.Pull
 {
     public class PullController : VirtualController
     {
@@ -25,15 +26,50 @@ namespace Content.Shared.Physics
 
         public ICollidableComponent? Puller => _puller;
 
-        public void StartPull(ICollidableComponent? pull)
+        public void StartPull(ICollidableComponent puller)
         {
-            _puller = pull;
+            DebugTools.AssertNotNull(puller);
+
+            if (_puller == puller)
+            {
+                return;
+            }
+
+            _puller = puller;
+
+            if (ControlledComponent == null)
+            {
+                return;
+            }
+
+            var message = new PullStartedMessage(this, _puller, ControlledComponent);
+
+            _puller.Owner.SendMessage(null, message);
+            ControlledComponent.Owner.SendMessage(null, message);
         }
 
         public void StopPull()
         {
+            var oldPuller = _puller;
+
+            if (oldPuller == null)
+            {
+                return;
+            }
+
             _puller = null;
-            ControlledComponent?.TryRemoveController<PullController>();
+
+            if (ControlledComponent == null)
+            {
+                return;
+            }
+
+            var message = new PullStoppedMessage(this, oldPuller, ControlledComponent);
+
+            oldPuller.Owner.SendMessage(null, message);
+            ControlledComponent.Owner.SendMessage(null, message);
+
+            ControlledComponent.TryRemoveController<PullController>();
         }
 
         public void TryMoveTo(GridCoordinates from, GridCoordinates to)
@@ -68,12 +104,18 @@ namespace Content.Shared.Physics
                 return;
             }
 
+            if (!_puller.Owner.IsInSameOrNoContainer(ControlledComponent.Owner))
+            {
+                StopPull();
+                return;
+            }
+
             // Are we outside of pulling range?
             var dist = _puller.Owner.Transform.WorldPosition - ControlledComponent.Owner.Transform.WorldPosition;
 
             if (dist.Length > DistBeforeStopPull)
             {
-                _puller.Owner.GetComponent<ISharedHandsComponent>().StopPull();
+                StopPull();
             }
             else if (_movingTo.HasValue)
             {
