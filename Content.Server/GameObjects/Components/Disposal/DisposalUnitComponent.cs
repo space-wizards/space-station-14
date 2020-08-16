@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             collidable.Anchored;
 
         [ViewVariables]
-        private State State => _pressure >= 1 ? State.Ready : State.Pressurizing;
+        private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables]
         private bool Engaged

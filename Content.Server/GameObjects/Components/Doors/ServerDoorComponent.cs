@@ -3,12 +3,10 @@ using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
@@ -61,8 +59,7 @@ namespace Content.Server.GameObjects.Components.Doors
         private const float DoorStunTime = 5f;
         protected bool Safety = true;
 
-        [ViewVariables]
-        private bool _occludes;
+        [ViewVariables] private bool _occludes;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -114,16 +111,25 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return;
             }
-            if (entity.TryGetComponent<IMoverComponent>(out var mover))
+
+            // Disabled because it makes it suck hard to walk through double doors.
+
+            if (entity.HasComponent<IBodyManagerComponent>())
             {
+                if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
+
+                /*
                 // TODO: temporary hack to fix the physics system raising collision events akwardly.
                 // E.g. when moving parallel to a door by going off the side of a wall.
                 var (walking, sprinting) = mover.VelocityDir;
                 // Also TODO: walking and sprint dir are added together here
                 // instead of calculating their contribution correctly.
                 var dotProduct = Vector2.Dot((sprinting + walking).Normalized, (entity.Transform.WorldPosition - Owner.Transform.WorldPosition).Normalized);
-                if (dotProduct <= -0.9f)
+                if (dotProduct <= -0.85f)
                     TryOpen(entity);
+                */
+
+                TryOpen(entity);
             }
         }
 
@@ -145,6 +151,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return true;
             }
+
             return accessReader.IsAllowed(user);
         }
 
@@ -205,6 +212,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 return true;
             }
+
             return accessReader.IsAllowed(user);
         }
 
@@ -215,6 +223,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 Deny();
                 return;
             }
+
             Close();
         }
 
@@ -243,6 +252,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     stun.Paralyze(DoorStunTime);
                     hitSomeone = true;
                 }
+
                 // If we hit someone, open up after stun (opens right when stun ends)
                 if (hitSomeone)
                 {

@@ -1,9 +1,11 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
+using Content.Server.Observer;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
@@ -168,6 +170,10 @@ namespace Content.Server.Chat
             // Default suicide, bite your tongue
             chat.EntityMe(owner, Loc.GetString("is attempting to bite {0:their} own tongue, looks like {0:theyre} trying to commit suicide!", owner)); //TODO: theyre macro
             dmgComponent.ChangeDamage(DamageType.Piercing, 500, true, owner);
+
+            // Prevent the player from returning to the body. Yes, this is an ugly hack.
+            var ghost = new Ghost(){CanReturn = false};
+            ghost.Execute(shell, player, Array.Empty<string>());
         }
     }
 }

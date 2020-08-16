@@ -14,7 +14,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 
@@ -29,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         public override uint? NetID => ContentNetIDs.ITEM;
 
         #pragma warning disable 649
-        [Dependency] private readonly IRobustRandom _robustRandom;
         [Dependency] private readonly IMapManager _mapManager;
         #pragma warning restore 649
 
@@ -93,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
                 return false;
             }
 
-            if (Owner.TryGetComponent(out IPhysicsComponent physics) &&
+            if (Owner.TryGetComponent(out ICollidableComponent physics) &&
                 physics.Anchored)
             {
                 return false;

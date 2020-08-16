@@ -4,7 +4,6 @@ using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.Interfaces;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
 using Content.Shared.GameObjects.EntitySystems;
@@ -42,7 +41,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
@@ -384,15 +382,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physicsComponent = projectile.GetComponent<IPhysicsComponent>();
-                physicsComponent.Status = BodyStatus.InAir;
+                var collidableComponent = projectile.GetComponent<ICollidableComponent>();
+                collidableComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
                 projectile
-                    .GetComponent<IPhysicsComponent>()
+                    .GetComponent<ICollidableComponent>()
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 

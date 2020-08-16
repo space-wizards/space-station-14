@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -113,7 +114,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
 
-            EntityManager.SpawnEntity("pointingarrow", coords);
+            var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
+
+            if (player.TryGetComponent(out VisibilityComponent playerVisibility))
+            {
+                var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
+                arrowVisibility.Layer = playerVisibility.Layer;
+            }
 
             string selfMessage;
             string viewerMessage;

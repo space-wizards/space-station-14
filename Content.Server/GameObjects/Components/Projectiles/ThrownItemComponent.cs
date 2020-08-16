@@ -88,7 +88,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
         public void StartThrow(Vector2 direction, float speed)
         {
-            var comp = Owner.GetComponent<IPhysicsComponent>();
+            var comp = Owner.GetComponent<ICollidableComponent>();
             comp.Status = BodyStatus.InAir;
 
             var controller = comp.EnsureController<ThrownController>();

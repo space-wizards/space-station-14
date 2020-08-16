@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
@@ -8,7 +7,6 @@ using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -25,7 +23,6 @@ namespace Content.Server.GameTicking.GameRules
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IGameTicker _gameTicker;
 #pragma warning restore 649
 
@@ -44,27 +41,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            _entityManager.EventBus.UnsubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this);
             _checkTimerCancel.Cancel();
-        }
-
-        private void OnHealthChanged(HealthChangedEventArgs message)
-        {
-            var damage = message.Damageable;
-            var owner = damage.Owner;
-
-            if (damage.CurrentDamageState != DamageState.Dead)
-                return;
-
-            if (!owner.TryGetComponent<MindComponent>(out var mind))
-                return;
-
-            if (!mind.HasMind)
-                return;
-
-            owner.Description += mind.Mind!.HasRole<SuspicionTraitorRole>()
-                ? "\nThey were a traitor!"
-                : "\nThey were an innocent!";
         }
 
         private void _checkWinConditions()

@@ -10,10 +10,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Suspicion;
 using Content.Shared.Roles;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-
 
 namespace Content.Server.GameTicking.GamePresets
 {
@@ -54,6 +55,8 @@ namespace Content.Server.GameTicking.GamePresets
                 {
                     prefList.Add(player);
                 }
+
+                player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
             }
 
             var numTraitors = FloatMath.Clamp(readyPlayers.Count % PlayersPerTraitor,
@@ -62,7 +65,7 @@ namespace Content.Server.GameTicking.GamePresets
             for (var i = 0; i < numTraitors; i++)
             {
                 IPlayerSession traitor;
-                if(prefList.Count() == 0)
+                if(prefList.Count == 0)
                 {
                     traitor = _random.PickAndTake(list);
                     Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");

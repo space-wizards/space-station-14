@@ -16,9 +16,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     class VaporComponent : Component, ICollideBehavior
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
-#pragma warning enable 649
         public override string Name => "Vapor";
 
         [ViewVariables]
@@ -66,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 var worldBounds = collidable.WorldAABB;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
-                
+
                 var tiles = mapGrid.GetTilesIntersecting(worldBounds);
                 var amount = _transferAmount / ReagentUnit.New(tiles.Count());
                 foreach (var tile in tiles)

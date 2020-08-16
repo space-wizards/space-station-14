@@ -156,6 +156,12 @@
   - type: Pullable
   - type: CanSeeGases
   - type: DoAfter
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      - key: enum.StrippingUiKey.Key
+        type: StrippableBoundUserInterface
+
 
 - type: entity
   save: false
