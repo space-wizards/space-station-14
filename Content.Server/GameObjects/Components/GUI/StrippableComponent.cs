@@ -137,7 +137,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!inventory.CanEquip(slot, item))
+                if (!inventory.CanEquip(slot, item, false))
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot equip that there!", Owner));
                     return false;
@@ -162,7 +162,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(item!.Owner, false);
-            inventory.Equip(slot, item!.Owner);
+            inventory.Equip(slot, item!.Owner, false);
 
             UpdateSubscribed();
         }
@@ -202,7 +202,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!hands.CanPutInHand(item, hand))
+                if (!hands.CanPutInHand(item, hand, false))
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot put that there!", Owner));
                     return false;
@@ -227,7 +227,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             userHands.Drop(hand, false);
-            hands.PutInHand(item, hand, false);
+            hands.PutInHand(item!, hand, false, false);
             UpdateSubscribed();
         }
 
@@ -253,7 +253,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!inventory.CanUnequip(slot))
+                if (!inventory.CanUnequip(slot, false))
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot unequip that!", Owner));
                     return false;
@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (result != DoAfterStatus.Finished) return;
 
             var item = inventory.GetSlotItem(slot);
-            inventory.Unequip(slot);
+            inventory.Unequip(slot, false);
             userHands.PutInHandOrDrop(item);
             UpdateSubscribed();
         }
@@ -304,7 +304,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     return false;
                 }
 
-                if (!hands.CanDrop(hand))
+                if (!hands.CanDrop(hand, false))
                 {
                     _notifyManager.PopupMessageCursor(user, Loc.GetString("{0:They} cannot drop that!", Owner));
                     return false;
@@ -329,7 +329,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
             var item = hands.GetItem(hand);
             hands.Drop(hand, false);
-            userHands.PutInHandOrDrop(item);
+            userHands.PutInHandOrDrop(item!);
             UpdateSubscribed();
         }
 
@@ -363,8 +363,6 @@ namespace Content.Server.GameObjects.Components.GUI
                         PlaceActiveHandItemInHands(user, handMessage.Hand);
                     else
                         TakeItemFromHands(user, handMessage.Hand);
-                    break;
-                default:
                     break;
             }
         }
