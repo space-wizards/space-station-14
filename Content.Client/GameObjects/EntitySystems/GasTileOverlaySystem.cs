@@ -53,8 +53,8 @@ namespace Content.Client.GameObjects.EntitySystems
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gas = Atmospherics.GetGas(i);
-                switch (gas.GasOverlay)
+                var overlay = Atmospherics.GetOverlay(i);
+                switch (overlay)
                 {
                     case SpriteSpecifier.Rsi animated:
                         var rsi = _resourceCache.GetResource<RSIResource>(animated.RsiPath).RSI;

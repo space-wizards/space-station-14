@@ -56,6 +56,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
 
             public bool Equals(GasOverlayData other)
             {
+                // TODO: Moony had a suggestion on how to do this faster with the hash
+                // https://discordapp.com/channels/310555209753690112/310555209753690112/744080145219846204
+                // Aside from that I can't really see any low-hanging fruit CPU perf wise.
                 if (Gas?.Length != other.Gas?.Length) return false;
                 if (FireState != other.FireState) return false;
                 if (FireTemperature != other.FireTemperature) return false;

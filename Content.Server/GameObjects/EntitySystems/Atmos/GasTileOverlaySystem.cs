@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gas = Atmospherics.GetGas(i);
-                var overlay = gas.GasOverlay;
+                var overlay = Atmospherics.GetOverlay(i);
                 if (overlay == null || tile.Air == null) continue;
 
                 var moles = tile.Air.Gases[i];
