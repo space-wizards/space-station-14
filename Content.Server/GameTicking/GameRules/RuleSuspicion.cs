@@ -32,8 +32,6 @@ namespace Content.Server.GameTicking.GameRules
         {
             _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
 
-            _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
-
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
 
