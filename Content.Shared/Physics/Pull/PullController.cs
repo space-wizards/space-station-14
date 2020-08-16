@@ -42,6 +42,8 @@ namespace Content.Shared.Physics.Pull
                 return;
             }
 
+            ControlledComponent.WakeBody();
+
             var message = new PullStartedMessage(this, _puller, ControlledComponent);
 
             _puller.Owner.SendMessage(null, message);
@@ -64,6 +66,8 @@ namespace Content.Shared.Physics.Pull
                 return;
             }
 
+            ControlledComponent.WakeBody();
+
             var message = new PullStoppedMessage(this, oldPuller, ControlledComponent);
 
             oldPuller.Owner.SendMessage(null, message);
@@ -85,6 +89,8 @@ namespace Content.Shared.Physics.Pull
             {
                 return;
             }
+
+            ControlledComponent.WakeBody();
 
             var dist = _puller.Owner.Transform.GridPosition.Position - to.Position;
 
