@@ -10,7 +10,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     /// <summary>
     ///     Transfer gas from one <see cref="PipeNode"/> to another.
     /// </summary>
-    public abstract class BasePumpComponent : UpdatedPipingComponent
+    public abstract class BasePumpComponent : PipeNetDevice
     {
         /// <summary>
         ///     Needs to be same <see cref="PipeDirection"/> as that of a <see cref="Pipe"/> on this entity.

@@ -8,7 +8,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface IPipeNet : IGasMixtureHolder
     {
-
+        void Update();
     }
 
     [NodeGroup(NodeGroupID.Pipe)]
@@ -60,9 +60,15 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             }
         }
 
+        public void Update()
+        {
+            Air.React(this);
+        }
+
         private class NullPipeNet : IPipeNet
         {
             GasMixture IGasMixtureHolder.Air { get; set; } = new GasMixture();
+            public void Update() { }
         }
     }
 }

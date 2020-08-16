@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     /// <summary>
     ///     Transfers gas from a <see cref="PipeNode"/> to the tile it is on.
     /// </summary>
-    public abstract class BaseVentComponent : UpdatedPipingComponent
+    public abstract class BaseVentComponent : PipeNetDevice
     {
         [ViewVariables]
         private PipeNode _ventInlet;
