@@ -192,7 +192,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             foreach (var handName in ActivePriorityEnumerable())
             {
-                if (CanPutInHand(item, handName))
+                // We already did a mobCheck, so let's not waste cycles.
+                if (CanPutInHand(item, handName, false))
                 {
                     return true;
                 }
