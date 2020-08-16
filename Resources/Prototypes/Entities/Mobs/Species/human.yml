@@ -129,6 +129,7 @@
     - type: SpeciesVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
+  - type: ClimbMode
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound
