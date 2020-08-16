@@ -161,6 +161,9 @@
             "Metabolism",
             "AiFactionTag",
             "PressureProtection",
+            "AMEPart",
+            "AMEFuelContainer",
+            "AMEShield",
         };
     }
 }
