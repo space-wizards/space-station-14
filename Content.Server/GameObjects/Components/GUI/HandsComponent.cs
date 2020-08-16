@@ -13,7 +13,7 @@ using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Health.BodySystem;
-using Content.Shared.Physics;
+using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -547,15 +547,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
             }
 
-            var isOwnerContained = ContainerHelpers.TryGetContainer(Owner, out var ownerContainer);
-            var isPullableContained = ContainerHelpers.TryGetContainer(pullable.Owner, out var pullableContainer);
-
-            if (isOwnerContained || isPullableContained)
+            if (!Owner.IsInSameOrNoContainer(pullable.Owner))
             {
-                if (ownerContainer != pullableContainer)
-                {
-                    return;
-                }
+                return;
             }
 
             if (IsPulling)
@@ -564,10 +558,8 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
-            var controller = PulledObject!.EnsureController<PullController>();
-            controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
-
-            AddPullingStatuses();
+            var controller = PulledObject.EnsureController<PullController>();
+            controller.StartPull(Owner.GetComponent<ICollidableComponent>());
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
@@ -576,6 +568,27 @@ namespace Content.Server.GameObjects.Components.GUI
                 PulledObject.TryGetController(out PullController controller))
             {
                 controller.TryMoveTo(puller, to);
+            }
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            if (!(message is PullMessage pullMessage) ||
+                pullMessage.Puller.Owner != Owner)
+            {
+                return;
+            }
+
+            switch (message)
+            {
+                case PullStartedMessage msg:
+                    AddPullingStatuses(msg.Pulled.Owner);
+                    break;
+                case PullStoppedMessage msg:
+                    RemovePullingStatuses(msg.Pulled.Owner);
+                    break;
             }
         }
 
@@ -689,10 +702,9 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private void AddPullingStatuses()
+        private void AddPullingStatuses(IEntity pulled)
         {
-            if (PulledObject?.Owner != null &&
-                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            if (pulled.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
             {
                 pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
                     "/Textures/Interface/StatusEffects/Pull/pulled.png");
@@ -705,10 +717,9 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private void RemovePullingStatuses()
+        private void RemovePullingStatuses(IEntity pulled)
         {
-            if (PulledObject?.Owner != null &&
-                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            if (pulled.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
             {
                 pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
             }
@@ -717,12 +728,6 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
             }
-        }
-
-        public override void StopPull()
-        {
-            RemovePullingStatuses();
-            base.StopPull();
         }
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)
