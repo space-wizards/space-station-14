@@ -17,9 +17,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Species/xeno_hunter.rsi
+      sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
   - type: Icon
-    sprite: Mobs/Species/xeno_hunter.rsi
+    sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
     state: standing
   - type: Clickable
   - type: Physics
