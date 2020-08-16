@@ -1,12 +1,11 @@
 using System.Collections.Generic;
+using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.GameObjects.Components.Mobs
 {

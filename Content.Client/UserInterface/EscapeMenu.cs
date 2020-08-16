@@ -1,5 +1,4 @@
-﻿using Content.Client.Sandbox;
-using Robust.Client.Console;
+﻿using Robust.Client.Console;
 using Robust.Client.Interfaces.Placement;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
@@ -15,16 +14,12 @@ namespace Content.Client.UserInterface
     internal sealed class EscapeMenu : SS14Window
     {
         private readonly IClientConsole _console;
-        private readonly ITileDefinitionManager __tileDefinitionManager;
+        private readonly ITileDefinitionManager _tileDefinitionManager;
         private readonly IPlacementManager _placementManager;
         private readonly IPrototypeManager _prototypeManager;
         private readonly IResourceCache _resourceCache;
         private readonly IConfigurationManager _configSystem;
         private readonly ILocalizationManager _localizationManager;
-#pragma warning disable 649
-        [Dependency] private readonly ISandboxManager _sandboxManager;
-        [Dependency] private readonly IClientConGroupController _conGroupController;
-#pragma warning restore 649
 
         private BaseButton DisconnectButton;
         private BaseButton QuitButton;
@@ -41,7 +36,7 @@ namespace Content.Client.UserInterface
             _configSystem = configSystem;
             _localizationManager = localizationManager;
             _console = console;
-            __tileDefinitionManager = tileDefinitionManager;
+            _tileDefinitionManager = tileDefinitionManager;
             _placementManager = placementManager;
             _prototypeManager = prototypeManager;
             _resourceCache = resourceCache;

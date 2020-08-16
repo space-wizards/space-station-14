@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-
-
-
-namespace Content.Shared.BodySystem
+namespace Content.Shared.Health.BodySystem.Mechanism
 {
 
     /// <summary>
     ///    Prototype for the Mechanism class.
-    /// </summary>	
+    /// </summary>
     [Prototype("mechanism")]
     [NetSerializable, Serializable]
     public class MechanismPrototype : IPrototype, IIndexedPrototype
@@ -22,7 +18,6 @@ namespace Content.Shared.BodySystem
         private string _name;
         private string _description;
         private string _examineMessage;
-        private string _spritePath;
         private string _rsiPath;
         private string _rsiState;
         private int _durability;

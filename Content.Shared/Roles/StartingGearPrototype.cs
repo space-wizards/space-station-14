@@ -7,7 +7,7 @@ using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.Jobs
+namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
     public class StartingGearPrototype : IPrototype, IIndexedPrototype

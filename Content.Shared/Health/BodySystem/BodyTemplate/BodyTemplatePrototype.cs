@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using YamlDotNet.RepresentationModel;
 
-namespace Content.Shared.BodySystem {
+namespace Content.Shared.Health.BodySystem.BodyTemplate {
 
     /// <summary>
     ///    Prototype for the BodyTemplate class.
-    /// </summary>	
+    /// </summary>
     [Prototype("bodyTemplate")]
     [NetSerializable, Serializable]
     public class BodyTemplatePrototype : IPrototype, IIndexedPrototype {
@@ -25,13 +24,13 @@ namespace Content.Shared.BodySystem {
 
         [ViewVariables]
         public string Name => _name;
-				
+
         [ViewVariables]
         public string CenterSlot => _centerSlot;
-	
+
         [ViewVariables]
         public Dictionary<string, BodyPartType> Slots => _slots;
-	
+
         [ViewVariables]
         public Dictionary<string, List<string>> Connections => _connections;
 

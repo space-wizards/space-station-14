@@ -1,18 +1,18 @@
-﻿using Content.Server.GameObjects;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Server.Players;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System.Linq;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.GUI;
 
 namespace Content.Server.Chat
 {

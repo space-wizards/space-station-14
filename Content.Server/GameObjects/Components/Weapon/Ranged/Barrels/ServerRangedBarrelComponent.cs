@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Shared.Audio;
 using Content.Shared.GameObjects.Components.Weapons.Ranged;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
@@ -27,8 +28,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -43,7 +42,6 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 #pragma warning disable 649
         [Dependency] private IGameTiming _gameTiming;
         [Dependency] private IRobustRandom _robustRandom;
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
 #pragma warning restore 649
 
         public override FireRateSelector FireRateSelector => _fireRateSelector;
@@ -112,14 +110,14 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             serializer.DataReadWriteFunction(
                 "angleIncrease",
                 40 / _fireRate,
-                angle => _angleIncrease = angle * (float) Math.PI / 180,
-                () => _angleIncrease / (float) Math.PI / 180);
+                angle => _angleIncrease = angle * (float) Math.PI / 180f,
+                () => MathF.Round(_angleIncrease / ((float) Math.PI / 180f), 2));
 
             serializer.DataReadWriteFunction(
                 "angleDecay",
                 20f,
-                angle => _angleDecay = angle * (float) Math.PI / 180,
-                () => _angleDecay / (float) Math.PI / 180);
+                angle => _angleDecay = angle * (float) Math.PI / 180f,
+                () => MathF.Round(_angleDecay / ((float) Math.PI / 180f), 2));
 
             serializer.DataField(ref _spreadRatio, "ammoSpreadRatio", 1.0f);
 
@@ -180,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         {
             var currentTime = _gameTiming.CurTime;
             var timeSinceLastFire = (currentTime - _lastFire).TotalSeconds;
-            var newTheta = Math.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
+            var newTheta = FloatMath.Clamp(_currentAngle.Theta + _angleIncrease - _angleDecay * timeSinceLastFire, _minAngle.Theta, _maxAngle.Theta);
             _currentAngle = new Angle(newTheta);
 
             var random = (_robustRandom.NextDouble() - 0.5) * 2;
@@ -385,15 +383,15 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                     projectileAngle = angle;
                 }
 
-                var physicsComponent = projectile.GetComponent<IPhysicsComponent>();
-                physicsComponent.Status = BodyStatus.InAir;
+                var collidableComponent = projectile.GetComponent<ICollidableComponent>();
+                collidableComponent.Status = BodyStatus.InAir;
                 projectile.Transform.GridPosition = Owner.Transform.GridPosition;
 
                 var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 projectileComponent.IgnoreEntity(shooter);
 
                 projectile
-                    .GetComponent<IPhysicsComponent>()
+                    .GetComponent<ICollidableComponent>()
                     .EnsureController<BulletController>()
                     .LinearVelocity = projectileAngle.ToVec() * velocity;
 

@@ -1,5 +1,5 @@
 #nullable enable
-using Content.Shared.Jobs;
+using Content.Shared.Roles;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

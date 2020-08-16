@@ -2,9 +2,10 @@
 using System;
 using System.Threading;
 using Robust.Shared.Interfaces.GameObjects;
+
 // ReSharper disable UnassignedReadonlyField
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
     public sealed class DoAfterEventArgs
     {

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.GameObjects;
@@ -22,9 +20,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
-using static Content.Shared.GameObjects.SharedInventoryComponent.ClientInventoryMessage;
+using static Content.Shared.GameObjects.Components.Inventory.SharedInventoryComponent.ClientInventoryMessage;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.GUI
 {
     [RegisterComponent]
     public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker, IPressureProtection
@@ -35,9 +33,13 @@ namespace Content.Server.GameObjects
 #pragma warning restore 649
 
         [ViewVariables]
-        private readonly Dictionary<Slots, ContainerSlot> SlotContainers = new Dictionary<Slots, ContainerSlot>();
+        private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new Dictionary<Slots, ContainerSlot>();
 
-        private KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity;
+        private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
+
+        public IEnumerable<Slots> Slots => _slotContainers.Keys;
+
+        public event Action OnItemChanged;
 
         public override void Initialize()
         {
@@ -45,7 +47,7 @@ namespace Content.Server.GameObjects
 
             foreach (var slotName in InventoryInstance.SlotMasks)
             {
-                if (slotName != Slots.NONE)
+                if (slotName != EquipmentSlotDefines.Slots.NONE)
                 {
                     AddSlot(slotName);
                 }
@@ -60,7 +62,7 @@ namespace Content.Server.GameObjects
             {
                 var multiplier = 1f;
 
-                foreach (var (slot, containerSlot) in SlotContainers)
+                foreach (var (slot, containerSlot) in _slotContainers)
                 {
                     foreach (var entity in containerSlot.ContainedEntities)
                     {
@@ -83,7 +85,7 @@ namespace Content.Server.GameObjects
             {
                 var multiplier = 1f;
 
-                foreach (var (slot, containerSlot) in SlotContainers)
+                foreach (var (slot, containerSlot) in _slotContainers)
                 {
                     foreach (var entity in containerSlot.ContainedEntities)
                     {
@@ -112,7 +114,7 @@ namespace Content.Server.GameObjects
 
         public override void OnRemove()
         {
-            var slots = SlotContainers.Keys.ToList();
+            var slots = _slotContainers.Keys.ToList();
             foreach (var slot in slots)
             {
                 RemoveSlot(slot);
@@ -142,15 +144,15 @@ namespace Content.Server.GameObjects
         }
         public T GetSlotItem<T>(Slots slot) where T : ItemComponent
         {
-            if (!SlotContainers.ContainsKey(slot))
+            if (!_slotContainers.ContainsKey(slot))
             {
                 return null;
             }
 
-            var containedEntity = SlotContainers[slot].ContainedEntity;
+            var containedEntity = _slotContainers[slot].ContainedEntity;
             if (containedEntity?.Deleted == true)
             {
-                SlotContainers[slot] = null;
+                _slotContainers[slot] = null;
                 containedEntity = null;
                 Dirty();
             }
@@ -171,7 +173,7 @@ namespace Content.Server.GameObjects
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
         /// <param name="item">The item to insert into the slot.</param>
-        /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
+        /// <param name="reason">The translated reason why the item cannot be equipped, if this function returns false. Can be null.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
         public bool Equip(Slots slot, ItemComponent item, out string reason)
         {
@@ -186,13 +188,15 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var inventorySlot = SlotContainers[slot];
+            var inventorySlot = _slotContainers[slot];
             if (!inventorySlot.Insert(item.Owner))
             {
                 return false;
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
+
+            OnItemChanged?.Invoke();
 
             Dirty();
 
@@ -241,7 +245,7 @@ namespace Content.Server.GameObjects
                 reason = Loc.GetString("You can't equip this!");
             }
 
-            return pass && SlotContainers[slot].CanInsert(item.Owner);
+            return pass && _slotContainers[slot].CanInsert(item.Owner);
         }
 
         public bool CanEquip(Slots slot, ItemComponent item) => CanEquip(slot, item, out var _);
@@ -260,7 +264,7 @@ namespace Content.Server.GameObjects
                 return false;
             }
 
-            var inventorySlot = SlotContainers[slot];
+            var inventorySlot = _slotContainers[slot];
             var item = inventorySlot.ContainedEntity.GetComponent<ItemComponent>();
             if (!inventorySlot.Remove(inventorySlot.ContainedEntity))
             {
@@ -272,6 +276,8 @@ namespace Content.Server.GameObjects
             itemTransform.GridPosition = Owner.GetComponent<ITransformComponent>().GridPosition;
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().UnequippedInteraction(Owner, item.Owner, slot);
+
+            OnItemChanged?.Invoke();
 
             Dirty();
 
@@ -290,7 +296,7 @@ namespace Content.Server.GameObjects
             if (!ActionBlockerSystem.CanUnequip(Owner))
                 return false;
 
-            var InventorySlot = SlotContainers[slot];
+            var InventorySlot = _slotContainers[slot];
             return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
         }
 
@@ -309,7 +315,12 @@ namespace Content.Server.GameObjects
             }
 
             Dirty();
-            return SlotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+
+            _slotContainers[slot] = ContainerManagerComponent.Create<ContainerSlot>(GetSlotString(slot), Owner);
+
+            OnItemChanged?.Invoke();
+
+            return _slotContainers[slot];
         }
 
         /// <summary>
@@ -333,7 +344,10 @@ namespace Content.Server.GameObjects
                     "Unable to remove slot as the contained clothing could not be dropped");
             }
 
-            SlotContainers.Remove(slot);
+            _slotContainers.Remove(slot);
+
+            OnItemChanged?.Invoke();
+
             Dirty();
         }
 
@@ -344,7 +358,7 @@ namespace Content.Server.GameObjects
         /// <returns>True if the slot exists, false otherwise.</returns>
         public bool HasSlot(Slots slot)
         {
-            return SlotContainers.ContainsKey(slot);
+            return _slotContainers.ContainsKey(slot);
         }
 
         /// <summary>
@@ -356,13 +370,15 @@ namespace Content.Server.GameObjects
             // make sure this is one of our containers.
             // Technically the correct way would be to enumerate the possible slot names
             // comparing with this container, but I might as well put the dictionary to good use.
-            if (!(container is ContainerSlot slot) || !SlotContainers.ContainsValue(slot))
+            if (!(container is ContainerSlot slot) || !_slotContainers.ContainsValue(slot))
                 return;
 
             if (entity.TryGetComponent(out ItemComponent itemComp))
             {
                 itemComp.RemovedFromSlot();
             }
+
+            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -419,7 +435,7 @@ namespace Content.Server.GameObjects
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
                         var canEquip = CanEquip(msg.Inventoryslot, activeHand, out var reason);
-                        HoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
+                        _hoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
 
                         Dirty();
                     }
@@ -478,7 +494,7 @@ namespace Content.Server.GameObjects
         public override ComponentState GetComponentState()
         {
             var list = new List<KeyValuePair<Slots, EntityUid>>();
-            foreach (var (slot, container) in SlotContainers)
+            foreach (var (slot, container) in _slotContainers)
             {
                 if (container.ContainedEntity != null)
                 {
@@ -486,8 +502,8 @@ namespace Content.Server.GameObjects
                 }
             }
 
-            var hover = HoverEntity;
-            HoverEntity = null;
+            var hover = _hoverEntity;
+            _hoverEntity = null;
 
             return new InventoryComponentState(list, hover);
         }
@@ -499,7 +515,7 @@ namespace Content.Server.GameObjects
                 return;
             }
 
-            foreach (var slot in SlotContainers.Values.ToList())
+            foreach (var slot in _slotContainers.Values.ToList())
             {
                 foreach (var entity in slot.ContainedEntities)
                 {

@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Verbs
 {
     /// <summary>
     ///     A verb is an action in the right click menu of an entity.
@@ -19,6 +19,12 @@ namespace Content.Shared.GameObjects
         ///     <see cref="VerbUtility.InteractionRange"/> meters from the entity on which this verb resides.
         /// </summary>
         public virtual bool RequireInteractionRange => true;
+
+        /// <summary>
+        ///     If true, this verb requires both the user and the entity on which
+        ///     this verb resides to be in the same container or no container.
+        /// </summary>
+        public virtual bool BlockedByContainers => true;
 
         /// <summary>
         ///     Gets the visible verb data for the user.

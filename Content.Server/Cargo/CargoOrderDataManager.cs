@@ -1,7 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Cargo;
+﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Cargo;
 using Content.Shared.Prototypes.Cargo;
-using System;
-using System.Collections.Generic;
 
 namespace Content.Server.Cargo
 {

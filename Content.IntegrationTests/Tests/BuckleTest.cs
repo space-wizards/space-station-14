@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Buckle;
+using Content.Server.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.EntitySystems;
 using NUnit.Framework;
@@ -7,7 +8,6 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using StrapComponent = Content.Server.GameObjects.Components.Strap.StrapComponent;
 
 namespace Content.IntegrationTests.Tests
 {

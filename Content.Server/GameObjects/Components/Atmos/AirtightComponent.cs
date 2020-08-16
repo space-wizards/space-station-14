@@ -1,11 +1,9 @@
 ﻿using System;
-using Content.Server.Atmos;
 using Content.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -42,7 +40,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             base.ExposeData(serializer);
 
             serializer.DataField(ref _airBlocked, "airBlocked", true);
-            serializer.DataField(ref _fixVacuum, "fixVacuum", false);
+            serializer.DataField(ref _fixVacuum, "fixVacuum", true);
         }
 
         public override void Initialize()
@@ -55,15 +53,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             // is missing.
             if (!Owner.TryGetComponent(out _snapGrid))
                 throw new Exception("Airtight entities must have a SnapGrid component");
-
-            UpdatePosition();
-        }
-
-        public override void OnRemove()
-        {
-            base.OnRemove();
-
-            _airBlocked = false;
 
             UpdatePosition();
         }
@@ -82,6 +71,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             _airBlocked = false;
 
             _snapGrid.OnPositionChanged -= OnTransformMove;
+
+            if(_fixVacuum)
+                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?
+                    .FixVacuum(_snapGrid.Position);
+
             UpdatePosition();
         }
 

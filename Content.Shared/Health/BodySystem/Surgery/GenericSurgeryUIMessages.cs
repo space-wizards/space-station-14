@@ -1,11 +1,9 @@
-﻿using Robust.Shared.GameObjects;
+﻿using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Content.Shared.BodySystem
+namespace Content.Shared.Health.BodySystem.Surgery
 {
 
     [Serializable, NetSerializable]

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects;
 using Content.Server.GameObjects.Components.GUI;
 using JetBrains.Annotations;
 

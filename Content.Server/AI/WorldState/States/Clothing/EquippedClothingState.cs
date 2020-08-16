@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.GameObjects;
