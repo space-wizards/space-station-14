@@ -62,7 +62,7 @@ namespace Content.Server.GameTicking.GamePresets
             for (var i = 0; i < numTraitors; i++)
             {
                 IPlayerSession traitor;
-                if(prefList.Count() == 0)
+                if(prefList.Count == 0)
                 {
                     traitor = _random.PickAndTake(list);
                     Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");

@@ -18,7 +18,6 @@ namespace Content.Shared.Health.BodySystem.Mechanism
         private string _name;
         private string _description;
         private string _examineMessage;
-        private string _spritePath;
         private string _rsiPath;
         private string _rsiState;
         private int _durability;

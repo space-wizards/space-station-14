@@ -217,7 +217,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
-            serializer.DataField(ref _clangSound, "clangSound", "/Audio/effects/clang.ogg");
+            serializer.DataField(ref _clangSound, "clangSound", "/Audio/Effects/clang.ogg");
         }
 
         public override void Initialize()

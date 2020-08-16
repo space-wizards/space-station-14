@@ -29,8 +29,6 @@ namespace Content.Shared.GameObjects.EntitySystems
         {
             base.Initialize();
 
-            EntityQuery = new TypeEntityQuery(typeof(IMoverComponent));
-
             var moveUpCmdHandler = new MoverDirInputCmdHandler(Direction.North);
             var moveLeftCmdHandler = new MoverDirInputCmdHandler(Direction.West);
             var moveRightCmdHandler = new MoverDirInputCmdHandler(Direction.East);
@@ -54,18 +52,17 @@ namespace Content.Shared.GameObjects.EntitySystems
             base.Shutdown();
         }
 
-        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, IPhysicsComponent physics,
-            ICollidableComponent? collider = null)
+        protected void UpdateKinematics(ITransformComponent transform, IMoverComponent mover, ICollidableComponent collidable)
         {
-            physics.EnsureController<MoverController>();
+            collidable.EnsureController<MoverController>();
 
             var weightless = !transform.Owner.HasComponent<MovementIgnoreGravityComponent>() &&
                              _physicsManager.IsWeightless(transform.GridPosition);
 
-            if (weightless && collider != null)
+            if (weightless)
             {
                 // No gravity: is our entity touching anything?
-                var touching = IsAroundCollider(transform, mover, collider);
+                var touching = IsAroundCollider(transform, mover, collidable);
 
                 if (!touching)
                 {
@@ -78,18 +75,16 @@ namespace Content.Shared.GameObjects.EntitySystems
             var combined = walkDir + sprintDir;
             if (combined.LengthSquared < 0.001 || !ActionBlockerSystem.CanMove(mover.Owner) && !weightless)
             {
-                if (physics.TryGetController(out MoverController controller))
+                if (collidable.TryGetController(out MoverController controller))
                 {
                     controller.StopMoving();
                 }
             }
             else
             {
-                //Console.WriteLine($"{IoCManager.Resolve<IGameTiming>().TickStamp}: {combined}");
-
                 if (weightless)
                 {
-                    if (physics.TryGetController(out MoverController controller))
+                    if (collidable.TryGetController(out MoverController controller))
                     {
                         controller.Push(combined, mover.CurrentPushSpeed);
                     }
@@ -99,12 +94,13 @@ namespace Content.Shared.GameObjects.EntitySystems
                 }
 
                 var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
-                //Console.WriteLine($"{walkDir} ({mover.CurrentWalkSpeed}) + {sprintDir} ({mover.CurrentSprintSpeed}): {total}");
 
-                {if (physics.TryGetController(out MoverController controller))
                 {
-                    controller.Move(total, 1);
-                }}
+                    if (collidable.TryGetController(out MoverController controller))
+                    {
+                        controller.Move(total, 1);
+                    }
+                }
 
                 transform.LocalRotation = total.GetDir().ToAngle();
 

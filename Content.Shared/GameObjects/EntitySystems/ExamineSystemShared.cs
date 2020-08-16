@@ -1,5 +1,7 @@
-﻿using Content.Shared.GameObjects.Components.Mobs;
+﻿using System;
+using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
@@ -22,6 +24,15 @@ namespace Content.Shared.GameObjects.EntitySystems
         public const float ExamineRangeSquared = ExamineRange * ExamineRange;
         protected const float ExamineDetailsRange = 3f;
 
+        private static bool IsInDetailsRange(IEntity examiner, IEntity entity)
+        {
+            return Get<SharedInteractionSystem>()
+                    .InRangeUnobstructed(examiner.Transform.MapPosition, entity.Transform.MapPosition,
+                        ExamineDetailsRange, predicate: entity0 => entity0 == examiner || entity0 == entity,
+                        ignoreInsideBlocker: true) &&
+                examiner.IsInSameOrNoContainer(entity);
+        }
+
         [Pure]
         protected static bool CanExamine(IEntity examiner, IEntity examined)
         {
@@ -40,9 +51,16 @@ namespace Content.Shared.GameObjects.EntitySystems
                 return false;
             }
 
+            Func<IEntity, bool> predicate = entity => entity == examiner || entity == examined;
+
+            if (ContainerHelpers.TryGetContainer(examiner, out var container))
+            {
+                predicate += entity => entity == container.Owner;
+            }
+
             return Get<SharedInteractionSystem>()
                 .InRangeUnobstructed(examiner.Transform.MapPosition, examined.Transform.MapPosition,
-                    ExamineRange, predicate: entity => entity == examiner || entity == examined, ignoreInsideBlocker:true);
+                    ExamineRange, predicate: predicate, ignoreInsideBlocker:true);
         }
 
         public static FormattedMessage GetExamineText(IEntity entity, IEntity examiner)
@@ -60,15 +78,11 @@ namespace Content.Shared.GameObjects.EntitySystems
 
             message.PushColor(Color.DarkGray);
 
-            var inDetailsRange = Get<SharedInteractionSystem>()
-                .InRangeUnobstructed(examiner.Transform.MapPosition, entity.Transform.MapPosition,
-                    ExamineDetailsRange, predicate: entity0 => entity0 == examiner || entity0 == entity, ignoreInsideBlocker: true);
-
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())
             {
                 var subMessage = new FormattedMessage();
-                examineComponent.Examine(subMessage, inDetailsRange);
+                examineComponent.Examine(subMessage, IsInDetailsRange(examiner, entity));
                 if (subMessage.Tags.Count == 0)
                     continue;
 
