@@ -20,6 +20,7 @@ using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -571,6 +572,21 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
+        private void MoveEvent(MoveEvent moveEvent)
+        {
+            if (moveEvent.Sender != Owner)
+            {
+                return;
+            }
+
+            if (!IsPulling)
+            {
+                return;
+            }
+
+            PulledObject!.WakeBody();
+        }
+
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
@@ -584,9 +600,13 @@ namespace Content.Server.GameObjects.Components.GUI
             switch (message)
             {
                 case PullStartedMessage msg:
+                    Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
+
                     AddPullingStatuses(msg.Pulled.Owner);
                     break;
                 case PullStoppedMessage msg:
+                    Owner.EntityManager.EventBus.UnsubscribeEvent<MoveEvent>(EventSource.Local, this);
+
                     RemovePullingStatuses(msg.Pulled.Owner);
                     break;
             }
