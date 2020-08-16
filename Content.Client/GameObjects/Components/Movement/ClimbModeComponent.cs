@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
-using Content.Shared.GameObjects.Components.Movement;
 using Robust.Shared.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
 
 namespace Content.Client.GameObjects.Components.Movement

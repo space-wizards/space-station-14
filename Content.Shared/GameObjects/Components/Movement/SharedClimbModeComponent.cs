@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
-using System;
 using Robust.Shared.Serialization;
+using System;
 
 namespace Content.Shared.GameObjects.Components.Movement
 {

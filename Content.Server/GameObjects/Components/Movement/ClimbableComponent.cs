@@ -1,21 +1,22 @@
-﻿using Content.Shared.Interfaces.GameObjects.Components;
+﻿
 using Robust.Shared.GameObjects;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Robust.Server.Interfaces.Player;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Interfaces;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Server.Health.BodySystem;
+using Content.Server.GameObjects.Components.GUI;
+using Content.Shared.Interfaces;
+using Content.Shared.Interfaces.GameObjects.Components;
+using System;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -23,17 +24,12 @@ namespace Content.Server.GameObjects.Components.Movement
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 #pragma warning restore 649
 
-        private const float CLIMB_DURATION = 0.3f;
-
         /// <summary>
-        ///     The range from which this entity can be climbed.>.
+        ///     The range from which this entity can be climbed.
         /// </summary>
         [ViewVariables]
         private float _range;
@@ -172,16 +168,47 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
-                body.PhysicsShapes[0].CollisionMask &= ~((int) CollisionGroup.VaultImpassable);
-                user.Transform.WorldPosition = Owner.Transform.WorldPosition; // todo: can this get lerped somehow?
+                var direction = (Owner.Transform.WorldPosition - user.Transform.WorldPosition).Normalized;
+                var endPoint = Owner.Transform.WorldPosition;
 
                 var climbMode = user.GetComponent<ClimbModeComponent>();
                 climbMode.SetClimbing(true);
+
+                if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
+                {
+                    endPoint = new Robust.Shared.Maths.Vector2(user.Transform.WorldPosition.X, endPoint.Y);
+                }
+                else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
+                {
+                    endPoint = new Robust.Shared.Maths.Vector2(endPoint.X, user.Transform.WorldPosition.Y);
+                }
+
+                climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
+
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto the {1}!", user, Owner), 15);
+                _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
 
                 return true;
             }
 
             return false;
+        }
+
+        private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
+        {
+            var viewers = _playerManager.GetPlayersInRange(source.Transform.GridPosition, maxReceiveDistance);
+
+            foreach (var viewer in viewers)
+            {
+                var viewerEntity = viewer.AttachedEntity;
+
+                if (viewerEntity == null || source == viewerEntity)
+                {
+                    continue;
+                }
+
+                source.PopupMessage(viewer.AttachedEntity, message);
+            }
         }
     }
 }
