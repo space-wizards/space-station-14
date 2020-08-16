@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     {
         public override string Name => "DebugPump";
 
-        protected override void PumpGas(GasMixture inletGas, GasMixture outletGas, float frameTime)
+        protected override void PumpGas(GasMixture inletGas, GasMixture outletGas)
         {
             outletGas.Merge(inletGas);
             inletGas.Clear();

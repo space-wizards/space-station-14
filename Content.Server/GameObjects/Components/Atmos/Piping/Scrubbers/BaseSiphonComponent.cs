@@ -25,15 +25,15 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             _scrubberOutlet = Owner.GetComponent<NodeContainerComponent>().Nodes.OfType<PipeNode>().First();
         }
 
-        public override void Update(float frameTime)
+        public override void Update()
         {
             var tileAtmos = AtmosHelpers.GetTileAtmosphere(Owner.Transform.GridPosition);
             if (tileAtmos == null)
                 return;
-            ScrubGas(tileAtmos.Air, _scrubberOutlet.Air, frameTime);
+            ScrubGas(tileAtmos.Air, _scrubberOutlet.Air);
             _atmosSystem.GetGridAtmosphere(Owner.Transform.GridID).Invalidate(tileAtmos.GridIndices);
         }
 
-        protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas, float frameTime);
+        protected abstract void ScrubGas(GasMixture inletGas, GasMixture outletGas);
     }
 }

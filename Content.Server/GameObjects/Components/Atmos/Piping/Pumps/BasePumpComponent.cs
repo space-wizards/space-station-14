@@ -47,11 +47,11 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
             _outletPipe = pipeNodes.Where(pipe => pipe.PipeDirection == _outletDirection).First();
         }
 
-        public override void Update(float frameTime)
+        public override void Update()
         {
-            PumpGas(_inletPipe.Air, _outletPipe.Air, frameTime);
+            PumpGas(_inletPipe.Air, _outletPipe.Air);
         }
 
-        protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas, float frameTime);
+        protected abstract void PumpGas(GasMixture inletGas, GasMixture outletGas);
     }
 }
