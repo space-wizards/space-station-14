@@ -30,11 +30,6 @@ namespace Content.Client.Atmos
 
         protected override void Draw(DrawingHandleBase handle, OverlaySpace overlay)
         {
-            if (!_gasTileOverlaySystem.CanSeeGas)
-            {
-                return;
-            }
-            
             var drawHandle = (DrawingHandleWorld) handle;
 
             var mapId = _eyeManager.CurrentMap;
@@ -45,6 +40,9 @@ namespace Content.Client.Atmos
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
+                if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
+                    continue;
+                
                 foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
                     foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))

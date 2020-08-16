@@ -32,6 +32,9 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         /// </summary>
         private Dictionary<GridId, HashSet<MapIndices>> _invalidTiles = new Dictionary<GridId, HashSet<MapIndices>>();
         
+        private Dictionary<IPlayerSession, PlayerGasOverlay> _knownPlayerChunks = 
+            new Dictionary<IPlayerSession, PlayerGasOverlay>();
+        
         /// <summary>
         ///     Gas data stored in chunks to make PVS / bubbling easier.
         /// </summary>
@@ -96,15 +99,28 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         {
             _invalidTiles.Clear();
             _overlay.Clear();
+
+            foreach (var (_, data) in _knownPlayerChunks)
+            {
+                data.Reset();
+            }
         }
 
         private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
         {
-            if (e.NewStatus != SessionStatus.InGame) return;
-
-            if (e.Session.AttachedEntity != null && e.Session.AttachedEntity.TryGetComponent(out CanSeeGasesComponent overlayComponent))
+            if (e.NewStatus != SessionStatus.InGame)
             {
-                overlayComponent.SyncClient();
+                if (_knownPlayerChunks.ContainsKey(e.Session))
+                {
+                    _knownPlayerChunks.Remove(e.Session);
+                }
+
+                return;
+            }
+
+            if (!_knownPlayerChunks.ContainsKey(e.Session))
+            {
+                _knownPlayerChunks[e.Session] = new PlayerGasOverlay();
             }
         }
 
@@ -261,15 +277,17 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             {
                 chunk.Dirty(currentTime);
             }
-            
+
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.
-            foreach (var comp in ComponentManager.EntityQuery<CanSeeGasesComponent>())
+            foreach (var (session, overlay) in _knownPlayerChunks)
             {
+                if (session.AttachedEntity == null) continue;
+                
                 // Get chunks in range and update if we've moved around or the chunks have new overlay data
-                var chunksInRange = GetChunksInRange(comp.Owner).ToArray();
-                var knownChunks = comp.GetKnownChunks().ToArray();
+                var chunksInRange = GetChunksInRange(session.AttachedEntity).ToArray();
+                var knownChunks = overlay.GetKnownChunks().ToArray();
                 var chunksToRemove = new List<GasOverlayChunk>(0);
                 var chunksToAdd = new List<GasOverlayChunk>(0);
                 
@@ -291,12 +309,16 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 
                 foreach (var chunk in chunksToAdd)
                 {
-                    comp.AddChunk(currentTime, chunk);
+                    var message = overlay.AddChunk(currentTime, chunk);
+                    if (message != null)
+                    {
+                        RaiseNetworkEvent(message, session.ConnectedClient);
+                    }
                 }
 
                 foreach (var chunk in chunksToRemove)
                 {
-                    comp.RemoveChunk(chunk);
+                    overlay.RemoveChunk(chunk);
                 }
                 
                 var clientInvalids = new Dictionary<GridId, List<(MapIndices, GasOverlayData)>>();
@@ -317,7 +339,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
                 foreach (var (grid, data) in clientInvalids)
                 {
-                    comp.UpdateClient(grid, data);
+                    RaiseNetworkEvent(overlay.UpdateClient(grid, data), session.ConnectedClient);
                 }
             }
 

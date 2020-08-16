@@ -64,7 +64,6 @@
         public const uint GAS_ANALYZER = 1057;
         public const uint DO_AFTER = 1058;
         public const uint RADIATION_PULSE = 1059;
-        public const uint GAS_OVERLAY = 1060;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

@@ -1,12 +1,15 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Content.Client.Atmos;
 using Content.Client.GameObjects.Components.Atmos;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.EntitySystems.Atmos;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Graphics;
+using Robust.Client.Interfaces.Graphics.Overlays;
 using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
@@ -40,15 +43,14 @@ namespace Content.Client.GameObjects.EntitySystems
         private readonly float[][] _fireFrameDelays = new float[FireStates][];
         private readonly int[] _fireFrameCounter = new int[FireStates];
         private readonly Texture[][] _fireFrames = new Texture[FireStates][];
-
-        private CanSeeGasesComponent? _gasesComponent;
-
-        public bool CanSeeGas => _gasesComponent != null;
+        
+        private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _tileData = 
+            new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
+            SubscribeNetworkEvent<GasOverlayMessage>(HandleGasOverlayMessage);
             _mapManager.OnGridRemoved += OnGridRemoved;
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
@@ -88,46 +90,81 @@ namespace Content.Client.GameObjects.EntitySystems
                 _fireFrameDelays[i] = state.GetDelays();
                 _fireFrameCounter[i] = 0;
             }
+            
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
+                overlayManager.AddOverlay(new GasTileOverlay());
+        }
+
+        private void HandleGasOverlayMessage(GasOverlayMessage message)
+        {
+            if (!_tileData.TryGetValue(message.GridId, out var chunks))
+            {
+                chunks = new Dictionary<MapIndices, GasOverlayChunk>();
+                _tileData[message.GridId] = chunks;
+            }
+            
+            foreach (var (indices, data) in message.OverlayData)
+            {
+                var chunk = GetOrCreateChunk(message.GridId, indices);
+                chunk.Update(data, indices);
+                chunks[chunk.MapIndices] = chunk;
+            }
+        }
+        
+        // Slightly different to the server-side system version
+        private GasOverlayChunk GetOrCreateChunk(GridId gridId, MapIndices indices)
+        {
+            if (!_tileData.TryGetValue(gridId, out var chunks))
+            {
+                chunks = new Dictionary<MapIndices, GasOverlayChunk>();
+                _tileData[gridId] = chunks;
+            }
+            
+            var chunkIndices = GetGasChunkIndices(indices);
+
+            if (!chunks.TryGetValue(chunkIndices, out var chunk))
+            {
+                chunk = new GasOverlayChunk(gridId, chunkIndices);
+                chunks[chunkIndices] = chunk;
+            }
+
+            return chunk;
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             _mapManager.OnGridRemoved -= OnGridRemoved;
-        }
-
-        public void HandlePlayerAttached(PlayerAttachSysMessage message)
-        {
-            if (message.AttachedEntity == null)
-            {
-                return;
-            }
-            
-            if (message.AttachedEntity.TryGetComponent(out CanSeeGasesComponent canSeeGasesComponent))
-            {
-                _gasesComponent = canSeeGasesComponent;
-            }
+            var overlayManager = IoCManager.Resolve<IOverlayManager>();
+            if(!overlayManager.HasOverlay(nameof(GasTileOverlay)))
+                overlayManager.RemoveOverlay(nameof(GasTileOverlay));
         }
 
         private void OnGridRemoved(GridId gridId)
         {
-            if (_gasesComponent == null)
+            if (_tileData.ContainsKey(gridId))
             {
-                return;
+                _tileData.Remove(gridId);
             }
+        }
 
-            _gasesComponent.RemoveGrid(gridId);
+        public bool HasData(GridId gridId)
+        {
+            return _tileData.ContainsKey(gridId);
         }
 
         public (Texture, Color color)[] GetOverlays(GridId gridIndex, MapIndices indices)
         {
-            var data = _gasesComponent!.GetData(gridIndex, indices);
-
-            if (data == null)
+            if (!_tileData.TryGetValue(gridIndex, out var chunks))
                 return Array.Empty<(Texture, Color)>();
-
-            var overlays = data.Value;
             
+            var chunkIndex = GetGasChunkIndices(indices);
+            if (!chunks.TryGetValue(chunkIndex, out var chunk))
+                return Array.Empty<(Texture, Color)>();
+            
+            var overlays = chunk.GetData(indices);
+
             if (overlays.Gas == null)
                 return Array.Empty<(Texture, Color)>();
             

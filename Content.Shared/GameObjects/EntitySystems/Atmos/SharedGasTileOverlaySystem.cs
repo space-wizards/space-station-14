@@ -90,7 +90,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         ///     No point re-sending every tile if only a subset might have been updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class GasOverlayMessage : ComponentMessage
+        public sealed class GasOverlayMessage : EntitySystemMessage
         {
             public GridId GridId { get; }
 
@@ -102,11 +102,5 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
                 OverlayData = overlayData;
             }
         }
-    }
-
-    public abstract class SharedCanSeeGasesComponent : Component
-    {
-        public override string Name => "CanSeeGases";
-        public override uint? NetID => ContentNetIDs.GAS_OVERLAY;
     }
 }
