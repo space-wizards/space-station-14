@@ -214,7 +214,7 @@ namespace Content.Shared
                 buffer.Write(RoundDuration.Seconds);
 
 
-                buffer.Write(PlayerCount);
+                buffer.Write(AllPlayersEndInfo.Count);
                 foreach(var playerEndInfo in AllPlayersEndInfo)
                 {
                     buffer.Write(playerEndInfo.PlayerOOCName);
