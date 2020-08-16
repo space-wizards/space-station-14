@@ -141,6 +141,8 @@
             "Listening",
             "Radio",
             "DisposalHolder",
+            "DisposalTagger",
+            "DisposalRouter",
             "DisposalTransit",
             "DisposalEntry",
             "DisposalJunction",

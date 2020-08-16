@@ -1,4 +1,5 @@
-#nullable enable
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
@@ -38,6 +39,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public IDisposalTubeComponent? NextTube { get; set; }
+
+        /// <summary>
+        ///     A list of tags attached to the content, used for sorting
+        /// </summary>
+        [ViewVariables]
+        public HashSet<string>? Tags { get; set; }
 
         private bool CanInsert(IEntity entity)
         {
@@ -145,6 +152,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Initialize();
 
             _contents = ContainerManagerComponent.Ensure<Container>(nameof(DisposalHolderComponent), Owner);
+            Tags = new HashSet<string>();
         }
     }
 }
