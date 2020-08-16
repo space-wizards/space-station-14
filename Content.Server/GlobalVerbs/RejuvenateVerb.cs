@@ -1,6 +1,6 @@
-﻿using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Mobs;
+﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Nutrition;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
@@ -28,7 +28,7 @@ namespace Content.Server.GlobalVerbs
 
             if (user.TryGetComponent<IActorComponent>(out var player))
             {
-                if (!target.HasComponent<DamageableComponent>() && !target.HasComponent<HungerComponent>() &&
+                if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
                 {
                     return;
@@ -50,20 +50,24 @@ namespace Content.Server.GlobalVerbs
                     PerformRejuvenate(target);
             }
         }
+
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out DamageableComponent damage))
+            if (target.TryGetComponent(out IDamageableComponent damage))
             {
-                damage.HealAllDamage();
+                damage.Heal();
             }
+
             if (target.TryGetComponent(out HungerComponent hunger))
             {
                 hunger.ResetFood();
             }
+
             if (target.TryGetComponent(out ThirstComponent thirst))
             {
                 thirst.ResetThirst();
             }
+
             if (target.TryGetComponent(out StunnableComponent stun))
             {
                 stun.ResetStuns();

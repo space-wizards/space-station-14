@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -30,6 +30,8 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
+            _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
+
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
 
@@ -48,12 +50,12 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     continue;
                 }
 
-                if (!species.CurrentDamageState.IsConscious)
+                if (damageable.CurrentDamageState != DamageState.Alive)
                 {
                     continue;
                 }

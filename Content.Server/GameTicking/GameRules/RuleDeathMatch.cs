@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -34,7 +34,7 @@ namespace Content.Server.GameTicking.GameRules
         {
             _chatManager.DispatchServerAnnouncement("The game is now a death match. Kill everybody else to win!");
 
-            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
+            _entityManager.EventBus.SubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this, OnHealthChanged);
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
         }
 
@@ -42,11 +42,11 @@ namespace Content.Server.GameTicking.GameRules
         {
             base.Removed();
 
-            _entityManager.EventBus.UnsubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this);
+            _entityManager.EventBus.UnsubscribeEvent<HealthChangedEventArgs>(EventSource.Local, this);
             _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
         }
 
-        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
+        private void OnHealthChanged(HealthChangedEventArgs message)
         {
             _runDelayedCheck();
         }
@@ -59,12 +59,12 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out SpeciesComponent species))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     continue;
                 }
 
-                if (!species.CurrentDamageState.IsConscious)
+                if (damageable.CurrentDamageState != DamageState.Alive)
                 {
                     continue;
                 }
