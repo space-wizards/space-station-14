@@ -59,13 +59,6 @@ namespace Content.Server.GameObjects.Components.Movement
                 return false;
             }
 
-            if (!eventArgs.User.HasComponent<HandsComponent>())
-            {
-                _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You don't have hands!"));
-
-                return false;
-            }
-
             if (eventArgs.User == eventArgs.Dropped) // user is dragging themselves onto a climbable
             {
                 if (eventArgs.Target == null) 
