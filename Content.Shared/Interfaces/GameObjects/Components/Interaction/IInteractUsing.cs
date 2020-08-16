@@ -17,7 +17,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// The interaction priority. Higher numbers get called first.
         /// </summary>
         /// <value>Priority defaults to 0</value>
-        int Priority { get => 0; }
+        int Priority => 0;
 
         /// <summary>
         /// Called when using one object on another when user is in range of the target entity.
