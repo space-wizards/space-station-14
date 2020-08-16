@@ -137,7 +137,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
             else if (Mind?.Session == null)
             {
-                message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
+                if(!dead)
+                    message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
             }
         }
     }
