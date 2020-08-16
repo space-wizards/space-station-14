@@ -8,6 +8,8 @@ namespace Content.Client.GameObjects.Components.Movement
     [RegisterComponent]
     public class ClimbModeComponent : SharedClimbModeComponent
     {
+        private ICollidableComponent _body = default;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -17,8 +19,6 @@ namespace Content.Client.GameObjects.Components.Movement
                 _body = body;
             }
         }
-
-        private ICollidableComponent _body = default;
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
