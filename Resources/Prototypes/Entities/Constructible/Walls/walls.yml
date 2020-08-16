@@ -230,7 +230,7 @@
     sprite: Constructible/Structures/Walls/solid.rsi
     state: rgeneric
   - type: Destructible
-    thresholdvalue: 300
+    thresholdvalue: 1500
     spawnondestroy: Girder
   - type: ReinforcedWall
     key: walls
@@ -248,7 +248,7 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/riveted.rsi
   - type: Destructible
-    thresholdvalue: 500
+    thresholdvalue: 2500
     spawnondestroy: Girder
   - type: IconSmooth
     key: walls
