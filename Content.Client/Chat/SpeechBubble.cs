@@ -106,13 +106,13 @@ namespace Content.Client.Chat
             }
 
             // Lerp to our new vertical offset if it's been modified.
-            if (FloatMath.CloseTo(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
+            if (MathHelper.CloseTo(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
             {
                 _verticalOffsetAchieved = VerticalOffset;
             }
             else
             {
-                _verticalOffsetAchieved = FloatMath.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
+                _verticalOffsetAchieved = MathHelper.Lerp(_verticalOffsetAchieved, VerticalOffset, 10 * args.DeltaSeconds);
             }
 
             var worldPos = _senderEntity.Transform.WorldPosition;
@@ -122,7 +122,7 @@ namespace Content.Client.Chat
             var screenPos = lowerCenter - (Width / 2, ContentHeight + _verticalOffsetAchieved);
             LayoutContainer.SetPosition(this, screenPos);
 
-            var height = FloatMath.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
+            var height = MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
             LayoutContainer.SetSize(this, (Size.X, height));
         }
 
