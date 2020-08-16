@@ -12,7 +12,7 @@ namespace Content.Server.GameObjects.Components
         private bool _isPlaceable;
         public bool IsPlaceable { get => _isPlaceable; set => _isPlaceable = value; }
 
-        int IInteractUsing.Priority { get => 1; }
+        int IInteractUsing.Priority => 1;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
