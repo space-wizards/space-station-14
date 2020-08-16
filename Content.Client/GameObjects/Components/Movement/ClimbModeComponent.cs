@@ -12,8 +12,10 @@ namespace Content.Client.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            Owner.TryGetComponent(out ICollidableComponent body);
-            _body = body;
+            if (Owner.TryGetComponent(out ICollidableComponent body))
+            {
+                _body = body;
+            }
         }
 
         private ICollidableComponent _body = default;
