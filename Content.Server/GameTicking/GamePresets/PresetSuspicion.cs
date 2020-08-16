@@ -41,6 +41,12 @@ namespace Content.Server.GameTicking.GamePresets
                 return false;
             }
 
+            if (readyPlayers.Count == 0)
+            {
+                _chatManager.DispatchServerAnnouncement($"No players readied up! Can't start Suspicion.");
+                return false;
+            }
+
             var list = new List<IPlayerSession>(readyPlayers);
             var prefList = new List<IPlayerSession>();
 
