@@ -260,6 +260,139 @@
         - ExGrenade
         - GrenadeFlashBang
         - SyndieMiniBomb
+        - GrenadeFlash
+        - GrenadeBlast
+        - GrenadeFrag
+        - GrenadeBaton
       chance: 0.75
+      gameRules:
+        - RuleSuspicion
+
+- type: entity
+  name: Suspicion Sniper Spawner
+  id: SuspicionSniperSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_sniper
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_sniper
+    - type: ConditionalSpawner
+      prototypes:
+        - SniperBoltGun
+        - SniperBoltGunWood
+        - SniperHeavy
+      chance: 0.75
+      gameRules:
+        - RuleSuspicion
+
+- type: entity
+  name: Suspicion Rifle Ammo Spawner
+  id: SuspicionRifleMagazineSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_rifle_ammo
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_rifle_ammo
+    - type: ConditionalSpawner
+      prototypes:
+        - MagazineSRifle
+        - MagazineClRifle
+        - MagazineLRifle
+      chance: 0.95
+      gameRules:
+        - RuleSuspicion
+
+- type: entity
+  name: Suspicion Shotgun Ammo Spawner
+  id: SuspicionShotgunMagazineSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_shotgun_ammo
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_shotgun_ammo
+    - type: ConditionalSpawner
+      prototypes:
+        - MagazineShotgun
+      chance: 0.95
+      gameRules:
+        - RuleSuspicion
+
+- type: entity
+  name: Suspicion Pistol Ammo Spawner
+  id: SuspicionPistolMagazineSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_pistol_ammo
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_pistol_ammo
+    - type: ConditionalSpawner
+      prototypes:
+        - MagazinePistol
+        - MagazineHCPistol
+        - MagazinePistolSmg
+        - MagazineClRiflePistol
+      chance: 0.95
+      gameRules:
+        - RuleSuspicion
+
+- type: entity
+  name: Suspicion Magnum Ammo Spawner
+  id: SuspicionMagnumMagazineSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_magnum_ammo
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_magnum_ammo
+    - type: ConditionalSpawner
+      prototypes:
+        - MagazineMagnum
+        - MagazineMagnumSmg
+      chance: 0.95
+      gameRules:
+        - RuleSuspicion
+
+- type: entity
+  name: Suspicion Launcher Ammo Spawner
+  id: SuspicionLauncherAmmoSpawner
+  parent: BaseConditionalSpawner
+  components:
+    - type: Sprite
+      netsync: false
+      visible: false
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_launcher_ammo
+    - type: Icon
+      sprite: Interface/Misc/markers.rsi
+      state: spawner_launcher_ammo
+    - type: ConditionalSpawner
+      prototypes:
+        - RocketAmmo
+        - GrenadeFrag
+      chance: 0.95
       gameRules:
         - RuleSuspicion
