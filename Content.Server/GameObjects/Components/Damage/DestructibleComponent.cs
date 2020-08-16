@@ -35,9 +35,14 @@ namespace Content.Server.GameObjects.Components.Damage
         public DamageThreshold Threshold { get; private set; }
 
         public DamageType damageType = DamageType.Total;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         public int damageValue = 0;
+
         public string spawnOnDestroy = "";
+
         public string destroySound = "";
+
         public bool destroyed = false;
 
         ActSystem _actSystem;
