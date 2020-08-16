@@ -7,6 +7,12 @@
   - type: Mind
   - type: Physics
     mass: 5
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.35,-0.35,0.35,0.35"
+      mask:
+      - GhostImpassable
   - type: Eye
     zoom: 0.5, 0.5
     drawFov: false

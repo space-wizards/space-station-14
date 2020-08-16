@@ -41,6 +41,11 @@ namespace Content.Server.Atmos
         void Invalidate(MapIndices indices);
 
         /// <summary>
+        ///     Attempts to fix a sudden vacuum by creating gas.
+        /// </summary>
+        void FixVacuum(MapIndices indices);
+
+        /// <summary>
         ///     Adds an active tile so it becomes processed every update until it becomes inactive.
         ///     Also makes the tile excited.
         /// </summary>
