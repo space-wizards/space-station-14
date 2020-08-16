@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.Chat;
@@ -7,7 +7,6 @@ using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -24,7 +23,6 @@ namespace Content.Server.GameTicking.GameRules
 #pragma warning disable 649
         [Dependency] private readonly IPlayerManager _playerManager;
         [Dependency] private readonly IChatManager _chatManager;
-        [Dependency] private readonly IEntityManager _entityManager;
         [Dependency] private readonly IGameTicker _gameTicker;
 #pragma warning restore 649
 
@@ -32,26 +30,7 @@ namespace Content.Server.GameTicking.GameRules
 
         public override void Added()
         {
-            _entityManager.EventBus.SubscribeEvent<MobDamageStateChangedMessage>(EventSource.Local, this, _onMobDamageStateChanged);
-
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
-        }
-
-        private void _onMobDamageStateChanged(MobDamageStateChangedMessage message)
-        {
-            var owner = message.Species.Owner;
-
-            if (!(message.Species.CurrentDamageState is DeadState))
-                return;
-
-            if (!owner.TryGetComponent<MindComponent>(out var mind))
-                return;
-
-            if (!mind.HasMind)
-                return;
-
-            message.Species.Owner.Description +=
-                mind.Mind.HasRole<SuspicionTraitorRole>() ? "\nThey were a traitor!" : "\nThey were an innocent!";
         }
 
         public override void Removed()
@@ -78,6 +57,7 @@ namespace Content.Server.GameTicking.GameRules
                 {
                     continue;
                 }
+
                 if (playerSession.ContentData().Mind.HasRole<SuspicionTraitorRole>())
                     traitorsAlive++;
                 else

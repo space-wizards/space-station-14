@@ -3,6 +3,8 @@ using Content.Client.Interfaces;
 using Content.Client.State;
 using Content.Client.UserInterface;
 using Content.Shared;
+using Content.Shared.Network.NetMessages;
+using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.State;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -39,6 +41,10 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
+            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention), msg =>
+            {
+                IoCManager.Resolve<IClyde>().RequestWindowAttention();
+            });
 
             _initialized = true;
         }

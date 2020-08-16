@@ -17,6 +17,7 @@ namespace Content.Server.Observer
         public string Command => "ghost";
         public string Description => "Give up on life and become a ghost.";
         public string Help => "ghost";
+        public bool CanReturn { get; set; } = true;
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
@@ -27,7 +28,7 @@ namespace Content.Server.Observer
             }
 
             var mind = player.ContentData().Mind;
-            var canReturn = player.AttachedEntity != null;
+            var canReturn = player.AttachedEntity != null && CanReturn;
             var name = player.AttachedEntity?.Name ?? player.Name;
 
             if (player.AttachedEntity != null && player.AttachedEntity.HasComponent<GhostComponent>())

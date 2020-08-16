@@ -112,7 +112,7 @@ namespace Content.Server.GameObjects.Components.Items.Clothing
 
         private bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
         {
-            if (!inv.Equip(slot, this, out var reason))
+            if (!inv.Equip(slot, this, true, out var reason))
             {
                 if (reason != null)
                     _serverNotifyManager.PopupMessage(Owner, user, reason);

@@ -1,8 +1,9 @@
 ﻿#nullable enable
 using System;
-using Content.Shared.Physics;
+using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -26,8 +27,27 @@ namespace Content.Shared.GameObjects.Components.Items
             {
                 controller.StopPull();
             }
+        }
 
-            PulledObject = null;
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            if (!(message is PullMessage pullMessage) ||
+                pullMessage.Puller.Owner != Owner)
+            {
+                return;
+            }
+
+            switch (message)
+            {
+                case PullStartedMessage msg:
+                    PulledObject = msg.Pulled;
+                    break;
+                case PullStoppedMessage _:
+                    PulledObject = null;
+                    break;
+            }
         }
     }
 
