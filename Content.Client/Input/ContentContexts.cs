@@ -19,6 +19,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenTutorial);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
+            common.AddFunction(ContentKeyFunctions.Point);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
@@ -37,9 +38,6 @@ namespace Content.Client.Input
             human.AddFunction(ContentKeyFunctions.MouseMiddle);
             human.AddFunction(ContentKeyFunctions.ToggleCombatMode);
             human.AddFunction(ContentKeyFunctions.WideAttack);
-            human.AddFunction(ContentKeyFunctions.Point);
-            human.AddFunction(ContentKeyFunctions.TryPullObject);
-            human.AddFunction(ContentKeyFunctions.MovePulledObject);
 
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
