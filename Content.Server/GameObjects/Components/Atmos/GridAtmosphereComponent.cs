@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent, Serializable]
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
-        [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
         /// <summary>

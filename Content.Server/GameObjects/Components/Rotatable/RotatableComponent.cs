@@ -21,9 +21,9 @@ namespace Content.Server.GameObjects.Components.Rotatable
 
         private void TryRotate(IEntity user, Angle angle)
         {
-            if (Owner.TryGetComponent(out IPhysicsComponent physics))
+            if (Owner.TryGetComponent(out ICollidableComponent collidable))
             {
-                if (physics.Anchored)
+                if (collidable.Anchored)
                 {
                     _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("It's stuck."));
                     return;

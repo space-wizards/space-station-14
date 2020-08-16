@@ -27,7 +27,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
 #pragma warning disable 649
         [Dependency] private IMapManager _mapManager;
-        [Dependency] private IEntityManager _entityManager;
         [Dependency] private IPauseManager _pauseManager;
 #pragma warning restore 649
         private PathfindingSystem _pathfindingSystem;
