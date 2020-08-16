@@ -1,30 +1,21 @@
 using System;
 using Content.Server.GameObjects.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Maths;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class StressTestMovementSystem : EntitySystem
+    internal sealed class StressTestMovementSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            EntityQuery = new TypeEntityQuery<StressTestMovementComponent>();
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var entity in RelevantEntities)
+            foreach (var stressTest in ComponentManager.EntityQuery<StressTestMovementComponent>())
             {
-                var stressTest = entity.GetComponent<StressTestMovementComponent>();
-                var transform = entity.Transform;
+                var transform = stressTest.Owner.Transform;
 
                 stressTest.Progress += frameTime;
 

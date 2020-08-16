@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.BodySystem;
+using Content.Server.Health.BodySystem.Surgery.Surgeon;
+using Content.Shared.Health.BodySystem;
 using Content.Shared.Interfaces;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
-using YamlDotNet.RepresentationModel;
 
-namespace Content.Server.BodySystem
+namespace Content.Server.Health.BodySystem.Surgery.SurgeryData
 {
 
     /// <summary>
     ///     Data class representing the surgery state of a biological entity.
-    /// </summary>	
+    /// </summary>
     public class BiologicalSurgeryData : ISurgeryData
     {
 
         protected bool _skinOpened = false;
         protected bool _vesselsClamped = false;
         protected bool _skinRetracted = false;
-        protected List<Mechanism> _disconnectedOrgans = new List<Mechanism>();
+        protected List<Mechanism.Mechanism> _disconnectedOrgans = new List<Mechanism.Mechanism>();
 
-        public BiologicalSurgeryData(BodyPart parent) : base(parent) { }
+        public BiologicalSurgeryData(BodyPart.BodyPart parent) : base(parent) { }
 
         public override SurgeryAction GetSurgeryStep(SurgeryType toolType)
         {
@@ -79,7 +73,7 @@ namespace Content.Server.BodySystem
             else if (_skinOpened && _vesselsClamped && _skinRetracted) //Case: skin is fully open.
             {
                 toReturn += Loc.GetString("There is an incision on {0:their} {1}.\n", target, _parent.Name);
-                foreach (Mechanism mechanism in _disconnectedOrgans)
+                foreach (Mechanism.Mechanism mechanism in _disconnectedOrgans)
                 {
                     toReturn += Loc.GetString("{0:their} {1} is loose.\n", target, mechanism.Name);
                 }
@@ -87,12 +81,12 @@ namespace Content.Server.BodySystem
             return toReturn;
         }
 
-        public override bool CanInstallMechanism(Mechanism toBeInstalled)
+        public override bool CanInstallMechanism(Mechanism.Mechanism toBeInstalled)
         {
             return _skinOpened && _vesselsClamped && _skinRetracted;
         }
 
-        public override bool CanAttachBodyPart(BodyPart toBeConnected)
+        public override bool CanAttachBodyPart(BodyPart.BodyPart toBeConnected)
         {
             return true;
             //TODO: if a bodypart is disconnected, you should have to do some surgery to allow another bodypart to be attached.
@@ -141,8 +135,8 @@ namespace Content.Server.BodySystem
         {
             if (_parent.Mechanisms.Count <= 0)
                 return;
-            List<Mechanism> toSend = new List<Mechanism>();
-            foreach (Mechanism mechanism in _parent.Mechanisms)
+            List<Mechanism.Mechanism> toSend = new List<Mechanism.Mechanism>();
+            foreach (Mechanism.Mechanism mechanism in _parent.Mechanisms)
             {
                 if (!_disconnectedOrgans.Contains(mechanism))
                     toSend.Add(mechanism);
@@ -150,7 +144,7 @@ namespace Content.Server.BodySystem
             if (toSend.Count > 0)
                 surgeon.RequestMechanism(toSend, LoosenOrganSurgeryCallback);
         }
-        public void LoosenOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        public void LoosenOrganSurgeryCallback(Mechanism.Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (target != null && _parent.Mechanisms.Contains(target))
             {
@@ -172,7 +166,7 @@ namespace Content.Server.BodySystem
 
 
         }
-        public void RemoveOrganSurgeryCallback(Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
+        public void RemoveOrganSurgeryCallback(Mechanism.Mechanism target, IBodyPartContainer container, ISurgeon surgeon, IEntity performer)
         {
             if (target != null && _parent.Mechanisms.Contains(target))
             {

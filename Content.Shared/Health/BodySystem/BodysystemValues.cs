@@ -1,5 +1,5 @@
 ﻿
-namespace Content.Shared.BodySystem
+namespace Content.Shared.Health.BodySystem
 {
     /// <summary>
     ///     Used to determine whether a BodyPart can connect to another BodyPart.

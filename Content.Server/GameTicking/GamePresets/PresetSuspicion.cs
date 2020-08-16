@@ -1,22 +1,18 @@
 ﻿using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared.Antags;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Roles;
 using Robust.Shared.Log;
-using System.Threading.Tasks;
-using Content.Shared.Preferences;
-
+using Robust.Shared.Maths;
 
 
 namespace Content.Server.GameTicking.GamePresets
@@ -60,13 +56,13 @@ namespace Content.Server.GameTicking.GamePresets
                 }
             }
 
-            var numTraitors = Math.Clamp(readyPlayers.Count % PlayersPerTraitor,
+            var numTraitors = FloatMath.Clamp(readyPlayers.Count % PlayersPerTraitor,
                 MinTraitors, readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)
             {
                 IPlayerSession traitor;
-                if(prefList.Count() == 0)
+                if(prefList.Count == 0)
                 {
                     traitor = _random.PickAndTake(list);
                     Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");

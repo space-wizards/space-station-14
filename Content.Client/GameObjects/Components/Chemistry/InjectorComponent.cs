@@ -1,14 +1,13 @@
-﻿using Content.Client.UserInterface;
-using Content.Client.UserInterface.Stylesheets;
+﻿using Content.Client.UserInterface.Stylesheets;
 using Content.Client.Utility;
-using Robust.Shared.Timing;
+using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Chemistry;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Chemistry;
 
 namespace Content.Client.GameObjects.Components.Chemistry
 {

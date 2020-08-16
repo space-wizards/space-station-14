@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Server.Interfaces;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Server.GameObjects.Components.Mobs.DamageThresholdTemplates;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces.GameObjects;
 using Content.Server.Observer;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
@@ -15,7 +16,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Mobs
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSpeciesComponent))]
@@ -50,7 +51,7 @@ namespace Content.Server.GameObjects
 
             serializer.DataField(ref templatename, "Template", "Human");
 
-            var type = typeof(SpeciesComponent).Assembly.GetType("Content.Server.GameObjects." + templatename);
+            var type = typeof(SpeciesComponent).Assembly.GetType("Content.Server.GameObjects.Components.Mobs.DamageThresholdTemplates." + templatename);
             DamageTemplate = (DamageTemplates) Activator.CreateInstance(type);
             serializer.DataFieldCached(ref _heatResistance, "HeatResistance", 323);
         }

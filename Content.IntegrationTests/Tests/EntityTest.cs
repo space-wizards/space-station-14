@@ -1,20 +1,21 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using Robust.Server.Interfaces.Maps;
+using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Robust.Shared.Log;
-using Robust.Server.Interfaces.Maps;
-using Robust.Server.Interfaces.Timing;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(Robust.Shared.GameObjects.Entity))]
+    [TestOf(typeof(Entity))]
     public class EntityTest : ContentIntegrationTest
     {
         [Test]
@@ -41,7 +42,7 @@ namespace Content.IntegrationTests.Tests
 
             server.Assert(() =>
                 {
-                    var testLocation = new GridCoordinates(new Robust.Shared.Maths.Vector2(0, 0), grid);
+                    var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
 
                     //Generate list of non-abstract prototypes to test
                     foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())

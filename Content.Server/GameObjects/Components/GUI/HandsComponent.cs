@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
-using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects.Components.Items;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.BodySystem;
+using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.Health.BodySystem;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -41,6 +42,8 @@ namespace Content.Server.GameObjects.Components.GUI
         private string? _activeHand;
         private uint _nextHand;
 
+        public event Action? OnItemChanged;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public string? ActiveHand
         {
@@ -58,6 +61,8 @@ namespace Content.Server.GameObjects.Components.GUI
         }
 
         [ViewVariables] private readonly List<Hand> _hands = new List<Hand>();
+
+        public IEnumerable<string> Hands => _hands.Select(h => h.Name);
 
         // Mostly arbitrary.
         public const float PickupRange = 2;
@@ -104,6 +109,12 @@ namespace Content.Server.GameObjects.Components.GUI
             return GetHand(handName)?.Entity?.GetComponent<ItemComponent>();
         }
 
+        public bool TryGetItem(string handName, [MaybeNullWhen(false)] out ItemComponent item)
+        {
+            item = GetItem(handName);
+            return item != null;
+        }
+
         public ItemComponent? GetActiveHand => ActiveHand == null
             ? null
             : GetItem(ActiveHand);
@@ -135,6 +146,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 if (PutInHand(item, hand, false))
                 {
+                    OnItemChanged?.Invoke();
+
                     return true;
                 }
             }
@@ -155,6 +168,7 @@ namespace Content.Server.GameObjects.Components.GUI
             if (success)
             {
                 item.Owner.Transform.LocalPosition = Vector2.Zero;
+                OnItemChanged?.Invoke();
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, item.Owner);
@@ -202,7 +216,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 if (!interactionSystem.TryDroppedInteraction(Owner, item.Owner))
                     return false;
             }
-            
+
             interactionSystem.DroppedInteraction(Owner, item.Owner);
             return true;
         }
@@ -248,6 +262,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 container.Insert(item.Owner);
             }
+
+            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -298,6 +314,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 container.Insert(item.Owner);
             }
+
+            OnItemChanged?.Invoke();
 
             Dirty();
             return true;
@@ -363,6 +381,8 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new InvalidOperationException();
             }
 
+            OnItemChanged?.Invoke();
+
             Dirty();
             return true;
         }
@@ -414,6 +434,8 @@ namespace Content.Server.GameObjects.Components.GUI
 
             ActiveHand ??= name;
 
+            OnItemChanged?.Invoke();
+
             Dirty();
         }
 
@@ -433,6 +455,8 @@ namespace Content.Server.GameObjects.Components.GUI
             {
                 _activeHand = _hands.FirstOrDefault()?.Name;
             }
+
+            OnItemChanged?.Invoke();
 
             Dirty();
         }
@@ -644,13 +668,13 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out IPhysicsComponent physics))
+                if (!message.Entity.TryGetComponent(out ICollidableComponent collidable))
                 {
                     return;
                 }
 
                 // set velocity to zero
-                physics.Stop();
+                collidable.Stop();
                 return;
             }
         }

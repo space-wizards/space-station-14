@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Content.Shared.Health.BodySystem.Surgery;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Interfaces.Network;
-using Robust.Shared.Players;
-using Content.Shared.BodySystem;
 
-namespace Content.Client.BodySystem
+namespace Content.Client.Health.BodySystem.Surgery
 {
 
     //TODO : Make window close if target or surgery tool gets too far away from user.

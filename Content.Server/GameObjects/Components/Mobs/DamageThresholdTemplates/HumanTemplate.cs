@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
 
-namespace Content.Server.GameObjects
+namespace Content.Server.GameObjects.Components.Mobs.DamageThresholdTemplates
 {
     [UsedImplicitly]
     public class Human : DamageTemplates

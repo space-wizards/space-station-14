@@ -2,14 +2,14 @@
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
+using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Storage;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.Physics;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystems;
@@ -49,8 +49,6 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         private bool _occludesLight;
         private bool _open;
         private bool _isWeldedShut;
-        private int _collisionMaskStorage;
-        private int _collisionLayerStorage;
 
         [ViewVariables]
         protected Container Contents;
@@ -201,18 +199,13 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         {
             if (!_isCollidableWhenOpen && Owner.TryGetComponent<ICollidableComponent>(out var collidableComponent))
             {
-                var physShape = collidableComponent.PhysicsShapes[0];
                 if (Open)
                 {
-                    _collisionMaskStorage = physShape.CollisionMask;
-                    physShape.CollisionMask = (int)CollisionGroup.Impassable;
-                    _collisionLayerStorage = physShape.CollisionLayer;
-                    physShape.CollisionLayer = (int)CollisionGroup.None;
+                    collidableComponent.Hard = false;
                 }
                 else
                 {
-                    physShape.CollisionMask = _collisionMaskStorage;
-                    physShape.CollisionLayer = _collisionLayerStorage;
+                    collidableComponent.Hard = true;
                 }
             }
 

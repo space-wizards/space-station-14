@@ -41,6 +41,11 @@ namespace Content.Server.Atmos
         void Invalidate(MapIndices indices);
 
         /// <summary>
+        ///     Attempts to fix a sudden vacuum by creating gas.
+        /// </summary>
+        void FixVacuum(MapIndices indices);
+
+        /// <summary>
         ///     Adds an active tile so it becomes processed every update until it becomes inactive.
         ///     Also makes the tile excited.
         /// </summary>
@@ -65,6 +70,18 @@ namespace Content.Server.Atmos
         /// </summary>
         /// <param name="tile"></param>
         void RemoveHotspotTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Marks a tile as superconductive so it can be processed.
+        /// </summary>
+        /// <param name="tile"></param>
+        void AddSuperconductivityTile(TileAtmosphere tile);
+
+        /// <summary>
+        ///     Removes a tile from the superconductivity processing list.
+        /// </summary>
+        /// <param name="tile"></param>
+        void RemoveSuperconductivityTile(TileAtmosphere tile);
 
         /// <summary>
         ///     Marks a tile has having high pressure differences that need to be equalized.

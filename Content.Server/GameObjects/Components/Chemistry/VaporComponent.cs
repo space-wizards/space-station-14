@@ -1,36 +1,22 @@
-﻿using Content.Server.GameObjects.Components.Fluids;
+﻿using System.Linq;
+using Content.Server.GameObjects.Components.Fluids;
 using Content.Shared.Chemistry;
 using Content.Shared.Physics;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Update.Internal;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timers;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using Timer = Robust.Shared.Timers.Timer;
 
 namespace Content.Server.GameObjects.Components.Chemistry
 {
     [RegisterComponent]
     class VaporComponent : Component, ICollideBehavior
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
-#pragma warning enable 649
         public override string Name => "Vapor";
 
         [ViewVariables]
@@ -78,7 +64,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             {
                 var worldBounds = collidable.WorldAABB;
                 var mapGrid = _mapManager.GetGrid(Owner.Transform.GridID);
-                
+
                 var tiles = mapGrid.GetTilesIntersecting(worldBounds);
                 var amount = _transferAmount / ReagentUnit.New(tiles.Count());
                 foreach (var tile in tiles)

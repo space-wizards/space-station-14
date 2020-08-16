@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.GameObjects
+namespace Content.Client.GameObjects.Components
 {
     /// <summary>
     /// Fuck I really hate doing this

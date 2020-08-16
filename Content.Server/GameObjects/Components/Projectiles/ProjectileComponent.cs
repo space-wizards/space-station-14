@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Projectiles;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
@@ -91,9 +92,9 @@ namespace Content.Server.GameObjects.Components.Projectiles
             }
 
             if (!entity.Deleted && entity.TryGetComponent(out CameraRecoilComponent recoilComponent)
-                                && Owner.TryGetComponent(out IPhysicsComponent physicsComponent))
+                                && Owner.TryGetComponent(out ICollidableComponent collidableComponent))
             {
-                var direction = physicsComponent.LinearVelocity.Normalized;
+                var direction = collidableComponent.LinearVelocity.Normalized;
                 recoilComponent.Kick(direction);
             }
         }

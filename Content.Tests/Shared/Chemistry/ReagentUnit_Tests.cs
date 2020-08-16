@@ -1,6 +1,6 @@
-﻿using Content.Shared.Chemistry;
+﻿using System;
+using Content.Shared.Chemistry;
 using NUnit.Framework;
-using System;
 
 namespace Content.Tests.Shared.Chemistry
 {

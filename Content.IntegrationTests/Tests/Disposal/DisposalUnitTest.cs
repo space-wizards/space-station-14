@@ -5,7 +5,6 @@ using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Disposal;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using NUnit.Framework;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
