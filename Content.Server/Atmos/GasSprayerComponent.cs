@@ -58,7 +58,7 @@ namespace Content.Server.Atmos
 
                 var playerPos = eventArgs.User.Transform.GridPosition;
                 var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
-                playerPos.Offset(direction);
+                playerPos.Offset(direction/2);
 
                 var spray = _serverEntityManager.SpawnEntity(_sprayType, playerPos);
                 spray.GetComponent<AppearanceComponent>()
