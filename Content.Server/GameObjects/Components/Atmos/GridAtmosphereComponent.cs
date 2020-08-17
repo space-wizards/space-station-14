@@ -564,14 +564,18 @@ namespace Content.Server.GameObjects.Components.Atmos
 
             var number = 0;
             var pipeNets = _pipeNets.ToArray();
-            for ( ; ; )
+            var netCount = pipeNets.Count();
+            for ( ; _deviceIndex < netCount; _deviceIndex++)
             {
+                pipeNets[_deviceIndex].Update();
+
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
+            _deviceIndex = 0;
         }
 
         private void ProcessPipeNetDevices()
