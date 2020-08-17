@@ -98,17 +98,10 @@ namespace Content.Client.GameObjects.EntitySystems
 
         private void HandleGasOverlayMessage(GasOverlayMessage message)
         {
-            if (!_tileData.TryGetValue(message.GridId, out var chunks))
-            {
-                chunks = new Dictionary<MapIndices, GasOverlayChunk>();
-                _tileData[message.GridId] = chunks;
-            }
-            
             foreach (var (indices, data) in message.OverlayData)
             {
                 var chunk = GetOrCreateChunk(message.GridId, indices);
                 chunk.Update(data, indices);
-                chunks[chunk.MapIndices] = chunk;
             }
         }
         

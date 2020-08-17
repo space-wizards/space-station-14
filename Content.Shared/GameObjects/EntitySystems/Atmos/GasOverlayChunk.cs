@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.GameObjects.EntitySystems.Atmos
@@ -22,7 +23,7 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         
         public SharedGasTileOverlaySystem.GasOverlayData[,] TileData = new SharedGasTileOverlaySystem.GasOverlayData[SharedGasTileOverlaySystem.ChunkSize, SharedGasTileOverlaySystem.ChunkSize];
 
-        public TimeSpan LastUpdate { get; private set; }
+        public GameTick LastUpdate { get; private set; }
 
         public GasOverlayChunk(GridId gridIndices, MapIndices mapIndices)
         {
@@ -30,9 +31,9 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             MapIndices = mapIndices;
         }
 
-        public void Dirty(TimeSpan currentTime)
+        public void Dirty(GameTick currentTick)
         {
-            LastUpdate = currentTime;
+            LastUpdate = currentTick;
         }
 
         /// <summary>
@@ -67,11 +68,11 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
             }
         }
 
-        public IEnumerable<(MapIndices, SharedGasTileOverlaySystem.GasOverlayData)> GetData(HashSet<MapIndices> indices)
+        public void GetData(List<(MapIndices, SharedGasTileOverlaySystem.GasOverlayData)> existingData, HashSet<MapIndices> indices)
         {
             foreach (var index in indices)
             {
-                yield return (index, GetData(index));
+                existingData.Add((index, GetData(index)));
             }
         }
 

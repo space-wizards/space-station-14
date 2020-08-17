@@ -12,16 +12,8 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
     public abstract class SharedGasTileOverlaySystem : EntitySystem
     {
         public const byte ChunkSize = 8;
-        
-        /// <summary>
-        ///     How frequently we can send out new data
-        /// </summary>
-        protected const float UpdateTime = 0.16f;
         protected float AccumulatedFrameTime;
 
-        // Probably need a cvar for this.
-        public const float UpdateRange = 18;
-        
         public static MapIndices GetGasChunkIndices(MapIndices indices)
         {
             return new MapIndices((int) Math.Floor((float) indices.X / ChunkSize) * ChunkSize, (int) MathF.Floor((float) indices.Y / ChunkSize) * ChunkSize);
@@ -30,10 +22,10 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         [Serializable, NetSerializable]
         public struct GasData
         {
-            public int Index { get; set; }
-            public float Opacity { get; set; }
+            public byte Index { get; set; }
+            public byte Opacity { get; set; }
 
-            public GasData(int gasId, float opacity)
+            public GasData(byte gasId, byte opacity)
             {
                 Index = gasId;
                 Opacity = opacity;
@@ -43,11 +35,11 @@ namespace Content.Shared.GameObjects.EntitySystems.Atmos
         [Serializable, NetSerializable]
         public readonly struct GasOverlayData : IEquatable<GasOverlayData>
         {
-            public readonly int FireState;
+            public readonly byte FireState;
             public readonly float FireTemperature;
             public readonly GasData[] Gas;
 
-            public GasOverlayData(int fireState, float fireTemperature, GasData[] gas)
+            public GasOverlayData(byte fireState, float fireTemperature, GasData[] gas)
             {
                 FireState = fireState;
                 FireTemperature = fireTemperature;
