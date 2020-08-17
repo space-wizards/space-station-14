@@ -373,9 +373,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 StandingStateHelper.Standing(Owner);
             }
 
-            if (Owner.TryGetComponent(out SpeciesComponent species))
+            if (Owner.TryGetComponent(out MobStateManagerComponent stateManager))
             {
-                species.CurrentDamageState.EnterState(Owner);
+                stateManager.CurrentMobState.EnterState(Owner);
             }
 
             BuckleStatus();

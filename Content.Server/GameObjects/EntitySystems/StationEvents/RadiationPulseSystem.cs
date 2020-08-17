@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.StationEvents;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -28,13 +30,13 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
         private const int DamageThreshold = 10;
 
         private Dictionary<IEntity, float> _accumulatedDamage = new Dictionary<IEntity, float>();
-        
+
         public override void Initialize()
         {
             base.Initialize();
-            _speciesQuery = new TypeEntityQuery(typeof(SpeciesComponent));
+            _speciesQuery = new TypeEntityQuery(typeof(IBodyManagerComponent));
         }
-        
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -72,7 +74,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                     var damageMultiple = (int) (totalDamage / DamageThreshold);
                     _accumulatedDamage[species] = totalDamage % DamageThreshold;
 
-                    damageableComponent.TakeDamage(DamageType.Heat, damageMultiple * DamageThreshold, comp.Owner, comp.Owner);
+                    damageableComponent.ChangeDamage(DamageType.Heat, damageMultiple * DamageThreshold, false, comp.Owner);
                 }
             }
 
@@ -80,7 +82,7 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             {
                 return;
             }
-            
+
             // probably don't need to worry about clearing this at roundreset unless you have a radiation pulse at roundstart
             // (which is currently not possible)
             _accumulatedDamage.Clear();
