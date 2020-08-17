@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components;
 using Content.Server.GameObjects.Components.Construction;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Interactable;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Utility;
 using Content.Shared.Construction;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Interactable;
+using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -32,7 +33,7 @@ namespace Content.Server.GameObjects.EntitySystems
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    internal class ConstructionSystem : Shared.GameObjects.EntitySystems.SharedConstructionSystem
+    internal class ConstructionSystem : SharedConstructionSystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager;
@@ -337,7 +338,7 @@ namespace Content.Server.GameObjects.EntitySystems
             }
 
             // OK WE'RE GOOD CONSTRUCTION STARTED.
-            EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", placingEnt);
+            Get<AudioSystem>().PlayFromEntity("/Audio/Items/deconstruct.ogg", placingEnt);
             if (prototype.Stages.Count == 2)
             {
                 // Exactly 2 stages, so don't make an intermediate frame.

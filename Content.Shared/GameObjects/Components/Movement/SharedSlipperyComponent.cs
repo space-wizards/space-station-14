@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Physics;
@@ -51,13 +50,12 @@ namespace Content.Shared.GameObjects.Components.Movement
                 ||  _slipped.Contains(entity.Uid)
                 ||  !entity.TryGetComponent(out SharedStunnableComponent stun)
                 ||  !entity.TryGetComponent(out ICollidableComponent otherBody)
-                ||  !entity.TryGetComponent(out IPhysicsComponent otherPhysics)
                 ||  !Owner.TryGetComponent(out ICollidableComponent body))
             {
                 return false;
             }
 
-            if (otherPhysics.LinearVelocity.Length < RequiredSlipSpeed || stun.KnockedDown)
+            if (otherBody.LinearVelocity.Length < RequiredSlipSpeed || stun.KnockedDown)
             {
                 return false;
             }

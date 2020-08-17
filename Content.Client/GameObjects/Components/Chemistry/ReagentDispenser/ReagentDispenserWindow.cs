@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Chemistry;
-using Content.Shared.GameObjects.Components.Chemistry;
+using Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -12,9 +11,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Content.Shared.GameObjects.Components.Chemistry.SharedReagentDispenserComponent;
+using static Content.Shared.GameObjects.Components.Chemistry.ReagentDispenser.SharedReagentDispenserComponent;
 
-namespace Content.Client.GameObjects.Components.Chemistry
+namespace Content.Client.GameObjects.Components.Chemistry.ReagentDispenser
 {
     /// <summary>
     /// Client-side UI used to control a <see cref="SharedReagentDispenserComponent"/>

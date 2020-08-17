@@ -58,10 +58,21 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float CellVolume = 2500f;
 
+        // Liters in a normal breath
+        public const float BreathVolume = 0.5f;
+
+        // Amount of air to take from a tile
+        public const float BreathPercentage = BreathVolume / CellVolume;
+
         /// <summary>
         ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        /// <summary>
+        ///     Compared against for superconduction.
+        /// </summary>
+        public const float MCellWithRatio = (MolesCellStandard * 0.005f);
 
         public const float OxygenStandard = 0.21f;
         public const float NitrogenStandard = 0.79f;
@@ -82,6 +93,11 @@ namespace Content.Shared.Atmos
         public const float GasMinMoles = 0.00000005f;
 
         public const float OpenHeatTransferCoefficient = 0.4f;
+
+        /// <summary>
+        ///     Hack to make vacuums cold, sacrificing realism for gameplay.
+        /// </summary>
+        public const float HeatCapacityVacuum = 7000f;
 
         /// <summary>
         ///     Ratio of air that must move to/from a tile to reset group processing
@@ -116,6 +132,7 @@ namespace Content.Shared.Atmos
         ///     Minimum temperature for starting superconduction.
         /// </summary>
         public const float MinimumTemperatureStartSuperConduction = (T20C + 200f);
+        public const float MinimumTemperatureForSuperconduction = (T20C + 10f);
 
         /// <summary>
         ///     Minimum heat capacity.
@@ -214,6 +231,8 @@ namespace Content.Shared.Atmos
         ///     so it just applies this flat value).
         /// </summary>
         public const int LowPressureDamage = 4;
+
+        public const float WindowHeatTransferCoefficient = 0.1f;
     }
 
     /// <summary>

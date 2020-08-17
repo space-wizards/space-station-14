@@ -1,8 +1,8 @@
 ﻿#nullable enable
+using System.Collections.Generic;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Server.Utility;
 using Content.Shared.Atmos;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
@@ -16,8 +16,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Atmos
 {

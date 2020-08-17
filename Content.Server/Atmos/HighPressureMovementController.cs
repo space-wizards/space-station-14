@@ -49,19 +49,23 @@ namespace Content.Server.Atmos
             {
 
 
-                if (maxForce > ThrowForce && throwTarget != GridCoordinates.InvalidGrid)
+                if (maxForce > ThrowForce)
                 {
-                    var moveForce = MathF.Min(maxForce * FloatMath.Clamp(moveProb, 0, 100) / 100f, 50f);
-                    var pos = throwTarget.Position - transform.GridPosition.Position;
-                    LinearVelocity = pos * moveForce;
-                }
-                else
-                {
-                    var moveForce = MathF.Min(maxForce * FloatMath.Clamp(moveProb, 0, 100) / 100f, 25f);
-                    LinearVelocity = direction.ToVec() * moveForce;
-                }
+                    if (throwTarget != GridCoordinates.InvalidGrid)
+                    {
+                        var moveForce = maxForce * FloatMath.Clamp(moveProb, 0, 100) / 150f;
+                        var pos = ((throwTarget.Position - transform.GridPosition.Position).Normalized + direction.ToVec()).Normalized;
+                        LinearVelocity = pos * moveForce;
+                    }
 
-                pressureComponent.LastHighPressureMovementAirCycle = cycle;
+                    else
+                    {
+                        var moveForce = MathF.Min(maxForce * FloatMath.Clamp(moveProb, 0, 100) / 2500f, 20f);
+                        LinearVelocity = direction.ToVec() * moveForce;
+                    }
+
+                    pressureComponent.LastHighPressureMovementAirCycle = cycle;
+                }
             }
         }
 
@@ -72,7 +76,7 @@ namespace Content.Server.Atmos
             if (ControlledComponent != null && !_physicsManager.IsWeightless(ControlledComponent.Owner.Transform.GridPosition))
             {
                 LinearVelocity *= 0.85f;
-                if (LinearVelocity.Length < 1f)
+                if (MathF.Abs(LinearVelocity.Length) < 1f)
                     Stop();
             }
         }

@@ -26,9 +26,7 @@
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
-      - VaultImpassable
       - SmallImpassable
     IsScrapingFloor: true
   - type: Physics
@@ -38,9 +36,8 @@
     capacity: 60
     CanWeldShut: false
   - type: PlaceableSurface
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
   - type: Appearance
     visuals:
     - type: StorageVisualizer

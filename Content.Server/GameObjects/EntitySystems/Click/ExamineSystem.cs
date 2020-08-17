@@ -4,7 +4,7 @@ using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameObjects.EntitySystems.Click
@@ -20,7 +20,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
         static ExamineSystem()
         {
             _entityNotFoundMessage = new FormattedMessage();
-            _entityNotFoundMessage.AddText("That entity doesn't exist");
+            _entityNotFoundMessage.AddText(Loc.GetString("That entity doesn't exist"));
         }
 
         public override void Initialize()

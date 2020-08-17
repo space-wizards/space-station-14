@@ -1,23 +1,20 @@
 ﻿using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
-using Content.Shared.Antags;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Suspicion;
+using Content.Shared.Roles;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
-using System.Threading.Tasks;
-using Content.Shared.Preferences;
 using Robust.Shared.Maths;
-
 
 namespace Content.Server.GameTicking.GamePresets
 {
@@ -44,6 +41,12 @@ namespace Content.Server.GameTicking.GamePresets
                 return false;
             }
 
+            if (readyPlayers.Count == 0)
+            {
+                _chatManager.DispatchServerAnnouncement($"No players readied up! Can't start Suspicion.");
+                return false;
+            }
+
             var list = new List<IPlayerSession>(readyPlayers);
             var prefList = new List<IPlayerSession>();
 
@@ -58,6 +61,8 @@ namespace Content.Server.GameTicking.GamePresets
                 {
                     prefList.Add(player);
                 }
+
+                player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
             }
 
             var numTraitors = FloatMath.Clamp(readyPlayers.Count % PlayersPerTraitor,
@@ -66,7 +71,7 @@ namespace Content.Server.GameTicking.GamePresets
             for (var i = 0; i < numTraitors; i++)
             {
                 IPlayerSession traitor;
-                if(prefList.Count() == 0)
+                if(prefList.Count == 0)
                 {
                     traitor = _random.PickAndTake(list);
                     Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");

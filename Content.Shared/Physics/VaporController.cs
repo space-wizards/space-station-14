@@ -1,8 +1,5 @@
 ﻿using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Shared.Physics
 {

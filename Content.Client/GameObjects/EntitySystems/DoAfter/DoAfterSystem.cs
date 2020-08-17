@@ -57,7 +57,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         {
             _player = entity;
             // Setup the GUI and pass the new data to it if applicable.
-            Gui?.Dispose();
+            Gui?.Detached();
 
             if (entity == null)
             {

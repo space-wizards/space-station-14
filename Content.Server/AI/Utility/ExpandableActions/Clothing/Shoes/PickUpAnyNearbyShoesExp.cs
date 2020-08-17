@@ -4,11 +4,10 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.Actions.Clothing.Shoes;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Clothing;
-using Content.Server.AI.Utility.Considerations.Inventory;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Server.AI.WorldState.States.Clothing;
-using Content.Server.GameObjects;
+using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Shared.GameObjects.Components.Inventory;
 using Robust.Shared.IoC;
 

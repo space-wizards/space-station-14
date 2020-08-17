@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lidgren.Network;
-using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Network;
 
@@ -153,6 +152,7 @@ namespace Content.Shared
             }
         }
 
+
         public struct RoundEndPlayerInfo
         {
             public string PlayerOOCName;
@@ -177,7 +177,7 @@ namespace Content.Shared
             public TimeSpan RoundDuration;
 
 
-            public uint PlayerCount;
+            public int PlayerCount;
 
             public List<RoundEndPlayerInfo> AllPlayersEndInfo;
 
@@ -190,9 +190,9 @@ namespace Content.Shared
                 var seconds = buffer.ReadInt32();
                 RoundDuration = new TimeSpan(hours, mins, seconds);
 
-                PlayerCount = buffer.ReadUInt32();
+                PlayerCount = buffer.ReadInt32();
                 AllPlayersEndInfo = new List<RoundEndPlayerInfo>();
-                for(var i = 0; i < PlayerCount + 1; i++)
+                for(var i = 0; i < PlayerCount; i++)
                 {
                     var readPlayerData = new RoundEndPlayerInfo
                     {
@@ -215,7 +215,7 @@ namespace Content.Shared
                 buffer.Write(RoundDuration.Seconds);
 
 
-                buffer.Write(PlayerCount);
+                buffer.Write(AllPlayersEndInfo.Count);
                 foreach(var playerEndInfo in AllPlayersEndInfo)
                 {
                     buffer.Write(playerEndInfo.PlayerOOCName);

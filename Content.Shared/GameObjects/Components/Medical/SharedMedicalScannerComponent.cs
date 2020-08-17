@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -13,18 +14,23 @@ namespace Content.Shared.GameObjects.Components.Medical
         [Serializable, NetSerializable]
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly int CurrentHealth;
-            public readonly int MaxHealth;
-            public readonly Dictionary<string, int> DamageDictionary;
+            public readonly EntityUid? Entity;
+            public readonly Dictionary<DamageClass, int> DamageClasses;
+            public readonly Dictionary<DamageType, int> DamageTypes;
 
             public MedicalScannerBoundUserInterfaceState(
-                int currentHealth,
-                int maxHealth,
-                Dictionary<string, int> damageDictionary)
+                EntityUid? entity,
+                Dictionary<DamageClass, int> damageClasses,
+                Dictionary<DamageType, int> damageTypes)
             {
-                CurrentHealth = currentHealth;
-                MaxHealth = maxHealth;
-                DamageDictionary = damageDictionary;
+                Entity = entity;
+                DamageClasses = damageClasses;
+                DamageTypes = damageTypes;
+            }
+
+            public bool HasDamage()
+            {
+                return DamageClasses.Count > 0 || DamageTypes.Count > 0;
             }
         }
 

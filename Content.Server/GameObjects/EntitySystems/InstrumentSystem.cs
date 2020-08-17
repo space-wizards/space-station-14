@@ -1,24 +1,19 @@
 using Content.Server.GameObjects.Components.Instruments;
-using Robust.Shared.GameObjects;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
 
 namespace Content.Server.GameObjects.EntitySystems
 {
-    public class InstrumentSystem : EntitySystem
+    [UsedImplicitly]
+    internal sealed class InstrumentSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-            EntityQuery = new TypeEntityQuery(typeof(InstrumentComponent));
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var entity in RelevantEntities)
+            foreach (var component in ComponentManager.EntityQuery<InstrumentComponent>())
             {
-                entity.GetComponent<InstrumentComponent>().Update(frameTime);
+                component.Update(frameTime);
             }
         }
     }
