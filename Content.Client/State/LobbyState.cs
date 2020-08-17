@@ -197,7 +197,7 @@ namespace Content.Client.State
                         _clientGameTicker.Ready.TryGetValue(session.SessionId, out ready);
                     readyState = ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready");
                 }
-                _lobby.PlayerReadyList.AddItem(readyState);
+                _lobby.PlayerReadyList.AddItem(readyState, null, false);
             }
         }
 
