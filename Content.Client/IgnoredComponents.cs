@@ -157,7 +157,7 @@
             "DamageOnHighSpeedImpact",
             "Barotrauma",
             "GasSprayer",
-            "GasVapor"
+            "GasVapor",
             "MobStateManager",
         };
     }
