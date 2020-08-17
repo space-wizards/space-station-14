@@ -319,6 +319,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void RemovePipeNet(IPipeNet pipeNet)
         {
             _pipeNets.Remove(pipeNet);
+            _deviceIndex = 0;
         }
 
         public void AddPipeNetDevice(PipeNetDevice pipeNetDevice)
