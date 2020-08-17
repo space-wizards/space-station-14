@@ -158,4 +158,3 @@ namespace Content.Server.Atmos
         void RemovePipeNetDevice(PipeNetDevice pipeNetDevice);
     }
 }
-}
