@@ -68,6 +68,8 @@ namespace Content.Client.GameTicking
             IsGameStarted = message.IsRoundStarted;
             AreWeReady = message.YouAreReady;
             Paused = message.Paused;
+            if (IsGameStarted)
+                Ready.Clear();
 
             LobbyStatusUpdated?.Invoke();
         }
@@ -102,7 +104,6 @@ namespace Content.Client.GameTicking
 
         private void RoundEnd(MsgRoundEndMessage message)
         {
-
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
             var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
 

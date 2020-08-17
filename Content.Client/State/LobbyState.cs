@@ -99,7 +99,7 @@ namespace Content.Client.State
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated += UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated += UpdateLobbyUi;
+            _clientGameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _clientGameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
         }
 
@@ -150,8 +150,25 @@ namespace Content.Client.State
             _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);
         }
 
-        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e) => UpdatePlayerList();
+        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
+        {
+            // Remove disconnected sessions from the Ready Dict
+            foreach (var p in _clientGameTicker.Ready)
+            {
+                if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
+                {
+                    _clientGameTicker.Ready.Remove(p.Key);
+                }
+            }
+            UpdatePlayerList();
+        }
         private void LobbyReadyUpdated() => UpdatePlayerList();
+
+        private void LobbyStatusUpdated()
+        {
+            UpdatePlayerList();
+            UpdateLobbyUi();
+        }
 
         private void UpdateLobbyUi()
         {
