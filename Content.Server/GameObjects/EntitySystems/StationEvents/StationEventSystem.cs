@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Content.Server.StationEvents;
+﻿using Content.Server.StationEvents;
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
-using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
@@ -14,6 +9,9 @@ using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using static Content.Shared.StationEvents.SharedStationEvent;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
