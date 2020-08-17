@@ -13,9 +13,9 @@ using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Server.Health.BodySystem;
-using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.GameObjects.Components.Damage;
 using System;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -75,15 +75,6 @@ namespace Content.Server.GameObjects.Components.Movement
                     return false;
                 }
 
-                var species = eventArgs.User.GetComponent<SpeciesComponent>();
-                
-                if (!(species.CurrentDamageState is NormalState)) // players who aren't healthy and upright can't jump on tables.
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are unable to climb!"));
-
-                    return false;
-                }
-
                 var bodyManager = eventArgs.User.GetComponent<BodyManagerComponent>();
 
                 if (bodyManager.GetBodyPartsOfType(Shared.Health.BodySystem.BodyPartType.Leg).Count == 0 ||
@@ -115,21 +106,12 @@ namespace Content.Server.GameObjects.Components.Movement
                     return false;
                 }
 
-                var species = eventArgs.Dropped.GetComponent<SpeciesComponent>();
+                var damageable = eventArgs.Dropped.GetComponent<IDamageableComponent>();
 
-                if (species.CurrentDamageState is NormalState) // todo: this should also work on people who are unconscious/restrained even if their damage state is NormalState
+                if (damageable.CurrentDamageState is NormalState) // todo: this should also work on people who are unconscious/restrained even if their damage state is NormalState
                 {
                     _notifyManager.PopupMessage(eventArgs.Dropped, eventArgs.User, Loc.GetString("You struggle to move {0:them}, but they resist!", eventArgs.Dropped));
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.Dropped, Loc.GetString("You resist {0:them}'s attempts to move you!", eventArgs.User));
-
-                    return false;
-                }
-
-                species = eventArgs.User.GetComponent<SpeciesComponent>();
-
-                if (!(species.CurrentDamageState is NormalState)) // players who aren't healthy and upright can't put other people on tables
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are too weak to move {0:them}!", eventArgs.Dropped));
 
                     return false;
                 }
