@@ -66,10 +66,6 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
         {
             base.Initialize(owner);
             LocalAir = new GasMixture(Volume);
-            //debug way for some gas to start in pipes
-            LocalAir.AdjustMoles(Gas.Phoron, 100);
-            LocalAir.AdjustMoles(Gas.Oxygen, 100);
-            LocalAir.Temperature = 500;
         }
 
         public void JoinPipeNet(IPipeNet pipeNet)
