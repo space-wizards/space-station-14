@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
@@ -260,7 +261,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>())
             {

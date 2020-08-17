@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Conveyor;
 using Content.Shared.Interfaces;
@@ -193,7 +194,9 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return NextState();
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
         {
             if (eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Interactable;
@@ -32,7 +33,9 @@ namespace Content.Server.GameObjects.Components.Damage
             Owner.EnsureComponent<DestructibleComponent>();
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
             {

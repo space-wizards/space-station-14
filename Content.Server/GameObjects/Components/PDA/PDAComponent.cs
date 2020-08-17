@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -143,7 +144,9 @@ namespace Content.Server.GameObjects.Components.PDA
             _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
         {
             var item = eventArgs.Using;
             if (!IdSlotEmpty)

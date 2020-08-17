@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -136,7 +137,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return ammo;
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             return TryInsertAmmo(eventArgs.User, eventArgs.Using);
         }

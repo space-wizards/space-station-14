@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -568,7 +569,9 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
         {
             return TryDrop(eventArgs.User, eventArgs.Using);
         }

@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             DisposalUnitComponent unit;
             DisposalEntryComponent entry;
 
-            server.Assert(() =>
+            server.Assert(async () =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
@@ -86,14 +86,14 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Can't insert, unanchored and unpowered
                 var disposalUnitAnchorable = disposalUnit.GetComponent<AnchorableComponent>();
-                disposalUnitAnchorable.TryUnAnchor(human, null, true);
+                await disposalUnitAnchorable.TryUnAnchor(human, null, true);
                 Assert.False(unit.Anchored);
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit
-                disposalUnitAnchorable.TryAnchor(human, null, true);
+                await disposalUnitAnchorable.TryAnchor(human, null, true);
                 Assert.True(disposalUnit.TryGetComponent(out AnchorableComponent anchorableUnit));
-                Assert.True(anchorableUnit.TryAnchor(human, wrench));
+                Assert.True(await anchorableUnit.TryAnchor(human, wrench));
                 Assert.True(unit.Anchored);
 
                 // No power

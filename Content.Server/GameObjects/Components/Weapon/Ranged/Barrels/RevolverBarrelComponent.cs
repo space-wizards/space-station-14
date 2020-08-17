@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
 using Content.Shared.GameObjects.Components.Weapons.Ranged.Barrels;
 using Content.Shared.GameObjects.EntitySystems;
@@ -231,7 +232,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
         }

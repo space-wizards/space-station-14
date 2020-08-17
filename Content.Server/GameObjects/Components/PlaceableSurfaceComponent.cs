@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -19,7 +20,9 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             if (!IsPlaceable)
                 return false;

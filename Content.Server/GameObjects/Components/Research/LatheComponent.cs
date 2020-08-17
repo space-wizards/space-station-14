@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Materials;
@@ -149,7 +150,9 @@ namespace Content.Server.GameObjects.Components.Research
 
             OpenUserInterface(actor.playerSession);
         }
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
                 ||  !eventArgs.Using.TryGetComponent(out MaterialComponent material)) return false;

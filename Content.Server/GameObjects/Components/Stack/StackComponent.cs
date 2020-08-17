@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -61,7 +62,9 @@ namespace Content.Server.GameObjects.Components.Stack
             return false;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             if (eventArgs.Using.TryGetComponent<StackComponent>(out var stack))
             {

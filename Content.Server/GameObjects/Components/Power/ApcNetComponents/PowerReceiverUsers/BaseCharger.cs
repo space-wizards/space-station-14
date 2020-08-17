@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Barrels;
@@ -65,7 +66,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             base.OnRemove();
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning disable 1998
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+#pragma warning restore 1998
         {
             var result = TryInsertItem(eventArgs.Using);
             if (!result)
