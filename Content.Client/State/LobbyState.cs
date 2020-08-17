@@ -186,13 +186,18 @@ namespace Content.Client.State
             {
                 _lobby.OnlinePlayerItemList.AddItem(session.Name);
 
-                var ready = false;
-                if (session.SessionId == _playerManager.LocalPlayer.SessionId)
-                    ready = _clientGameTicker.AreWeReady;
-                else
-                    _clientGameTicker.Ready.TryGetValue(session.SessionId, out ready);
-
-                _lobby.PlayerReadyList.AddItem(ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready"));
+                var readyState = "";
+                // Don't show ready state if we're ingame
+                if (!_clientGameTicker.IsGameStarted)
+                {
+                    var ready = false;
+                    if (session.SessionId == _playerManager.LocalPlayer.SessionId)
+                        ready = _clientGameTicker.AreWeReady;
+                    else
+                        _clientGameTicker.Ready.TryGetValue(session.SessionId, out ready);
+                    readyState = ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready");
+                }
+                _lobby.PlayerReadyList.AddItem(readyState);
             }
         }
 
