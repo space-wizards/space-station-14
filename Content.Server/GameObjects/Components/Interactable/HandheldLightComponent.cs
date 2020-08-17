@@ -58,9 +58,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 

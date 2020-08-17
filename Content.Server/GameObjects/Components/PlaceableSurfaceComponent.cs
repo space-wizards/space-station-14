@@ -22,9 +22,8 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _isPlaceable, "IsPlaceable", true);
         }
 
-#pragma warning disable 1998
+
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!IsPlaceable)
                 return false;

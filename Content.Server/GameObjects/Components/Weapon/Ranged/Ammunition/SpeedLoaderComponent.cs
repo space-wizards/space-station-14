@@ -205,9 +205,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             }
         }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             return TryInsertAmmo(eventArgs.User, eventArgs.Using);
         }

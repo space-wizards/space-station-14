@@ -150,9 +150,8 @@ namespace Content.Server.GameObjects.Components.Research
 
             OpenUserInterface(actor.playerSession);
         }
-#pragma warning disable 1998
+
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
                 ||  !eventArgs.Using.TryGetComponent(out MaterialComponent material)) return false;

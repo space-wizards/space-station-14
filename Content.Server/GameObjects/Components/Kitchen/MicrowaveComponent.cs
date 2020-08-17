@@ -207,9 +207,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _userInterface.Open(actor.playerSession);
         }
 
-#pragma warning disable 1998
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!_powered)
             {

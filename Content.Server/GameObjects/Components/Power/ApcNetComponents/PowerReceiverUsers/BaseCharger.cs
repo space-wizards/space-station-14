@@ -66,9 +66,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             base.OnRemove();
         }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             var result = TryInsertItem(eventArgs.Using);
             if (!result)

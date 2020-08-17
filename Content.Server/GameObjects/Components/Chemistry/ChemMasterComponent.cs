@@ -377,9 +377,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
-#pragma warning restore 1998
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {

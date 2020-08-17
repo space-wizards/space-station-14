@@ -67,9 +67,7 @@ namespace Content.Server.GameObjects.Components.Paper
             UpdateUserInterface();
         }
 
-#pragma warning disable 1998
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;

@@ -345,9 +345,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-#pragma warning disable 1998
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             // Insert magazine
             if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))

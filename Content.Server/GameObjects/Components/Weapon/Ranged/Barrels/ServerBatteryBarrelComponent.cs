@@ -261,9 +261,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             return true;
         }
 
-#pragma warning disable 1998
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>())
             {

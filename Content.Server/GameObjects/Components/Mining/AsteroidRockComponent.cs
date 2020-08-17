@@ -31,9 +31,7 @@ namespace Content.Server.GameObjects.Components.Mining
             spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;

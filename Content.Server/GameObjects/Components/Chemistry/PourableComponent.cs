@@ -51,9 +51,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="eventArgs">Attack event args</param>
         /// <returns></returns>
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             //Get target solution component
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))

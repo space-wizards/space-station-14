@@ -120,9 +120,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition
             return true;
         }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (eventArgs.Using.HasComponent<AmmoComponent>())
             {

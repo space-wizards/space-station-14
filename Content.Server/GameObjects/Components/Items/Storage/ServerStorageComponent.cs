@@ -436,9 +436,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
         /// </summary>
         /// <param name="eventArgs"></param>
         /// <returns>true if inserted, false otherwise</returns>
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 

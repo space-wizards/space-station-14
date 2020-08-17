@@ -144,9 +144,7 @@ namespace Content.Server.GameObjects.Components.PDA
             _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
         }
 
-#pragma warning disable 1998
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning disable 1998
         {
             var item = eventArgs.Using;
             if (!IdSlotEmpty)

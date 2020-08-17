@@ -31,9 +31,7 @@ namespace Content.Server.GameObjects.Components
                 ContainerManagerComponent.Ensure<ContainerSlot>("potted_plant_hide", Owner, out _);
         }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (_itemContainer.ContainedEntity != null)
             {

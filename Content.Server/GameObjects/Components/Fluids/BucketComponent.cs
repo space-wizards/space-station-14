@@ -71,9 +71,7 @@ namespace Content.Server.GameObjects.Components.Fluids
             return true;
         }
 
-#pragma warning disable 1998
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning restore 1998
         {
             if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
             {

@@ -194,9 +194,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             return NextState();
         }
 
-#pragma warning disable 1998
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-#pragma warning disable 1998
         {
             if (eventArgs.Using.TryGetComponent(out ConveyorComponent conveyor))
             {
