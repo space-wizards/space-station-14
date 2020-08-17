@@ -480,6 +480,16 @@ namespace Content.Server.GameObjects.Components.Atmos
         #region pipenet
         private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
 
+        public void AddPipeNet(IPipeNet pipeNet)
+        {
+            _pipeNets.Add(pipeNet);
+        }
+
+        public void RemovePipeNet(IPipeNet pipeNet)
+        {
+            _pipeNets.Remove(pipeNet);
+        }
+
         private void ProcessPipeNets()
         {
             _stopwatch.Restart();

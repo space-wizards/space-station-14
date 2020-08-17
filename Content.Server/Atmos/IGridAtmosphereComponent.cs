@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 
@@ -134,5 +135,9 @@ namespace Content.Server.Atmos
         void AddPipeNetDevice(PipeNetDevice pipeNetDevice);
 
         void RemovePipeNetDevice(PipeNetDevice pipeNetDevice);
+
+        void AddPipeNet(IPipeNet pipeNet);
+
+        void RemovePipeNet(IPipeNet pipeNet);
     }
 }

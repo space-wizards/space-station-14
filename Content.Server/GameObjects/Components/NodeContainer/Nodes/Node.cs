@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.Nodes
 
         private INodeGroup MakeNewGroup()
         {
-            return _nodeGroupFactory.MakeNodeGroup(NodeGroupID);
+            return _nodeGroupFactory.MakeNodeGroup(this);
         }
 
         private void AnchorUpdate()

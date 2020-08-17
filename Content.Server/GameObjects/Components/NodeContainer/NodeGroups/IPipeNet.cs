@@ -1,6 +1,8 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.ViewVariables;
 using System.Collections.Generic;
 
@@ -22,6 +24,19 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         private readonly List<PipeNode> _pipes = new List<PipeNode>();
 
+        public override void Initialize(Node sourceNode)
+        {
+            base.Initialize(sourceNode);
+            EntitySystem.Get<AtmosphereSystem>()
+                .GetGridAtmosphere(GridId)
+                .AddPipeNet(this);
+        }
+
+        public void Update()
+        {
+            Air.React(this);
+        }
+
         protected override void OnAddNode(Node node)
         {
             if (!(node is PipeNode pipeNode))
@@ -35,6 +50,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnRemoveNode(Node node)
         {
+            RemoveFromGridAtmos();
             if (!(node is PipeNode pipeNode))
                 return;
             var pipeAir = pipeNode.LocalAir;
@@ -58,11 +74,14 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
                 var newPipeNetGas = newPipeNet.Air;
                 newPipeNetGas.Multiply(newPipeNetGas.Volume / Air.Volume);
             }
+            RemoveFromGridAtmos();
         }
 
-        public void Update()
+        private void RemoveFromGridAtmos()
         {
-            Air.React(this);
+            EntitySystem.Get<AtmosphereSystem>()
+                .GetGridAtmosphere(GridId)
+                .RemovePipeNet(this);
         }
 
         private class NullPipeNet : IPipeNet
