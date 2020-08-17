@@ -124,7 +124,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             }
         }
 
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.InGame)
             {
