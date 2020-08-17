@@ -28,7 +28,6 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent, Serializable]
     public class GridAtmosphereComponent : Component, IGridAtmosphereComponent
     {
-        [Robust.Shared.IoC.Dependency] private IGameTiming _gameTiming = default!;
         [Robust.Shared.IoC.Dependency] private IMapManager _mapManager = default!;
 
         /// <summary>
@@ -154,13 +153,14 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (tile == null)
                 {
                     tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
-                    _tiles.Add(indices, tile);
+                    _tiles[indices] = tile;
                 }
 
                 if (IsSpace(indices))
                 {
                     tile.Air = new GasMixture(GetVolumeForCells(1));
                     tile.Air.MarkImmutable();
+                    _tiles[indices] = tile;
 
                 } else if (IsAirBlocked(indices))
                 {
@@ -174,17 +174,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     {
                         if (tile.Air == null && obs.FixVacuum)
                         {
-                            var adjacent = GetAdjacentTiles(indices);
-                            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
-
-                            var ratio = 1f / adjacent.Count;
-
-                            foreach (var (direction, adj) in adjacent)
-                            {
-                                var mix = adj.Air.RemoveRatio(ratio);
-                                tile.Air.Merge(mix);
-                                adj.Air.Merge(mix);
-                            }
+                            FixVacuum(tile.GridIndices);
                         }
                     }
 
@@ -204,6 +194,25 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
 
             _invalidatedCoords.Clear();
+        }
+
+        /// <inheritdoc />
+        public void FixVacuum(MapIndices indices)
+        {
+            var tile = GetTile(indices);
+            if (tile?.GridIndex != _grid.Index) return;
+            var adjacent = GetAdjacentTiles(indices);
+            tile.Air = new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+            _tiles[indices] = tile;
+
+            var ratio = 1f / adjacent.Count;
+
+            foreach (var (direction, adj) in adjacent)
+            {
+                var mix = adj.Air.RemoveRatio(ratio);
+                tile.Air.Merge(mix);
+                adj.Air.Merge(mix);
+            }
         }
 
         /// <inheritdoc />

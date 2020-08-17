@@ -7,6 +7,7 @@
     spriteName: Objects/Weapons/Guns/Projectiles/laser.png
     muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
     impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+    damageType: Heat
     damage: 10
 
 - type: entity
@@ -18,6 +19,7 @@
     spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
     muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
     impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
+    damageType: Heat
     damage: 30
 
 - type: entity
@@ -29,4 +31,5 @@
     spriteName: Objects/Weapons/Guns/Projectiles/xray.png
     muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
     impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
+    damageType: Heat
     damage: 60

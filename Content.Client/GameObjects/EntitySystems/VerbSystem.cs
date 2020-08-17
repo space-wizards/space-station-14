@@ -210,6 +210,9 @@ namespace Content.Client.GameObjects.EntitySystems
                 if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
                     continue;
 
+                if (verb.BlockedByContainers && !user.IsInSameOrNoContainer(entity))
+                    continue;
+
                 var verbData = verb.GetData(user, component);
 
                 if (verbData.IsInvisible)
@@ -230,6 +233,9 @@ namespace Content.Client.GameObjects.EntitySystems
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
                 if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(user, entity))
+                    continue;
+
+                if (globalVerb.BlockedByContainers && !user.IsInSameOrNoContainer(entity))
                     continue;
 
                 var verbData = globalVerb.GetData(user, entity);

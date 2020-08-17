@@ -51,7 +51,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
         }
 
         [Serializable, NetSerializable]
-        public enum State
+        public enum PressureState
         {
             Ready,
             Pressurizing

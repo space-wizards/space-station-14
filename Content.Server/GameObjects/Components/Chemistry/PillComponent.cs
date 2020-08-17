@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Nutrition;
+﻿using Content.Server.GameObjects.Components.Body.Digestive;
+using Content.Server.GameObjects.Components.Nutrition;
 using Content.Server.GameObjects.Components.Utensil;
 using Content.Server.Utility;
 using Content.Shared.Chemistry;

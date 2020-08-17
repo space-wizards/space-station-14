@@ -21,6 +21,13 @@ namespace Content.Shared.GameObjects.Verbs
         public virtual bool RequireInteractionRange => true;
 
         /// <summary>
+        ///     If true, this verb requires both the user and the entity on which
+        ///     this verb resides to be in the same container or no container.
+        ///     OR the user can be the entity's container
+        /// </summary>
+        public virtual bool BlockedByContainers => true;
+
+        /// <summary>
         ///     Gets the visible verb data for the user.
         /// </summary>
         /// <remarks>

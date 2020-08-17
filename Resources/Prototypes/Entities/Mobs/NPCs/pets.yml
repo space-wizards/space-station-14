@@ -1,0 +1,212 @@
+# Bounds Guide
+#1D2L3U4R
+
+- type: entity
+  save: false
+  name: based on what?
+  abstract: true
+  id: PetBaseMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: AiController
+    logic: Civilian
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    mass: 50
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.30,-0.35,0.45,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Species
+    Template: Human
+    HeatResistance: 50
+  - type: BodyManager
+    BaseTemplate: bodyTemplate.Humanoid
+    BasePreset: bodyPreset.BasicHuman
+  - type: HeatResistance
+  - type: Damageable
+  - type: CombatMode
+  - type: Teleportable
+  - type: Stunnable
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage: 50
+  - type: MovementIgnoreGravity
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: monkey
+      dead: dead
+  - type: Pullable
+
+- type: entity
+  save: false
+  name: corgi
+  parent: PetBaseMob_Content
+  id: CorgiMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Damageable
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: corgi
+  - type: Icon
+    sprite: Mobs/Pets/corgi.rsi
+    state: corgi
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.25,0.30,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: corgi
+      dead: corgi_dead
+
+- type: entity
+  save: false
+  name: ian
+  parent: PetBaseMob_Content
+  id: IanMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: ian
+  - type: Icon
+    sprite: Mobs/Pets/corgi.rsi
+    state: ian
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.50,-0.25,0.30,0.25"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: ian
+      dead: ian_dead
+
+- type: entity
+  save: false
+  name: cat
+  parent: PetBaseMob_Content
+  id: CatMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/cat.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: cat
+  - type: Icon
+    sprite: Mobs/Pets/cat.rsi
+    state: cat
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45,-0.20,0.30,0.20"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: cat
+      dead: cat_dead
+
+- type: entity
+  save: false
+  name: sloth
+  parent: PetBaseMob_Content
+  id: SlothMob_Content
+  description:
+  drawdepth: Mobs
+  suffix: AI
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1
+    baseSprintSpeed : 1
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Pets/sloth.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: sloth
+  - type: Icon
+    sprite: Mobs/Pets/sloth.rsi
+    state: sloth
+  - type: Physics
+    mass: 10
+  - type: Collidable
+    shapes:
+    - !type:PhysShapeAabb
+      bounds: "-0.45,-0.35,0.15,0.35"
+      mask:
+      - Impassable
+      - MobImpassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+      - MobImpassable
+  - type: Appearance
+    visuals:
+    - type: DamageStateVisualizer
+      normal: sloth
+      dead: sloth_dead

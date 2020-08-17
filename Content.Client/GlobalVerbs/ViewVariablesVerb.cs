@@ -13,6 +13,7 @@ namespace Content.Client.GlobalVerbs
     class ViewVariablesVerb : GlobalVerb
     {
         public override bool RequireInteractionRange => false;
+        public override bool BlockedByContainers => false;
 
         public override void GetData(IEntity user, IEntity target, VerbData data)
         {

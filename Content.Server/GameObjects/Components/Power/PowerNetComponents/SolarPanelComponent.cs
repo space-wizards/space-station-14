@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.Timing;
