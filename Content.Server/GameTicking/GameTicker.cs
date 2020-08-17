@@ -25,6 +25,7 @@ using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Prometheus;
@@ -138,6 +139,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
+            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
 
@@ -207,6 +209,16 @@ namespace Content.Server.GameTicking
                     _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
 
                 _sendStatusToAll();
+
+                ReqWindowAttentionAll();
+            }
+        }
+
+        private void ReqWindowAttentionAll()
+        {
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                player.RequestWindowAttention();
             }
         }
 
@@ -285,6 +297,7 @@ namespace Content.Server.GameTicking
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
+            ReqWindowAttentionAll();
         }
 
         private void SendServerMessage(string message)

@@ -71,6 +71,12 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float CellVolume = 2500f;
 
+        // Liters in a normal breath
+        public const float BreathVolume = 0.5f;
+
+        // Amount of air to take from a tile
+        public const float BreathPercentage = BreathVolume / CellVolume;
+
         /// <summary>
         ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>

@@ -33466,10 +33466,10 @@ entities:
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2877
-  type: TrashSpawner
+  type: SuspicionPistolMagazineSpawner
   components:
   - parent: 15
-    pos: -21.5,-12.5
+    pos: -35.5,0.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2878
@@ -37344,7 +37344,6 @@ entities:
     pos: -13.672081,21.719378
     rot: -1.5707963267948966 rad
     type: Transform
-  - type: BatteryBarrel
   - anchored: False
     type: Collidable
   - containers:
@@ -37371,7 +37370,6 @@ entities:
     pos: -14.515831,21.735003
     rot: -1.5707963267948966 rad
     type: Transform
-  - type: BatteryBarrel
   - anchored: False
     type: Collidable
   - containers:
@@ -37840,10 +37838,10 @@ entities:
         type: Robust.Server.GameObjects.Components.Container.Container
     type: ContainerContainer
 - uid: 3282
-  type: metal_wall
+  type: SuspicionPistolSpawner
   components:
   - parent: 15
-    pos: 13.293709,-8.309891
+    pos: 8.5,-4.5
     rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3283
@@ -38099,4 +38097,312 @@ entities:
     type: Transform
   - anchored: False
     type: Collidable
+- uid: 3310
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -6.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3311
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -7.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3312
+  type: SuspicionShotgunSpawner
+  components:
+  - parent: 15
+    pos: -7.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3313
+  type: SuspicionSniperSpawner
+  components:
+  - parent: 15
+    pos: -8.5,-12.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3314
+  type: SuspicionRifleMagazineSpawner
+  components:
+  - parent: 15
+    pos: -13.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3315
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: 15.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3316
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: 18.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3317
+  type: SuspicionHitscanSpawner
+  components:
+  - parent: 15
+    pos: 25.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3318
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: 0.5,-15.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3319
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: -8.5,-17.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3320
+  type: SuspicionMagnumMagazineSpawner
+  components:
+  - parent: 15
+    pos: 14.5,-2.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3321
+  type: SuspicionRevolverSpawner
+  components:
+  - parent: 15
+    pos: 15.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3322
+  type: SuspicionMagnumMagazineSpawner
+  components:
+  - parent: 15
+    pos: 16.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3323
+  type: SuspicionSMGSpawner
+  components:
+  - parent: 15
+    pos: -7.5,8.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3324
+  type: SuspicionRifleMagazineSpawner
+  components:
+  - parent: 15
+    pos: -7.5,7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3325
+  type: SuspicionShotgunSpawner
+  components:
+  - parent: 15
+    pos: -29.5,-5.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3326
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -30.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3327
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -29.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3328
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - parent: 15
+    pos: -3.5,0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3329
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - parent: 15
+    pos: -10.5,1.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3330
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - parent: 15
+    pos: -9.5,6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3331
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - parent: 15
+    pos: -29.5,9.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3332
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - parent: 15
+    pos: -31.5,13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3333
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 15
+    pos: -5.5,24.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3334
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 15
+    pos: -10.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3335
+  type: SuspicionHitscanSpawner
+  components:
+  - parent: 15
+    pos: -14.5,18.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3336
+  type: SuspicionRevolverSpawner
+  components:
+  - parent: 15
+    pos: -14.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3337
+  type: SuspicionPistolSpawner
+  components:
+  - parent: 15
+    pos: -13.5,18.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3338
+  type: SuspicionRifleSpawner
+  components:
+  - parent: 15
+    pos: -13.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3339
+  type: SuspicionSMGSpawner
+  components:
+  - parent: 15
+    pos: -13.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3340
+  type: SuspicionShotgunSpawner
+  components:
+  - parent: 15
+    pos: -12.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3341
+  type: SuspicionSniperSpawner
+  components:
+  - parent: 15
+    pos: -12.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3342
+  type: SuspicionLaunchersSpawner
+  components:
+  - parent: 15
+    pos: -12.5,18.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3343
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: -11.5,20.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3344
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: -11.5,19.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3345
+  type: SuspicionGrenadesSpawner
+  components:
+  - parent: 15
+    pos: -11.5,18.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3346
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -35.5,-7.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3347
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -35.5,-6.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3348
+  type: SuspicionRifleMagazineSpawner
+  components:
+  - parent: 15
+    pos: -35.5,-4.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3349
+  type: SuspicionRifleMagazineSpawner
+  components:
+  - parent: 15
+    pos: -35.5,-3.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3350
+  type: SuspicionPistolMagazineSpawner
+  components:
+  - parent: 15
+    pos: -35.5,-0.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3351
+  type: SuspicionShotgunMagazineSpawner
+  components:
+  - parent: 15
+    pos: -23.5,-13.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3352
+  type: SuspicionShotgunSpawner
+  components:
+  - parent: 15
+    pos: -15.5,-14.5
+    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 3353
+  type: SuspicionHitscanSpawner
+  components:
+  - parent: 15
+    pos: -15.5,-11.5
+    rot: -1.5707963267948966 rad
+    type: Transform
 ...

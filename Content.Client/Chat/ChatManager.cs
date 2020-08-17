@@ -323,8 +323,6 @@ namespace Content.Client.Chat
 
         private void _onChatMessage(MsgChatMessage msg)
         {
-            Logger.Debug($"{msg.Channel}: {msg.Message}");
-
             // Log all incoming chat to repopulate when filter is un-toggled
             var storedMessage = new StoredChatMessage(msg);
             filteredHistory.Add(storedMessage);

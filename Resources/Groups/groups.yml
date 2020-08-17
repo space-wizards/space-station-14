@@ -95,6 +95,7 @@
   - tubeconnections
   - tilewalls
   - events
+  - destroymechanism
   CanViewVar: true
   CanAdminPlace: true
 
@@ -184,6 +185,7 @@
   - setatmostemp
   - tilewalls
   - events
+  - destroymechanism
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true

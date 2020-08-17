@@ -30,8 +30,8 @@
       - SmallImpassable
   - type: SnapGrid
     offset: Center
-  - type: Damageable
   - type: Breakable
+    maxHP: 50
   - type: UserInterface
     interfaces:
     - key: enum.VendingMachineUiKey.Key
