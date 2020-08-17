@@ -69,15 +69,18 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         protected override void OnGivingNodesForCombine(INodeGroup newGroup)
         {
-            var newPipeNet = (IPipeNet) newGroup;
+            if (!(newGroup is IPipeNet newPipeNet))
+                return;
             newPipeNet.Air.Merge(Air);
             Air.Clear();
         }
 
         protected override void AfterRemake(IEnumerable<INodeGroup> newGroups)
         {
-            foreach (IPipeNet newPipeNet in newGroups)
+            foreach (var newGroup in newGroups)
             {
+                if (!(newGroup is IPipeNet newPipeNet))
+                    continue;
                 newPipeNet.Air.Merge(Air);
                 var newPipeNetGas = newPipeNet.Air;
                 newPipeNetGas.Multiply(newPipeNetGas.Volume / Air.Volume);
