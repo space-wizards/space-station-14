@@ -447,7 +447,7 @@ namespace Content.Server.GameObjects.EntitySystems.Click
                 return;
             }
 
-            var attackBys = attacked.GetAllComponents<IInteractUsing>().ToList();
+            var attackBys = attacked.GetAllComponents<IInteractUsing>().OrderByDescending(x => x.Priority);
             var attackByEventArgs = new InteractUsingEventArgs
             {
                 User = user, ClickLocation = clickLocation, Using = weapon, Target = attacked

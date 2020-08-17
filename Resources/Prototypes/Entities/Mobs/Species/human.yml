@@ -155,7 +155,6 @@
   - type: Grammar
     proper: true
   - type: Pullable
-  - type: CanSeeGases
   - type: DoAfter
   - type: Strippable
   - type: UserInterface

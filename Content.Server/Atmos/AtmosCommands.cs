@@ -138,7 +138,7 @@ namespace Content.Server.Atmos
         }
     }
 
-        public class FillGas : IClientCommand
+    public class FillGas : IClientCommand
     {
         public string Command => "fillgas";
         public string Description => "Adds gas to all tiles in a grid.";

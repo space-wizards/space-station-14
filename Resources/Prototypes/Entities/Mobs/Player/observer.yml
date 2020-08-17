@@ -22,7 +22,6 @@
     DoRangeCheck: false
   - type: IgnorePause
   - type: Ghost
-  - type: CanSeeGases
   - type: Sprite
     netsync: false
     drawdepth: Ghosts
