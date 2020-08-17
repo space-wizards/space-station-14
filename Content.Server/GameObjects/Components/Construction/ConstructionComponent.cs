@@ -1,10 +1,7 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.Construction;
+﻿using Content.Shared.Construction;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -17,9 +14,6 @@ namespace Content.Server.GameObjects.Components.Construction
     [RegisterComponent]
     public class ConstructionComponent : Component, IExamine
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _loc;
-#pragma warning restore 649
         /// <inheritdoc />
         public override string Name => "Construction";
 

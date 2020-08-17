@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
-namespace Content.Shared.GameObjects
+namespace Content.Shared.GameObjects.Components.Inventory
 {
     public abstract class Inventory
     {
@@ -47,7 +47,7 @@ namespace Content.Shared.GameObjects
         public override IReadOnlyList<Slots> SlotMasks { get; } = new List<Slots>()
         {
             Slots.EYES, Slots.HEAD, Slots.EARS,
-            Slots.OUTERCLOTHING, Slots.MASK, Slots.INNERCLOTHING, 
+            Slots.OUTERCLOTHING, Slots.MASK, Slots.INNERCLOTHING,
             Slots.BACKPACK, Slots.BELT, Slots.GLOVES,
             Slots.NONE, Slots.SHOES, Slots.IDCARD, Slots.POCKET1, Slots.POCKET2,
             Slots.NECK

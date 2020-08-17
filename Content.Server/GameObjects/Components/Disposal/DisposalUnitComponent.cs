@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -92,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             collidable.Anchored;
 
         [ViewVariables]
-        private State State => _pressure >= 1 ? State.Ready : State.Pressurizing;
+        private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables]
         private bool Engaged
@@ -120,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<SpeciesComponent>())
+                !entity.HasComponent<IBodyManagerComponent>())
             {
                 return false;
             }

@@ -7,11 +7,11 @@ using Content.Server.GameObjects.Components.Strap;
 using Content.Server.Interfaces;
 using Content.Server.Mobs;
 using Content.Server.Utility;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Buckle;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.Components.Strap;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystemMessages;
@@ -373,9 +373,9 @@ namespace Content.Server.GameObjects.Components.Buckle
                 StandingStateHelper.Standing(Owner);
             }
 
-            if (Owner.TryGetComponent(out SpeciesComponent species))
+            if (Owner.TryGetComponent(out MobStateManagerComponent stateManager))
             {
-                species.CurrentDamageState.EnterState(Owner);
+                stateManager.CurrentMobState.EnterState(Owner);
             }
 
             BuckleStatus();

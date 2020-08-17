@@ -404,6 +404,24 @@
             ]
         },
         {
+            "name": "spawner_launcher_ammo",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spawner_magnum_ammo",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "spawner_melee",
             "directions": 1,
             "delays": [
@@ -414,6 +432,15 @@
         },
         {
             "name": "spawner_pistol",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spawner_pistol_ammo",
             "directions": 1,
             "delays": [
                 [
@@ -440,7 +467,25 @@
             ]
         },
         {
+            "name": "spawner_rifle_ammo",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
             "name": "spawner_shotgun",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "spawner_shotgun_ammo",
             "directions": 1,
             "delays": [
                 [
@@ -466,7 +511,7 @@
                 ]
             ]
         },
-		{
+        {
             "name": "spawner_trash",
             "directions": 1,
             "delays": [

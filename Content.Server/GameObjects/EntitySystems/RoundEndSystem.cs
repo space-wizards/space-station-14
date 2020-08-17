@@ -6,7 +6,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
-namespace Content.Server.Interfaces.GameObjects.Components.Interaction
+namespace Content.Server.GameObjects.EntitySystems
 {
     public class RoundEndSystem : EntitySystem
     {

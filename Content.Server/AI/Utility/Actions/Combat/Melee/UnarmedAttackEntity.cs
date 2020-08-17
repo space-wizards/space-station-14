@@ -5,7 +5,6 @@ using Content.Server.AI.Operators.Combat.Melee;
 using Content.Server.AI.Operators.Movement;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.Utility.Considerations.Combat;
-using Content.Server.AI.Utility.Considerations.Combat.Melee;
 using Content.Server.AI.Utility.Considerations.Containers;
 using Content.Server.AI.Utility.Considerations.Movement;
 using Content.Server.AI.WorldState;

@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Weapon;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
 namespace Content.Server.GameObjects.Components.Projectiles

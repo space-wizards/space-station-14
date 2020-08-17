@@ -8,6 +8,7 @@
     - Window
   components:
   - type: Clickable
+  - type: RCDDeconstructWhitelist
   - type: InteractionOutline
   - type: Sprite
     color: "#DDDDDD"
@@ -26,9 +27,8 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
   - type: SnapGrid
     offset: Center
   - type: Airtight

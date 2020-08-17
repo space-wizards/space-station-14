@@ -1,19 +1,18 @@
 using System;
-using Content.Shared.GameObjects;
+using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.EntitySystemMessages;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Serialization;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
-using Timer = Robust.Shared.Timers.Timer;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Projectiles
 {
@@ -26,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         private int _collisionMask;
-        
+
         public float Damage
         {
             get => _damage;
@@ -92,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 var offset = angle.ToVec().Normalized / 2;
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(_soundHitWall, user.Transform.GridPosition.Translated(offset));
             }
-            
+
             Timer.Spawn((int) _deathTime.TotalMilliseconds, () =>
             {
                 if (!Owner.Deleted)
@@ -101,16 +100,16 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 }
             });
         }
-        
+
         private EffectSystemMessage MuzzleFlash(GridCoordinates grid, Angle angle)
         {
             if (_muzzleFlash == null)
             {
                 return null;
             }
-            
+
             var offset = angle.ToVec().Normalized / 2;
-            
+
             var message = new EffectSystemMessage
             {
                 EffectSprite = _muzzleFlash,
@@ -123,7 +122,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
                 ColorDelta = new Vector4(0, 0, 0, -1500f),
                 Shaded = false
             };
-            
+
             return message;
         }
 
@@ -144,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Projectiles
 
                 Shaded = false
             };
-            
+
             return message;
         }
 

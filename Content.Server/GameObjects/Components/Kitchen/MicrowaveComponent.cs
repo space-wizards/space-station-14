@@ -1,34 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Content.Server.BodySystem;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Server.GameObjects.Components.Body;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Shared.Chemistry;
-using Robust.Shared.Serialization;
-using Robust.Shared.Interfaces.GameObjects;
-using Content.Shared.Prototypes.Kitchen;
-using Content.Shared.Kitchen;
-using Robust.Shared.Timers;
-using Robust.Server.GameObjects;
-using Content.Shared.GameObjects.Components.Power;
-using Robust.Server.GameObjects.EntitySystems;
-using Robust.Server.GameObjects.Components.Container;
-using Robust.Server.GameObjects.Components.UserInterface;
-using Robust.Server.Interfaces.GameObjects;
-using Robust.Shared.Localization;
-using Content.Server.Interfaces;
-using Robust.Shared.Audio;
-using Content.Server.Interfaces.GameObjects;
-using Content.Server.Interfaces.Chat;
-using Content.Shared.BodySystem;
-using Robust.Shared.GameObjects.Systems;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Interfaces;
+using Content.Server.Interfaces.Chat;
+using Content.Server.Interfaces.GameObjects;
+using Content.Shared.Chemistry;
+using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Kitchen;
+using Content.Shared.Prototypes.Kitchen;
+using Robust.Server.GameObjects;
+using Robust.Server.GameObjects.Components.Container;
+using Robust.Server.GameObjects.Components.UserInterface;
+using Robust.Server.GameObjects.EntitySystems;
+using Robust.Server.Interfaces.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects.Systems;
+using Content.Shared.GameObjects.Components.Body;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Timers;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -311,7 +313,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
                            (_currentCookTimerTime == (uint)recipeToCook.CookTime);
             SetAppearance(MicrowaveVisualState.Cooking);
             _audioSystem.PlayFromEntity(_startCookingSound, Owner, AudioParams.Default);
-            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (System.Action)(() =>
+            Timer.Spawn((int)(_currentCookTimerTime * _cookTimeMultiplier), (Action)(() =>
             {
                 if (_lostPower)
                 {
@@ -454,13 +456,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            int headCount = 0;
+            var headCount = 0;
             if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
             {
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DropBodyPart(head);
+                    var droppedHead = bodyManagerComponent.DropPart(head);
+
+                    if (droppedHead == null)
+                    {
+                        continue;
+                    }
+
                     _storage.Insert(droppedHead);
                     headCount++;
                 }
