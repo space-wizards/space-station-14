@@ -6,7 +6,7 @@ namespace Content.Shared.GameObjects.Components
 {
     public class SharedExtinguisherComponent : Component
     {
-        public sealed override string Name => "RoguePointingArrow";
+        public sealed override string Name => "GasSprayer";
     }
 
     [Serializable, NetSerializable]
