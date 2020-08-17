@@ -6,7 +6,7 @@ using Content.Shared.Physics;
 namespace Content.Client.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    public class ClimbModeComponent : SharedClimbModeComponent
+    public class ClimbingComponent : SharedClimbingComponent
     {
         private ICollidableComponent _body = default;
 
@@ -14,10 +14,7 @@ namespace Content.Client.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out ICollidableComponent body))
-            {
-                _body = body;
-            }
+            Owner.TryGetComponent(out _body);
         }
 
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)

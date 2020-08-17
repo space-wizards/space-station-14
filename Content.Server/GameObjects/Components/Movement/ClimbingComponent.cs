@@ -10,46 +10,53 @@ using Content.Shared.GameObjects.EntitySystems;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
-    public class ClimbModeComponent : SharedClimbModeComponent, IActionBlocker
+    public class ClimbingComponent : SharedClimbingComponent, IActionBlocker
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent(out ICollidableComponent body))
-            {
-                _body = body;
-            }
+            Owner.TryGetComponent(out _body);
         }
 
         private ICollidableComponent _body = default;
         private bool _isClimbing = false;
         private ClimbController _climbController = default;
 
-        bool IActionBlocker.CanMove() => OwnerIsTransitioning();
-        bool IActionBlocker.CanChangeDirection() => OwnerIsTransitioning();
-
-        private bool OwnerIsTransitioning()
+        public bool IsClimbing
         {
-            if (_climbController != null)
+            get
             {
-                return !_climbController.IsActive;
+                return _isClimbing;
             }
+            set
+            {
+                if (!value && _body != null)
+                {
+                    _body.TryRemoveController<ClimbController>();
+                }
 
-            return true;
+                _isClimbing = value;
+                UpdateCollision();
+                Dirty();
+            }
         }
 
-        public void SetClimbing(bool isClimbing)
+        private bool OwnerIsTransitioning
         {
-            if (!isClimbing && _body != null)
+            get
             {
-                _body.TryRemoveController<ClimbController>();
-            }
+                if (_climbController != null)
+                {
+                    return !_climbController.IsActive;
+                }
 
-            _isClimbing = isClimbing;
-            UpdateCollision();
-            Dirty();
+                return true;
+            }
         }
+
+        bool IActionBlocker.CanMove() => OwnerIsTransitioning;
+        bool IActionBlocker.CanChangeDirection() => OwnerIsTransitioning;
 
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
@@ -71,17 +78,20 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 // We should be using AABB checks to unclimb but i can't think of a cheap way to do it so for now let's just check if the user's grid position has climbables
 
-                var tile = (TileRef)TurfHelpers.GetTileRef(Owner.Transform.GridPosition);
+                var tile = TurfHelpers.GetTileRef(Owner.Transform.GridPosition);
 
-                foreach (var entity in TurfHelpers.GetEntitiesInTile(tile))
+                if (tile.HasValue)
                 {
-                    if (entity.HasComponent<ClimbableComponent>())
+                    foreach (var entity in TurfHelpers.GetEntitiesInTile(tile.Value))
                     {
-                        return;
+                        if (entity.HasComponent<ClimbableComponent>())
+                        {
+                            return;
+                        }
                     }
                 }
 
-                SetClimbing(false); // there are no climbables within the tile we stand on
+                IsClimbing = false; // there are no climbables within the tile we stand on
             }
         }
 

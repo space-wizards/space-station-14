@@ -14,7 +14,9 @@ using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces;
 using Content.Server.GameObjects.Components.Body;
+using Content.Server.GameObjects.EntitySystems.DoAfter;
 using System;
+using System.Threading;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -39,12 +41,14 @@ namespace Content.Server.GameObjects.Components.Movement
         private float _climbDelay;
 
         private ICollidableComponent _collidableComponent;
+        private DoAfterSystem _doAfterSystem;
 
         public override void Initialize()
         {
             base.Initialize();
 
             _collidableComponent = Owner.GetComponent<ICollidableComponent>();
+            _doAfterSystem = EntitySystem.Get<DoAfterSystem>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -66,14 +70,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
             if (eventArgs.User == eventArgs.Dropped) // user is dragging themselves onto a climbable
             {
-                if (eventArgs.Target == null) 
-                {
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't climb that!"));
-
-                    return false;
-                }
-
-                if (!eventArgs.User.HasComponent<ClimbModeComponent>())
+                if (!eventArgs.User.HasComponent<ClimbingComponent>())
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are incapable of climbing!"));
 
@@ -104,7 +101,7 @@ namespace Content.Server.GameObjects.Components.Movement
             }
             else // user is dragging some other entity onto a climbable
             {
-                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbModeComponent>()) 
+                if (eventArgs.Target == null || !eventArgs.Dropped.HasComponent<ClimbingComponent>()) 
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You can't do that!"));
                     
@@ -133,23 +130,35 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             if (eventArgs.User == eventArgs.Dropped)
             {
-                return TryClimb(eventArgs.User);
+                TryClimb(eventArgs.User);
             }
             else
             {
-                return TryMoveEntity(eventArgs.User, eventArgs.Dropped);
+                TryMoveEntity(eventArgs.User, eventArgs.Dropped);
             }
+
+            return true;
         }
 
-        private bool TryMoveEntity(IEntity user, IEntity entityToMove)
+        private async void TryMoveEntity(IEntity user, IEntity entityToMove)
         {
-            if (user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, entityToMove)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true
+            };
+
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+
+            if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 var direction = (Owner.Transform.WorldPosition - entityToMove.Transform.WorldPosition).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
 
-                var climbMode = entityToMove.GetComponent<ClimbModeComponent>();
-                climbMode.SetClimbing(true);
+                var climbMode = entityToMove.GetComponent<ClimbingComponent>();
+                climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
@@ -166,22 +175,28 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} forces {1:them} onto {2:theName}!", user, entityToMove, Owner), 15);
                 _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:them} onto {1:theName}!", entityToMove, Owner));
-
-                return true;
             }
-
-            return false;
         }
 
-        private bool TryClimb(IEntity user)
+        private async void TryClimb(IEntity user)
         {
-            if (user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true
+            };
+
+            var result = await _doAfterSystem.DoAfter(doAfterEventArgs);
+
+            if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
                 var direction = (Owner.Transform.WorldPosition - user.Transform.WorldPosition).Normalized;
                 var endPoint = Owner.Transform.WorldPosition;
 
-                var climbMode = user.GetComponent<ClimbModeComponent>();
-                climbMode.SetClimbing(true);
+                var climbMode = user.GetComponent<ClimbingComponent>();
+                climbMode.IsClimbing = true;
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
@@ -194,13 +209,9 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto the {1}!", user, Owner), 15);
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto (1:theName}!", user, Owner), 15);
                 _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
-
-                return true;
             }
-
-            return false;
         }
 
         private void PopupMessageOtherClientsInRange(IEntity source, string message, int maxReceiveDistance)
