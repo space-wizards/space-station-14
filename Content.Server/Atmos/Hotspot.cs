@@ -23,7 +23,7 @@ namespace Content.Server.Atmos
         ///     State for the fire sprite.
         /// </summary>
         [ViewVariables]
-        public int State;
+        public byte State;
 
         public void Start()
         {
