@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             AsTask = Tcs.Task;
         }
 
-        public void HandleDamage(object? sender, DamageEventArgs eventArgs)
+        public void HandleDamage(HealthChangedEventArgs args)
         {
             _tookDamage = true;
         }

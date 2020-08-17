@@ -1,7 +1,7 @@
 #nullable enable
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Body;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -49,7 +49,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             return entity.HasComponent<ItemComponent>() ||
-                   entity.HasComponent<SpeciesComponent>();
+                   entity.HasComponent<IBodyManagerComponent>();
         }
 
         public bool TryInsert(IEntity entity)

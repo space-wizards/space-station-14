@@ -5,20 +5,21 @@ using Robust.Shared.GameObjects.Systems;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ThirstSystem : EntitySystem
+    public class ThirstSystem : EntitySystem
     {
         private float _accumulatedFrameTime;
 
         public override void Update(float frameTime)
         {
             _accumulatedFrameTime += frameTime;
-            if (_accumulatedFrameTime > 1.0f)
+
+            if (_accumulatedFrameTime > 1)
             {
                 foreach (var component in ComponentManager.EntityQuery<ThirstComponent>())
                 {
                     component.OnUpdate(_accumulatedFrameTime);
                 }
-                _accumulatedFrameTime -= 1.0f;
+                _accumulatedFrameTime -= 1;
             }
         }
     }

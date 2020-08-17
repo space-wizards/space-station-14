@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
@@ -126,8 +127,8 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var dead =
-                Owner.TryGetComponent<SpeciesComponent>(out var species) &&
-                species.CurrentDamageState is DeadState;
+                Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
+                damageable.CurrentDamageState == DamageState.Dead;
 
             if (!HasMind)
             {

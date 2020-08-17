@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.EntitySystems;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.Interfaces;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
@@ -745,7 +746,7 @@ namespace Content.Server.Atmos
             }
             else
             {
-                Hotspot.State = Hotspot.Volume > Atmospherics.CellVolume * 0.4f ? 2 : 1;
+                Hotspot.State = (byte) (Hotspot.Volume > Atmospherics.CellVolume * 0.4f ? 2 : 1);
             }
 
             if (Hotspot.Temperature > MaxFireTemperatureSustained)

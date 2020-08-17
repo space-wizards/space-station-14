@@ -1,5 +1,5 @@
 using System;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Physics;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
