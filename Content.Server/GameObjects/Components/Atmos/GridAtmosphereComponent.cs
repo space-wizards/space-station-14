@@ -78,12 +78,18 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
 
-        private int _updatedNets = 0;
+        /// <summary>
+        ///     Index of most recently updated <see cref="IPipeNet"/>.
+        /// </summary>
+        private int _netIndex = 0;
 
         [ViewVariables]
         private readonly List<PipeNetDevice> _pipeNetDevices = new List<PipeNetDevice>();
 
-        private int _updatedDevices = 0;
+        /// <summary>
+        ///     Index of most recently updated <see cref="PipeNetDevice"/>.
+        /// </summary>
+        private int _deviceIndex = 0;
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
@@ -323,7 +329,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void RemovePipeNetDevice(PipeNetDevice pipeNetDevice)
         {
             _pipeNetDevices.Remove(pipeNetDevice);
-            _updatedDevices = 0;
+            _deviceIndex = 0;
         }
 
         /// <inheritdoc />
@@ -575,9 +581,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             var number = 0;
             var pipeNetDevices = _pipeNetDevices.ToArray();
             var deviceCount = pipeNetDevices.Count();
-            for ( ; _updatedDevices < deviceCount; _updatedDevices++)
+            for ( ; _deviceIndex < deviceCount; _deviceIndex++)
             {
-                pipeNetDevices[_updatedDevices].Update();
+                pipeNetDevices[_deviceIndex].Update();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -585,7 +591,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
-            _updatedDevices = 0;
+            _deviceIndex = 0;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
