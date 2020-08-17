@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Movement
         private float _range;
 
         /// <summary>
-        ///     The time it takes to climb the entity.
+        ///     The time it takes to climb onto the entity.
         /// </summary>
         [ViewVariables]
         private float _climbDelay;
@@ -180,7 +180,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
         private async void TryClimb(IEntity user)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay)
+            var doAfterEventArgs = new DoAfterEventArgs(user, _climbDelay, default, Owner)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -209,7 +209,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto (1:theName}!", user, Owner), 15);
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto {1:theName}!", user, Owner), 15);
                 _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
             }
         }
