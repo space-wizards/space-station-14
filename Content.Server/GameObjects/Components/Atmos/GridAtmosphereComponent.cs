@@ -74,6 +74,12 @@ namespace Content.Server.GameObjects.Components.Atmos
         private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
+        private readonly Queue<IPipeNet> _pipeNets = new Queue<IPipeNet>();
+
+        [ViewVariables]
+        private readonly Queue<PipeNetDevice> _pipeNetDevices = new Queue<PipeNetDevice>();
+
+        [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
 
         private enum ProcessState
@@ -268,6 +274,16 @@ namespace Content.Server.GameObjects.Components.Atmos
         public void RemoveExcitedGroup(ExcitedGroup excitedGroup)
         {
             _excitedGroups.Remove(excitedGroup);
+        }
+
+        public void AddPipeNet(IPipeNet pipeNet)
+        {
+            _pipeNets.Enqueue(pipeNet);
+        }
+
+        public void AddPipeNetDevice(PipeNetDevice pipeNetDevice)
+        {
+            _pipeNetDevices.Enqueue(pipeNetDevice);
         }
 
         /// <inheritdoc />
@@ -475,21 +491,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             }
         }
 
-        #region tempregion
-
-        #region pipenet
-        private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
-
-        public void AddPipeNet(IPipeNet pipeNet)
-        {
-            _pipeNets.Add(pipeNet);
-        }
-
-        public void RemovePipeNet(IPipeNet pipeNet)
-        {
-            _pipeNets.Remove(pipeNet);
-        }
-
         private void ProcessPipeNets()
         {
             _stopwatch.Restart();
@@ -498,10 +499,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             var pipeNetCount = _pipeNets.Count;
             for (var i = 0; i < pipeNetCount; i++)
             {
-                var pipeNet = _pipeNets.First();
-                pipeNet.Update();
-                _pipeNets.RemoveAt(0);
-                _pipeNets.Add(pipeNet);
+                var pipeNet = _pipeNets.Dequeue();
+                if (pipeNet.ContinueAtmosUpdates)
+                {
+                    pipeNet.Update();
+                    _pipeNets.Enqueue(pipeNet);
+                }
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -509,20 +512,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
-        }
-
-        #endregion
-
-        private readonly List<PipeNetDevice> _pipeNetDevices = new List<PipeNetDevice>();
-
-        public void AddPipeNetDevice(PipeNetDevice pipeNetDevice)
-        {
-            _pipeNetDevices.Add(pipeNetDevice);
-        }
-
-        public void RemovePipeNetDevice(PipeNetDevice pipeNetDevice)
-        {
-            _pipeNetDevices.Remove(pipeNetDevice);
         }
 
         private void ProcessPipeNetDevices()
@@ -533,11 +522,12 @@ namespace Content.Server.GameObjects.Components.Atmos
             var deviceCount = _pipeNetDevices.Count;
             for (var i = 0; i < deviceCount; i++)
             {
-                var pipeNetDevice = _pipeNetDevices.First();
-                pipeNetDevice.Update();
-                _pipeNetDevices.RemoveAt(0);
-                _pipeNetDevices.Add(pipeNetDevice);
-
+                var pipeNetDevice = _pipeNetDevices.Dequeue();
+                if (pipeNetDevice.ContinueAtmosUpdates)
+                {
+                    pipeNetDevice.Update();
+                    _pipeNetDevices.Enqueue(pipeNetDevice);
+                }
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
@@ -545,8 +535,6 @@ namespace Content.Server.GameObjects.Components.Atmos
                     return;
             }
         }
-
-        #endregion
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
         {

@@ -155,10 +155,9 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
-            "PipeContainer",
             "DebugPump",
             "DebugVent",
-            "DebugScrubber",
+            "DebugSiphon",
         };
     }
 }
