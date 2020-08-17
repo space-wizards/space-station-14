@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos;
+using Content.Server.GameObjects.Components.Atmos.Piping;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Server.Interfaces.GameObjects;
@@ -81,6 +83,8 @@ namespace Content.Server.GameObjects.Components.Atmos
             ExcitedGroups,
             HighPressureDelta,
             Hotspots,
+            PipeNet,
+            PipeNetDevices,
         }
 
         /// <inheritdoc />
@@ -361,7 +365,15 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
                 case ProcessState.Hotspots:
                     ProcessHotspots();
-                    _state = ProcessState.TileEqualize;
+                    _state = ProcessState.PipeNet;
+                    break;
+                case ProcessState.PipeNet:
+                    ProcessPipeNets();
+                    _state = ProcessState.PipeNetDevices;
+                    break;
+                case ProcessState.PipeNetDevices:
+                    ProcessPipeNetDevices();
+                    _state = ProcessState.ActiveTiles;
                     break;
             }
 
@@ -462,6 +474,69 @@ namespace Content.Server.GameObjects.Components.Atmos
                     return;
             }
         }
+
+        #region tempregion
+
+        #region pipenet
+        private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
+
+        private void ProcessPipeNets()
+        {
+            _stopwatch.Restart();
+
+            var number = 0;
+            var pipeNetCount = _pipeNets.Count;
+            for (var i = 0; i < pipeNetCount; i++)
+            {
+                var pipeNet = _pipeNets.First();
+                pipeNet.Update();
+                _pipeNets.RemoveAt(0);
+                _pipeNets.Add(pipeNet);
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    return;
+            }
+        }
+
+        #endregion
+
+        private readonly List<PipeNetDevice> _pipeNetDevices = new List<PipeNetDevice>();
+
+        public void AddPipeNetDevice(PipeNetDevice pipeNetDevice)
+        {
+            _pipeNetDevices.Add(pipeNetDevice);
+        }
+
+        public void RemovePipeNetDevice(PipeNetDevice pipeNetDevice)
+        {
+            _pipeNetDevices.Remove(pipeNetDevice);
+        }
+
+        private void ProcessPipeNetDevices()
+        {
+            _stopwatch.Restart();
+
+            var number = 0;
+            var deviceCount = _pipeNetDevices.Count;
+            for (var i = 0; i < deviceCount; i++)
+            {
+                var pipeNetDevice = _pipeNetDevices.First();
+                pipeNetDevice.Update();
+                _pipeNetDevices.RemoveAt(0);
+                _pipeNetDevices.Add(pipeNetDevice);
+
+                if (number++ < LagCheckIterations) continue;
+                number = 0;
+                // Process the rest next time.
+                if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
+                    return;
+            }
+        }
+
+        #endregion
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)
         {
