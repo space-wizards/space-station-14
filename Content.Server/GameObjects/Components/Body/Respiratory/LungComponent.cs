@@ -86,13 +86,14 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
                 return;
             }
 
-            var amount = Atmospherics.BreathPercentage * frameTime;
+            var amount = Atmospherics.BreathVolume * frameTime;
             var volumeRatio = amount / tileAir.Volume;
             var temp = tileAir.RemoveRatio(volumeRatio);
 
             temp.PumpGasTo(Air, Pressure);
             Air.PumpGasTo(bloodstream.Air, Pressure);
             tileAir.Merge(temp);
+            temp.Clear();
         }
 
         public void Exhale(float frameTime)
@@ -109,12 +110,13 @@ namespace Content.Server.GameObjects.Components.Body.Respiratory
 
             bloodstream.PumpToxins(Air, Pressure);
 
-            var amount = Atmospherics.BreathPercentage * frameTime;
-            var volumeRatio = amount / tileAir.Volume;
-            var temp = tileAir.RemoveRatio(volumeRatio);
+            var temp = new GasMixture(Air.Volume);
 
-            temp.PumpGasTo(tileAir, Pressure);
-            Air.Merge(temp);
+            temp.Merge(Air);
+            Air.Clear();
+
+            tileAir.Merge(temp);
+            temp.Clear();
         }
     }
 

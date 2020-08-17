@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
-using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry;
@@ -99,10 +97,14 @@ namespace Content.Server.GameObjects.Components.Metabolism
 
         private float GasProducedMultiplier(Gas gas, float usedAverage)
         {
-            if (!NeedsGases.TryGetValue(gas, out var needs) ||
-                !ProducesGases.TryGetValue(gas, out var produces))
+            if (!ProducesGases.TryGetValue(gas, out var produces))
             {
                 return 0;
+            }
+
+            if (!NeedsGases.TryGetValue(gas, out var needs))
+            {
+                needs = 1;
             }
 
             return needs * produces * usedAverage;
@@ -217,15 +219,17 @@ namespace Content.Server.GameObjects.Components.Metabolism
             }
         }
 
-        public void Transfer(BloodstreamComponent @from, GasMixture to, Gas gas, float pressure)
+        public void Transfer(BloodstreamComponent from, GasMixture to, Gas gas, float pressure)
         {
-            var transfer = new GasMixture();
-            var molesInBlood = @from.Air.GetMoles(gas);
+            var transfer = new GasMixture(from.Air.Volume);
+            var molesInBlood = from.Air.GetMoles(gas);
+            transfer.AdjustMoles(gas, molesInBlood);
+            from.Air.AdjustMoles(gas, -molesInBlood);
 
-            transfer.SetMoles(gas, molesInBlood);
-            transfer.ReleaseGasTo(to, pressure);
+            transfer.PumpGasTo(to, pressure);
 
-            @from.Air.Merge(transfer);
+            from.Air.Merge(transfer);
+            transfer.Clear();
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream, float pressure = 100)

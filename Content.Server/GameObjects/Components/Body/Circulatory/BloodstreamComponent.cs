@@ -66,18 +66,19 @@ namespace Content.Server.GameObjects.Components.Body.Circulatory
             return true;
         }
 
-        public void PumpToxins(GasMixture into, float pressure)
+        public void PumpToxins(GasMixture to, float pressure)
         {
             if (!Owner.TryGetComponent(out MetabolismComponent metabolism))
             {
-                Air.PumpGasTo(into, pressure);
+                Air.PumpGasTo(to, pressure);
                 return;
             }
 
             var toxins = metabolism.Clean(this);
 
-            toxins.PumpGasTo(into, pressure);
+            toxins.PumpGasTo(to, pressure);
             Air.Merge(toxins);
+            toxins.Clear();
         }
     }
 }
