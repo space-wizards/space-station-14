@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.Damage;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Doors;
 using Content.Shared.GameObjects.Components.Movement;
@@ -113,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             // Disabled because it makes it suck hard to walk through double doors.
 
-            if (entity.HasComponent(typeof(SpeciesComponent)))
+            if (entity.HasComponent<IBodyManagerComponent>())
             {
                 if (!entity.TryGetComponent<IMoverComponent>(out var mover)) return;
 
@@ -237,7 +238,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 foreach (var e in collidesWith)
                 {
                     if (!e.TryGetComponent(out StunnableComponent stun)
-                        || !e.TryGetComponent(out DamageableComponent damage)
+                        || !e.TryGetComponent(out IDamageableComponent damage)
                         || !e.TryGetComponent(out ICollidableComponent otherBody)
                         || !Owner.TryGetComponent(out ICollidableComponent body))
                         continue;
@@ -247,7 +248,7 @@ namespace Content.Server.GameObjects.Components.Doors
                     if (percentage < 0.1f)
                         continue;
 
-                    damage.TakeDamage(DamageType.Brute, DoorCrushDamage);
+                    damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
                     stun.Paralyze(DoorStunTime);
                     hitSomeone = true;
                 }

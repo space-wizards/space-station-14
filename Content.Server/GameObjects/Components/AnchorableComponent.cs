@@ -14,6 +14,8 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Anchorable";
 
+        int IInteractUsing.Priority => 1;
+
         /// <summary>
         ///     Checks if a tool can change the anchored status.
         /// </summary>

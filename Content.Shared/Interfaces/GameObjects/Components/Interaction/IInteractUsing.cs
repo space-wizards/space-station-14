@@ -14,10 +14,10 @@ namespace Content.Shared.Interfaces.GameObjects.Components
     public interface IInteractUsing
     {
         /// <summary>
-        /// The interaction Priority. Higher numbers get called first.
+        /// The interaction priority. Higher numbers get called first.
         /// </summary>
-        /// <value>Prority defaults to 0</value>
-        int Priority { get => 0; }
+        /// <value>Priority defaults to 0</value>
+        int Priority => 0;
 
         /// <summary>
         /// Called when using one object on another when user is in range of the target entity.

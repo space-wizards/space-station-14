@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Mobs.Roles;
+using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -14,8 +15,8 @@ namespace Content.Server.GameObjects.Components.Suspicion
 
         public bool IsDead()
         {
-            return Owner.TryGetComponent(out SpeciesComponent species) &&
-                   species.CurrentDamageState is DeadState;
+            return Owner.TryGetComponent(out IDamageableComponent damageable) &&
+                   damageable.CurrentDamageState == DamageState.Dead;
         }
 
         public bool IsTraitor()

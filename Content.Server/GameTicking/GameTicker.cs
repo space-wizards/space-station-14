@@ -13,6 +13,7 @@ using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
@@ -633,7 +634,8 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
-
+            
+            EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
             EntitySystem.Get<WireHackingSystem>().ResetLayouts();
