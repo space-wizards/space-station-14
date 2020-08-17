@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Content.Client.Interfaces;
 using Content.Client.State;
 using Content.Client.UserInterface;
@@ -27,9 +28,11 @@ namespace Content.Client.GameTicking
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
+        [ViewVariables] public Dictionary<string, bool> Ready { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
+        public event Action LobbyReadyUpdated;
 
         public void Initialize()
         {
@@ -40,12 +43,14 @@ namespace Content.Client.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus), LobbyStatus);
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo), LobbyInfo);
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown), LobbyCountdown);
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady), LobbyReady);
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage), RoundEnd);
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention), msg =>
             {
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
 
+            Ready = new Dictionary<string, bool>();
             _initialized = true;
         }
 
@@ -82,6 +87,16 @@ namespace Content.Client.GameTicking
         {
             StartTime = message.StartTime;
             Paused = message.Paused;
+        }
+
+        private void LobbyReady(MsgTickerLobbyReady message)
+        {
+            // Merge the Dictionaries
+            foreach (var p in message.PlayerReady)
+            {
+                Ready[p.Key] = p.Value;
+            }
+            LobbyReadyUpdated?.Invoke();
         }
 
         private void RoundEnd(MsgRoundEndMessage message)

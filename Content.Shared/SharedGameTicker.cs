@@ -152,6 +152,44 @@ namespace Content.Shared
             }
         }
 
+        protected class MsgTickerLobbyReady : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerLobbyReady);
+            public MsgTickerLobbyReady(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            /// <summary>
+            /// The Players Ready (playerName:ready)
+            /// </summary>
+            public IDictionary<string, bool> PlayerReady { get; set; }
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                PlayerReady = new Dictionary<string, bool>();
+                var length = buffer.ReadInt32();
+                for (int i = 0; i < length; i++)
+                {
+                    var name = buffer.ReadString();
+                    var ready = buffer.ReadBoolean();
+                    PlayerReady.Add(name, ready);
+                }
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(PlayerReady.Count);
+                foreach (var p in PlayerReady)
+                {
+                    buffer.Write(p.Key);
+                    buffer.Write(p.Value);
+                }
+            }
+        }
+
 
         public struct RoundEndPlayerInfo
         {

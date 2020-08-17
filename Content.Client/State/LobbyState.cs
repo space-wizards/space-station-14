@@ -100,6 +100,7 @@ namespace Content.Client.State
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _clientGameTicker.LobbyStatusUpdated += UpdateLobbyUi;
+            _clientGameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
         }
 
         public override void Shutdown()
@@ -150,6 +151,7 @@ namespace Content.Client.State
         }
 
         private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e) => UpdatePlayerList();
+        private void LobbyReadyUpdated() => UpdatePlayerList();
 
         private void UpdateLobbyUi()
         {
@@ -178,10 +180,19 @@ namespace Content.Client.State
         private void UpdatePlayerList()
         {
             _lobby.OnlinePlayerItemList.Clear();
+            _lobby.PlayerReadyList.Clear();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
                 _lobby.OnlinePlayerItemList.AddItem(session.Name);
+
+                var ready = false;
+                if (session.SessionId == _playerManager.LocalPlayer.SessionId)
+                    ready = _clientGameTicker.AreWeReady;
+                else
+                    _clientGameTicker.Ready.TryGetValue(session.Name, out ready);
+
+                _lobby.PlayerReadyList.AddItem(ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready"));
             }
         }
 
@@ -193,6 +204,7 @@ namespace Content.Client.State
             }
 
             _console.ProcessCommand($"toggleready {newReady}");
+            UpdatePlayerList();
         }
     }
 }

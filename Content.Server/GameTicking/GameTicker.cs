@@ -137,6 +137,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
 
@@ -380,6 +381,7 @@ namespace Content.Server.GameTicking
 
             _playersInLobby[player] = ready;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+            _netManager.ServerSendToAll(GetReadySingle(player, ready));
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -869,6 +871,7 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetReadyStatus(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -878,6 +881,26 @@ namespace Content.Server.GameTicking
             if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
+        }
+
+        private MsgTickerLobbyReady GetReadyStatus()
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerReady = new Dictionary<string, bool>();
+            foreach (var player in _playersInLobby.Keys)
+            {
+                _playersInLobby.TryGetValue(player, out var ready);
+                msg.PlayerReady.Add(player.Name, ready);
+            }
+            return msg;
+        }
+
+        private MsgTickerLobbyReady GetReadySingle(IPlayerSession player, bool ready)
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerReady = new Dictionary<string, bool>();
+            msg.PlayerReady.Add(player.Name, ready);
+            return msg;
         }
 
         private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)

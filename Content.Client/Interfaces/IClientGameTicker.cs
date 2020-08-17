@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Content.Client.Interfaces
 {
@@ -9,9 +10,11 @@ namespace Content.Client.Interfaces
         bool AreWeReady { get; }
         DateTime StartTime { get; }
         bool Paused { get; }
+        Dictionary<string, bool> Ready { get; }
 
         void Initialize();
         event Action InfoBlobUpdated;
         event Action LobbyStatusUpdated;
+        event Action LobbyReadyUpdated;
     }
 }
