@@ -13,13 +13,9 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
     {
         public abstract void Update();
 
-        /// <summary>
-        ///     If the <see cref="IGridAtmosphereComponent"/> this is being updates by should continue to do so,
-        ///     or get rid of this from its queue.
-        /// </summary>
-        public bool ContinueAtmosUpdates { get; private set; } = true;
-
         private IGridAtmosphereComponent CurrentGridAtmos => EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID);
+
+        private IGridAtmosphereComponent _joinedGridAtmos;
 
         public override void Initialize()
         {
@@ -35,12 +31,14 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private void JoinGridAtmos()
         {
-            CurrentGridAtmos?.AddPipeNetDevice(this);
+            _joinedGridAtmos = CurrentGridAtmos;
+            _joinedGridAtmos?.AddPipeNetDevice(this);
         }
 
         private void LeaveGridAtmos()
         {
-            ContinueAtmosUpdates = false;
+            _joinedGridAtmos?.RemovePipeNetDevice(this);
+            _joinedGridAtmos = null;
         }
     }
 }

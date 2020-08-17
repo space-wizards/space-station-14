@@ -76,10 +76,14 @@ namespace Content.Server.GameObjects.Components.Atmos
         private HashSet<TileAtmosphere> _highPressureDelta = new HashSet<TileAtmosphere>(1000);
 
         [ViewVariables]
-        private readonly Queue<IPipeNet> _pipeNets = new Queue<IPipeNet>();
+        private readonly List<IPipeNet> _pipeNets = new List<IPipeNet>();
+
+        private int _updatedNets = 0;
 
         [ViewVariables]
-        private readonly Queue<PipeNetDevice> _pipeNetDevices = new Queue<PipeNetDevice>();
+        private readonly List<PipeNetDevice> _pipeNetDevices = new List<PipeNetDevice>();
+
+        private int _updatedDevices = 0;
 
         [ViewVariables]
         private ProcessState _state = ProcessState.TileEqualize;
@@ -303,12 +307,23 @@ namespace Content.Server.GameObjects.Components.Atmos
 
         public void AddPipeNet(IPipeNet pipeNet)
         {
-            _pipeNets.Enqueue(pipeNet);
+            _pipeNets.Add(pipeNet);
+        }
+
+        public void RemovePipeNet(IPipeNet pipeNet)
+        {
+            _pipeNets.Remove(pipeNet);
         }
 
         public void AddPipeNetDevice(PipeNetDevice pipeNetDevice)
         {
-            _pipeNetDevices.Enqueue(pipeNetDevice);
+            _pipeNetDevices.Add(pipeNetDevice);
+        }
+
+        public void RemovePipeNetDevice(PipeNetDevice pipeNetDevice)
+        {
+            _pipeNetDevices.Remove(pipeNetDevice);
+            _updatedDevices = 0;
         }
 
         /// <inheritdoc />
@@ -542,16 +557,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             _stopwatch.Restart();
 
             var number = 0;
-            var pipeNetCount = _pipeNets.Count;
-            for (var i = 0; i < pipeNetCount; i++)
+            var pipeNets = _pipeNets.ToArray();
+            for ( ; ; )
             {
-                var pipeNet = _pipeNets.Dequeue();
-                if (pipeNet.ContinueAtmosUpdates)
-                {
-                    pipeNet.Update();
-                    _pipeNets.Enqueue(pipeNet);
-                }
-
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
                 // Process the rest next time.
@@ -565,15 +573,11 @@ namespace Content.Server.GameObjects.Components.Atmos
             _stopwatch.Restart();
 
             var number = 0;
-            var deviceCount = _pipeNetDevices.Count;
-            for (var i = 0; i < deviceCount; i++)
+            var pipeNetDevices = _pipeNetDevices.ToArray();
+            var deviceCount = pipeNetDevices.Count();
+            for ( ; _updatedDevices < deviceCount; _updatedDevices++)
             {
-                var pipeNetDevice = _pipeNetDevices.Dequeue();
-                if (pipeNetDevice.ContinueAtmosUpdates)
-                {
-                    pipeNetDevice.Update();
-                    _pipeNetDevices.Enqueue(pipeNetDevice);
-                }
+                pipeNetDevices[_updatedDevices].Update();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -581,6 +585,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
+            _updatedDevices = 0;
         }
 
         private AirtightComponent GetObstructingComponent(MapIndices indices)

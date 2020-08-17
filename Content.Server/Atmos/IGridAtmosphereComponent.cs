@@ -149,8 +149,13 @@ namespace Content.Server.Atmos
 
         void Update(float frameTime);
 
+        void AddPipeNet(IPipeNet pipeNet);
+
+        void RemovePipeNet(IPipeNet pipeNet);
+
         void AddPipeNetDevice(PipeNetDevice pipeNetDevice);
 
-        void AddPipeNet(IPipeNet pipeNet);
+        void RemovePipeNetDevice(PipeNetDevice pipeNetDevice);
     }
+}
 }

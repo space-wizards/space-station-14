@@ -10,13 +10,10 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 {
     public interface IPipeNet : IGasMixtureHolder
     {
-        void Update();
-
         /// <summary>
-        ///     If the <see cref="IGridAtmosphereComponent"/> this is being updates by should continue to do so,
-        ///     or get rid of this from its queue.
+        ///     Causes gas in the PipeNet to react.
         /// </summary>
-        bool ContinueAtmosUpdates { get; }
+        void Update();
     }
 
     [NodeGroup(NodeGroupID.Pipe)]
@@ -25,19 +22,20 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
         [ViewVariables]
         public GasMixture Air { get; set; } = new GasMixture();
 
-        public bool ContinueAtmosUpdates { get; private set; } = true;
-
         public static readonly IPipeNet NullNet = new NullPipeNet();
 
         [ViewVariables]
         private readonly List<PipeNode> _pipes = new List<PipeNode>();
 
+        [ViewVariables]
+        private IGridAtmosphereComponent _gridAtmos;
+
         public override void Initialize(Node sourceNode)
         {
             base.Initialize(sourceNode);
-            EntitySystem.Get<AtmosphereSystem>()
-                .GetGridAtmosphere(GridId)
-                ?.AddPipeNet(this);
+            _gridAtmos = EntitySystem.Get<AtmosphereSystem>()
+                .GetGridAtmosphere(GridId);
+            _gridAtmos?.AddPipeNet(this);
         }
 
         public void Update()
@@ -90,12 +88,11 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
 
         private void RemoveFromGridAtmos()
         {
-            ContinueAtmosUpdates = false;
+            _gridAtmos.RemovePipeNet(this);
         }
 
         private class NullPipeNet : IPipeNet
         {
-            public bool ContinueAtmosUpdates => false;
             GasMixture IGasMixtureHolder.Air { get; set; } = new GasMixture();
             public void Update() { }
         }
