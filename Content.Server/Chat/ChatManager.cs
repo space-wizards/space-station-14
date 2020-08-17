@@ -1,11 +1,10 @@
-﻿using System.Linq;
+﻿using Content.Server.GameObjects.Components.Mobs.Speech;
 using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.EntitySystems;
-using NFluidsynth;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Server.Interfaces.Player;
@@ -13,6 +12,7 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System.Linq;
 
 namespace Content.Server.Chat
 {
@@ -97,6 +97,12 @@ namespace Content.Server.Chat
                     DispatchServerMessage(playerSession, Loc.GetString(MaxLengthExceededMessage, MaxMessageLength));
                     return;
                 }
+
+            //TODO: make this a action or something?
+            if (source.TryGetComponent(out IAccentComponent speech))
+            {
+                message = speech.Accentuate(message);
+            }
 
             var pos = source.Transform.GridPosition;
             var clients = _playerManager.GetPlayersInRange(pos, VoiceRange).Select(p => p.ConnectedClient);

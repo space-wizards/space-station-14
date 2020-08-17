@@ -1,0 +1,19 @@
+﻿using Robust.Shared.GameObjects;
+using System;
+
+namespace Content.Server.GameObjects.Components.Mobs.Speech
+{
+    [RegisterComponent]
+    [ComponentReference(typeof(IAccentComponent))]
+    class BackwardsAccentComponent : Component, IAccentComponent
+    {
+        public override string Name => "BackwardsAccent";
+
+        public string Accentuate(string message)
+        {
+            var arr = message.ToCharArray();
+            Array.Reverse(arr);
+            return new string(arr);
+        }
+    }
+}
