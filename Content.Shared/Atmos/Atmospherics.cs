@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos
 {
@@ -14,10 +15,18 @@ namespace Content.Shared.Atmos
             var protoMan = IoCManager.Resolve<IPrototypeManager>();
 
             GasPrototypes = new GasPrototype[TotalNumberOfGases];
+            GasOverlays = new SpriteSpecifier[TotalNumberOfGases];
 
             for (var i = 0; i < TotalNumberOfGases; i++)
             {
-                GasPrototypes[i] = protoMan.Index<GasPrototype>(i.ToString());
+                var gasPrototype = protoMan.Index<GasPrototype>(i.ToString());
+                GasPrototypes[i] = gasPrototype;
+
+                if(string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
+                    GasOverlays[i] = new SpriteSpecifier.Texture(new ResourcePath(gasPrototype.GasOverlayTexture));
+
+                if(!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
+                    GasOverlays[i] = new SpriteSpecifier.Rsi(new ResourcePath(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
             }
         }
 
@@ -26,6 +35,10 @@ namespace Content.Shared.Atmos
         public static GasPrototype GetGas(int gasId) => GasPrototypes[gasId];
         public static GasPrototype GetGas(Gas gasId) => GasPrototypes[(int) gasId];
         public static IEnumerable<GasPrototype> Gases => GasPrototypes;
+
+        private static readonly SpriteSpecifier[] GasOverlays;
+        
+        public static SpriteSpecifier GetOverlay(int overlayId) => GasOverlays[overlayId];
 
         #region ATMOS
         /// <summary>
@@ -166,7 +179,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 6;
+        public const byte TotalNumberOfGases = 6;
 
         /// <summary>
         ///     Amount of heat released per mole of burnt hydrogen or tritium (hydrogen isotope)
