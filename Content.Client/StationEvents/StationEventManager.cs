@@ -2,9 +2,7 @@
 using Content.Shared.StationEvents;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Client.StationEvents
 {
@@ -31,7 +29,8 @@ namespace Content.Client.StationEvents
 
         public void RequestEvents()
         {
-            IoCManager.Resolve<IClientNetManager>().ClientSendMessage(IoCManager.Resolve<IClientNetManager>().CreateNetMessage<MsgGetStationEvents>());
+            var netManager = IoCManager.Resolve<IClientNetManager>();
+            netManager.ClientSendMessage(netManager.CreateNetMessage<MsgGetStationEvents>());
         }
     }
 }
