@@ -418,7 +418,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                     break;
                 case ProcessState.PipeNetDevices:
                     ProcessPipeNetDevices();
-                    _state = ProcessState.ActiveTiles;
+                    _state = ProcessState.TileEqualize;
                     break;
             }
 
@@ -525,7 +525,6 @@ namespace Content.Server.GameObjects.Components.Atmos
             _stopwatch.Restart();
 
             var number = 0;
-
             foreach (var superconductivity in _superconductivityTiles.ToArray())
             {
                 superconductivity.Superconduct();
