@@ -35,7 +35,7 @@ namespace Content.Server.GameObjects.Components.Atmos.Piping
 
         private void JoinGridAtmos()
         {
-            CurrentGridAtmos.AddPipeNetDevice(this);
+            CurrentGridAtmos?.AddPipeNetDevice(this);
         }
 
         private void LeaveGridAtmos()

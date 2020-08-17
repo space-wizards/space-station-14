@@ -37,7 +37,7 @@ namespace Content.Server.GameObjects.Components.NodeContainer.NodeGroups
             base.Initialize(sourceNode);
             EntitySystem.Get<AtmosphereSystem>()
                 .GetGridAtmosphere(GridId)
-                .AddPipeNet(this);
+                ?.AddPipeNet(this);
         }
 
         public void Update()
