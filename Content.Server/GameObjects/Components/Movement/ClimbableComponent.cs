@@ -8,14 +8,12 @@ using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 using Robust.Server.Interfaces.Player;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Server.Health.BodySystem;
-using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.Components.Movement;
+using Content.Shared.Interfaces;
+using Content.Server.GameObjects.Components.Body;
 using System;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -34,6 +32,12 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables]
         private float _range;
 
+        /// <summary>
+        ///     The time it takes to climb the entity.
+        /// </summary>
+        [ViewVariables]
+        private float _climbDelay;
+
         private ICollidableComponent _collidableComponent;
 
         public override void Initialize()
@@ -48,6 +52,7 @@ namespace Content.Server.GameObjects.Components.Movement
             base.ExposeData(serializer);
 
             serializer.DataField(ref _range, "range", SharedInteractionSystem.InteractionRange / 1.4f);
+            serializer.DataField(ref _climbDelay, "delay", 0.8f);
         }
 
         bool IDragDropOn.CanDragDropOn(DragDropEventArgs eventArgs)
@@ -77,8 +82,8 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 var bodyManager = eventArgs.User.GetComponent<BodyManagerComponent>();
 
-                if (bodyManager.GetBodyPartsOfType(Shared.Health.BodySystem.BodyPartType.Leg).Count == 0 ||
-                    bodyManager.GetBodyPartsOfType(Shared.Health.BodySystem.BodyPartType.Foot).Count == 0) 
+                if (bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Leg).Count == 0 ||
+                    bodyManager.GetBodyPartsOfType(Shared.GameObjects.Components.Body.BodyPartType.Foot).Count == 0) 
                 {
                     _notifyManager.PopupMessage(eventArgs.User, eventArgs.User, Loc.GetString("You are unable to climb!"));
 
@@ -106,16 +111,6 @@ namespace Content.Server.GameObjects.Components.Movement
                     return false;
                 }
 
-                var damageable = eventArgs.Dropped.GetComponent<IDamageableComponent>();
-
-                if (damageable.CurrentDamageState is NormalState) // todo: this should also work on people who are unconscious/restrained even if their damage state is NormalState
-                {
-                    _notifyManager.PopupMessage(eventArgs.Dropped, eventArgs.User, Loc.GetString("You struggle to move {0:them}, but they resist!", eventArgs.Dropped));
-                    _notifyManager.PopupMessage(eventArgs.User, eventArgs.Dropped, Loc.GetString("You resist {0:them}'s attempts to move you!", eventArgs.User));
-
-                    return false;
-                }
-
                 var userPosition = eventArgs.User.Transform.MapPosition;
                 var otherUserPosition = eventArgs.Dropped.Transform.MapPosition;
                 var climbablePosition = eventArgs.Target.Transform.MapPosition;
@@ -136,10 +131,49 @@ namespace Content.Server.GameObjects.Components.Movement
 
         bool IDragDropOn.DragDropOn(DragDropEventArgs eventArgs)
         {
-            return TryClimb(eventArgs.Dropped);
+            if (eventArgs.User == eventArgs.Dropped)
+            {
+                return TryClimb(eventArgs.User);
+            }
+            else
+            {
+                return TryMoveEntity(eventArgs.User, eventArgs.Dropped);
+            }
         }
 
-        bool TryClimb(IEntity user)
+        private bool TryMoveEntity(IEntity user, IEntity entityToMove)
+        {
+            if (user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
+            {
+                var direction = (Owner.Transform.WorldPosition - entityToMove.Transform.WorldPosition).Normalized;
+                var endPoint = Owner.Transform.WorldPosition;
+
+                var climbMode = entityToMove.GetComponent<ClimbModeComponent>();
+                climbMode.SetClimbing(true);
+
+                if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
+                {
+                    endPoint = new Robust.Shared.Maths.Vector2(entityToMove.Transform.WorldPosition.X, endPoint.Y);
+                }
+                else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
+                {
+                    endPoint = new Robust.Shared.Maths.Vector2(endPoint.X, entityToMove.Transform.WorldPosition.Y);
+                }
+
+                climbMode.TryMoveTo(entityToMove.Transform.WorldPosition, endPoint);
+                // we may potentially need additional logic since we're forcing a player onto a climbable
+                // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
+
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} forces {1:them} onto {2:theName}!", user, entityToMove, Owner), 15);
+                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:them} onto {1:theName}!", entityToMove, Owner));
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool TryClimb(IEntity user)
         {
             if (user.TryGetComponent(out ICollidableComponent body) && body.PhysicsShapes.Count >= 1)
             {
