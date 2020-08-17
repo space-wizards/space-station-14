@@ -1,15 +1,12 @@
 using Content.Client.GameObjects.Components;
 using Content.Client.GameObjects.EntitySystems;
 using Content.Client.Interfaces;
-using Content.Shared.GameObjects.Components.Markers;
-using Robust.Client.Console.Commands;
+using Content.Shared.GameObjects;
 using Robust.Client.Interfaces.Console;
 using Robust.Client.Interfaces.GameObjects.Components;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
 
 namespace Content.Client.Commands
 {

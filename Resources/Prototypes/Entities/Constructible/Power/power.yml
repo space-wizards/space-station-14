@@ -50,9 +50,8 @@
       nodeGroupID: HVPower
   - type: PowerConsumer
     drawRate: 50
-  - type: Damageable
   - type: Breakable
-    thresholdvalue: 100
+    maxHP: 100
   - type: Anchorable
 
 - type: entity
@@ -290,9 +289,8 @@
     supply: 1500
   - type: SnapGrid
     offset: Center
-  - type: Damageable
   - type: Breakable
-    thresholdvalue: 100
+    maxHP: 100
 
 #Depriciated, to be removed from maps
 

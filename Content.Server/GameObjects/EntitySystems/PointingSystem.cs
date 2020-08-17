@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interfaces;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects.Components;
 using Robust.Server.Interfaces.Player;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -24,14 +25,12 @@ using Robust.Shared.Players;
 namespace Content.Server.GameObjects.EntitySystems
 {
     [UsedImplicitly]
-    public class PointingSystem : EntitySystem
+    internal sealed class PointingSystem : EntitySystem
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -115,7 +114,13 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var viewers = _playerManager.GetPlayersInRange(player.Transform.GridPosition, 15);
 
-            EntityManager.SpawnEntity("pointingarrow", coords);
+            var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
+
+            if (player.TryGetComponent(out VisibilityComponent playerVisibility))
+            {
+                var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
+                arrowVisibility.Layer = playerVisibility.Layer;
+            }
 
             string selfMessage;
             string viewerMessage;
@@ -156,8 +161,6 @@ namespace Content.Server.GameObjects.EntitySystems
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
-            EntityQuery = new TypeEntityQuery(typeof(PointingArrowComponent));
-
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
@@ -173,9 +176,9 @@ namespace Content.Server.GameObjects.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var entity in RelevantEntities)
+            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>())
             {
-                entity.GetComponent<PointingArrowComponent>().Update(frameTime);
+                component.Update(frameTime);
             }
         }
     }

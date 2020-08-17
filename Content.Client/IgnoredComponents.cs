@@ -96,7 +96,6 @@
             "BarSign",
             "DroppedBodyPart",
             "DroppedMechanism",
-            "BodyManager",
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
@@ -136,6 +135,8 @@
             "TrashSpawner",
             "Pill",
             "RCD",
+            "RCDDeconstructWhitelist",
+            "RCDAmmo",
             "Pullable",
             "CursedEntityStorage",
             "Listening",
@@ -157,6 +158,7 @@
             "Barotrauma",
             "GasSprayer",
             "GasVapor"
+            "MobStateManager",
         };
     }
 }

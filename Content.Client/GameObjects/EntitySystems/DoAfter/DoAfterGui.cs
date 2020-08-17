@@ -44,6 +44,25 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
         }
 
         /// <summary>
+        ///     Called when the mind is detached from an entity
+        /// </summary>
+        ///     Rather than just dispose of the Gui we'll just remove its child controls and re-use the control.
+        public void Detached()
+        {
+            foreach (var (_, control) in _doAfterControls)
+            {
+                control.Dispose();
+            }
+            _doAfterControls.Clear();
+            foreach (var (_, control) in _doAfterBars)
+            {
+                control.Dispose();
+            }
+            _doAfterBars.Clear();
+            _cancelledDoAfters.Clear();
+        }
+
+        /// <summary>
         ///     Add the necessary control for a DoAfter progress bar.
         /// </summary>
         /// <param name="message"></param>

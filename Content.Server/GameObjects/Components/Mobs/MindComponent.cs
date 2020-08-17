@@ -1,19 +1,19 @@
 ﻿#nullable enable
 using Content.Server.GameObjects.Components.Observer;
-using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.GameObjects.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using Content.Shared.GameObjects.EntitySystems;
 
 namespace Content.Server.GameObjects.Components.Mobs
 {
@@ -127,18 +127,19 @@ namespace Content.Server.GameObjects.Components.Mobs
             }
 
             var dead =
-                Owner.TryGetComponent<SpeciesComponent>(out var species) &&
-                species.CurrentDamageState is DeadState;
+                Owner.TryGetComponent<IDamageableComponent>(out var damageable) &&
+                damageable.CurrentDamageState == DamageState.Dead;
 
             if (!HasMind)
             {
                 message.AddMarkup(!dead
-                    ? $"[color=red]" + Loc.GetString("{0:They} are totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
+                    ? $"[color=red]" + Loc.GetString("{0:They} {0:are} totally catatonic. The stresses of life in deep-space must have been too much for {0:them}. Any recovery is unlikely.", Owner) + "[/color]"
                     : $"[color=purple]" + Loc.GetString("{0:Their} soul has departed.", Owner) + "[/color]");
             }
             else if (Mind?.Session == null)
             {
-                message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} have a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
+                if(!dead)
+                    message.AddMarkup("[color=yellow]" + Loc.GetString("{0:They} {0:have} a blank, absent-minded stare and appears completely unresponsive to anything. {0:They} may snap out of it soon.", Owner) + "[/color]");
             }
         }
     }

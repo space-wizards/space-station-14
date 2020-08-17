@@ -1,6 +1,4 @@
 ﻿using Content.Client.GameObjects.Components.Mobs;
-using Content.Shared.GameObjects.Components.Mobs;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
@@ -13,11 +11,6 @@ namespace Content.Client.GameObjects.EntitySystems
         [Dependency] private IGameTiming _gameTiming;
 #pragma warning restore 649
 
-        public StatusEffectsSystem()
-        {
-            EntityQuery = new TypeEntityQuery(typeof(ClientStatusEffectsComponent));
-        }
-
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);
@@ -25,9 +18,9 @@ namespace Content.Client.GameObjects.EntitySystems
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
-            foreach (var entity in RelevantEntities)
+            foreach (var clientStatusEffectsComponent in EntityManager.ComponentManager.EntityQuery<ClientStatusEffectsComponent>())
             {
-                entity.GetComponent<ClientStatusEffectsComponent>().FrameUpdate(frameTime);
+                clientStatusEffectsComponent.FrameUpdate(frameTime);
             }
         }
     }

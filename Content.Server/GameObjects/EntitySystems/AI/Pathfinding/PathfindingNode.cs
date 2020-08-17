@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Doors;
-using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.EntitySystems.Pathfinding
+namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 {
     public class PathfindingNode
     {
@@ -20,7 +17,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
         private readonly PathfindingChunk _parentChunk;
 
         public TileRef TileRef { get; private set; }
-        
+
         /// <summary>
         /// Whenever there's a change in the collision layers we update the mask as the graph has more reads than writes
         /// </summary>
@@ -46,7 +43,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
 
         public static bool IsRelevant(IEntity entity, ICollidableComponent collidableComponent)
         {
-            if (entity.Transform.GridID == GridId.Invalid || 
+            if (entity.Transform.GridID == GridId.Invalid ||
                 (PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) == 0)
             {
                 return false;
@@ -66,7 +63,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             {
                 neighborChunks = ParentChunk.RelevantChunks(this).ToList();
             }
-            
+
             for (var x = -1; x <= 1; x++)
             {
                 for (var y = -1; y <= 1; y++)
@@ -112,7 +109,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -129,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset + 1];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y + 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -146,7 +143,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset, chunkYOffset + 1];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y + 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -163,7 +160,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset + 1];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y + 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -180,7 +177,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -197,7 +194,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset - 1, chunkYOffset - 1];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X - 1, TileRef.Y - 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -214,7 +211,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset, chunkYOffset - 1];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X, TileRef.Y - 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -231,7 +228,7 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                     {
                         return ParentChunk.Nodes[chunkXOffset + 1, chunkYOffset - 1];
                     }
-                    
+
                     neighborMapIndices = new MapIndices(TileRef.X + 1, TileRef.Y - 1);
                     foreach (var neighbor in ParentChunk.GetNeighbors())
                     {
@@ -276,9 +273,9 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
                 }
                 return;
             }
-            
+
             DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & collidableComponent.CollisionLayer) != 0);
-            
+
             if (!collidableComponent.Anchored)
             {
                 _physicsLayers.Add(entity, collidableComponent.CollisionLayer);
@@ -304,12 +301,12 @@ namespace Content.Server.GameObjects.EntitySystems.Pathfinding
             if (_physicsLayers.ContainsKey(entity))
             {
                 _physicsLayers.Remove(entity);
-            } 
+            }
             else if (_accessReaders.ContainsKey(entity))
             {
                 _accessReaders.Remove(entity);
                 ParentChunk.Dirty();
-            } 
+            }
             else if (_blockedCollidables.ContainsKey(entity))
             {
                 _blockedCollidables.Remove(entity);

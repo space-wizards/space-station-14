@@ -1,9 +1,9 @@
-﻿﻿using Content.Server.AI.Utility.Considerations;
- using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
+﻿using Content.Server.AI.Utility.Considerations;
+using Content.Server.AI.WorldState;
+using Content.Server.GameObjects.Components.NodeContainer.NodeGroups;
 using Content.Server.Interfaces;
-﻿using Content.Server.AI.WorldState;
 using Content.Server.Interfaces.Chat;
+using Content.Server.Body.Network;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Interfaces.PDA;
 using Content.Server.Sandbox;
@@ -46,6 +46,8 @@ namespace Content.Server
             }
 
             IoCManager.BuildGraph();
+
+            IoCManager.Resolve<IBodyNetworkFactory>().DoAutoRegistrations();
 
             _gameTicker = IoCManager.Resolve<IGameTicker>();
 

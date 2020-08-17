@@ -1,39 +1,41 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
-namespace Content.Server.GameObjects.EntitySystems
+namespace Content.Server.GameObjects.EntitySystems.DoAfter
 {
     public sealed class DoAfter
     {
         public Task<DoAfterStatus> AsTask { get; }
-        
+
         private TaskCompletionSource<DoAfterStatus> Tcs { get;}
-        
+
         public DoAfterEventArgs EventArgs;
-        
+
         public TimeSpan StartTime { get; }
-        
+
         public float Elapsed { get; set; }
-        
+
         public GridCoordinates UserGrid { get; }
-        
+
         public GridCoordinates TargetGrid { get; }
 
         private bool _tookDamage;
 
         public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
-        
+
         // NeedHand
         private string? _activeHand;
         private ItemComponent? _activeItem;
-        
+
         public DoAfter(DoAfterEventArgs eventArgs)
         {
             EventArgs = eventArgs;
@@ -57,12 +59,12 @@ namespace Content.Server.GameObjects.EntitySystems
                 _activeHand = handsComponent.ActiveHand;
                 _activeItem = handsComponent.GetActiveHand;
             }
-            
+
             Tcs = new TaskCompletionSource<DoAfterStatus>();
             AsTask = Tcs.Task;
         }
 
-        public void HandleDamage(object? sender, DamageEventArgs eventArgs)
+        public void HandleDamage(HealthChangedEventArgs args)
         {
             _tookDamage = true;
         }
@@ -79,15 +81,15 @@ namespace Content.Server.GameObjects.EntitySystems
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             Elapsed += frameTime;
-            
+
             if (IsFinished())
             {
                 Tcs.SetResult(DoAfterStatus.Finished);
                 return;
             }
-            
+
             if (IsCancelled())
             {
                 Tcs.SetResult(DoAfterStatus.Cancelled);
@@ -101,13 +103,13 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return true;
             }
-            
+
             // TODO :Handle inertia in space.
             if (EventArgs.BreakOnUserMove && EventArgs.User.Transform.GridPosition != UserGrid)
             {
                 return true;
             }
-            
+
             if (EventArgs.BreakOnTargetMove && EventArgs.Target!.Transform.GridPosition != TargetGrid)
             {
                 return true;
@@ -129,7 +131,7 @@ namespace Content.Server.GameObjects.EntitySystems
             {
                 return true;
             }
-            
+
             if (EventArgs.NeedHand)
             {
                 if (!EventArgs.User.TryGetComponent(out HandsComponent handsComponent))

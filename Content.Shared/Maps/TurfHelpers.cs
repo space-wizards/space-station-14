@@ -13,6 +13,34 @@ namespace Content.Shared.Maps
     public static class TurfHelpers
     {
         /// <summary>
+        ///     Returns the content tile definition for a tile.
+        /// </summary>
+        public static ContentTileDefinition GetContentTileDefinition(this Tile tile)
+        {
+            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
+            return (ContentTileDefinition)tileDefinitionManager[tile.TypeId];
+        }
+
+        /// <summary>
+        ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
+        /// </summary>
+        public static TileRef? GetTileRef(this MapIndices mapIndices, GridId gridId)
+        {
+            if (!gridId.IsValid())
+                return null;
+
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            if (!mapManager.TryGetGrid(gridId, out var grid))
+                return null;
+
+            if (!grid.TryGetTileRef(mapIndices, out var tile))
+                return null;
+
+            return tile;
+        }
+
+        /// <summary>
         ///     Attempts to get the turf at a certain coordinates or null if no such turf is found.
         /// </summary>
         public static TileRef? GetTileRef(this GridCoordinates coordinates)
@@ -55,13 +83,13 @@ namespace Content.Shared.Maps
             foreach (var body in query)
             {
                 if (body.CanCollide && body.Hard && (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                    return false;
+                    return true;
 
                 if (filterMobs && (body.CollisionLayer & (int) CollisionGroup.MobMask) != 0)
-                    return false;
+                    return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>

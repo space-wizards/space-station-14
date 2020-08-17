@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Content.Server.GameObjects.Components.Interactable;
-using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces;
+﻿using Content.Server.Interfaces;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.GameObjects.Components
 {

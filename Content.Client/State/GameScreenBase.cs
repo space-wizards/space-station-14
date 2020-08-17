@@ -5,11 +5,10 @@ using Content.Client.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Client.GameObjects.EntitySystems;
 using Robust.Client.Interfaces.GameObjects;
-using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Interfaces.State;
+using Robust.Client.Interfaces.UserInterface;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -227,7 +226,10 @@ namespace Content.Client.State
 
             // client side command handlers will always be sent the local player session.
             var session = PlayerManager.LocalPlayer.Session;
-            inputSys.HandleInputCommand(session, func, message);
+            if (inputSys.HandleInputCommand(session, func, message))
+            {
+                args.Handle();
+            }
         }
     }
 }

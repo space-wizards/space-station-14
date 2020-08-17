@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
