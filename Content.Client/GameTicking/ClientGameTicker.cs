@@ -9,6 +9,7 @@ using Robust.Client.Interfaces.Graphics;
 using Robust.Client.Interfaces.State;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -28,7 +29,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<string, bool> Ready { get; private set; }
+        [ViewVariables] public Dictionary<NetSessionId, bool> Ready { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
@@ -50,7 +51,7 @@ namespace Content.Client.GameTicking
                 IoCManager.Resolve<IClyde>().RequestWindowAttention();
             });
 
-            Ready = new Dictionary<string, bool>();
+            Ready = new Dictionary<NetSessionId, bool>();
             _initialized = true;
         }
 

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Lidgren.Network;
 using Robust.Shared.Interfaces.Network;
+using Robust.Shared.Interfaces.Serialization;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
 namespace Content.Shared
@@ -163,28 +166,41 @@ namespace Content.Shared
             #endregion
 
             /// <summary>
-            /// The Players Ready (playerName:ready)
+            /// The Players Ready (SessionID:ready)
             /// </summary>
-            public IDictionary<string, bool> PlayerReady { get; set; }
+            public Dictionary<NetSessionId, bool> PlayerReady { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                PlayerReady = new Dictionary<string, bool>();
+                PlayerReady = new Dictionary<NetSessionId, bool>();
                 var length = buffer.ReadInt32();
                 for (int i = 0; i < length; i++)
                 {
-                    var name = buffer.ReadString();
+                    var serializer = IoCManager.Resolve<IRobustSerializer>();
+                    var byteLength = buffer.ReadVariableInt32();
+                    NetSessionId sessionID;
+                    using (var stream = buffer.ReadAsStream(byteLength))
+                    {
+                        serializer.DeserializeDirect(stream, out sessionID);
+                    }
                     var ready = buffer.ReadBoolean();
-                    PlayerReady.Add(name, ready);
+                    PlayerReady.Add(sessionID, ready);
                 }
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
+                var serializer = IoCManager.Resolve<IRobustSerializer>();
                 buffer.Write(PlayerReady.Count);
                 foreach (var p in PlayerReady)
                 {
-                    buffer.Write(p.Key);
+                    using (var stream = new MemoryStream())
+                    {
+                        serializer.SerializeDirect(stream, p.Key);
+                        buffer.WriteVariableInt32((int) stream.Length);
+                        stream.TryGetBuffer(out var segment);
+                        buffer.Write(segment);
+                    }
                     buffer.Write(p.Value);
                 }
             }

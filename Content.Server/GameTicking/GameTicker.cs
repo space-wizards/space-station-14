@@ -48,6 +48,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -886,11 +887,11 @@ namespace Content.Server.GameTicking
         private MsgTickerLobbyReady GetReadyStatus()
         {
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerReady = new Dictionary<string, bool>();
+            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
             foreach (var player in _playersInLobby.Keys)
             {
                 _playersInLobby.TryGetValue(player, out var ready);
-                msg.PlayerReady.Add(player.Name, ready);
+                msg.PlayerReady.Add(player.SessionId, ready);
             }
             return msg;
         }
@@ -898,8 +899,8 @@ namespace Content.Server.GameTicking
         private MsgTickerLobbyReady GetReadySingle(IPlayerSession player, bool ready)
         {
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerReady = new Dictionary<string, bool>();
-            msg.PlayerReady.Add(player.Name, ready);
+            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
+            msg.PlayerReady.Add(player.SessionId, ready);
             return msg;
         }
 

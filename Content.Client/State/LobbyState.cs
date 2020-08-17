@@ -190,7 +190,7 @@ namespace Content.Client.State
                 if (session.SessionId == _playerManager.LocalPlayer.SessionId)
                     ready = _clientGameTicker.AreWeReady;
                 else
-                    _clientGameTicker.Ready.TryGetValue(session.Name, out ready);
+                    _clientGameTicker.Ready.TryGetValue(session.SessionId, out ready);
 
                 _lobby.PlayerReadyList.AddItem(ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready"));
             }
