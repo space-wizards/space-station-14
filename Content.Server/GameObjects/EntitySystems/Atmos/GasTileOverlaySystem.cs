@@ -45,8 +45,18 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         private Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>> _overlay = 
             new Dictionary<GridId, Dictionary<MapIndices, GasOverlayChunk>>();
 
+        /// <summary>
+        ///     How far away do we update gas overlays (minimum; due to chunking further away tiles may also be updated).
+        /// </summary>
         private float _updateRange;
-        private float _updateFrequency;
+        // Because the gas overlay updates aren't run every tick we need to avoid the pop-in that might occur with
+        // the regular PVS range.
+        private const float RangeOffset = 6.0f;
+        
+        /// <summary>
+        ///     Overlay update ticks per second.
+        /// </summary>
+        private float _updateCooldown;
 
         public override void Initialize()
         {
@@ -54,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
-            _configManager.RegisterCVar("net.gasoverlayupdate", 0.3f);
+            _configManager.RegisterCVar("net.gasoverlaytickrate", 3.0f);
         }
 
         public override void Shutdown()
@@ -178,16 +188,11 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         {
             var inRange = new List<GasOverlayChunk>();
             
-            var entityTile = _mapManager
-                .GetGrid(entity.Transform.GridID)
-                .GetTileRef(entity.Transform.GridPosition)
-                .GridIndices;
-
             // This is the max in any direction that we can get a chunk (e.g. max 2 chunks away of data).
             var (maxXDiff, maxYDiff) = ((int) (_updateRange / ChunkSize) + 1, (int) (_updateRange / ChunkSize) + 1);
             
             var worldBounds = Box2.CenteredAround(entity.Transform.WorldPosition,
-                new Vector2(20.0f, 20.0f));
+                new Vector2(_updateRange, _updateRange));
 
             foreach (var grid in _mapManager.FindGridsIntersecting(entity.Transform.MapID, worldBounds))
             {
@@ -195,6 +200,8 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 {
                     continue;
                 }
+
+                var entityTile = grid.GetTileRef(entity.Transform.GridPosition).GridIndices;
                 
                 for (var x = -maxXDiff; x <= maxXDiff; x++)
                 {
@@ -224,14 +231,14 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
         public override void Update(float frameTime)
         {
             AccumulatedFrameTime += frameTime;
-            _updateFrequency = _configManager.GetCVar<float>("net.gasoverlayupdate");
+            _updateCooldown = 1 / _configManager.GetCVar<float>("net.gasoverlaytickrate");
 
-            if (AccumulatedFrameTime < _updateFrequency)
+            if (AccumulatedFrameTime < _updateCooldown)
             {
                 return;
             }
             
-            _updateRange = _configManager.GetCVar<float>("net.maxupdaterange") * 1.5f;
+            _updateRange = _configManager.GetCVar<float>("net.maxupdaterange") + RangeOffset;
             
             // TODO: So in the worst case scenario we still have to send a LOT of tile data per tick if there's a fire.
             // If we go with say 15 tile radius then we have up to 900 tiles to update per tick.
@@ -244,7 +251,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             // Could also look at updating tiles close to us more frequently (e.g. within 1 chunk every tick).
             // Stuff just out of our viewport we need so when we move it doesn't pop in but it doesn't mean we need to update it every tick.
             
-            AccumulatedFrameTime -= _updateFrequency;
+            AccumulatedFrameTime -= _updateCooldown;
 
             var gridAtmosComponents = new Dictionary<GridId, GridAtmosphereComponent>();
             var updatedTiles = new Dictionary<GasOverlayChunk, HashSet<MapIndices>>();
@@ -395,7 +402,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
                 return known;
             }
 
-            public GasOverlayMessage AddChunk(GameTick currentTick, GasOverlayChunk chunk)
+            public GasOverlayMessage? AddChunk(GameTick currentTick, GasOverlayChunk chunk)
             {
                 if (!_data.TryGetValue(chunk.GridIndices, out var chunks))
                 {
