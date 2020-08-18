@@ -34,14 +34,10 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Species
-    Template: Human
-    HeatResistance: 323
   - type: BodyManager
     BaseTemplate: bodyTemplate.Humanoid
     BasePreset: bodyPreset.BasicHuman
   - type: HeatResistance
-  - type: Damageable
   - type: CombatMode
   - type: Teleportable
   - type: Stunnable

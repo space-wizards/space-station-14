@@ -13,6 +13,7 @@ using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
@@ -48,6 +49,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -137,6 +139,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
 
@@ -380,6 +383,7 @@ namespace Content.Server.GameTicking
 
             _playersInLobby[player] = ready;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+            _netManager.ServerSendToAll(GetReadySingle(player, ready));
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -633,7 +637,8 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
-
+            
+            EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
             EntitySystem.Get<WireHackingSystem>().ResetLayouts();
@@ -869,6 +874,7 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetReadyStatus(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -878,6 +884,26 @@ namespace Content.Server.GameTicking
             if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
+        }
+
+        private MsgTickerLobbyReady GetReadyStatus()
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
+            foreach (var player in _playersInLobby.Keys)
+            {
+                _playersInLobby.TryGetValue(player, out var ready);
+                msg.PlayerReady.Add(player.SessionId, ready);
+            }
+            return msg;
+        }
+
+        private MsgTickerLobbyReady GetReadySingle(IPlayerSession player, bool ready)
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
+            msg.PlayerReady.Add(player.SessionId, ready);
+            return msg;
         }
 
         private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)

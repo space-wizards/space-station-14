@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.GUI;
+﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power;
@@ -57,7 +58,7 @@ namespace Content.Server.GameObjects.Components.Interactable
         [ViewVariables]
         public bool Activated { get; private set; }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<BatteryComponent>()) return false;
 
@@ -276,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallHyper", Owner.Transform.GridPosition);
+            var cell = Owner.EntityManager.SpawnEntity("PowerCellSmallStandard", Owner.Transform.GridPosition);
             _cellContainer.Insert(cell);
         }
     }

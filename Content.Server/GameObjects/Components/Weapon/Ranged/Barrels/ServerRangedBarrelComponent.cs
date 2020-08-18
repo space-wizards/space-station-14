@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -186,7 +187,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         public abstract bool UseEntity(UseEntityEventArgs eventArgs);
-        public abstract bool InteractUsing(InteractUsingEventArgs eventArgs);
+
+        public abstract Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {
