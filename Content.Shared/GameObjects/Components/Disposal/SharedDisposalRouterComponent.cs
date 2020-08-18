@@ -33,7 +33,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
                 if (Action == UiAction.Ok)
                 {
-                    Tags = tags;
+                    Tags = tags.Substring(0, Math.Min(tags.Length, 150));
                 }
             }
         }

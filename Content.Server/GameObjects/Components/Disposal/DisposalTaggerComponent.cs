@@ -25,7 +25,6 @@ namespace Content.Server.GameObjects.Components.Disposal
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
 #pragma warning restore 649
         public override string Name => "DisposalTagger";
 
@@ -130,7 +129,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have no hands."));
+                    Loc.GetString("You have no hands."));
                 return;
             }
 
@@ -140,6 +139,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 UpdateUserInterface();
                 _userInterface.Open(actor.playerSession);
             }
+        }
+
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            _userInterface.CloseAll();
         }
     }
 }

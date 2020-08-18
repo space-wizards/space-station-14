@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
@@ -46,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         ///     A list of tags attached to the content, used for sorting
         /// </summary>
         [ViewVariables]
-        public HashSet<string>? Tags { get; set; }
+        public HashSet<string> Tags { get; set; } = new HashSet<string>();
 
         private bool CanInsert(IEntity entity)
         {
@@ -154,7 +153,6 @@ namespace Content.Server.GameObjects.Components.Disposal
             base.Initialize();
 
             _contents = ContainerManagerComponent.Ensure<Container>(nameof(DisposalHolderComponent), Owner);
-            Tags = new HashSet<string>();
         }
     }
 }
