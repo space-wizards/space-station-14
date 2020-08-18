@@ -23,7 +23,6 @@
     key: generic
     base: solid_
   - type: Climbable
-  - type: Damageable
   - type: Destructible
     maxHP: 50
     spawnOnDestroy: SteelSheet1

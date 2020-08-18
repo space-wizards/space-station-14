@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 // Force the player out of climb state. It should immediately remove the ClimbController.
                 climbing.IsClimbing = false;
 
-                Assert.True(!body.HasController<ClimbController>(), "Body wrongly has a ClimbController");
+                Assert.True(!body.HasController<ClimbController>(), "Player wrongly has a ClimbController");
 
             });
 
