@@ -200,11 +200,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
-                    endPoint = new Robust.Shared.Maths.Vector2(user.Transform.WorldPosition.X, endPoint.Y);
+                    endPoint = new Vector2(user.Transform.WorldPosition.X, endPoint.Y);
                 }
                 else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
                 {
-                    endPoint = new Robust.Shared.Maths.Vector2(endPoint.X, user.Transform.WorldPosition.Y);
+                    endPoint = new Vector2(endPoint.X, user.Transform.WorldPosition.Y);
                 }
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
