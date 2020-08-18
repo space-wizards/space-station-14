@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         /// <summary>
         ///     Index of most recently updated <see cref="IPipeNet"/>.
         /// </summary>
-        private int _netIndex = 0;
+        private int _pipeNetIndex = 0;
 
         [ViewVariables]
         private readonly List<PipeNetDevice> _pipeNetDevices = new List<PipeNetDevice>();
@@ -566,9 +566,9 @@ namespace Content.Server.GameObjects.Components.Atmos
             var number = 0;
             var pipeNets = _pipeNets.ToArray();
             var netCount = pipeNets.Count();
-            for ( ; _deviceIndex < netCount; _deviceIndex++)
+            for ( ; _pipeNetIndex < netCount; _pipeNetIndex++)
             {
-                pipeNets[_deviceIndex].Update();
+                pipeNets[_pipeNetIndex].Update();
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -576,7 +576,7 @@ namespace Content.Server.GameObjects.Components.Atmos
                 if (_stopwatch.Elapsed.TotalMilliseconds >= LagCheckMaxMilliseconds)
                     return;
             }
-            _deviceIndex = 0;
+            _pipeNetIndex = 0;
         }
 
         private void ProcessPipeNetDevices()
