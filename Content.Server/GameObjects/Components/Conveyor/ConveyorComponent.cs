@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -162,10 +163,10 @@ namespace Content.Server.GameObjects.Components.Conveyor
             }
         }
 
-        private bool ToolUsed(IEntity user, ToolComponent tool)
+        private async Task<bool> ToolUsed(IEntity user, ToolComponent tool)
         {
             if (!Owner.HasComponent<ItemComponent>() &&
-                tool.UseTool(user, Owner, ToolQuality.Prying))
+                await tool.UseTool(user, Owner, 0.5f, ToolQuality.Prying))
             {
                 State = ConveyorState.Loose;
 
@@ -244,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
             Disconnect();
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent(out ConveyorSwitchComponent conveyorSwitch))
             {
@@ -254,7 +255,7 @@ namespace Content.Server.GameObjects.Components.Conveyor
 
             if (eventArgs.Using.TryGetComponent(out ToolComponent tool))
             {
-                return ToolUsed(eventArgs.User, tool);
+                return await ToolUsed(eventArgs.User, tool);
             }
 
             return false;
