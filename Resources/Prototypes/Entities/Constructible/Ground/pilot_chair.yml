@@ -13,7 +13,6 @@
   - type: Collidable
   - type: Clickable
   - type: InteractionOutline
-  - type: Damageable
   - type: Destructible
     maxHP: 100
   - type: Physics

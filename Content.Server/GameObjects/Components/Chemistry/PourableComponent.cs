@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces;
+﻿using System.Threading.Tasks;
+using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -50,7 +51,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="eventArgs">Attack event args</param>
         /// <returns></returns>
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             //Get target solution component
             if (!Owner.TryGetComponent<SolutionComponent>(out var targetSolution))

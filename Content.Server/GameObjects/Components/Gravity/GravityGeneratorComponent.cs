@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Damage;
+﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
@@ -98,12 +99,12 @@ namespace Content.Server.GameObjects.Components.Gravity
             return true;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
                 return false;
 
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Welding, 5f))
+            if (!await tool.UseTool(eventArgs.User, Owner, 2f, ToolQuality.Welding, 5f))
                 return false;
 
             // Repair generator

@@ -154,7 +154,6 @@
   - type: Grammar
     proper: true
   - type: Pullable
-  - type: CanSeeGases
   - type: DoAfter
   - type: Strippable
   - type: UserInterface
@@ -259,7 +258,6 @@
       baseTemplate: bodyTemplate.Humanoid
       basePreset: bodyPreset.BasicHuman
     - type: MobStateManager
-    - type: Damageable
     - type: Appearance
       visuals:
         - type: RotationVisualizer
