@@ -1,12 +1,9 @@
-<<<<<<< HEAD
+
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.StationEvents;
 using Content.Server.Interfaces.GameTicking;
-=======
-﻿using Content.Server.StationEvents;
->>>>>>> 259762717ba368f776fd0ff922929902cdea64c2
 using JetBrains.Annotations;
 using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
@@ -17,9 +14,6 @@ using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using static Content.Shared.StationEvents.SharedStationEvent;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
@@ -27,18 +21,11 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
     [UsedImplicitly]
     public sealed class StationEventSystem : EntitySystem // Somewhat based off of TG's implementation of events
     {
-<<<<<<< HEAD
-        [Dependency]
-        private readonly IGameTicker _gameTicker = default!;
-=======
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
         [Dependency] private readonly IPlayerManager _playerManager;
+        [Dependency] private readonly IGameTicker _gameTicker;
 #pragma warning restore 649
-        // Somewhat based off of TG's implementation of events
-
-        public StationEvent CurrentEvent { get; private set; }
->>>>>>> 259762717ba368f776fd0ff922929902cdea64c2
 
         public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
