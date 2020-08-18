@@ -8,7 +8,7 @@
     },
     "states": [
         {
-            "name": "lantern",
+            "name": "fire_extinguisher_open",
             "directions": 1,
             "delays": [
                 [
@@ -17,7 +17,7 @@
             ]
         },
         {
-            "name": "lantern-on",
+            "name": "fire_extinguisher_closed",
             "directions": 1,
             "delays": [
                 [
@@ -26,7 +26,7 @@
             ]
         },
         {
-            "name": "off-inhand-left",
+            "name": "inhand-right",
             "directions": 4,
             "delays": [
                 [
@@ -44,43 +44,7 @@
             ]
         },
         {
-            "name": "off-inhand-right",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "on-inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ],
-                [
-                    1
-                ]
-            ]
-        },
-        {
-            "name": "on-inhand-right",
+            "name": "inhand-left",
             "directions": 4,
             "delays": [
                 [

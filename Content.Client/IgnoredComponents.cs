@@ -156,6 +156,8 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
+            "GasSprayer",
+            "GasVapor",
             "MobStateManager",
             "Metabolism",
         };
