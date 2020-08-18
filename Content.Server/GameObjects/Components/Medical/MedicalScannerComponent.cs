@@ -41,6 +41,9 @@ namespace Content.Server.GameObjects.Components.Medical
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
+            //TODO: write this so that it checks for a change in power events and acts accordingly.
+            var newState = GetUserInterfaceState();
+            _userInterface.SetState(newState);
             UpdateUserInterface();
         }
 
