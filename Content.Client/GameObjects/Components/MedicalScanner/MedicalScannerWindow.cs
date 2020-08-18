@@ -46,8 +46,17 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                     text.Append("\n");
                 }
             }
+            var vBox = new VBoxContainer();
+            var ScanButton = new Button {Text = "Scan DNA"};
+            vBox.AddChild(ScanButton);
+            vBox.AddChild(new Label() {Text = text.ToString()});
+            Contents.AddChild(vBox);
 
-            Contents.AddChild(new Label() {Text = text.ToString()});
+        }
+
+        private void OnScanButtonPressed(BaseButton.ButtonEventArgs args)
+        {
+            return;
         }
     }
 }
