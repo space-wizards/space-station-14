@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Damage
 {
@@ -21,6 +22,7 @@ namespace Content.Server.GameObjects.Components.Damage
         ///     How much HP this component can sustain before triggering
         ///     <see cref="PerformDestruction"/>.
         /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         public int MaxHp { get; private set; }
 
         /// <summary>
