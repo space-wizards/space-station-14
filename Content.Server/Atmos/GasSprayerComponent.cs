@@ -46,8 +46,10 @@ namespace Content.Server.Atmos
 
         public void AfterInteract(AfterInteractEventArgs eventArgs)
         {
-            if (Owner.TryGetComponent(out SolutionComponent tank) &&
-                tank.Solution.GetReagentQuantity(_fuelType) == 0)
+            if (!Owner.TryGetComponent(out SolutionComponent tank))
+                return;
+
+            if (tank.Solution.GetReagentQuantity(_fuelType) == 0)
             {
                 _notifyManager.PopupMessage(Owner, eventArgs.User,
                     Loc.GetString("The {0} is out of {1}!", Owner.Name, _fuelName));
