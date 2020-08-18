@@ -64,7 +64,7 @@
         public const uint DO_AFTER = 1058;
         public const uint RADIATION_PULSE = 1059;
         public const uint BODY_MANAGER = 1060;
-        public const uint CLIMB_MODE = 1061;
+        public const uint CLIMBING = 1061;
 
         // Net IDs for integration tests.
         public const uint PREDICTION_TEST = 10001;

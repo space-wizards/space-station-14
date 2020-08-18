@@ -15,6 +15,7 @@ using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Interfaces;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
+using Robust.Shared.Maths;
 using System;
 
 namespace Content.Server.GameObjects.Components.Movement
@@ -161,11 +162,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 if (MathF.Abs(direction.X) < 0.6f) // user climbed mostly vertically so lets make it a clean straight line
                 {
-                    endPoint = new Robust.Shared.Maths.Vector2(entityToMove.Transform.WorldPosition.X, endPoint.Y);
+                    endPoint = new Vector2(entityToMove.Transform.WorldPosition.X, endPoint.Y);
                 }
                 else if (MathF.Abs(direction.Y) < 0.6f) // user climbed mostly horizontally so lets make it a clean straight line
                 {
-                    endPoint = new Robust.Shared.Maths.Vector2(endPoint.X, entityToMove.Transform.WorldPosition.Y);
+                    endPoint = new Vector2(endPoint.X, entityToMove.Transform.WorldPosition.Y);
                 }
 
                 climbMode.TryMoveTo(entityToMove.Transform.WorldPosition, endPoint);
