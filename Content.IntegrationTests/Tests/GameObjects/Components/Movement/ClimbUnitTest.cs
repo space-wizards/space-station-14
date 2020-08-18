@@ -39,9 +39,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 human = entityManager.SpawnEntity("HumanMob_Content", MapCoordinates.Nullspace);
                 table = entityManager.SpawnEntity("Table", MapCoordinates.Nullspace);
 
-                human.TryGetComponent(out ICollidableComponent body);
-                Assert.True(body != null, "Player ICollidableComponent is null");
-
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
                 Assert.True(human.TryGetComponent(out climbing), "Human has no climbing");
@@ -50,7 +47,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
                 climbing.TryMoveTo(human.Transform.WorldPosition, table.Transform.WorldPosition);
-                
+                human.TryGetComponent(out ICollidableComponent body);
+
                 Assert.True(body.HasController<ClimbController>(), "Player has no ClimbController");
 
                 // Force the player out of climb state. It should immediately remove the ClimbController.
