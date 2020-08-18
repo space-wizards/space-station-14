@@ -6,6 +6,7 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
+using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
 using Content.Shared.GameObjects.Components.Damage;
@@ -149,7 +150,23 @@ namespace Content.Server.AI.Utility.AiLogic
 
         private void DeathHandle(HealthChangedEventArgs eventArgs)
         {
+            var oldDeadState = _isDead;
             _isDead = eventArgs.Damageable.CurrentDamageState == DamageState.Dead || eventArgs.Damageable.CurrentDamageState == DamageState.Critical;
+
+            if (oldDeadState != _isDead)
+            {
+                var entityManager = IoCManager.Resolve<IEntityManager>();
+                
+                switch (_isDead)
+                {
+                    case true:
+                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, true));
+                        break;
+                    case false:
+                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
+                        break;
+                }
+            }
         }
 
         private void ReceivedAction()
