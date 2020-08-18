@@ -1,4 +1,5 @@
-﻿using Content.Shared.GameObjects.Components;
+﻿using System.Threading.Tasks;
+using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
@@ -66,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Paper
             UpdateUserInterface();
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.VendingMachines;
 using Content.Server.GameObjects.EntitySystems;
@@ -468,11 +469,11 @@ namespace Content.Server.GameObjects.Components
             serializer.DataField(ref _layoutId, "LayoutId", null);
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Screwing))
+            if (!await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
                 return false;
 
             IsPanelOpen = !IsPanelOpen;
