@@ -44,6 +44,7 @@ namespace Content.Server.GameObjects.Components.Medical
             //TODO: write this so that it checks for a change in power events and acts accordingly.
             var newState = GetUserInterfaceState();
             _userInterface.SetState(newState);
+
             UpdateUserInterface();
         }
 
@@ -95,12 +96,17 @@ namespace Content.Server.GameObjects.Components.Medical
                 default: throw new ArgumentException(nameof(damageState));
             }
         }
+
         private MedicalScannerStatus GetStatus()
         {
-            var body = _bodyContainer.ContainedEntity;
-            return body == null
-                ? MedicalScannerStatus.Open
-                : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+            if (Powered)
+            {
+                var body = _bodyContainer.ContainedEntity;
+                return body == null
+                    ? MedicalScannerStatus.Open
+                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+            }
+            return MedicalScannerStatus.Off;
         }
 
         private void UpdateAppearance()
@@ -181,12 +187,6 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Update(float frameTime)
         {
-            if (_bodyContainer.ContainedEntity == null)
-            {
-                // There's no need to update if there's no one inside
-                return;
-            }
-
             UpdateUserInterface();
             UpdateAppearance();
         }
