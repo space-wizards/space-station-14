@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -38,6 +39,7 @@ namespace Content.Server.GameObjects.Components.Medical
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MedicalScannerUiKey.Key);
+            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
 
@@ -106,6 +108,7 @@ namespace Content.Server.GameObjects.Components.Medical
                     ? MedicalScannerStatus.Open
                     : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
             }
+
             return MedicalScannerStatus.Off;
         }
 
@@ -189,6 +192,26 @@ namespace Content.Server.GameObjects.Components.Medical
         {
             UpdateUserInterface();
             UpdateAppearance();
+        }
+
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!(obj.Message is UiButtonPressedMessage message))
+            {
+                return;
+            }
+
+            switch (message.Button)
+            {
+                case UiButton.ScanDNA:
+                    if (_bodyContainer.ContainedEntity != null)
+                    {
+                        CloningSystem.AddToScannedUids(_bodyContainer.ContainedEntity.Uid);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

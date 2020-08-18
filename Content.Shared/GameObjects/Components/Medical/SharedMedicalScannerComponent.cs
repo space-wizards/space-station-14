@@ -56,5 +56,24 @@ namespace Content.Shared.GameObjects.Components.Medical
             Green,
             Yellow,
         }
+
+        [Serializable, NetSerializable]
+        public enum UiButton
+        {
+            ScanDNA,
+        }
+
+        [Serializable, NetSerializable]
+        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        {
+            public readonly UiButton Button;
+
+            public UiButtonPressedMessage(UiButton button)
+            {
+                Button = button;
+            }
+        }
+
+
     }
 }

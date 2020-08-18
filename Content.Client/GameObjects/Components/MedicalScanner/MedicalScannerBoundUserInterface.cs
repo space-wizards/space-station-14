@@ -1,3 +1,5 @@
+using Content.Shared.GameObjects.Components.Access;
+using Content.Shared.GameObjects.Components.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects.Components.UserInterface;
 using Robust.Shared.GameObjects.Components.UserInterface;
@@ -22,6 +24,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                 Title = Owner.Owner.Name,
             };
             _window.OnClose += Close;
+            _window.ScanButton.OnPressed += _ => SendMessage(new UiButtonPressedMessage(UiButton.ScanDNA));
             _window.OpenCentered();
         }
 

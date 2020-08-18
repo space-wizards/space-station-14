@@ -12,11 +12,30 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
 {
     public class MedicalScannerWindow : SS14Window
     {
+        public readonly Button ScanButton;
+        public Label diagnostics;
         protected override Vector2? CustomSize => (485, 90);
+
+        public MedicalScannerWindow()
+        {
+            Contents.AddChild(new VBoxContainer
+            {
+                Children =
+                {
+                    (ScanButton = new Button
+                    {
+                        Text = "Scan DNA"
+                    }),
+                    (diagnostics = new Label
+                    {
+                        Text = ""
+                    })
+                }
+            });
+        }
 
         public void Populate(MedicalScannerBoundUserInterfaceState state)
         {
-            Contents.RemoveAllChildren();
             var text = new StringBuilder();
 
             if (!state.Entity.HasValue ||
@@ -46,17 +65,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                     text.Append("\n");
                 }
             }
-            var vBox = new VBoxContainer();
-            var ScanButton = new Button {Text = "Scan DNA"};
-            vBox.AddChild(ScanButton);
-            vBox.AddChild(new Label() {Text = text.ToString()});
-            Contents.AddChild(vBox);
-
-        }
-
-        private void OnScanButtonPressed(BaseButton.ButtonEventArgs args)
-        {
-            return;
+            diagnostics.Text = text.ToString();
         }
     }
 }
