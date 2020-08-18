@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Content.Server.StationEvents;
+using Content.Server.Interfaces.GameTicking;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
@@ -14,13 +15,14 @@ using Robust.Shared.Localization;
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
-    public sealed class StationEventSystem : EntitySystem
+    public sealed class StationEventSystem : EntitySystem // Somewhat based off of TG's implementation of events
     {
-        // Somewhat based off of TG's implementation of events
-        
-        public StationEvent CurrentEvent { get; private set; }
+        [Dependency]
+        private readonly IGameTicker _gameTicker = default!;
 
+        public StationEvent CurrentEvent { get; private set; }
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
+
         private List<StationEvent> _stationEvents = new List<StationEvent>();
 
         private const float MinimumTimeUntilFirstEvent = 600;
@@ -164,7 +166,18 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
             {
                 return;
             }
-            
+
+            // Stop events from happening in lobby and force active event to end if the round ends
+            if (_gameTicker.RunLevel != GameTicking.GameRunLevel.InRound)
+            {
+                if (CurrentEvent != null)
+                {
+                    Enabled = false;
+                }
+
+                return;
+            }
+
             // Keep running the current event
             if (CurrentEvent != null)
             {
