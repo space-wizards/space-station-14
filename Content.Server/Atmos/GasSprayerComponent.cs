@@ -52,7 +52,7 @@ namespace Content.Server.Atmos
             if (tank.Solution.GetReagentQuantity(_fuelType) == 0)
             {
                 _notifyManager.PopupMessage(Owner, eventArgs.User,
-                    Loc.GetString("The {0} is out of {1}!", Owner.Name, _fuelName));
+                    Loc.GetString("{0:theName} is out of {1}!", Owner, _fuelName));
             }
             else
             {
