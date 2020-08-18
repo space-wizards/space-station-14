@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Medical;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects.Systems;
