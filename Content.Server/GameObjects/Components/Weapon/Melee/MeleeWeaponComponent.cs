@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Interfaces.GameObjects.Components.Interaction;
-using Content.Shared.GameObjects;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Items;
 using Robust.Server.GameObjects.EntitySystems;
@@ -18,6 +15,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 
 namespace Content.Server.GameObjects.Components.Weapon.Melee
@@ -116,9 +114,9 @@ namespace Content.Server.GameObjects.Components.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == eventArgs.User)
                     continue;
 
-                if (entity.TryGetComponent(out DamageableComponent damageComponent))
+                if (entity.TryGetComponent(out IDamageableComponent damageComponent))
                 {
-                    damageComponent.TakeDamage(DamageType.Brute, Damage, Owner, eventArgs.User);
+                    damageComponent.ChangeDamage(DamageType.Blunt, Damage, false, Owner);
                     hitEntities.Add(entity);
                 }
             }

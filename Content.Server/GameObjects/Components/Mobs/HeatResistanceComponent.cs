@@ -13,10 +13,9 @@ namespace Content.Server.GameObjects.Components.Mobs
 
         public int GetHeatResistance()
         {
-            if (Owner.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, itemComponent: out ClothingComponent gloves)
-             | Owner.TryGetComponent(out SpeciesComponent speciesComponent))
+            if (Owner.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, itemComponent: out ClothingComponent gloves))
             {
-                return Math.Max(gloves?.HeatResistance ?? int.MinValue, speciesComponent?.HeatResistance ?? int.MinValue);
+                return gloves?.HeatResistance ?? int.MinValue;
             }
             return int.MinValue;
         }

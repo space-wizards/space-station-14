@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Body;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
-using Content.Server.Health.BodySystem;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameObjects;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Power;
-using Content.Shared.Health.BodySystem;
 using Content.Shared.Interfaces;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Kitchen;
@@ -23,14 +26,12 @@ using Robust.Server.GameObjects.Components.UserInterface;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
+using Content.Shared.GameObjects.Components.Body;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timers;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Kitchen
 {
@@ -206,7 +207,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _userInterface.Open(actor.playerSession);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_powered)
             {
@@ -456,13 +457,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         public SuicideKind Suicide(IEntity victim, IChatManager chat)
         {
-            int headCount = 0;
+            var headCount = 0;
             if (victim.TryGetComponent<BodyManagerComponent>(out var bodyManagerComponent))
             {
                 var heads = bodyManagerComponent.GetBodyPartsOfType(BodyPartType.Head);
                 foreach (var head in heads)
                 {
-                    var droppedHead = bodyManagerComponent.DropBodyPart(head);
+                    var droppedHead = bodyManagerComponent.DropPart(head);
+
+                    if (droppedHead == null)
+                    {
+                        continue;
+                    }
+
                     _storage.Insert(droppedHead);
                     headCount++;
                 }

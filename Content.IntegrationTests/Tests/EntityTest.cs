@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests
     public class EntityTest : ContentIntegrationTest
     {
         [Test]
-        public async Task Test()
+        public async Task SpawnTest()
         {
             var server = StartServerDummyTicker();
             await server.WaitIdleAsync();
@@ -41,43 +41,65 @@ namespace Content.IntegrationTests.Tests
             });
 
             server.Assert(() =>
+            {
+                var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
+
+                //Generate list of non-abstract prototypes to test
+                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    var testLocation = new GridCoordinates(new Vector2(0, 0), grid);
-
-                    //Generate list of non-abstract prototypes to test
-                    foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
+                    if (prototype.Abstract)
                     {
-                        if (prototype.Abstract)
-                        {
-                            continue;
-                        }
-                        prototypes.Add(prototype);
+                        continue;
+                    }
+                    prototypes.Add(prototype);
+                }
+
+                //Iterate list of prototypes to spawn
+                foreach (var prototype in prototypes)
+                {
+                    try
+                    {
+                        Logger.LogS(LogLevel.Debug, "EntityTest", "Testing: " + prototype.ID);
+                        testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
+                        server.RunTicks(2);
+                        Assert.That(testEntity.Initialized);
+                        entityMan.DeleteEntity(testEntity.Uid);
                     }
 
-                    //Iterate list of prototypes to spawn
-                    foreach (var prototype in prototypes)
+                    //Fail any exceptions thrown on spawn
+                    catch (Exception e)
                     {
-                        try
-                        {
-                            Logger.LogS(LogLevel.Debug, "EntityTest", "Testing: " + prototype.ID);
-                            testEntity = entityMan.SpawnEntity(prototype.ID, testLocation);
-                            server.RunTicks(2);
-                            Assert.That(testEntity.Initialized);
-                            entityMan.DeleteEntity(testEntity.Uid);
-                        }
-
-                        //Fail any exceptions thrown on spawn
-                        catch (Exception e)
-                        {
-                            Logger.LogS(LogLevel.Error, "EntityTest", "Entity '" + prototype.ID + "' threw: " + e.Message);
-                            //Assert.Fail();
-                            throw;
-                        }
+                        Logger.LogS(LogLevel.Error, "EntityTest", "Entity '" + prototype.ID + "' threw: " + e.Message);
+                        //Assert.Fail();
+                        throw;
                     }
-                });
+                }
+            });
 
             await server.WaitIdleAsync();
         }
 
+        [Test]
+        public async Task NotAbstractIconTest()
+        {
+            var client = StartClient();
+            await client.WaitIdleAsync();
+            var prototypeMan = client.ResolveDependency<IPrototypeManager>();
+
+            client.Assert(() =>
+            {
+                foreach (var prototype in prototypeMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (prototype.Abstract)
+                    {
+                        continue;
+                    }
+
+                    Assert.That(prototype.Components.ContainsKey("Icon"), $"Entity {prototype.ID} does not have an Icon component, but is not abstract");
+                }
+            });
+
+            await client.WaitIdleAsync();
+        }
     }
 }

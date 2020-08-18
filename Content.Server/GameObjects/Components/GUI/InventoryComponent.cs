@@ -173,9 +173,10 @@ namespace Content.Server.GameObjects.Components.GUI
         /// </remarks>
         /// <param name="slot">The slot to put the item in.</param>
         /// <param name="item">The item to insert into the slot.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <param name="reason">The translated reason why the item cannot be equipped, if this function returns false. Can be null.</param>
         /// <returns>True if the item was successfully inserted, false otherwise.</returns>
-        public bool Equip(Slots slot, ItemComponent item, out string reason)
+        public bool Equip(Slots slot, ItemComponent item, bool mobCheck, out string reason)
         {
             if (item == null)
             {
@@ -183,7 +184,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     "Clothing must be passed here. To remove some clothing from a slot, use Unequip()");
             }
 
-            if (!CanEquip(slot, item, out reason))
+            if (!CanEquip(slot, item, mobCheck, out reason))
             {
                 return false;
             }
@@ -203,9 +204,9 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool Equip(Slots slot, ItemComponent item) => Equip(slot, item, out var _);
+        public bool Equip(Slots slot, ItemComponent item, bool mobCheck = true) => Equip(slot, item, mobCheck, out var _);
 
-        public bool Equip(Slots slot, IEntity entity) => Equip(slot, entity.GetComponent<ItemComponent>());
+        public bool Equip(Slots slot, IEntity entity, bool mobCheck = true) => Equip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
 
         /// <summary>
         ///     Checks whether an item can be put in the specified slot.
@@ -214,12 +215,12 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <param name="item">The item to check for.</param>
         /// <param name="reason">The translated reason why the item cannot be equiped, if this function returns false. Can be null.</param>
         /// <returns>True if the item can be inserted into the specified slot.</returns>
-        public bool CanEquip(Slots slot, ItemComponent item, out string reason)
+        public bool CanEquip(Slots slot, ItemComponent item, bool mobCheck, out string reason)
         {
             var pass = false;
             reason = null;
 
-            if (!ActionBlockerSystem.CanEquip(Owner))
+            if (mobCheck && !ActionBlockerSystem.CanEquip(Owner))
                 return false;
 
             if (item is ClothingComponent clothing)
@@ -248,18 +249,19 @@ namespace Content.Server.GameObjects.Components.GUI
             return pass && _slotContainers[slot].CanInsert(item.Owner);
         }
 
-        public bool CanEquip(Slots slot, ItemComponent item) => CanEquip(slot, item, out var _);
+        public bool CanEquip(Slots slot, ItemComponent item, bool mobCheck = true) => CanEquip(slot, item, mobCheck, out var _);
 
-        public bool CanEquip(Slots slot, IEntity entity) => CanEquip(slot, entity.GetComponent<ItemComponent>());
+        public bool CanEquip(Slots slot, IEntity entity, bool mobCheck = true) => CanEquip(slot, entity.GetComponent<ItemComponent>(), mobCheck);
 
         /// <summary>
         ///     Drops the item in a slot.
         /// </summary>
         /// <param name="slot">The slot to drop the item from.</param>
         /// <returns>True if an item was dropped, false otherwise.</returns>
-        public bool Unequip(Slots slot)
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
+        public bool Unequip(Slots slot, bool mobCheck = true)
         {
-            if (!CanUnequip(slot))
+            if (!CanUnequip(slot, mobCheck))
             {
                 return false;
             }
@@ -288,16 +290,17 @@ namespace Content.Server.GameObjects.Components.GUI
         ///     Checks whether an item can be dropped from the specified slot.
         /// </summary>
         /// <param name="slot">The slot to check for.</param>
+        /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanUnequip(Slots slot)
+        public bool CanUnequip(Slots slot, bool mobCheck = true)
         {
-            if (!ActionBlockerSystem.CanUnequip(Owner))
+            if (mobCheck && !ActionBlockerSystem.CanUnequip(Owner))
                 return false;
 
-            var InventorySlot = _slotContainers[slot];
-            return InventorySlot.ContainedEntity != null && InventorySlot.CanRemove(InventorySlot.ContainedEntity);
+            var inventorySlot = _slotContainers[slot];
+            return inventorySlot.ContainedEntity != null && inventorySlot.CanRemove(inventorySlot.ContainedEntity);
         }
 
         /// <summary>
@@ -398,7 +401,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     if (activeHand != null && activeHand.Owner.TryGetComponent(out ItemComponent clothing))
                     {
                         hands.Drop(hands.ActiveHand);
-                        if (!Equip(msg.Inventoryslot, clothing, out var reason))
+                        if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
                         {
                             hands.PutInHand(clothing);
 
@@ -434,7 +437,7 @@ namespace Content.Server.GameObjects.Components.GUI
                     var activeHand = hands.GetActiveHand;
                     if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
                     {
-                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, out var reason);
+                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
                         _hoverEntity = new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot, (activeHand.Owner.Uid, canEquip));
 
                         Dirty();

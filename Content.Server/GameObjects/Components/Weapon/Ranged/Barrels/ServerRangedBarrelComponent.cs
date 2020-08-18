@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.GameObjects.Components.Damage;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Projectiles;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -15,7 +15,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Physics;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
@@ -28,6 +27,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Content.Shared.GameObjects.Components.Damage;
 
 namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
 {
@@ -187,7 +187,8 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
         }
 
         public abstract bool UseEntity(UseEntityEventArgs eventArgs);
-        public abstract bool InteractUsing(InteractUsingEventArgs eventArgs);
+
+        public abstract Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
 
         public void ChangeFireSelector(FireRateSelector rateSelector)
         {
@@ -430,16 +431,12 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
                 var distance = result.HitEntity != null ? result.Distance : hitscan.MaxLength;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
 
-                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out DamageableComponent damageable))
+                if (result.HitEntity == null || !result.HitEntity.TryGetComponent(out IDamageableComponent damageable))
                 {
                     return;
                 }
 
-                damageable.TakeDamage(
-                    hitscan.DamageType,
-                    (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero),
-                    Owner,
-                    shooter);
+                damageable.ChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), false, Owner);
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
                 //even numbers if halfway between two numbers, rather than rounding to nearest
             }

@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Verbs;
@@ -122,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             }
 
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<SpeciesComponent>())
+                !entity.HasComponent<IBodyManagerComponent>())
             {
                 return false;
             }
@@ -568,7 +569,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryDrop(eventArgs.User, eventArgs.Using);
         }

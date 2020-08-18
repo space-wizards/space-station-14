@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Weapon.Ranged.Ammunition;
@@ -344,7 +345,7 @@ namespace Content.Server.GameObjects.Components.Weapon.Ranged.Barrels
             UpdateAppearance();
         }
 
-        public override bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             // Insert magazine
             if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent magazineComponent))
