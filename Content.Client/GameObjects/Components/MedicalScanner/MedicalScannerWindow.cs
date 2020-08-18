@@ -13,7 +13,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
     public class MedicalScannerWindow : SS14Window
     {
         public readonly Button ScanButton;
-        public Label diagnostics;
+        private readonly Label _diagnostics;
         protected override Vector2? CustomSize => (485, 90);
 
         public MedicalScannerWindow()
@@ -26,7 +26,7 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                     {
                         Text = "Scan DNA"
                     }),
-                    (diagnostics = new Label
+                    (_diagnostics = new Label
                     {
                         Text = ""
                     })
@@ -42,7 +42,8 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
                 !state.HasDamage() ||
                 !IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Entity.Value, out var entity))
             {
-                text.Append(Loc.GetString("No patient data."));
+                _diagnostics.Text = Loc.GetString("No patient data.");
+                ScanButton.Disabled = true;
             }
             else
             {
@@ -64,8 +65,10 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
 
                     text.Append("\n");
                 }
+
+                _diagnostics.Text = text.ToString();
+                ScanButton.Disabled = state.IsScanned;
             }
-            diagnostics.Text = text.ToString();
         }
     }
 }

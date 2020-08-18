@@ -54,7 +54,8 @@ namespace Content.Server.GameObjects.Components.Medical
             new MedicalScannerBoundUserInterfaceState(
                 null,
                 new Dictionary<DamageClass, int>(),
-                new Dictionary<DamageType, int>());
+                new Dictionary<DamageType, int>(),
+                false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
         {
@@ -74,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Medical
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types);
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, CloningSystem.HasUid(body.Uid));
         }
 
         private void UpdateUserInterface()

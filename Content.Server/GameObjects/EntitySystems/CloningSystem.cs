@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Medical;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 
@@ -18,9 +16,9 @@ namespace Content.Server.GameObjects.EntitySystems
             }
         }
 
-        public static List<EntityUid> GetUids()
+        public static bool HasUid(EntityUid uid)
         {
-            return scannedUids;
+            return scannedUids.Contains(uid);
         }
     }
 }
