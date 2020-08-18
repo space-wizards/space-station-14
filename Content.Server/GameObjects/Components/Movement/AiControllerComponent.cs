@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             base.Initialize();
 
-            // This component requires a physics component.
+            // This component requires a collidable component.
             if (!Owner.HasComponent<ICollidableComponent>())
                 Owner.AddComponent<CollidableComponent>();
             
