@@ -20,14 +20,16 @@ namespace Content.Server.Atmos
             return coordinates.GetTileAtmosphere()?.Air;
         }
 
-        public static bool TryGetTileAtmosphere(this GridCoordinates coordinates, [NotNullWhen(true)] out TileAtmosphere atmosphere)
+        public static bool TryGetTileAtmosphere(this GridCoordinates coordinates, [MaybeNullWhen(false)] out TileAtmosphere atmosphere)
         {
-            return (atmosphere = coordinates.GetTileAtmosphere()!) != default;
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            return !Equals(atmosphere = coordinates.GetTileAtmosphere()!, default);
         }
 
-        public static bool TryGetTileAir(this GridCoordinates coordinates, [NotNullWhen(true)] out GasMixture air)
+        public static bool TryGetTileAir(this GridCoordinates coordinates, [MaybeNullWhen(false)] out GasMixture air)
         {
-            return !(air = coordinates.GetTileAir()!).Equals(default);
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            return !Equals(air = coordinates.GetTileAir()!, default);
         }
 
         public static TileAtmosphere? GetTileAtmosphere(this MapIndices indices, GridId gridId)
@@ -43,14 +45,16 @@ namespace Content.Server.Atmos
         }
 
         public static bool TryGetTileAtmosphere(this MapIndices indices, GridId gridId,
-            [NotNullWhen(true)] out TileAtmosphere atmosphere)
+            [MaybeNullWhen(false)] out TileAtmosphere atmosphere)
         {
-            return (atmosphere = indices.GetTileAtmosphere(gridId)!) != default;
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            return !Equals(atmosphere = indices.GetTileAtmosphere(gridId)!, default);
         }
 
-        public static bool TryGetTileAir(this MapIndices indices, GridId gridId, [NotNullWhen(true)] out GasMixture air)
+        public static bool TryGetTileAir(this MapIndices indices, GridId gridId, [MaybeNullWhen(false)] out GasMixture air)
         {
-            return !(air = indices.GetTileAir(gridId)!).Equals(default);
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            return !Equals(air = indices.GetTileAir(gridId)!, default);
         }
     }
 }

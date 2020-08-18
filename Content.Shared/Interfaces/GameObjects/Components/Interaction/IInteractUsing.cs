@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -22,7 +23,7 @@ namespace Content.Shared.Interfaces.GameObjects.Components
         /// <summary>
         /// Called when using one object on another when user is in range of the target entity.
         /// </summary>
-        bool InteractUsing(InteractUsingEventArgs eventArgs);
+        Task<bool> InteractUsing(InteractUsingEventArgs eventArgs);
     }
 
     public class InteractUsingEventArgs : EventArgs, ITargetedInteractEventArgs

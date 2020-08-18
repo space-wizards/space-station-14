@@ -1,23 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Content.Server.StationEvents;
+﻿using Content.Server.StationEvents;
 using JetBrains.Annotations;
+using Robust.Server.Console;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.GameObjects.Systems;
+using Robust.Shared.Interfaces.Network;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Reflection;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using static Content.Shared.StationEvents.SharedStationEvent;
 
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
     public sealed class StationEventSystem : EntitySystem
     {
+#pragma warning disable 649
+        [Dependency] private readonly IServerNetManager _netManager;
+        [Dependency] private readonly IPlayerManager _playerManager;
+#pragma warning restore 649
         // Somewhat based off of TG's implementation of events
-        
+
         public StationEvent CurrentEvent { get; private set; }
 
         public IReadOnlyCollection<StationEvent> StationEvents => _stationEvents;
@@ -154,7 +161,30 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
                 var stationEvent = (StationEvent) typeFactory.CreateInstance(type);
                 _stationEvents.Add(stationEvent);
             }
+
+            _netManager.RegisterNetMessage<MsgGetStationEvents>(nameof(MsgGetStationEvents), GetEventReceived);
         }
+
+        private void GetEventReceived(MsgGetStationEvents msg)
+        {
+            var player = _playerManager.GetSessionByChannel(msg.MsgChannel);
+            SendEvents(player);
+        }
+
+        private void SendEvents(IPlayerSession player)
+        {
+            if (!IoCManager.Resolve<IConGroupController>().CanCommand(player, "events"))
+                return;
+
+            var newMsg = _netManager.CreateNetMessage<MsgGetStationEvents>();
+            newMsg.Events = new List<string>();
+            foreach (var e in StationEvents)
+            {
+                newMsg.Events.Add(e.Name);
+            }
+            _netManager.ServerSendMessage(newMsg, player.ConnectedClient);
+        }
+
 
         public override void Update(float frameTime)
         {
