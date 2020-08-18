@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.GUI;
+﻿using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Shared.GameObjects;
@@ -11,6 +11,8 @@ namespace Content.Server.GameObjects.Components
     {
         private bool _isPlaceable;
         public bool IsPlaceable { get => _isPlaceable; set => _isPlaceable = value; }
+
+        int IInteractUsing.Priority => 1;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

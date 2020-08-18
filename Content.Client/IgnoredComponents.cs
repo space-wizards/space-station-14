@@ -96,7 +96,6 @@
             "BarSign",
             "DroppedBodyPart",
             "DroppedMechanism",
-            "BodyManager",
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
@@ -159,6 +158,7 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
+            "MobStateManager",
         };
     }
 }

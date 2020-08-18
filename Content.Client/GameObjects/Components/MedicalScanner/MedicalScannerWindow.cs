@@ -1,6 +1,10 @@
 using System.Text;
+using Content.Shared.Damage;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Interfaces.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.GameObjects.Components.Medical.SharedMedicalScannerComponent;
 
@@ -14,22 +18,36 @@ namespace Content.Client.GameObjects.Components.MedicalScanner
         {
             Contents.RemoveAllChildren();
             var text = new StringBuilder();
-            if (state.MaxHealth == 0)
-            {
-                text.Append("No patient data.");
-            } else
-            {
-                text.Append($"Patient's health: {state.CurrentHealth}/{state.MaxHealth}\n");
 
-                if (state.DamageDictionary != null)
+            if (!state.Entity.HasValue ||
+                !state.HasDamage() ||
+                !IoCManager.Resolve<IEntityManager>().TryGetEntity(state.Entity.Value, out var entity))
+            {
+                text.Append(Loc.GetString("No patient data."));
+            }
+            else
+            {
+                text.Append($"{entity.Name}{Loc.GetString("'s health:")}\n");
+
+                foreach (var (@class, classAmount) in state.DamageClasses)
                 {
-                    foreach (var (dmgType, amount) in state.DamageDictionary)
+                    text.Append($"\n{Loc.GetString("{0}: {1}", @class, classAmount)}");
+
+                    foreach (var type in @class.ToTypes())
                     {
-                        text.Append($"\n{dmgType}: {amount}");
+                        if (!state.DamageTypes.TryGetValue(type, out var typeAmount))
+                        {
+                            continue;
+                        }
+
+                        text.Append($"\n- {Loc.GetString("{0}: {1}", type, typeAmount)}");
                     }
+
+                    text.Append("\n");
                 }
             }
-            Contents.AddChild(new Label(){Text = text.ToString()});
+
+            Contents.AddChild(new Label() {Text = text.ToString()});
         }
     }
 }
