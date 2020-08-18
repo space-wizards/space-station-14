@@ -258,7 +258,6 @@
       baseTemplate: bodyTemplate.Humanoid
       basePreset: bodyPreset.BasicHuman
     - type: MobStateManager
-    - type: Damageable
     - type: Appearance
       visuals:
         - type: RotationVisualizer
