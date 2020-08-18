@@ -157,6 +157,7 @@
             "DamageOnHighSpeedImpact",
             "Barotrauma",
             "MobStateManager",
+            "Metabolism",
         };
     }
 }

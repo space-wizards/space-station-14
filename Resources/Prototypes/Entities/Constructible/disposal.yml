@@ -13,7 +13,6 @@
   - type: SnapGrid
     offset: Center
   - type: Anchorable
-  - type: Damageable
   - type: Breakable
   - type: Rotatable
 
