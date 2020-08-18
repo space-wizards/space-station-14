@@ -16,7 +16,6 @@ using Content.Shared.Interfaces;
 using Content.Server.GameObjects.Components.Body;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using System;
-using System.Threading;
 
 namespace Content.Server.GameObjects.Components.Movement
 {

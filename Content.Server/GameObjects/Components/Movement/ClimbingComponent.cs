@@ -1,11 +1,13 @@
 ﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.GameObjects.Components;
 using Content.Shared.Physics;
 using Content.Shared.Maps;
+using Robust.Shared.IoC;
+using Robust.Shared.Interfaces.GameObjects;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.GameObjects.EntitySystems;
+using System.Collections.Generic;
 
 namespace Content.Server.GameObjects.Components.Movement
 {
@@ -76,11 +78,9 @@ namespace Content.Server.GameObjects.Components.Movement
                     _body.TryRemoveController<ClimbController>();
                 }
 
-                // We should be using AABB checks to unclimb but i can't think of a cheap way to do it so for now let's just check if the user's grid position has climbables
-
                 var tile = TurfHelpers.GetTileRef(Owner.Transform.GridPosition);
 
-                if (tile.HasValue)
+                if (tile.HasValue) // GetEntitiesIntersectingEntity would have been nicer but it's expensive.
                 {
                     foreach (var entity in TurfHelpers.GetEntitiesInTile(tile.Value))
                     {
@@ -93,6 +93,20 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 IsClimbing = false; // there are no climbables within the tile we stand on
             }
+        }
+
+        // Helper that returns all entities intersecting this entity
+        // This is too expensive to use every update :(
+        public IEnumerable<IEntity> GetEntitiesIntersectingEntity(bool approximate = false)
+        {
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            if (Owner.TryGetComponent(out ICollidableComponent body))
+            {
+                return entityManager.GetEntitiesIntersecting(Owner.Transform.MapID, body.WorldAABB, approximate);
+            }
+
+            return new IEntity[0];
         }
 
         private void UpdateCollision()

@@ -6,7 +6,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 {
     public class SharedClimbingComponent : Component
     {
-        public sealed override string Name => "ClimbMode";
+        public sealed override string Name => "Climbing";
         public sealed override uint? NetID => ContentNetIDs.CLIMB_MODE;
 
         [Serializable, NetSerializable]
