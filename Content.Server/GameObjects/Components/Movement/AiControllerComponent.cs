@@ -45,8 +45,8 @@ namespace Content.Server.GameObjects.Components.Movement
             base.Initialize();
 
             // This component requires a physics component.
-            if (!Owner.HasComponent<IPhysicsComponent>())
-                Owner.AddComponent<PhysicsComponent>();
+            if (!Owner.HasComponent<ICollidableComponent>())
+                Owner.AddComponent<CollidableComponent>();
             
             EntitySystem.Get<AiSystem>().ProcessorInitialize(this);
         }

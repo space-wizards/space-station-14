@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.AI.Operators;
@@ -6,11 +6,9 @@ using Content.Server.AI.Utility.Actions;
 using Content.Server.AI.Utility.BehaviorSets;
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Utility;
-using Content.Server.GameObjects.Components.Damage;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.GameObjects.EntitySystems.AI;
 using Content.Server.GameObjects.EntitySystems.AI.LoadBalancer;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Server.AI;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
@@ -131,43 +129,27 @@ namespace Content.Server.AI.Utility.AiLogic
             _planCooldownRemaining = PlanCooldown;
             _blackboard = new Blackboard(SelfEntity);
             _planner = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AiActionSystem>();
-            if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed += DamageThresholdHandle;
+                damageableComponent.HealthChangedEvent += DeathHandle;
             }
         }
 
         public override void Shutdown()
         {
             // TODO: If DamageableComponent removed still need to unsubscribe?
-            if (SelfEntity.TryGetComponent(out DamageableComponent damageableComponent))
+            if (SelfEntity.TryGetComponent(out IDamageableComponent damageableComponent))
             {
-                damageableComponent.DamageThresholdPassed -= DamageThresholdHandle;
+                damageableComponent.HealthChangedEvent -= DeathHandle;
             }
 
             var currentOp = CurrentAction?.ActionOperators.Peek();
             currentOp?.Shutdown(Outcome.Failed);
         }
 
-        private void DamageThresholdHandle(object sender, DamageThresholdPassedEventArgs eventArgs)
+        private void DeathHandle(HealthChangedEventArgs eventArgs)
         {
-            var oldDeadState = _isDead;
-            _isDead = eventArgs.DamageThreshold.ThresholdType == ThresholdType.Death;
-
-            if (oldDeadState != _isDead)
-            {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                
-                switch (_isDead)
-                {
-                    case true:
-                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, true));
-                        break;
-                    case false:
-                        entityManager.EventBus.RaiseEvent(EventSource.Local, new SleepAiMessage(this, false));
-                        break;
-                }
-            }
+            _isDead = eventArgs.Damageable.CurrentDamageState == DamageState.Dead || eventArgs.Damageable.CurrentDamageState == DamageState.Critical;
         }
 
         private void ReceivedAction()

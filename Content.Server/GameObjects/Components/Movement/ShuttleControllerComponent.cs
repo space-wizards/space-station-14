@@ -71,22 +71,15 @@ namespace Content.Server.GameObjects.Components.Movement
                 _entityManager.TryGetEntity(grid.GridEntityId, out var gridEntity))
             {
                 //TODO: Switch to shuttle component
-                if (!gridEntity.TryGetComponent(out IPhysicsComponent physComp))
+                if (!gridEntity.TryGetComponent(out ICollidableComponent collidable))
                 {
-                    physComp = gridEntity.AddComponent<PhysicsComponent>();
-                    physComp.Mass = 1;
+                    collidable = gridEntity.AddComponent<CollidableComponent>();
+                    collidable.Mass = 1;
+                    collidable.CanCollide = true;
+                    collidable.PhysicsShapes.Add(new PhysShapeGrid(grid));
                 }
 
-                //TODO: Is this always true?
-                if (!gridEntity.HasComponent<ICollidableComponent>())
-                {
-                    var collideComp = gridEntity.AddComponent<CollidableComponent>();
-                    collideComp.CanCollide = true;
-                    //collideComp.IsHardCollidable = true;
-                    collideComp.PhysicsShapes.Add(new PhysShapeGrid(grid));
-                }
-
-                var controller = physComp.EnsureController<ShuttleController>();
+                var controller = collidable.EnsureController<ShuttleController>();
                 controller.Push(CalcNewVelocity(direction, enabled), CurrentWalkSpeed);
             }
         }

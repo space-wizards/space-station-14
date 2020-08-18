@@ -1,5 +1,5 @@
 ﻿using System;
-using Content.Server.GameObjects.Components.Damage;
+using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Maths;
 using Robust.Shared.GameObjects;
@@ -44,16 +44,16 @@ namespace Content.Server.GameObjects.Components.Temperature
         /// <inheritdoc />
         public void OnUpdate(float frameTime)
         {
-            int fireDamage =
+            var fireDamage =
                 (int) Math.Floor(Math.Max(0, CurrentTemperature - _fireDamageThreshold) / _fireDamageCoefficient);
 
             _secondsSinceLastDamageUpdate += frameTime;
 
-            Owner.TryGetComponent(out DamageableComponent component);
+            Owner.TryGetComponent(out IDamageableComponent component);
 
             while (_secondsSinceLastDamageUpdate >= 1)
             {
-                component?.TakeDamage(DamageType.Heat, fireDamage);
+                component?.ChangeDamage(DamageType.Heat, fireDamage, false, null);
                 _secondsSinceLastDamageUpdate -= 1;
             }
         }

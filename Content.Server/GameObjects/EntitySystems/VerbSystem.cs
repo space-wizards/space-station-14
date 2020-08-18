@@ -2,6 +2,7 @@
 using System.Reflection;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
@@ -37,6 +38,12 @@ namespace Content.Server.GameObjects.EntitySystems
             var session = eventArgs.SenderSession;
             var userEntity = session.AttachedEntity;
 
+            if (userEntity == null)
+            {
+                Logger.Warning($"{nameof(UseVerb)} called by player {session} with no attached entity.");
+                return;
+            }
+
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
                 if ($"{component.GetType()}:{verb.GetType()}" != use.VerbKey)
@@ -44,14 +51,14 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
                 }
 
-                if (verb.RequireInteractionRange)
+                if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
                 {
-                    var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
-                        .LengthSquared;
-                    if (distanceSquared > VerbUtility.InteractionRangeSquared)
-                    {
-                        break;
-                    }
+                    break;
+                }
+
+                if (verb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
+                {
+                    break;
                 }
 
                 verb.Activate(userEntity, component);
@@ -65,14 +72,15 @@ namespace Content.Server.GameObjects.EntitySystems
                     continue;
                 }
 
-                if (globalVerb.RequireInteractionRange)
+                if (globalVerb.RequireInteractionRange &&
+                    !VerbUtility.InVerbUseRange(userEntity, entity))
                 {
-                    var distanceSquared = (userEntity.Transform.WorldPosition - entity.Transform.WorldPosition)
-                        .LengthSquared;
-                    if (distanceSquared > VerbUtility.InteractionRangeSquared)
-                    {
-                        break;
-                    }
+                    break;
+                }
+
+                if (globalVerb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
+                {
+                    break;
                 }
 
                 globalVerb.Activate(userEntity, entity);
@@ -92,12 +100,30 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var userEntity = player.AttachedEntity;
 
+            if (userEntity == null)
+            {
+                Logger.Warning($"{nameof(UseVerb)} called by player {player} with no attached entity.");
+                return;
+            }
+
             var data = new List<VerbsResponseMessage.NetVerbData>();
             //Get verbs, component dependent.
             foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
             {
                 if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
                     continue;
+
+                if (verb.BlockedByContainers)
+                {
+                    if (!userEntity.IsInSameOrNoContainer(entity))
+                    {
+                        if (!ContainerHelpers.TryGetContainer(entity, out var container) ||
+                            container.Owner != userEntity)
+                        {
+                            continue;
+                        }
+                    }
+                }
 
                 var verbData = verb.GetData(userEntity, component);
                 if (verbData.IsInvisible)
@@ -111,6 +137,9 @@ namespace Content.Server.GameObjects.EntitySystems
             foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
             {
                 if (globalVerb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
+                    continue;
+
+                if (globalVerb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
                     continue;
 
                 var verbData = globalVerb.GetData(userEntity, entity);

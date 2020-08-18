@@ -7,6 +7,7 @@ using Content.Client.Interfaces.Parallax;
 using Content.Client.Parallax;
 using Content.Client.Sandbox;
 using Content.Client.State;
+using Content.Client.StationEvents;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.GameObjects.Components;
@@ -150,6 +151,7 @@ namespace Content.Client
             IoCManager.Resolve<IChatManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<IClientPreferencesManager>().Initialize();
+            IoCManager.Resolve<IStationEventManager>().Initialize();
 
             _baseClient.RunLevelChanged += (sender, args) =>
             {

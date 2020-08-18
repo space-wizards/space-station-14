@@ -1,6 +1,6 @@
-using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Mobs;
+﻿using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Movement;
+using Content.Shared.GameObjects.Components.Damage;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Player;
 using Robust.Shared.Interfaces.GameObjects;
@@ -27,7 +27,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
 
             foreach (var player in nearbyPlayers)
             {
-                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<SpeciesComponent>())
+                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<IDamageableComponent>())
                 {
                     result.Add(player.AttachedEntity);
                 }
