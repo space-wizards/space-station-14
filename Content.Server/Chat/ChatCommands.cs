@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -32,9 +32,11 @@ namespace Content.Server.Chat
             if (args.Length < 1)
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
 
-            var message = string.Join(" ", args);
+            var chat = IoCManager.Resolve<IChatManager>();
 
             if (player.AttachedEntity.HasComponent<GhostComponent>())
                 chat.SendDeadChat(player, message);
@@ -61,9 +63,11 @@ namespace Content.Server.Chat
             if (args.Length < 1)
                 return;
 
-            var chat = IoCManager.Resolve<IChatManager>();
+            var action = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(action))
+                return;
 
-            var action = string.Join(" ", args);
+            var chat = IoCManager.Resolve<IChatManager>();
 
             var mindComponent = player.ContentData().Mind;
             chat.EntityMe(mindComponent.OwnedEntity, action);
@@ -78,8 +82,15 @@ namespace Content.Server.Chat
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (args.Length < 1)
+                return;
+
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendOOC(player, string.Join(" ", args));
+            chat.SendOOC(player, message);
         }
     }
 
@@ -91,8 +102,15 @@ namespace Content.Server.Chat
 
         public void Execute(IConsoleShell shell, IPlayerSession player, string[] args)
         {
+            if (args.Length < 1)
+                return;
+
+            var message = string.Join(" ", args).Trim();
+            if (string.IsNullOrEmpty(message))
+                return;
+
             var chat = IoCManager.Resolve<IChatManager>();
-            chat.SendAdminChat(player, string.Join(" ", args));
+            chat.SendAdminChat(player, message);
         }
     }
 
