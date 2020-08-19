@@ -240,7 +240,7 @@
   name: CMO PDA
   parent: BasePDA
   id: CMOPDA
-  description: A PDA for the doctor №1 in the station.
+  description: A PDA for the doctor No. 1 in the station.
   components:
   - type: PDA
     idCard: CMOIDCard
