@@ -147,53 +147,60 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             foreach (var indices in _invalidatedCoords.ToArray())
             {
-                var tile = GetTile(indices);
-                AddActiveTile(tile);
-
-                if (tile == null)
-                {
-                    tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
-                    _tiles[indices] = tile;
-                }
-
-                if (IsSpace(indices))
-                {
-                    tile.Air = new GasMixture(GetVolumeForCells(1));
-                    tile.Air.MarkImmutable();
-                    _tiles[indices] = tile;
-
-                } else if (IsAirBlocked(indices))
-                {
-                    tile.Air = null;
-                }
-                else
-                {
-                    var obs = GetObstructingComponent(indices);
-
-                    if (obs != null)
-                    {
-                        if (tile.Air == null && obs.FixVacuum)
-                        {
-                            FixVacuum(tile.GridIndices);
-                        }
-                    }
-
-                    tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
-                }
-
-                tile.UpdateAdjacent();
-                tile.UpdateVisuals();
-
-                foreach (var direction in Cardinal)
-                {
-                    var otherIndices = indices.Offset(direction);
-                    var otherTile = GetTile(otherIndices);
-                    AddActiveTile(otherTile);
-                    otherTile?.UpdateAdjacent(direction.GetOpposite());
-                }
+                Revalidate(indices);
             }
 
             _invalidatedCoords.Clear();
+        }
+
+        /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Revalidate(MapIndices indices)
+        {
+            var tile = GetTile(indices);
+            AddActiveTile(tile);
+
+            if (tile == null)
+            {
+                tile = new TileAtmosphere(this, _grid.Index, indices, new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C});
+                _tiles[indices] = tile;
+            }
+
+            if (IsSpace(indices))
+            {
+                tile.Air = new GasMixture(GetVolumeForCells(1));
+                tile.Air.MarkImmutable();
+                _tiles[indices] = tile;
+
+            } else if (IsAirBlocked(indices))
+            {
+                tile.Air = null;
+            }
+            else
+            {
+                var obs = GetObstructingComponent(indices);
+
+                if (obs != null)
+                {
+                    if (tile.Air == null && obs.FixVacuum)
+                    {
+                        FixVacuum(tile.GridIndices);
+                    }
+                }
+
+                tile.Air ??= new GasMixture(GetVolumeForCells(1)){Temperature = Atmospherics.T20C};
+            }
+
+            tile.UpdateAdjacent();
+            tile.UpdateVisuals();
+
+            foreach (var direction in Cardinal)
+            {
+                var otherIndices = indices.Offset(direction);
+                var otherTile = GetTile(otherIndices);
+                AddActiveTile(otherTile);
+                otherTile?.UpdateAdjacent(direction.GetOpposite());
+            }
         }
 
         /// <inheritdoc />

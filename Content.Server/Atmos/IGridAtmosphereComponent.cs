@@ -46,6 +46,12 @@ namespace Content.Server.Atmos
         void FixVacuum(MapIndices indices);
 
         /// <summary>
+        ///     Revalidates indices immediately.
+        /// </summary>
+        /// <param name="indices"></param>
+        void Revalidate(MapIndices indices);
+
+        /// <summary>
         ///     Adds an active tile so it becomes processed every update until it becomes inactive.
         ///     Also makes the tile excited.
         /// </summary>

@@ -1051,6 +1051,25 @@ namespace Content.Server.Atmos
         private void ConsiderFirelocks(TileAtmosphere other)
         {
             // TODO ATMOS firelocks!
+            var reconsiderAdjacent = false;
+
+            foreach (var entity in GridIndices.GetEntitiesInTile(GridIndex))
+            {
+                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+            }
+
+            foreach (var entity in other.GridIndices.GetEntitiesInTile(other.GridIndex))
+            {
+                if (!entity.TryGetComponent(out FirelockComponent firelock)) continue;
+                reconsiderAdjacent |= firelock.EmergencyPressureStop();
+            }
+
+            if (reconsiderAdjacent)
+            {
+                UpdateAdjacent();
+                other.UpdateAdjacent();
+            }
         }
 
         private void React()

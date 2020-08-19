@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Atmos
             set
             {
                 _airBlocked = value;
-                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Invalidate(_snapGrid.Position);
+                EntitySystem.Get<AtmosphereSystem>().GetGridAtmosphere(Owner.Transform.GridID)?.Revalidate(_snapGrid.Position);
             }
         }
 

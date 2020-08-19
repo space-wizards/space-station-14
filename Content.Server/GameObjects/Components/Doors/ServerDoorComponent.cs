@@ -61,6 +61,8 @@ namespace Content.Server.GameObjects.Components.Doors
 
         [ViewVariables] private bool _occludes;
 
+        public bool Occludes => _occludes;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -133,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        private void SetAppearance(DoorVisualState state)
+        protected void SetAppearance(DoorVisualState state)
         {
             if (_appearance != null || Owner.TryGetComponent(out _appearance))
                 _appearance.SetData(DoorVisuals.VisualState, state);
@@ -144,7 +146,7 @@ namespace Content.Server.GameObjects.Components.Doors
             return true;
         }
 
-        public bool CanOpen(IEntity user)
+        public virtual bool CanOpen(IEntity user)
         {
             if (!CanOpen()) return false;
             if (!Owner.TryGetComponent(out AccessReader accessReader))
@@ -205,7 +207,7 @@ namespace Content.Server.GameObjects.Components.Doors
             return true;
         }
 
-        public bool CanClose(IEntity user)
+        public virtual bool CanClose(IEntity user)
         {
             if (!CanClose()) return false;
             if (!Owner.TryGetComponent(out AccessReader accessReader))

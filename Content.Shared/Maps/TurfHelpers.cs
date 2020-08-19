@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Shared.Physics;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
@@ -62,11 +64,38 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             return entityManager.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+        }
+
+        /// <summary>
+        ///     Helper that returns all entities in a turf.
+        /// </summary>
+        public static IEnumerable<IEntity> GetEntitiesInTile(this GridCoordinates coordinates, bool approximate = false)
+        {
+            var turf = coordinates.GetTileRef();
+
+            if (turf == null)
+                return Enumerable.Empty<IEntity>();
+
+            return GetEntitiesInTile(turf.Value);
+        }
+
+        /// <summary>
+        ///     Helper that returns all entities in a turf.
+        /// </summary>
+        public static IEnumerable<IEntity> GetEntitiesInTile(this MapIndices indices, GridId gridId, bool approximate = false)
+        {
+            var turf = indices.GetTileRef(gridId);
+
+            if (turf == null)
+                return Enumerable.Empty<IEntity>();
+
+            return GetEntitiesInTile(turf.Value);
         }
 
         /// <summary>
