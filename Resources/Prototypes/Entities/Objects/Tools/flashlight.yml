@@ -22,3 +22,5 @@
     enabled: false
     radius: 3
   - type: LoopingSound
+  - type: RadiatingLight
+    playing: false

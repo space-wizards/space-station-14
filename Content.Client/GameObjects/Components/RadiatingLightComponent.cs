@@ -1,9 +1,11 @@
 using System;
+using System.Runtime.InteropServices.ComTypes;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Client.GameObjects.Components
 {
@@ -11,6 +13,14 @@ namespace Content.Client.GameObjects.Components
     public class RadiatingLightComponent : Component
     {
         public override string Name => "RadiatingLight";
+        private bool _playing;
+
+
+        public override void ExposeData(ObjectSerializer serializer)
+        {
+            base.ExposeData(serializer);
+            serializer.DataField(ref _playing,"playing" , true);
+        }
 
         protected override void Startup()
         {
@@ -37,9 +47,10 @@ namespace Content.Client.GameObjects.Components
             };
 
             var playerComponent = Owner.EnsureComponent<AnimationPlayerComponent>();
-            playerComponent.Play(animation, "emergency");
-
-            playerComponent.AnimationCompleted += s => playerComponent.Play(animation, s);
+            if (_playing) {
+                playerComponent.Play(animation, "radiatingLight");
+                playerComponent.AnimationCompleted += s => playerComponent.Play(animation, s);
+            }
         }
     }
 }

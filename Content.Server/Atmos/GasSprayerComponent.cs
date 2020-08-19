@@ -2,7 +2,6 @@
 using Content.Server.Interfaces;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.Components.Pointing;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
