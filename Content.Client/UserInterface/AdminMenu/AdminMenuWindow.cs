@@ -9,6 +9,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Input;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -151,7 +152,7 @@ namespace Content.Client.UserInterface
                 Text = "Refresh"
             };
             refreshButton.OnPressed += RefreshPlayerList;
-            RefreshPlayerList(null);
+            RefreshPlayerList(null!);
             var playerVBox = new VBoxContainer
             {
                 Children =
@@ -509,28 +510,28 @@ namespace Content.Client.UserInterface
 
         private abstract class CommandUIControl
         {
-            public string Name;
-            public Control Control;
+            public string? Name;
+            public Control? Control;
             //Idea: implement these abstract functions:
             public abstract Control GetControl();
             public abstract string GetValue();
         }
         private class CommandUIDropDown : CommandUIControl
         {
-            public Func<List<object>> GetData;
+            public Func<List<object>>? GetData;
             // The string that the player sees in the list
-            public Func<object, string> GetDisplayName;
+            public Func<object, string>? GetDisplayName;
             // The value that is given to Submit
-            public Func<object, string> GetValueFromData;
+            public Func<object, string>? GetValueFromData;
             // Cache
-            private List<object> Data; //TODO: make this like IEnumerable or smth, so you don't have to do this ToList<object> shittery
+            protected List<object>? Data; //TODO: make this like IEnumerable or smth, so you don't have to do this ToList<object> shittery
 
             public override Control GetControl() //TODO: fix optionbutton being shitty after moving the window
             {
                 var opt = new OptionButton { CustomMinimumSize = (100, 0), SizeFlagsHorizontal = SizeFlags.FillExpand };
-                Data = GetData();
+                Data = GetData!();
                 foreach (var item in Data)
-                    opt.AddItem(GetDisplayName(item));
+                    opt.AddItem(GetDisplayName!(item));
 
                 opt.OnItemSelected += eventArgs => opt.SelectId(eventArgs.Id);
                 Control = opt;
@@ -539,7 +540,7 @@ namespace Content.Client.UserInterface
 
             public override string GetValue()
             {
-                return GetValueFromData(Data[((OptionButton)Control).SelectedId]);
+                return GetValueFromData!(Data![((OptionButton)Control!).SelectedId]);
             }
         }
         private class CommandUICheckBox : CommandUIControl
@@ -552,7 +553,7 @@ namespace Content.Client.UserInterface
 
             public override string GetValue()
             {
-                return ((CheckBox)Control).Pressed ? "1" : "0";
+                return ((CheckBox)Control!).Pressed ? "1" : "0";
             }
         }
         private class CommandUILineEdit : CommandUIControl
@@ -565,7 +566,7 @@ namespace Content.Client.UserInterface
 
             public override string GetValue()
             {
-                return ((LineEdit)Control).Text;
+                return ((LineEdit)Control!).Text;
             }
         }
 
@@ -579,14 +580,14 @@ namespace Content.Client.UserInterface
 
             public override string GetValue()
             {
-                return ((SpinBox)Control).Value.ToString();
+                return ((SpinBox)Control!).Value.ToString();
             }
         }
 
         private class CommandWindow : SS14Window
         {
             List<CommandUIControl> _controls;
-            public Action<Dictionary<string, string>> Submit { get; set; }
+            public Action<Dictionary<string, string>>? Submit { get; set; }
             public CommandWindow(UICommandButton button)
             {
                 Title = button.Name;
@@ -637,9 +638,9 @@ namespace Content.Client.UserInterface
                     if (control.Control == null)
                         return;
 
-                    val.Add(control.Name, control.GetValue());
+                    val.Add(control.Name ?? "Empty", control.GetValue());
                 }
-                Submit.Invoke(val);
+                Submit?.Invoke(val);
             }
         }
     }
