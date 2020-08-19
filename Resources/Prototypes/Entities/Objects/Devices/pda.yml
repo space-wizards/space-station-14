@@ -253,26 +253,6 @@
       map: ["enum.PDAVisualLayers.Flashlight"]
 
 - type: entity
-  name: Mime PDA
-  parent: BasePDA
-  id: MimePDA
-  components:
-  - type: PDA
-    idCard: MedicalIDCard
-  - type: Icon
-    sprite: Objects/Devices/pda.rsi
-    state: pda-mime
-  - type: Sprite
-    sprite: Objects/Devices/pda.rsi
-    netsync: false
-    layers:
-    - state: pda-mime
-      map: ["enum.PDAVisualLayers.Base"]
-    - state: light_overlay
-      shader: unshaded
-      map: ["enum.PDAVisualLayers.Flashlight"]
-
-- type: entity
   name: Medical PDA
   parent: BasePDA
   id: MedicalPDA
