@@ -4,12 +4,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
-    public class LinkerComponent : Component
+    public class SignalLinkerComponent : Component
     {
-        public override string Name => "Linker";
+        public override string Name => "SignalLinker";
 
         [ViewVariables]
-        public TransmitterComponent Link;
+        public SignalTransmitterComponent Link { get; set; }
 
         public override void Initialize()
         {

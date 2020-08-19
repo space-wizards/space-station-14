@@ -11,15 +11,15 @@ using System.Threading.Tasks;
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
-    public class TransmitterComponent : Component, IInteractUsing
+    public class SignalTransmitterComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        public override string Name => "Transmitter";
+        public override string Name => "SignalTransmitter";
 
-        private List<ReceiverComponent> _receivers;
+        private List<SignalReceiverComponent> _receivers;
         private float _range;
 
         public float Range { get => _range; private set => _range = value; }
@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
         {
             base.Initialize();
 
-            _receivers = new List<ReceiverComponent>();
+            _receivers = new List<SignalReceiverComponent>();
         }
 
         public override void ExposeData(ObjectSerializer serializer)
@@ -38,20 +38,25 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             serializer.DataField(ref _range, "range", 10);
         }
 
-        public void TransmitTrigger(bool state)
+        public void TransmitSignal(SignalState state)
         {
             foreach (var receiver in _receivers)
             {
-                receiver.DistributeTrigger(state);
+                receiver.DistributeSignal(state);
             }
         }
 
-        public void Subscribe(ReceiverComponent receiver)
+        public void Subscribe(SignalReceiverComponent receiver)
         {
+            if (_receivers.Contains(receiver))
+            {
+                return;
+            }
+
             _receivers.Add(receiver);
         }
 
-        public void Unsubscribe(ReceiverComponent receiver)
+        public void Unsubscribe(SignalReceiverComponent receiver)
         {
             _receivers.Remove(receiver);
         }
@@ -62,7 +67,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return false;
 
             if (tool.HasQuality(ToolQuality.Multitool)
-                && eventArgs.Using.TryGetComponent<LinkerComponent>(out var linker))
+                && eventArgs.Using.TryGetComponent<SignalLinkerComponent>(out var linker))
             {
                 linker.Link = this;
                 _notifyManager.PopupMessage(Owner, eventArgs.User, "Paired!");

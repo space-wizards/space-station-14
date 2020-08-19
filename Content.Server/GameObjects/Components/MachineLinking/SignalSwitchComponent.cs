@@ -4,20 +4,17 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
-    public class SwitchComponent : Component, IInteractHand, IActivate
+    public class SignalSwitchComponent : Component, IInteractHand, IActivate
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
 
-        public override string Name => "Switch";
+        public override string Name => "SignalSwitch";
 
         private bool _on;
 
@@ -30,37 +27,30 @@ namespace Content.Server.GameObjects.Components.MachineLinking
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            Trigger(eventArgs.User);
+            TransmitSignal(eventArgs.User);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            Trigger(eventArgs.User);
+            TransmitSignal(eventArgs.User);
             return true;
         }
 
-        private void Trigger(IEntity user)
+        private void TransmitSignal(IEntity user)
         {
             _on = !_on;
 
-            if (!Owner.TryGetComponent<TransmitterComponent>(out var transmitter))
+            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
+            {
+                sprite.LayerSetState(0, _on ? "on" : "off");
+            }
+
+            if (!Owner.TryGetComponent<SignalTransmitterComponent>(out var transmitter))
             {
                 return;
             }
 
-            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
-            {
-                if (_on)
-                {
-                    sprite.LayerSetState(0, "on");
-                }
-                else
-                {
-                    sprite.LayerSetState(0, "off");
-                }
-            }
-            _notifyManager.PopupMessage(Owner, user, $"{(_on ? "On" : "Off")}.");
-            transmitter.TransmitTrigger(_on);
+            transmitter.TransmitSignal(_on ? SignalState.On : SignalState.Off);
         }
     }
 }

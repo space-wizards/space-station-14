@@ -28,7 +28,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, IReceiver
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver
     {
         public override string Name => "PoweredLight";
 
@@ -74,9 +74,20 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             return InsertBulb(eventArgs.Using);
         }
 
-        public void Trigger(bool state)
+        public void TriggerSignal(SignalState state)
         {
-            _turnedOn = state;
+            switch (state)
+            {
+                case SignalState.On:
+                    _turnedOn = true;
+                    break;
+                case SignalState.Off:
+                    _turnedOn = false;
+                    break;
+                case SignalState.Toggle:
+                    _turnedOn = !_turnedOn;
+                    break;
+            }
             UpdateLight();
         }
 

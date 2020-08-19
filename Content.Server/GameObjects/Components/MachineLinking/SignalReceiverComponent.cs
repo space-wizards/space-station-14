@@ -11,33 +11,33 @@ using System.Threading.Tasks;
 namespace Content.Server.GameObjects.Components.MachineLinking
 {
     [RegisterComponent]
-    public class ReceiverComponent : Component, IInteractUsing
+    public class SignalReceiverComponent : Component, IInteractUsing
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager;
 #pragma warning restore 649
 
-        public override string Name => "Receiver";
+        public override string Name => "SignalReceiver";
 
-        private List<TransmitterComponent> _transmitters;
+        private List<SignalTransmitterComponent> _transmitters;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _transmitters = new List<TransmitterComponent>();
+            _transmitters = new List<SignalTransmitterComponent>();
         }
 
-        public void DistributeTrigger(bool state)
+        public void DistributeSignal(SignalState state)
         {
-            foreach (var comp in Owner.GetAllComponents<IReceiver>())
+            foreach (var comp in Owner.GetAllComponents<ISignalReceiver>())
             {
-                comp.Trigger(state);
+                comp.TriggerSignal(state);
             }
         }
 
-        public void Subscribe(TransmitterComponent transmitter)
+        public void Subscribe(SignalTransmitterComponent transmitter)
         {
             if (_transmitters.Contains(transmitter))
             {
@@ -47,7 +47,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
             _transmitters.Add(transmitter);
         }
 
-        public void Unsubscribe(TransmitterComponent transmitter)
+        public void Unsubscribe(SignalTransmitterComponent transmitter)
         {
             _transmitters.Remove(transmitter);
         }
@@ -58,7 +58,7 @@ namespace Content.Server.GameObjects.Components.MachineLinking
                 return false;
 
             if (tool.HasQuality(ToolQuality.Multitool)
-                && eventArgs.Using.TryGetComponent<LinkerComponent>(out var linker)
+                && eventArgs.Using.TryGetComponent<SignalLinkerComponent>(out var linker)
                 && linker.Link != null)
             {
                 if (!Owner.Transform.GridPosition.InRange(_mapManager, linker.Link.Owner.Transform.GridPosition, linker.Link.Range))
