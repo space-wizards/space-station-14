@@ -172,8 +172,8 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
-            base.OnRemove();
             _userInterface.CloseAll();
+            base.OnRemove();
         }
     }
 }
