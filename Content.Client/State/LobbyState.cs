@@ -107,7 +107,10 @@ namespace Content.Client.State
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated -= UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated -= UpdateLobbyUi;
+            _clientGameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
+            _clientGameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+
+            _clientGameTicker.Ready.Clear();
 
             _lobby.Dispose();
             _characterSetup.Dispose();
