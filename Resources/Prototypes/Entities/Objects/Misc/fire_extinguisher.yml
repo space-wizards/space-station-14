@@ -2,7 +2,7 @@
   name: fire extinguisher
   parent: BaseItem
   id: FireExtinguisher
-  description: Extinguishes fires.
+  description: Extinguishes fires and hothead assistants.
   components:
     - type: Sprite
       sprite: Objects/Misc/fire_extinguisher.rsi

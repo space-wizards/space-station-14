@@ -47,7 +47,7 @@
   name: Chef PDA
   parent: BasePDA
   id: ChefPDA
-  description: Why isn't it gray?
+  description: Smells tasty.
   components:
   - type: PDA
     idCard: ChefIDCard
@@ -176,6 +176,7 @@
   name: HoP PDA
   parent: BasePDA
   id: HoPPDA
+  description: A PDA of a true bureaucrat.
   components:
   - type: PDA
     idCard: HoPIDCard
@@ -196,6 +197,7 @@
   name: CE PDA
   parent: BasePDA
   id: CEPDA
+  description: A very robust PDA, good luck breaking that.
   components:
   - type: PDA
     idCard: CEIDCard
@@ -217,6 +219,7 @@
   name: Engineer PDA
   parent: BasePDA
   id: EngineerPDA
+  description: Smells like oil.
   components:
   - type: PDA
     idCard: EngineeringIDCard
@@ -237,6 +240,7 @@
   name: CMO PDA
   parent: BasePDA
   id: CMOPDA
+  description: A PDA for the doctor №1 in the station.
   components:
   - type: PDA
     idCard: CMOIDCard
@@ -258,6 +262,7 @@
   name: Medical PDA
   parent: BasePDA
   id: MedicalPDA
+  description: A sterile PDA.
   components:
   - type: PDA
     idCard: MedicalIDCard
@@ -278,6 +283,7 @@
   name: RnD PDA
   parent: BasePDA
   id: RnDPDA
+  description: A PDA that looks exactly the same as PDA of a scientist.
   components:
   - type: PDA
     idCard: RDIDCard
@@ -298,6 +304,7 @@
   name: Science PDA
   parent: BasePDA
   id: SciencePDA
+  description: A PDA for mostly analysing strange objects and reporting.
   components:
   - type: PDA
     idCard: ResearchIDCard
@@ -318,6 +325,7 @@
   name: HoS PDA
   parent: BasePDA
   id: HoSPDA
+  description: An intimidating PDA for an intimidating HoS.
   components:
   - type: PDA
     idCard: HoSIDCard
@@ -338,6 +346,7 @@
   name: Security PDA
   parent: BasePDA
   id: SecurityPDA
+  description: Smells like gunpowder.
   components:
   - type: PDA
     idCard: SecurityIDCard

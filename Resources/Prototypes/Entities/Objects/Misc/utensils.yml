@@ -14,6 +14,7 @@
   parent: UtensilBase
   id: Fork
   name: fork
+  description: A fork, nothing special about it.
   components:
   - type: Sprite
     state: fork
@@ -27,6 +28,7 @@
   parent: UtensilBase
   id: ForkPlastic
   name: plastic fork
+  description: A fragile plastic fork that will inevitably break.
   components:
   - type: Sprite
     state: plastic_fork
@@ -55,7 +57,7 @@
   parent: UtensilBase
   id: SpoonPlastic
   name: plastic spoon
-  description: There is no spoon.
+  description: A fragile plastic spoon that will inevitably break.
   components:
   - type: Sprite
     state: plastic_spoon

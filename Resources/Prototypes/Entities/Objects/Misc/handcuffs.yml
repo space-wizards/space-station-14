@@ -1,6 +1,6 @@
 - type: entity
   name: handcuffs
-  description: Just a prop for screenshots for now, sorry!
+  description: 'You are under arrest, you have the right to remain silent.'
   id: Handcuffs
   parent: BaseItem
   components:
@@ -21,6 +21,7 @@
   name: cable restraints
   id: Cablecuffs
   parent: Handcuffs
+  description: Handmade cable restraints.
   components:
   - type: Sprite
     sprite: Objects/Misc/cablecuffs.rsi
