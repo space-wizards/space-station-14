@@ -65,7 +65,7 @@ namespace Content.Server.GameTicking.GamePresets
                 player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
             }
 
-            var numTraitors = FloatMath.Clamp(readyPlayers.Count % PlayersPerTraitor,
+            var numTraitors = FloatMath.Clamp(readyPlayers.Count / PlayersPerTraitor,
                 MinTraitors, readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)
