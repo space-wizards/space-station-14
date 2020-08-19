@@ -17,7 +17,7 @@ namespace Content.Client.UserInterface
         private TabContainer RoundEndWindowTabs { get; }
         protected override Vector2? CustomSize => (520, 580);
 
-        public RoundEndSummaryWindow(string gm, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info )
+        public RoundEndSummaryWindow(string gm, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info)
         {
 
             Title = Loc.GetString("Round End Summary");
@@ -65,17 +65,17 @@ namespace Content.Client.UserInterface
             //Create labels for each player info.
             foreach (var plyinfo in manifestSortedList)
             {
-
                 var playerInfoText = new RichTextLabel()
                 {
-                    SizeFlagsVertical = SizeFlags.Fill
+                    SizeFlagsVertical = SizeFlags.Fill,
                 };
 
                 //TODO: On Hover display a popup detailing more play info.
                 //For example: their antag goals and if they completed them sucessfully.
                 var icNameColor = plyinfo.Antag ? "red" : "white";
                 playerInfoText.SetMarkup(
-                    Loc.GetString($"[color=gray]{plyinfo.PlayerOOCName}[/color] was [color={icNameColor}]{plyinfo.PlayerICName}[/color] playing role of [color=orange]{plyinfo.Role}[/color]."));
+                    Loc.GetString("[color=gray]{0}[/color] was [color={1}]{2}[/color] playing role of [color=orange]{3}[/color].",
+                                    plyinfo.PlayerOOCName, icNameColor, plyinfo.PlayerICName, Loc.GetString(plyinfo.Role)));
                 innerScrollContainer.AddChild(playerInfoText);
             }
 
@@ -86,7 +86,6 @@ namespace Content.Client.UserInterface
             //Finally, display the window.
             OpenCentered();
             MoveToFront();
-
         }
 
     }
