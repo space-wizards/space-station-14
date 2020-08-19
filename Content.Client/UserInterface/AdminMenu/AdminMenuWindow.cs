@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Content.Client.StationEvents;
 using Content.Client.UserInterface.AdminMenu;
 using Content.Shared.Atmos;
 using Robust.Client.Console;
@@ -35,7 +36,7 @@ namespace Content.Client.UserInterface
         {
             new SpawnEntitiesCommandButton(),
             new SpawnTilesCommandButton(),
-            //TODO: station events
+            new StationEventsCommandButton(),
         };
         private List<CommandButton> _debugButtons = new List<CommandButton>
         {
@@ -257,7 +258,6 @@ namespace Content.Client.UserInterface
             MasterTabContainer = new TabContainer();
 
             //Add all the tabs to the Master container.
-            //TODO: add playerlist maybe?
             MasterTabContainer.AddChild(adminTabContainer);
             MasterTabContainer.SetTabTitle(0, Loc.GetString("Admin"));
             MasterTabContainer.AddChild(adminbusTabContainer);
@@ -271,7 +271,8 @@ namespace Content.Client.UserInterface
             MasterTabContainer.AddChild(playerTabContainer);
             MasterTabContainer.SetTabTitle(5, Loc.GetString("Players"));
             Contents.AddChild(MasterTabContainer);
-            //TODO: request station events here
+            //Request station events, so we can use them later
+            var a = IoCManager.Resolve<IStationEventManager>().StationEvents;
         }
 
         private abstract class CommandButton
@@ -301,7 +302,7 @@ namespace Content.Client.UserInterface
         private abstract class UICommandButton : CommandButton
         {
             // The text on the submit button
-            public string? SubmitText;
+            public virtual string? SubmitText { get; }
             /// <summary>
             /// Called when the Submit button is pressed
             /// </summary>
@@ -355,6 +356,36 @@ namespace Content.Client.UserInterface
                     IoCManager.Resolve<IPlacementManager>(),
                     IoCManager.Resolve<IResourceCache>());
                 manager.OpenCommand(window);
+            }
+        }
+
+        private class StationEventsCommandButton : UICommandButton
+        {
+            public override string Name => "Station Events";
+            public override string RequiredCommand => "events";
+            public override string? SubmitText => "Run";
+
+            public override List<CommandUIControl> UI => new List<CommandUIControl>
+            {
+                new CommandUIDropDown
+                {
+                    Name = "Event",
+                    GetData = () =>
+                    {
+                        var events = IoCManager.Resolve<IStationEventManager>().StationEvents;
+                        if (events == null)
+                            return new List<object>{"Not loaded"};
+                        events.Add("Random");
+                        return events.ToList<object>();
+                    },
+                    GetDisplayName = (obj) => (string)obj,
+                    GetValueFromData = (obj) => ((string)obj).ToLower(),
+                }
+            };
+
+            public override void Submit(Dictionary<string, string> val)
+            {
+                IoCManager.Resolve<IClientConsole>().ProcessCommand($"events run \"{val["Event"]}\"");
             }
         }
 
