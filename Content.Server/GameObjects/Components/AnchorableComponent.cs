@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -14,17 +15,18 @@ namespace Content.Server.GameObjects.Components
     {
         public override string Name => "Anchorable";
 
+        int IInteractUsing.Priority => 1;
+
         /// <summary>
         ///     Checks if a tool can change the anchored status.
         /// </summary>
         /// <param name="user">The user doing the action</param>
         /// <param name="utilizing">The tool being used, can be null if forcing it</param>
-        /// <param name="collidable">The physics component of the owning entity</param>
         /// <param name="force">Whether or not to check if the tool is valid</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private bool Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] out ICollidableComponent collidable, bool force = false)
+        private async Task<bool> Valid(IEntity user, IEntity? utilizing, [MaybeNullWhen(false)] bool force = false)
         {
-            if (!Owner.TryGetComponent(out collidable))
+            if (!Owner.HasComponent<ICollidableComponent>())
             {
                 return false;
             }
@@ -33,7 +35,7 @@ namespace Content.Server.GameObjects.Components
             {
                 if (utilizing == null ||
                     !utilizing.TryGetComponent(out ToolComponent tool) ||
-                    !tool.UseTool(user, Owner, ToolQuality.Anchoring))
+                    !(await tool.UseTool(user, Owner, 0.5f, ToolQuality.Anchoring)))
                 {
                     return false;
                 }
@@ -49,13 +51,14 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public bool TryAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Valid(user, utilizing, out var physics, force))
+            if (!(await Valid(user, utilizing, force)))
             {
                 return false;
             }
 
+            var physics = Owner.GetComponent<ICollidableComponent>();
             physics.Anchored = true;
 
             return true;
@@ -68,13 +71,14 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public bool TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
-            if (!Valid(user, utilizing, out var physics, force))
+            if (!(await Valid(user, utilizing, force)))
             {
                 return false;
             }
 
+            var physics = Owner.GetComponent<ICollidableComponent>();
             physics.Anchored = false;
 
             return true;
@@ -87,7 +91,7 @@ namespace Content.Server.GameObjects.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if toggled, false otherwise</returns>
-        private bool TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
+        private async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing = null, bool force = false)
         {
             if (!Owner.TryGetComponent(out ICollidableComponent collidable))
             {
@@ -95,8 +99,8 @@ namespace Content.Server.GameObjects.Components
             }
 
             return collidable.Anchored ?
-                TryUnAnchor(user, utilizing, force) :
-                TryAnchor(user, utilizing, force);
+                await TryUnAnchor(user, utilizing, force) :
+                await TryAnchor(user, utilizing, force);
         }
 
         public override void Initialize()
@@ -105,9 +109,9 @@ namespace Content.Server.GameObjects.Components
             Owner.EnsureComponent<CollidableComponent>();
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            return TryToggleAnchor(eventArgs.User, eventArgs.Using);
+            return await TryToggleAnchor(eventArgs.User, eventArgs.Using);
         }
     }
 }

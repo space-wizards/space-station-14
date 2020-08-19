@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Body;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -206,7 +207,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
             _userInterface.Open(actor.playerSession);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!_powered)
             {

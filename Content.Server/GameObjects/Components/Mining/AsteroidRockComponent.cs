@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Weapon.Melee;
+﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Weapon.Melee;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -30,7 +31,7 @@ namespace Content.Server.GameObjects.Components.Mining
             spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
             if (!item.TryGetComponent(out MeleeWeaponComponent meleeWeaponComponent)) return false;
