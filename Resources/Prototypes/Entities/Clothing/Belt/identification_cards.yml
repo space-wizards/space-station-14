@@ -143,6 +143,21 @@
 
 - type: entity
   parent: IDCardStandard
+  id: MimeIDCard
+  name: mime ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: assigned
+    - state: idmime
+  - type: Icon
+    state: idmime
+  - type: PresetIdCard
+    job: Mime
+
+- type: entity
+  parent: IDCardStandard
   id: JanitorIDCard
   name: janitor ID card
   components:
