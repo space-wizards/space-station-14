@@ -2,7 +2,9 @@
 
 namespace Content.Shared.GameObjects.Components.Movement
 {
-    public class SharedClimbableComponent : Component
+    public interface IClimbable { };
+
+    public class SharedClimbableComponent : Component, IClimbable
     {
         public sealed override string Name => "Climbable";
     }

@@ -17,12 +17,16 @@ namespace Content.Shared.Physics
         /// <summary>
         /// If 5 ticks have passed and our position has not changed then something is blocking us.
         /// </summary>
-        public bool IsBlocked => _numTicksBlocked > 5;
+        public bool IsBlocked => _numTicksBlocked > 5 || _isMovingWrongDirection;
 
         /// <summary>
         /// If the controller is currently moving the player somewhere, it is considered active.
         /// </summary>
         public bool IsActive => _movingTo.HasValue;
+
+        private float _cancelTime = default;
+        private float _initialDist = default;
+        private bool _isMovingWrongDirection = false;
 
         public void TryMoveTo(Vector2 from, Vector2 to)
         {
@@ -31,9 +35,11 @@ namespace Content.Shared.Physics
                 return;
             }
 
+            _initialDist = (from - to).Length;
             _numTicksBlocked = 0;
             _lastKnownPosition = from;
             _movingTo = to;
+            _isMovingWrongDirection = false;
         }
 
         public override void UpdateAfterProcessing()
@@ -50,13 +56,22 @@ namespace Content.Shared.Physics
                 _numTicksBlocked++;
             }
 
-            if (ControlledComponent.Owner.Transform.WorldPosition.EqualsApprox(_movingTo.Value, 0.01))
+            _lastKnownPosition = ControlledComponent.Owner.Transform.WorldPosition;
+
+            if (ControlledComponent.Owner.Transform.WorldPosition.EqualsApprox(_movingTo.Value, 0.05))
             {
                 _movingTo = null;
             }
 
             if (_movingTo.HasValue)
             {
+                var dist = (_lastKnownPosition - _movingTo.Value).Length;
+
+                if (dist > _initialDist)
+                {
+                    _isMovingWrongDirection = true;
+                }
+
                 var diff = _movingTo.Value - ControlledComponent.Owner.Transform.WorldPosition;
                 LinearVelocity = diff.Normalized * 5;
             }

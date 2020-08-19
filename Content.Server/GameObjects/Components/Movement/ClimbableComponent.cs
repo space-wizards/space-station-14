@@ -21,6 +21,7 @@ using System;
 namespace Content.Server.GameObjects.Components.Movement
 {
     [RegisterComponent]
+    [ComponentReference(typeof(IClimbable))]
     public class ClimbableComponent : SharedClimbableComponent, IDragDropOn
     {
 #pragma warning disable 649

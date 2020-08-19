@@ -9,35 +9,21 @@ namespace Content.Client.GameObjects.Components.Movement
     [RegisterComponent]
     public class ClimbingComponent : SharedClimbingComponent, IClientDraggable
     {
-        private ICollidableComponent _body = default;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.TryGetComponent(out _body);
-        }
-
         public override void HandleComponentState(ComponentState curState, ComponentState nextState)
         {
-            if (!(curState is ClimbModeComponentState climbModeState) || _body == null)
+            if (!(curState is ClimbModeComponentState climbModeState) || Body == null)
             {
                 return;
             }
 
-            if (climbModeState.Climbing)
-            {
-                _body.PhysicsShapes[0].CollisionMask &= ~((int) CollisionGroup.VaultImpassable);
-            }
-            else
-            {
-                _body.PhysicsShapes[0].CollisionMask |= ((int) CollisionGroup.VaultImpassable);
-            }           
+            IsClimbing = climbModeState.Climbing; 
         }
+
+        public override bool IsClimbing { get; set; }
 
         bool IClientDraggable.ClientCanDropOn(CanDropEventArgs eventArgs)
         {
-            return eventArgs.Target.HasComponent<ClimbableComponent>();
+            return eventArgs.Target.HasComponent<IClimbable>();
         }
 
         bool IClientDraggable.ClientCanDrag(CanDragEventArgs eventArgs)
