@@ -207,7 +207,7 @@
   name: banana bread (slice)
   parent: FoodBase
   id: FoodBananaBreadSlice
-  description: A slice of a banana bread. Makes you chuckle when you eat it.
+  description: A slice of banana bread. Makes you chuckle when you eat it.
   components:
   - type: Food
     trash: TrashPlate
