@@ -122,6 +122,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
+            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+                !collidable.CanCollide)
+            {
+                return false;
+            }
+
             if (!entity.HasComponent<ItemComponent>() &&
                 !entity.HasComponent<IBodyManagerComponent>())
             {

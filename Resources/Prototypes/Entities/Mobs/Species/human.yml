@@ -141,6 +141,7 @@
     - type: RotationVisualizer
     - type: BuckleVisualizer
   - type: CombatMode
+  - type: Climbing
   - type: Teleportable
   - type: CharacterInfo
   - type: FootstepSound

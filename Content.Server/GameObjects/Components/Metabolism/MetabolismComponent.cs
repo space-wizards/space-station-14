@@ -213,7 +213,7 @@ namespace Content.Server.GameObjects.Components.Metabolism
             if (Suffocating &&
                 Owner.TryGetComponent(out IDamageableComponent damageable))
             {
-                damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
+                // damageable.ChangeDamage(DamageClass.Airloss, _suffocationDamage, false);
             }
         }
 

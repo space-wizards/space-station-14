@@ -247,13 +247,17 @@ namespace Content.Client.Chat
                 case OOCAlias:
                 {
                     var conInput = text.Substring(1);
+                    if (string.IsNullOrWhiteSpace(conInput))
+                        return;
                     _console.ProcessCommand($"ooc \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
                 case AdminChatAlias:
                 {
                     var conInput = text.Substring(1);
-                    if(_groupController.CanCommand("asay")){
+                    if (string.IsNullOrWhiteSpace(conInput))
+                        return;
+                    if (_groupController.CanCommand("asay")){
                         _console.ProcessCommand($"asay \"{CommandParsing.Escape(conInput)}\"");
                     }
                     else
@@ -265,6 +269,8 @@ namespace Content.Client.Chat
                 case MeAlias:
                 {
                     var conInput = text.Substring(1);
+                    if (string.IsNullOrWhiteSpace(conInput))
+                        return;
                     _console.ProcessCommand($"me \"{CommandParsing.Escape(conInput)}\"");
                     break;
                 }
