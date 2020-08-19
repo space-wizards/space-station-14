@@ -381,7 +381,23 @@ namespace Content.Client.UserInterface
                     },
                     GetDisplayName = (obj) => (string)obj,
                     GetValueFromData = (obj) => ((string)obj).ToLower(),
-                }
+                },
+                new CommandUIButton
+                {
+                    Name = "Pause",
+                    Handler = (val) =>
+                    {
+                        IoCManager.Resolve<IClientConsole>().ProcessCommand($"events pause");
+                    },
+                },
+                new CommandUIButton
+                {
+                    Name = "Resume",
+                    Handler = (val) =>
+                    {
+                        IoCManager.Resolve<IClientConsole>().ProcessCommand($"events resume");
+                    },
+                },
             };
 
             public override void Submit(Dictionary<string, string> val)
@@ -512,7 +528,6 @@ namespace Content.Client.UserInterface
         {
             public string? Name;
             public Control? Control;
-            //Idea: implement these abstract functions:
             public abstract Control GetControl();
             public abstract string GetValue();
         }
@@ -584,6 +599,25 @@ namespace Content.Client.UserInterface
             }
         }
 
+        private class CommandUIButton : CommandUIControl
+        {
+            public Action<Dictionary<string,string>>? Handler { get; set; }
+
+            public override Control GetControl()
+            {
+                Control = new Button {
+                    CustomMinimumSize = (100, 0),
+                    SizeFlagsHorizontal = SizeFlags.FillExpand,
+                    Text = Name };
+                return Control;
+            }
+
+            public override string GetValue()
+            {
+                return "";
+            }
+        }
+
         private class CommandWindow : SS14Window
         {
             List<CommandUIControl> _controls;
@@ -598,26 +632,39 @@ namespace Content.Client.UserInterface
                 // Init Controls in a hbox + a label
                 foreach (var control in _controls)
                 {
-                    var label = new Label
+                    var c = control.GetControl();
+                    if (c is Button)
                     {
-                        Text = control.Name,
-                        CustomMinimumSize = (100, 0)
-                    };
-                    var divider = new Control
+                        ((Button) c).OnPressed += (args) =>
+                         {
+                             ((CommandUIButton) control).Handler?.Invoke(GetValues());
+                         };
+                        container.AddChild(c);
+                    }
+                    else
                     {
-                        CustomMinimumSize = (50, 0)
-                    };
-                    var hbox = new HBoxContainer
-                    {
-                        Children =
+                        var label = new Label
                         {
-                            label,
-                            divider,
-                            control.GetControl()
-                        },
-                    };
+                            Text = control.Name,
+                            CustomMinimumSize = (100, 0)
+                        };
+                        var divider = new Control
+                        {
+                            CustomMinimumSize = (50, 0)
+                        };
+                        var hbox = new HBoxContainer
+                        {
+                            Children =
+                            {
+                                label,
+                                divider,
+                                c
+                            },
+                        };
+                        container.AddChild(hbox);
+                    }
 
-                    container.AddChild(hbox);
+                    
                 }
                 // Init Submit Button
                 var submitButton = new Button
@@ -630,17 +677,22 @@ namespace Content.Client.UserInterface
                 Contents.AddChild(container);
             }
 
-            public void SubmitPressed(ButtonEventArgs args)
+            public Dictionary<string, string> GetValues()
             {
                 Dictionary<string, string> val = new Dictionary<string, string>();
                 foreach (var control in _controls)
                 {
                     if (control.Control == null)
-                        return;
+                        continue;
 
                     val.Add(control.Name ?? "Empty", control.GetValue());
                 }
-                Submit?.Invoke(val);
+                return val;
+            }
+
+            public void SubmitPressed(ButtonEventArgs args)
+            {
+                Submit?.Invoke(GetValues());
             }
         }
     }
