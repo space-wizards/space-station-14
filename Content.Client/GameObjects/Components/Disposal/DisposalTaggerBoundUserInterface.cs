@@ -23,15 +23,13 @@ namespace Content.Client.GameObjects.Components.Disposal
         {
             base.Open();
 
-            _window = new DisposalTaggerWindow
-            {
-                Title = Loc.GetString("Disposal Tagger"),
-            };
+            _window = new DisposalTaggerWindow();
 
             _window.OpenCentered();
             _window.OnClose += Close;
 
             _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
 
         }
 

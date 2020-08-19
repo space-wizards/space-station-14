@@ -3,12 +3,15 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Content.Shared.GameObjects.Components.Disposal
 {
     public class SharedDisposalTaggerComponent : Component
     {
         public override string Name => "DisposalTagger";
+
+        public static readonly Regex TagRegex = new Regex("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
         public class DisposalTaggerUserInterfaceState : BoundUserInterfaceState
@@ -33,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Disposal
 
                 if (Action == UiAction.Ok)
                 {
-                    Tag = tag;
+                    Tag = tag.Substring(0, Math.Min(tag.Length, 30));
                 }
             }
         }
