@@ -36,7 +36,7 @@ namespace Content.Shared.GameObjects.Components.Movement
 
         bool ICollideSpecial.PreventCollide(IPhysBody collided)
         {
-            if (collided.CollisionLayer == (int) CollisionGroup.VaultImpassable && collided.Entity.HasComponent<IClimbable>())
+            if (((CollisionGroup)collided.CollisionLayer).HasFlag(CollisionGroup.VaultImpassable) && collided.Entity.HasComponent<IClimbable>())
             {
                 IsOnClimbableThisFrame = true;
                 return IsClimbing;

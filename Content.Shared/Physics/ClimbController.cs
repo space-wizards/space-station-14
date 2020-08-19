@@ -51,7 +51,7 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            if (ControlledComponent.Owner.Transform.WorldPosition.EqualsApprox(_lastKnownPosition, 0.01))
+            if (ControlledComponent.Owner.Transform.WorldPosition.EqualsApprox(_lastKnownPosition, 0.05))
             {
                 _numTicksBlocked++;
             }
