@@ -185,6 +185,7 @@
   - type: Tool
     qualities:
       - Multitool
+  - type: Linker
 
 - type: entity
   name: jaws of life

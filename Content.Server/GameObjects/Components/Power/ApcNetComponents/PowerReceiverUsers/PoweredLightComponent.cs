@@ -20,6 +20,7 @@ using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
+using Content.Server.GameObjects.Components.MachineLinking;
 
 namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
@@ -27,19 +28,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, IReceiver
     {
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
-
         private TimeSpan _lastThunk;
 
+        private bool _turnedOn = true;
 
         private LightBulbType BulbType = LightBulbType.Tube;
-
         [ViewVariables] private ContainerSlot _lightBulbContainer;
-
         [ViewVariables]
         private LightBulbComponent LightBulb
         {
@@ -73,6 +72,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.Using);
+        }
+
+        public void Trigger(bool state)
+        {
+            _turnedOn = state;
+            UpdateLight();
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
@@ -185,9 +190,9 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    powerReceiver.Load = LightBulb.PowerUse;
-                    if (powerReceiver.Powered)
+                    if (powerReceiver.Powered && _turnedOn)
                     {
+                        powerReceiver.Load = LightBulb.PowerUse;
                         sprite.LayerSetState(0, "on");
                         light.Enabled = true;
                         light.Color = LightBulb.Color;
@@ -200,6 +205,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     }
                     else
                     {
+                        powerReceiver.Load = 0;
                         sprite.LayerSetState(0, "off");
                         light.Enabled = false;
                     }
