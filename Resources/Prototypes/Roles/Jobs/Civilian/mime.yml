@@ -19,5 +19,7 @@
     belt: SuspendersClothing
     gloves: GlovesWhite
     shoes: ShoesMime
+    pocket1: Pen
+    pocket2: Paper
     mask: MaskMime
     idcard: MimePDA
