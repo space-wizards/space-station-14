@@ -83,7 +83,7 @@ namespace Content.Client.UserInterface
             scrollContainer.AddChild(innerScrollContainer);
             //Attach the entire ScrollContainer that holds all the playerinfo.
             PlayerManifestoTab.AddChild(scrollContainer);
-            // Temp Hack to make the lines not overlap
+            // TODO: 1240 Overlap, remove once it's fixed. Temp Hack to make the lines not overlap
             PlayerManifestoTab.OnVisibilityChanged += PlayerManifestoTab_OnVisibilityChanged;
 
             //Finally, display the window.
