@@ -6,6 +6,7 @@ using Content.Shared.GameObjects.Components.Body;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.ViewVariables;
@@ -55,6 +56,12 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
+            if (!entity.TryGetComponent(out ICollidableComponent collidable) ||
+                !collidable.CanCollide)
+            {
+                return false;
+            }
+
             return entity.HasComponent<ItemComponent>() ||
                    entity.HasComponent<IBodyManagerComponent>();
         }
@@ -64,6 +71,11 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (!CanInsert(entity) || !_contents.Insert(entity))
             {
                 return false;
+            }
+
+            if (entity.TryGetComponent(out ICollidableComponent collidable))
+            {
+                collidable.CanCollide = false;
             }
 
             return true;
@@ -93,6 +105,11 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in _contents.ContainedEntities.ToArray())
             {
+                if (entity.TryGetComponent(out ICollidableComponent collidable))
+                {
+                    collidable.CanCollide = true;
+                }
+
                 _contents.ForceRemove(entity);
 
                 if (entity.Transform.Parent == Owner.Transform)
