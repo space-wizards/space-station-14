@@ -24,7 +24,6 @@ namespace Content.Shared.Physics
         /// </summary>
         public bool IsActive => _movingTo.HasValue;
 
-        private float _cancelTime = default;
         private float _initialDist = default;
         private bool _isMovingWrongDirection = false;
 
