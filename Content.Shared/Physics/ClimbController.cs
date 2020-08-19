@@ -51,14 +51,18 @@ namespace Content.Shared.Physics
                 return;
             }
 
-            if (ControlledComponent.Owner.Transform.WorldPosition.EqualsApprox(_lastKnownPosition, 0.05))
+            if ((ControlledComponent.Owner.Transform.WorldPosition - _lastKnownPosition).Length <= 0.05f)
             {
                 _numTicksBlocked++;
+            }
+            else
+            {
+                _numTicksBlocked = 0;
             }
 
             _lastKnownPosition = ControlledComponent.Owner.Transform.WorldPosition;
 
-            if (ControlledComponent.Owner.Transform.WorldPosition.EqualsApprox(_movingTo.Value, 0.05))
+            if ((ControlledComponent.Owner.Transform.WorldPosition - _movingTo.Value).Length <= 0.05f)
             {
                 _movingTo = null;
             }
