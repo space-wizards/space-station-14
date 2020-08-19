@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components.PDA
 
         private void UpdatePDAAppearance()
         {
-            _appearance?.SetData(PDAVisuals.ScreenLit, _lightOn);
+            _appearance?.SetData(PDAVisuals.FlashlightLit, _lightOn);
         }
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
