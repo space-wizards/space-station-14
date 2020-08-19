@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Shared.GameObjects.Components.Body;
@@ -40,6 +41,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public IDisposalTubeComponent? NextTube { get; set; }
+
+        /// <summary>
+        ///     A list of tags attached to the content, used for sorting
+        /// </summary>
+        [ViewVariables]
+        public HashSet<string> Tags { get; set; } = new HashSet<string>();
 
         private bool CanInsert(IEntity entity)
         {
