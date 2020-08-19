@@ -1,17 +1,20 @@
-using System;
+﻿using System;
+using Content.Shared.GameObjects.Components.Power;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
-    public class EmergencyLightComponent : Component
+    public class EmergencyLightComponent : SharedEmergencyLightComponent
     {
-        public override string Name => "EmergencyLight";
+        [ViewVariables]
+        public EmergencyLightState State { get; set; }
 
         protected override void Startup()
         {
@@ -40,6 +43,12 @@ namespace Content.Client.GameObjects.Components
             playerComponent.Play(animation, "emergency");
 
             playerComponent.AnimationCompleted += s => playerComponent.Play(animation, s);
+        }
+
+        public override void HandleComponentState(ComponentState currentState, ComponentState nextState)
+        {
+            if (currentState == null) return;
+            State = ((EmergencyLightComponentState) currentState).State;
         }
     }
 }
