@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Damage;
 using Content.Shared.GameObjects.Components.Medical;
 using Content.Shared.GameObjects.EntitySystems;
@@ -38,8 +39,13 @@ namespace Content.Server.GameObjects.Components.Medical
             _appearance = Owner.GetComponent<AppearanceComponent>();
             _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
                 .GetBoundUserInterface(MedicalScannerUiKey.Key);
+            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
             _bodyContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-bodyContainer", Owner);
             _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+
+            //TODO: write this so that it checks for a change in power events and acts accordingly.
+            var newState = GetUserInterfaceState();
+            _userInterface.SetState(newState);
 
             UpdateUserInterface();
         }
@@ -48,7 +54,8 @@ namespace Content.Server.GameObjects.Components.Medical
             new MedicalScannerBoundUserInterfaceState(
                 null,
                 new Dictionary<DamageClass, int>(),
-                new Dictionary<DamageType, int>());
+                new Dictionary<DamageType, int>(),
+                false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
         {
@@ -68,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Medical
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types);
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, CloningSystem.HasUid(body.Uid));
         }
 
         private void UpdateUserInterface()
@@ -92,12 +99,18 @@ namespace Content.Server.GameObjects.Components.Medical
                 default: throw new ArgumentException(nameof(damageState));
             }
         }
+
         private MedicalScannerStatus GetStatus()
         {
-            var body = _bodyContainer.ContainedEntity;
-            return body == null
-                ? MedicalScannerStatus.Open
-                : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+            if (Powered)
+            {
+                var body = _bodyContainer.ContainedEntity;
+                return body == null
+                    ? MedicalScannerStatus.Open
+                    : GetStatusFromDamageState(body.GetComponent<IDamageableComponent>().CurrentDamageState);
+            }
+
+            return MedicalScannerStatus.Off;
         }
 
         private void UpdateAppearance()
@@ -178,14 +191,28 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Update(float frameTime)
         {
-            if (_bodyContainer.ContainedEntity == null)
+            UpdateUserInterface();
+            UpdateAppearance();
+        }
+
+        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        {
+            if (!(obj.Message is UiButtonPressedMessage message))
             {
-                // There's no need to update if there's no one inside
                 return;
             }
 
-            UpdateUserInterface();
-            UpdateAppearance();
+            switch (message.Button)
+            {
+                case UiButton.ScanDNA:
+                    if (_bodyContainer.ContainedEntity != null)
+                    {
+                        CloningSystem.AddToScannedUids(_bodyContainer.ContainedEntity.Uid);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
