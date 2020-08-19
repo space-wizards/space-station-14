@@ -1,6 +1,6 @@
 - type: entity
-  id: Switch
-  name: "switch"
+  id: SignalSwitch
+  name: "signal switch"
   components:
   - type: Clickable
     bounds:
@@ -20,8 +20,8 @@
     - Wallmount
 
 - type: entity
-  id: Switch
-  name: "switch"
+  id: SignalButton
+  name: "signal button"
   components:
   - type: Clickable
     bounds:
@@ -30,10 +30,10 @@
   - type: Collidable
   - type: Sprite
     sprite: Constructible/Linking/switch.rsi
-    state: off
+    state: dead
   - type: Icon
     sprite: Constructible/Linking/switch.rsi
-    state: on
+    state: dead
   - type: SignalButton
   - type: SignalTransmitter
   placement:
