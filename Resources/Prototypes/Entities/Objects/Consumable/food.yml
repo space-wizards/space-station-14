@@ -189,7 +189,7 @@
   name: bread (slice)
   parent: FoodBase
   id: FoodBreadSlice
-  description: A slice of a bread.
+  description: A slice of bread.
   components:
   - type: Food
     trash: TrashPlate
