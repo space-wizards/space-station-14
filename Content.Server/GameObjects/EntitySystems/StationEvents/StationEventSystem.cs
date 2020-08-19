@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +18,8 @@ using static Content.Shared.StationEvents.SharedStationEvent;
 namespace Content.Server.GameObjects.EntitySystems.StationEvents
 {
     [UsedImplicitly]
-    public sealed class StationEventSystem : EntitySystem // Somewhat based off of TG's implementation of events
+    // Somewhat based off of TG's implementation of events
+    public sealed class StationEventSystem : EntitySystem
     {
 #pragma warning disable 649
         [Dependency] private readonly IServerNetManager _netManager;
