@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Utility;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
@@ -82,12 +83,23 @@ namespace Content.Client.UserInterface
             scrollContainer.AddChild(innerScrollContainer);
             //Attach the entire ScrollContainer that holds all the playerinfo.
             PlayerManifestoTab.AddChild(scrollContainer);
+            // Temp Hack to make the lines not overlap
+            PlayerManifestoTab.OnVisibilityChanged += PlayerManifestoTab_OnVisibilityChanged;
 
             //Finally, display the window.
             OpenCentered();
             MoveToFront();
         }
 
+        private void PlayerManifestoTab_OnVisibilityChanged(Control obj)
+        {
+            if (obj.Visible)
+            {
+                // For some reason the lines get not properly drawn with the right height
+                // so we just force a update
+                ForceRunLayoutUpdate();
+            }
+        }
     }
 
 }
