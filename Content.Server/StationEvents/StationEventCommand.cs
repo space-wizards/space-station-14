@@ -1,5 +1,4 @@
 ﻿#nullable enable
-using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using JetBrains.Annotations;
 using Robust.Server.Interfaces.Console;
