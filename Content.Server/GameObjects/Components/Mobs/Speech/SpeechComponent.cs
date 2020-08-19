@@ -39,13 +39,6 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
                 shell.SendText(player, "You don't have a player!");
                 return;
             }
-
-            // TODO: multiple speech components?
-            if (player.AttachedEntity.TryGetComponent(out IAccentComponent speech))
-            {
-                shell.SendText(player, "You already have a accent!");
-                return;
-            }
             
             var compFactory = IoCManager.Resolve<IComponentFactory>();
             
@@ -65,17 +58,30 @@ namespace Content.Server.GameObjects.Components.Mobs.Speech
             {
                 var name = args[0];
                 // Try to get the Component
+                Type type;
                 try
                 {
                     var comp = compFactory.GetComponent(name);
+                    type = comp.GetType();
                 }
                 catch (Exception e)
                 {
                     shell.SendText(player, $"Accent {name} not found. Try {Command} list to get a list of all appliable accents.");
                     return;
                 }
-                //TODO: actually give them the component
-                player.AttachedEntity.EnsureComponent<BackwardsAccentComponent>();
+
+                //TODO: check if that already exists
+                /*if (player.AttachedEntity.TryGetComponent(out ValueType(type) speech))
+                {
+                    shell.SendText(player, "You already have a accent!");
+                    return;
+                }*/
+
+                var ensure = typeof(IEntity).GetMethod("AddComponent");
+                if (ensure == null)
+                    return;
+                var method = ensure.MakeGenericMethod(type);
+                method.Invoke(player.AttachedEntity, null);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Mobs.Speech;
-using Content.Server.GameObjects.Components.Observer;
+﻿using Content.Server.GameObjects.Components.Observer;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.Chat;
@@ -12,6 +11,8 @@ using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Chat
@@ -33,6 +34,8 @@ namespace Content.Server.Chat
         /// </summary>
         private const string MaxLengthExceededMessage = "Your message exceeded {0} character limit";
 
+        //TODO: make prio based?
+        private List<Func<IEntity, string, string>> _chatTransformHandlers;
 #pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager;
         [Dependency] private readonly IServerNetManager _netManager;
@@ -51,6 +54,8 @@ namespace Content.Server.Chat
             var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             msg.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendToAll(msg);
+
+            _chatTransformHandlers = new List<Func<IEntity, string, string>>();
         }
 
         public void DispatchServerAnnouncement(string message)
@@ -98,10 +103,10 @@ namespace Content.Server.Chat
                     return;
                 }
 
-            //TODO: make this a action or something?
-            if (source.TryGetComponent(out IAccentComponent speech))
+            foreach (var handler in _chatTransformHandlers)
             {
-                message = speech.Accentuate(message);
+                //TODO: rather return a bool and use a out var?
+                message = handler(source, message);
             }
 
             var pos = source.Transform.GridPosition;
@@ -222,6 +227,11 @@ namespace Content.Server.Chat
             var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
             response.MaxMessageLength = MaxMessageLength;
             _netManager.ServerSendMessage(response, msg.MsgChannel);
+        }
+
+        public void RegisterChatTransform(Func<IEntity, string, string> handler)
+        {
+            _chatTransformHandlers.Add(handler);
         }
     }
 }
