@@ -23,7 +23,7 @@ namespace Content.Client.GameObjects.Components.Mobs
         private const float RestoreRateRamp = 0.1f;
 
         // The maximum magnitude of the kick applied to the camera at any point.
-        private const float KickMagnitudeMax = 5f;
+        private const float KickMagnitudeMax = 2f;
 
         private Vector2 _currentKick;
         private float _lastKickTime;
