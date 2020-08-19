@@ -6,13 +6,13 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: Clothing/Belt/id_cards.rsi
   - type: Icon
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: Clothing/Belt/id_cards.rsi
   - type: Clothing
     Slots:
     - idcard
-    sprite: Objects/Misc/id_cards.rsi
+    sprite: Clothing/Belt/id_cards.rsi
     HeldPrefix: default
   - type: Access
   - type: IdCard
