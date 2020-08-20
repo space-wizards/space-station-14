@@ -116,8 +116,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
                 "Map", // We aren't testing a map entity in this test
-                "MapGrid",
-                "BasicActor" // TODO: Unignore if https://github.com/space-wizards/RobustToolbox/pull/1242 is merged
+                "MapGrid"
             };
 
             var testEntity = @"
