@@ -43,6 +43,11 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// </summary>
         private const float TileTolerance = 0.8f;
 
+        /// <summary>
+        ///     How long to wait between checks (if necessary).
+        /// </summary>
+        private const float InRangeUnobstructedCooldown = 0.25f;
+
         private Dictionary<IEntity, IAiSteeringRequest> RunningAgents => _agentLists[_listIndex];
 
         // We'll cycle the running list every tick as all we're doing is getting a vector2 for the
@@ -277,7 +282,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     return SteeringStatus.Arrived;
                 }
 
-                steeringRequest.TimeUntilInteractionCheck = 0.25f;
+                steeringRequest.TimeUntilInteractionCheck = InRangeUnobstructedCooldown;
                 // Welp, we'll keep on moving.
             }
 
