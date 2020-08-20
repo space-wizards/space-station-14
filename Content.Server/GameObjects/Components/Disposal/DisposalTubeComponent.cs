@@ -44,7 +44,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var snapGrid = Owner.GetComponent<SnapGridComponent>();
             var tube = snapGrid
                 .GetInDir(nextDirection)
-                .Select(x => x.TryGetComponent(out IDisposalTubeComponent c) ? c : null)
+                .Select(x => x.TryGetComponent(out IDisposalTubeComponent? c) ? c : null)
                 .FirstOrDefault(x => x != null && x != this);
 
             if (tube == null)
@@ -153,7 +153,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
             {
-                if (!entity.TryGetComponent(out DisposalHolderComponent holder))
+                if (!entity.TryGetComponent(out DisposalHolderComponent? holder))
                 {
                     continue;
                 }
@@ -171,7 +171,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void UpdateVisualState()
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -187,7 +187,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void AnchoredChanged()
         {
-            if (!Owner.TryGetComponent(out CollidableComponent collidable))
+            if (!Owner.TryGetComponent(out CollidableComponent? collidable))
             {
                 return;
             }

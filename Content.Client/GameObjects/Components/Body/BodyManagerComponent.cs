@@ -33,7 +33,7 @@ namespace Content.Client.GameObjects.Components.Body
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
-            if (!Owner.TryGetComponent(out ISpriteComponent sprite))
+            if (!Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
             }
@@ -50,7 +50,7 @@ namespace Content.Client.GameObjects.Components.Body
 
                     if (!partRemoved.Dropped.HasValue ||
                         !_entityManager.TryGetEntity(partRemoved.Dropped.Value, out var entity) ||
-                        !entity.TryGetComponent(out ISpriteComponent droppedSprite))
+                        !entity.TryGetComponent(out ISpriteComponent? droppedSprite))
                     {
                         break;
                     }

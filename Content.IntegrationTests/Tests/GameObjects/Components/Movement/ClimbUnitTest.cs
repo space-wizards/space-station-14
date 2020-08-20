@@ -41,13 +41,13 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
 
                 // Test for climb components existing
                 // Players and tables should have these in their prototypes.
-                Assert.True(human.TryGetComponent(out climbing), "Human has no climbing");
-                Assert.True(table.TryGetComponent(out climbable), "Table has no climbable");
+                Assert.True(human.TryGetComponent(out climbing!), "Human has no climbing");
+                Assert.True(table.TryGetComponent(out climbable!), "Table has no climbable");
 
                 // Now let's make the player enter a climbing transitioning state.
                 climbing.IsClimbing = true;
                 climbing.TryMoveTo(human.Transform.WorldPosition, table.Transform.WorldPosition);
-                human.TryGetComponent(out ICollidableComponent body);
+                var body = human.GetComponent<ICollidableComponent>();
 
                 Assert.True(body.HasController<ClimbController>(), "Player has no ClimbController");
 
