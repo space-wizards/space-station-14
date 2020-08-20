@@ -50,10 +50,13 @@ namespace Content.Client.UserInterface
             gamemodeLabel.SetMarkup(Loc.GetString("Round of [color=white]{0}[/color] has ended.", gm));
             RoundEndSummaryTab.AddChild(gamemodeLabel);
 
-            //Gamemode Name
-            var roundendLabel = new RichTextLabel();
-            roundendLabel.SetMarkup(Loc.GetString(roundEnd));
-            RoundEndSummaryTab.AddChild(roundendLabel);
+            //Round end text
+            if (!string.IsNullOrEmpty(roundEnd))
+            {
+                var roundendLabel = new RichTextLabel();
+                roundendLabel.SetMarkup(Loc.GetString(roundEnd));
+                RoundEndSummaryTab.AddChild(roundendLabel);
+            }
 
             //Duration
             var roundTimeLabel = new RichTextLabel();
