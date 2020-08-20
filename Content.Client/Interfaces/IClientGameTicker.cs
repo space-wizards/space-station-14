@@ -9,6 +9,7 @@ namespace Content.Client.Interfaces
         bool IsGameStarted { get; }
         string ServerInfoBlob { get; }
         bool AreWeReady { get; }
+        bool DisallowedLateJoin { get; }
         DateTime StartTime { get; }
         bool Paused { get; }
         Dictionary<NetSessionId, bool> Ready { get; }
@@ -17,5 +18,6 @@ namespace Content.Client.Interfaces
         event Action InfoBlobUpdated;
         event Action LobbyStatusUpdated;
         event Action LobbyReadyUpdated;
+        event Action LobbyLateJoinStatusUpdated;
     }
 }

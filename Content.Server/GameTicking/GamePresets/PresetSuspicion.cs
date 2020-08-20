@@ -30,6 +30,9 @@ namespace Content.Server.GameTicking.GamePresets
         public int MinPlayers { get; set; } = 5;
         public int MinTraitors { get; set; } = 2;
         public int PlayersPerTraitor { get; set; } = 5;
+
+        public override bool DisallowLateJoin => true;
+
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";
 

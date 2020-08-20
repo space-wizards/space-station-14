@@ -101,6 +101,7 @@ namespace Content.Client.State
             _clientGameTicker.InfoBlobUpdated += UpdateLobbyUi;
             _clientGameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
             _clientGameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
+            _clientGameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
         public override void Shutdown()
@@ -109,6 +110,7 @@ namespace Content.Client.State
             _clientGameTicker.InfoBlobUpdated -= UpdateLobbyUi;
             _clientGameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
             _clientGameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+            _clientGameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
             _clientGameTicker.Ready.Clear();
 
@@ -173,6 +175,11 @@ namespace Content.Client.State
             UpdateLobbyUi();
         }
 
+        private void LobbyLateJoinStatusUpdated()
+        {
+            _lobby.ReadyButton.Disabled = _clientGameTicker.DisallowedLateJoin;
+        }
+
         private void UpdateLobbyUi()
         {
             if (_lobby == null)
@@ -191,6 +198,7 @@ namespace Content.Client.State
                 _lobby.StartTime.Text = "";
                 _lobby.ReadyButton.Text = Loc.GetString("Ready Up");
                 _lobby.ReadyButton.ToggleMode = true;
+                _lobby.ReadyButton.Disabled = false;
                 _lobby.ReadyButton.Pressed = _clientGameTicker.AreWeReady;
             }
 
