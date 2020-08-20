@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Robust.Shared.Interfaces.GameObjects;
@@ -16,16 +17,6 @@ namespace Content.Server.AI.Operators.Inventory
         {
             _owner = owner;
             _target = target;
-        }
-
-        public override bool TryStartup()
-        {
-            if (!base.TryStartup())
-            {
-                return true;
-            }
-            
-            return _target != null;
         }
 
         public override Outcome Execute(float frameTime)

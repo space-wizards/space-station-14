@@ -1,3 +1,4 @@
+#nullable enable
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Nutrition;
@@ -20,17 +21,7 @@ namespace Content.Server.AI.Operators.Nutrition
             _owner = owner;
             _target = target;
         }
-
-        public override bool TryStartup()
-        {
-            if (!base.TryStartup())
-            {
-                return true;
-            }
-
-            return _target != null;
-        }
-
+        
         public override Outcome Execute(float frameTime)
         {
             if (_interactionCooldown >= 0)
