@@ -323,7 +323,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
-                if (mob.TryGetComponent(out StunnableComponent stun))
+                if (mob != null && mob.TryGetComponent(out StunnableComponent stun))
                 {
                     stun.Stun(1);
                     Clean();

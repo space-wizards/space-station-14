@@ -290,6 +290,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
             var solidsDict = new Dictionary<string, int>();
             foreach(var item in _storage.ContainedEntities)
             {
+                if (item.Prototype == null)
+                {
+                    continue;
+                }
+
                 if(solidsDict.ContainsKey(item.Prototype.ID))
                 {
                     solidsDict[item.Prototype.ID]++;
@@ -416,6 +421,11 @@ namespace Content.Server.GameObjects.Components.Kitchen
                 {
                     foreach (var item in _storage.ContainedEntities)
                     {
+                        if (item.Prototype == null)
+                        {
+                            continue;
+                        }
+
                         if (item.Prototype.ID == recipeSolid.Key)
                         {
                             _storage.Remove(item);

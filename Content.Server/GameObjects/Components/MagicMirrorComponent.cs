@@ -46,6 +46,11 @@ namespace Content.Server.GameObjects.Components
 
         private static void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent looks))
             {
                 return;
