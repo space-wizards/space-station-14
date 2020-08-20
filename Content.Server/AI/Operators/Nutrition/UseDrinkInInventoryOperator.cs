@@ -38,7 +38,7 @@ namespace Content.Server.AI.Operators.Nutrition
                 return Outcome.Failed;
             }
 
-            DrinkComponent drinkComponent = null;
+            DrinkComponent? drinkComponent = null;
 
             foreach (var slot in handsComponent.ActivePriorityEnumerable())
             {
