@@ -25,7 +25,7 @@ namespace Content.Server.AI.Utility.Considerations
             
             // Previously we used a makeupvalue method although the geometric mean is less punishing for more considerations
             var considerationsCount = context.GetState<ConsiderationState>().GetValue();
-            var adjustedScore = MathF.Pow(score, considerationsCount);
+            var adjustedScore = MathF.Pow(score, 1 / (float) considerationsCount);
             return FloatMath.Clamp(adjustedScore, 0.0f, 1.0f);
         }
 
