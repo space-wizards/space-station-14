@@ -234,10 +234,11 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 // Arrival portal
                 var arrivalPortal = _serverEntityManager.SpawnEntity("Portal", targetGrid);
-                arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent);
-
-                // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.
-                arrivalComponent.TryConnectPortal(departurePortal);
+                if (arrivalPortal.TryGetComponent<ServerPortalComponent>(out var arrivalComponent))
+                {
+                    // Connect. TODO: If the OnUpdate in ServerPortalComponent is changed this may need to change as well.
+                    arrivalComponent.TryConnectPortal(departurePortal);
+                }
             }
             else
             {
