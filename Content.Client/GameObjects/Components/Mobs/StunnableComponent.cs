@@ -34,7 +34,7 @@ namespace Content.Client.GameObjects.Components.Mobs
             WalkModifierOverride = state.WalkModifierOverride;
             RunModifierOverride = state.RunModifierOverride;
 
-            if (Owner.TryGetComponent(out MovementSpeedModifierComponent movement))
+            if (Owner.TryGetComponent(out MovementSpeedModifierComponent? movement))
             {
                 movement.RefreshMovementSpeedModifiers();
             }

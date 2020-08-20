@@ -1,5 +1,8 @@
+using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.Interfaces.Chat;
 using Content.Shared.Roles;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Mobs.Roles
@@ -26,6 +29,19 @@ namespace Content.Server.Mobs.Roles
             var chat = IoCManager.Resolve<IChatManager>();
             chat.DispatchServerMessage(Mind.Session, $"You're a {Name}!");
             chat.DispatchServerMessage(Mind.Session, $"Objective: {Objective}");
+
+            var traitors = "";
+
+            foreach (var sus in IoCManager.Resolve<IComponentManager>().EntityQuery<SuspicionRoleComponent>())
+            {
+                if (!sus.IsTraitor()) continue;
+                if (traitors.Length > 0)
+                    traitors += $", {sus.Owner.Name}";
+                else
+                    traitors += sus.Owner.Name;
+            }
+            
+            chat.DispatchServerMessage(Mind.Session, $"The traitors are: {traitors}");
         }
     }
 }

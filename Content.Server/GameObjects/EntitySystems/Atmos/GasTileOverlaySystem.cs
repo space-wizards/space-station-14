@@ -270,7 +270,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
             {
                 var gridEntityId = _mapManager.GetGrid(gridId).GridEntityId;
 
-                if (!EntityManager.GetEntity(gridEntityId).TryGetComponent(out GridAtmosphereComponent gam))
+                if (!EntityManager.GetEntity(gridEntityId).TryGetComponent(out GridAtmosphereComponent? gam))
                 {
                     continue;
                 }

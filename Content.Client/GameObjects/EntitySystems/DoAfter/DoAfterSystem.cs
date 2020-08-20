@@ -67,7 +67,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
             Gui ??= new DoAfterGui();
             Gui.AttachedEntity = entity;
 
-            if (entity.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (entity.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 foreach (var (_, doAfter) in doAfterComponent.DoAfters)
                 {
@@ -87,7 +87,7 @@ namespace Content.Client.GameObjects.EntitySystems.DoAfter
                 return;
             }
 
-            if (!_player.TryGetComponent(out DoAfterComponent doAfterComponent))
+            if (!_player.TryGetComponent(out DoAfterComponent? doAfterComponent))
             {
                 return;
             }

@@ -94,6 +94,8 @@ namespace Content.Server.GameTicking
         [ViewVariables] private GameRunLevel _runLevel;
         [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
 
+        [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
+
         [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
 
         [ViewVariables] private bool _updateOnRoundEnd;
@@ -142,6 +144,7 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
             _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
+            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
 
@@ -285,6 +288,8 @@ namespace Content.Server.GameTicking
             // Time to start the preset.
             var preset = MakeGamePreset(profiles);
 
+            DisallowLateJoin |= preset.DisallowLateJoin;
+
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
                 SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
@@ -300,6 +305,13 @@ namespace Content.Server.GameTicking
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
             ReqWindowAttentionAll();
+            UpdateLateJoinStatus();
+        }
+
+        private void UpdateLateJoinStatus()
+        {
+            var msg = new MsgTickerLateJoinStatus(null) {Disallowed = DisallowLateJoin};
+            _netManager.ServerSendToAll(msg);
         }
 
         private void SendServerMessage(string message)
@@ -400,12 +412,12 @@ namespace Content.Server.GameTicking
 
         public bool HasGameRule(Type t)
         {
-            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+            if (t == null || !typeof(GameRule).IsAssignableFrom(t))
                 return false;
 
             foreach (var rule in _gameRules)
             {
-                if (rule.GetType().Equals(t))
+                if (rule.GetType().IsAssignableFrom(t))
                     return true;
             }
 
@@ -646,6 +658,7 @@ namespace Content.Server.GameTicking
 
             _spawnedPositions.Clear();
             _manifest.Clear();
+            DisallowLateJoin = false;
         }
 
         private void _preRoundSetup()
@@ -776,6 +789,12 @@ namespace Content.Server.GameTicking
             string jobId = null,
             bool lateJoin = true)
         {
+            if (lateJoin && DisallowLateJoin)
+            {
+                MakeObserve(session);
+                return;
+            }
+
             _playerJoinGame(session);
 
             var data = session.ContentData();

@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.EntitySystems
 
             var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
 
-            if (player.TryGetComponent(out VisibilityComponent playerVisibility))
+            if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
             {
                 var arrowVisibility = arrow.EnsureComponent<VisibilityComponent>();
                 arrowVisibility.Layer = playerVisibility.Layer;
