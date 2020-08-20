@@ -30,15 +30,19 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public const float StripDelay = 2f;
 
-        private InventoryComponent _inventoryComponent;
-        private HandsComponent _handsComponent;
-
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
             Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
             ui.TryGetBoundUserInterface(StrippingUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
+
+        [ViewVariables]
+        private InventoryComponent? InventoryComponent =>
+            Owner.TryGetComponent(out InventoryComponent inventory) ? inventory : null;
+
+        [ViewVariables]
+        private HandsComponent? HandsComponent => Owner.TryGetComponent(out HandsComponent hands) ? hands : null;
 
         public override void Initialize()
         {
@@ -49,10 +53,13 @@ namespace Content.Server.GameObjects.Components.GUI
                 UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
             }
 
-            _inventoryComponent = Owner.EnsureComponent<InventoryComponent>();
-            _handsComponent = Owner.EnsureComponent<HandsComponent>();
+            Owner.EnsureComponent<InventoryComponent>();
+            Owner.EnsureComponent<HandsComponent>();
 
-            _inventoryComponent.OnItemChanged += UpdateSubscribed;
+            if (InventoryComponent != null)
+            {
+                InventoryComponent.OnItemChanged += UpdateSubscribed;
+            }
 
             // Initial update.
             UpdateSubscribed();
@@ -89,9 +96,14 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<Slots, string>();
 
-            foreach (var slot in _inventoryComponent.Slots)
+            if (InventoryComponent == null)
             {
-                dictionary[slot] = _inventoryComponent.GetSlotItem(slot)?.Owner.Name ?? "None";
+                return dictionary;
+            }
+
+            foreach (var slot in InventoryComponent.Slots)
+            {
+                dictionary[slot] = InventoryComponent.GetSlotItem(slot)?.Owner.Name ?? "None";
             }
 
             return dictionary;
@@ -101,9 +113,14 @@ namespace Content.Server.GameObjects.Components.GUI
         {
             var dictionary = new Dictionary<string, string>();
 
-            foreach (var hand in _handsComponent.Hands)
+            if (HandsComponent == null)
             {
-                dictionary[hand] = _handsComponent.GetItem(hand)?.Owner.Name ?? "None";
+                return dictionary;
+            }
+
+            foreach (var hand in HandsComponent.Hands)
+            {
+                dictionary[hand] = HandsComponent.GetItem(hand)?.Owner.Name ?? "None";
             }
 
             return dictionary;
