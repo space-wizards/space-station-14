@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
 using Content.Server.Mobs.Roles;
@@ -50,7 +51,8 @@ namespace Content.Server.GameTicking.GameRules
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (playerSession.AttachedEntity == null
-                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable))
+                    || !playerSession.AttachedEntity.TryGetComponent(out IDamageableComponent damageable)
+                    || !playerSession.AttachedEntity.TryGetComponent(out SuspicionRoleComponent suspicionRole))
                 {
                     continue;
                 }
@@ -69,24 +71,46 @@ namespace Content.Server.GameTicking.GameRules
             if ((innocentsAlive + traitorsAlive) == 0)
             {
                 _chatManager.DispatchServerAnnouncement("Everybody is dead, it's a stalemate!");
-                EndRound();
+                EndRound(Victory.Stalemate);
             }
 
             else if (traitorsAlive == 0)
             {
                 _chatManager.DispatchServerAnnouncement("The traitors are dead! The innocents win.");
-                EndRound();
+                EndRound(Victory.Innocents);
             }
             else if (innocentsAlive == 0)
             {
                 _chatManager.DispatchServerAnnouncement("The innocents are dead! The traitors win.");
-                EndRound();
+                EndRound(Victory.Traitors);
             }
         }
 
-        private void EndRound()
+        private enum Victory
         {
-            _gameTicker.EndRound();
+            Stalemate,
+            Innocents,
+            Traitors
+        }
+
+        private void EndRound(Victory victory)
+        {
+            string text;
+
+            switch (victory)
+            {
+                case Victory.Innocents:
+                    text = "The innocents have won!";
+                    break;
+                case Victory.Traitors:
+                    text = "The traitors have won!";
+                    break;
+                default:
+                    text = "Nobody wins!";
+                    break;
+            }
+
+            _gameTicker.EndRound(text);
             _chatManager.DispatchServerAnnouncement($"Restarting in 10 seconds.");
             _checkTimerCancel.Cancel();
             Timer.Spawn(TimeSpan.FromSeconds(10), () => _gameTicker.RestartRound());
