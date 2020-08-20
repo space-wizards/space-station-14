@@ -412,7 +412,7 @@ namespace Content.Server.GameTicking
 
         public bool HasGameRule(Type t)
         {
-            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+            if (t == null || !typeof(GameRule).IsAssignableFrom(t))
                 return false;
 
             foreach (var rule in _gameRules)
