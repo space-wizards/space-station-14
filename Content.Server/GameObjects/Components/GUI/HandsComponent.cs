@@ -8,17 +8,19 @@ using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.Click;
 using Content.Server.Interfaces.GameObjects.Components.Interaction;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Health.BodySystem;
-using Content.Shared.Physics;
+using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.Physics.Pull;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
 using Robust.Server.GameObjects.EntitySystemMessages;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
+using Robust.Shared.GameObjects.Components.Transform;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -140,11 +142,11 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        public bool PutInHand(ItemComponent item)
+        public bool PutInHand(ItemComponent item, bool mobCheck = true)
         {
             foreach (var hand in ActivePriorityEnumerable())
             {
-                if (PutInHand(item, hand, false))
+                if (PutInHand(item, hand, false, mobCheck))
                 {
                     OnItemChanged?.Invoke();
 
@@ -155,10 +157,10 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool PutInHand(ItemComponent item, string index, bool fallback = true)
+        public bool PutInHand(ItemComponent item, string index, bool fallback = true, bool mobChecks = true)
         {
             var hand = GetHand(index);
-            if (!CanPutInHand(item, index) || hand == null)
+            if (!CanPutInHand(item, index, mobChecks) || hand == null)
             {
                 return fallback && PutInHand(item);
             }
@@ -176,19 +178,23 @@ namespace Content.Server.GameObjects.Components.GUI
             return success;
         }
 
-        public void PutInHandOrDrop(ItemComponent item)
+        public void PutInHandOrDrop(ItemComponent item, bool mobCheck = true)
         {
-            if (!PutInHand(item))
+            if (!PutInHand(item, mobCheck))
             {
                 item.Owner.Transform.GridPosition = Owner.Transform.GridPosition;
             }
         }
 
-        public bool CanPutInHand(ItemComponent item)
+        public bool CanPutInHand(ItemComponent item, bool mobCheck = true)
         {
+            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+                return false;
+
             foreach (var handName in ActivePriorityEnumerable())
             {
-                if (CanPutInHand(item, handName))
+                // We already did a mobCheck, so let's not waste cycles.
+                if (CanPutInHand(item, handName, false))
                 {
                     return true;
                 }
@@ -197,8 +203,11 @@ namespace Content.Server.GameObjects.Components.GUI
             return false;
         }
 
-        public bool CanPutInHand(ItemComponent item, string index)
+        public bool CanPutInHand(ItemComponent item, string index, bool mobCheck = true)
         {
+            if (mobCheck && !ActionBlockerSystem.CanPickup(Owner))
+                return false;
+
             return GetHand(index)?.Container.CanInsert(item.Owner) == true;
         }
 
@@ -284,17 +293,17 @@ namespace Content.Server.GameObjects.Components.GUI
             return Drop(slot, coords, doMobChecks);
         }
 
-        public bool Drop(string slot, bool doMobChecks = true)
+        public bool Drop(string slot, bool mobChecks = true)
         {
             var hand = GetHand(slot);
-            if (!CanDrop(slot) || hand?.Entity == null)
+            if (!CanDrop(slot, mobChecks) || hand?.Entity == null)
             {
                 return false;
             }
 
             var item = hand.Entity.GetComponent<ItemComponent>();
 
-            if (!DroppedInteraction(item, doMobChecks))
+            if (!DroppedInteraction(item, mobChecks))
                 return false;
 
             if (!hand.Container.Remove(hand.Entity))
@@ -321,7 +330,7 @@ namespace Content.Server.GameObjects.Components.GUI
             return true;
         }
 
-        public bool Drop(IEntity entity, bool doMobChecks = true)
+        public bool Drop(IEntity entity, bool mobChecks = true)
         {
             if (entity == null)
             {
@@ -333,7 +342,7 @@ namespace Content.Server.GameObjects.Components.GUI
                 throw new ArgumentException("Entity must be held in one of our hands.", nameof(entity));
             }
 
-            return Drop(slot, doMobChecks);
+            return Drop(slot, mobChecks);
         }
 
         public bool Drop(string slot, BaseContainer targetContainer, bool doMobChecks = true)
@@ -409,13 +418,15 @@ namespace Content.Server.GameObjects.Components.GUI
         /// <returns>
         ///     True if there is an item in the slot and it can be dropped, false otherwise.
         /// </returns>
-        public bool CanDrop(string name)
+        public bool CanDrop(string name, bool mobCheck = true)
         {
             var hand = GetHand(name);
-            if (hand?.Entity == null)
-            {
+
+            if (mobCheck && !ActionBlockerSystem.CanDrop(Owner))
                 return false;
-            }
+
+            if (hand?.Entity == null)
+                return false;
 
             return hand.Container.CanRemove(hand.Entity);
         }
@@ -537,15 +548,9 @@ namespace Content.Server.GameObjects.Components.GUI
                 return;
             }
 
-            var isOwnerContained = ContainerHelpers.TryGetContainer(Owner, out var ownerContainer);
-            var isPullableContained = ContainerHelpers.TryGetContainer(pullable.Owner, out var pullableContainer);
-
-            if (isOwnerContained || isPullableContained)
+            if (!Owner.IsInSameOrNoContainer(pullable.Owner))
             {
-                if (ownerContainer != pullableContainer)
-                {
-                    return;
-                }
+                return;
             }
 
             if (IsPulling)
@@ -554,10 +559,8 @@ namespace Content.Server.GameObjects.Components.GUI
             }
 
             PulledObject = pullable.Owner.GetComponent<ICollidableComponent>();
-            var controller = PulledObject!.EnsureController<PullController>();
-            controller!.StartPull(Owner.GetComponent<ICollidableComponent>());
-
-            AddPullingStatuses();
+            var controller = PulledObject.EnsureController<PullController>();
+            controller.StartPull(Owner.GetComponent<ICollidableComponent>());
         }
 
         public void MovePulledObject(GridCoordinates puller, GridCoordinates to)
@@ -566,6 +569,46 @@ namespace Content.Server.GameObjects.Components.GUI
                 PulledObject.TryGetController(out PullController controller))
             {
                 controller.TryMoveTo(puller, to);
+            }
+        }
+
+        private void MoveEvent(MoveEvent moveEvent)
+        {
+            if (moveEvent.Sender != Owner)
+            {
+                return;
+            }
+
+            if (!IsPulling)
+            {
+                return;
+            }
+
+            PulledObject!.WakeBody();
+        }
+
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
+        {
+            base.HandleMessage(message, component);
+
+            if (!(message is PullMessage pullMessage) ||
+                pullMessage.Puller.Owner != Owner)
+            {
+                return;
+            }
+
+            switch (message)
+            {
+                case PullStartedMessage msg:
+                    Owner.EntityManager.EventBus.SubscribeEvent<MoveEvent>(EventSource.Local, this, MoveEvent);
+
+                    AddPullingStatuses(msg.Pulled.Owner);
+                    break;
+                case PullStoppedMessage msg:
+                    Owner.EntityManager.EventBus.UnsubscribeEvent<MoveEvent>(EventSource.Local, this);
+
+                    RemovePullingStatuses(msg.Pulled.Owner);
+                    break;
             }
         }
 
@@ -668,7 +711,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
                 Dirty();
 
-                if (!message.Entity.TryGetComponent(out ICollidableComponent collidable))
+                if (!message.Entity.TryGetComponent(out ICollidableComponent? collidable))
                 {
                     return;
                 }
@@ -679,40 +722,32 @@ namespace Content.Server.GameObjects.Components.GUI
             }
         }
 
-        private void AddPullingStatuses()
+        private void AddPullingStatuses(IEntity pulled)
         {
-            if (PulledObject?.Owner != null &&
-                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
             {
                 pulledStatus.ChangeStatusEffectIcon(StatusEffect.Pulled,
                     "/Textures/Interface/StatusEffects/Pull/pulled.png");
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
             {
                 ownerStatus.ChangeStatusEffectIcon(StatusEffect.Pulling,
                     "/Textures/Interface/StatusEffects/Pull/pulling.png");
             }
         }
 
-        private void RemovePullingStatuses()
+        private void RemovePullingStatuses(IEntity pulled)
         {
-            if (PulledObject?.Owner != null &&
-                PulledObject.Owner.TryGetComponent(out ServerStatusEffectsComponent pulledStatus))
+            if (pulled.TryGetComponent(out ServerStatusEffectsComponent? pulledStatus))
             {
                 pulledStatus.RemoveStatusEffect(StatusEffect.Pulled);
             }
 
-            if (Owner.TryGetComponent(out ServerStatusEffectsComponent ownerStatus))
+            if (Owner.TryGetComponent(out ServerStatusEffectsComponent? ownerStatus))
             {
                 ownerStatus.RemoveStatusEffect(StatusEffect.Pulling);
             }
-        }
-
-        public override void StopPull()
-        {
-            RemovePullingStatuses();
-            base.StopPull();
         }
 
         void IBodyPartAdded.BodyPartAdded(BodyPartAddedEventArgs eventArgs)

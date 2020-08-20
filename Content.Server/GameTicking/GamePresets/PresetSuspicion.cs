@@ -10,10 +10,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameObjects.Components.Suspicion;
 using Content.Shared.Roles;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
-
 
 namespace Content.Server.GameTicking.GamePresets
 {
@@ -29,6 +30,9 @@ namespace Content.Server.GameTicking.GamePresets
         public int MinPlayers { get; set; } = 5;
         public int MinTraitors { get; set; } = 2;
         public int PlayersPerTraitor { get; set; } = 5;
+
+        public override bool DisallowLateJoin => true;
+
         private static string TraitorID = "SuspicionTraitor";
         private static string InnocentID = "SuspicionInnocent";
 
@@ -37,6 +41,12 @@ namespace Content.Server.GameTicking.GamePresets
             if (!force && readyPlayers.Count < MinPlayers)
             {
                 _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {readyPlayers.Count} players readied up out of {MinPlayers} needed.");
+                return false;
+            }
+
+            if (readyPlayers.Count == 0)
+            {
+                _chatManager.DispatchServerAnnouncement($"No players readied up! Can't start Suspicion.");
                 return false;
             }
 
@@ -54,10 +64,12 @@ namespace Content.Server.GameTicking.GamePresets
                 {
                     prefList.Add(player);
                 }
+
+                player.AttachedEntity?.EnsureComponent<SuspicionRoleComponent>();
             }
 
-            var numTraitors = MathHelper.Clamp(readyPlayers.Count % PlayersPerTraitor,
-                                               MinTraitors, readyPlayers.Count);
+            var numTraitors = FloatMath.Clamp(readyPlayers.Count / PlayersPerTraitor,
+                MinTraitors, readyPlayers.Count);
 
             for (var i = 0; i < numTraitors; i++)
             {

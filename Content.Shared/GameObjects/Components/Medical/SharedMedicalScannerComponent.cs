@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components.UserInterface;
 using Robust.Shared.Serialization;
@@ -13,18 +14,26 @@ namespace Content.Shared.GameObjects.Components.Medical
         [Serializable, NetSerializable]
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly int CurrentHealth;
-            public readonly int MaxHealth;
-            public readonly Dictionary<string, int> DamageDictionary;
+            public readonly EntityUid? Entity;
+            public readonly Dictionary<DamageClass, int> DamageClasses;
+            public readonly Dictionary<DamageType, int> DamageTypes;
+            public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
-                int currentHealth,
-                int maxHealth,
-                Dictionary<string, int> damageDictionary)
+                EntityUid? entity,
+                Dictionary<DamageClass, int> damageClasses,
+                Dictionary<DamageType, int> damageTypes,
+                bool isScanned)
             {
-                CurrentHealth = currentHealth;
-                MaxHealth = maxHealth;
-                DamageDictionary = damageDictionary;
+                Entity = entity;
+                DamageClasses = damageClasses;
+                DamageTypes = damageTypes;
+                IsScanned = isScanned;
+            }
+
+            public bool HasDamage()
+            {
+                return DamageClasses.Count > 0 || DamageTypes.Count > 0;
             }
         }
 
@@ -50,5 +59,24 @@ namespace Content.Shared.GameObjects.Components.Medical
             Green,
             Yellow,
         }
+
+        [Serializable, NetSerializable]
+        public enum UiButton
+        {
+            ScanDNA,
+        }
+
+        [Serializable, NetSerializable]
+        public class UiButtonPressedMessage : BoundUserInterfaceMessage
+        {
+            public readonly UiButton Button;
+
+            public UiButtonPressedMessage(UiButton button)
+            {
+                Button = button;
+            }
+        }
+
+
     }
 }

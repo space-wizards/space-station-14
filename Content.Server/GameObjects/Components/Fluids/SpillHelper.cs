@@ -63,7 +63,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
             foreach (var spillEntity in entityManager.GetEntitiesAt(spillTileMapGrid.ParentMapId, spillGridCoords.Position))
             {
-                if (!spillEntity.TryGetComponent(out PuddleComponent puddleComponent))
+                if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent))
                 {
                     continue;
                 }

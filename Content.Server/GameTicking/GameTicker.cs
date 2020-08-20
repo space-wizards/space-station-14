@@ -13,6 +13,7 @@ using Content.Server.GameObjects.Components.PDA;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
+using Content.Server.GameObjects.EntitySystems.Atmos;
 using Content.Server.GameObjects.EntitySystems.StationEvents;
 using Content.Server.GameTicking.GamePresets;
 using Content.Server.Interfaces;
@@ -24,6 +25,7 @@ using Content.Server.Players;
 using Content.Shared;
 using Content.Shared.Chat;
 using Content.Shared.GameObjects.Components.PDA;
+using Content.Shared.Network.NetMessages;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Prometheus;
@@ -47,6 +49,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -90,6 +93,8 @@ namespace Content.Server.GameTicking
         private DateTime _roundStartTimeUtc;
         [ViewVariables] private GameRunLevel _runLevel;
         [ViewVariables(VVAccess.ReadWrite)] private GridCoordinates _spawnPoint;
+
+        [ViewVariables] private bool DisallowLateJoin { get; set; } = false;
 
         [ViewVariables] private bool LobbyEnabled => _configurationManager.GetCVar<bool>("game.lobbyenabled");
 
@@ -136,7 +141,10 @@ namespace Content.Server.GameTicking
             _netManager.RegisterNetMessage<MsgTickerLobbyStatus>(nameof(MsgTickerLobbyStatus));
             _netManager.RegisterNetMessage<MsgTickerLobbyInfo>(nameof(MsgTickerLobbyInfo));
             _netManager.RegisterNetMessage<MsgTickerLobbyCountdown>(nameof(MsgTickerLobbyCountdown));
+            _netManager.RegisterNetMessage<MsgTickerLobbyReady>(nameof(MsgTickerLobbyReady));
             _netManager.RegisterNetMessage<MsgRoundEndMessage>(nameof(MsgRoundEndMessage));
+            _netManager.RegisterNetMessage<MsgRequestWindowAttention>(nameof(MsgRequestWindowAttention));
+            _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus));
 
             SetStartPreset(_configurationManager.GetCVar<string>("game.defaultpreset"));
 
@@ -206,6 +214,16 @@ namespace Content.Server.GameTicking
                     _roundStartTimeUtc = DateTime.UtcNow + LobbyDuration;
 
                 _sendStatusToAll();
+
+                ReqWindowAttentionAll();
+            }
+        }
+
+        private void ReqWindowAttentionAll()
+        {
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                player.RequestWindowAttention();
             }
         }
 
@@ -270,6 +288,8 @@ namespace Content.Server.GameTicking
             // Time to start the preset.
             var preset = MakeGamePreset(profiles);
 
+            DisallowLateJoin |= preset.DisallowLateJoin;
+
             if (!preset.Start(assignedJobs.Keys.ToList(), force))
             {
                 SetStartPreset(_configurationManager.GetCVar<string>("game.fallbackpreset"));
@@ -280,10 +300,21 @@ namespace Content.Server.GameTicking
                 {
                     throw new ApplicationException("Fallback preset failed to start!");
                 }
+
+                DisallowLateJoin = false;
+                DisallowLateJoin |= newPreset.DisallowLateJoin;
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
             _sendStatusToAll();
+            ReqWindowAttentionAll();
+            UpdateLateJoinStatus();
+        }
+
+        private void UpdateLateJoinStatus()
+        {
+            var msg = new MsgTickerLateJoinStatus(null) {Disallowed = DisallowLateJoin};
+            _netManager.ServerSendToAll(msg);
         }
 
         private void SendServerMessage(string message)
@@ -298,7 +329,7 @@ namespace Content.Server.GameTicking
             (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.SessionId.Username))
             .SelectedCharacter;
 
-        public void EndRound()
+        public void EndRound(string roundEndText = "")
         {
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
             Logger.InfoS("ticker", "Ending round!");
@@ -308,6 +339,7 @@ namespace Content.Server.GameTicking
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
             roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
+            roundEndMessage.RoundEndText = roundEndText;
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
@@ -367,6 +399,7 @@ namespace Content.Server.GameTicking
 
             _playersInLobby[player] = ready;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
+            _netManager.ServerSendToAll(GetReadySingle(player, ready));
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -383,12 +416,12 @@ namespace Content.Server.GameTicking
 
         public bool HasGameRule(Type t)
         {
-            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+            if (t == null || !typeof(GameRule).IsAssignableFrom(t))
                 return false;
 
             foreach (var rule in _gameRules)
             {
-                if (rule.GetType().Equals(t))
+                if (rule.GetType().IsAssignableFrom(t))
                     return true;
             }
 
@@ -621,6 +654,7 @@ namespace Content.Server.GameTicking
                 _playerJoinLobby(player);
             }
 
+            EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
             EntitySystem.Get<WireHackingSystem>().ResetLayouts();
@@ -628,6 +662,7 @@ namespace Content.Server.GameTicking
 
             _spawnedPositions.Clear();
             _manifest.Clear();
+            DisallowLateJoin = false;
         }
 
         private void _preRoundSetup()
@@ -758,6 +793,12 @@ namespace Content.Server.GameTicking
             string jobId = null,
             bool lateJoin = true)
         {
+            if (lateJoin && DisallowLateJoin)
+            {
+                MakeObserve(session);
+                return;
+            }
+
             _playerJoinGame(session);
 
             var data = session.ContentData();
@@ -856,6 +897,7 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetReadyStatus(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -865,6 +907,26 @@ namespace Content.Server.GameTicking
             if (_playersInLobby.ContainsKey(session)) _playersInLobby.Remove(session);
 
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
+        }
+
+        private MsgTickerLobbyReady GetReadyStatus()
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
+            foreach (var player in _playersInLobby.Keys)
+            {
+                _playersInLobby.TryGetValue(player, out var ready);
+                msg.PlayerReady.Add(player.SessionId, ready);
+            }
+            return msg;
+        }
+
+        private MsgTickerLobbyReady GetReadySingle(IPlayerSession player, bool ready)
+        {
+            var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
+            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
+            msg.PlayerReady.Add(player.SessionId, ready);
+            return msg;
         }
 
         private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)

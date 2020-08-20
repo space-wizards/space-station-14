@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.GameObjects.Components.Movement;
 using Content.Shared.Physics;
+using Content.Shared.Physics.Pull;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
@@ -178,7 +179,7 @@ namespace Content.Shared.GameObjects.EntitySystems
         }
 
         private static bool TryGetAttachedComponent<T>(ICommonSession? session, [MaybeNullWhen(false)] out T component)
-            where T : IComponent
+            where T : class, IComponent
         {
             component = default;
 
@@ -187,7 +188,7 @@ namespace Content.Shared.GameObjects.EntitySystems
             if (ent == null || !ent.IsValid())
                 return false;
 
-            if (!ent.TryGetComponent(out T comp))
+            if (!ent.TryGetComponent(out T? comp))
                 return false;
 
             component = comp;

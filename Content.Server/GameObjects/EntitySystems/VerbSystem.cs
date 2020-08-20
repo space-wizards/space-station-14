@@ -113,8 +113,17 @@ namespace Content.Server.GameObjects.EntitySystems
                 if (verb.RequireInteractionRange && !VerbUtility.InVerbUseRange(userEntity, entity))
                     continue;
 
-                if (verb.BlockedByContainers && !userEntity.IsInSameOrNoContainer(entity))
-                    continue;
+                if (verb.BlockedByContainers)
+                {
+                    if (!userEntity.IsInSameOrNoContainer(entity))
+                    {
+                        if (!ContainerHelpers.TryGetContainer(entity, out var container) ||
+                            container.Owner != userEntity)
+                        {
+                            continue;
+                        }
+                    }
+                }
 
                 var verbData = verb.GetData(userEntity, component);
                 if (verbData.IsInvisible)

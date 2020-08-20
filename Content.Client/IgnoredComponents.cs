@@ -96,7 +96,6 @@
             "BarSign",
             "DroppedBodyPart",
             "DroppedMechanism",
-            "BodyManager",
             "SolarPanel",
             "BodyScanner",
             "Stunbaton",
@@ -143,6 +142,8 @@
             "Listening",
             "Radio",
             "DisposalHolder",
+            "DisposalTagger",
+            "DisposalRouter",
             "DisposalTransit",
             "DisposalEntry",
             "DisposalJunction",
@@ -157,6 +158,10 @@
             "Vapor",
             "DamageOnHighSpeedImpact",
             "Barotrauma",
+            "GasSprayer",
+            "GasVapor",
+            "MobStateManager",
+            "Metabolism",
         };
     }
 }

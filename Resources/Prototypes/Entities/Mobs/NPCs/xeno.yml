@@ -17,9 +17,9 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-      sprite: Mobs/Species/xeno_hunter.rsi
+      sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
   - type: Icon
-    sprite: Mobs/Species/xeno_hunter.rsi
+    sprite: Mobs/Aliens/Xenos/xeno_hunter.rsi
     state: standing
   - type: Clickable
   - type: Physics
@@ -36,14 +36,12 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Species
-    Template: Human
-    HeatResistance: 323
   - type: BodyManager
-    BaseTemplate: bodyTemplate.Humanoid
-    BasePreset: bodyPreset.BasicHuman
+    baseTemplate: bodyTemplate.Humanoid
+    basePreset: bodyPreset.BasicHuman
+  - type: Metabolism
+  - type: MobStateManager
   - type: HeatResistance
-  - type: Damageable
   - type: CombatMode
   - type: Teleportable
   - type: FootstepSound
@@ -52,7 +50,7 @@
     range: 1.5
     arcwidth: 0
     arc: claw
-    damage: 90
+    damage: 10
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

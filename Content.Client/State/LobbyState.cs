@@ -99,14 +99,20 @@ namespace Content.Client.State
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated += UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated += UpdateLobbyUi;
+            _clientGameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
+            _clientGameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
+            _clientGameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
         public override void Shutdown()
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
             _clientGameTicker.InfoBlobUpdated -= UpdateLobbyUi;
-            _clientGameTicker.LobbyStatusUpdated -= UpdateLobbyUi;
+            _clientGameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
+            _clientGameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+            _clientGameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
+
+            _clientGameTicker.Ready.Clear();
 
             _lobby.Dispose();
             _characterSetup.Dispose();
@@ -149,7 +155,30 @@ namespace Content.Client.State
             _lobby.StartTime.Text = Loc.GetString("Round Starts In: {0}", text);
         }
 
-        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e) => UpdatePlayerList();
+        private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
+        {
+            // Remove disconnected sessions from the Ready Dict
+            foreach (var p in _clientGameTicker.Ready)
+            {
+                if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
+                {
+                    _clientGameTicker.Ready.Remove(p.Key);
+                }
+            }
+            UpdatePlayerList();
+        }
+        private void LobbyReadyUpdated() => UpdatePlayerList();
+
+        private void LobbyStatusUpdated()
+        {
+            UpdatePlayerList();
+            UpdateLobbyUi();
+        }
+
+        private void LobbyLateJoinStatusUpdated()
+        {
+            _lobby.ReadyButton.Disabled = _clientGameTicker.DisallowedLateJoin;
+        }
 
         private void UpdateLobbyUi()
         {
@@ -169,6 +198,7 @@ namespace Content.Client.State
                 _lobby.StartTime.Text = "";
                 _lobby.ReadyButton.Text = Loc.GetString("Ready Up");
                 _lobby.ReadyButton.ToggleMode = true;
+                _lobby.ReadyButton.Disabled = false;
                 _lobby.ReadyButton.Pressed = _clientGameTicker.AreWeReady;
             }
 
@@ -178,10 +208,24 @@ namespace Content.Client.State
         private void UpdatePlayerList()
         {
             _lobby.OnlinePlayerItemList.Clear();
+            _lobby.PlayerReadyList.Clear();
 
             foreach (var session in _playerManager.Sessions.OrderBy(s => s.Name))
             {
                 _lobby.OnlinePlayerItemList.AddItem(session.Name);
+
+                var readyState = "";
+                // Don't show ready state if we're ingame
+                if (!_clientGameTicker.IsGameStarted)
+                {
+                    var ready = false;
+                    if (session.SessionId == _playerManager.LocalPlayer.SessionId)
+                        ready = _clientGameTicker.AreWeReady;
+                    else
+                        _clientGameTicker.Ready.TryGetValue(session.SessionId, out ready);
+                    readyState = ready ? Loc.GetString("Ready") : Loc.GetString("Not Ready");
+                }
+                _lobby.PlayerReadyList.AddItem(readyState, null, false);
             }
         }
 
@@ -193,6 +237,7 @@ namespace Content.Client.State
             }
 
             _console.ProcessCommand($"toggleready {newReady}");
+            UpdatePlayerList();
         }
     }
 }

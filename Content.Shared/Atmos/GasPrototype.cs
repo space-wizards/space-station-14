@@ -46,23 +46,6 @@ namespace Content.Shared.Atmos
         public string GasOverlaySprite { get; set; }
 
         /// <summary>
-        ///     Sprite specifier for the gas overlay.
-        /// </summary>
-        public SpriteSpecifier GasOverlay
-        {
-            get
-            {
-                if(string.IsNullOrEmpty(GasOverlaySprite) && !string.IsNullOrEmpty(GasOverlayTexture))
-                    return new SpriteSpecifier.Texture(new ResourcePath(GasOverlayTexture));
-
-                if(!string.IsNullOrEmpty(GasOverlaySprite) && !string.IsNullOrEmpty(GasOverlayState))
-                    return new SpriteSpecifier.Rsi(new ResourcePath(GasOverlaySprite), GasOverlayState);
-
-                return null;
-            }
-        }
-
-        /// <summary>
         /// Path to the tile overlay used when this gas appears visible.
         /// </summary>
         public string OverlayPath { get; private set; }

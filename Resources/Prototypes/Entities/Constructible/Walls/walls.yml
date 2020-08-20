@@ -25,10 +25,9 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 500
+    spawnOnDestroy: Girder
   - type: Occluder
     sizeX: 32
     sizeY: 32
@@ -50,8 +49,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/brick.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: brick
@@ -66,8 +65,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/clock.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: clock
@@ -82,8 +81,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/clown.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: clown
@@ -99,8 +98,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/cult.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: cult
@@ -115,8 +114,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/debug.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: debug
@@ -131,8 +130,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/diamond.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: diamond
@@ -148,8 +147,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/gold.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: gold
@@ -164,8 +163,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/ice.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: ice
@@ -180,8 +179,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/metal.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: metal
@@ -196,8 +195,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/plasma.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: plasma
@@ -212,8 +211,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/plastic.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: plastic
@@ -230,8 +229,8 @@
     sprite: Constructible/Structures/Walls/solid.rsi
     state: rgeneric
   - type: Destructible
-    thresholdvalue: 300
-    spawnondestroy: Girder
+    maxHP: 600
+    spawnOnDestroy: Girder
   - type: ReinforcedWall
     key: walls
     base: solid
@@ -248,8 +247,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/riveted.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 1000
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: riveted
@@ -264,8 +263,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/sandstone.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: sandstone
@@ -280,8 +279,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/silver.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: silver
@@ -297,9 +296,9 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/solid.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
-    destroysound: /Audio/Effects/metalbreak.ogg
+    maxHP: 300
+    spawnOnDestroy: Girder
+    destroySound: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: solid
@@ -314,8 +313,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/uranium.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: uranium
@@ -330,8 +329,8 @@
   - type: Icon
     sprite: Constructible/Structures/Walls/wood.rsi
   - type: Destructible
-    thresholdvalue: 100
-    spawnondestroy: Girder
+    maxHP: 300
+    spawnOnDestroy: Girder
   - type: IconSmooth
     key: walls
     base: wood

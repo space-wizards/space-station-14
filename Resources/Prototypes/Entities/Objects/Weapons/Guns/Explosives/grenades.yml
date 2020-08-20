@@ -21,9 +21,8 @@
     heavyImpactRange: 2
     lightImpactRange: 4
     flashRange: 7
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 10
+    maxHP: 10
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -48,9 +47,8 @@
   - type: OnUseTimerTrigger
     delay: 3.5
   - type: FlashExplosive
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 10
+    maxHP: 10
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -79,9 +77,8 @@
     heavyImpactRange: 5
     lightImpactRange: 7
     flashRange: 10
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 10
+    maxHP: 10
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -109,7 +106,6 @@
     devastationRange: 25
     heavyImpactRange: 25
     flashRange: 50
-  - type: Damageable
   - type: Destructible
     thresholdvalue: 50
   - type: Appearance

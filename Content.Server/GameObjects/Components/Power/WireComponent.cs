@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Interactable;
+﻿using System.Threading.Tasks;
+using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.GameObjects.Components.Interactable;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -34,10 +35,10 @@ namespace Content.Server.GameObjects.Components.Power
             serializer.DataField(ref _wireType, "wireType", WireType.HighVoltage);
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent(out ToolComponent tool)) return false;
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Cutting)) return false;
+            if (!await tool.UseTool(eventArgs.User, Owner, 0.25f, ToolQuality.Cutting)) return false;
 
             Owner.Delete();
             var droppedEnt = Owner.EntityManager.SpawnEntity(_wireDroppedOnCutPrototype, eventArgs.ClickLocation);

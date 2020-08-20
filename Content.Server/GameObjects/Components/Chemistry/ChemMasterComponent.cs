@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
@@ -376,7 +377,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         /// <returns></returns>
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs args)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
             if (!args.User.TryGetComponent(out IHandsComponent hands))
             {

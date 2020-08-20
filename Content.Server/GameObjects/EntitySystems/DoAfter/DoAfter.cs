@@ -5,6 +5,7 @@ using Content.Server.GameObjects.Components.Damage;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -53,7 +54,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
             // (or if there is no item there we need to keep it free).
-            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHand;
                 _activeItem = handsComponent.GetActiveHand;
@@ -63,7 +64,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             AsTask = Tcs.Task;
         }
 
-        public void HandleDamage(object? sender, DamageEventArgs eventArgs)
+        public void HandleDamage(HealthChangedEventArgs args)
         {
             _tookDamage = true;
         }
@@ -125,7 +126,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
             }
 
             if (EventArgs.BreakOnStun &&
-                EventArgs.User.TryGetComponent(out StunnableComponent stunnableComponent) &&
+                EventArgs.User.TryGetComponent(out StunnableComponent? stunnableComponent) &&
                 stunnableComponent.Stunned)
             {
                 return true;
@@ -133,7 +134,7 @@ namespace Content.Server.GameObjects.EntitySystems.DoAfter
 
             if (EventArgs.NeedHand)
             {
-                if (!EventArgs.User.TryGetComponent(out HandsComponent handsComponent))
+                if (!EventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
                 {
                     // If we had a hand but no longer have it that's still a paddlin'
                     if (_activeHand != null)
