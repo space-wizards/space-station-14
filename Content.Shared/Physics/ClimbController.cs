@@ -50,6 +50,8 @@ namespace Content.Shared.Physics
                 return;
             }
 
+            ControlledComponent.WakeBody();
+
             if ((ControlledComponent.Owner.Transform.WorldPosition - _lastKnownPosition).Length <= 0.05f)
             {
                 _numTicksBlocked++;
@@ -61,7 +63,7 @@ namespace Content.Shared.Physics
 
             _lastKnownPosition = ControlledComponent.Owner.Transform.WorldPosition;
 
-            if ((ControlledComponent.Owner.Transform.WorldPosition - _movingTo.Value).Length <= 0.05f)
+            if ((ControlledComponent.Owner.Transform.WorldPosition - _movingTo.Value).Length <= 0.1f) 
             {
                 _movingTo = null;
             }
