@@ -1,4 +1,5 @@
-﻿using Content.Server.GameTicking;
+﻿#nullable enable
+using Content.Server.GameTicking;
 using Content.Server.Interfaces.GameTicking;
 using Robust.Server.Interfaces.Console;
 using Robust.Server.Interfaces.Player;
