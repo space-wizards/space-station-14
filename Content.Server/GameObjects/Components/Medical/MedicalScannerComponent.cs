@@ -34,18 +34,18 @@ namespace Content.Server.GameObjects.Components.Medical
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(MedicalScannerUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         [ViewVariables]
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void Initialize()
         {
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Medical
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent damageable) ||
+            if (!body.TryGetComponent(out IDamageableComponent? damageable) ||
                 damageable.CurrentDamageState == DamageState.Dead)
             {
                 return EmptyUIState;
@@ -135,7 +135,7 @@ namespace Content.Server.GameObjects.Components.Medical
 
         public void Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

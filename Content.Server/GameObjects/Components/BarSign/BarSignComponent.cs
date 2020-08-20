@@ -41,9 +41,9 @@ namespace Content.Server.GameObjects.Components.BarSign
         private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
-        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent sprite) ? sprite : null;
+        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent? sprite) ? sprite : null;
 
         private void UpdateSignInfo()
         {

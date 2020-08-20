@@ -50,17 +50,17 @@ namespace Content.Server.GameObjects.Components.PDA
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(PDAUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
-        private PointLightComponent? PdaLight => Owner.TryGetComponent(out PointLightComponent light) ? light : null;
+        private PointLightComponent? PdaLight => Owner.TryGetComponent(out PointLightComponent? light) ? light : null;
 
         [ViewVariables]
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public PDAComponent()
         {

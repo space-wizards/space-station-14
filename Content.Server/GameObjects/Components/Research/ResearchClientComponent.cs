@@ -21,7 +21,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         // TODO: Create GUI for changing RD server.
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(ResearchClientUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
 
             OpenUserInterface(actor.playerSession);

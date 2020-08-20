@@ -49,17 +49,17 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(ApcUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         [ViewVariables]
-        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent battery) ? battery : null;
+        public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? battery) ? battery : null;
 
         public override void Initialize()
         {
@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
                 return ApcChargeState.Full;
             }
 
-            if (!Owner.TryGetComponent(out PowerConsumerComponent consumer))
+            if (!Owner.TryGetComponent(out PowerConsumerComponent? consumer))
             {
                 return ApcChargeState.Full;
             }
@@ -155,7 +155,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         private ApcExternalPowerState CalcExtPowerState()
         {
-            if (!Owner.TryGetComponent(out BatteryStorageComponent batteryStorage))
+            if (!Owner.TryGetComponent(out BatteryStorageComponent? batteryStorage))
             {
                 return ApcExternalPowerState.None;
             }
@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

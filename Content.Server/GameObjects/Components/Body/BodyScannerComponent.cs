@@ -19,20 +19,20 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(BodyScannerUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor) ||
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) ||
                 actor.playerSession.AttachedEntity == null)
             {
                 return;
             }
 
-            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent attempt))
+            if (actor.playerSession.AttachedEntity.TryGetComponent(out BodyManagerComponent? attempt))
             {
                 var state = InterfaceState(attempt.Template, attempt.Parts);
                 UserInterface?.SetState(state);

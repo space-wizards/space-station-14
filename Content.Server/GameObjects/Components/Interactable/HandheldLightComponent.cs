@@ -45,7 +45,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             {
                 if (_cellContainer.ContainedEntity == null) return null;
 
-                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent cell);
+                _cellContainer.ContainedEntity.TryGetComponent(out BatteryComponent? cell);
                 return cell;
             }
         }
@@ -57,10 +57,10 @@ namespace Content.Server.GameObjects.Components.Interactable
         public bool Activated { get; private set; }
 
         private PointLightComponent? PointLight =>
-            Owner.TryGetComponent(out PointLightComponent light) ? light : null;
+            Owner.TryGetComponent(out PointLightComponent? light) ? light : null;
 
         private ClothingComponent? ClothingComponent =>
-            Owner.TryGetComponent(out ClothingComponent clothing) ? clothing : null;
+            Owner.TryGetComponent(out ClothingComponent? clothing) ? clothing : null;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -182,7 +182,7 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private void SetState(bool on)
         {
-            if (Owner.TryGetComponent(out SpriteComponent sprite))
+            if (Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 sprite.LayerSetVisible(1, on);
             }
@@ -222,7 +222,7 @@ namespace Content.Server.GameObjects.Components.Interactable
                 return;
             }
 
-            if (!user.TryGetComponent(out HandsComponent hands))
+            if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return;
             }

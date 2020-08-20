@@ -33,10 +33,10 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private const int VisualsChangeDelay = 1;
 
-        private BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent appearance) ? appearance : null;
+        private BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? appearance) ? appearance : null;
 
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void Initialize()
         {

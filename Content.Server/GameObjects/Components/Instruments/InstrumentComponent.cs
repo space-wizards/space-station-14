@@ -111,7 +111,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(InstrumentUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -267,7 +267,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent actor)) return;
+            if (Handheld || !eventArgs.User.TryGetComponent(out IActorComponent? actor)) return;
 
             if (InstrumentPlayer != null) return;
 
@@ -277,7 +277,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
         public bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor)) return false;
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             if (InstrumentPlayer == actor.playerSession)
             {
@@ -323,7 +323,7 @@ namespace Content.Server.GameObjects.Components.Instruments
 
                 UserInterface?.CloseAll();
 
-                if (mob != null && mob.TryGetComponent(out StunnableComponent stun))
+                if (mob != null && mob.TryGetComponent(out StunnableComponent? stun))
                 {
                     stun.Stun(1);
                     Clean();

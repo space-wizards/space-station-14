@@ -63,21 +63,21 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(CargoConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
         public GalacticMarketComponent? Market =>
-            Owner.TryGetComponent(out GalacticMarketComponent market) ? market : null;
+            Owner.TryGetComponent(out GalacticMarketComponent? market) ? market : null;
 
         [ViewVariables]
         public CargoOrderDatabaseComponent? Orders =>
-            Owner.TryGetComponent(out CargoOrderDatabaseComponent orders) ? orders : null;
+            Owner.TryGetComponent(out CargoOrderDatabaseComponent? orders) ? orders : null;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {

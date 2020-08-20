@@ -60,12 +60,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(ChemMasterUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
-        private PowerReceiverComponent? PowerReceiver => Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+        private PowerReceiverComponent? PowerReceiver => Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -369,12 +369,12 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     _localizationManager.GetString("You have no hands."));
@@ -397,7 +397,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <returns></returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     _localizationManager.GetString("You have no hands."));

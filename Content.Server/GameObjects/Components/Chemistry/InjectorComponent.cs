@@ -60,7 +60,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         [ViewVariables]
         private SolutionComponent? InternalContents =>
-            Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
+            Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -143,7 +143,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
             else //Handle injecting into bloodstream
             {
-                if (targetEntity.TryGetComponent(out BloodstreamComponent bloodstream) &&
+                if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream) &&
                     _toggleState == InjectorToggleMode.Inject)
                 {
                     TryInjectIntoBloodstream(bloodstream, eventArgs.User);

@@ -34,16 +34,16 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(ResearchConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         private ResearchClientComponent? Client =>
-            Owner.TryGetComponent(out ResearchClientComponent research) ? research : null;
+            Owner.TryGetComponent(out ResearchClientComponent? research) ? research : null;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {
@@ -59,7 +59,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
         {
-            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)) return;
+            if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database)) return;
             if (!Powered)
                 return;
 
@@ -85,7 +85,7 @@ namespace Content.Server.GameObjects.Components.Research
                     break;
 
                 case ConsoleServerSelectionMessage _:
-                    if (!Owner.TryGetComponent(out ResearchClientComponent client)) break;
+                    if (!Owner.TryGetComponent(out ResearchClientComponent? client)) break;
                     client.OpenUserInterface(message.Session);
                     break;
             }
@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
             if (!Powered)
             {

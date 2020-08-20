@@ -57,7 +57,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         [ViewVariables]
         private SolutionComponent? StomachContents =>
-            Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
+            Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -113,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         public void Update(float frameTime)
         {
             if (StomachContents == null ||
-                !Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+                !Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
             {
                 return;
             }

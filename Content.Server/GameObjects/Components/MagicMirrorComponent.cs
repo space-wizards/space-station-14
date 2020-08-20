@@ -19,7 +19,7 @@ namespace Content.Server.GameObjects.Components
     {
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(MagicMirrorUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -51,7 +51,7 @@ namespace Content.Server.GameObjects.Components
                 return;
             }
 
-            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent looks))
+            if (!obj.Session.AttachedEntity.TryGetComponent(out HumanoidAppearanceComponent? looks))
             {
                 return;
             }
@@ -94,12 +94,12 @@ namespace Content.Server.GameObjects.Components
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent looks))
+            if (!eventArgs.User.TryGetComponent(out HumanoidAppearanceComponent? looks))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("You can't have any hair!"));
                 return;

@@ -61,15 +61,15 @@ namespace Content.Server.GameObjects.Components.Gravity
         public override string Name => "GravityGenerator";
 
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(GravityGeneratorUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
-        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent sprite) ? sprite : null;
+        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent? sprite) ? sprite : null;
 
         public override void Initialize()
         {
@@ -108,7 +108,7 @@ namespace Content.Server.GameObjects.Components.Gravity
 
         public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent tool))
+            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool))
                 return false;
 
             if (!await tool.UseTool(eventArgs.User, Owner, 2f, ToolQuality.Welding, 5f))

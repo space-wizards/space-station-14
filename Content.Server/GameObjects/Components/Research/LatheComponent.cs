@@ -47,16 +47,16 @@ namespace Content.Server.GameObjects.Components.Research
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(LatheUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void Initialize()
         {
@@ -92,13 +92,13 @@ namespace Content.Server.GameObjects.Components.Research
                     break;
 
                 case LatheServerSelectionMessage _:
-                    if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
+                    if (!Owner.TryGetComponent(out ResearchClientComponent? researchClient)) return;
                     researchClient.OpenUserInterface(message.Session);
                     break;
 
                 case LatheServerSyncMessage _:
-                    if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
-                    || !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
+                    if (!Owner.TryGetComponent(out TechnologyDatabaseComponent? database)
+                    || !Owner.TryGetComponent(out ProtolatheDatabaseComponent? protoDatabase)) return;
 
                     if (database.SyncWithServer())
                         protoDatabase.Sync();
@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 return false;
             }
-            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
+            if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent? storage)) return false;
 
             UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
 
@@ -152,7 +152,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
             if (!Powered)
             {
@@ -164,12 +164,12 @@ namespace Content.Server.GameObjects.Components.Research
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out MaterialStorageComponent storage)
-                ||  !eventArgs.Using.TryGetComponent(out MaterialComponent material)) return false;
+            if (!Owner.TryGetComponent(out MaterialStorageComponent? storage)
+                ||  !eventArgs.Using.TryGetComponent(out MaterialComponent? material)) return false;
 
             var multiplier = 1;
 
-            if (eventArgs.Using.TryGetComponent(out StackComponent stack)) multiplier = stack.Count;
+            if (eventArgs.Using.TryGetComponent(out StackComponent? stack)) multiplier = stack.Count;
 
             var totalAmount = 0;
 

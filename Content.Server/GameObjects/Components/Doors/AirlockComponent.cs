@@ -86,9 +86,9 @@ namespace Content.Server.GameObjects.Components.Doors
         }
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
-        private WiresComponent? WiresComponent => Owner.TryGetComponent(out WiresComponent wires) ? wires : null;
+        private WiresComponent? WiresComponent => Owner.TryGetComponent(out WiresComponent? wires) ? wires : null;
 
         private void UpdateWiresStatus()
         {
@@ -163,7 +163,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void UpdateBoltLightStatus()
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DoorVisuals.BoltLights, BoltLightsVisible);
             }
@@ -194,7 +194,7 @@ namespace Content.Server.GameObjects.Components.Doors
             }
 
             if (PowerReceiver != null &&
-                Owner.TryGetComponent(out AppearanceComponent appearance))
+                Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DoorVisuals.Powered, PowerReceiver.Powered);
             }
@@ -212,7 +212,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
         private void PowerDeviceOnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
-            if (Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(DoorVisuals.Powered, e.Powered);
             }
@@ -225,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Doors
         {
             if (WiresComponent != null && WiresComponent.IsPanelOpen)
             {
-                if (args.User.TryGetComponent(out IActorComponent actor))
+                if (args.User.TryGetComponent(out IActorComponent? actor))
                 {
                     WiresComponent.OpenInterface(actor.playerSession);
                 }
@@ -424,7 +424,7 @@ namespace Content.Server.GameObjects.Components.Doors
             {
                 if (WiresComponent != null && WiresComponent.IsPanelOpen)
                 {
-                    if (eventArgs.User.TryGetComponent(out IActorComponent actor))
+                    if (eventArgs.User.TryGetComponent(out IActorComponent? actor))
                     {
                         WiresComponent.OpenInterface(actor.playerSession);
                         return true;

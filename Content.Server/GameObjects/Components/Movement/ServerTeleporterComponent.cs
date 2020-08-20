@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.Components.Movement
         [ViewVariables] private float _portalAliveTime;
 
         private AppearanceComponent? AppearanceComponent =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {

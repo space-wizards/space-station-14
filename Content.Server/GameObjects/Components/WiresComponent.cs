@@ -141,7 +141,7 @@ namespace Content.Server.GameObjects.Components
         private string? _layoutId;
 
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(WiresUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;

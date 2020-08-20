@@ -42,7 +42,7 @@ namespace Content.Server.GameObjects.Components.Fluids
 
         private string? _sound;
 
-        private SolutionComponent? Contents => Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
+        private SolutionComponent? Contents => Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
 
         /// <inheritdoc />
         public override void ExposeData(ObjectSerializer serializer)
@@ -90,7 +90,7 @@ namespace Content.Server.GameObjects.Components.Fluids
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out MopComponent mopComponent))
+            if (!eventArgs.Using.TryGetComponent(out MopComponent? mopComponent))
             {
                 return false;
             }

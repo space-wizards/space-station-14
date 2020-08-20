@@ -35,12 +35,12 @@ namespace Content.Server.GameObjects.Components.Access
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(IdCardConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
-        private AccessReader? AccessReader => Owner.TryGetComponent(out AccessReader reader) ? reader : null;
+        private AccessReader? AccessReader => Owner.TryGetComponent(out AccessReader? reader) ? reader : null;
 
         public override void Initialize()
         {
@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Access
         /// </summary>
         private void HandleId(IEntity user, ContainerSlot container)
         {
-            if (!user.TryGetComponent(out IHandsComponent hands))
+            if (!user.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You have no hands."));
                 return;
@@ -224,7 +224,7 @@ namespace Content.Server.GameObjects.Components.Access
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

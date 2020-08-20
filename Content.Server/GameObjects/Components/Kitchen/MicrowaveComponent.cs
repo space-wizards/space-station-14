@@ -66,7 +66,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
         private uint _currentCookTimerTime = 1;
 
         private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
-        private bool _hasContents => Solution == null ? false : Solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0;
+        private bool _hasContents => Solution != null && (Solution.ReagentList.Count > 0 || _storage.ContainedEntities.Count > 0);
         private bool _uiDirty = true;
         private bool _lostPower = false;
         private int _currentCookTimeButtonIndex = 0;
@@ -77,19 +77,19 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(MicrowaveUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
-        private SolutionComponent? Solution => Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
+        private SolutionComponent? Solution => Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
 
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -203,7 +203,7 @@ namespace Content.Server.GameObjects.Components.Kitchen
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor) || !Powered)
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor) || !Powered)
             {
                 return;
             }

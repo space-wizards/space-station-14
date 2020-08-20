@@ -1,12 +1,10 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Server.Interfaces;
 using Content.Shared.GameObjects.Components.GUI;
-using Content.Shared.GameObjects.Components.Inventory;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;
@@ -17,7 +15,6 @@ using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
 
@@ -32,17 +29,17 @@ namespace Content.Server.GameObjects.Components.GUI
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(StrippingUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
         private InventoryComponent? InventoryComponent =>
-            Owner.TryGetComponent(out InventoryComponent inventory) ? inventory : null;
+            Owner.TryGetComponent(out InventoryComponent? inventory) ? inventory : null;
 
         [ViewVariables]
-        private HandsComponent? HandsComponent => Owner.TryGetComponent(out HandsComponent hands) ? hands : null;
+        private HandsComponent? HandsComponent => Owner.TryGetComponent(out HandsComponent? hands) ? hands : null;
 
         public override void Initialize()
         {
@@ -86,7 +83,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         public bool DragDrop(DragDropEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor)) return false;
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor)) return false;
 
             OpenUserInterface(actor.playerSession);
             return true;
@@ -365,7 +362,7 @@ namespace Content.Server.GameObjects.Components.GUI
         private void HandleUserInterfaceMessage(ServerBoundUserInterfaceMessage obj)
         {
             var user = obj.Session.AttachedEntity;
-            if (user == null || !(user.TryGetComponent(out HandsComponent userHands))) return;
+            if (user == null || !(user.TryGetComponent(out HandsComponent? userHands))) return;
 
             var placingItem = userHands.GetActiveHand != null;
 

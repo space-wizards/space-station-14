@@ -34,12 +34,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(DisposalTaggerUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -87,7 +87,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the configuration interface, and false if it cannot.</returns>
-        private bool PlayerCanUseDisposalTagger(IEntity playerEntity)
+        private bool PlayerCanUseDisposalTagger(IEntity? playerEntity)
         {
             //Need player entity to check if they are still able to use the configuration interface
             if (playerEntity == null)
@@ -127,12 +127,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     Loc.GetString("You have no hands."));

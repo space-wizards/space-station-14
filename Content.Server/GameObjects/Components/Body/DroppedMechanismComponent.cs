@@ -46,7 +46,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(GenericSurgeryUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -94,7 +94,7 @@ namespace Content.Server.GameObjects.Components.Body
             ContainedMechanism = data;
             Owner.Name = Loc.GetString(ContainedMechanism.Name);
 
-            if (Owner.TryGetComponent(out SpriteComponent component))
+            if (Owner.TryGetComponent(out SpriteComponent? component))
             {
                 component.LayerSetRSI(0, data.RSIPath);
                 component.LayerSetState(0, data.RSIState);
@@ -158,7 +158,7 @@ namespace Content.Server.GameObjects.Components.Body
         private void HandleReceiveBodyPart(int key)
         {
             if (_performerCache == null ||
-                !_performerCache.TryGetComponent(out IActorComponent actor))
+                !_performerCache.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

@@ -114,7 +114,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(DisposalUnitUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;

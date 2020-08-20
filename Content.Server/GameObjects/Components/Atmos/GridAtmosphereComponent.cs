@@ -77,7 +77,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         private ProcessState _state = ProcessState.TileEqualize;
 
         [ViewVariables]
-        private IMapGrid? Grid => Owner.TryGetComponent(out IMapGridComponent grid) ? grid.Grid : null;
+        private IMapGrid? Grid => Owner.TryGetComponent(out IMapGridComponent? grid) ? grid.Grid : null;
 
         private enum ProcessState
         {
@@ -573,7 +573,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         {
             base.ExposeData(serializer);
             if (serializer.Reading &&
-                Owner.TryGetComponent(out IMapGridComponent mapGrid))
+                Owner.TryGetComponent(out IMapGridComponent? mapGrid))
             {
                 var gridId = mapGrid.Grid.Index;
 

@@ -54,7 +54,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         }
 
         [ViewVariables]
-        private SolutionComponent? Contents => Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
+        private SolutionComponent? Contents => Owner.TryGetComponent(out SolutionComponent? solution) ? solution : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -132,7 +132,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
 
             var trueTarget = target ?? user;
 
-            if (!trueTarget.TryGetComponent(out StomachComponent stomach))
+            if (!trueTarget.TryGetComponent(out StomachComponent? stomach))
             {
                 return false;
             }
@@ -146,11 +146,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 utensils = new List<UtensilComponent>();
                 var types = UtensilType.None;
 
-                if (user.TryGetComponent(out HandsComponent hands))
+                if (user.TryGetComponent(out HandsComponent? hands))
                 {
                     foreach (var item in hands.GetAllHeldItems())
                     {
-                        if (!item.Owner.TryGetComponent(out UtensilComponent utensil))
+                        if (!item.Owner.TryGetComponent(out UtensilComponent? utensil))
                         {
                             continue;
                         }
@@ -210,13 +210,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
             var finisher = Owner.EntityManager.SpawnEntity(_trashPrototype, position);
 
             // If the user is holding the item
-            if (user.TryGetComponent(out HandsComponent handsComponent) &&
+            if (user.TryGetComponent(out HandsComponent? handsComponent) &&
                 handsComponent.IsHolding(Owner))
             {
                 Owner.Delete();
 
                 // Put the trash in the user's hand
-                if (finisher.TryGetComponent(out ItemComponent item) &&
+                if (finisher.TryGetComponent(out ItemComponent? item) &&
                     handsComponent.CanPutInHand(item))
                 {
                     handsComponent.PutInHand(item);

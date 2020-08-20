@@ -26,14 +26,14 @@ namespace Content.Server.GameObjects.Components.Command
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(CommunicationsConsoleUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         [ViewVariables]
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         public override void Initialize()
         {
@@ -75,7 +75,7 @@ namespace Content.Server.GameObjects.Components.Command
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
                 return;
 
             if (!Powered)

@@ -56,7 +56,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(GenericSurgeryUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -68,7 +68,7 @@ namespace Content.Server.GameObjects.Components.Body
                 return;
             }
 
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -81,7 +81,7 @@ namespace Content.Server.GameObjects.Components.Body
             _callbackCache = null;
 
             // Attempt surgery on a BodyManagerComponent by sending a list of operable BodyParts to the client to choose from
-            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent body))
+            if (eventArgs.Target.TryGetComponent(out BodyManagerComponent? body))
             {
                 // Create dictionary to send to client (text to be shown : data sent back if selected)
                 var toSend = new Dictionary<string, int>();
@@ -215,7 +215,7 @@ namespace Content.Server.GameObjects.Components.Body
         private void HandleReceiveBodyPart(int key)
         {
             if (_performerCache == null ||
-                !_performerCache.TryGetComponent(out IActorComponent actor))
+                !_performerCache.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
@@ -246,7 +246,7 @@ namespace Content.Server.GameObjects.Components.Body
             // TODO: sanity checks to see whether user is in range, user is still able-bodied, target is still the same, etc etc
             if (!_optionsCache.TryGetValue(key, out var targetObject) ||
                 _performerCache == null ||
-                !_performerCache.TryGetComponent(out IActorComponent actor))
+                !_performerCache.TryGetComponent(out IActorComponent? actor))
             {
                 SendNoUsefulWayToUseAnymorePopup();
                 return;

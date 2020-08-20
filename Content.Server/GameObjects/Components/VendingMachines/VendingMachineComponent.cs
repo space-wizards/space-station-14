@@ -45,20 +45,20 @@ namespace Content.Server.GameObjects.Components.VendingMachines
         private string _soundVend = "";
 
         private AppearanceComponent? Appearance =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(VendingMachineUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
 
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? appearance) ? appearance : null;
 
         public void Activate(ActivateEventArgs eventArgs)
         {
-            if(!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if(!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }

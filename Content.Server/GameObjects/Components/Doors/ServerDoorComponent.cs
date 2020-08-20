@@ -61,14 +61,14 @@ namespace Content.Server.GameObjects.Components.Doors
 
         [ViewVariables]
         private AirtightComponent? Airtight =>
-            Owner.TryGetComponent(out AirtightComponent airtight) ? airtight : null;
+            Owner.TryGetComponent(out AirtightComponent? airtight) ? airtight : null;
 
         [ViewVariables]
         private ICollidableComponent? Collidable =>
-            Owner.TryGetComponent(out ICollidableComponent collidable) ? collidable : null;
+            Owner.TryGetComponent(out ICollidableComponent? collidable) ? collidable : null;
 
         [ViewVariables]
-        private AppearanceComponent? Appearance => Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+        private AppearanceComponent? Appearance => Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -142,7 +142,7 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool CanOpen(IEntity user)
         {
             if (!CanOpen()) return false;
-            if (!Owner.TryGetComponent(out AccessReader accessReader))
+            if (!Owner.TryGetComponent(out AccessReader? accessReader))
             {
                 return true;
             }
@@ -160,7 +160,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             Open();
 
-            if (user.TryGetComponent(out HandsComponent hands) && hands.Count == 0)
+            if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
             {
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Effects/bang.ogg", Owner,
                     AudioParams.Default.WithVolume(-2));
@@ -176,7 +176,7 @@ namespace Content.Server.GameObjects.Components.Doors
 
             State = DoorState.Opening;
             SetAppearance(DoorVisualState.Opening);
-            if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
+            if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
             {
                 occluder.Enabled = false;
             }
@@ -210,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Doors
         public bool CanClose(IEntity user)
         {
             if (!CanClose()) return false;
-            if (!Owner.TryGetComponent(out AccessReader accessReader))
+            if (!Owner.TryGetComponent(out AccessReader? accessReader))
             {
                 return true;
             }
@@ -244,10 +244,10 @@ namespace Content.Server.GameObjects.Components.Doors
                 bool hitSomeone = false;
                 foreach (var e in collidesWith)
                 {
-                    if (!e.TryGetComponent(out StunnableComponent stun)
-                        || !e.TryGetComponent(out IDamageableComponent damage)
-                        || !e.TryGetComponent(out ICollidableComponent otherBody)
-                        || !Owner.TryGetComponent(out ICollidableComponent body))
+                    if (!e.TryGetComponent(out StunnableComponent? stun)
+                        || !e.TryGetComponent(out IDamageableComponent? damage)
+                        || !e.TryGetComponent(out ICollidableComponent? otherBody)
+                        || !Owner.TryGetComponent(out ICollidableComponent? body))
                         continue;
 
                     var percentage = otherBody.WorldAABB.IntersectPercentage(body.WorldAABB);
@@ -283,7 +283,7 @@ namespace Content.Server.GameObjects.Components.Doors
             State = DoorState.Closing;
             OpenTimeCounter = 0;
             SetAppearance(DoorVisualState.Closing);
-            if (_occludes && Owner.TryGetComponent(out OccluderComponent occluder))
+            if (_occludes && Owner.TryGetComponent(out OccluderComponent? occluder))
             {
                 occluder.Enabled = true;
             }

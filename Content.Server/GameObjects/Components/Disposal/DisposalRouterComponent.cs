@@ -36,12 +36,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface =>
-            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            Owner.TryGetComponent(out ServerUserInterfaceComponent? ui) &&
             ui.TryGetBoundUserInterface(DisposalRouterUiKey.Key, out var boundUi)
                 ? boundUi
                 : null;
@@ -77,6 +77,11 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             var msg = (UiActionMessage) obj.Message;
 
             if (!PlayerCanUseDisposalTagger(obj.Session.AttachedEntity))
@@ -154,12 +159,12 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
         void IActivate.Activate(ActivateEventArgs args)
         {
-            if (!args.User.TryGetComponent(out IActorComponent actor))
+            if (!args.User.TryGetComponent(out IActorComponent? actor))
             {
                 return;
             }
 
-            if (!args.User.TryGetComponent(out IHandsComponent hands))
+            if (!args.User.TryGetComponent(out IHandsComponent? hands))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     Loc.GetString("You have no hands."));

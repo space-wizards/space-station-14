@@ -41,11 +41,11 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
         [ViewVariables]
         private PowerReceiverComponent? PowerReceiver =>
-            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+            Owner.TryGetComponent(out PowerReceiverComponent? receiver) ? receiver : null;
 
         [ViewVariables]
         private AppearanceComponent? AppearanceComponent =>
-            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
+            Owner.TryGetComponent(out AppearanceComponent? appearance) ? appearance : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -110,12 +110,12 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             _container.Remove(heldItem);
             _heldBattery = null;
-            if (user.TryGetComponent(out HandsComponent handsComponent))
+            if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
                 handsComponent.PutInHandOrDrop(heldItem.GetComponent<ItemComponent>());
             }
 
-            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent batteryBarrelComponent))
+            if (heldItem.TryGetComponent(out ServerBatteryBarrelComponent? batteryBarrelComponent))
             {
                 batteryBarrelComponent.UpdateAppearance();
             }
@@ -138,7 +138,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
                     data.Visibility = VerbVisibility.Invisible;
                     return;
                 }
-                if (!user.TryGetComponent(out HandsComponent handsComponent))
+                if (!user.TryGetComponent(out HandsComponent? handsComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -156,7 +156,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
 
             protected override void Activate(IEntity user, BaseCharger component)
             {
-                if (!user.TryGetComponent(out HandsComponent handsComponent))
+                if (!user.TryGetComponent(out HandsComponent? handsComponent))
                 {
                     return;
                 }

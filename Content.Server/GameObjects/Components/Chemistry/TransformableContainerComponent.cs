@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         public bool Transformed { get; private set; }
 
-        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent sprite) ? sprite : null;
+        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent? sprite) ? sprite : null;
 
         public override void Initialize()
         {

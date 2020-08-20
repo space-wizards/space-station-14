@@ -74,7 +74,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -91,7 +91,7 @@ namespace Content.Server.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }

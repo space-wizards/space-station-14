@@ -39,7 +39,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [ViewVariables]
         public bool FixVacuum => _fixVacuum;
 
-        private SnapGridComponent? SnapGrid => Owner.TryGetComponent(out SnapGridComponent snapGrid) ? snapGrid : null;
+        private SnapGridComponent? SnapGrid => Owner.TryGetComponent(out SnapGridComponent? snapGrid) ? snapGrid : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
