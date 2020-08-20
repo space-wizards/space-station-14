@@ -20,7 +20,6 @@ namespace Content.Server.GameObjects.EntitySystems.AI
          *    This may change where specified friendly factions are listed. (e.g. to get number of friendlies in area).
          */
         
-        // TODO: Settable via commands
         public Faction GetHostileFactions(Faction faction) => _hostileFactions.TryGetValue(faction, out var hostiles) ? hostiles : Faction.None;
         
         private Dictionary<Faction, Faction> _hostileFactions = new Dictionary<Faction, Faction>
