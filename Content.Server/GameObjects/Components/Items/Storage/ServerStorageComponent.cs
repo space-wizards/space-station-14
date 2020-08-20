@@ -496,7 +496,7 @@ namespace Content.Server.GameObjects.Components.Items.Storage
 
             foreach (var entity in storedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>();
+                var exActs = entity.GetAllComponents<IExAct>().ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);
