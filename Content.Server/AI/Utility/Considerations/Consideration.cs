@@ -24,7 +24,7 @@ namespace Content.Server.AI.Utility.Considerations
         private static float BoolCurve(float x)
         {
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            return x == 1.0f ? 1.0f : 0.0f;
+            return x > 0.0f ? 1.0f : 0.0f;
         }
 
         public Func<float> BoolCurve(Blackboard context)
@@ -42,7 +42,7 @@ namespace Content.Server.AI.Utility.Considerations
         private static float InverseBoolCurve(float x)
         {
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            return x == 1.0f ? 0.0f : 1.0f;
+            return x == 0.0f ? 1.0f : 0.0f;
         }
 
         public Func<float> InverseBoolCurve(Blackboard context)
