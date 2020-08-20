@@ -400,12 +400,12 @@ namespace Content.Server.GameTicking
 
         public bool HasGameRule(Type t)
         {
-            if (t == null || !t.IsAssignableFrom(typeof(GameRule)))
+            if (t == null || !typeof(GameRule).IsAssignableFrom(t))
                 return false;
 
             foreach (var rule in _gameRules)
             {
-                if (rule.GetType().Equals(t))
+                if (rule.GetType().IsAssignableFrom(t))
                     return true;
             }
 
@@ -637,7 +637,7 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
-            
+
             EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();
