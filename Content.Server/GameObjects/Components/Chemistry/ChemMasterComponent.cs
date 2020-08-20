@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             UpdateUserInterface();
         }
 
-        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
         {
             UpdateUserInterface();
         }

@@ -121,7 +121,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             }
         }
 
-        private void OnPowerChanged(object sender, PowerStateEventArgs e)
+        private void OnPowerChanged(object? sender, PowerStateEventArgs e)
         {
             UpdateUserInterface();
         }

@@ -103,7 +103,7 @@ namespace Content.Server.GameObjects.Components.BarSign
             base.OnRemove();
         }
 
-        private void PowerOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        private void PowerOnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
             UpdateSignInfo();
         }

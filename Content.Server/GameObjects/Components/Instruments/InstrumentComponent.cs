@@ -116,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Instruments
                 ? boundUi
                 : null;
 
-        private void OnPlayerStatusChanged(object sender, SessionStatusEventArgs e)
+        private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.Session != _instrumentPlayer || e.NewStatus != SessionStatus.Disconnected) return;
             InstrumentPlayer = null;

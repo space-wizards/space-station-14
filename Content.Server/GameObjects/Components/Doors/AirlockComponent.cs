@@ -210,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Doors
             base.OnRemove();
         }
 
-        private void PowerDeviceOnOnPowerStateChanged(object sender, PowerStateEventArgs e)
+        private void PowerDeviceOnOnPowerStateChanged(object? sender, PowerStateEventArgs e)
         {
             if (Owner.TryGetComponent(out AppearanceComponent appearance))
             {

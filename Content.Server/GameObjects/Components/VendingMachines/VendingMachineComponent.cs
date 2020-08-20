@@ -140,7 +140,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
             base.OnRemove();
         }
 
-        private void UpdatePower(object sender, PowerStateEventArgs args)
+        private void UpdatePower(object? sender, PowerStateEventArgs args)
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);

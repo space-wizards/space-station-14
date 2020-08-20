@@ -123,7 +123,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerRece
             UpdateStatus();
         }
 
-        private void PowerUpdate(object sender, PowerStateEventArgs eventArgs)
+        private void PowerUpdate(object? sender, PowerStateEventArgs eventArgs)
         {
             UpdateStatus();
         }
