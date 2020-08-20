@@ -37,6 +37,7 @@
   - loc
   - hostlogin
   - events
+  - factions
 
 - Index: 100
   Name: Administrator
@@ -96,6 +97,7 @@
   - tilewalls
   - events
   - destroymechanism
+  - factions
   CanViewVar: true
   CanAdminPlace: true
 
@@ -186,6 +188,7 @@
   - tilewalls
   - events
   - destroymechanism
+  - factions
   CanViewVar: true
   CanAdminPlace: true
   CanScript: true
