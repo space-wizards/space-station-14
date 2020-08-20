@@ -54,6 +54,31 @@ namespace Content.Shared
             }
         }
 
+        protected class MsgTickerLateJoinStatus : NetMessage
+        {
+            #region REQUIRED
+
+            public const MsgGroups GROUP = MsgGroups.Command;
+            public const string NAME = nameof(MsgTickerLateJoinStatus);
+
+            public bool Disallowed { get; set; }
+
+            public MsgTickerLateJoinStatus(INetChannel channel) : base(NAME, GROUP) { }
+
+            #endregion
+
+            public override void ReadFromBuffer(NetIncomingMessage buffer)
+            {
+                Disallowed = buffer.ReadBoolean();
+            }
+
+            public override void WriteToBuffer(NetOutgoingMessage buffer)
+            {
+                buffer.Write(Disallowed);
+            }
+        }
+
+
         protected class MsgTickerLobbyStatus : NetMessage
         {
             #region REQUIRED
