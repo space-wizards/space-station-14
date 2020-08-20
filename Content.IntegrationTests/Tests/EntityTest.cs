@@ -111,11 +111,11 @@ namespace Content.IntegrationTests.Tests
         {
             var skipComponents = new[]
             {
-                "DebugExceptionOnAdd",
+                "DebugExceptionOnAdd", // Debug components that explicitly throw exceptions
                 "DebugExceptionExposeData",
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
-                "Map",
+                "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "BasicActor" // TODO: Unignore if https://github.com/space-wizards/RobustToolbox/pull/1242 is merged
             };
@@ -138,9 +138,11 @@ namespace Content.IntegrationTests.Tests
 
             server.Post(() =>
             {
+                // Load test entity
                 using var reader = new StringReader(testEntity);
                 prototypeManager.LoadFromStream(reader);
 
+                // Load test map
                 var mapId = mapManager.CreateMap();
                 pauseManager.AddUninitializedMap(mapId);
                 grid = mapLoader.LoadBlueprint(mapId, "Maps/stationstation.yml");
@@ -152,6 +154,7 @@ namespace Content.IntegrationTests.Tests
                 (new List<Type>(), new List<Type>())
             };
 
+            // Split components into groups, ensuring that their references don't conflict
             foreach (var type in componentFactory.AllRegisteredTypes)
             {
                 var registration = componentFactory.GetRegistration(type);
@@ -162,6 +165,7 @@ namespace Content.IntegrationTests.Tests
 
                     if (distinct.references.Intersect(registration.References).Any())
                     {
+                        // Ensure the next list if this one has conflicting references
                         if (i + 1 >= distinctComponents.Count)
                         {
                             distinctComponents.Add((new List<Type>(), new List<Type>()));
@@ -170,11 +174,13 @@ namespace Content.IntegrationTests.Tests
                         continue;
                     }
 
+                    // Add the component and its references if no conflicting references were found
                     distinct.components.Add(type);
                     distinct.references.AddRange(registration.References);
                 }
             }
 
+            // Sanity check
             Assert.That(distinctComponents, Is.Not.Empty);
 
             server.Assert(() =>
@@ -192,11 +198,13 @@ namespace Content.IntegrationTests.Tests
                         {
                             var component = (Component) componentFactory.GetComponent(type);
 
+                            // If the entity already has this component, if it was ensured or added by another
                             if (entity.HasComponent(component.GetType()))
                             {
                                 continue;
                             }
 
+                            // If this component is ignored
                             if (skipComponents.Contains(component.Name))
                             {
                                 continue;
