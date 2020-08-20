@@ -326,7 +326,7 @@ namespace Content.Server.GameTicking
             (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.SessionId.Username))
             .SelectedCharacter;
 
-        public void EndRound()
+        public void EndRound(string roundEndText = "")
         {
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
             Logger.InfoS("ticker", "Ending round!");
@@ -336,6 +336,7 @@ namespace Content.Server.GameTicking
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
             roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
+            roundEndMessage.RoundEndText = roundEndText;
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);

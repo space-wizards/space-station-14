@@ -113,7 +113,7 @@ namespace Content.Client.GameTicking
         private void RoundEnd(MsgRoundEndMessage message)
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
 
         }
     }

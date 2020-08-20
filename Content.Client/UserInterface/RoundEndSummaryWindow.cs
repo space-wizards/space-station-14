@@ -18,7 +18,7 @@ namespace Content.Client.UserInterface
         private TabContainer RoundEndWindowTabs { get; }
         protected override Vector2? CustomSize => (520, 580);
 
-        public RoundEndSummaryWindow(string gm, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info)
+        public RoundEndSummaryWindow(string gm, string roundEnd, TimeSpan roundTimeSpan, List<RoundEndPlayerInfo> info)
         {
 
             Title = Loc.GetString("Round End Summary");
@@ -49,6 +49,11 @@ namespace Content.Client.UserInterface
             var gamemodeLabel = new RichTextLabel();
             gamemodeLabel.SetMarkup(Loc.GetString("Round of [color=white]{0}[/color] has ended.", gm));
             RoundEndSummaryTab.AddChild(gamemodeLabel);
+
+            //Gamemode Name
+            var roundendLabel = new RichTextLabel();
+            roundendLabel.SetMarkup(Loc.GetString(roundEnd));
+            RoundEndSummaryTab.AddChild(roundendLabel);
 
             //Duration
             var roundTimeLabel = new RichTextLabel();

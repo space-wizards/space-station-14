@@ -41,7 +41,7 @@ namespace Content.IntegrationTests
         {
         }
 
-        public void EndRound()
+        public void EndRound(string roundEnd)
         {
         }
 

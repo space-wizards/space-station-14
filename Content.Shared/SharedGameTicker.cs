@@ -253,6 +253,7 @@ namespace Content.Shared
             #endregion
 
             public string GamemodeTitle;
+            public string RoundEndText;
             public TimeSpan RoundDuration;
 
 
@@ -263,6 +264,7 @@ namespace Content.Shared
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
                 GamemodeTitle = buffer.ReadString();
+                RoundEndText = buffer.ReadString();
 
                 var hours = buffer.ReadInt32();
                 var mins = buffer.ReadInt32();
@@ -289,6 +291,7 @@ namespace Content.Shared
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 buffer.Write(GamemodeTitle);
+                buffer.Write(RoundEndText);
                 buffer.Write(RoundDuration.Hours);
                 buffer.Write(RoundDuration.Minutes);
                 buffer.Write(RoundDuration.Seconds);
