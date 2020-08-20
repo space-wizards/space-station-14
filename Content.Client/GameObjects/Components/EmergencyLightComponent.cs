@@ -6,15 +6,13 @@ using Robust.Client.GameObjects.Components.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.GameObjects.Components
 {
     [RegisterComponent]
-    public class EmergencyLightComponent : SharedEmergencyLightComponent
+    public class EmergencyLightComponent : Component
     {
-        [ViewVariables]
-        public EmergencyLightState State { get; set; }
+        public override string Name => "EmergencyLight";
 
         protected override void Startup()
         {
@@ -43,12 +41,6 @@ namespace Content.Client.GameObjects.Components
             playerComponent.Play(animation, "emergency");
 
             playerComponent.AnimationCompleted += s => playerComponent.Play(animation, s);
-        }
-
-        public override void HandleComponentState(ComponentState currentState, ComponentState nextState)
-        {
-            if (currentState == null) return;
-            State = ((EmergencyLightComponentState) currentState).State;
         }
     }
 }
