@@ -27,7 +27,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     ///     Component that represents a handheld lightsource which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
-    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
+    internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing,
+        IMapInit
     {
 #pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager;
@@ -140,7 +141,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             Activated = false;
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
-
         }
 
         private void TurnOn(IEntity user)
@@ -153,7 +153,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             var cell = Cell;
             if (cell == null)
             {
-
                 EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Machines/button.ogg", Owner);
 
                 _notifyManager.PopupMessage(Owner, user, _localizationManager.GetString("Cell missing..."));
@@ -174,7 +173,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             SetState(true);
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/flashlight_toggle.ogg", Owner);
-
         }
 
         private void SetState(bool on)
@@ -193,6 +191,10 @@ namespace Content.Server.GameObjects.Components.Interactable
 
             var cell = Cell;
             if (cell == null || !cell.TryUseCharge(Wattage * frameTime)) TurnOff();
+
+
+            var foo = Owner.GetComponent<AppearanceComponent>();
+            foo.SetData(HandheldLightVisuals.LowPower, true);
 
             Dirty();
         }
@@ -222,7 +224,6 @@ namespace Content.Server.GameObjects.Components.Interactable
             }
 
             EntitySystem.Get<AudioSystem>().PlayFromEntity("/Audio/Items/pistol_magout.ogg", Owner);
-
         }
 
         public override ComponentState GetComponentState()

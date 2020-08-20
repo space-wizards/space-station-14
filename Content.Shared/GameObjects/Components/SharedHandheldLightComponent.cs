@@ -20,4 +20,14 @@ namespace Content.Shared.GameObjects.Components
             public float? Charge { get; }
         }
     }
+
+    [Serializable, NetSerializable]
+    public enum HandheldLightVisuals
+    {
+        FullPower,
+        LowPower,
+        Dying
+    }
+
+
 }
