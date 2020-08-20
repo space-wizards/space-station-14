@@ -7,6 +7,7 @@ using Content.Server.GameObjects.Components.Movement;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
 using Content.Server.GameObjects.EntitySystems.JobQueues;
+using Content.Server.Utility;
 using Content.Shared.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Components;
@@ -208,7 +209,8 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             foreach (var (agent, steering) in RunningAgents)
             {
-                var result = Steer(agent, steering);
+                // Yeah look it's not true frametime but good enough.
+                var result = Steer(agent, steering, frameTime * RunningAgents.Count);
                 steering.Status = result;
 
                 switch (result)
@@ -236,9 +238,10 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="steeringRequest"></param>
+        /// <param name="frameTime"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest)
+        private SteeringStatus Steer(IEntity entity, IAiSteeringRequest steeringRequest, float frameTime)
         {
             // Main optimisation to be done below is the redundant calls and adding more variables
             if (!entity.TryGetComponent(out AiControllerComponent controller) || !ActionBlockerSystem.CanMove(entity))
@@ -262,13 +265,27 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
 
             // Check if we have arrived
             var targetDistance = (entity.Transform.MapPosition.Position - steeringRequest.TargetMap.Position).Length;
-            if (targetDistance <= steeringRequest.ArrivalDistance)
+            steeringRequest.TimeUntilInteractionCheck -= frameTime;
+            
+            if (targetDistance <= steeringRequest.ArrivalDistance && steeringRequest.TimeUntilInteractionCheck <= 0.0f)
             {
-                // TODO: If we need LOS and are moving to an entity then we may not be in range yet
-                // Chuck out a ray every half second or so and keep moving until we are?
-                // Alternatively could use tile-based LOS checks via the pathfindingsystem I guess
+                if (!steeringRequest.RequiresInRangeUnobstructed || 
+                    InteractionChecks.InRangeUnobstructed(entity, steeringRequest.TargetMap, steeringRequest.ArrivalDistance, ignoredEnt: entity))
+                {
+                    // TODO: Need cruder LOS checks for ranged weaps
+                    controller.VelocityDir = Vector2.Zero;
+                    return SteeringStatus.Arrived;
+                }
+
+                steeringRequest.TimeUntilInteractionCheck = 0.25f;
+                // Welp, we'll keep on moving.
+            }
+
+            // If we're really close don't swiggity swoogity back and forth and just wait for the interaction check maybe?
+            if (steeringRequest.TimeUntilInteractionCheck > 0.0f && targetDistance <= 0.1f)
+            {
                 controller.VelocityDir = Vector2.Zero;
-                return SteeringStatus.Arrived;
+                return SteeringStatus.Moving;
             }
 
             // Handle pathfinding job
