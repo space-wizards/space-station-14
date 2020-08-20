@@ -8,6 +8,9 @@
   components:
   - type: AiController
     logic: Xeno
+  - type: AiFactionTag
+    factions:
+    - SimpleHostile
   - type: MovementSpeedModifier
   - type: InteractionOutline
   - type: Sprite
