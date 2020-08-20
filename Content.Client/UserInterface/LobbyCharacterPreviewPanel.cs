@@ -82,6 +82,8 @@ namespace Content.Client.UserInterface
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
+            _preferencesManager.OnServerDataLoaded -= UpdateUI;
+
             if (!disposing) return;
             _previewDummy.Delete();
             _previewDummy = null;
