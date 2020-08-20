@@ -22,11 +22,11 @@ namespace Content.Server.AI.Utility.Considerations
             * For our purposes if we go below the minimum threshold we want to cut it off, thus we take a
             * "running geometric mean" which can only ever go down (and by the final value will equal the actual geometric mean).
             */
-            
+
             // Previously we used a makeupvalue method although the geometric mean is less punishing for more considerations
             var considerationsCount = context.GetState<ConsiderationState>().GetValue();
             var adjustedScore = MathF.Pow(score, 1 / (float) considerationsCount);
-            return FloatMath.Clamp(adjustedScore, 0.0f, 1.0f);
+            return MathHelper.Clamp(adjustedScore, 0.0f, 1.0f);
         }
 
         [Pure]
@@ -68,7 +68,7 @@ namespace Content.Server.AI.Utility.Considerations
         [Pure]
         private static float LogisticCurve(float x, float slope, float exponent, float yOffset, float xOffset)
         {
-            return FloatMath.Clamp(
+            return MathHelper.Clamp(
                 exponent * (1 / (1 + (float) Math.Pow(Math.Log(1000) * slope, -1 * x + xOffset))) + yOffset, 0.0f, 1.0f);
         }
 
@@ -86,7 +86,7 @@ namespace Content.Server.AI.Utility.Considerations
         [Pure]
         private static float QuadraticCurve(float x, float slope, float exponent, float yOffset, float xOffset)
         {
-            return FloatMath.Clamp(slope * (float) Math.Pow(x - xOffset, exponent) + yOffset, 0.0f, 1.0f);
+            return MathHelper.Clamp(slope * (float) Math.Pow(x - xOffset, exponent) + yOffset, 0.0f, 1.0f);
         }
 
         public Func<float> QuadraticCurve(Blackboard context, float slope, float exponent, float yOffset, float xOffset)

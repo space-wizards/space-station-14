@@ -647,7 +647,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Steering
                     var additionalVector = (centerGrid.Position - entityGridCoords.Position);
                     var distance = additionalVector.Length;
                     // If we're too far no point, if we're close then cap it at the normalized vector
-                    distance = FloatMath.Clamp(2.5f - distance, 0.0f, 1.0f);
+                    distance = MathHelper.Clamp(2.5f - distance, 0.0f, 1.0f);
                     additionalVector = new Angle(90 * distance).RotateVec(additionalVector);
                     avoidanceVector += additionalVector;
                     // if we do need to avoid that means we'll have to lookahead for the next tile
