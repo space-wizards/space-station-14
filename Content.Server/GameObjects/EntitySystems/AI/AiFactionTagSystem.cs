@@ -25,7 +25,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         private Dictionary<Faction, Faction> _hostileFactions = new Dictionary<Faction, Faction>
         {
             {Faction.NanoTransen, 
-                Faction.Syndicate | Faction.Xeno},
+                Faction.SimpleHostile | Faction.Syndicate | Faction.Xeno},
             {Faction.SimpleHostile,
                 Faction.NanoTransen | Faction.Syndicate
             },
@@ -34,7 +34,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
                 Faction.None
             },
             {Faction.Syndicate,
-                Faction.NanoTransen | Faction.Xeno},
+                Faction.NanoTransen | Faction.SimpleHostile | Faction.Xeno},
             {Faction.Xeno, 
                 Faction.NanoTransen | Faction.Syndicate},
         };
@@ -48,7 +48,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI
         {
             var ourFaction = GetFactions(entity);
             var hostile = GetHostileFactions(ourFaction);
-            if (hostile == Faction.None)
+            if (ourFaction == Faction.None || hostile == Faction.None)
             {
                 yield break;
             }
@@ -115,13 +115,13 @@ namespace Content.Server.GameObjects.EntitySystems.AI
             
             if (args.Length < 2)
             {
-                shell.SendText(player, "Need more args");
+                shell.SendText(player, Loc.GetString("Need more args"));
                 return;
             }
 
             if (!Enum.TryParse(args[0], out Faction faction))
             {
-                shell.SendText(player, "Invalid faction");
+                shell.SendText(player, Loc.GetString("Invalid faction"));
                 return;
             }
 
