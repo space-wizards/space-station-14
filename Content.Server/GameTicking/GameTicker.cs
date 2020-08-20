@@ -300,6 +300,9 @@ namespace Content.Server.GameTicking
                 {
                     throw new ApplicationException("Fallback preset failed to start!");
                 }
+
+                DisallowLateJoin = false;
+                DisallowLateJoin |= newPreset.DisallowLateJoin;
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
