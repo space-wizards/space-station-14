@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -25,25 +26,31 @@ namespace Content.Server.GameObjects.Components.GUI
     [RegisterComponent]
     public sealed class StrippableComponent : SharedStrippableComponent, IDragDrop
     {
-        [Dependency] private IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 
         public const float StripDelay = 2f;
 
-        [ViewVariables]
-        private BoundUserInterface _userInterface;
-
         private InventoryComponent _inventoryComponent;
         private HandsComponent _handsComponent;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(StrippingUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(StrippingUiKey.Key);
-            _userInterface.OnReceiveMessage += HandleUserInterfaceMessage;
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += HandleUserInterfaceMessage;
+            }
 
-            _inventoryComponent = Owner.GetComponent<InventoryComponent>();
-            _handsComponent = Owner.GetComponent<HandsComponent>();
+            _inventoryComponent = Owner.EnsureComponent<InventoryComponent>();
+            _handsComponent = Owner.EnsureComponent<HandsComponent>();
 
             _inventoryComponent.OnItemChanged += UpdateSubscribed;
 
@@ -53,10 +60,15 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void UpdateSubscribed()
         {
+            if (UserInterface == null)
+            {
+                return;
+            }
+
             var inventory = GetInventorySlots();
             var hands = GetHandSlots();
 
-            _userInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands));
+            UserInterface.SetState(new StrippingBoundUserInterfaceState(inventory, hands));
         }
 
         public bool CanDragDrop(DragDropEventArgs eventArgs)
@@ -99,7 +111,7 @@ namespace Content.Server.GameObjects.Components.GUI
 
         private void OpenUserInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         /// <summary>

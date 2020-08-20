@@ -637,7 +637,7 @@ namespace Content.Server.GameTicking
 
                 _playerJoinLobby(player);
             }
-            
+
             EntitySystem.Get<GasTileOverlaySystem>().ResettingCleanup();
             EntitySystem.Get<PathfindingSystem>().ResettingCleanup();
             EntitySystem.Get<AiReachableSystem>().ResettingCleanup();

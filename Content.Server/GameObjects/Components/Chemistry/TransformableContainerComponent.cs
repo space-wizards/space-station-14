@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.EntitySystems;
+﻿#nullable enable
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Chemistry;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -12,27 +13,29 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class TransformableContainerComponent : Component, ISolutionChange
     {
 #pragma warning disable 649
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 #pragma warning restore 649
 
         public override string Name => "TransformableContainer";
 
-        private bool _transformed = false;
-        public bool Transformed { get => _transformed; }
+        private SpriteSpecifier? _initialSprite;
+        private string _initialName = default!;
+        private string _initialDescription = default!;
+        private ReagentPrototype? _currentReagent;
 
-        private SpriteSpecifier _initialSprite;
-        private string _initialName;
-        private string _initialDescription;
-        private SpriteComponent _sprite;
+        public bool Transformed { get; private set; }
 
-        private ReagentPrototype _currentReagent;
+        private SpriteComponent? Sprite => Owner.TryGetComponent(out SpriteComponent sprite) ? sprite : null;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _sprite = Owner.GetComponent<SpriteComponent>();
-            _initialSprite = new SpriteSpecifier.Rsi(new ResourcePath(_sprite.BaseRSIPath), "icon");
+            if (Sprite?.BaseRSIPath != null)
+            {
+                _initialSprite = new SpriteSpecifier.Rsi(new ResourcePath(Sprite.BaseRSIPath), "icon");
+            }
+
             _initialName = Owner.Name;
             _initialDescription = Owner.Description;
         }
@@ -40,14 +43,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
         protected override void Startup()
         {
             base.Startup();
-            Owner.GetComponent<SolutionComponent>().Capabilities |= SolutionCaps.FitsInDispenser;;
+            Owner.GetComponent<SolutionComponent>().Capabilities |= SolutionCaps.FitsInDispenser;
         }
 
         public void CancelTransformation()
         {
             _currentReagent = null;
-            _transformed = false;
-            _sprite.LayerSetSprite(0, _initialSprite);
+            Transformed = false;
+
+            if (_initialSprite != null)
+            {
+                Sprite?.LayerSetSprite(0, _initialSprite);
+            }
+
             Owner.Name = _initialName;
             Owner.Description = _initialDescription;
         }
@@ -76,11 +84,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
             {
                 var spriteSpec = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Drinks/" + proto.SpriteReplacementPath),"icon");
-                _sprite.LayerSetSprite(0, spriteSpec);
+                Sprite?.LayerSetSprite(0, spriteSpec);
                 Owner.Name = proto.Name + " glass";
                 Owner.Description = proto.Description;
                 _currentReagent = proto;
-                _transformed = true;
+                Transformed = true;
             }
         }
     }

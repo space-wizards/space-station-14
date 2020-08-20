@@ -1,4 +1,5 @@
-﻿using Content.Server.Interfaces;
+﻿#nullable enable
+using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -24,12 +25,9 @@ namespace Content.Server.GameObjects.Components.Disposal
     public class DisposalTaggerComponent : DisposalTransitComponent, IActivate
     {
 #pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
 #pragma warning restore 649
         public override string Name => "DisposalTagger";
-
-        [ViewVariables]
-        private BoundUserInterface _userInterface;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private string _tag = "";
@@ -39,19 +37,27 @@ namespace Content.Server.GameObjects.Components.Disposal
             !Owner.TryGetComponent(out CollidableComponent collidable) ||
             collidable.Anchored;
 
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(DisposalTaggerUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
             holder.Tags.Add(_tag);
             return base.NextDirection(holder);
         }
 
-
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(DisposalTaggerUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
             UpdateUserInterface();
         }
@@ -70,7 +76,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
             //Check for correct message and ignore maleformed strings
             if (msg.Action == UiAction.Ok && TagRegex.IsMatch(msg.Tag))
-            {   
+            {
                     _tag = msg.Tag;
                     ClickSound();
             }
@@ -98,7 +104,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         /// <summary>
         /// Gets component data to be used to update the user interface client-side.
         /// </summary>
-        /// <returns>Returns a <see cref="SharedDisposalTaggerComponent.DisposalTaggerBoundUserInterfaceState"/></returns>
+        /// <returns>Returns a <see cref="DisposalTaggerUserInterfaceState"/></returns>
         private DisposalTaggerUserInterfaceState GetUserInterfaceState()
         {
             return new DisposalTaggerUserInterfaceState(_tag);
@@ -107,7 +113,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         private void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
-            _userInterface.SetState(state);
+            UserInterface?.SetState(state);
         }
 
         private void ClickSound()
@@ -137,14 +143,14 @@ namespace Content.Server.GameObjects.Components.Disposal
             if (activeHandEntity == null)
             {
                 UpdateUserInterface();
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Open(actor.playerSession);
             }
         }
 
         public override void OnRemove()
         {
             base.OnRemove();
-            _userInterface.CloseAll();
+            UserInterface?.CloseAll();
         }
     }
 }

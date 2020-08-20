@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Utility;
 using Robust.Server.GameObjects;
@@ -16,13 +17,13 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     [RegisterComponent]
     public class SmesComponent : Component
     {
+#pragma warning disable 649
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+#pragma warning restore 649
+
         public override string Name => "Smes";
 
-        private BatteryComponent _battery;
-
-        private AppearanceComponent _appearance;
-
-        private int _lastChargeLevel = 0;
+        private int _lastChargeLevel;
 
         private TimeSpan _lastChargeLevelChange;
 
@@ -32,15 +33,17 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         private const int VisualsChangeDelay = 1;
 
-#pragma warning disable 649
-        [Dependency] private readonly IGameTiming _gameTiming;
-#pragma warning restore 649
+        private BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent appearance) ? appearance : null;
+
+        private AppearanceComponent? Appearance =>
+            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            _battery = Owner.GetComponent<BatteryComponent>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
+
+            Owner.EnsureComponent<BatteryComponent>();
+            Owner.EnsureComponent<AppearanceComponent>();
         }
 
         public void OnUpdate()
@@ -50,7 +53,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             {
                 _lastChargeLevel = newLevel;
                 _lastChargeLevelChange = _gameTiming.CurTime;
-                _appearance.SetData(SmesVisuals.LastChargeLevel, newLevel);
+                Appearance?.SetData(SmesVisuals.LastChargeLevel, newLevel);
             }
 
             var newChargeState = GetNewChargeState();
@@ -58,13 +61,18 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
             {
                 _lastChargeState = newChargeState;
                 _lastChargeStateChange = _gameTiming.CurTime;
-                _appearance.SetData(SmesVisuals.LastChargeState, newChargeState);
+                Appearance?.SetData(SmesVisuals.LastChargeState, newChargeState);
             }
         }
 
         private int GetNewChargeLevel()
         {
-            return ContentHelpers.RoundToLevels(_battery.CurrentCharge, _battery.MaxCharge, 6);
+            if (Battery == null)
+            {
+                return 0;
+            }
+
+            return ContentHelpers.RoundToLevels(Battery.CurrentCharge, Battery.MaxCharge, 6);
         }
 
         private ChargeState GetNewChargeState()

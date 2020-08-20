@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,15 +26,12 @@ namespace Content.Server.GameObjects.Components.Research
     {
         public const int VolumePerSheet = 3750;
 
-        private BoundUserInterface _userInterface;
-
         [ViewVariables]
         public Queue<LatheRecipePrototype> Queue { get; } = new Queue<LatheRecipePrototype>();
 
         [ViewVariables]
-        public bool Producing { get; private set; } = false;
+        public bool Producing { get; private set; }
 
-        private AppearanceComponent _appearance;
         private LatheState _state = LatheState.Base;
 
         protected virtual LatheState State
@@ -42,19 +40,32 @@ namespace Content.Server.GameObjects.Components.Research
             set => _state = value;
         }
 
-        private LatheRecipePrototype _producingRecipe = null;
-        private PowerReceiverComponent _powerReceiver;
-        private bool Powered => _powerReceiver.Powered;
+        private LatheRecipePrototype? _producingRecipe;
+        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(LatheUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
+        private PowerReceiverComponent? PowerReceiver =>
+            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
+
+        private AppearanceComponent? Appearance =>
+            Owner.TryGetComponent(out AppearanceComponent appearance) ? appearance : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(LatheUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _appearance = Owner.GetComponent<AppearanceComponent>();
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
@@ -66,26 +77,26 @@ namespace Content.Server.GameObjects.Components.Research
             {
                 case LatheQueueRecipeMessage msg:
                     _prototypeManager.TryIndex(msg.ID, out LatheRecipePrototype recipe);
-                    if (recipe != null)
+                    if (recipe != null!)
                         for (var i = 0; i < msg.Quantity; i++)
                         {
                             Queue.Enqueue(recipe);
-                            _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+                            UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
                         }
                     break;
-                case LatheSyncRequestMessage msg:
-                    if (!Owner.TryGetComponent(out MaterialStorageComponent storage)) return;
-                    _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+                case LatheSyncRequestMessage _:
+                    if (!Owner.HasComponent<MaterialStorageComponent>()) return;
+                    UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
                     if (_producingRecipe != null)
-                        _userInterface.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
+                        UserInterface?.SendMessage(new LatheProducingRecipeMessage(_producingRecipe.ID));
                     break;
 
-                case LatheServerSelectionMessage msg:
+                case LatheServerSelectionMessage _:
                     if (!Owner.TryGetComponent(out ResearchClientComponent researchClient)) return;
                     researchClient.OpenUserInterface(message.Session);
                     break;
 
-                case LatheServerSyncMessage msg:
+                case LatheServerSyncMessage _:
                     if (!Owner.TryGetComponent(out TechnologyDatabaseComponent database)
                     || !Owner.TryGetComponent(out ProtolatheDatabaseComponent protoDatabase)) return;
 
@@ -105,7 +116,7 @@ namespace Content.Server.GameObjects.Components.Research
             }
             if (Producing || !CanProduce(recipe) || !Owner.TryGetComponent(out MaterialStorageComponent storage)) return false;
 
-            _userInterface.SendMessage(new LatheFullQueueMessage(GetIDQueue()));
+            UserInterface?.SendMessage(new LatheFullQueueMessage(GetIdQueue()));
 
             Producing = true;
             _producingRecipe = recipe;
@@ -116,7 +127,7 @@ namespace Content.Server.GameObjects.Components.Research
                 storage.RemoveMaterial(material, amount);
             }
 
-            _userInterface.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
+            UserInterface?.SendMessage(new LatheProducingRecipeMessage(recipe.ID));
 
             State = LatheState.Producing;
             SetAppearance(LatheVisualState.Producing);
@@ -126,7 +137,7 @@ namespace Content.Server.GameObjects.Components.Research
                 Producing = false;
                 _producingRecipe = null;
                 Owner.EntityManager.SpawnEntity(recipe.Result, Owner.Transform.GridPosition);
-                _userInterface.SendMessage(new LatheStoppedProducingRecipeMessage());
+                UserInterface?.SendMessage(new LatheStoppedProducingRecipeMessage());
                 State = LatheState.Base;
                 SetAppearance(LatheVisualState.Idle);
             });
@@ -136,7 +147,7 @@ namespace Content.Server.GameObjects.Components.Research
 
         public void OpenUserInterface(IPlayerSession session)
         {
-            _userInterface.Open(session);
+            UserInterface?.Open(session);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
@@ -205,11 +216,10 @@ namespace Content.Server.GameObjects.Components.Research
 
         private void SetAppearance(LatheVisualState state)
         {
-            if (_appearance != null || Owner.TryGetComponent(out _appearance))
-                _appearance.SetData(PowerDeviceVisuals.VisualState, state);
+            Appearance?.SetData(PowerDeviceVisuals.VisualState, state);
         }
 
-        private Queue<string> GetIDQueue()
+        private Queue<string> GetIdQueue()
         {
             var queue = new Queue<string>();
             foreach (var recipePrototype in Queue)

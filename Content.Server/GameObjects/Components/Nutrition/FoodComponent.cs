@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Content.Server.GameObjects.Components.Body.Digestive;
 using Content.Server.GameObjects.Components.Chemistry;
@@ -26,23 +27,34 @@ namespace Content.Server.GameObjects.Components.Nutrition
     public class FoodComponent : Component, IUse, IAfterInteract
     {
 #pragma warning disable 649
-        [Dependency] private readonly IEntitySystemManager _entitySystem;
+        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 #pragma warning restore 649
+
         public override string Name => "Food";
 
-        [ViewVariables]
-        private string _useSound;
-        [ViewVariables]
-        private string _trashPrototype;
-        [ViewVariables]
-        private SolutionComponent _contents;
-        [ViewVariables]
-        private ReagentUnit _transferAmount;
+        [ViewVariables] private string _useSound = "";
+        [ViewVariables] private string? _trashPrototype;
+        [ViewVariables] private ReagentUnit _transferAmount;
         private UtensilType _utensilsNeeded;
 
-        public int UsesRemaining => _contents.CurrentVolume == 0
-            ?
-            0 : Math.Max(1, (int)Math.Ceiling((_contents.CurrentVolume / _transferAmount).Float()));
+        [ViewVariables]
+        public int UsesRemaining
+        {
+            get
+            {
+                if (Contents == null)
+                {
+                    return 0;
+                }
+
+                return Contents.CurrentVolume == 0
+                    ? 0
+                    : Math.Max(1, (int)Math.Ceiling((Contents.CurrentVolume / _transferAmount).Float()));
+            }
+        }
+
+        [ViewVariables]
+        private SolutionComponent? Contents => Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -60,7 +72,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 {
                     var types = new List<UtensilType>();
 
-                    foreach (UtensilType type in Enum.GetValues(typeof(UtensilType)))
+                    foreach (var type in (UtensilType[]) Enum.GetValues(typeof(UtensilType)))
                     {
                         if ((_utensilsNeeded & type) != 0)
                         {
@@ -75,8 +87,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
         public override void Initialize()
         {
             base.Initialize();
-            _contents = Owner.GetComponent<SolutionComponent>();
-
+            Owner.EnsureComponent<SolutionComponent>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -101,8 +112,13 @@ namespace Content.Server.GameObjects.Components.Nutrition
             TryUseFood(eventArgs.User, eventArgs.Target);
         }
 
-        public virtual bool TryUseFood(IEntity user, IEntity target, UtensilComponent utensilUsed = null)
+        public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
+            if (Contents == null)
+            {
+                return false;
+            }
+
             if (user == null)
             {
                 return false;
@@ -156,11 +172,11 @@ namespace Content.Server.GameObjects.Components.Nutrition
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(_transferAmount, _contents.CurrentVolume);
-            var split = _contents.SplitSolution(transferAmount);
+            var transferAmount = ReagentUnit.Min(_transferAmount, Contents.CurrentVolume);
+            var split = Contents.SplitSolution(transferAmount);
             if (!stomach.TryTransferSolution(split))
             {
-                _contents.TryAddSolution(split);
+                Contents.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("You can't eat any more!"));
                 return false;
             }

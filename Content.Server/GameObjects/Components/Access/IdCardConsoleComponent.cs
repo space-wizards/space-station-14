@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.Interfaces;
@@ -15,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Access
 {
@@ -23,15 +25,22 @@ namespace Content.Server.GameObjects.Components.Access
     public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
     {
 #pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-        [Dependency] private readonly IPrototypeManager _prototypeManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 #pragma warning restore 649
 
-        private BoundUserInterface _userInterface;
-        private ContainerSlot _privilegedIdContainer;
-        private ContainerSlot _targetIdContainer;
-        private AccessReader _accessReader;
+        private ContainerSlot _privilegedIdContainer = default!;
+        private ContainerSlot _targetIdContainer = default!;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(IdCardConsoleUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
+        private AccessReader? AccessReader => Owner.TryGetComponent(out AccessReader reader) ? reader : null;
 
         public override void Initialize()
         {
@@ -40,16 +49,30 @@ namespace Content.Server.GameObjects.Components.Access
             _privilegedIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-privilegedId", Owner);
             _targetIdContainer = ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-targetId", Owner);
 
-            _accessReader = Owner.GetComponent<AccessReader>();
+            if (!Owner.EnsureComponent(out AccessReader _))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(Access.AccessReader)}");
+            }
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(IdCardConsoleUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+            if (UserInterface == null)
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} doesn't have a {nameof(ServerUserInterfaceComponent)}");
+            }
+            else
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
+
             UpdateUserInterface();
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             switch (obj.Message)
             {
                 case IdButtonPressedMessage msg:
@@ -72,12 +95,17 @@ namespace Content.Server.GameObjects.Components.Access
         }
 
         /// <summary>
-        /// Returns true if there is an ID in <see cref="_privilegedIdContainer"/> and said ID satisfies the requirements of <see cref="_accessReader"/>.
+        /// Returns true if there is an ID in <see cref="_privilegedIdContainer"/> and said ID satisfies the requirements of <see cref="AccessReader"/>.
         /// </summary>
         private bool PrivilegedIdIsAuthorized()
         {
+            if (AccessReader == null)
+            {
+                return true;
+            }
+
             var privilegedIdEntity = _privilegedIdContainer.ContainedEntity;
-            return privilegedIdEntity != null && _accessReader.IsAllowed(privilegedIdEntity);
+            return privilegedIdEntity != null && AccessReader.IsAllowed(privilegedIdEntity);
         }
         /// <summary>
         /// Called when the "Submit" button in the UI gets pressed.
@@ -133,7 +161,13 @@ namespace Content.Server.GameObjects.Components.Access
             {
                 return;
             }
-            if(!hands.Drop(hands.ActiveHand, container))
+
+            if (hands.ActiveHand == null)
+            {
+                return;
+            }
+
+            if (!hands.Drop(hands.ActiveHand, container))
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, user, _localizationManager.GetString("You can't let go of the ID card!"));
                 return;
@@ -185,7 +219,7 @@ namespace Content.Server.GameObjects.Components.Access
                     _privilegedIdContainer.ContainedEntity?.Name ?? "",
                     _targetIdContainer.ContainedEntity?.Name ?? "");
             }
-            _userInterface.SetState(newState);
+            UserInterface?.SetState(newState);
         }
 
         public void Activate(ActivateEventArgs eventArgs)
@@ -195,7 +229,7 @@ namespace Content.Server.GameObjects.Components.Access
                 return;
             }
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
     }
 }

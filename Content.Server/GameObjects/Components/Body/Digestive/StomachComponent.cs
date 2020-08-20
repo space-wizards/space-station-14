@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameObjects.Components.Body.Circulatory;
 using Content.Server.GameObjects.Components.Chemistry;
 using Content.Shared.Chemistry;
 using Content.Shared.GameObjects.Components.Nutrition;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -20,24 +19,20 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
     [RegisterComponent]
     public class StomachComponent : SharedStomachComponent
     {
-#pragma warning disable 649
-        [Dependency] private readonly ILocalizationManager _localizationManager;
-#pragma warning restore 649
-
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
         public ReagentUnit MaxVolume
         {
-            get => _stomachContents.MaxVolume;
-            set => _stomachContents.MaxVolume = value;
+            get => StomachContents?.MaxVolume ?? ReagentUnit.Zero;
+            set
+            {
+                if (StomachContents != null)
+                {
+                    StomachContents.MaxVolume = value;
+                }
+            }
         }
-
-        /// <summary>
-        ///     Internal solution storage
-        /// </summary>
-        [ViewVariables]
-        private SolutionComponent _stomachContents;
 
         /// <summary>
         ///     Initial internal solution storage volume
@@ -57,6 +52,13 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// </summary>
         private readonly List<ReagentDelta> _reagentDeltas = new List<ReagentDelta>();
 
+        /// <summary>
+        ///     Internal solution storage
+        /// </summary>
+        [ViewVariables]
+        private SolutionComponent? StomachContents =>
+            Owner.TryGetComponent(out SolutionComponent solution) ? solution : null;
+
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -68,20 +70,31 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         {
             base.Startup();
 
-            _stomachContents = Owner.GetComponent<SolutionComponent>();
-            _stomachContents.MaxVolume = _initialMaxVolume;
+            if (Owner.EnsureComponent(out SolutionComponent solution))
+            {
+                solution.MaxVolume = _initialMaxVolume;
+            }
+            else
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} didn't have a {nameof(SolutionComponent)}");
+            }
         }
 
         public bool TryTransferSolution(Solution solution)
         {
+            if (StomachContents == null)
+            {
+                return false;
+            }
+
             // TODO: For now no partial transfers. Potentially change by design
-            if (solution.TotalVolume + _stomachContents.CurrentVolume > _stomachContents.MaxVolume)
+            if (solution.TotalVolume + StomachContents.CurrentVolume > StomachContents.MaxVolume)
             {
                 return false;
             }
 
             // Add solution to _stomachContents
-            _stomachContents.TryAddSolution(solution, false, true);
+            StomachContents.TryAddSolution(solution, false, true);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {
@@ -99,7 +112,8 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
         /// <param name="frameTime">The time since the last update in seconds.</param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent(out BloodstreamComponent bloodstream))
+            if (StomachContents == null ||
+                !Owner.TryGetComponent(out BloodstreamComponent bloodstream))
             {
                 return;
             }
@@ -114,7 +128,7 @@ namespace Content.Server.GameObjects.Components.Body.Digestive
                 delta.Increment(frameTime);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    _stomachContents.TryRemoveReagent(delta.ReagentId, delta.Quantity);
+                    StomachContents.TryRemoveReagent(delta.ReagentId, delta.Quantity);
                     transferSolution.AddReagent(delta.ReagentId, delta.Quantity);
                     _reagentDeltas.Remove(delta);
                 }

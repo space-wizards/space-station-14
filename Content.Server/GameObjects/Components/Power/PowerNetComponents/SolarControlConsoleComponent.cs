@@ -1,4 +1,5 @@
-﻿using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+﻿#nullable enable
+using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Power;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -7,6 +8,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 {
@@ -18,24 +20,35 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         [Dependency] private IEntitySystemManager _entitySystemManager;
 #pragma warning restore 649
 
-        private BoundUserInterface _userInterface;
-        private PowerReceiverComponent _powerReceiver;
         private PowerSolarSystem _powerSolarSystem;
-        private bool Powered => _powerReceiver.Powered;
+        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(SolarControlConsoleUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
+        private PowerReceiverComponent? PowerReceiver =>
+            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(SolarControlConsoleUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnReceiveMessage;
+            }
+
+            Owner.EnsureComponent<PowerReceiverComponent>();
             _powerSolarSystem = _entitySystemManager.GetEntitySystem<PowerSolarSystem>();
         }
 
         public void UpdateUIState()
         {
-            _userInterface.SetState(new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun));
+            UserInterface?.SetState(new SolarControlConsoleBoundInterfaceState(_powerSolarSystem.TargetPanelRotation, _powerSolarSystem.TargetPanelVelocity, _powerSolarSystem.TotalPanelPower, _powerSolarSystem.TowardsSun));
         }
 
         private void UserInterfaceOnReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -69,7 +82,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
             // always update the UI immediately before opening, just in case
             UpdateUIState();
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
     }
 }

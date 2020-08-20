@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
@@ -41,23 +43,29 @@ namespace Content.Server.GameObjects.Components.Chemistry
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
     {
 #pragma warning disable 649
-        [Dependency] private readonly IServerNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 #pragma warning restore 649
 
-        [ViewVariables] private BoundUserInterface _userInterface;
-        [ViewVariables] private ContainerSlot _beakerContainer;
-        [ViewVariables] private string _packPrototypeId;
+        [ViewVariables] private ContainerSlot _beakerContainer = default!;
+        [ViewVariables] private string _packPrototypeId = "";
 
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
 
-        [ViewVariables] private bool BufferModeTransfer = true;
+        [ViewVariables] private bool _bufferModeTransfer = true;
 
-        private PowerReceiverComponent _powerReceiver;
-        private bool Powered => _powerReceiver.Powered;
+        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
 
         private readonly SolutionComponent BufferSolution = new SolutionComponent();
 
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(ChemMasterUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
+        private PowerReceiverComponent? PowerReceiver => Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
 
         /// <summary>
         /// Shows the serializer how to save/load this components yaml prototype.
@@ -77,14 +85,19 @@ namespace Content.Server.GameObjects.Components.Chemistry
         public override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>()
-                .GetBoundUserInterface(ChemMasterUiKey.Key);
-            _userInterface.OnReceiveMessage += OnUiReceiveMessage;
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
+            }
 
             _beakerContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>($"{Name}-reagentContainerContainer", Owner);
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
-            _powerReceiver.OnPowerStateChanged += OnPowerChanged;
+
+            if (PowerReceiver != null)
+            {
+                PowerReceiver.OnPowerStateChanged += OnPowerChanged;
+            }
 
             //BufferSolution = Owner.BufferSolution
             BufferSolution.Solution = new Solution();
@@ -105,6 +118,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// <param name="obj">A user interface message from the client.</param>
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
+            if (obj.Session.AttachedEntity == null)
+            {
+                return;
+            }
+
             var msg = (UiActionMessage) obj.Message;
             var needsPower = msg.action switch
             {
@@ -124,11 +142,11 @@ namespace Content.Server.GameObjects.Components.Chemistry
                     TransferReagent(msg.id, msg.amount, msg.isBuffer);
                     break;
                 case UiAction.Transfer:
-                    BufferModeTransfer = true;
+                    _bufferModeTransfer = true;
                     UpdateUserInterface();
                     break;
                 case UiAction.Discard:
-                    BufferModeTransfer = false;
+                    _bufferModeTransfer = false;
                     UpdateUserInterface();
                     break;
                 case UiAction.CreatePills:
@@ -147,7 +165,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
         /// <returns>Returns true if the entity can use the chem master, and false if it cannot.</returns>
-        private bool PlayerCanUseChemMaster(IEntity playerEntity, bool needsPower = true)
+        private bool PlayerCanUseChemMaster(IEntity? playerEntity, bool needsPower = true)
         {
             //Need player entity to check if they are still able to use the chem master
             if (playerEntity == null)
@@ -172,18 +190,18 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (beaker == null)
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Owner.Name, null, BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
+                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.ReagentList.ToList(), _bufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
             }
 
             var solution = beaker.GetComponent<SolutionComponent>();
             return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), BufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
+                beaker.Name, Owner.Name, solution.ReagentList.ToList(), BufferSolution.ReagentList.ToList(), _bufferModeTransfer, BufferSolution.CurrentVolume, BufferSolution.MaxVolume);
         }
 
         private void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
-            _userInterface.SetState(state);
+            UserInterface?.SetState(state);
         }
 
         /// <summary>
@@ -207,7 +225,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
 
         private void TransferReagent(string id, ReagentUnit amount, bool isBuffer)
         {
-            if (!HasBeaker && BufferModeTransfer) return;
+            if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = _beakerContainer.ContainedEntity;
             var beakerSolution = beaker.GetComponent<SolutionComponent>();
             if (isBuffer)
@@ -227,7 +245,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
                         }
 
                         BufferSolution.Solution.RemoveReagent(id, actualAmount);
-                        if (BufferModeTransfer)
+                        if (_bufferModeTransfer)
                         {
                             beakerSolution.Solution.AddReagent(id, actualAmount);
                         }
@@ -366,7 +384,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             var activeHandEntity = hands.GetActiveHand?.Owner;
             if (activeHandEntity == null)
             {
-                _userInterface.Open(actor.playerSession);
+                UserInterface?.Open(actor.playerSession);
             }
         }
 
@@ -384,6 +402,13 @@ namespace Content.Server.GameObjects.Components.Chemistry
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
                     _localizationManager.GetString("You have no hands."));
                 return true;
+            }
+
+            if (hands.GetActiveHand == null)
+            {
+                _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
+                    _localizationManager.GetString("You have nothing on your hand."));
+                return false;
             }
 
             var activeHandEntity = hands.GetActiveHand.Owner;

@@ -27,7 +27,8 @@ namespace Content.Server.GameObjects.Components.Mining
         public override void Initialize()
         {
             base.Initialize();
-            var spriteComponent = Owner.GetComponent<SpriteComponent>();
+
+            var spriteComponent = Owner.EnsureComponent<SpriteComponent>();
             spriteComponent.LayerSetState(0, _random.Pick(SpriteStates));
         }
 

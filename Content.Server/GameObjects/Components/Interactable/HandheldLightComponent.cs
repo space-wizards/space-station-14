@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Items.Clothing;
 using Content.Server.GameObjects.Components.Items.Storage;
@@ -30,18 +31,15 @@ namespace Content.Server.GameObjects.Components.Interactable
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
     {
 #pragma warning disable 649
-        [Dependency] private readonly ISharedNotifyManager _notifyManager;
-        [Dependency] private readonly ILocalizationManager _localizationManager;
+        [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
+        [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 #pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
-        [ViewVariables] private ContainerSlot _cellContainer;
-        private PointLightComponent _pointLight;
-        private SpriteComponent _spriteComponent;
-        private ClothingComponent _clothingComponent;
+        [ViewVariables] private ContainerSlot _cellContainer = default!;
 
         [ViewVariables]
-        private BatteryComponent Cell
+        private BatteryComponent? Cell
         {
             get
             {
@@ -57,6 +55,12 @@ namespace Content.Server.GameObjects.Components.Interactable
         /// </summary>
         [ViewVariables]
         public bool Activated { get; private set; }
+
+        private PointLightComponent? PointLight =>
+            Owner.TryGetComponent(out PointLightComponent light) ? light : null;
+
+        private ClothingComponent? ClothingComponent =>
+            Owner.TryGetComponent(out ClothingComponent clothing) ? clothing : null;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -98,11 +102,10 @@ namespace Content.Server.GameObjects.Components.Interactable
         {
             base.Initialize();
 
-            _pointLight = Owner.GetComponent<PointLightComponent>();
-            _spriteComponent = Owner.GetComponent<SpriteComponent>();
-            Owner.TryGetComponent(out _clothingComponent);
+            Owner.EnsureComponent<PointLightComponent>();
             _cellContainer =
                 ContainerManagerComponent.Ensure<ContainerSlot>("flashlight_cell_container", Owner, out _);
+
             Dirty();
         }
 
@@ -179,11 +182,19 @@ namespace Content.Server.GameObjects.Components.Interactable
 
         private void SetState(bool on)
         {
-            _spriteComponent.LayerSetVisible(1, on);
-            _pointLight.Enabled = on;
-            if (_clothingComponent != null)
+            if (Owner.TryGetComponent(out SpriteComponent sprite))
             {
-                _clothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
+                sprite.LayerSetVisible(1, on);
+            }
+
+            if (PointLight != null)
+            {
+                PointLight.Enabled = on;
+            }
+
+            if (ClothingComponent != null)
+            {
+                ClothingComponent.ClothingEquippedPrefix = on ? "On" : "Off";
             }
         }
 

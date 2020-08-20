@@ -10,6 +10,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -25,14 +26,6 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         [ViewVariables]
         public int Points = 1000;
-
-        private BoundUserInterface _userInterface  = default!;
-
-        [ViewVariables]
-        public GalacticMarketComponent Market { get; private set; } = default!;
-
-        [ViewVariables]
-        public CargoOrderDatabaseComponent Orders { get; private set; } = default!;
 
         private CargoBankAccount? _bankAccount;
 
@@ -65,20 +58,58 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private bool _requestOnly = false;
 
-        private PowerReceiverComponent _powerReceiver = default!;
-        private bool Powered => _powerReceiver.Powered;
+        private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
+
+        [ViewVariables]
+        private BoundUserInterface? UserInterface =>
+            Owner.TryGetComponent(out ServerUserInterfaceComponent ui) &&
+            ui.TryGetBoundUserInterface(CargoConsoleUiKey.Key, out var boundUi)
+                ? boundUi
+                : null;
+
+        [ViewVariables]
+        public GalacticMarketComponent? Market =>
+            Owner.TryGetComponent(out GalacticMarketComponent market) ? market : null;
+
+        [ViewVariables]
+        public CargoOrderDatabaseComponent? Orders =>
+            Owner.TryGetComponent(out CargoOrderDatabaseComponent orders) ? orders : null;
+
+        private PowerReceiverComponent? PowerReceiver =>
+            Owner.TryGetComponent(out PowerReceiverComponent receiver) ? receiver : null;
 
         public override void Initialize()
         {
             base.Initialize();
-            Market = Owner.GetComponent<GalacticMarketComponent>();
-            Orders = Owner.GetComponent<CargoOrderDatabaseComponent>();
-            _userInterface = Owner.GetComponent<ServerUserInterfaceComponent>().GetBoundUserInterface(CargoConsoleUiKey.Key);
-            _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            _powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+
+            if (!Owner.EnsureComponent(out GalacticMarketComponent _))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} had no {nameof(GalacticMarketComponent)}");
+            }
+
+            if (!Owner.EnsureComponent(out CargoOrderDatabaseComponent _))
+            {
+                Logger.Warning($"Entity {Owner} at {Owner.Transform.MapPosition} had no {nameof(GalacticMarketComponent)}");
+            }
+
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
             _cargoConsoleSystem = EntitySystem.Get<CargoConsoleSystem>();
             BankAccount = _cargoConsoleSystem.StationAccount;
+        }
+
+        public override void OnRemove()
+        {
+            if (UserInterface != null)
+            {
+                UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+            }
+
+            base.OnRemove();
         }
 
         /// <summary>
@@ -93,6 +124,11 @@ namespace Content.Server.GameObjects.Components.Cargo
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
         {
+            if (Orders == null)
+            {
+                return;
+            }
+
             var message = serverMsg.Message;
             if (!Orders.ConnectedToDatabase)
                 return;
@@ -125,7 +161,7 @@ namespace Content.Server.GameObjects.Components.Cargo
                     }
 
                     _prototypeManager.TryIndex(order.ProductId, out CargoProductPrototype product);
-                    if (product == null)
+                    if (product == null!)
                         break;
                     var capacity = _cargoOrderDataManager.GetCapacity(Orders.Database.Id);
                     if (capacity.CurrentCapacity == capacity.MaxCapacity)
@@ -166,12 +202,12 @@ namespace Content.Server.GameObjects.Components.Cargo
             if (!Powered)
                 return;
 
-            _userInterface.Open(actor.playerSession);
+            UserInterface?.Open(actor.playerSession);
         }
 
         private void UpdateUIState()
         {
-            if (_bankAccount == null)
+            if (_bankAccount == null || !Owner.IsValid())
             {
                 return;
             }
@@ -180,7 +216,7 @@ namespace Content.Server.GameObjects.Components.Cargo
             var name = _bankAccount.Name;
             var balance = _bankAccount.Balance;
             var capacity = _cargoOrderDataManager.GetCapacity(id);
-            _userInterface.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
+            UserInterface?.SetState(new CargoConsoleInterfaceState(_requestOnly, id, name, balance, capacity));
         }
     }
 }
