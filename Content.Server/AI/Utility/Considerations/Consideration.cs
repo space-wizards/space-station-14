@@ -13,10 +13,19 @@ namespace Content.Server.AI.Utility.Considerations
         private float GetAdjustedScore(Blackboard context)
         {
             var score = GetScore(context);
+            /*
+            * Now using the geometric mean
+            * for n scores you take the n-th root of the scores multiplied
+            * e.g. a, b, c scores you take Math.Pow(a * b * c, 1/3)
+            * To get the ACTUAL geometric mean at any one stage you'd need to divide by the running consideration count
+            * however, the downside to this is it will fluctuate up and down over time.
+            * For our purposes if we go below the minimum threshold we want to cut it off, thus we take a
+            * "running geometric mean" which can only ever go down (and by the final value will equal the actual geometric mean).
+            */
+            
+            // Previously we used a makeupvalue method although the geometric mean is less punishing for more considerations
             var considerationsCount = context.GetState<ConsiderationState>().GetValue();
-            var modificationFactor = 1.0f - 1.0f / considerationsCount;
-            var makeUpValue = (1.0f - score) * modificationFactor;
-            var adjustedScore = score + makeUpValue * score;
+            var adjustedScore = MathF.Pow(score, 1 / (float) considerationsCount);
             return FloatMath.Clamp(adjustedScore, 0.0f, 1.0f);
         }
 
