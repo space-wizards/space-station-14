@@ -9,6 +9,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Client.UserInterface
 {
@@ -21,8 +23,7 @@ namespace Content.Client.UserInterface
         public Button CreditsButton { get; }
         public Button LeaveButton { get; }
         public ChatBox Chat { get; }
-        public ItemList OnlinePlayerItemList { get; }
-        public ItemList PlayerReadyList { get; }
+        public LobbyPlayerList OnlinePlayerList { get; }
         public ServerInfo ServerInfo { get; }
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
@@ -226,17 +227,11 @@ namespace Content.Client.UserInterface
                                     CustomMinimumSize = (50,50),
                                     Children =
                                     {
-                                        (OnlinePlayerItemList = new ItemList
+                                        (OnlinePlayerList = new LobbyPlayerList
                                         {
                                             SizeFlagsVertical = SizeFlags.FillExpand,
                                             SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                        }),
-                                        (PlayerReadyList = new ItemList
-                                        {
-                                            SizeFlagsVertical = SizeFlags.FillExpand,
-                                            SizeFlagsHorizontal = SizeFlags.FillExpand,
-                                            SizeFlagsStretchRatio = 0.2f
-                                        }),
+                                        })
                                     }
                                 }
                             }
@@ -260,6 +255,61 @@ namespace Content.Client.UserInterface
                     }
                 });
             }
+        }
+    }
+
+    public class LobbyPlayerList : Control
+    {
+        private ScrollBar _scrollBar;
+        private VBoxContainer _vBox;
+
+        public LobbyPlayerList()
+        {
+            _vBox = new VBoxContainer
+            {
+                //SizeFlagsVertical = SizeFlags.FillExpand,
+                //SizeFlagsHorizontal = SizeFlags.FillExpand,
+            };
+            _scrollBar = new VScrollBar
+            {
+                SizeFlagsVertical = SizeFlags.Fill,
+                SizeFlagsHorizontal = SizeFlags.ShrinkEnd
+            };
+            AddChild(_vBox);
+            AddChild(_scrollBar);
+        }
+
+        // Adds a row
+        public void AddItem(string name, string status)
+        {
+            var hbox = new HBoxContainer
+            {
+                //SizeFlagsVertical = SizeFlags.FillExpand,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                
+            };
+
+            // Player Name
+            hbox.AddChild(new Label
+            {
+                Text = name,
+                SizeFlagsHorizontal = SizeFlags.FillExpand
+            });
+            // Status
+            hbox.AddChild(new Label
+            {
+                Text = status,
+                SizeFlagsHorizontal = SizeFlags.FillExpand,
+                SizeFlagsStretchRatio = 0.2f,
+            });
+
+            _vBox.AddChild(hbox);
+        }
+
+        // Deletes all rows
+        public void Clear()
+        {
+            _vBox.RemoveAllChildren();
         }
     }
 }
