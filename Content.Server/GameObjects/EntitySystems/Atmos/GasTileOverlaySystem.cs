@@ -172,7 +172,7 @@ namespace Content.Server.GameObjects.EntitySystems.Atmos
 
                 if (moles < gas.GasMolesVisible) continue;
 
-                var data = new GasData(i, (byte) (FloatMath.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
+                var data = new GasData(i, (byte) (MathHelper.Clamp01(moles / gas.GasMolesVisibleMax) * 255));
                 tileData.Add(data);
             }
 

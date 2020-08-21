@@ -452,7 +452,7 @@ namespace Content.Server.GameObjects.Components.Doors
                 return true;
             }
 
-            if (!await tool.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Prying, AirlockCheck)) return false;
+            if (!await tool.UseTool(eventArgs.User, Owner, 0.2f, ToolQuality.Prying, AirlockCheck)) return false;
 
             if (State == DoorState.Closed)
                 Open();

@@ -80,9 +80,8 @@ namespace Content.Server.GameTicking
         [ViewVariables] private readonly List<GameRule> _gameRules = new List<GameRule>();
         [ViewVariables] private readonly List<ManifestEntry> _manifest = new List<ManifestEntry>();
 
-        // Value is whether they're ready.
         [ViewVariables]
-        private readonly Dictionary<IPlayerSession, bool> _playersInLobby = new Dictionary<IPlayerSession, bool>();
+        private readonly Dictionary<IPlayerSession, PlayerStatus> _playersInLobby = new Dictionary<IPlayerSession, PlayerStatus>();
 
         [ViewVariables] private bool _initialized;
 
@@ -133,6 +132,8 @@ namespace Content.Server.GameTicking
             _configurationManager.RegisterCVar("game.lobbyduration", 20, CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.defaultpreset", "Suspicion", CVar.ARCHIVE);
             _configurationManager.RegisterCVar("game.fallbackpreset", "Sandbox", CVar.ARCHIVE);
+
+            PresetSuspicion.RegisterCVars(_configurationManager);
 
             _playerManager.PlayerStatusChanged += _handlePlayerStatusChanged;
 
@@ -237,7 +238,7 @@ namespace Content.Server.GameTicking
             List<IPlayerSession> readyPlayers;
             if (LobbyEnabled)
             {
-                readyPlayers = _playersInLobby.Where(p => p.Value).Select(p => p.Key).ToList();
+                readyPlayers = _playersInLobby.Where(p => p.Value == PlayerStatus.Ready).Select(p => p.Key).ToList();
             }
             else
             {
@@ -300,6 +301,9 @@ namespace Content.Server.GameTicking
                 {
                     throw new ApplicationException("Fallback preset failed to start!");
                 }
+
+                DisallowLateJoin = false;
+                DisallowLateJoin |= newPreset.DisallowLateJoin;
             }
 
             _roundStartTimeSpan = IoCManager.Resolve<IGameTiming>().RealTime;
@@ -326,7 +330,7 @@ namespace Content.Server.GameTicking
             (HumanoidCharacterProfile) (await _prefsManager.GetPreferencesAsync(p.SessionId.Username))
             .SelectedCharacter;
 
-        public void EndRound()
+        public void EndRound(string roundEndText = "")
         {
             DebugTools.Assert(RunLevel == GameRunLevel.InRound);
             Logger.InfoS("ticker", "Ending round!");
@@ -336,6 +340,7 @@ namespace Content.Server.GameTicking
             //Tell every client the round has ended.
             var roundEndMessage = _netManager.CreateNetMessage<MsgRoundEndMessage>();
             roundEndMessage.GamemodeTitle = MakeGamePreset(null).ModeTitle;
+            roundEndMessage.RoundEndText = roundEndText;
 
             //Get the timespan of the round.
             roundEndMessage.RoundDuration = IoCManager.Resolve<IGameTiming>().RealTime.Subtract(_roundStartTimeSpan);
@@ -380,6 +385,8 @@ namespace Content.Server.GameTicking
             if (!_playersInLobby.ContainsKey(player)) return;
 
             _spawnObserver(player);
+            _playersInLobby[player] = PlayerStatus.Observer;
+            _netManager.ServerSendToAll(GetStatusSingle(player, PlayerStatus.Observer));
         }
 
         public void MakeJoinGame(IPlayerSession player, string jobId = null)
@@ -393,9 +400,10 @@ namespace Content.Server.GameTicking
         {
             if (!_playersInLobby.ContainsKey(player)) return;
 
-            _playersInLobby[player] = ready;
+            var status = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
+            _playersInLobby[player] = ready ? PlayerStatus.Ready : PlayerStatus.NotReady;
             _netManager.ServerSendMessage(_getStatusMsg(player), player.ConnectedClient);
-            _netManager.ServerSendToAll(GetReadySingle(player, ready));
+            _netManager.ServerSendToAll(GetStatusSingle(player, status));
         }
 
         public T AddGameRule<T>() where T : GameRule, new()
@@ -887,13 +895,13 @@ namespace Content.Server.GameTicking
 
         private void _playerJoinLobby(IPlayerSession session)
         {
-            _playersInLobby.Add(session, false);
+            _playersInLobby.Add(session, PlayerStatus.NotReady);
 
             _prefsManager.OnClientConnected(session);
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinLobby>(), session.ConnectedClient);
             _netManager.ServerSendMessage(_getStatusMsg(session), session.ConnectedClient);
             _netManager.ServerSendMessage(GetInfoMsg(), session.ConnectedClient);
-            _netManager.ServerSendMessage(GetReadyStatus(), session.ConnectedClient);
+            _netManager.ServerSendMessage(GetPlayerStatus(), session.ConnectedClient);
         }
 
         private void _playerJoinGame(IPlayerSession session)
@@ -905,33 +913,35 @@ namespace Content.Server.GameTicking
             _netManager.ServerSendMessage(_netManager.CreateNetMessage<MsgTickerJoinGame>(), session.ConnectedClient);
         }
 
-        private MsgTickerLobbyReady GetReadyStatus()
+        private MsgTickerLobbyReady GetPlayerStatus()
         {
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
+            msg.PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>();
             foreach (var player in _playersInLobby.Keys)
             {
-                _playersInLobby.TryGetValue(player, out var ready);
-                msg.PlayerReady.Add(player.SessionId, ready);
+                _playersInLobby.TryGetValue(player, out var status);
+                msg.PlayerStatus.Add(player.SessionId, status);
             }
             return msg;
         }
 
-        private MsgTickerLobbyReady GetReadySingle(IPlayerSession player, bool ready)
+        private MsgTickerLobbyReady GetStatusSingle(IPlayerSession player, PlayerStatus status)
         {
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyReady>();
-            msg.PlayerReady = new Dictionary<NetSessionId, bool>();
-            msg.PlayerReady.Add(player.SessionId, ready);
+            msg.PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>
+            {
+                { player.SessionId, status }
+            };
             return msg;
         }
 
         private MsgTickerLobbyStatus _getStatusMsg(IPlayerSession session)
         {
-            _playersInLobby.TryGetValue(session, out var ready);
+            _playersInLobby.TryGetValue(session, out var status);
             var msg = _netManager.CreateNetMessage<MsgTickerLobbyStatus>();
             msg.IsRoundStarted = RunLevel != GameRunLevel.PreRoundLobby;
             msg.StartTime = _roundStartTimeUtc;
-            msg.YouAreReady = ready;
+            msg.YouAreReady = status == PlayerStatus.Ready;
             msg.Paused = Paused;
             return msg;
         }

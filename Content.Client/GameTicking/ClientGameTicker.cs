@@ -30,7 +30,7 @@ namespace Content.Client.GameTicking
         [ViewVariables] public string ServerInfoBlob { get; private set; }
         [ViewVariables] public DateTime StartTime { get; private set; }
         [ViewVariables] public bool Paused { get; private set; }
-        [ViewVariables] public Dictionary<NetSessionId, bool> Ready { get; private set; }
+        [ViewVariables] public Dictionary<NetSessionId, PlayerStatus> Status { get; private set; }
 
         public event Action InfoBlobUpdated;
         public event Action LobbyStatusUpdated;
@@ -54,7 +54,7 @@ namespace Content.Client.GameTicking
             });
             _netManager.RegisterNetMessage<MsgTickerLateJoinStatus>(nameof(MsgTickerLateJoinStatus), LateJoinStatus);
 
-            Ready = new Dictionary<NetSessionId, bool>();
+            Status = new Dictionary<NetSessionId, PlayerStatus>();
             _initialized = true;
         }
 
@@ -77,7 +77,7 @@ namespace Content.Client.GameTicking
             AreWeReady = message.YouAreReady;
             Paused = message.Paused;
             if (IsGameStarted)
-                Ready.Clear();
+                Status.Clear();
 
             LobbyStatusUpdated?.Invoke();
         }
@@ -103,9 +103,9 @@ namespace Content.Client.GameTicking
         private void LobbyReady(MsgTickerLobbyReady message)
         {
             // Merge the Dictionaries
-            foreach (var p in message.PlayerReady)
+            foreach (var p in message.PlayerStatus)
             {
-                Ready[p.Key] = p.Value;
+                Status[p.Key] = p.Value;
             }
             LobbyReadyUpdated?.Invoke();
         }
@@ -113,7 +113,7 @@ namespace Content.Client.GameTicking
         private void RoundEnd(MsgRoundEndMessage message)
         {
             //This is not ideal at all, but I don't see an immediately better fit anywhere else.
-            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundDuration, message.AllPlayersEndInfo);
+            var roundEnd = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.AllPlayersEndInfo);
 
         }
     }

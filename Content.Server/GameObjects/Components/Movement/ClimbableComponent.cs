@@ -174,8 +174,8 @@ namespace Content.Server.GameObjects.Components.Movement
                 // we may potentially need additional logic since we're forcing a player onto a climbable
                 // there's also the cases where the user might collide with the person they are forcing onto the climbable that i haven't accounted for
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} forces {1:them} onto {2:theName}!", user, entityToMove, Owner), 15);
-                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:them} onto {1:theName}!", entityToMove, Owner));
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} forces {1:theName} onto {2:theName}!", user, entityToMove, Owner), 15);
+                _notifyManager.PopupMessage(user, user, Loc.GetString("You force {0:theName} onto {1:theName}!", entityToMove, Owner));
             }
         }
 
@@ -210,7 +210,7 @@ namespace Content.Server.GameObjects.Components.Movement
 
                 climbMode.TryMoveTo(user.Transform.WorldPosition, endPoint);
 
-                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:them} jumps onto {1:theName}!", user, Owner), 15);
+                PopupMessageOtherClientsInRange(user, Loc.GetString("{0:theName} jumps onto {1:theName}!", user, Owner), 15);
                 _notifyManager.PopupMessage(user, user, Loc.GetString("You jump onto {0:theName}!", Owner));
             }
         }
