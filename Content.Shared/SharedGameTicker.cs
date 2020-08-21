@@ -308,7 +308,7 @@ namespace Content.Shared
 
         }
 
-        public enum PlayerStatus
+        public enum PlayerStatus : byte
         {
             NotReady = 0,
             Ready,

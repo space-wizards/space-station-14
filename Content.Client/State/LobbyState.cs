@@ -158,7 +158,7 @@ namespace Content.Client.State
 
         private void PlayerManagerOnPlayerListUpdated(object sender, EventArgs e)
         {
-            // Remove disconnected sessions from the Ready Dict //Question: Do we still need this? We clean the dict once we get ingame
+            // Remove disconnected sessions from the Ready Dict
             foreach (var p in _clientGameTicker.Status)
             {
                 if (!_playerManager.SessionsDict.TryGetValue(p.Key, out _))
