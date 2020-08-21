@@ -50,12 +50,12 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
         {
             if (!enabled)
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You turn on the radiation panel."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The panel turns on."));
                 enabled = true;
             }
             else
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("You turn off the radiation panel."));
+                Owner.PopupMessage(eventArgs.User, Loc.GetString("The panel turns off."));
                 enabled = false;
             }
 

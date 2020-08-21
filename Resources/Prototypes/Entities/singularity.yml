@@ -134,6 +134,13 @@
     sprite: Constructible/Power/emitter.rsi
     state: emitter
   - type: Emitter
+  - type: NodeContainer
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: MVPower
+  - type: PowerConsumer
+    voltage: Medium
+
 
 - type: entity
   name: Emitter Bolt
@@ -147,3 +154,6 @@
   - type: Icon
     sprite: Constructible/Power/emitter.rsi
     state: emitter_projectile
+  - type: Projectile
+    damages:
+      Burn: 30
