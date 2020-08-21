@@ -10,7 +10,7 @@ namespace Content.Shared.Physics
 {
     public class MoverController : VirtualController
     {
-        [Dependency] private readonly IPhysicsManager _physicsManager;
+        [Dependency] private readonly IPhysicsManager _physicsManager = default!;
 
         public override ICollidableComponent? ControlledComponent { protected get; set; }
 
