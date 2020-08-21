@@ -15,9 +15,10 @@ namespace Content.Server.Utility
         {
             var entityManager = inventory.Owner.EntityManager;
             var protoManager = IoCManager.Resolve<IPrototypeManager>();
+            var user = inventory.Owner;
 
             // Let's do nothing if the owner of the inventory has been deleted.
-            if (inventory.Owner.Deleted)
+            if (user.Deleted)
                 return false;
 
             // If we don't have that slot or there's already an item there, we do nothing.
@@ -28,8 +29,8 @@ namespace Content.Server.Utility
             if (!protoManager.HasIndex<EntityPrototype>(prototype))
                 return false;
 
-            // Let's spawn this in nullspace first...
-            var item = entityManager.SpawnEntity(prototype, MapCoordinates.Nullspace);
+            // Let's spawn this first...
+            var item = entityManager.SpawnEntity(prototype, user.Transform.MapPosition);
 
             // Helper method that deletes the item and returns false.
             bool DeleteItem()
