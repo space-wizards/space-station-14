@@ -352,6 +352,7 @@ namespace Content.Server.GameTicking
                 var mind = ply.ContentData().Mind;
                 if (mind != null)
                 {
+                    _playersInLobby.TryGetValue(ply, out var status);
                     var antag = mind.AllRoles.Any(role => role.Antagonist);
                     var playerEndRoundInfo = new RoundEndPlayerInfo()
                     {
@@ -360,7 +361,8 @@ namespace Content.Server.GameTicking
                         Role = antag
                             ? mind.AllRoles.First(role => role.Antagonist).Name
                             : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("Unknown"),
-                        Antag = antag
+                        Antag = antag,
+                        Observer = status == PlayerStatus.Observer,
                     };
                     listOfPlayerInfo.Add(playerEndRoundInfo);
                 }
