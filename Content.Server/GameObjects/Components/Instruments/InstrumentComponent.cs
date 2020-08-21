@@ -302,6 +302,7 @@ namespace Content.Server.GameObjects.Components.Instruments
             {
                 InstrumentPlayer = null;
                 Clean();
+                _userInterface.CloseAll();
             }
 
             if ((_batchesDropped >= MaxMidiBatchDropped

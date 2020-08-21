@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 
 namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders
 {

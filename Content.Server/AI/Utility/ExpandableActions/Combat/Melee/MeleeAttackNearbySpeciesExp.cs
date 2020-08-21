@@ -14,7 +14,8 @@ namespace Content.Server.AI.Utility.ExpandableActions.Combat.Melee
         public override IEnumerable<UtilityAction> GetActions(Blackboard context)
         {
             var owner = context.GetState<SelfState>().GetValue();
-            foreach (var entity in context.GetState<NearbySpeciesState>().GetValue())
+
+            foreach (var entity in context.GetState<NearbyBodiesState>().GetValue())
             {
                 yield return new MeleeWeaponAttackEntity(owner, entity, Bonus);
             }

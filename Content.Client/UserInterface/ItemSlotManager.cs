@@ -1,17 +1,12 @@
-﻿using System;
-using Content.Client.GameObjects;
-using Content.Client.GameObjects.Components.Storage;
+﻿using Content.Client.GameObjects.Components.Storage;
 using Content.Client.GameObjects.EntitySystems;
-using Content.Client.Utility;
 using Content.Shared.GameObjects.Components.Items;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.GameObjects.EntitySystems;
-using Robust.Client.Graphics;
 using Robust.Client.Interfaces.GameObjects.Components;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Interfaces.Input;
-using Robust.Client.Interfaces.ResourceManagement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Input;
@@ -112,7 +107,7 @@ namespace Content.Client.UserInterface
                 var progress = (_gameTiming.CurTime - start).TotalSeconds / length;
                 var ratio = (progress <= 1 ? (1 - progress) : (_gameTiming.CurTime - end).TotalSeconds * -5);
 
-                cooldownDisplay.Progress = (float)ratio.Clamp(-1, 1);
+                cooldownDisplay.Progress = MathHelper.Clamp((float)ratio, -1, 1);
 
                 if (ratio > -1f)
                 {

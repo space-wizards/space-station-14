@@ -17,9 +17,8 @@
            - VaultImpassable
    - type: SnapGrid
      offset: Center
-   - type: Damageable
    - type: Destructible
-     thresholdvalue: 50
+     maxHP: 50
    - type: UserInterface
      interfaces:
      - key: enum.InstrumentUiKey.Key
@@ -44,6 +43,7 @@
    name: minimoog
    parent: BasePlaceableInstrument
    id: MinimoogInstrument
+   description: 'This is a minimoog, like a space piano, but more spacey!' 
    components:
    - type: Instrument
      program: 81
@@ -73,6 +73,8 @@
    name: xylophone
    parent: BasePlaceableInstrument
    id: XylophoneInstrument
+   # could not find the description for this item, so this is just temporary
+   description: That's a Xylophone
    components:
    - type: Instrument
      program: 13

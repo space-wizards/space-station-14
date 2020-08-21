@@ -3,13 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
+using Content.Server.GameObjects.Components.Items.Storage;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.Interfaces;
 using Content.Server.Interfaces.GameObjects.Components.Items;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Disposal;
 using Content.Shared.GameObjects.EntitySystems;
+using Content.Shared.GameObjects.Verbs;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -83,16 +86,16 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         [ViewVariables]
         public bool Powered =>
-            !Owner.TryGetComponent(out PowerReceiverComponent receiver) ||
+            !Owner.TryGetComponent(out PowerReceiverComponent? receiver) ||
             receiver.Powered;
 
         [ViewVariables]
         public bool Anchored =>
-            !Owner.TryGetComponent(out CollidableComponent collidable) ||
+            !Owner.TryGetComponent(out CollidableComponent? collidable) ||
             collidable.Anchored;
 
         [ViewVariables]
-        private State State => _pressure >= 1 ? State.Ready : State.Pressurizing;
+        private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables]
         private bool Engaged
@@ -119,8 +122,14 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
+            if (!entity.TryGetComponent(out ICollidableComponent? collidable) ||
+                !collidable.CanCollide)
+            {
+                return false;
+            }
+
             if (!entity.HasComponent<ItemComponent>() &&
-                !entity.HasComponent<SpeciesComponent>())
+                !entity.HasComponent<IBodyManagerComponent>())
             {
                 return false;
             }
@@ -150,7 +159,7 @@ namespace Content.Server.GameObjects.Components.Disposal
         {
             TryQueueEngage();
 
-            if (entity.TryGetComponent(out IActorComponent actor))
+            if (entity.TryGetComponent(out IActorComponent? actor))
             {
                 _userInterface.Close(actor.playerSession);
             }
@@ -172,7 +181,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private bool TryDrop(IEntity user, IEntity entity)
         {
-            if (!user.TryGetComponent(out HandsComponent hands))
+            if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return false;
             }
@@ -264,7 +273,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void TogglePower()
         {
-            if (!Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            if (!Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -343,7 +352,7 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         private void UpdateVisualState(bool flush)
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent appearance))
+            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 return;
             }
@@ -355,6 +364,10 @@ namespace Content.Server.GameObjects.Components.Disposal
                 appearance.SetData(Visuals.Handle, HandleState.Normal);
                 appearance.SetData(Visuals.Light, LightState.Off);
                 return;
+            }
+            else if (_pressure < 1)
+            {
+                appearance.SetData(Visuals.VisualState, VisualState.Charging);
             }
             else
             {
@@ -475,7 +488,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             var collidable = Owner.EnsureComponent<CollidableComponent>();
             collidable.AnchoredChanged += UpdateVisualState;
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 receiver.OnPowerStateChanged += PowerStateChanged;
             }
@@ -485,12 +498,12 @@ namespace Content.Server.GameObjects.Components.Disposal
 
         public override void OnRemove()
         {
-            if (Owner.TryGetComponent(out ICollidableComponent collidable))
+            if (Owner.TryGetComponent(out ICollidableComponent? collidable))
             {
                 collidable.AnchoredChanged -= UpdateVisualState;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent receiver))
+            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
             {
                 receiver.OnPowerStateChanged -= PowerStateChanged;
             }
@@ -517,7 +530,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             switch (message)
             {
                 case RelayMovementEntityMessage msg:
-                    if (!msg.Entity.TryGetComponent(out HandsComponent hands) ||
+                    if (!msg.Entity.TryGetComponent(out HandsComponent? hands) ||
                         hands.Count == 0 ||
                         _gameTiming.CurTime < _lastExitAttempt + ExitAttemptDelay)
                     {
@@ -546,7 +559,7 @@ namespace Content.Server.GameObjects.Components.Disposal
                 return false;
             }
 
-            if (!eventArgs.User.TryGetComponent(out IActorComponent actor))
+            if (!eventArgs.User.TryGetComponent(out IActorComponent? actor))
             {
                 return false;
             }
@@ -562,7 +575,7 @@ namespace Content.Server.GameObjects.Components.Disposal
             return true;
         }
 
-        bool IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
+        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryDrop(eventArgs.User, eventArgs.Using);
         }

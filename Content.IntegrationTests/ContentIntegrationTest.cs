@@ -4,6 +4,7 @@ using Content.Client;
 using Content.Client.Interfaces.Parallax;
 using Content.Server;
 using Content.Server.Interfaces.GameTicking;
+using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Interfaces.Network;
 using Robust.Shared.IoC;
@@ -12,6 +13,7 @@ using EntryPoint = Content.Client.EntryPoint;
 
 namespace Content.IntegrationTests
 {
+    [Parallelizable(ParallelScope.All)]
     public abstract class ContentIntegrationTest : RobustIntegrationTest
     {
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)

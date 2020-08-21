@@ -1,6 +1,8 @@
 ﻿#nullable enable
 using System;
+using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Mobs;
+using Content.Shared.GameObjects.Components.Rotation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Interfaces.Configuration;
@@ -54,7 +56,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentWalkSpeed;
                 }
@@ -67,7 +69,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         {
             get
             {
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent component))
+                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? component))
                 {
                     return component.CurrentSprintSpeed;
                 }
@@ -142,11 +144,11 @@ namespace Content.Shared.GameObjects.Components.Movement
         /// <inheritdoc />
         public override void OnAdd()
         {
-            // This component requires that the entity has a PhysicsComponent.
-            if (!Owner.HasComponent<IPhysicsComponent>())
+            // This component requires that the entity has a CollidableComponent.
+            if (!Owner.HasComponent<ICollidableComponent>())
                 Logger.Error(
                     $"[ECS] {Owner.Prototype?.Name} - {nameof(SharedPlayerInputMoverComponent)} requires" +
-                    $" {nameof(IPhysicsComponent)}. ");
+                    $" {nameof(ICollidableComponent)}. ");
 
             base.OnAdd();
         }
@@ -268,7 +270,7 @@ namespace Content.Shared.GameObjects.Components.Movement
         bool ICollideSpecial.PreventCollide(IPhysBody collidedWith)
         {
             // Don't collide with other mobs
-            return collidedWith.Entity.HasComponent<SharedSpeciesComponent>();
+            return collidedWith.Entity.HasComponent<IBodyManagerComponent>();
         }
 
         [Serializable, NetSerializable]

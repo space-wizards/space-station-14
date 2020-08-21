@@ -1,4 +1,7 @@
-﻿using Content.Client.GameObjects.Components.Cargo;
+﻿using System;
+using System.Collections.Generic;
+using Content.Client.GameObjects.Components.Cargo;
+using Content.Client.UserInterface.Stylesheets;
 using Content.Shared.Prototypes.Cargo;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface.Controls;
@@ -7,9 +10,6 @@ using Robust.Client.Utility;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using System;
-using System.Collections.Generic;
-using Content.Client.UserInterface.Stylesheets;
 
 namespace Content.Client.UserInterface.Cargo
 {

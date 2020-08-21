@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.Interactable;
 using Content.Server.GameObjects.Components.Power.ApcNetComponents;
 using Content.Server.GameObjects.Components.VendingMachines;
@@ -379,7 +380,7 @@ namespace Content.Server.GameObjects.Components.Doors
             return _powerReceiver.Powered;
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
                 return false;
@@ -397,22 +398,27 @@ namespace Content.Server.GameObjects.Components.Doors
                 }
             }
 
-            if (!tool.UseTool(eventArgs.User, Owner, ToolQuality.Prying)) return false;
-
-            if (IsBolted())
+            bool AirlockCheck()
             {
-                var notify = IoCManager.Resolve<IServerNotifyManager>();
-                notify.PopupMessage(Owner, eventArgs.User,
-                    Loc.GetString("The airlock's bolts prevent it from being forced!"));
+                if (IsBolted())
+                {
+                    var notify = IoCManager.Resolve<IServerNotifyManager>();
+                    notify.PopupMessage(Owner, eventArgs.User,
+                        Loc.GetString("The airlock's bolts prevent it from being forced!"));
+                    return false;
+                }
+
+                if (IsPowered())
+                {
+                    var notify = IoCManager.Resolve<IServerNotifyManager>();
+                    notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
+                    return false;
+                }
+
                 return true;
             }
 
-            if (IsPowered())
-            {
-                var notify = IoCManager.Resolve<IServerNotifyManager>();
-                notify.PopupMessage(Owner, eventArgs.User, Loc.GetString("The powered motors block your efforts!"));
-                return true;
-            }
+            if (!await tool.UseTool(eventArgs.User, Owner, 0.2f, ToolQuality.Prying, AirlockCheck)) return false;
 
             if (State == DoorState.Closed)
                 Open();

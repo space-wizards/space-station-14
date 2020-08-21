@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.EntitySystems.Click;
+﻿using System.Threading.Tasks;
 using Content.Shared.GameObjects.Components;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces.GameObjects.Components;
@@ -8,7 +8,7 @@ using Robust.Server.Interfaces.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameObjects.Components.Interactable
+namespace Content.Server.GameObjects.Components.Paper
 {
     [RegisterComponent]
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
@@ -67,7 +67,7 @@ namespace Content.Server.GameObjects.Components.Interactable
             UpdateUserInterface();
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.Using.HasComponent<WriteComponent>())
                 return false;

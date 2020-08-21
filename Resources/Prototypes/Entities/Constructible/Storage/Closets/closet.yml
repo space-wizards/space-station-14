@@ -18,6 +18,8 @@
     state: generic_door
   - type: Clickable
   - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    soundHit: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Collidable
     shapes:
@@ -30,7 +32,6 @@
       - SmallImpassable
       layer:
       - Opaque
-      - Impassable
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
@@ -40,9 +41,8 @@
     anchored: false
   - type: EntityStorage
   - type: PlaceableSurface
-  - type: Damageable
   - type: Destructible
-    thresholdvalue: 100
+    maxHP: 100
   - type: Appearance
     visuals:
     - type: StorageVisualizer

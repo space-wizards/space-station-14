@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Power.ApcNetComponents;
+using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.GameObjects.EntitySystems;
 using Content.Server.Interfaces;
-using Content.Shared.GameObjects;
+using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.Components.Container;
@@ -18,7 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.GameObjects.Components.Power
+namespace Content.Server.GameObjects.Components.Power.ApcNetComponents.PowerReceiverUsers
 {
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
@@ -67,14 +70,14 @@ namespace Content.Server.GameObjects.Components.Power
             }
         }
 
-        public bool InteractUsing(InteractUsingEventArgs eventArgs)
+        public async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return InsertBulb(eventArgs.Using);
         }
 
         public bool InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out DamageableComponent damageableComponent))
+            if (!eventArgs.User.TryGetComponent(out IDamageableComponent damageableComponent))
             {
                 Eject();
                 return false;
@@ -97,7 +100,7 @@ namespace Content.Server.GameObjects.Components.Power
 
             void Burn()
             {
-                damageableComponent.TakeDamage(DamageType.Heat, 20, Owner);
+                damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 var audioSystem = EntitySystem.Get<AudioSystem>();
                 audioSystem.PlayFromEntity("/Audio/Effects/lightburn.ogg", Owner);
             }

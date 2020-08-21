@@ -2,8 +2,6 @@ using Content.Client.GameObjects.EntitySystems.AI;
 using JetBrains.Annotations;
 using Robust.Client.Interfaces.Console;
 using Robust.Shared.GameObjects.Systems;
-using Robust.Shared.Interfaces.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {

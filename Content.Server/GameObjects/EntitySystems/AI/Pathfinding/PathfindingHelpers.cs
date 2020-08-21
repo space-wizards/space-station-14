@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Accessible;
 using Content.Server.GameObjects.EntitySystems.AI.Pathfinding.Pathfinders;
-using Content.Server.GameObjects.EntitySystems.Pathfinding;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
 using Robust.Shared.IoC;
@@ -38,40 +36,40 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
             // If it's a diagonal we need to check NSEW to see if we can get to it and stop corner cutting, NE needs N and E etc.
             // Given there's different collision layers stored for each node in the graph it's probably not worth it to cache this
             // Also this will help with corner-cutting
-            
+
             PathfindingNode northNeighbor = null;
             PathfindingNode southNeighbor = null;
             PathfindingNode eastNeighbor = null;
             PathfindingNode westNeighbor = null;
             foreach (var neighbor in currentNode.GetNeighbors())
             {
-                if (neighbor.TileRef.X == currentNode.TileRef.X && 
+                if (neighbor.TileRef.X == currentNode.TileRef.X &&
                     neighbor.TileRef.Y == currentNode.TileRef.Y + 1)
                 {
                     northNeighbor = neighbor;
                     continue;
-                }   
-                
-                if (neighbor.TileRef.X == currentNode.TileRef.X + 1 && 
+                }
+
+                if (neighbor.TileRef.X == currentNode.TileRef.X + 1 &&
                     neighbor.TileRef.Y == currentNode.TileRef.Y)
                 {
                     eastNeighbor = neighbor;
                     continue;
                 }
-                
-                if (neighbor.TileRef.X == currentNode.TileRef.X && 
+
+                if (neighbor.TileRef.X == currentNode.TileRef.X &&
                     neighbor.TileRef.Y == currentNode.TileRef.Y - 1)
                 {
                     southNeighbor = neighbor;
                     continue;
-                }   
-                
-                if (neighbor.TileRef.X == currentNode.TileRef.X - 1 && 
+                }
+
+                if (neighbor.TileRef.X == currentNode.TileRef.X - 1 &&
                     neighbor.TileRef.Y == currentNode.TileRef.Y)
                 {
                     westNeighbor = neighbor;
                     continue;
-                }   
+                }
             }
 
             switch (direction)
@@ -130,7 +128,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             return true;
         }
-        
+
         public static Queue<TileRef> ReconstructPath(Dictionary<PathfindingNode, PathfindingNode> cameFrom, PathfindingNode current)
         {
             var running = new Stack<TileRef>();
@@ -244,7 +242,7 @@ namespace Content.Server.GameObjects.EntitySystems.AI.Pathfinding
 
             return 1.4f * dstX + (dstY - dstX);
         }
-        
+
         public static float OctileDistance(TileRef endTile, TileRef startTile)
         {
             // "Fast Euclidean" / octile.

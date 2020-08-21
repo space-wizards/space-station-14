@@ -1,4 +1,4 @@
-﻿using Content.Server.Interfaces.GameObjects.Components.Interaction;
+﻿using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.GameObjects.Components.Research;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Robust.Server.GameObjects.Components.UserInterface;

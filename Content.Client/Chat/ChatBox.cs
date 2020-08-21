@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Robust.Client.Console;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.UserInterface;
@@ -35,6 +34,8 @@ namespace Content.Client.Chat
         public string DefaultChatFormat { get; set; }
 
         public bool ReleaseFocusOnEnter { get; set; } = true;
+
+        public bool ClearOnEnter { get; set; } = true;
 
         public ChatBox()
         {
@@ -167,12 +168,18 @@ namespace Content.Client.Chat
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
         {
+            // We set it there to true so it's set to false by TextSubmitted.Invoke if necessary
+            ClearOnEnter = true;
+
             if (!string.IsNullOrWhiteSpace(args.Text))
             {
                 TextSubmitted?.Invoke(this, args.Text);
             }
 
-            Input.Clear();
+            if (ClearOnEnter)
+            {
+                Input.Clear();
+            }
 
             if (ReleaseFocusOnEnter)
             {
