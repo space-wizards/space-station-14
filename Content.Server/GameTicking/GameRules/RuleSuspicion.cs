@@ -3,11 +3,15 @@ using System.Threading;
 using Content.Server.GameObjects.Components.Suspicion;
 using Content.Server.Interfaces.Chat;
 using Content.Server.Interfaces.GameTicking;
+using Content.Server.Mobs;
 using Content.Server.Mobs.Roles;
 using Content.Server.Players;
 using Content.Shared.GameObjects.Components.Damage;
+using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.IoC;
 using Timer = Robust.Shared.Timers.Timer;
 
@@ -32,6 +36,9 @@ namespace Content.Server.GameTicking.GameRules
         public override void Added()
         {
             _chatManager.DispatchServerAnnouncement("There are traitors on the station! Find them, and kill them!");
+
+            EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Misc/tatoralert.ogg", AudioParams.Default,
+                (session) => session.ContentData().Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
             Timer.SpawnRepeating(DeadCheckDelay, _checkWinConditions, _checkTimerCancel.Token);
         }
