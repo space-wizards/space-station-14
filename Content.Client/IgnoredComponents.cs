@@ -162,6 +162,10 @@
             "GasVapor",
             "MobStateManager",
             "Metabolism",
+            "RadiationPanel",
+            "ContainmentFieldGenerator",
+            "ContainmentField",
+            "Emitter"
         };
     }
 }

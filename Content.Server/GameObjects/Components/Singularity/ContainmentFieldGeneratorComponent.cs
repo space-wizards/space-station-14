@@ -17,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Singularity
     [RegisterComponent]
     public class ContainmentFieldGeneratorComponent : Component, IExamine
     {
-        public override string Name => "Containment Field Generator";
+        public override string Name => "ContainmentFieldGenerator";
 
         public int Power = 5;
 

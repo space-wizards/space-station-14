@@ -84,7 +84,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
 
         public bool Fire()
         {
-            if (DrawRate > ReceivedPower)
+            if (DrawRate != ReceivedPower)
             {
                 return false;
             }

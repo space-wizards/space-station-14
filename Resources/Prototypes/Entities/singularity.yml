@@ -18,7 +18,6 @@
   - type: Physics
     mass: 5
   - type: Singularity
-  - type: CollidableComponent
   - type: Sprite
     sprite: Effects/Singularity/singularity_1.rsi
     state: singularity_1
@@ -52,8 +51,10 @@
     sprite: Constructible/Power/radiation_panel.rsi
     state: ca_active
   - type: NodeContainer
-    nodeTypes: { HVPower : ["AdjacentNode"] }
-  - type: Radiation Panel
+    nodes:
+    - !type:AdjacentNode
+      nodeGroupID: HVPower
+  - type: RadiationPanel
   - type: Anchorable
 
 - type: entity
@@ -80,7 +81,7 @@
   - type: Icon
     sprite: Constructible/Power/field_generator.rsi
     state: Field_Gen
-  - type: Containment Field Generator
+  - type: ContainmentFieldGenerator
   - type: Anchorable
 
 - type: entity
@@ -107,7 +108,7 @@
   - type: Icon
     sprite: Effects/contain_f.rsi
     state: Contain_F
-  - type: Containment Field
+  - type: ContainmentField
 
 - type: entity
   name: Emitter
@@ -134,12 +135,11 @@
     sprite: Constructible/Power/emitter.rsi
     state: emitter
   - type: Emitter
+    voltage: Medium
   - type: NodeContainer
     nodes:
     - !type:AdjacentNode
       nodeGroupID: MVPower
-  - type: PowerConsumer
-    voltage: Medium
 
 
 - type: entity
@@ -155,5 +155,3 @@
     sprite: Constructible/Power/emitter.rsi
     state: emitter_projectile
   - type: Projectile
-    damages:
-      Burn: 30
