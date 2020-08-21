@@ -123,9 +123,9 @@ namespace Content.Shared.GameObjects.Components.Movement
 
             collidable.Hard = false;
 
-            IPhysShape shape;
+            var shape = collidable.PhysicsShapes.FirstOrDefault();
 
-            if ((shape = collidable.PhysicsShapes.ElementAtOrDefault(0)) != null)
+            if (shape != null)
             {
                 shape.CollisionLayer |= (int) CollisionGroup.SmallImpassable;
                 shape.CollisionMask = (int) CollisionGroup.None;

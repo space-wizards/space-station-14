@@ -178,7 +178,7 @@ namespace Content.Server.GameObjects.Components.Body
 
             var target = (BodyPart) targetObject;
             var message = target.TryInstallDroppedMechanism(this)
-                ? Loc.GetString("You jam the {1} inside {0:them}.", _performerCache, ContainedMechanism.Name)
+                ? Loc.GetString("You jam the {0} inside {1:them}.", ContainedMechanism.Name, _performerCache)
                 : Loc.GetString("You can't fit it in!");
 
             _sharedNotifyManager.PopupMessage(

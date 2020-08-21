@@ -405,7 +405,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
             if (hands.GetActiveHand == null)
             {
                 _notifyManager.PopupMessage(Owner.Transform.GridPosition, args.User,
-                    _localizationManager.GetString("You have nothing on your hand."));
+                    Loc.GetString("You have nothing on your hand."));
                 return false;
             }
 
