@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using Content.Server.Atmos;
 using Content.Server.GameObjects.Components.Access;
 using Content.Server.GameObjects.Components.Atmos;
 using Content.Server.GameObjects.Components.GUI;
 using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.GameObjects.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.GameObjects.Components.Damage;
@@ -49,11 +51,11 @@ namespace Content.Server.GameObjects.Components.Doors
         private AppearanceComponent _appearance;
         private CancellationTokenSource _cancellationTokenSource;
 
-        private static readonly TimeSpan CloseTimeOne = TimeSpan.FromSeconds(0.3f);
-        private static readonly TimeSpan CloseTimeTwo = TimeSpan.FromSeconds(0.9f);
-        private static readonly TimeSpan OpenTimeOne = TimeSpan.FromSeconds(0.3f);
-        private static readonly TimeSpan OpenTimeTwo = TimeSpan.FromSeconds(0.9f);
-        private static readonly TimeSpan DenyTime = TimeSpan.FromSeconds(0.45f);
+        protected virtual TimeSpan CloseTimeOne => TimeSpan.FromSeconds(0.3f);
+        protected virtual TimeSpan CloseTimeTwo => TimeSpan.FromSeconds(0.9f);
+        protected virtual TimeSpan OpenTimeOne => TimeSpan.FromSeconds(0.3f);
+        protected virtual TimeSpan OpenTimeTwo => TimeSpan.FromSeconds(0.9f);
+        protected virtual TimeSpan DenyTime => TimeSpan.FromSeconds(0.45f);
 
         private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
@@ -261,6 +263,57 @@ namespace Content.Server.GameObjects.Components.Doors
                     Timer.Spawn(TimeSpan.FromSeconds(DoorStunTime) - OpenTimeOne - OpenTimeTwo, () => Open());
                 }
             }
+        }
+
+        public bool IsHoldingPressure(float threshold = 20)
+        {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            if (!Owner.Transform.GridPosition.TryGetTileAtmosphere(out var tileAtmos))
+                return false;
+
+            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
+
+            if (gridAtmosphere == null)
+                return false;
+
+            var minMoles = float.MaxValue;
+            var maxMoles = 0f;
+
+            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            {
+                var moles = adjacent.Air.TotalMoles;
+                if (moles < minMoles)
+                    minMoles = moles;
+                if (moles > maxMoles)
+                    maxMoles = moles;
+            }
+
+            return (maxMoles - minMoles) > threshold;
+        }
+
+        public bool IsHoldingFire()
+        {
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            if (!Owner.Transform.GridPosition.TryGetTileAtmosphere(out var tileAtmos))
+                return false;
+
+            if (tileAtmos.Hotspot.Valid)
+                return true;
+
+            var gridAtmosphere = atmosphereSystem.GetGridAtmosphere(Owner.Transform.GridID);
+
+            if (gridAtmosphere == null)
+                return false;
+
+            foreach (var (direction, adjacent) in gridAtmosphere.GetAdjacentTiles(tileAtmos.GridIndices))
+            {
+                if (adjacent.Hotspot.Valid)
+                    return true;
+            }
+
+            return false;
         }
 
         public bool Close()

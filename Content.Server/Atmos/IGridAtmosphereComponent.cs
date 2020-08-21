@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos
 {
@@ -150,6 +151,11 @@ namespace Content.Server.Atmos
         /// <param name="cellCount"></param>
         /// <returns></returns>
         float GetVolumeForCells(int cellCount);
+
+        /// <summary>
+        ///     Returns a dictionary of adjacent TileAtmospheres.
+        /// </summary>
+        Dictionary<Direction, TileAtmosphere> GetAdjacentTiles(MapIndices indices, bool includeAirBlocked = false);
 
         void Update(float frameTime);
     }
