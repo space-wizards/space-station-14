@@ -36,9 +36,7 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: BodyManager
-    baseTemplate: bodyTemplate.Humanoid
-    basePreset: bodyPreset.BasicHuman
+  - type: Damageable
   - type: Metabolism
   - type: MobStateManager
   - type: HeatResistance
