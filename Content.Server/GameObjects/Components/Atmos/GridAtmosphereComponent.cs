@@ -237,8 +237,7 @@ namespace Content.Server.GameObjects.Components.Atmos
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveActiveTile(TileAtmosphere? tile)
         {
-            if (Grid == null) return;
-            if (tile == null) return;
+            if (Grid == null || tile == null) return;
             _activeTiles.Remove(tile);
             tile.Excited = false;
             tile.ExcitedGroup?.Dispose();
