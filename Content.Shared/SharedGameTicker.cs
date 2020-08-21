@@ -191,13 +191,13 @@ namespace Content.Shared
             #endregion
 
             /// <summary>
-            /// The Players Ready (SessionID:ready)
+            /// The Status of the Player in the lobby (ready, observer, ...)
             /// </summary>
-            public Dictionary<NetSessionId, bool> PlayerReady { get; set; }
+            public Dictionary<NetSessionId, PlayerStatus> PlayerStatus { get; set; }
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
-                PlayerReady = new Dictionary<NetSessionId, bool>();
+                PlayerStatus = new Dictionary<NetSessionId, PlayerStatus>();
                 var length = buffer.ReadInt32();
                 for (int i = 0; i < length; i++)
                 {
@@ -208,16 +208,16 @@ namespace Content.Shared
                     {
                         serializer.DeserializeDirect(stream, out sessionID);
                     }
-                    var ready = buffer.ReadBoolean();
-                    PlayerReady.Add(sessionID, ready);
+                    var status = (PlayerStatus)buffer.ReadByte();
+                    PlayerStatus.Add(sessionID, status);
                 }
             }
 
             public override void WriteToBuffer(NetOutgoingMessage buffer)
             {
                 var serializer = IoCManager.Resolve<IRobustSerializer>();
-                buffer.Write(PlayerReady.Count);
-                foreach (var p in PlayerReady)
+                buffer.Write(PlayerStatus.Count);
+                foreach (var p in PlayerStatus)
                 {
                     using (var stream = new MemoryStream())
                     {
@@ -226,7 +226,7 @@ namespace Content.Shared
                         stream.TryGetBuffer(out var segment);
                         buffer.Write(segment);
                     }
-                    buffer.Write(p.Value);
+                    buffer.Write((byte)p.Value);
                 }
             }
         }
@@ -238,7 +238,6 @@ namespace Content.Shared
             public string PlayerICName;
             public string Role;
             public bool Antag;
-
         }
 
         protected class MsgRoundEndMessage : NetMessage
@@ -307,6 +306,13 @@ namespace Content.Shared
                 }
             }
 
+        }
+
+        public enum PlayerStatus : byte
+        {
+            NotReady = 0,
+            Ready,
+            Observer,
         }
     }
 }
