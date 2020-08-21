@@ -23,7 +23,7 @@ namespace Content.Server.GameTicking
             PlayerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
-        protected virtual void PlayerStatusChanged(object sender, SessionStatusEventArgs args)
+        protected virtual void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
             var session = args.Session;
 
