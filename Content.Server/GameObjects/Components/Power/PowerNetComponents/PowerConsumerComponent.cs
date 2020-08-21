@@ -11,7 +11,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     {
         public override string Name => "PowerConsumer";
 
-        /// <summary>d
+        /// <summary>
         ///     How much power this needs to be fully powered.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
