@@ -13,6 +13,8 @@ using Content.Server.GameObjects.Components.GUI;
 using Content.Shared.GameObjects.Components.ActionBlocking;
 using Content.Shared.GameObjects.Verbs;
 using Robust.Shared.Log;
+using System.Linq;
+using Content.Server.GameObjects.Components.Items.Storage;
 
 namespace Content.Server.GameObjects.Components.ActionBlocking
 {
@@ -91,12 +93,21 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         public void AddNewCuffs(CuffConfig config)
         {
             _cuffConfigs.Add(config);
+            CanStillInteract = _hands.Count > CuffedHandCount;
+
+            UpdateHeldItems();
+            Dirty();
+        }
+
+        public void Update(float frameTime)
+        {
+            UpdateHandCount(); 
         }
 
         /// <summary>
         /// Check the current amount of hands the owner has, and if there's less hands than active cuffs we remove some cuffs.
         /// </summary>
-        public void UpdateHandCount() // TODO: WE NEED TO CALL THIS FROM AN UPDATE OR SOMETHING TO KEEP THE CUFFS SYNCED WITH THE HANDS
+        private void UpdateHandCount() 
         {
             _dirtyThisFrame = false;
 
@@ -118,6 +129,31 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             {
                 CanStillInteract = _hands.Count > CuffedHandCount;
                 Dirty();
+            }
+        }
+
+        /// <summary>
+        /// Check how many items the user is holding and if it's more than the number of cuffed hands, drop some items.
+        /// </summary>
+        public void UpdateHeldItems()
+        {
+            var itemCount = _hands.GetAllHeldItems().Count();
+            var freeHandCount = _hands.Count - CuffedHandCount;
+
+            if (freeHandCount < itemCount)
+            {
+                foreach (ItemComponent item in _hands.GetAllHeldItems())
+                {
+                    if (freeHandCount < itemCount)
+                    {
+                        freeHandCount++;
+                        _hands.Drop(item.Owner);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
         }
 
@@ -153,7 +189,6 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
             var uncuffTime = isOwner ? config.BreakoutTime : config.UncuffTime;
             var doAfterEventArgs = new DoAfterEventArgs(user, uncuffTime)
             {
-                BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,

@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿
 using Content.Server.GameObjects.EntitySystems.DoAfter;
 using Content.Shared.GameObjects.EntitySystems;
 using Content.Shared.Interfaces;
@@ -122,7 +122,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         // User has existing CuffedComponent so we add a new cuff entry to it.
         private async void TryUpdateCuff(IEntity user, IEntity target, CuffedComponent cuffs)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(user, _cuffTime)
+            var doAfterEventArgs = new DoAfterEventArgs(user, _cuffTime, default, target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
@@ -175,7 +175,7 @@ namespace Content.Server.GameObjects.Components.ActionBlocking
         // User has no CuffedComponent yet so we add one.
         private async void TryAddCuff(IEntity user, IEntity target)
         {
-            var doAfterEventArgs = new DoAfterEventArgs(user, _cuffTime)
+            var doAfterEventArgs = new DoAfterEventArgs(user, _cuffTime, default, target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
