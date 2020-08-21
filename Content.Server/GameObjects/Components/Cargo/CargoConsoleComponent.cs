@@ -20,9 +20,7 @@ namespace Content.Server.GameObjects.Components.Cargo
     [ComponentReference(typeof(IActivate))]
     public class CargoConsoleComponent : SharedCargoConsoleComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly ICargoOrderDataManager _cargoOrderDataManager = default!;
-#pragma warning restore 649
 
         [ViewVariables]
         public int Points = 1000;

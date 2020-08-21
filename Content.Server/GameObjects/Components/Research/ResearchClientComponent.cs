@@ -15,9 +15,7 @@ namespace Content.Server.GameObjects.Components.Research
     [RegisterComponent]
     public class ResearchClientComponent : SharedResearchClientComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-#pragma warning restore 649
 
         // TODO: Create GUI for changing RD server.
         private BoundUserInterface? UserInterface =>

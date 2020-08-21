@@ -23,10 +23,8 @@ namespace Content.Server.GameObjects.Components.Research
     [ComponentReference(typeof(IActivate))]
     public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-#pragma warning restore 649
 
         private const string SoundCollectionName = "keyboard";
 

@@ -23,10 +23,8 @@ namespace Content.Server.GameObjects.Components.Atmos
     [RegisterComponent]
     public class GasAnalyzerComponent : SharedGasAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-#pragma warning restore 649
 
         private GasAnalyzerDanger _pressureDanger;
         private float _timeSinceSync;

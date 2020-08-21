@@ -20,10 +20,8 @@ namespace Content.Server.GameObjects.Components.BarSign
     {
         public override string Name => "BarSign";
 
-#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-#pragma warning restore 649
 
         private string? _currentSign;
 

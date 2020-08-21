@@ -37,10 +37,8 @@ namespace Content.Server.GameObjects.Components.Items.Storage
     public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct,
         IDragDrop
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-#pragma warning restore 649
 
         private const string LoggerName = "Storage";
 

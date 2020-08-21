@@ -29,9 +29,7 @@ namespace Content.Server.GameObjects.Components.VendingMachines
     [ComponentReference(typeof(IActivate))]
     public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
     {
-#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random = default!;
-#pragma warning restore 649
 
         private bool _ejecting;
         private TimeSpan _animationDuration = TimeSpan.Zero;

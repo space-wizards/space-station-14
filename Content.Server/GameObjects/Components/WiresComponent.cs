@@ -33,10 +33,8 @@ namespace Content.Server.GameObjects.Components
     [RegisterComponent]
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
     {
-#pragma warning disable 649
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         private AudioSystem _audioSystem = default!;
         private AppearanceComponent _appearance = default!;

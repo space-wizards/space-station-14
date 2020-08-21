@@ -21,9 +21,7 @@ namespace Content.Shared.GameObjects.Components.Damage
     [ComponentReference(typeof(IDamageableComponent))]
     public class DamageableComponent : Component, IDamageableComponent
     {
-#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Damageable";
 

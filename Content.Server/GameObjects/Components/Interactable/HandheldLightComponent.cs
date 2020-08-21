@@ -30,10 +30,8 @@ namespace Content.Server.GameObjects.Components.Interactable
     [RegisterComponent]
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing, IMapInit
     {
-#pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _notifyManager = default!;
         [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-#pragma warning restore 649
 
         [ViewVariables(VVAccess.ReadWrite)] public float Wattage { get; set; } = 10;
         [ViewVariables] private ContainerSlot _cellContainer = default!;

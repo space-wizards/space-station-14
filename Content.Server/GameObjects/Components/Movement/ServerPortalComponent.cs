@@ -19,9 +19,7 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class ServerPortalComponent : SharedPortalComponent
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
-#pragma warning restore 649
 
         // Potential improvements: Different sounds,
         // Add Gateways

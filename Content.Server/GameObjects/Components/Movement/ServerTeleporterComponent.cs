@@ -25,11 +25,10 @@ namespace Content.Server.GameObjects.Components.Movement
     [RegisterComponent]
     public class ServerTeleporterComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IRobustRandom _spreadRandom = default!;
-#pragma warning restore 649
+
         // TODO: Look at MapManager.Map for Beacons to get all entities on grid
         public ItemTeleporterState State => _state;
 

@@ -21,9 +21,7 @@ namespace Content.Server.GameObjects.Components.Power.ApcNetComponents
     [ComponentReference(typeof(IActivate))]
     public class ApcComponent : BaseApcNetComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         public override string Name => "Apc";
 

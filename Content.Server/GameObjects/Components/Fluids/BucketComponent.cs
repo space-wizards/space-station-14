@@ -20,9 +20,7 @@ namespace Content.Server.GameObjects.Components.Fluids
     [RegisterComponent]
     public class BucketComponent : Component, IInteractUsing
     {
-#pragma warning disable 649
         [Dependency] private readonly ILocalizationManager _localizationManager = default!;
-#pragma warning restore 649
 
         public override string Name => "Bucket";
 

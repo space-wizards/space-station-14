@@ -26,9 +26,7 @@ namespace Content.Server.GameObjects.Components.Nutrition
     [ComponentReference(typeof(IAfterInteract))]
     public class FoodComponent : Component, IUse, IAfterInteract
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-#pragma warning restore 649
 
         public override string Name => "Food";
 

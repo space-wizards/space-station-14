@@ -23,9 +23,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
 
         /// <summary>
         /// Whether or not the injector is able to draw from containers or if it's a single use

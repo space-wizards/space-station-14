@@ -33,9 +33,7 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
     {
-#pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
-#pragma warning restore 649
 
         public override string Name => "SurgeryTool";
         public override uint? NetID => ContentNetIDs.SURGERY;

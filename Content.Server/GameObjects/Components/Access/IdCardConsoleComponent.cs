@@ -24,11 +24,9 @@ namespace Content.Server.GameObjects.Components.Access
     [ComponentReference(typeof(IActivate))]
     public class IdCardConsoleComponent : SharedIdCardConsoleComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly ILocalizationManager _localizationManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-#pragma warning restore 649
 
         private ContainerSlot _privilegedIdContainer = default!;
         private ContainerSlot _targetIdContainer = default!;

@@ -35,11 +35,8 @@ namespace Content.Server.GameObjects.Components.Instruments
             IUse,
             IThrown
     {
-
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         private static readonly TimeSpan OneSecAgo = TimeSpan.FromSeconds(-1);
 

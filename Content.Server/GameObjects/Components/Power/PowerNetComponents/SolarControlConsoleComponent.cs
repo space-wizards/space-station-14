@@ -16,9 +16,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     [ComponentReference(typeof(IActivate))]
     public class SolarControlConsoleComponent : SharedSolarControlConsoleComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-#pragma warning restore 649
 
         private PowerSolarSystem _powerSolarSystem = default!;
         private bool Powered => PowerReceiver == null || PowerReceiver.Powered;

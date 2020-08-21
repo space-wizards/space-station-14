@@ -17,9 +17,7 @@ namespace Content.Server.GameObjects.Components.Power.PowerNetComponents
     [RegisterComponent]
     public class SmesComponent : Component
     {
-#pragma warning disable 649
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-#pragma warning restore 649
 
         public override string Name => "Smes";
 

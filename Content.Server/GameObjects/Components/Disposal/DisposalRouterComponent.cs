@@ -26,9 +26,7 @@ namespace Content.Server.GameObjects.Components.Disposal
     [ComponentReference(typeof(IDisposalTubeComponent))]
     public class DisposalRouterComponent : DisposalJunctionComponent, IActivate
     {
-#pragma warning disable 649
         [Dependency] private readonly IServerNotifyManager _notifyManager = default!;
-#pragma warning restore 649
         public override string Name => "DisposalRouter";
 
         [ViewVariables]

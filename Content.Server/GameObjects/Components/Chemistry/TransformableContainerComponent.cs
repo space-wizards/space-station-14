@@ -12,9 +12,7 @@ namespace Content.Server.GameObjects.Components.Chemistry
     [RegisterComponent]
     public class TransformableContainerComponent : Component, ISolutionChange
     {
-#pragma warning disable 649
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-#pragma warning restore 649
 
         public override string Name => "TransformableContainer";
 

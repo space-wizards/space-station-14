@@ -17,9 +17,7 @@ namespace Content.Server.GameObjects.Components.Command
     [ComponentReference(typeof(IActivate))]
     public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
     {
-#pragma warning disable 649
-        [Dependency] private IEntitySystemManager _entitySystemManager = default!;
-#pragma warning restore 649
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         private bool Powered => PowerReceiver == null || PowerReceiver.Powered;
         private RoundEndSystem RoundEndSystem => _entitySystemManager.GetEntitySystem<RoundEndSystem>();

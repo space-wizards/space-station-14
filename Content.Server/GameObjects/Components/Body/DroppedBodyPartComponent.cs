@@ -23,9 +23,7 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedBodyPartComponent : Component, IAfterInteract, IBodyPartContainer
     {
-#pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
-#pragma warning restore 649
 
         private readonly Dictionary<int, object> _optionsCache = new Dictionary<int, object>();
         private BodyManagerComponent? _bodyManagerComponentCache;

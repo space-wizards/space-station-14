@@ -27,10 +27,8 @@ namespace Content.Server.GameObjects.Components.Body
     [RegisterComponent]
     public class DroppedMechanismComponent : Component, IAfterInteract
     {
-#pragma warning disable 649
         [Dependency] private readonly ISharedNotifyManager _sharedNotifyManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-#pragma warning restore 649
 
         public sealed override string Name => "DroppedMechanism";
 
