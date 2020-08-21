@@ -27,7 +27,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public override string Name => "Damageable";
 
-        public event Action<HealthChangedEventArgs> HealthChangedEvent = default!;
+        public event Action<HealthChangedEventArgs>? HealthChangedEvent;
 
         [ViewVariables] private ResistanceSet Resistance { get; set; } = default!;
 
@@ -35,7 +35,7 @@ namespace Content.Shared.GameObjects.Components.Damage
 
         public virtual List<DamageState> SupportedDamageStates => new List<DamageState> {DamageState.Alive};
 
-        public virtual DamageState CurrentDamageState { get; protected set; } = DamageState.Alive;
+        public virtual DamageState CurrentDamageState { get; } = DamageState.Alive;
 
         [ViewVariables] public int TotalDamage => Damage.TotalDamage;
 
@@ -72,6 +72,16 @@ namespace Content.Shared.GameObjects.Components.Damage
                 }
 
                 Resistance = new ResistanceSet(resistance);
+            }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            foreach (var behavior in Owner.GetAllComponents<IOnHealthChangedBehavior>())
+            {
+                HealthChangedEvent += behavior.OnHealthChanged;
             }
         }
 

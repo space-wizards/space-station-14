@@ -138,11 +138,6 @@ namespace Content.Server.GameObjects.Components.Body
             base.Initialize();
 
             LoadBodyPreset(Preset);
-
-            foreach (var behavior in Owner.GetAllComponents<IOnHealthChangedBehavior>())
-            {
-                HealthChangedEvent += behavior.OnHealthChanged;
-            }
         }
 
         protected override void Startup()

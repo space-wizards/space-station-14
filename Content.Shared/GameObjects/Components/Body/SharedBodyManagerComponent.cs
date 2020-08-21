@@ -1,25 +1,15 @@
 using System;
-using System.Collections.Generic;
 using Content.Shared.GameObjects.Components.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameObjects.Components.Body
 {
-    public abstract class SharedBodyManagerComponent : DamageableComponent, IBodyManagerComponent
+    public abstract class SharedBodyManagerComponent : LivingDamageableComponent, IBodyManagerComponent
     {
         public override string Name => "BodyManager";
 
         public override uint? NetID => ContentNetIDs.BODY_MANAGER;
-
-        public override List<DamageState> SupportedDamageStates => new List<DamageState> {DamageState.Alive, DamageState.Critical, DamageState.Dead};
-
-        public override DamageState CurrentDamageState =>
-            CurrentDamageState = TotalDamage > 200
-                ? DamageState.Dead
-                : TotalDamage > 100
-                    ? DamageState.Critical
-                    : DamageState.Alive;
     }
 
     [Serializable, NetSerializable]

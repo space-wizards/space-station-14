@@ -34,7 +34,7 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Damageable
+  - type: LivingDamageable
   - type: HeatResistance
   - type: CombatMode
   - type: Teleportable

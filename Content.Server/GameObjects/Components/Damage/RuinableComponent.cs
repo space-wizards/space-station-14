@@ -35,12 +35,6 @@ namespace Content.Server.GameObjects.Components.Damage
 
         public override DamageState CurrentDamageState => _currentDamageState;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            HealthChangedEvent += OnHealthChanged;
-        }
-
         public override void ExposeData(ObjectSerializer serializer)
         {
             base.ExposeData(serializer);
@@ -49,14 +43,10 @@ namespace Content.Server.GameObjects.Components.Damage
             serializer.DataField(this, ruinable => ruinable.DestroySound, "destroySound", string.Empty);
         }
 
-        public override void OnRemove()
+        protected override void OnHealthChanged(HealthChangedEventArgs e)
         {
-            base.OnRemove();
-            HealthChangedEvent -= OnHealthChanged;
-        }
+            base.OnHealthChanged(e);
 
-        private void OnHealthChanged(HealthChangedEventArgs e)
-        {
             if (CurrentDamageState != DamageState.Dead && TotalDamage >= MaxHp)
             {
                 PerformDestruction();
