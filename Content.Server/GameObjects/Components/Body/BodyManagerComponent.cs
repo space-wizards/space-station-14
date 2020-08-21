@@ -272,7 +272,7 @@ namespace Content.Server.GameObjects.Components.Body
 
         private void CalculateSpeed()
         {
-            if (!Owner.TryGetComponent(out MovementSpeedModifierComponent playerMover))
+            if (!Owner.TryGetComponent(out MovementSpeedModifierComponent? playerMover))
             {
                 return;
             }

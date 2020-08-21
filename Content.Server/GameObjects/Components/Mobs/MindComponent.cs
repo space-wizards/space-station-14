@@ -79,7 +79,7 @@ namespace Content.Server.GameObjects.Components.Mobs
                 var visiting = Mind?.VisitingEntity;
                 if (visiting != null)
                 {
-                    if (visiting.TryGetComponent(out GhostComponent ghost))
+                    if (visiting.TryGetComponent(out GhostComponent? ghost))
                     {
                         ghost.CanReturnToBody = false;
                     }

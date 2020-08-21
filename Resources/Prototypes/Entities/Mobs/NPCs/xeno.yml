@@ -50,7 +50,7 @@
     range: 1.5
     arcwidth: 0
     arc: claw
-    damage: 90
+    damage: 10
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer
