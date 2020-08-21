@@ -1,32 +1,50 @@
 {
     "version": 1,
 	"license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Cev-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/053a4b359acc1cd26b5006dfbc72200d7a43470a",
+	"copyright": "Taken from Cev-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/053a4b359acc1cd26b5006dfbc72200d7a43470a",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "crate",
+            "name": "phoroncrate",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
-            "name": "crate_door",
+            "name": "phoroncrate_door",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
-            "name": "crate_icon",
+            "name": "phoroncrate_icon",
             "select": [],
             "flags": {},
             "directions": 1
         },
         {
             "name": "welded",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "lock_unlocked",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "lock_off",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "lock_locked",
             "select": [],
             "flags": {},
             "directions": 1
@@ -39,10 +57,10 @@
             "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
         },
         {
-            "name": "crate_open",
+            "name": "phoroncrate_open",
             "select": [],
             "flags": {},
             "directions": 1
-        }
+	}
     ]
 }

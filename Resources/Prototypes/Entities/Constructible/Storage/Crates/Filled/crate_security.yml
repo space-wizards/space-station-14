@@ -1,0 +1,123 @@
+- type: entity
+  id: CrateArmorSecurity
+  name: security armor crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - OuterclothingHmarmorvest
+      - OuterclothingHmarmorvest
+      - OuterclothingHmarmorvest
+      - HatHelmet
+      - HatHelmet
+      - HatHelmet
+
+- type: entity
+  id: CrateNonlethalSecurity
+  name: nonlethals crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - TaserGun
+      - TaserGun
+      - TaserGun
+      - Stunbaton
+      - Stunbaton
+      - Stunbaton
+      - GrenadeFlashBang
+      - GrenadeFlashBang
+#      - Pepperspray
+#      - Pepperspray
+#      - Pepperspray
+#      - GrenadeTeargas
+#      - GrenadeTeargas
+#      - GrenadeTeargas
+#      - Flash
+#      - Flash
+#      - Flash
+
+- type: entity
+  id: CrateLethalSecurity
+  name: lethals crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - LaserGun
+      - LaserGun
+      - LaserGun
+      - SmgC20r
+      - SmgC20r
+      - MagazinePistolSmg
+      - MagazinePistolSmg
+      - MagazinePistolSmg
+      - MagazinePistolSmg
+      - MagazinePistolSmg
+      - MagazinePistolSmg
+      - ShotgunGladstone
+      - ShotgunGladstone
+# V This is probably an issue.
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+      - ShellShotgun
+
+- type: entity
+  id: CrateRiotSecurity
+  name: swat crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - OuterclothingRiot
+      - OuterclothingRiot
+      - HatLightRiot
+      - HatLightRiot
+      - ShotgunGladstone
+      - ShotgunGladstone
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+      - ShellShotgunBeanbag
+#      - ShieldRiot
+#      - ShieldRiot
+#      - SecGasmask
+#      - SecGasmask
+
+- type: entity
+  id: CrateSuppliesSecurity
+  name: security supplies crate
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - Handcuffs
+      - Handcuffs
+      - Handcuffs
+      - SecGlasses
+      - SecGlasses
+      - SecGlasses
+#      - SecBelt
+#      - SecBelt
+#      - SecBelt
+#      - SecGasmask
+#      - SecGasmask
+#      - SecGasmask
+#      - SpacelawBook

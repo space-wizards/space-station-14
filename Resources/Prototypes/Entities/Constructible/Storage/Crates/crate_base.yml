@@ -1,5 +1,6 @@
-﻿- type: entity
+- type: entity
   id: CrateGeneric
+  abstract: true
   name: crate
   description: A large container for items.
   components:
@@ -10,9 +11,9 @@
     - state: crate
     - state: crate_door
       map: ["enum.StorageVisualLayers.Door"]
-  - type: Icon
-    sprite: Constructible/Structures/Crates/generic.rsi
-    state: crate
+    - state: welded
+      visible: false
+      map: ["enum.StorageVisualLayers.Welded"]
   - type: Clickable
   - type: InteractionOutline
   - type: Collidable
@@ -33,8 +34,8 @@
     mass: 25
     anchored: false
   - type: EntityStorage
-    capacity: 60
-    CanWeldShut: false
+    Capacity: 60
+    CanWeldShut: true
   - type: PlaceableSurface
   - type: Destructible
     maxHP: 100
@@ -44,4 +45,5 @@
       state_open: crate_open
       state_closed: crate_door
   - type: LoopingSound
+  - type: Anchorable
   - type: Pullable

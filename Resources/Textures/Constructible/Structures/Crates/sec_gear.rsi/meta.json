@@ -1,7 +1,7 @@
 {
     "version": 1,
 	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from https://github.com/discordia-space/CEV-Eris.",
+	"copyright": "Taken from Cev-Eris at commit https://github.com/discordia-space/CEV-Eris/commit/053a4b359acc1cd26b5006dfbc72200d7a43470a",
     "size": {
         "x": 32,
         "y": 32
@@ -18,6 +18,43 @@
             "select": [],
             "flags": {},
             "directions": 1
+        },
+        {
+            "name": "secgearcrate_icon",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "welded",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "unlocked",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "off",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "locked",
+            "select": [],
+            "flags": {},
+            "directions": 1
+        },
+        {
+            "name": "sparking",
+            "select": [],
+            "flags": {},
+            "directions": 1,
+            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
         },
         {
             "name": "secgearcrate_open",

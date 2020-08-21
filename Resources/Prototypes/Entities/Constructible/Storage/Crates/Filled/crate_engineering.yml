@@ -1,0 +1,46 @@
+- type: entity
+  id: CrateGearEngineering
+  name: engineering gear crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - UtilityBeltClothing
+      - UtilityBeltClothing
+      - UtilityBeltClothing
+      - MesonGlasses
+      - MesonGlasses
+      - MesonGlasses
+      - HatHardhatYellow
+      - HatHardhatYellow
+      - HatHardhatYellow
+      - HatWelding
+      - HatWelding
+      - HatWelding
+#      - ThatOneOrangeVest
+#      - ThatOneOrangeVest
+#      - ThatOneOrangeVest
+      - GlovesYellow
+      - GlovesYellow
+      - GlovesYellow
+
+- type: entity
+  id: CrateGeneratorEngineering
+  name: generator crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - DebugGenerator
+
+- type: entity
+  id: CrateToolboxEngineering
+  name: toolbox crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - ToolboxMechanical
+      - ToolboxMechanical
+      - ToolboxElectrical
+      - ToolboxElectrical
