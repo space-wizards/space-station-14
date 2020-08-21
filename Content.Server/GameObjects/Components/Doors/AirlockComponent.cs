@@ -144,9 +144,9 @@ namespace Content.Server.GameObjects.Components.Doors
             }
         }
 
-        protected override DoorState State
+        public override DoorState State
         {
-            set
+            protected set
             {
                 base.State = value;
                 // Only show the maintenance panel if the airlock is closed
@@ -171,7 +171,11 @@ namespace Content.Server.GameObjects.Components.Doors
 
         public override void OnRemove()
         {
-            _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
+            if (Owner.TryGetComponent(out _powerReceiver))
+            {
+                _powerReceiver.OnPowerStateChanged -= PowerDeviceOnOnPowerStateChanged;
+            }
+
             base.OnRemove();
         }
 
